@@ -1,0 +1,9 @@
+* Error Handling Strategies
+
+** use "assert()":
+   Use it where it is clearly a programming error in the "component"
+   what should be part of the component?...
+                 
+** Log Error where it happens:
+
+** Throw exception:

@@ -1,0 +1,449 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Freds Lab",
+  "productName": "Buzzzy",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      },
+      {
+        "name": "2",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "3",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "4",
+        "engineId": 0,
+        "midiChannel" : 4
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Amp/Arp": {
+            "parameterIds": [
+              "Volume",
+              "Pan",
+              "Tempo",
+              "Div",
+              "Repeat",
+              "Gate"
+            ]
+          },
+          "Sound/Filter": {
+            "parameterIds": [
+              "Engine",
+              "Wave",
+              "Decay",
+              "Attack",
+              "Cutoff",
+              "Resonance",
+              "Filter Type"
+            ]
+          },
+          "Space Effect": {
+            "parameterIds": [
+              "Space Model",
+              "Space Mix",
+              "Space Decay",
+              "Space Diffuse"
+            ]
+          },
+          "Delay Effect": {
+            "parameterIds": [
+              "Delay Model",
+              "Delay Mix",
+              "Delay Feedback",
+              "Delay Time"
+            ]
+          }
+        },
+        "parameters": {
+          "Volume": {
+            "type": "continous",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          "Pan": {
+            "type": "continous-bipolar",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          "Tempo": {
+            "type": "continous",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          "Div": {
+            "type": "continous",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          "Repeat": {
+            "type": "continous",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          "Gate": {
+            "type": "continous",
+            "component": "Amp/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          "Engine": {
+            "type": "list",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Pulse",
+                    "range": [
+                      0,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "Fm",
+                    "range": [
+                      32,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "Wave",
+                    "range": [
+                      64,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "Noise",
+                    "range": [
+                      96,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Wave": {
+            "type": "continous",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          "Decay": {
+            "type": "continous",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          "Attack": {
+            "type": "continous",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          "Cutoff": {
+            "type": "continous",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          "Resonance": {
+            "type": "continous",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          "Space Model": {
+            "type": "list",
+            "component": "Space Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "Fort",
+                    "range": [
+                      32,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "Reservoir",
+                    "range": [
+                      64,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "Abyss",
+                    "range": [
+                      96,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Delay Model": {
+            "type": "list",
+            "component": "Delay Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "Mono",
+                    "range": [
+                      32,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "Ping-Pong",
+                    "range": [
+                      64,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "Chorus/Flanger",
+                    "range": [
+                      96,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Filter Type": {
+            "type": "list",
+            "component": "Sound/Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "Lowpass",
+                    "range": [
+                      32,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "Bandpass",
+                    "range": [
+                      64,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "Highpass",
+                    "range": [
+                      96,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Space Mix": {
+            "type": "continous",
+            "component": "Space Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          "Delay Mix": {
+            "type": "continous",
+            "component": "Delay Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          "Space Decay": {
+            "type": "continous",
+            "component": "Space Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          "Space Diffuse": {
+            "type": "continous",
+            "component": "Space Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          "Delay Feedback": {
+            "type": "continous",
+            "component": "Delay Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          "Delay Time": {
+            "type": "continous",
+            "component": "Delay Effect",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

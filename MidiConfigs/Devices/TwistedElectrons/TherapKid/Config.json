@@ -1,0 +1,457 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Twisted Electrons",
+  "productName": "ThreapKid",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "LFO/Filt/Arp": {
+            "parameterIds": [
+              "LFO1 Depth",
+              "LFO1 Rate",
+              "LFO2 Depth",
+              "LFO2 Rate",
+              "Filter Cutoff",
+              "Filter Resonance",
+              "Arp rate",
+              "Arp range"
+            ]
+          },
+          "Amp": {
+            "parameterIds": [
+              "Attack",
+              "Sustain",
+              "Release",
+              "Mix",
+              "PW1",
+              "PW2",
+              "Glide",
+              "Tune"
+            ]
+          },
+          "Vol Waveform": {
+            "parameterIds": [
+              "Vol WavF1",
+              "Vol WavF2",
+              "Vol WavF3",
+              "Vol WavF4",
+              "Vol WavF5",
+              "Vol WavF6",
+              "Vol WavF7",
+              "Vol WavF8"
+            ]
+          },
+          "Tune Waveform": {
+            "parameterIds": [
+              "Tune WavF1",
+              "Tune WavF2",
+              "Tune WavF3",
+              "Tune WavF4",
+              "Tune WavF5",
+              "Tune WavF6",
+              "Tune WavF7",
+              "Tune WavF8"
+            ]
+          }
+        },
+        "parameters": {
+          "LFO1 Depth": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          "LFO1 Rate": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          "LFO2 Depth": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          "LFO2 Rate": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          "Filter Cutoff": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          "Filter Resonance": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                }
+              }
+            }
+          },
+          "Arp rate": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          "Arp range": {
+            "type": "continous",
+            "component": "LFO/Filt/Arp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          "Attack": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          "Sustain": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          "Release": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          "Mix": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          "Vol WavF1": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          "Vol WavF2": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          "Vol WavF3": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          "Vol WavF4": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          "Vol WavF5": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          "Vol WavF6": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          "Vol WavF7": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          "Vol WavF8": {
+            "type": "continous",
+            "component": "Vol Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          "Tune WavF1": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          "Tune WavF2": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          "Tune WavF3": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          "Tune WavF4": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          "Tune WavF5": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          "Tune WavF6": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          "Tune WavF7": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          "Tune WavF8": {
+            "type": "continous",
+            "component": "Tune Waveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          "PW1": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          "PW2": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          "Glide": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          "Tune": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

@@ -1,0 +1,516 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Elektron",
+  "productName": "Octatrack Mk1",
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "Track-1",
+        "engineId": 0,
+        "midiChannel" : 1
+      },
+      {
+        "name": "Track-2",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "Track-3",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "Track-4",
+        "engineId": 0,
+        "midiChannel" : 4
+      },
+      {
+        "name": "Track-5",
+        "engineId": 0,
+        "midiChannel" : 5
+      },
+      {
+        "name": "Track-6",
+        "engineId": 0,
+        "midiChannel" : 6
+      },
+      {
+        "name": "Track-7",
+        "engineId": 0,
+        "midiChannel" : 7
+      },
+      {
+        "name": "Track-8",
+        "engineId": 0,
+        "midiChannel" : 8
+      }
+    ],
+    "parameterDumpRequest": {
+      "midiMsg": {
+        "cc": [
+          61
+        ],
+        "value": 0
+      }
+    },
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Track/Playback": {
+            "parameterIds": [
+              "Track Level",
+              "Cue Level",
+              "Playback Param #1",
+              "Playback Param #2",
+              "Playback Param #3",
+              "Playback Param #4",
+              "Playback Param #5",
+              "Playback Param #6"
+            ]
+          },
+          "Amp": {
+            "parameterIds": [
+              "Attack",
+              "Hold",
+              "Release",
+              "Volume",
+              "Balance"
+            ]
+          },
+          "LFO": {
+            "parameterIds": [
+              "Lfo Spped #1",
+              "Lfo Speed #2",
+              "Lfo Depth #1",
+              "Lfo Depth #2",
+              "Lfo Depth #3",
+              "Lfo Param #6"
+            ]
+          },
+          "Effect 1": {
+            "parameterIds": [
+              "Param #1_1",
+              "Param #2_1",
+              "Param #3_1",
+              "Param #4_1",
+              "Param #5_1",
+              "Param #6_1"
+            ]
+          },
+          "Effect 2": {
+            "parameterIds": [
+              "Param #1_2",
+              "Param #2_2",
+              "Param #3_2",
+              "Param #4_2",
+              "Param #5_2",
+              "Param #6_2"
+            ]
+          }
+        },
+        "parameters": {
+          "Track Level": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          "Cue Level": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          "Playback Param #1": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          "Playback Param #2": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          "Playback Param #3": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          "Playback Param #4": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          "Playback Param #5": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          "Playback Param #6": {
+            "type": "continous",
+            "component": "Track/Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          "Attack": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          "Hold": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          "Release": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          "Volume": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          "Balance": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          "Lfo Spped #1": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          "Lfo Speed #2": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          "Lfo Depth #1": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          "Lfo Depth #2": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          "Lfo Depth #3": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          "Lfo Param #6": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          "Param #1_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          "Param #2_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          "Param #3_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          "Param #4_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          "Param #5_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          "Param #6_1": {
+            "type": "continous",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          "Param #1_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          "Param #2_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          "Param #3_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          "Param #4_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          "Param #5_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          "Param #6_2": {
+            "type": "continous",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "controllerSection": {
+    "widgets": [
+      {
+        "name": "Cross-fader",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "ContinousValue",
+            "name": "Cross-fader",
+            "source": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

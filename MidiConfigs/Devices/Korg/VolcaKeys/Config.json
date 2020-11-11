@@ -1,0 +1,245 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Korg",
+  "productName": "Volca Keys",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Osc": {
+            "parameterIds": [
+              "Portamento",
+              "Expression",
+              "Voice",
+              "Octave",
+              "Detune"
+            ]
+          },
+          "Filter/Env": {
+            "parameterIds": [
+              "Filter Cutoff",
+              "VCF Eg",
+              "VCO Eg",
+              "Eg Attack",
+              "Eg Decay",
+              "Eg Sustain"
+            ]
+          },
+          "Modulation/Fx": {
+            "parameterIds": [
+              "LFO Rate",
+              "LFO Pitch",
+              "LFO Cutoff",
+              "Delay Time",
+              "Delay Feedback"
+            ]
+          }
+        },
+        "parameters": {
+          "Portamento": {
+            "type": "continous",
+            "component": "Osc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          "Expression": {
+            "type": "continous",
+            "component": "Osc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          "Voice": {
+            "type": "continous",
+            "component": "Osc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          "Octave": {
+            "type": "continous",
+            "component": "Osc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          "Detune": {
+            "type": "continous",
+            "component": "Osc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          "VCO Eg": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          "Filter Cutoff": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          "VCF Eg": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          "LFO Rate": {
+            "type": "continous",
+            "component": "Modulation/Fx",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          "LFO Pitch": {
+            "type": "continous",
+            "component": "Modulation/Fx",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          "LFO Cutoff": {
+            "type": "continous",
+            "component": "Modulation/Fx",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          "Eg Attack": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          "Eg Decay": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          "Eg Sustain": {
+            "type": "continous",
+            "component": "Filter/Env",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          "Delay Time": {
+            "type": "continous",
+            "component": "Modulation/Fx",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          "Delay Feedback": {
+            "type": "continous",
+            "component": "Modulation/Fx",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

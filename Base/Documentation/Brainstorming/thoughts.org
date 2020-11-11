@@ -1,0 +1,55 @@
+* Id for a device:
+   Needed to differentiate 2 devices with same type
+   (Otherwise we can differentiate through type+connectionPort)
+** Sometimes we have a unique ID for the device (device tells us)
+   eg: device tells over midisysex
+       USB subsystem tells it
+
+* Class Type  (Midi or evdev or ...)
+** Automatically told at connection (USB/RtMidi or sysex)
+** User selected
+** Constant?
+
+* Device Type
+Determination:
+   per subsystem:
+      * RtMidi(over USB, BLE) [[HOTPLUG]]
+         Subsystem tells us: [Manufacturer + Device Name] + Connected Port
+         ID: a [UUID] from USB/BLE || otherwise use [Manufacturer + Device Name + Connected Port]
+         PORT: Connected Port
+         PROTOCOL CLASS: [[Midi]]
+      * Din Midi
+         User has to choose [Manufacturer + Device Name] on a PORT
+         PORT : - a music devices port : device Id + Connected Port
+                - builtin serial port identifier
+         ID: "port"
+         PROTOCOL CLASS: [[Midi]]
+      * Evdev(over USB) [[HOTPLUG]] *- maybe only use for controller part -*
+         USB tells: [Manufacturer + Device Name] + [UUID] + port |-> create device file
+         ID: [UUID]
+         PORT: USB port? or device file
+         PROTOCOL CLASS: [[Evdev]]
+      * Free hanging device with analog IO
+         User has to choose [Manufacturer + Device Name] without a PORT
+         PORT: none
+         ID: [Manufacturer + Device Name] + "user defined id ?"
+         PROTOCOL CLASS: [[Analog]] 
+      * Remote devices over Wifi ???       
+
+* Device Creation
+
+
+* Connection Port
+
+* Connection Event
+** Automatic(hotplug)
+** User select device type on a port
+** Constant on a port
+
+* What do we need to make a device running?
+
+subsystem sends connection event --> (subsystem determines type, connection port)
+
+usb plugged -- (device class, id, usb port) --> RtMidiIn0..N(@Port) + RtMidiOut0..N(@Port)
+usb plugged -- (device class, id, usb port) --> Evdev created
+User Select --> device type

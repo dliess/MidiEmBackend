@@ -1,0 +1,198 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Synthstorm",
+  "productName": "Deluge",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Filter": {
+            "parameterIds": [
+              "Filter Cutoff",
+              "Filter Resonance",
+              "Filt Env Amount",
+              "Filt Env Attack",
+              "Filt Env Decay",
+              "Filt Env Sustain",
+              "Filt Env Release"
+            ]
+          },
+          "Shape": {
+            "parameterIds": [
+              "Noise"
+            ]
+          },
+          "Amp": {
+            "parameterIds": [
+              "Attack",
+              "Decay",
+              "Sustain",
+              "Release"
+            ]
+          }
+        },
+        "parameters": {
+          "Filter Cutoff": {
+            "description": "Adjusts the Filter Cutoff",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          "Filter Resonance": {
+            "description": "Adjusts the Filter Resonance",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          "Filt Env Amount": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          "Noise": {
+            "type": "continous",
+            "component": "Shape",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          "Attack": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                }
+              }
+            }
+          },
+          "Decay": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          "Sustain": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          "Release": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          "Filt Env Attack": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          "Filt Env Decay": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          "Filt Env Sustain": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          "Filt Env Release": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "controllerSection": {
+    "widgets": []
+  },
+  "reactsToTransportCommands": true
+}

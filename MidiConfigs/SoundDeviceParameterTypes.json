@@ -1,0 +1,24 @@
+{
+// Component types:
+{
+   "Filter":{
+      "mode" : "Highpass/Lowpass/Bandpass",
+      "cutoffFreq" : "",
+      
+   }
+}
+
+// Very first loog in parameter descriptor
+
+// If that doe snot specify, determine it by Hardcoded Component assignment
+
+// If that doe snot specify, look for it here
+
+{
+   "Filter.CutoffFreq" : { "initialValue" : "0.7", "valueRepresentation" : "fromZero" },
+   "Volume" : { "initialValue" : "0.7", "valueRepresentation" : "fromZero" },
+   "Pan" : { "initialValue" : "0.5", "valueRepresentation" : "fromCenter" }
+}
+
+
+}

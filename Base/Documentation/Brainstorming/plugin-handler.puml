@@ -1,0 +1,15 @@
+@startuml
+
+package Controller {}
+package Description {}
+package PluginHandler {}
+package PluginInterface {}
+package ThePluginLib {}
+
+Controller --> PluginHandler
+PluginHandler --> PluginInterface
+PluginInterface --> Description
+
+ThePluginLib --> PluginInterface
+
+@enduml

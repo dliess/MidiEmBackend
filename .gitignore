@@ -1,0 +1,8 @@
+build
+build-*
+*.vscode/ipch
+Settings.json
+*__PRESETS__.json
+midiDeviceChains.json
+*.so
+CMakeLists.txt.user

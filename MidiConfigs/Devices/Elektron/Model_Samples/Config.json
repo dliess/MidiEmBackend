@@ -1,0 +1,443 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Elektron",
+  "productName": "Model:Samples",
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      },
+      {
+        "name": "2",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "3",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "4",
+        "engineId": 0,
+        "midiChannel" : 4
+      },
+      {
+        "name": "5",
+        "engineId": 0,
+        "midiChannel" : 5
+      },
+      {
+        "name": "6",
+        "engineId": 0,
+        "midiChannel" : 6
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Track Params": {
+            "parameterIds": [
+              "Note",
+              "Mute",
+              "Track Level",
+              "Pan",
+              "Pitch",
+              "Decay Time",
+              "Sample Start",
+              "Sample Length",
+              "Cutoff",
+              "Resonance",
+              "Delay Send",
+              "Reverb Send",
+              "Volume+Dist",
+              "Swing",
+              "Chance"
+            ]
+          },
+          "Playback": {
+            "parameterIds": [
+              "Loop",
+              "Reverse"
+            ]
+          },
+          "LFO": {
+            "parameterIds": [
+              "LFO Speed",
+              "LFO Multiplier",
+              "LFO Fade In/Out",
+              "LFO Destination",
+              "LFO Waveform",
+              "LFO Start Phase",
+              "LFO Reset",
+              "LFO Depth"
+            ]
+          },
+          "FX Parameters": {
+            "parameterIds": [
+              "Delay Time",
+              "Delay Feedback",
+              "Reverb Size",
+              "Delay Tone"
+            ]
+          }
+        },
+        "parameters": {
+          "Note": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          "Mute": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          "Track Level": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          "Pan": {
+            "type": "continous-bipolar",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          "Pitch": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          "Decay Time": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          "Sample Start": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          "Sample Length": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          "Cutoff": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          "Resonance": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          "Delay Send": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          "Reverb Send": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          "Volume+Dist": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          "Swing": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          "Chance": {
+            "type": "continous",
+            "component": "Track Params",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          "Loop": {
+            "type": "continous",
+            "component": "Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          "Reverse": {
+            "type": "continous",
+            "component": "Playback",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          "LFO Speed": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          "LFO Multiplier": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          "LFO Fade In/Out": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          "LFO Destination": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          "LFO Waveform": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          "LFO Start Phase": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          "LFO Reset": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          "LFO Depth": {
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          "Delay Time": {
+            "type": "continous",
+            "component": "FX Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          "Delay Feedback": {
+            "type": "continous",
+            "component": "FX Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          "Reverb Size": {
+            "type": "continous",
+            "component": "FX Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          "Delay Tone": {
+            "type": "continous",
+            "component": "FX Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

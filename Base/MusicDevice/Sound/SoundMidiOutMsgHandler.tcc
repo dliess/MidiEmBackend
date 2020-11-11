@@ -1,0 +1,144 @@
+#include <loguru.hpp>
+
+#include "SoundMidiOutMsgHandler.h"
+#include "MidiMessage.h"
+#include "MidiMessageIds.h"
+
+using namespace base::musicDevice;
+
+template<typename MidiOutIfPtr>
+sound::MidiOutMsgHandler<MidiOutIfPtr>::MidiOutMsgHandler(
+   MidiOutIfPtr pMidiOutIf,
+   const description::sound::Section& rSoundSection) noexcept :
+   m_pMidiOutIf(pMidiOutIf),
+   m_rSoundSection(rSoundSection)
+{
+   if (m_rSoundSection.pitchBendFactor)
+   {
+      m_pitchBendFactor = *m_rSoundSection.pitchBendFactor;
+   }
+}
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(uint32_t voiceId,
+                                                  uint32_t parameterId,
+                                                  float value) noexcept
+{
+   const auto& paramDescr =
+      m_rSoundSection.parameterDescr(voiceId, parameterId);
+   const auto midiChannel = m_rSoundSection.getMidiChannel(voiceId);
+   assert(paramDescr.source.midi);
+
+   const auto midiMsg = mpark::visit(
+      midi::overload{
+         [midiChannel, value](
+            const midi::MidiMsgId<midi::ControlChange>& msgId) -> midi::MidiMessage {
+            return midi::Message<midi::ControlChange>(midiChannel, msgId.id,
+                                                      value);
+         },
+         [midiChannel,
+          value](const midi::MidiMsgId<midi::ControlChangeHighRes>& msgId)
+            -> midi::MidiMessage {
+            return midi::Message<midi::ControlChangeHighRes>(
+               midiChannel, msgId.idMsb, msgId.idLsb, value);
+         },
+         [midiChannel,
+          value](const midi::MidiMsgId<midi::NRPN>& msgId) -> midi::MidiMessage {
+            return midi::Message<midi::NRPN>(midiChannel, msgId.idMsb,
+                                             msgId.idLsb, value);
+         },
+         [midiChannel,
+          value](const midi::MidiMsgId<midi::RPN>& msgId) -> midi::MidiMessage {
+            return midi::Message<midi::RPN>(midiChannel, msgId.idMsb,
+                                            msgId.idLsb, value);
+         },
+         [](auto&& other) -> midi::MidiMessage { return midi::MidiMessage(); }},
+      paramDescr.source.midi->id);
+   m_pMidiOutIf->send(midiMsg);
+}
+
+template<typename MidiOutIfPtr>
+bool sound::MidiOutMsgHandler<MidiOutIfPtr>::sendParameterDumpRequest() noexcept
+{
+   if (m_rSoundSection.parameterDumpRequest)
+   {
+      if (m_rSoundSection.parameterDumpRequest->midiSysex)
+      {
+         m_pMidiOutIf->sysEx(*m_rSoundSection.parameterDumpRequest->midiSysex);
+      }
+      if (m_rSoundSection.parameterDumpRequest->midiMsg)
+      {
+         m_pMidiOutIf->controlParameter(
+            1, m_rSoundSection.parameterDumpRequest->midiMsg->cc[0],
+            m_rSoundSection.parameterDumpRequest->midiMsg->value);
+      }
+      return true;
+   }
+   return false;
+}
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
+                                      float velocity) noexcept
+{
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   const auto engineIdx   = voiceDescr.engineId;
+   const auto& engineDesc = m_rSoundSection.engines[engineIdx];
+   if (engineDesc.noteSettings)
+   {
+      const int noteRangeStart = engineDesc.noteSettings->noteRange.from;
+      const int noteRangeEnd   = engineDesc.noteSettings->noteRange.to;
+      if (engineDesc.noteSettings->midi)
+      {
+         if (engineDesc.noteSettings->midi->pitchRouting)
+         {
+            const float value =
+               engineDesc.noteSettings->midi->pitchRouting->mapping
+                  ? engineDesc.noteSettings->midi->pitchRouting->mapping->
+                    operator[](note - noteRangeStart)
+                  : note / 127.0f;
+
+            sendSoundParameter(voiceIndex,
+                               engineDesc.noteSettings->midi->pitchRouting
+                                  ->destinationParameterIdx,
+                               value);
+         }
+         if (engineDesc.noteSettings->midi->velocityRouting)
+         {
+            const float value =
+               engineDesc.noteSettings->midi->velocityRouting->mapping
+                  ? engineDesc.noteSettings->midi->velocityRouting->mapping->
+                    operator[](note - noteRangeStart)
+                  : velocity;
+            sendSoundParameter(voiceIndex,
+                               engineDesc.noteSettings->midi->velocityRouting
+                                  ->destinationParameterIdx,
+                               value);
+         }
+      }
+   }
+   const int note2Send = voiceDescr.midiTriggerNoteNumber
+                            ? *voiceDescr.midiTriggerNoteNumber
+                            : note;
+   m_pMidiOutIf->noteOn(voiceDescr.midiChannel, note2Send, velocity * 127);
+}
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOff(int voiceIndex, int note,
+                                       float velocity) noexcept
+{
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   const int note2Send    = voiceDescr.midiTriggerNoteNumber
+                            ? *voiceDescr.midiTriggerNoteNumber
+                            : note;
+
+   m_pMidiOutIf->noteOff(voiceDescr.midiChannel, note2Send, velocity * 127);
+}
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIndex, float value) noexcept
+{
+   m_pMidiOutIf->pitchBend(voiceIndex + 1, value * m_pitchBendFactor * 16383);
+}

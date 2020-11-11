@@ -1,0 +1,133 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Suonobuono",
+  "productName": "nABC",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Parameters": {
+            "parameterIds": [
+              "Attack",
+              "Release",
+              "Threshold",
+              "Ratio",
+              "Comp Knee",
+              "S/C Depth",
+              "Gain",
+              "Bypass"
+            ]
+          }
+        },
+        "parameters": {
+          "Attack": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          "Release": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          "Threshold": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          "Ratio": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          "Comp Knee": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          "S/C Depth": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          "Gain": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          "Bypass": {
+            "type": "continous",
+            "component": "Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}
