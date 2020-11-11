@@ -1,0 +1,78 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Elektron",
+  "productName": "Analog Rytm",
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      },
+      {
+        "name": "2",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "3",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "4",
+        "engineId": 0,
+        "midiChannel" : 4
+      },
+      {
+        "name": "5",
+        "engineId": 0,
+        "midiChannel" : 5
+      },
+      {
+        "name": "6",
+        "engineId": 0,
+        "midiChannel" : 6
+      },
+      {
+        "name": "7",
+        "engineId": 0,
+        "midiChannel" : 7
+      },
+      {
+        "name": "8",
+        "engineId": 0,
+        "midiChannel" : 8
+      },
+      {
+        "name": "9",
+        "engineId": 0,
+        "midiChannel" : 9
+      },
+      {
+        "name": "10",
+        "engineId": 0,
+        "midiChannel" : 10
+      },
+      {
+        "name": "11",
+        "engineId": 0,
+        "midiChannel" : 11
+      },
+      {
+        "name": "12",
+        "engineId": 0,
+        "midiChannel" : 12
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {},
+        "parameters": {}
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

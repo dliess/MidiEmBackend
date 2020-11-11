@@ -1,0 +1,1431 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Elektron",
+  "productName": "Analog4 Mk1",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      },
+      {
+        "name": "2",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "3",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "4",
+        "engineId": 0,
+        "midiChannel" : 4
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "OSC 1": {
+            "parameterIds": [
+              "Pitch_1",
+              "Detune_1",
+              "Keytracking_1",
+              "Level_1",
+              "Waveform_1",
+              "Sub-Oscillator_1",
+              "Pulsewidth_1",
+              "PWM Speed_1",
+              "PWM Depth_1"
+            ]
+          },
+          "OSC 2": {
+            "parameterIds": [
+              "Pitch_2",
+              "Detune_2",
+              "Keytracking_2",
+              "Level_2",
+              "Waveform_2",
+              "Sub-Oscillator_2",
+              "Pulsewidth_2",
+              "PWM Speed_2",
+              "PWM Depth_2"
+            ]
+          },
+          "Noise": {
+            "parameterIds": [
+              "Noise S&H",
+              "Noise Fade",
+              "Noise Level"
+            ]
+          },
+          "OSC Common": {
+            "parameterIds": [
+              "OSC1 AM",
+              "Sync Mode",
+              "Sync Amount",
+              "Bend Amount",
+              "Slide Time",
+              "OSC2 AM",
+              "Note Sync",
+              "Vibrato Fade",
+              "Vibrato Speed",
+              "Vibrato Depth"
+            ]
+          },
+          "Filter": {
+            "parameterIds": [
+              "Filter1 Cutoff",
+              "Filter1 Resonance",
+              "Filter Overdrive",
+              "Filter1 Keytrack",
+              "Filter1 Envelop Am",
+              "Filter2 Cutoff",
+              "Filter2 Resonance",
+              "Filter2 Type",
+              "Filter2 Keytracking",
+              "Filter2 Envelope Am"
+            ]
+          },
+          "Amp": {
+            "parameterIds": [
+              "EnvA Attack Time",
+              "EnvA Decay Time",
+              "EnvA Sustain Level",
+              "EnvA Release Time",
+              "EnvA Env Shape",
+              "Chorus Send Level",
+              "Delay Send Level",
+              "Reverb Send Level",
+              "Pan",
+              "Volume"
+            ]
+          },
+          "Filter1 Envelope": {
+            "parameterIds": [
+              "ENVF Attack",
+              "ENVF Decay",
+              "ENVF Sustain",
+              "ENVF Release",
+              "ENVF Env Shape",
+              "ENVF Env Gate Length",
+              "ENVF Env Destination A",
+              "ENVF Depth A",
+              "ENVF Env Destination B",
+              "ENVF Depth B"
+            ]
+          },
+          "Filter2 Envelope": {
+            "parameterIds": [
+              "ENV2 Attack",
+              "ENV2 Decay",
+              "ENV2 Sustain",
+              "ENV2 Release",
+              "ENV2 Env Shape",
+              "ENV2 Env Gate Length",
+              "ENV2 Env Destination A",
+              "ENV2 Depth A",
+              "ENV2 Env Destination B",
+              "ENV2 Depth B"
+            ]
+          },
+          "LFO 1": {
+            "parameterIds": [
+              "LFO1 Speed",
+              "LFO1 Multiplier",
+              "LFO1 Fade",
+              "LFO1 Start Phase",
+              "LFO1 Mode",
+              "LFO1 Waveform",
+              "LFO1 Destination A",
+              "LFO1 Depth A",
+              "LFO1 Destination B",
+              "LFO1 Depth B"
+            ]
+          },
+          "LFO 2": {
+            "parameterIds": [
+              "LFO2 Speed",
+              "LFO2 Multiplier",
+              "LFO2 Fade",
+              "LFO2 Start Phase",
+              "LFO2 Mode",
+              "LFO2 Waveform",
+              "LFO2 Destination A",
+              "LFO2 Depth A",
+              "LFO2 Destination B",
+              "LFO2 Depth B"
+            ]
+          }
+        },
+        "parameters": {
+          "Pitch_1": {
+            "id": 0,
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          "Detune_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          "Keytracking_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          "Level_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          "Waveform_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          "Sub-Oscillator_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          "Pulsewidth_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          "PWM Speed_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          "PWM Depth_1": {
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 9
+                }
+              }
+            }
+          },
+          "Pitch_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 20
+                }
+              }
+            }
+          },
+          "Detune_2": {
+            "id": 10,
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 22
+                }
+              }
+            }
+          },
+          "Keytracking_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          "Level_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          "Waveform_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          "Sub-Oscillator_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          "Pulsewidth_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 27
+                }
+              }
+            }
+          },
+          "PWM Speed_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          "PWM Depth_2": {
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          "Noise S&H": {
+            "type": "continous",
+            "component": "Noise",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 10
+                }
+              }
+            }
+          },
+          "Noise Fade": {
+            "type": "continous",
+            "component": "Noise",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 12
+                }
+              }
+            }
+          },
+          "Noise Level": {
+            "id": 20,
+            "type": "continous",
+            "component": "Noise",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 14
+                }
+              }
+            }
+          },
+          "OSC1 AM": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          "Sync Mode": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 31
+                }
+              }
+            }
+          },
+          "Sync Amount": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          "Bend Amount": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          "Slide Time": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 34
+                }
+              }
+            }
+          },
+          "OSC2 AM": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          "Note Sync": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          "Vibrato Fade": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 37
+                }
+              }
+            }
+          },
+          "Vibrato Speed": {
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 38
+                }
+              }
+            }
+          },
+          "Vibrato Depth": {
+            "id": 30,
+            "type": "continous",
+            "component": "OSC Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          "Filter1 Cutoff": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 40
+                }
+              }
+            }
+          },
+          "Filter1 Resonance": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 41
+                }
+              }
+            }
+          },
+          "Filter Overdrive": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 42
+                }
+              }
+            }
+          },
+          "Filter1 Keytrack": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 43
+                }
+              }
+            }
+          },
+          "Filter1 Envelop Am": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          "Filter2 Cutoff": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          "Filter2 Resonance": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 46
+                }
+              }
+            }
+          },
+          "Filter2 Type": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 47
+                }
+              }
+            }
+          },
+          "Filter2 Keytracking": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 48
+                }
+              }
+            }
+          },
+          "Filter2 Envelope Am": {
+            "id": 40,
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          "EnvA Attack Time": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          "EnvA Decay Time": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 51
+                }
+              }
+            }
+          },
+          "EnvA Sustain Level": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 52
+                }
+              }
+            }
+          },
+          "EnvA Release Time": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 53
+                }
+              }
+            }
+          },
+          "EnvA Env Shape": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          "Chorus Send Level": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 55
+                }
+              }
+            }
+          },
+          "Delay Send Level": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          "Reverb Send Level": {
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 57
+                }
+              }
+            }
+          },
+          "Pan": {
+            "type": "continous-bipolar",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 58
+                }
+              }
+            }
+          },
+          "Volume": {
+            "id": 50,
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          "ENVF Attack": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          "ENVF Decay": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          "ENVF Sustain": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          "ENVF Release": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          "ENVF Env Shape": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 64
+                }
+              }
+            }
+          },
+          "ENVF Env Gate Length": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 65
+                }
+              }
+            }
+          },
+          "ENVF Env Destination A": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 66
+                }
+              }
+            }
+          },
+          "ENVF Depth A": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 67
+                }
+              }
+            }
+          },
+          "ENVF Env Destination B": {
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 68
+                }
+              }
+            }
+          },
+          "ENVF Depth B": {
+            "id": 60,
+            "type": "continous",
+            "component": "Filter1 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 69
+                }
+              }
+            }
+          },
+          "ENV2 Attack": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 70
+                }
+              }
+            }
+          },
+          "ENV2 Decay": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 71
+                }
+              }
+            }
+          },
+          "ENV2 Sustain": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 72
+                }
+              }
+            }
+          },
+          "ENV2 Release": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 73
+                }
+              }
+            }
+          },
+          "ENV2 Env Shape": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 74
+                }
+              }
+            }
+          },
+          "ENV2 Env Gate Length": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 75
+                }
+              }
+            }
+          },
+          "ENV2 Env Destination A": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 76
+                }
+              }
+            }
+          },
+          "ENV2 Depth A": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 77
+                }
+              }
+            }
+          },
+          "ENV2 Env Destination B": {
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 78
+                }
+              }
+            }
+          },
+          "ENV2 Depth B": {
+            "id": 70,
+            "type": "continous",
+            "component": "Filter2 Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 79
+                }
+              }
+            }
+          },
+          "LFO1 Speed": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 80
+                }
+              }
+            }
+          },
+          "LFO1 Multiplier": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 81
+                }
+              }
+            }
+          },
+          "LFO1 Fade": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 82
+                }
+              }
+            }
+          },
+          "LFO1 Start Phase": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 83
+                }
+              }
+            }
+          },
+          "LFO1 Mode": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 84
+                }
+              }
+            }
+          },
+          "LFO1 Waveform": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 85
+                }
+              }
+            }
+          },
+          "LFO1 Destination A": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 86
+                }
+              }
+            }
+          },
+          "LFO1 Depth A": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 87
+                }
+              }
+            }
+          },
+          "LFO1 Destination B": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 88
+                }
+              }
+            }
+          },
+          "LFO1 Depth B": {
+            "type": "continous",
+            "component": "LFO 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 89
+                }
+              }
+            }
+          },
+          "LFO2 Speed": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 90
+                }
+              }
+            }
+          },
+          "LFO2 Multiplier": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 91
+                }
+              }
+            }
+          },
+          "LFO2 Fade": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 92
+                }
+              }
+            }
+          },
+          "LFO2 Start Phase": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 93
+                }
+              }
+            }
+          },
+          "LFO2 Mode": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 94
+                }
+              }
+            }
+          },
+          "LFO2 Waveform": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 95
+                }
+              }
+            }
+          },
+          "LFO2 Destination A": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 96
+                }
+              }
+            }
+          },
+          "LFO2 Depth A": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 97
+                }
+              }
+            }
+          },
+          "LFO2 Destination B": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 98
+                }
+              }
+            }
+          },
+          "LFO2 Depth B": {
+            "type": "continous",
+            "component": "LFO 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 99
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "controllerSection": {
+    "widgets": [
+      {
+        "name": "Pad",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 10
+        },
+        "events": [
+          {
+            ".type": "ContinousValue",
+            "name": "Performance",
+            "source": [
+              [
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 1
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                },
+                {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reactsToTransportCommands": true
+}

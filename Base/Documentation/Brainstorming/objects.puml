@@ -1,0 +1,13 @@
+@startuml
+
+object RtMidiPortNotifiers
+object UsbHotplugNotifier
+object MusicDeviceFactory{
+   Load descriptor by "Manufacturer/Device"
+}
+RtMidiPortNotifiers -->"Manufacturer/Device/MidiPort@UsbPortId" MusicDeviceFactory
+note left: No device identifier
+UsbHotplugNotifier -->"Manufacturer/Device/DeviceId/Class" MusicDeviceFactory
+note right: Class -> Protocol\nManufacturer/Device -> Key\nDeviceId -> Id 
+
+@enduml

@@ -1,0 +1,25 @@
+{
+    "Moog Minitaur:Moog Minitaur MIDI 1": "Moog/Minitaur",
+    "Push2Pads" : "Ableton/Push2Pads",
+    "Deluge:Deluge MIDI 1" : "Synthstorm/Deluge",
+    "TOUCHE_SE:TOUCHE_SE MIDI 1" : "ExpressiveE/ToucheSe",
+    "Arturia KeyStep 32:Arturia KeyStep 32 MIDI 1" : "Arturia/Keystep32",
+    "MODEL D:MODEL D MIDI 1" : "Behringer/ModelD",
+    "Space Pedal:Space Pedal MIDI 1" : "Eventide/Space",
+    "Launch Control XL:Launch Control XL MIDI 1" : "Novation/LaunchControlXL",
+    "Launch Control XL:Launch Control XL MIDI 2" : "--UNUSED--",
+    "Seaboard BLOCK:Seaboard BLOCK MIDI 1" : "Roli/SeaboardBlocks",
+    "Buzzzy! polysynth:Buzzzy! polysynth MIDI 1" : "FredsLab/Buzzzy",
+    "MicroBrute:MicroBrute MIDI 1" : "Arturia/Microbrute",
+    "SUONOBUONO nABC:SUONOBUONO nABC MIDI 1" : "SuonoBuono/nABC",
+    "Elektron Model:Samples:Elektron Model:Samples MIDI 1" : "Elektron/Model_Samples",
+    "therapKid:therapKid MIDI 1" : "TwistedElectrons/TherapKid",
+
+    "__JUST_4_TEST__Elektron/Octatrack_Mk1": "Elektron/Octatrack_Mk1",
+    "__JUST_4_TEST__Elektron/Analog4_Mk1": "Elektron/Analog4_Mk1",
+    "__JUST_4_TEST__Elektron/AnalogRytm_Mk1": "Elektron/AnalogRytm_Mk1",
+    "__JUST_4_TEST__MAM/MB33": "MAM/MB33",
+    "__JUST_4_TEST__Mitxela/Flash": "Mitxela/Flash",
+    "__JUST_4_TEST__Korg/VolcaKeys": "Korg/VolcaKeys",
+    "__JUST_4_TEST__Korg/VolcaKick": "Korg/VolcaKick"
+}

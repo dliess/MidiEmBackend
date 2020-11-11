@@ -1,0 +1,106 @@
+@startuml
+
+package GLOBAL
+{
+   class SoundPresets
+   class Description
+   class description::sound::Section
+   class description::controller::Section
+}
+
+package MusicDevice
+{
+
+
+package soundHandler
+{
+   class sound::MidiInMsgHandler #aaaaff
+   {
+
+   }
+
+   class sound::MidiOutMsgHandler #00ff00
+   {
+      +void sendSoundParameter(uint32_t voiceId, uint32_t parameterId,
+                              float value) noexcept;
+      +bool sendParameterDumpRequest() noexcept;
+      +void noteOn(int voiceIndex, int note, float velocity) noexcept;
+      +void noteOff(int voiceIndex, int note, float velocity) noexcept;
+      +void pitchBend(int voiceIndex, float value) noexcept;
+   }
+
+
+   class sound::ParameterStorage
+   {
+
+   }
+
+   class sound::PresetHandler
+   {
+
+   }
+
+}
+
+package controllerHandler
+{
+   class controller::MidiInMsgHandler #aaaaff
+   {
+
+   }
+
+   class controller::MidiOutMsgHandler #00ff00
+   {
+
+   }
+
+   class controller::EvdevInMsgHandler #aaaaff
+   {
+
+   }
+
+   class controller::EvdevOutMsgHandler #00ff00
+   {
+
+   }
+}
+
+package midi-medium
+{
+
+class MidiInDoubleBuffer #aaaaff
+class MidiOut #00ff00
+class MidiIn #aaaaff
+
+}
+
+package evdev-mediummusicDevice
+{
+   class EvdevFileHandler
+}
+
+}
+
+Description *-- description::sound::Section
+Description *-- description::controller::Section
+
+MusicDevice o-- Description
+
+sound::MidiInMsgHandler --> sound::ParameterStorage #0000ff
+sound::PresetHandler o-- sound::ParameterStorage
+sound::PresetHandler o-- SoundPresets
+sound::PresetHandler o-- description::sound::Section
+sound::MidiOutMsgHandler o-- description::sound::Section
+sound::MidiInMsgHandler o-- description::sound::Section
+
+MidiIn --> MidiInDoubleBuffer #0000ff
+MidiInDoubleBuffer --> sound::MidiInMsgHandler #0000ff
+MidiInDoubleBuffer --> controller::MidiInMsgHandler #0000ff
+
+sound::MidiOutMsgHandler --> MidiOut #00ff00
+controller::MidiOutMsgHandler --> MidiOut #00ff00
+
+EvdevFileHandler --> controller::EvdevInMsgHandler #0000ff
+EvdevFileHandler <-- controller::EvdevOutMsgHandler #00ff00
+
+@enduml

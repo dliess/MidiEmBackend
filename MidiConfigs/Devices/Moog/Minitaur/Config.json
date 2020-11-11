@@ -1,0 +1,1041 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Moog",
+  "productName": "Minitaur",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel" : 1
+      }
+    ],
+    "parameterDumpRequest": {
+      "midiSysex": [
+        240,
+        4,
+        8,
+        27,
+        0,
+        0,
+        247
+      ]
+    },
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": {
+          "Modulation": {
+            "parameterIds": [
+              "LFO Rate",
+              "LFO VCO Amount",
+              "LFO VCF Amount",
+              "LFO Midi Sync",
+              "LFO Sync Clock Div",
+              "LFO Key Trigger"
+            ]
+          },
+          "Oscillator": {
+            "parameterIds": [
+              "VCO 1 Wave",
+              "VCO 2 Wave",
+              "VCO 2 Freq",
+              "VCO 2 Breat Freq",
+              "Note Sync",
+              "Glide Rate",
+              "Glide Switch",
+              "Glide Type",
+              "Glide on Legato Only"
+            ]
+          },
+          "Mixer": {
+            "parameterIds": [
+              "VCO1",
+              "VCO2",
+              "External In Level"
+            ]
+          },
+          "Filter": {
+            "parameterIds": [
+              "Cutoff",
+              "Resonance",
+              "EG Amount",
+              "Filter KB Track",
+              "Filter Velocity Sens"
+            ]
+          },
+          "Envelopes": {
+            "parameterIds": [
+              "VCF Attack_1",
+              "VCF Decay Release",
+              "VCF Sustain",
+              "VCF Attack_2",
+              "VCA Decay/Release",
+              "VCA Sustain",
+              "Release Switch",
+              "Trigger Mode"
+            ]
+          },
+          "Volume/Misc": {
+            "parameterIds": [
+              "VCA Output Level",
+              "Volume Velocity Sens",
+              "Key Priority",
+              "Modwheel Response",
+              "Pitch Wheel Bend Up Amnt",
+              "Pitch Wheel Bend Down Amnt"
+            ]
+          }
+        },
+        "parameters": {
+          "LFO Rate": {
+            "description": "Adjusts the LFO frequency",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 3,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          "LFO VCO Amount": {
+            "description": "Adjusts the Modulation amount to the VCOs",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 13,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          "LFO VCF Amount": {
+            "description": "Adjusts the Modulation amount to the VCF",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          "LFO Midi Sync": {
+            "description": "Enables or disables ability of LFO to sync with MIDI Clock messages",
+            "type": "list",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                },
+                "sourceRanges": [
+                  {
+                    "name": "INTERNAL",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "MIDI CLOCK",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "LFO Sync Clock Div": {
+            "description": "Sets the LFO Synchronization CLock Divider",
+            "type": "list",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                },
+                "sourceRanges": [
+                  {
+                    "name": "1/64 Note Triplet",
+                    "range": [
+                      122,
+                      127
+                    ]
+                  },
+                  {
+                    "name": "1/32 Note Triplet",
+                    "range": [
+                      116,
+                      121
+                    ]
+                  },
+                  {
+                    "name": "1/32 Note",
+                    "range": [
+                      110,
+                      115
+                    ]
+                  },
+                  {
+                    "name": "1/16 Note Triplet",
+                    "range": [
+                      104,
+                      109
+                    ]
+                  },
+                  {
+                    "name": "1/16 Note",
+                    "range": [
+                      98,
+                      103
+                    ]
+                  },
+                  {
+                    "name": "1/8 Note Triplet",
+                    "range": [
+                      92,
+                      97
+                    ]
+                  },
+                  {
+                    "name": "Dotted 1/16 Note",
+                    "range": [
+                      86,
+                      91
+                    ]
+                  },
+                  {
+                    "name": "1/8 Note",
+                    "range": [
+                      80,
+                      85
+                    ]
+                  },
+                  {
+                    "name": "1/4 Note Triplet",
+                    "range": [
+                      74,
+                      79
+                    ]
+                  },
+                  {
+                    "name": "Dotted 1/8 Note",
+                    "range": [
+                      68,
+                      73
+                    ]
+                  },
+                  {
+                    "name": "1/4 Note",
+                    "range": [
+                      61,
+                      67
+                    ]
+                  },
+                  {
+                    "name": "1/2 Note Triplet",
+                    "range": [
+                      55,
+                      60
+                    ]
+                  },
+                  {
+                    "name": "Dotted 1/4 Note Triplet",
+                    "range": [
+                      49,
+                      54
+                    ]
+                  },
+                  {
+                    "name": "1/2 Note",
+                    "range": [
+                      43,
+                      48
+                    ]
+                  },
+                  {
+                    "name": "Whole Note Triplet",
+                    "range": [
+                      37,
+                      42
+                    ]
+                  },
+                  {
+                    "name": "Dotted 1/2 Note",
+                    "range": [
+                      31,
+                      36
+                    ]
+                  },
+                  {
+                    "name": "Whole Note",
+                    "range": [
+                      25,
+                      30
+                    ]
+                  },
+                  {
+                    "name": "Whole Note + Half Note",
+                    "range": [
+                      19,
+                      24
+                    ]
+                  },
+                  {
+                    "name": "2 Whole Notes",
+                    "range": [
+                      13,
+                      18
+                    ]
+                  },
+                  {
+                    "name": "3 Whole Notes",
+                    "range": [
+                      7,
+                      12
+                    ]
+                  },
+                  {
+                    "name": "4 Whole Notes",
+                    "range": [
+                      0,
+                      6
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "LFO Key Trigger": {
+            "description": "Re-triggers the LFO to the start of the cycle",
+            "type": "list",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                },
+                "sourceRanges": [
+                  {
+                    "name": "On",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  },
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "VCO 1 Wave": {
+            "description": "Selects the waveform of VCO 1",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                },
+                "sourceRanges": [
+                  {
+                    "name": "SAW",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "SQUARE",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "VCO 2 Wave": {
+            "description": "Selects the waveform of VCO 2",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                },
+                "sourceRanges": [
+                  {
+                    "name": "SAW",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "SQUARE",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "VCO 2 Freq": {
+            "description": "Adjusts the Frequency of VCO 2",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 17,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          "VCO 2 Breat Freq": {
+            "description": "Adjusts the Beat Frequency of VCO 2",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 18,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          "Note Sync": {
+            "description": "Enables/Disables Note Sync",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                },
+                "sourceRanges": [
+                  {
+                    "name": "On",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  },
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Glide Rate": {
+            "description": "Adjusts the glide(portamento) rate time",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          "Glide Switch": {
+            "description": "Sets the state of the Glide switch",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                },
+                "sourceRanges": [
+                  {
+                    "name": "On",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  },
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Glide Type": {
+            "description": "Selects the type of Glide; Linear Constant Rate, Linear Constant Time, or Exponential.",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                },
+                "sourceRanges": [
+                  {
+                    "name": "LCR",
+                    "range": [
+                      0,
+                      42
+                    ]
+                  },
+                  {
+                    "name": "LCT",
+                    "range": [
+                      43,
+                      84
+                    ]
+                  },
+                  {
+                    "name": "EXP",
+                    "range": [
+                      85,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Glide on Legato Only": {
+            "description": "Sets the state of the Legato Glide parameter when Glide is enabled",
+            "type": "list",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                },
+                "sourceRanges": [
+                  {
+                    "name": "On",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  },
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "VCO1": {
+            "description": "Adjusts the glide(portamento) rate time",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 15,
+                  "idLsb": 47
+                }
+              }
+            }
+          },
+          "VCO2": {
+            "description": "Adjusts the glide(portamento) rate time",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 16,
+                  "idLsb": 48
+                }
+              }
+            }
+          },
+          "External In Level": {
+            "description": "Adjusts the glide(portamento) rate time",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 27,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          "Cutoff": {
+            "description": "Adjust the Filter Cutoff Frequency",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 19,
+                  "idLsb": 51
+                }
+              }
+            }
+          },
+          "Resonance": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 21,
+                  "idLsb": 53
+                }
+              }
+            }
+          },
+          "EG Amount": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 22,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          "Filter KB Track": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 20,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          "Filter Velocity Sens": {
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          "VCF Attack_1": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 23,
+                  "idLsb": 55
+                }
+              }
+            }
+          },
+          "VCF Decay Release": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 24,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          "VCF Sustain": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 25,
+                  "idLsb": 57
+                }
+              }
+            }
+          },
+          "VCF Attack_2": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 28,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          "VCA Decay/Release": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 29,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          "VCA Sustain": {
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 30,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          "Release Switch": {
+            "type": "list",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                },
+                "sourceRanges": [
+                  {
+                    "name": "OFF",
+                    "range": [
+                      0,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "ON",
+                    "range": [
+                      64,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Trigger Mode": {
+            "type": "list",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Legato On",
+                    "range": [
+                      0,
+                      42
+                    ]
+                  },
+                  {
+                    "name": "Legato Off",
+                    "range": [
+                      43,
+                      84
+                    ]
+                  },
+                  {
+                    "name": "EG Reset",
+                    "range": [
+                      85,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "VCA Output Level": {
+            "type": "continous",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 7,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          "Volume Velocity Sens": {
+            "type": "continous",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          "Key Priority": {
+            "type": "list",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Low",
+                    "range": [
+                      0,
+                      42
+                    ]
+                  },
+                  {
+                    "name": "High",
+                    "range": [
+                      43,
+                      84
+                    ]
+                  },
+                  {
+                    "name": "Last",
+                    "range": [
+                      85,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Modwheel Response": {
+            "type": "continous",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          "Pitch Wheel Bend Up Amnt": {
+            "type": "list",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      15
+                    ]
+                  },
+                  {
+                    "name": "2 Semitones",
+                    "range": [
+                      16,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "3 Semitones",
+                    "range": [
+                      32,
+                      47
+                    ]
+                  },
+                  {
+                    "name": "4 Semitones",
+                    "range": [
+                      48,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "5 Semitones",
+                    "range": [
+                      64,
+                      79
+                    ]
+                  },
+                  {
+                    "name": "7 Semitones",
+                    "range": [
+                      80,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "12 Semitones",
+                    "range": [
+                      96,
+                      111
+                    ]
+                  },
+                  {
+                    "name": "24 Semitones",
+                    "range": [
+                      112,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Pitch Wheel Bend Down Amnt": {
+            "type": "list",
+            "component": "Volume/Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": [
+                      0,
+                      15
+                    ]
+                  },
+                  {
+                    "name": "2 Semitones",
+                    "range": [
+                      16,
+                      31
+                    ]
+                  },
+                  {
+                    "name": "3 Semitones",
+                    "range": [
+                      32,
+                      47
+                    ]
+                  },
+                  {
+                    "name": "4 Semitones",
+                    "range": [
+                      48,
+                      63
+                    ]
+                  },
+                  {
+                    "name": "5 Semitones",
+                    "range": [
+                      64,
+                      79
+                    ]
+                  },
+                  {
+                    "name": "7 Semitones",
+                    "range": [
+                      80,
+                      95
+                    ]
+                  },
+                  {
+                    "name": "12 Semitones",
+                    "range": [
+                      96,
+                      111
+                    ]
+                  },
+                  {
+                    "name": "24 Semitones",
+                    "range": [
+                      112,
+                      127
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

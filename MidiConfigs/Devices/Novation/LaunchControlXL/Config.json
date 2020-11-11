@@ -1,0 +1,518 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Novation",
+  "productName": "Launch Control XL",
+  "controllerSection": {
+    "widgets": [
+      {
+        "name": "Rotary Knobs",
+        "dimension": {
+          "numRows": 3,
+          "numColumns": 8
+        },
+        "events": [
+          {
+            ".type": "ContinousValue",
+            "name": "Rotary Knobs",
+            "source": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              ],
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              ],
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Faders",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 8
+        },
+        "events": [
+          {
+            ".type": "ContinousValue",
+            "name": "Fader",
+            "source": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ButtonMatrix",
+        "dimension": {
+          "numRows": 2,
+          "numColumns": 8
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "ButtonMatrix",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 41
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 42
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 43
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 44
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 57
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 58
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 59
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 60
+                }
+              ],
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 73
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 74
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 75
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 76
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 89
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 90
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 91
+                },
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 92
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 41
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 42
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 43
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 44
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 57
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 58
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 59
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 60
+                }
+              ],
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 73
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 74
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 75
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 76
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 89
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 90
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 91
+                },
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 92
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Send-Select",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 2
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "Track-Select",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Track-Select",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 2
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "Track-Select",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                },
+                {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "DeviceButton",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "DeviceButton",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 105
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 105
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MuteButton",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "MuteButton",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 106
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 106
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SoloButton",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "SoloButton",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 107
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 107
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "RecordArmButton",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "PressRelease",
+            "name": "RecordArmButton",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": 108
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": 108
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

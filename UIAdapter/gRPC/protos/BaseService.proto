@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service BaseService {
+  rpc registerForParameterChange(RegisterForParameterChangeRequest) returns(Empty) {}
+  rpc unregisterForParameterChange(RegisterForParameterChangeRequest) returns(Empty) {}
+  rpc getParameterChanges(Empty) returns (stream GetParameterChangesAnswer) {}
+}
+
+message Empty {
+}
+
+message RegisterForParameterChangeRequest {
+  string deviceId = 1;
+  uint32 voiceId = 2;
+}
+
+message GetParameterChangesAnswer {
+  string deviceId = 1;
+  uint32 voiceId = 2;
+  uint32 paramId = 3;
+  float  commandedValue = 4;
+  float  actualValue = 5;
+}
