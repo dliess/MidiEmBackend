@@ -1,0 +1,38 @@
+[services]
+    [services.Instruments.rpc.triggerSendData]
+    [services.Instruments.rpc.createKitInstrument]
+        parameter = '''
+          name @0 :Text;
+        '''
+    [services.Instruments.rpc.removeKitInstrument]
+        parameter = '''
+          instrumentUUID @0 :Data;
+        '''
+    [services.Instruments.signal.dataChanged]
+        parameter = '''
+          jsonStrData @0 :Text;
+        '''
+
+    [services.MusicDevices.rpc.triggerSendMusicDeviceList]
+    [services.MusicDevices.rpc.registerForParameterChange]
+        parameter = '''
+          deviceIdStr @0 :Text;
+          voiceIdx @1 :Int16;
+        '''
+    [services.MusicDevices.rpc.unregisterForParameterChange]
+        parameter = '''
+          deviceIdStr @0 :Text;
+          voiceIdx @1: Int16;
+        '''
+    [services.MusicDevices.signal.musicDeviceListChanged]
+        parameter = '''
+          deviceNameList @0 :Text;
+        '''
+    [services.MusicDevices.signal.parameterChanged]
+        parameter = '''
+          deviceId @0 :Text;
+          voiceId @1 :Int16;
+          paramIdx @2 :Int16;
+          commanded @3 :Float32;
+          actual @4 :Float32;
+        '''

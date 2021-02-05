@@ -1,6 +1,6 @@
 find_package(CapnProto CONFIG REQUIRED)
 
-capnp_generate_cpp(CAPNP_SRCS CAPNP_HDRS schema/schema.capnp)
+capnp_generate_cpp(CAPNP_SRCS CAPNP_HDRS schema/Interface.capnp)
 
 set(TARGET_NAME "uiadapter-capnproto")
 

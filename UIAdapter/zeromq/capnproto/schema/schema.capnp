@@ -1,5 +1,11 @@
 @0x9bc5fd751a04c7f1;
 
+enum Type {
+  mobile @0;
+  home @1;
+  work @2;
+}
+
 struct Person {
   name @0 :Text;
   birthdate @3 :Date;
@@ -7,20 +13,16 @@ struct Person {
   email @1 :Text;
   phones @2 :List(PhoneNumber);
 
+
   struct PhoneNumber {
     number @0 :Text;
     type @1 :Type;
 
-    enum Type {
-      mobile @0;
-      home @1;
-      work @2;
-    }
   }
 }
 
 struct Date {
-  year @0 :Int16;
+  year @0 :Data;
   month @1 :UInt8;
   day @2 :UInt8;
 }
