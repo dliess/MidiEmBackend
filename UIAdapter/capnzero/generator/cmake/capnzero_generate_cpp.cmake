@@ -1,67 +1,63 @@
-function(capnzero_generate_cpp SOURCES HEADERS)
-  if(NOT ARGN)
-    message(SEND_ERROR "Error: capnzero_generate_cpp() called without any toml files")
-    return()
-  endif()
-
+function(capnzero_generate_cpp SOURCES HEADERS PROTOCOL_DESCRIPTION_FILE)
   set(_gRPC_PROTO_GENS_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
   set(${SOURCES})
   set(${HEADERS})
-  foreach(FIL ${ARGN})
 
-    get_filename_component(FIL_WLE ${FIL} NAME_WLE) # File name without directory and last extension
+  get_filename_component(FIL_WLE ${PROTOCOL_DESCRIPTION_FILE} NAME_WLE) # File name without directory and last extension
 
-    add_custom_command(
-      OUTPUT "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}.capnp"
-             "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.h"
-             "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.cpp"
-             "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.h"
-             "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.cpp"
-      COMMAND "${_GENERATOR_SCRIPT}"
-      ARGS ${FIL}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      COMMENT "Running python generator script on ${FIL}"
-      VERBATIM
-    )
+  set(GEN_CAPNP_FILE "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}.capnp")
+  file(TOUCH ${GEN_CAPNP_FILE})
 
-    capnp_generate_cpp(CAPNP_GEN_SRCS CAPNP_GEN_HDRS "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}.capnp")
+  add_custom_command(
+    OUTPUT  "${GEN_CAPNP_FILE}"
+            "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.h"
+            "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.cpp"
+            "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.h"
+            "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.cpp"
+#    COMMAND "$<TARGET_FILE:capnzeroc>"
+    COMMAND python3 capnzeroc.py
+    ARGS  --outdir=${_gRPC_PROTO_GENS_DIR}
+          ${PROTOCOL_DESCRIPTION_FILE}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Running capnzeroc generator script on ${PROTOCOL_DESCRIPTION_FILE}"
+    VERBATIM
+  )
 
-    get_filename_component(ABS_FIL ${FIL} ABSOLUTE) # Full path to file
-    get_filename_component(FIL_WE ${FIL} NAME_WE) # File name without directory and last extension
-    file(RELATIVE_PATH REL_FIL ${CMAKE_CURRENT_SOURCE_DIR} ${ABS_FIL})
-    get_filename_component(REL_DIR ${REL_FIL} DIRECTORY) # Directory without file name
-    set(RELFIL_WE "${REL_DIR}/${FIL_WE}")
+  find_package(CapnProto CONFIG REQUIRED)
+  set(CAPNPC_SRC_PREFIX ${CMAKE_CURRENT_BINARY_DIR})
 
-    if(CMAKE_CROSSCOMPILING)
-      find_program(_gRPC_CPP_PLUGIN grpc_cpp_plugin)
-      find_program(_gRPC_PROTOBUF_PROTOC_EXECUTABLE protoc)
-    else()
-      set(_gRPC_CPP_PLUGIN $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
-      set(_gRPC_PROTOBUF_PROTOC_EXECUTABLE "$<TARGET_FILE:protobuf::protoc>")
-    endif()
+  if(TARGET capnp_tool)
+    set(CAPNP_EXECUTABLE capnp_tool)
+    GET_TARGET_PROPERTY(CAPNPC_CXX_EXECUTABLE capnpc_cpp CAPNPC_CXX_EXECUTABLE)
+    GET_TARGET_PROPERTY(CAPNP_INCLUDE_DIRECTORY capnp_tool CAPNP_INCLUDE_DIRECTORY)
+    list(APPEND tool_depends capnp_tool capnpc_cpp)
+  else()
+    message(FATAL "no TARGET capnp_tool")
+  endif()
 
-    add_custom_command(
-       OUTPUT "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.grpc.pb.cc"
-              "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.grpc.pb.h"
-              "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.pb.cc"
-              "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.pb.h"
-       COMMAND ${_gRPC_PROTOBUF_PROTOC_EXECUTABLE}
-       ARGS --grpc_out=${_gRPC_PROTO_GENS_DIR}
-            --cpp_out=${_gRPC_PROTO_GENS_DIR}
-            --plugin=protoc-gen-grpc=${_gRPC_CPP_PLUGIN}
-            -I ${CMAKE_CURRENT_SOURCE_DIR}
-            ${REL_FIL}
-       DEPENDS ${ABS_FIL}
-       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-       COMMENT "Running gRPC C++ protocol buffer compiler on ${FIL}"
-       VERBATIM
-    )
-    list(APPEND ${SOURCES} "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.grpc.pb.cc")
-    list(APPEND ${SOURCES} "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.pb.cc")
-    list(APPEND ${HEADERS} "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.grpc.pb.h")
-    list(APPEND ${HEADERS} "${_gRPC_PROTO_GENS_DIR}/${RELFIL_WE}.pb.h")
-  endforeach()
+  set(include_path -I "${CAPNPC_SRC_PREFIX}" -I "${CAPNP_INCLUDE_DIRECTORY}")
+  set(output_base ${CMAKE_CURRENT_BINARY_DIR}/capnp)
+
+  add_custom_command(
+    OUTPUT "${output_base}.c++" "${output_base}.h"
+    COMMAND capnp_tool
+    ARGS compile
+        -o ${CAPNPC_CXX_EXECUTABLE}
+        --src-prefix ${CAPNPC_SRC_PREFIX}
+        ${include_path}
+        ${GEN_CAPNP_FILE}
+    DEPENDS "${GEN_CAPNP_FILE}" ${tool_depends}
+    COMMENT "Compiling Cap'n Proto schema ${schema_file}"
+    VERBATIM
+  )
+
+  list(APPEND ${SOURCES} "${CAPNP_GEN_SRCS}")
+  list(APPEND ${SOURCES} "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.cpp")
+  list(APPEND ${SOURCES} "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.cpp")
+  list(APPEND ${HEADERS} "${CAPNP_GEN_HDRS}")
+  list(APPEND ${HEADERS} "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Client.h")
+  list(APPEND ${HEADERS} "${_gRPC_PROTO_GENS_DIR}/${FIL_WLE}_Server.h")
 
   set(${SOURCES} ${${SOURCES}} PARENT_SCOPE)
   set(${HEADERS} ${${HEADERS}} PARENT_SCOPE)
