@@ -1,3 +1,3 @@
 #add_subdirectory(gRPC)
 add_subdirectory(Qt)
-add_subdirectory(zeromq)
+add_subdirectory(capnzero)

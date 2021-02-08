@@ -25,6 +25,7 @@
       "plex.vscode-protolint",
       "zxh404.vscode-proto3",
       "xaver.clang-format",
-      "abronan.capnproto-syntax"
+      "abronan.capnproto-syntax",
+      "be5invis.toml"
    ]
 }

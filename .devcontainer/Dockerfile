@@ -67,7 +67,8 @@ RUN apt-get install -y \
         pkg-config \
         libcapnp-dev \
         capnproto \
-        libzmq3-dev
+        libzmq3-dev \
+        python3-toml
 
 RUN rm -rf /var/lib/apt/lists/*
 

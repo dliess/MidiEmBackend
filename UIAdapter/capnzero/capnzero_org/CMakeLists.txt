@@ -1,6 +1,12 @@
 find_package(CapnProto CONFIG REQUIRED)
 
-capnp_generate_cpp(CAPNP_SRCS CAPNP_HDRS schema/Interface.capnp)
+
+capnzero_generate_cpp(CAPNZERO_SRCS CAPNZERO_HDRS "schema/Interface.toml")
+
+
+set(CAPNPROTO_FILE "${CMAKE_CURRENT_BINARY_DIR}/Interface.capnp")
+
+capnp_generate_cpp(CAPNP_SRCS CAPNP_HDRS ${CAPNPROTO_FILE})
 
 set(TARGET_NAME "uiadapter-capnproto")
 
