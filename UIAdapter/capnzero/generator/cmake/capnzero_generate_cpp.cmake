@@ -17,8 +17,9 @@ function(capnzero_generate_cpp SOURCES HEADERS PROTOCOL_DESCRIPTION_FILE)
 #    COMMAND "$<TARGET_FILE:capnzeroc>"
     COMMAND python3 generator/capnzeroc.py
     ARGS  --outdir=${_GEN_OUTPUT_DIR}
-          ${PROTOCOL_DESCRIPTION_FILE}
+          --descrfile=${PROTOCOL_DESCRIPTION_FILE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    DEPENDS "${_GEN_OUTPUT_DIR}/${FIL_WLE}.capnp"  generator/capnzeroc.py
     COMMENT "Running capnzeroc generator script on ${PROTOCOL_DESCRIPTION_FILE}"
     VERBATIM
   )
@@ -27,20 +28,26 @@ function(capnzero_generate_cpp SOURCES HEADERS PROTOCOL_DESCRIPTION_FILE)
 
   if(NOT TARGET CapnProto::capnp_tool)
     message(SEND_ERROR "No capnp_tool TARGET")
+  else()
   endif()
   if(NOT TARGET CapnProto::capnpc_cpp)
     message(SEND_ERROR "No capnpc_cpp TARGET")
   endif()
-  
+
+
+  find_program(CAPNP_EXECUTABLE "capnp")
   GET_TARGET_PROPERTY(CAPNPC_CXX_EXECUTABLE CapnProto::capnpc_cpp CAPNPC_CXX_EXECUTABLE)
+  if(NOT EXISTS ${CAPNPC_CXX_EXECUTABLE})
+    find_program(CAPNPC_CXX_EXECUTABLE "capnpc-c++")
+  endif()
   add_custom_command(
     OUTPUT "${GEN_CAPNP_FILE}.c++" "${GEN_CAPNP_FILE}.h"
-    COMMAND CapnProto::capnp_tool
+    COMMAND ${CAPNP_EXECUTABLE}
     ARGS compile
         -o ${CAPNPC_CXX_EXECUTABLE}
         --src-prefix ${_GEN_OUTPUT_DIR}
         ${GEN_CAPNP_FILE}
-    DEPENDS "${GEN_CAPNP_FILE}" CapnProto::capnp_tool CapnProto::capnpc_cpp
+    DEPENDS "${GEN_CAPNP_FILE}"
     COMMENT "Compiling Cap'n Proto schema ${GEN_CAPNP_FILE}"
     VERBATIM
   )

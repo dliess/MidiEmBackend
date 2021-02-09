@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
 import toml
+import getopt
+import sys
+import os.path
 
 decapitalize = lambda s: s[:1].lower() + s[1:] if s else ''
 
@@ -86,18 +89,18 @@ private:
     return outStr
 
 
-def create_capnzero_client_file_cpp_content_str(data):
-    outStr = """\
-#include "CapnZeroClient.h"
+def create_capnzero_client_file_cpp_content_str(data, header_filename):
+    outStr = '''\
+#include "{0}"
 
 using namespace capnzero;
 
 Client::Client():
     m_zmqContext(0),
     m_zmqReqSocket(m_zmqContext, zmq::socket_type::req)
-{}
+{{}}
 
-"""
+'''.format(header_filename)
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void"
@@ -113,13 +116,55 @@ Client::Client():
     return outStr
 
 
+def create_capnzero_server_file_h_content_str(data):
+    outStr = """\
+    int i;
+"""
+    return outStr
 
-data = toml.load('Interface.toml')
-with open("Interface.capnp", 'w') as open_file:
+
+def create_capnzero_server_file_cpp_content_str(data, header_filename):
+    outStr = """\
+    int j;
+"""
+    return outStr
+
+
+
+
+outdir="undefined"
+descrfile="undefined"
+options, remainder = getopt.getopt(sys.argv[1:], ['o:d:'], ['outdir=', 'descrfile='])
+for opt, arg in options:
+    if opt in ('-o', '--outdir'):
+        outdir = arg
+    elif opt in ('-d', '--descrfile'):
+        descrfile = arg
+
+file_we = os.path.splitext(os.path.basename(descrfile))[0]
+
+print("outdir: " + outdir)
+print("descrfile: " + descrfile)
+print("file_we: " + file_we)
+
+capnp_file = outdir + "/" + file_we + ".capnp"
+client_h_file = outdir + "/" + file_we + "_Client.h"
+client_cpp_file = outdir + "/" + file_we + "_Client.cpp"
+server_h_file = outdir + "/" + file_we + "_Server.h"
+server_cpp_file = outdir + "/" + file_we + "_Server.cpp"
+
+data = toml.load(descrfile)
+with open(capnp_file, 'w') as open_file:
     open_file.write(create_capnp_file_content_str(data))
 
-with open("CapnZeroClient.h", 'w') as open_file:
+with open(client_h_file, 'w') as open_file:
     open_file.write(create_capnzero_client_file_h_content_str(data))
 
-with open("CapnZeroClient.cpp", 'w') as open_file:
-    open_file.write(create_capnzero_client_file_cpp_content_str(data))
+with open(client_cpp_file, 'w') as open_file:
+    open_file.write(create_capnzero_client_file_cpp_content_str(data, file_we + "_Client.h"))
+
+with open(server_h_file, 'w') as open_file:
+    open_file.write(create_capnzero_server_file_h_content_str(data))
+
+with open(server_cpp_file, 'w') as open_file:
+    open_file.write(create_capnzero_server_file_cpp_content_str(data, file_we + "_Server.h"))

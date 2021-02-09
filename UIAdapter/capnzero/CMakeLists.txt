@@ -3,10 +3,10 @@ add_subdirectory(generator)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/generator/cmake")
 include(capnzero_generate_cpp)
-capnzero_generate_cpp(CAPNZERO_GEN_SRCS CAPNZERO__GEN_HDRS "schema/Interface.toml")
+capnzero_generate_cpp(CAPNZERO_GEN_SRCS CAPNZERO__GEN_HDRS "capnzero/schema/Interface.toml")
 
 set(SOURCES
-    "ZeroMqAdapter.cpp"
+#    "ZeroMqAdapter.cpp"
 )
 
 add_library(ZeroMqAdapter STATIC ${SOURCES} ${CAPNZERO_GEN_SRCS})
