@@ -1,9 +1,7 @@
 [services]
     [services.Instruments.rpc.triggerSendData]
     [services.Instruments.rpc.createKitInstrument]
-        parameter = '''
-          name @0 :Text;
-        '''
+        parameter = [{'name' = 'Text'}]
     [services.Instruments.rpc.removeKitInstrument]
         parameter = '''
           instrumentUUID @0 :Data;
