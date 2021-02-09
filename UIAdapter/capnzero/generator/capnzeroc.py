@@ -7,6 +7,10 @@ import os.path
 
 decapitalize = lambda s: s[:1].lower() + s[1:] if s else ''
 
+def to_snake_case(name):
+    import re
+    return re.sub(r'(?<!^)(?=[A-Z])', '_', name)
+
 def create_capnp_file_content_str(data):
     outStr = "@0x9c9f9131bf231692;\n\n"
 
@@ -92,6 +96,7 @@ private:
 def create_capnzero_client_file_cpp_content_str(data, header_filename):
     outStr = '''\
 #include "{0}"
+#include <capnp/message.h>
 
 using namespace capnzero;
 
@@ -106,27 +111,37 @@ Client::Client():
             return_type_str = "void"
             if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
                 return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
-            input_parameter_type_str = ""
+            input_parameter_type_str_full = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                input_parameter_type_str = "const Parameter" + service_name +  rpc_name.capitalize() + " &param"
+                input_parameter_type_str = "Parameter" + service_name +  rpc_name.capitalize()
+                input_parameter_type_str_full = "const " + input_parameter_type_str + " &param"
             method_name = service_name + "__" + rpc_name
-            outStr +=  return_type_str + " Client::" + method_name + "(" + input_parameter_type_str + "){\n"
+            outStr +=  return_type_str + " Client::" + method_name + "(" + input_parameter_type_str_full + "){\n"
+            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                outStr += """\
+    ::capnp::MallocMessageBuilder message;
+    auto builder = message.initRoot<Full{0}>();
+    builder.setServiceId(ServiceId::{1});
+    builder.setRpcId({2}RpcIds::{3});
+    //builder.setParameter(param);
+""".format(input_parameter_type_str, \
+           to_snake_case(service_name).upper(), \
+           service_name, to_snake_case(rpc_name).upper())
             outStr +=  "}\n\n"
-
     return outStr
 
 
 def create_capnzero_server_file_h_content_str(data):
     outStr = """\
-    int i;
+int i;
 """
     return outStr
 
 
 def create_capnzero_server_file_cpp_content_str(data, header_filename):
     outStr = """\
-    int j;
-"""
+#include "{0}"
+""".format(header_filename)
     return outStr
 
 

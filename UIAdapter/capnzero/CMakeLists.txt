@@ -1,6 +1,3 @@
-#add_subdirectory(capnproto)
-add_subdirectory(generator)
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/generator/cmake")
 include(capnzero_generate_cpp)
 capnzero_generate_cpp(CAPNZERO_GEN_SRCS CAPNZERO__GEN_HDRS "capnzero/schema/Interface.toml")
