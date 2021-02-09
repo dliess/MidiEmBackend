@@ -12,7 +12,10 @@ def to_snake_case(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name)
 
 def create_capnp_file_content_str(data):
-    outStr = "@0x9c9f9131bf231692;\n\n"
+    outStr = """\
+@0x9c9f9131bf231692;
+
+"""
 
     if "capnpdata" in data:
         outStr += data["capnpdata"]
@@ -40,17 +43,16 @@ def create_capnp_file_content_str(data):
 
     # Create capnp type for parameter and return types
     for service_name in data["services"]:
+        rpc_coord_str = "struct RpcCoord" + service_name + " {\n" + \
+                                    "serviceId @0 :ServiceId;\n" + \
+                                    "rpcId @1 :" + service_name + "RpcIds;\n" + \
+                                    "}\n"
+        outStr += rpc_coord_str
         for rpc_name in data["services"][service_name]["rpc"]:
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n" + \
                                         data["services"][service_name]["rpc"][rpc_name]["parameter"] + "}\n"
-                full_parameter_struct_str = "struct FullParameter" + service_name +  rpc_name.capitalize() + " {\n" + \
-                                            "serviceId @0 :ServiceId;\n" + \
-                                            "rpcId @1 :" + service_name + "RpcIds;\n" + \
-                                            "parameter @2 :Parameter" + service_name +  rpc_name.capitalize() + ";\n" + \
-                                            "}\n"
                 outStr += parameter_struct_str
-                outStr += full_parameter_struct_str
     return outStr
 
 
@@ -62,6 +64,8 @@ def create_capnzero_client_file_h_content_str(data):
 #include <zmq.hpp>
 #include <thread>
 #include "Interface.capnp.h"
+
+namespace capnp { class MallocMessageBuilder; }
 
 namespace capnzero
 {
@@ -86,6 +90,9 @@ public:
 private:
     zmq::context_t m_zmqContext;
     zmq::socket_t m_zmqReqSocket;
+    void send(::capnp::MallocMessageBuilder& message,
+              const zmq::send_flags& sendFlags);
+
 };
 } // namespace capnzero
 #endif // CAPNZERO_CLIENT_H
@@ -117,17 +124,32 @@ Client::Client():
                 input_parameter_type_str_full = "const " + input_parameter_type_str + " &param"
             method_name = service_name + "__" + rpc_name
             outStr +=  return_type_str + " Client::" + method_name + "(" + input_parameter_type_str_full + "){\n"
-            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                outStr += """\
+            outStr += """\
     ::capnp::MallocMessageBuilder message;
-    auto builder = message.initRoot<Full{0}>();
+    auto builder = message.initRoot<{0}>();
     builder.setServiceId(ServiceId::{1});
     builder.setRpcId({2}RpcIds::{3});
-    //builder.setParameter(param);
-""".format(input_parameter_type_str, \
+""".format("RpcCoord" + service_name, \
            to_snake_case(service_name).upper(), \
            service_name, to_snake_case(rpc_name).upper())
+
+            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                outStr += "\tsend(message, zmq::send_flags::sndmore);\n"
+                #outStr += "\tsend(param, zmq::send_flags::dontwait);\n"
+            else:
+                outStr += "\tsend(message, zmq::send_flags::dontwait);\n"
+
             outStr +=  "}\n\n"
+    outStr += """\
+void Client::send(::capnp::MallocMessageBuilder& message,
+                  const zmq::send_flags& sendFlags){
+    const auto segments = message.getSegmentsForOutput();
+    assert(segments.size() == 1);
+    m_zmqReqSocket.send(
+        zmq::const_buffer(segments[0].begin(), segments[0].asBytes().size()),
+        sendFlags);
+}
+"""
     return outStr
 
 
