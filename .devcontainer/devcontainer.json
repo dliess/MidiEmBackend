@@ -13,17 +13,16 @@
    ],
    "containerEnv": {"DISPLAY": "${localEnv:DISPLAY}"},
    "settings": { 
-      "terminal.integrated.shell.linux": "/bin/bash"
+      "terminal.integrated.shell.linux": "/bin/zsh",
+      "terminal.integrated.detectLocale": "off"
    },
    "extensions": [
       "eamodio.gitlens",
-      "eugenwiens.bitbake",
       "ms-vscode.cpptools",
       "twxs.cmake",
       "ms-vscode.cmake-tools",
       "jebbs.plantuml",
       "plex.vscode-protolint",
-      "zxh404.vscode-proto3",
       "xaver.clang-format",
       "abronan.capnproto-syntax",
       "be5invis.toml"

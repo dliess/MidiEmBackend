@@ -58,10 +58,10 @@ RUN apt-get install -y \
         vim \
         feedgnuplot \
         netcat \
+        curl \
         zsh \
-        curl
+        wget
 
-#RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 RUN apt-get install -y \
         pkg-config \
@@ -78,9 +78,11 @@ RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $BUILD_USE
 RUN echo "$BUILD_USER:$BUILD_USER_PWD" | chpasswd
 RUN usermod -aG sudo $BUILD_USER
 
-USER $BUILD_USER
-WORKDIR /home/$BUILD_USER
+USER $BUILD_USER:$BUILD_USER
+WORKDIR /home/build-user
 
+RUN wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh || true
+RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="gentoo"/g' ~/.zshrc
 
 
 
