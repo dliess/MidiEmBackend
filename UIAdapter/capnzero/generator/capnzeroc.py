@@ -50,8 +50,11 @@ def create_capnp_file_content_str(data):
         outStr += rpc_coord_str
         for rpc_name in data["services"][service_name]["rpc"]:
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n" + \
-                                        data["services"][service_name]["rpc"][rpc_name]["parameter"] + "}\n"
+                parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n"
+                param = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                for idx, key in enumerate(param.keys()):
+                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + param[key] + ";\n"  
+                parameter_struct_str += "}\n"
                 outStr += parameter_struct_str
     return outStr
 
@@ -82,7 +85,9 @@ public:
                 return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
             input_parameter_type_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                input_parameter_type_str = "const Parameter" + service_name +  rpc_name.capitalize() + " &param"
+                param = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                for key, val in param.items():
+                    input_parameter_type_str += "const " + val + " &" + key    
             method_name = service_name + "__" + rpc_name
             outStr +=  "\t" + return_type_str + " " + method_name + "(" + input_parameter_type_str + ");\n"
 
