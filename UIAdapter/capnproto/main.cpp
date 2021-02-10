@@ -7,11 +7,14 @@
 int main()
 {
     ::capnp::MallocMessageBuilder message;
-    Date::Builder builder = message.initRoot<Date>();
-    //builder.setName("Dolly");
+    Person::Builder builder = message.initRoot<Person>();
+    builder.setName("Dollyyyyyyyyyyyyyy.,sdmf.ssssssssssssssssssssggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggddss");
+    builder.setEmail("Dollyyyyyyyyyyyyyy.,sdmf.ssssssssssssssssssssggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggddss");
+
     //::capnp::Text::Builder txtBuilder = builder.getName();
     auto arrOfArr = message.getSegmentsForOutput();
-    std::cout << arrOfArr[0].asBytes().size() << "\n";
+    std::cout << "arrOfArr.size(): " << arrOfArr.size() << "\n";
+    std::cout << "size in bytes: " << arrOfArr[0].asBytes().size() << "\n";
     //std::cout << txtBuilder.cStr() << "\n";
     //Person person;
     //Date date;
