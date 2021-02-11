@@ -5,6 +5,9 @@ import getopt
 import sys
 import os.path
 
+def upperfirst(x):
+    return x[:1].upper() + x[1:]
+
 decapitalize = lambda s: s[:1].lower() + s[1:] if s else ''
 
 def to_snake_case(name):
@@ -18,7 +21,7 @@ def type_to_fn_parameter_pass_str(type):
     if is_integral_type(type):
         return type
     else:
-        return "const {} &".format(type)
+        return "const {}&".format(type)
 
 def create_fn_parameter_str(params):
     ret = ""
@@ -68,9 +71,9 @@ def create_capnp_file_content_str(data):
         for rpc_name in data["services"][service_name]["rpc"]:
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n"
-                param = data["services"][service_name]["rpc"][rpc_name]["parameter"]
-                for idx, key in enumerate(param.keys()):
-                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + param[key] + ";\n"  
+                params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                for idx, key in enumerate(params.keys()):
+                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + params[key] + ";\n"  
                 parameter_struct_str += "}\n"
                 outStr += parameter_struct_str
     return outStr
@@ -146,20 +149,37 @@ Client::Client():
             outStr +=  return_type_str + " Client::" + method_name + "(" + parameter_str + "){\n"
             outStr += """\
     ::capnp::MallocMessageBuilder message;
-    auto builder = message.initRoot<{0}>();
-    builder.setServiceId(ServiceId::{1});
-    builder.setRpcId({2}RpcIds::{3});
+    {{
+        auto builder = message.initRoot<{0}>();
+        builder.setServiceId(ServiceId::{1});
+        builder.setRpcId({2}RpcIds::{3});
 """.format("RpcCoord" + service_name, \
            to_snake_case(service_name).upper(), \
            service_name, to_snake_case(rpc_name).upper())
 
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                outStr += "\tsend(message, zmq::send_flags::sndmore);\n"
-                #outStr += "\tsend(param, zmq::send_flags::dontwait);\n"
+                outStr += "\t\tsend(message, zmq::send_flags::sndmore);\n"
             else:
-                outStr += "\tsend(message, zmq::send_flags::dontwait);\n"
-
+                outStr += "\t\tsend(message, zmq::send_flags::dontwait);\n"
+            outStr += "\t}\n"
+            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                outStr += " \t{\n"
+                outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format("Parameter" + service_name +  rpc_name.capitalize())
+                params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                for param_name, param_type in params.items():
+                    if(param_type == 'Data'):
+                        outStr += "\t\tcapnp::Data::Reader reader({0}.data(), {0}.size());\n".format(param_name)
+                        outStr += "\t\tparamBuilder.set{0}(reader);\n".format(upperfirst(param_name))
+                    else:
+                        outStr += "\t\tparamBuilder.set{0}({1});\n".format(upperfirst(param_name), param_name)
+                outStr += "\t\tsend(message, zmq::send_flags::dontwait);\n"
+                outStr += "\t}\n"
+            outStr += "\tzmq::message_t revcMsg;\n"
+            outStr += "\tauto recvRes = m_zmqReqSocket.recv(revcMsg);\n"
+            if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                pass
             outStr +=  "}\n\n"
+
     outStr += """\
 void Client::send(::capnp::MallocMessageBuilder& message,
                   const zmq::send_flags& sendFlags){
