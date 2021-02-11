@@ -88,6 +88,12 @@ CPMFindPackage(
    "CPPZMQ_BUILD_TESTS OFF"
 )
 
+CPMFindPackage(
+  NAME span
+  GITHUB_REPOSITORY tcbrindle/span
+  GIT_TAG 5d8d366eca918d0ed3d2d196cbeae6abfd874736
+)
+
 #CPMFindPackage(
 #  NAME grpc
 #  GITHUB_REPOSITORY grpc/grpc

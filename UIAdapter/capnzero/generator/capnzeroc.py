@@ -11,6 +11,23 @@ def to_snake_case(name):
     import re
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name)
 
+def is_integral_type(type):
+    return type != "Data" and type != "Text"
+
+def type_to_fn_parameter_pass_str(type):
+    if is_integral_type(type):
+        return type
+    else:
+        return "const {} &".format(type)
+
+def create_fn_parameter_str(params):
+    ret = ""
+    for key, val in params.items():
+        ret += type_to_fn_parameter_pass_str(val) + " " + key
+        if list(params.keys())[-1] != key:
+            ret += ", "
+    return ret
+
 def create_capnp_file_content_str(data):
     outStr = """\
 @0x9c9f9131bf231692;
@@ -66,7 +83,7 @@ def create_capnzero_client_file_h_content_str(data):
 
 #include <zmq.hpp>
 #include <thread>
-#include "Interface.capnp.h"
+#include "capnzero_typedefs.h"
 
 namespace capnp { class MallocMessageBuilder; }
 
@@ -83,13 +100,11 @@ public:
             return_type_str = "void"
             if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
                 return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
-            input_parameter_type_str = ""
+            parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                param = data["services"][service_name]["rpc"][rpc_name]["parameter"]
-                for key, val in param.items():
-                    input_parameter_type_str += "const " + val + " &" + key    
+                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
             method_name = service_name + "__" + rpc_name
-            outStr +=  "\t" + return_type_str + " " + method_name + "(" + input_parameter_type_str + ");\n"
+            outStr +=  "\t" + return_type_str + " " + method_name + "(" + parameter_str + ");\n"
 
     outStr += """\
 private:
@@ -109,6 +124,7 @@ def create_capnzero_client_file_cpp_content_str(data, header_filename):
     outStr = '''\
 #include "{0}"
 #include <capnp/message.h>
+#include "Interface.capnp.h"
 
 using namespace capnzero;
 
@@ -123,12 +139,11 @@ Client::Client():
             return_type_str = "void"
             if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
                 return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
-            input_parameter_type_str_full = ""
+            parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                input_parameter_type_str = "Parameter" + service_name +  rpc_name.capitalize()
-                input_parameter_type_str_full = "const " + input_parameter_type_str + " &param"
+                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
             method_name = service_name + "__" + rpc_name
-            outStr +=  return_type_str + " Client::" + method_name + "(" + input_parameter_type_str_full + "){\n"
+            outStr +=  return_type_str + " Client::" + method_name + "(" + parameter_str + "){\n"
             outStr += """\
     ::capnp::MallocMessageBuilder message;
     auto builder = message.initRoot<{0}>();
