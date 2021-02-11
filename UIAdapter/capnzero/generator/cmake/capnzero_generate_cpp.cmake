@@ -19,7 +19,7 @@ function(capnzero_generate_cpp SOURCES HEADERS PROTOCOL_DESCRIPTION_FILE)
     ARGS  --outdir=${_GEN_OUTPUT_DIR}
           --descrfile=${PROTOCOL_DESCRIPTION_FILE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DEPENDS "${_GEN_OUTPUT_DIR}/${FIL_WLE}.capnp"  generator/capnzeroc.py
+    DEPENDS generator/capnzeroc.py  ${PROTOCOL_DESCRIPTION_FILE}
     COMMENT "Running capnzeroc generator script on ${PROTOCOL_DESCRIPTION_FILE}"
     VERBATIM
   )

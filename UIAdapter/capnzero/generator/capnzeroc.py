@@ -31,6 +31,12 @@ def create_fn_parameter_str(params):
             ret += ", "
     return ret
 
+def create_return_type_str(service_name, rpc_name):
+    return "Return" + service_name +  rpc_name.capitalize()
+
+def create_capnp_return_type_str(service_name, rpc_name):
+    return "CAPNPReturn" + service_name +  rpc_name.capitalize()
+
 def create_capnp_file_content_str(data):
     outStr = """\
 @0x9c9f9131bf231692;
@@ -76,8 +82,15 @@ def create_capnp_file_content_str(data):
                     parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + params[key] + ";\n"  
                 parameter_struct_str += "}\n"
                 outStr += parameter_struct_str
-    return outStr
+            if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                return_struct_str = "struct " + create_capnp_return_type_str(service_name, rpc_name) + " {\n"
+                members = data["services"][service_name]["rpc"][rpc_name]["returns"]
+                for idx, key in enumerate(members.keys()):
+                    return_struct_str += "\t" + key + " @" + str(idx) + " :" + members[key] + ";\n"  
+                return_struct_str += "}\n"
+                outStr += return_struct_str
 
+    return outStr
 
 def create_capnzero_client_file_h_content_str(data):
     outStr = """\
@@ -101,13 +114,24 @@ public:
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void"
+            if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                return_type_str = create_return_type_str(service_name, rpc_name)
+                return_struct_str = "\tstruct " + return_type_str + " {\n"
+                members = data["services"][service_name]["rpc"][rpc_name]["returns"]
+                for member_name, member_type in members.items():
+                    return_struct_str += "\t\t" + member_type + " " + member_name + ";\n"  
+                return_struct_str += "\t};\n"
+                outStr += return_struct_str
+
             if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
                 return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
             parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
             method_name = service_name + "__" + rpc_name
-            outStr +=  "\t" + return_type_str + " " + method_name + "(" + parameter_str + ");\n"
+            outStr +=  "\t" + return_type_str
+            outStr += " " if len(return_type_str) < 8 else "\n\t"
+            outStr += method_name + "(" + parameter_str + ");\n"
 
     outStr += """\
 private:
@@ -127,6 +151,7 @@ def create_capnzero_client_file_cpp_content_str(data, header_filename):
     outStr = '''\
 #include "{0}"
 #include <capnp/message.h>
+#include <capnp/serialize.h>
 #include "Interface.capnp.h"
 
 using namespace capnzero;
@@ -139,14 +164,14 @@ Client::Client():
 '''.format(header_filename)
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
-            return_type_str = "void"
-            if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
-                return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
+            return_type_str = "void "
+            if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                return_type_str = "Client::" + create_return_type_str(service_name, rpc_name) + "\n"
             parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
             method_name = service_name + "__" + rpc_name
-            outStr +=  return_type_str + " Client::" + method_name + "(" + parameter_str + "){\n"
+            outStr +=  return_type_str + "Client::" + method_name + "(" + parameter_str + "){\n"
             outStr += """\
     ::capnp::MallocMessageBuilder message;
     {{
@@ -176,8 +201,24 @@ Client::Client():
                 outStr += "\t}\n"
             outStr += "\tzmq::message_t revcMsg;\n"
             outStr += "\tauto recvRes = m_zmqReqSocket.recv(revcMsg);\n"
+            outStr += "\tif(!recvRes)\n"
+            outStr += "\t{\n"
+            outStr += "\t\tthrow std::runtime_error(\"recv failed, nothing received\");\n"
+            outStr += "\t}\n"
+
             if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                pass
+                outStr += "\t::capnp::FlatArrayMessageReader readMessage(\n"
+                outStr += "\tkj::ArrayPtr<const capnp::word>(reinterpret_cast<const capnp::word*>(revcMsg.data()), revcMsg.size() / sizeof(capnp::word) )\n"
+                outStr += "\t);\n"
+                outStr += "\tauto reader = readMessage.getRoot<{}>();\n".format(create_capnp_return_type_str(service_name, rpc_name))
+                outStr += "\t" + create_return_type_str(service_name, rpc_name) + " retVal;\n"
+                ret_members = data["services"][service_name]["rpc"][rpc_name]["returns"]
+                for member_name, member_type in ret_members.items():
+                    if member_type == 'Data':
+                        pass #TODO
+                    else:
+                        outStr += "\tretVal.{0} = reader.get{1}();\n".format(member_name, upperfirst(member_name))
+                outStr += "\treturn retVal;\n"
             outStr +=  "}\n\n"
 
     outStr += """\

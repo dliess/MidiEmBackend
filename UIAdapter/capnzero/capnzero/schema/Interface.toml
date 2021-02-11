@@ -11,6 +11,7 @@
         parameter = { deviceIdStr = 'Text', voiceIdx = 'Int16' }
     [services.MusicDevices.rpc.unregisterForParameterChange]
         parameter = { deviceIdStr = 'Text', voiceIdx = 'Int16' }
+        returns = { instrumentUUID = 'Data', deviceIdStr = 'Text', aNumber = 'Int32' }
     [services.MusicDevices.signal.musicDeviceListChanged]
         parameter = { deviceNameList = 'Text' }
     [services.MusicDevices.signal.parameterChanged]
