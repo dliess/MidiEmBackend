@@ -9,7 +9,9 @@
 namespace capnzero{
 
 using Text = std::string;
-using Data = tcb::span<const uint8_t, tcb::dynamic_extent>;
+using Span = tcb::span<const uint8_t, tcb::dynamic_extent>;
+template<std::size_t SIZE>
+using Data = std::array<uint8_t, SIZE>;
 using Int8 = int8_t;
 using Int16 = int16_t;
 using Int32 = int32_t;

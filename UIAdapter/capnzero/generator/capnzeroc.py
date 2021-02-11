@@ -15,7 +15,16 @@ def to_snake_case(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name)
 
 def is_integral_type(type):
-    return type != "Data" and type != "Text"
+    return type == "Int8" or \
+           type == "Int16" or \
+           type == "Int32" or \
+           type == "Int64" or \
+           type == "UInt8" or \
+           type == "UInt16" or \
+           type == "UInt32" or \
+           type == "UInt64" or \
+           type == "Float32" or \
+           type == "Float64"
 
 def type_to_fn_parameter_pass_str(type):
     if is_integral_type(type):
@@ -25,9 +34,9 @@ def type_to_fn_parameter_pass_str(type):
 
 def create_fn_parameter_str(params):
     ret = ""
-    for key, val in params.items():
-        ret += type_to_fn_parameter_pass_str(val) + " " + key
-        if list(params.keys())[-1] != key:
+    for param_name, param_type in params.items():
+        ret += type_to_fn_parameter_pass_str(param_type) + " " + param_name
+        if list(params.keys())[-1] != param_name:
             ret += ", "
     return ret
 
@@ -36,6 +45,20 @@ def create_return_type_str(service_name, rpc_name):
 
 def create_capnp_return_type_str(service_name, rpc_name):
     return "CAPNPReturn" + service_name +  rpc_name.capitalize()
+
+def map_descr_type_to_capnp_type(type):
+    import re
+    p = re.compile(r'Data<\d+>')
+    if p.match(type) or type == "Span":
+        return "Data"
+    else:
+        return type
+
+def map_2_ret_type(type):
+    if(type == "Span"):
+        return "std::vector<uint8_t>"
+    else:
+        return type
 
 def create_capnp_file_content_str(data):
     outStr = """\
@@ -79,14 +102,14 @@ def create_capnp_file_content_str(data):
                 parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n"
                 params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
                 for idx, key in enumerate(params.keys()):
-                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + params[key] + ";\n"  
+                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(params[key]) + ";\n"  
                 parameter_struct_str += "}\n"
                 outStr += parameter_struct_str
             if "returns" in data["services"][service_name]["rpc"][rpc_name]:
                 return_struct_str = "struct " + create_capnp_return_type_str(service_name, rpc_name) + " {\n"
                 members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for idx, key in enumerate(members.keys()):
-                    return_struct_str += "\t" + key + " @" + str(idx) + " :" + members[key] + ";\n"  
+                    return_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(members[key]) + ";\n"  
                 return_struct_str += "}\n"
                 outStr += return_struct_str
 
@@ -119,7 +142,7 @@ public:
                 return_struct_str = "\tstruct " + return_type_str + " {\n"
                 members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for member_name, member_type in members.items():
-                    return_struct_str += "\t\t" + member_type + " " + member_name + ";\n"  
+                    return_struct_str += "\t\t" + map_2_ret_type(member_type) + " " + member_name + ";\n"  
                 return_struct_str += "\t};\n"
                 outStr += return_struct_str
 
@@ -192,7 +215,7 @@ Client::Client():
                 outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format("Parameter" + service_name +  rpc_name.capitalize())
                 params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
                 for param_name, param_type in params.items():
-                    if(param_type == 'Data'):
+                    if(map_descr_type_to_capnp_type(param_type) == 'Data'):
                         outStr += "\t\tcapnp::Data::Reader reader({0}.data(), {0}.size());\n".format(param_name)
                         outStr += "\t\tparamBuilder.set{0}(reader);\n".format(upperfirst(param_name))
                     else:
@@ -214,8 +237,10 @@ Client::Client():
                 outStr += "\t" + create_return_type_str(service_name, rpc_name) + " retVal;\n"
                 ret_members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for member_name, member_type in ret_members.items():
-                    if member_type == 'Data':
-                        pass #TODO
+                    if map_descr_type_to_capnp_type(member_type) == 'Data':
+                        outStr += "\tauto src = reader.get{}();\n".format(upperfirst(member_name))
+                        outStr += "\tassert(src.size() == retVal.{}.size());\n".format(member_name)
+                        outStr += "\tstd::copy(src.begin(), src.end(), retVal.{}.begin());\n".format(member_name)
                     else:
                         outStr += "\tretVal.{0} = reader.get{1}();\n".format(member_name, upperfirst(member_name))
                 outStr += "\treturn retVal;\n"

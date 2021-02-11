@@ -3,7 +3,8 @@
     [services.Instruments.rpc.createKitInstrument]
         parameter = { name = 'Text' }
     [services.Instruments.rpc.removeKitInstrument]
-        parameter = { instrumentUUID = 'Data' }
+        parameter = { instrumentUUID = 'Data<8>' }
+        returns = { instrumentUUID = 'Data<8>', deviceIdStr = 'Text', aNumber = 'Int32' }
     [services.Instruments.signal.dataChanged]
         parameter = { jsonStrData = 'Text' }
     [services.MusicDevices.rpc.triggerSendMusicDeviceList]
@@ -11,7 +12,7 @@
         parameter = { deviceIdStr = 'Text', voiceIdx = 'Int16' }
     [services.MusicDevices.rpc.unregisterForParameterChange]
         parameter = { deviceIdStr = 'Text', voiceIdx = 'Int16' }
-        returns = { instrumentUUID = 'Data', deviceIdStr = 'Text', aNumber = 'Int32' }
+        returns = { instrumentUUID = 'Span', deviceIdStr = 'Text', aNumber = 'Int32' }
     [services.MusicDevices.signal.musicDeviceListChanged]
         parameter = { deviceNameList = 'Text' }
     [services.MusicDevices.signal.parameterChanged]
