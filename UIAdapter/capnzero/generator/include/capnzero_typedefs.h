@@ -3,6 +3,7 @@
 
 #include <string>
 #include <array>
+#include <vector>
 #include <cstdint>
 #include "tcb/span.hpp"
 

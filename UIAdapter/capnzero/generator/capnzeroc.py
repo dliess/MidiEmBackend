@@ -32,7 +32,10 @@ def type_to_fn_parameter_pass_str(type):
     else:
         return "const {}&".format(type)
 
-def create_fn_parameter_str(params):
+def create_fn_parameter_str(rpc_info):
+    if not "parameter" in rpc_info:
+        return ""
+    params = rpc_info["parameter"]
     ret = ""
     for param_name, param_type in params.items():
         ret += type_to_fn_parameter_pass_str(param_type) + " " + param_name
@@ -40,8 +43,11 @@ def create_fn_parameter_str(params):
             ret += ", "
     return ret
 
-def create_return_type_str(service_name, rpc_name):
-    return "Return" + service_name +  rpc_name.capitalize()
+def create_return_type_str_client(service_name, rpc_name):
+    return "Return" + service_name +  upperfirst(rpc_name)
+
+def create_return_type_str_server(rpc_info, rpc_name):
+    return "Return{}".format(upperfirst(rpc_name)) if "returns" in rpc_info else "void"
 
 def create_capnp_return_type_str(service_name, rpc_name):
     return "CAPNPReturn" + service_name +  rpc_name.capitalize()
@@ -67,6 +73,16 @@ def create_member_cb_if(service_name):
 
 def create_member_cb_if_type(service_name):
     return "{}If".format(upperfirst(service_name))
+
+def create_return_type_definition(return_type, content, tabs):
+    struct_content = ""
+    for member_name, member_type in content.items():
+        struct_content += "{}\t{} {};\n".format(tabs, map_2_ret_type(member_type), member_name)
+    return """\
+{0}struct {1}
+{0}{{
+{2}{0}}};
+""".format(tabs, return_type, struct_content)
 
 #####################################################
 ################### CAPNP FILE ######################
@@ -152,7 +168,7 @@ public:
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void"
             if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                return_type_str = create_return_type_str(service_name, rpc_name)
+                return_type_str = create_return_type_str_client(service_name, rpc_name)
                 return_struct_str = "\tstruct " + return_type_str + " {\n"
                 members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for member_name, member_type in members.items():
@@ -160,11 +176,11 @@ public:
                 return_struct_str += "\t};\n"
                 outStr += return_struct_str
 
-            if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
-                return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
+            #if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
+            #    return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
             parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
+                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name])
             method_name = service_name + "__" + rpc_name
             outStr +=  "\t" + return_type_str
             outStr += " " if len(return_type_str) < 8 else "\n\t"
@@ -206,10 +222,10 @@ using namespace capnzero;
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void "
             if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                return_type_str = file_we + "Client::" + create_return_type_str(service_name, rpc_name) + "\n"
+                return_type_str = file_we + "Client::" + create_return_type_str_client(service_name, rpc_name) + "\n"
             parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
+                parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name])
             method_name = service_name + "__" + rpc_name
             outStr +=  return_type_str + file_we + "Client::" + method_name + "(" + parameter_str + "){\n"
             outStr += """\
@@ -250,7 +266,7 @@ using namespace capnzero;
                 outStr += "\tkj::ArrayPtr<const capnp::word>(reinterpret_cast<const capnp::word*>(revcMsg.data()), revcMsg.size() / sizeof(capnp::word) )\n"
                 outStr += "\t);\n"
                 outStr += "\tauto reader = readMessage.getRoot<{}>();\n".format(create_capnp_return_type_str(service_name, rpc_name))
-                outStr += "\t" + create_return_type_str(service_name, rpc_name) + " retVal;\n"
+                outStr += "\t" + create_return_type_str_client(service_name, rpc_name) + " retVal;\n"
                 ret_members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for member_name, member_type in ret_members.items():
                     if map_descr_type_to_capnp_type(member_type) == 'Data':
@@ -281,7 +297,7 @@ def create_capnzero_server_file_h_content_str(data, file_we):
     cbif_includes = ""
     cbif_members = ""
     for service_name in data["services"]:
-        cbif_includes += "#include \"{}.h\"\n".format(create_member_cb_if_type(service_name))
+        cbif_includes += "#include \"{}{}.h\"\n".format(file_we, create_member_cb_if_type(service_name))
         cbif_members += "\tstd::unique_ptr<{}> {};\n".format(create_member_cb_if_type(service_name), \
                                                              create_member_cb_if(service_name))
 
@@ -378,17 +394,24 @@ void {0}Server::peekForRequests() {{
 
     return outStr
 
+
 #####################################################
 ############ RPC INTERFACE HEADERS ##################
 #####################################################
-def create_capnzero_cbif_h_content_str(service_name, rpc_info, file_we):
+def create_capnzero_cbif_h_content_str(service_name, rpc_infos, file_we):
     if_member_fns = ""
-    for rpc_name in rpc_info:
-        if_member_fns += "\tvirtual {}({}) = 0;\n".format(rpc_name, "todo")
+    for rpc_name in rpc_infos:
+        return_type = create_return_type_str_server(rpc_infos[rpc_name], rpc_name)
+        if "void" != return_type:
+            if_member_fns += create_return_type_definition(return_type, rpc_infos[rpc_name]["returns"], "\t")
+        parameter = create_fn_parameter_str(rpc_infos[rpc_name])
+        if_member_fns += "\tvirtual {} {}({}) = 0;\n".format(return_type, rpc_name, parameter)
 
     outStr = """\
 #ifndef {0}_H
 #define {0}_H
+
+#include "capnzero_typedefs.h"
 
 namespace capnzero
 {{
@@ -397,8 +420,7 @@ class {1}
 {{
 public:
     virtual ~{1}() = default;
-{2}
-}};
+{2}}};
 
 }}
 #endif
