@@ -62,6 +62,15 @@ def map_2_ret_type(type):
     else:
         return type
 
+def create_member_cb_if(service_name):
+    return "m_p{}If".format(upperfirst(service_name))
+
+def create_member_cb_if_type(service_name):
+    return "{}If".format(upperfirst(service_name))
+
+#####################################################
+################### CAPNP FILE ######################
+#####################################################
 def create_capnp_file_content_str(data):
     outStr = """\
 @0x9c9f9131bf231692;
@@ -117,6 +126,9 @@ def create_capnp_file_content_str(data):
 
     return outStr
 
+#####################################################
+################### CLIENT H ########################
+#####################################################
 def create_capnzero_client_file_h_content_str(data, file_we):
     outStr = """\
 #ifndef {0}_CLIENT_H
@@ -171,7 +183,9 @@ private:
 """
     return outStr
 
-
+#####################################################
+################### CLIENT CPP ######################
+#####################################################
 def create_capnzero_client_file_cpp_content_str(data, file_we):
     outStr = '''\
 #include "{0}_Client.h"
@@ -260,40 +274,53 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
 """.format(file_we)
     return outStr
 
-
+#####################################################
+################### SERVER H ########################
+#####################################################
 def create_capnzero_server_file_h_content_str(data, file_we):
+    cbif_includes = ""
+    cbif_members = ""
+    for service_name in data["services"]:
+        cbif_includes += "#include \"{}.h\"\n".format(create_member_cb_if_type(service_name))
+        cbif_members += "\tstd::unique_ptr<{}> {};\n".format(create_member_cb_if_type(service_name), \
+                                                             create_member_cb_if(service_name))
+
     outStr = """\
 #ifndef {0}_SERVER_H
 #define {0}_SERVER_H
 
 #include <zmq.hpp>
 #include <thread>
+#include <memory>
 #include "capnzero_typedefs.h"
+
+{1}
 
 namespace capnzero
 {{
 
-class {1}Server
+class {2}Server
 {{
 public:
-    {1}Server();
+    {2}Server();
     void peekForRequests();
-""".format(file_we.upper(), file_we)
-
+""".format(file_we.upper(), cbif_includes, file_we)
 
     outStr += """\
 private:
     zmq::context_t m_zmqContext;
     zmq::socket_t m_zmqRepSocket;
-
-};
-} // namespace capnzero
+{}
+}};
+}} // namespace capnzero
 #endif
-"""
+""".format(cbif_members)
 
     return outStr
 
-
+#####################################################
+################### SERVER CPP ######################
+#####################################################
 def create_capnzero_server_file_cpp_content_str(data, file_we):
 
     cases_str = ""
@@ -305,7 +332,7 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
         for rpc_name in data["services"][service_name]["rpc"]:
             cases_str += "\t\t\t\tcase to_underlying({0}RpcIds::{1}):\n".format(service_name, to_snake_case(rpc_name).upper())
             cases_str += "\t\t\t\t{\n"
-            cases_str += "\t\t\t\t\t//m_cbIf.{}__{}();\n".format(service_name, rpc_name)
+            cases_str += "\t\t\t\t\t//{}->{}();\n".format(create_member_cb_if(service_name), rpc_name)
             cases_str += "\t\t\t\t\tbreak;\n"
             cases_str += "\t\t\t\t}\n"
         cases_str += "\t\t\t}\n"
@@ -351,7 +378,33 @@ void {0}Server::peekForRequests() {{
 
     return outStr
 
+#####################################################
+############ RPC INTERFACE HEADERS ##################
+#####################################################
+def create_capnzero_cbif_h_content_str(service_name, rpc_info, file_we):
+    if_member_fns = ""
+    for rpc_name in rpc_info:
+        if_member_fns += "\tvirtual {}({}) = 0;\n".format(rpc_name, "todo")
 
+    outStr = """\
+#ifndef {0}_H
+#define {0}_H
+
+namespace capnzero
+{{
+
+class {1}
+{{
+public:
+    virtual ~{1}() = default;
+{2}
+}};
+
+}}
+#endif
+""".format(to_snake_case(file_we).upper(), create_member_cb_if_type(service_name), if_member_fns)
+
+    return outStr
 
 
 outdir="undefined"
@@ -390,3 +443,10 @@ with open(server_h_file, 'w') as open_file:
 
 with open(server_cpp_file, 'w') as open_file:
     open_file.write(create_capnzero_server_file_cpp_content_str(data, file_we))
+
+for service_name in data["services"]:
+    service = data["services"][service_name]
+    if "rpc" in service:
+        rpc_if_filename_we = file_we + create_member_cb_if_type(service_name)
+        with open(outdir + "/" + rpc_if_filename_we + ".h", 'w') as open_file:
+            open_file.write(create_capnzero_cbif_h_content_str(service_name, service["rpc"], rpc_if_filename_we))
