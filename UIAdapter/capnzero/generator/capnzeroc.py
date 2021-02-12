@@ -117,25 +117,25 @@ def create_capnp_file_content_str(data):
 
     return outStr
 
-def create_capnzero_client_file_h_content_str(data):
+def create_capnzero_client_file_h_content_str(data, file_we):
     outStr = """\
-#ifndef CAPNZERO_CLIENT_H
-#define CAPNZERO_CLIENT_H
+#ifndef {0}_CLIENT_H
+#define {0}_CLIENT_H
 
 #include <zmq.hpp>
 #include <thread>
 #include "capnzero_typedefs.h"
 
-namespace capnp { class MallocMessageBuilder; }
+namespace capnp {{ class MallocMessageBuilder; }}
 
 namespace capnzero
-{
+{{
 
-class Client
-{
+class {1}Client
+{{
 public:
-    Client();
-"""
+    {1}Client();
+""".format(file_we.upper(), file_we)
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void"
@@ -167,36 +167,36 @@ private:
 
 };
 } // namespace capnzero
-#endif // CAPNZERO_CLIENT_H
+#endif
 """
     return outStr
 
 
-def create_capnzero_client_file_cpp_content_str(data, header_filename):
+def create_capnzero_client_file_cpp_content_str(data, file_we):
     outStr = '''\
-#include "{0}"
+#include "{0}_Client.h"
 #include <capnp/message.h>
 #include <capnp/serialize.h>
 #include "Interface.capnp.h"
 
 using namespace capnzero;
 
-Client::Client():
+{0}Client::{0}Client():
     m_zmqContext(0),
     m_zmqReqSocket(m_zmqContext, zmq::socket_type::req)
 {{}}
 
-'''.format(header_filename)
+'''.format(file_we)
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
             return_type_str = "void "
             if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                return_type_str = "Client::" + create_return_type_str(service_name, rpc_name) + "\n"
+                return_type_str = file_we + "Client::" + create_return_type_str(service_name, rpc_name) + "\n"
             parameter_str = ""
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name]["parameter"])
             method_name = service_name + "__" + rpc_name
-            outStr +=  return_type_str + "Client::" + method_name + "(" + parameter_str + "){\n"
+            outStr +=  return_type_str + file_we + "Client::" + method_name + "(" + parameter_str + "){\n"
             outStr += """\
     ::capnp::MallocMessageBuilder message;
     {{
@@ -249,29 +249,29 @@ Client::Client():
             outStr +=  "}\n\n"
 
     outStr += """\
-void Client::send(::capnp::MallocMessageBuilder& message,
-                  const zmq::send_flags& sendFlags){
+void {0}Client::send(::capnp::MallocMessageBuilder& message,
+                  const zmq::send_flags& sendFlags){{
     kj::Array<capnp::word> words = messageToFlatArray(message);
     kj::ArrayPtr<kj::byte> bytes = words.asBytes();
     m_zmqReqSocket.send(
         zmq::const_buffer(bytes.begin(), bytes.size()),
         sendFlags);
-}
-"""
+}}
+""".format(file_we)
     return outStr
 
 
-def create_capnzero_server_file_h_content_str(data):
+def create_capnzero_server_file_h_content_str(data, file_we):
     outStr = """\
 int i;
 """
     return outStr
 
 
-def create_capnzero_server_file_cpp_content_str(data, header_filename):
+def create_capnzero_server_file_cpp_content_str(data, file_we):
     outStr = """\
-#include "{0}"
-""".format(header_filename)
+#include "{0}_Server.h"
+""".format(file_we)
     return outStr
 
 
@@ -303,13 +303,13 @@ with open(capnp_file, 'w') as open_file:
     open_file.write(create_capnp_file_content_str(data))
 
 with open(client_h_file, 'w') as open_file:
-    open_file.write(create_capnzero_client_file_h_content_str(data))
+    open_file.write(create_capnzero_client_file_h_content_str(data, file_we))
 
 with open(client_cpp_file, 'w') as open_file:
-    open_file.write(create_capnzero_client_file_cpp_content_str(data, file_we + "_Client.h"))
+    open_file.write(create_capnzero_client_file_cpp_content_str(data, file_we))
 
 with open(server_h_file, 'w') as open_file:
-    open_file.write(create_capnzero_server_file_h_content_str(data))
+    open_file.write(create_capnzero_server_file_h_content_str(data, file_we))
 
 with open(server_cpp_file, 'w') as open_file:
-    open_file.write(create_capnzero_server_file_cpp_content_str(data, file_we + "_Server.h"))
+    open_file.write(create_capnzero_server_file_cpp_content_str(data, file_we))
