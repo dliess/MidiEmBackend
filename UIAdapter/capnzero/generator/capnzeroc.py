@@ -55,8 +55,10 @@ def map_descr_type_to_capnp_type(type):
         return type
 
 def map_2_ret_type(type):
-    if(type == "Span"):
+    if(type == "Data"):
         return "std::vector<uint8_t>"
+    elif type == "Span":
+        return "NOT A TYPE"  # TODO: replace with toml verification function
     else:
         return type
 
@@ -249,10 +251,10 @@ Client::Client():
     outStr += """\
 void Client::send(::capnp::MallocMessageBuilder& message,
                   const zmq::send_flags& sendFlags){
-    const auto segments = message.getSegmentsForOutput();
-    assert(segments.size() == 1);
+    kj::Array<capnp::word> words = messageToFlatArray(message);
+    kj::ArrayPtr<kj::byte> bytes = words.asBytes();
     m_zmqReqSocket.send(
-        zmq::const_buffer(segments[0].begin(), segments[0].asBytes().size()),
+        zmq::const_buffer(bytes.begin(), bytes.size()),
         sendFlags);
 }
 """
