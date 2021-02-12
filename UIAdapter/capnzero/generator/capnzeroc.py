@@ -92,13 +92,13 @@ def create_capnp_file_content_str(data):
     for rpc_enum in rpc_enum_strings:
         outStr += rpc_enum
 
+    outStr += "struct RpcCoord {\n"
+    outStr += "\tserviceId @0 :UInt16;\n"
+    outStr += "\trpcId @1 :UInt16;\n"
+    outStr += "}\n"
+
     # Create capnp type for parameter and return types
     for service_name in data["services"]:
-        rpc_coord_str = "struct RpcCoord" + service_name + " {\n" + \
-                                    "serviceId @0 :ServiceId;\n" + \
-                                    "rpcId @1 :" + service_name + "RpcIds;\n" + \
-                                    "}\n"
-        outStr += rpc_coord_str
         for rpc_name in data["services"][service_name]["rpc"]:
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n"
@@ -178,6 +178,7 @@ def create_capnzero_client_file_cpp_content_str(data, file_we):
 #include <capnp/message.h>
 #include <capnp/serialize.h>
 #include "Interface.capnp.h"
+#include "capnzero_utils.h"
 
 using namespace capnzero;
 
@@ -200,11 +201,10 @@ using namespace capnzero;
             outStr += """\
     ::capnp::MallocMessageBuilder message;
     {{
-        auto builder = message.initRoot<{0}>();
-        builder.setServiceId(ServiceId::{1});
-        builder.setRpcId({2}RpcIds::{3});
-""".format("RpcCoord" + service_name, \
-           to_snake_case(service_name).upper(), \
+        auto builder = message.initRoot<RpcCoord>();
+        builder.setServiceId(to_underlying(ServiceId::{0}));
+        builder.setRpcId(to_underlying({1}RpcIds::{2}));
+""".format(to_snake_case(service_name).upper(), \
            service_name, to_snake_case(rpc_name).upper())
 
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
@@ -263,15 +263,92 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
 
 def create_capnzero_server_file_h_content_str(data, file_we):
     outStr = """\
-int i;
+#ifndef {0}_SERVER_H
+#define {0}_SERVER_H
+
+#include <zmq.hpp>
+#include <thread>
+#include "capnzero_typedefs.h"
+
+namespace capnzero
+{{
+
+class {1}Server
+{{
+public:
+    {1}Server();
+    void peekForRequests();
+""".format(file_we.upper(), file_we)
+
+
+    outStr += """\
+private:
+    zmq::context_t m_zmqContext;
+    zmq::socket_t m_zmqRepSocket;
+
+};
+} // namespace capnzero
+#endif
 """
+
     return outStr
 
 
 def create_capnzero_server_file_cpp_content_str(data, file_we):
-    outStr = """\
+
+    cases_str = ""
+    for service_name in data["services"]:
+        cases_str += "\t\tcase to_underlying(ServiceId::{}):\n".format(to_snake_case(service_name).upper())
+        cases_str +=  "\t\t{\n"
+        cases_str += "\t\t\tswitch(coordReader.getRpcId())\n"
+        cases_str += "\t\t\t{\n"
+        for rpc_name in data["services"][service_name]["rpc"]:
+            cases_str += "\t\t\t\tcase to_underlying({0}RpcIds::{1}):\n".format(service_name, to_snake_case(rpc_name).upper())
+            cases_str += "\t\t\t\t{\n"
+            cases_str += "\t\t\t\t\t//m_cbIf.{}__{}();\n".format(service_name, rpc_name)
+            cases_str += "\t\t\t\t\tbreak;\n"
+            cases_str += "\t\t\t\t}\n"
+        cases_str += "\t\t\t}\n"
+        cases_str +=  "\t\t\tbreak;\n"
+        cases_str +=  "\t\t}\n"
+
+
+    outStr = '''\
 #include "{0}_Server.h"
-""".format(file_we)
+#include <capnp/message.h>
+#include <capnp/serialize.h>
+#include "Interface.capnp.h"
+#include "capnzero_utils.h"
+
+using namespace capnzero;
+
+{0}Server::{0}Server():
+    m_zmqContext(0),
+    m_zmqRepSocket(m_zmqContext, zmq::socket_type::rep)
+{{}}
+
+void {0}Server::peekForRequests() {{
+    zmq::message_t rpcCoordBuf;
+    auto res1 = m_zmqRepSocket.recv(rpcCoordBuf, zmq::recv_flags::dontwait);
+    if (!res1) {{ return; }}
+    zmq::message_t payloadBuf;
+    auto res2 = m_zmqRepSocket.recv(payloadBuf, zmq::recv_flags::dontwait);
+    if (!res2) {{ throw std::runtime_error("No received msg"); }}
+    ::capnp::FlatArrayMessageReader rpcCoordMessageReader(
+        kj::ArrayPtr<const capnp::word>(
+            reinterpret_cast<const capnp::word*>( rpcCoordBuf.data() ), 
+            rpcCoordBuf.size() / sizeof(capnp::word)
+        )
+    );
+    auto coordReader = rpcCoordMessageReader.getRoot<RpcCoord>();
+    switch(coordReader.getServiceId())
+    {{
+{1}
+    }}
+}}
+
+'''.format(file_we, cases_str)
+
     return outStr
 
 
