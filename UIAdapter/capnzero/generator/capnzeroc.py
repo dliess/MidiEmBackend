@@ -126,7 +126,7 @@ def create_capnp_file_content_str(data):
     for service_name in data["services"]:
         for rpc_name in data["services"][service_name]["rpc"]:
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                parameter_struct_str = "struct Parameter" + service_name +  rpc_name.capitalize() + " {\n"
+                parameter_struct_str = "struct Parameter" + service_name +  upperfirst(rpc_name) + " {\n"
                 params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
                 for idx, key in enumerate(params.keys()):
                     parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(params[key]) + ";\n"  
@@ -207,7 +207,7 @@ def create_capnzero_client_file_cpp_content_str(data, file_we):
 #include "{0}_Client.h"
 #include <capnp/message.h>
 #include <capnp/serialize.h>
-#include "Interface.capnp.h"
+#include "{0}.capnp.h"
 #include "capnzero_utils.h"
 
 using namespace capnzero;
@@ -244,7 +244,7 @@ using namespace capnzero;
             outStr += "\t}\n"
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 outStr += " \t{\n"
-                outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format("Parameter" + service_name +  rpc_name.capitalize())
+                outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format("Parameter" + service_name +  upperfirst(rpc_name))
                 params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
                 for param_name, param_type in params.items():
                     if(map_descr_type_to_capnp_type(param_type) == 'Data'):
@@ -348,7 +348,15 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
         for rpc_name in data["services"][service_name]["rpc"]:
             cases_str += "\t\t\t\tcase to_underlying({0}RpcIds::{1}):\n".format(service_name, to_snake_case(rpc_name).upper())
             cases_str += "\t\t\t\t{\n"
-            cases_str += "\t\t\t\t\t//{}->{}();\n".format(create_member_cb_if(service_name), rpc_name)
+            params = ""
+            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                cases_str += "\t\t\t\t\tzmq::message_t paramBuf;\n"
+                cases_str += "\t\t\t\t\tauto res2 = m_zmqRepSocket.recv(paramBuf, zmq::recv_flags::dontwait);\n"
+                cases_str += "\t\t\t\t\tif (!res2) { throw std::runtime_error(\"No received msg\"); }\n"
+                cases_str += "\t\t\t\t\tauto paramReader = getReader<Parameter{}{}>(paramBuf);\n".format(service_name, upperfirst(rpc_name))
+                for param_name, param_type in data["services"][service_name]["rpc"][rpc_name]["parameter"].items():
+                   params += "pffui," 
+            cases_str += "\t\t\t\t\t//{}->{}({});\n".format(create_member_cb_if(service_name), rpc_name, params)
             cases_str += "\t\t\t\t\tbreak;\n"
             cases_str += "\t\t\t\t}\n"
         cases_str += "\t\t\t}\n"
@@ -360,10 +368,22 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
 #include "{0}_Server.h"
 #include <capnp/message.h>
 #include <capnp/serialize.h>
-#include "Interface.capnp.h"
+#include "{0}.capnp.h"
 #include "capnzero_utils.h"
 
 using namespace capnzero;
+
+template<typename T, typename MsgBuf>
+typename T::Reader getReader(MsgBuf& msgBuf)
+{{
+	::capnp::FlatArrayMessageReader msgReader(
+		kj::ArrayPtr<const capnp::word>(
+			reinterpret_cast<const capnp::word*>( msgBuf.data() ), 
+			msgBuf.size() / sizeof(capnp::word)
+		)
+	);
+	return msgReader.getRoot<T>();
+}}
 
 {0}Server::{0}Server():
     m_zmqContext(0),
@@ -374,16 +394,7 @@ void {0}Server::peekForRequests() {{
     zmq::message_t rpcCoordBuf;
     auto res1 = m_zmqRepSocket.recv(rpcCoordBuf, zmq::recv_flags::dontwait);
     if (!res1) {{ return; }}
-    zmq::message_t payloadBuf;
-    auto res2 = m_zmqRepSocket.recv(payloadBuf, zmq::recv_flags::dontwait);
-    if (!res2) {{ throw std::runtime_error("No received msg"); }}
-    ::capnp::FlatArrayMessageReader rpcCoordMessageReader(
-        kj::ArrayPtr<const capnp::word>(
-            reinterpret_cast<const capnp::word*>( rpcCoordBuf.data() ), 
-            rpcCoordBuf.size() / sizeof(capnp::word)
-        )
-    );
-    auto coordReader = rpcCoordMessageReader.getRoot<RpcCoord>();
+    auto coordReader = getReader<RpcCoord>(rpcCoordBuf);
     switch(coordReader.getServiceId())
     {{
 {1}
