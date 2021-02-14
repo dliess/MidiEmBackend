@@ -43,6 +43,17 @@ def create_fn_parameter_str(rpc_info):
             ret += ", "
     return ret
 
+def create_rpc_if_fn_parameter_str(rpc_info):
+    if not "parameter" in rpc_info:
+        return ""
+    params = rpc_info["parameter"]
+    ret = ""
+    for param_name, param_type in params.items():
+        ret += type_to_fn_parameter_pass_str(map_2_rpc_if_param_type(param_type)) + " " + param_name
+        if list(params.keys())[-1] != param_name:
+            ret += ", "
+    return ret
+
 def create_return_type_str_client(service_name, rpc_name):
     return "Return" + service_name +  upperfirst(rpc_name)
 
@@ -61,10 +72,25 @@ def map_descr_type_to_capnp_type(type):
         return type
 
 def map_2_ret_type(type):
-    if(type == "Data"):
+    if type == "Data":
         return "std::vector<uint8_t>"
     elif type == "Span":
         return "NOT A TYPE"  # TODO: replace with toml verification function
+    else:
+        return type
+
+def map_2_rpc_if_param_type(type):
+    import re
+    p = re.compile(r'Data<(\d+)>')
+    m = p.match(type) 
+    if m:
+        return "SpanCL<{}>".format(m.group(1))
+    elif type == "Data":
+        return "Span"
+    elif type == "Span":
+        return "Span"
+    elif type == "Text":
+        return "TextView"
     else:
         return type
 
@@ -354,9 +380,20 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
                 cases_str += "\t\t\t\t\tauto res2 = m_zmqRepSocket.recv(paramBuf, zmq::recv_flags::dontwait);\n"
                 cases_str += "\t\t\t\t\tif (!res2) { throw std::runtime_error(\"No received msg\"); }\n"
                 cases_str += "\t\t\t\t\tauto paramReader = getReader<Parameter{}{}>(paramBuf);\n".format(service_name, upperfirst(rpc_name))
-                for param_name, param_type in data["services"][service_name]["rpc"][rpc_name]["parameter"].items():
-                   params += "pffui," 
-            cases_str += "\t\t\t\t\t//{}->{}({});\n".format(create_member_cb_if(service_name), rpc_name, params)
+                param_info = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                for param_name, param_type in param_info.items():
+                    cpp_rpc_if_type = map_2_rpc_if_param_type(param_type)
+                    if cpp_rpc_if_type == "Span":
+                        params += "Span(paramReader.get{0}().begin(), paramReader.get{0}().end())".format(upperfirst(param_name))
+                    elif cpp_rpc_if_type.startswith("SpanCL"):
+                        params += "{0}(paramReader.get{1}().begin(), paramReader.get{1}().end())".format(cpp_rpc_if_type, upperfirst(param_name))
+                    elif cpp_rpc_if_type == "TextView":
+                        params += "TextView(paramReader.get{0}().begin(), paramReader.get{0}().size())".format(upperfirst(param_name))
+                    else:
+                        params += "paramReader.get{}()".format(upperfirst(param_name))
+                    if list(param_info.keys())[-1] != param_name:
+                        params += ", " 
+            cases_str += "\t\t\t\t\t{}->{}({});\n".format(create_member_cb_if(service_name), rpc_name, params)
             cases_str += "\t\t\t\t\tbreak;\n"
             cases_str += "\t\t\t\t}\n"
         cases_str += "\t\t\t}\n"
@@ -415,7 +452,7 @@ def create_capnzero_cbif_h_content_str(service_name, rpc_infos, file_we):
         return_type = create_return_type_str_server(rpc_infos[rpc_name], rpc_name)
         if "void" != return_type:
             if_member_fns += create_return_type_definition(return_type, rpc_infos[rpc_name]["returns"], "\t")
-        parameter = create_fn_parameter_str(rpc_infos[rpc_name])
+        parameter = create_rpc_if_fn_parameter_str(rpc_infos[rpc_name])
         if_member_fns += "\tvirtual {} {}({}) = 0;\n".format(return_type, rpc_name, parameter)
 
     outStr = """\
