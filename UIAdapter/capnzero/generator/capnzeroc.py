@@ -258,7 +258,7 @@ using namespace capnzero;
 
 {0}Client::{0}Client():
     m_zmqContext(0),
-    m_zmqReqSocket(m_zmqContext, zmq::socket_type::req)
+    m_zmqReqSocket(m_zmqContext, zmq::socket_type::dealer)
 {{}}
 
 '''.format(file_we)
@@ -500,7 +500,7 @@ void sendOverZmq(::capnp::MallocMessageBuilder& message,
 
 {0}Server::{0}Server({1}):
     m_zmqContext(0),
-    m_zmqRepSocket(m_zmqContext, zmq::socket_type::rep),
+    m_zmqRepSocket(m_zmqContext, zmq::socket_type::router),
     m_zmqPubSocket(m_zmqContext, zmq::socket_type::pub),
 {2}
 {{}}
