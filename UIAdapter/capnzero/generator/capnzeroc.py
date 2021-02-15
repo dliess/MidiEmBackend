@@ -6,9 +6,10 @@ import sys
 import os.path
 
 def upperfirst(x):
-    return x[:1].upper() + x[1:]
+    return x[:1].upper() + x[1:] if x else ''
 
-decapitalize = lambda s: s[:1].lower() + s[1:] if s else ''
+def lowerfirst(x):
+    return x[:1].lower() + x[1:] if x else ''
 
 def to_snake_case(name):
     import re
@@ -61,7 +62,7 @@ def create_return_type_str_server(rpc_info, rpc_name):
     return "Return{}".format(upperfirst(rpc_name)) if "returns" in rpc_info else "void"
 
 def create_capnp_return_type_str(service_name, rpc_name):
-    return "CAPNPReturn" + service_name +  rpc_name.capitalize()
+    return "CAPNPReturn" + service_name +  upperfirst(rpc_name)
 
 def map_descr_type_to_capnp_type(type):
     import re
@@ -125,7 +126,7 @@ def create_capnp_file_content_str(data):
     # Create capnp enum for ServiceId 
     service_enum_str = "enum ServiceId {\n"
     for idx, service_name in enumerate(data["services"]):
-        service_enum_str += "\t" + decapitalize(service_name) + " @" + str(idx) + ";\n"
+        service_enum_str += "\t" + lowerfirst(service_name) + " @" + str(idx) + ";\n"
     service_enum_str += "}\n"
 
     outStr += service_enum_str
@@ -322,10 +323,17 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
 def create_capnzero_server_file_h_content_str(data, file_we):
     cbif_includes = ""
     cbif_members = ""
+    constructor_parameters = ""
     for service_name in data["services"]:
         cbif_includes += "#include \"{}{}.h\"\n".format(file_we, create_member_cb_if_type(service_name))
+        constructor_parameters += "std::unique_ptr<{}> {}".format(create_member_cb_if_type(service_name), \
+                                                             lowerfirst(service_name))
+        if list(data["services"].keys())[-1] != service_name:
+            constructor_parameters += ", "
         cbif_members += "\tstd::unique_ptr<{}> {};\n".format(create_member_cb_if_type(service_name), \
                                                              create_member_cb_if(service_name))
+
+
 
     outStr = """\
 #ifndef {0}_SERVER_H
@@ -338,21 +346,25 @@ def create_capnzero_server_file_h_content_str(data, file_we):
 
 {1}
 
+namespace capnp {{ class MallocMessageBuilder; }}
+
 namespace capnzero
 {{
 
 class {2}Server
 {{
 public:
-    {2}Server();
+    {2}Server({3});
     void peekForRequests();
-""".format(file_we.upper(), cbif_includes, file_we)
+""".format(file_we.upper(), cbif_includes, file_we, constructor_parameters)
 
     outStr += """\
 private:
     zmq::context_t m_zmqContext;
     zmq::socket_t m_zmqRepSocket;
 {}
+    void send(::capnp::MallocMessageBuilder& message,
+              const zmq::send_flags& sendFlags);
 }};
 }} // namespace capnzero
 #endif
@@ -364,6 +376,16 @@ private:
 ################### SERVER CPP ######################
 #####################################################
 def create_capnzero_server_file_cpp_content_str(data, file_we):
+    constructor_parameters = ""
+    constructor_initializer_list = ""
+    for service_name in data["services"]:
+        constructor_parameters += "std::unique_ptr<{}> {}".format(create_member_cb_if_type(service_name), \
+                                                             lowerfirst(service_name))
+        constructor_initializer_list += "\t{}(std::move({}))".format(create_member_cb_if(service_name), lowerfirst(service_name))
+
+        if list(data["services"].keys())[-1] != service_name:
+            constructor_parameters += ", "
+            constructor_initializer_list += ",\n"
 
     cases_str = ""
     for service_name in data["services"]:
@@ -372,28 +394,39 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
         cases_str += "\t\t\tswitch(coordReader.getRpcId())\n"
         cases_str += "\t\t\t{\n"
         for rpc_name in data["services"][service_name]["rpc"]:
+            rpc_info = data["services"][service_name]["rpc"][rpc_name]
             cases_str += "\t\t\t\tcase to_underlying({0}RpcIds::{1}):\n".format(service_name, to_snake_case(rpc_name).upper())
             cases_str += "\t\t\t\t{\n"
             params = ""
-            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+            if "parameter" in rpc_info:
                 cases_str += "\t\t\t\t\tzmq::message_t paramBuf;\n"
                 cases_str += "\t\t\t\t\tauto res2 = m_zmqRepSocket.recv(paramBuf, zmq::recv_flags::dontwait);\n"
                 cases_str += "\t\t\t\t\tif (!res2) { throw std::runtime_error(\"No received msg\"); }\n"
                 cases_str += "\t\t\t\t\tauto paramReader = getReader<Parameter{}{}>(paramBuf);\n".format(service_name, upperfirst(rpc_name))
-                param_info = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                param_info = rpc_info["parameter"]
                 for param_name, param_type in param_info.items():
                     cpp_rpc_if_type = map_2_rpc_if_param_type(param_type)
-                    if cpp_rpc_if_type == "Span":
-                        params += "Span(paramReader.get{0}().begin(), paramReader.get{0}().end())".format(upperfirst(param_name))
-                    elif cpp_rpc_if_type.startswith("SpanCL"):
+                    if cpp_rpc_if_type.startswith("Span"):
                         params += "{0}(paramReader.get{1}().begin(), paramReader.get{1}().end())".format(cpp_rpc_if_type, upperfirst(param_name))
                     elif cpp_rpc_if_type == "TextView":
                         params += "TextView(paramReader.get{0}().begin(), paramReader.get{0}().size())".format(upperfirst(param_name))
                     else:
                         params += "paramReader.get{}()".format(upperfirst(param_name))
                     if list(param_info.keys())[-1] != param_name:
-                        params += ", " 
-            cases_str += "\t\t\t\t\t{}->{}({});\n".format(create_member_cb_if(service_name), rpc_name, params)
+                        params += ", "
+            return_expr = ""
+            if "returns" in rpc_info:
+                return_expr = "auto ret = "
+            cases_str += "\t\t\t\t\t{}{}->{}({});\n".format(return_expr, create_member_cb_if(service_name), rpc_name, params)
+            if "returns" in rpc_info:
+                cases_str += "\t\t\t\t\t::capnp::MallocMessageBuilder retMessage;\n"
+                cases_str += "\t\t\t\t\tauto builder = retMessage.initRoot<{}>();\n".format(create_capnp_return_type_str(service_name, rpc_name))
+                for return_name, return_type in rpc_info["returns"].items():
+                    if map_descr_type_to_capnp_type(return_type) == "Data":
+                        cases_str += "\t\t\t\t\tbuilder.set{0}(capnp::Data::Reader(ret.{1}.data(), ret.{1}.size()));\n".format(upperfirst(return_name), return_name)
+                    else:
+                        cases_str += "\t\t\t\t\tbuilder.set{}(ret.{});\n".format(upperfirst(return_name), return_name)
+                cases_str += "\t\t\t\t\tsend(retMessage, zmq::send_flags::dontwait);\n"
             cases_str += "\t\t\t\t\tbreak;\n"
             cases_str += "\t\t\t\t}\n"
         cases_str += "\t\t\t}\n"
@@ -422,9 +455,10 @@ typename T::Reader getReader(MsgBuf& msgBuf)
 	return msgReader.getRoot<T>();
 }}
 
-{0}Server::{0}Server():
+{0}Server::{0}Server({1}):
     m_zmqContext(0),
-    m_zmqRepSocket(m_zmqContext, zmq::socket_type::rep)
+    m_zmqRepSocket(m_zmqContext, zmq::socket_type::rep),
+{2}
 {{}}
 
 void {0}Server::peekForRequests() {{
@@ -434,11 +468,20 @@ void {0}Server::peekForRequests() {{
     auto coordReader = getReader<RpcCoord>(rpcCoordBuf);
     switch(coordReader.getServiceId())
     {{
-{1}
+{3}
     }}
 }}
 
-'''.format(file_we, cases_str)
+void {0}Server::send(::capnp::MallocMessageBuilder& message,
+                  const zmq::send_flags& sendFlags){{
+    kj::Array<capnp::word> words = messageToFlatArray(message);
+    kj::ArrayPtr<kj::byte> bytes = words.asBytes();
+    m_zmqRepSocket.send(
+        zmq::const_buffer(bytes.begin(), bytes.size()),
+        sendFlags);
+}}
+
+'''.format(file_we, constructor_parameters, constructor_initializer_list, cases_str)
 
     return outStr
 
