@@ -276,6 +276,7 @@ def create_capnzero_client_file_cpp_content_str(data, file_we):
 #include "{0}_Client.h"
 #include <capnp/message.h>
 #include <capnp/serialize.h>
+#include <string_view>
 #include "{0}.capnp.h"
 #include "capnzero_utils.h"
 
@@ -359,14 +360,29 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
 }}
 
 """.format(file_we)
+
+    string_comparisons = ""
+    for service_name in data["services"]:
+        if "signal" in data["services"][service_name]:
+            for signal_name in data["services"][service_name]["signal"]:
+                signal_info = data["services"][service_name]["signal"][signal_name]
+                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_register_fn_name = "on{}{}".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_member = "m_{}".format(lowerfirst(cb_type_name))
+                zmq_sub_key = "{}{}".format(service_name, signal_name)
+                string_comparisons += "\t{}(key == \"{}\"){{\n".format("if" if (string_comparisons == "") else "else if", zmq_sub_key)
+                string_comparisons += "\t}\n"
+
     outStr += """\
 void {0}Client::receiveSignals()
 {{
     zmq::message_t keyBuf;
     auto res = m_zmqSubSocket.recv(keyBuf);
-    if (!res) {{ return; }}
+    if (!res) {{ throw std::runtime_error(\"No received msg\"); }}
+    std::string_view key(static_cast<const char*>(keyBuf.data()), *res);
+{1}
 }}
-""".format(file_we)
+""".format(file_we, string_comparisons)
     outStr += "\n"
     for service_name in data["services"]:
         if "signal" in data["services"][service_name]:
