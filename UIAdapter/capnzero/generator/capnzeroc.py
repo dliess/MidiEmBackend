@@ -61,8 +61,14 @@ def create_return_type_str_client(service_name, rpc_name):
 def create_return_type_str_server(rpc_info, rpc_name):
     return "Return{}".format(upperfirst(rpc_name)) if "returns" in rpc_info else "void"
 
-def create_capnp_return_type_str(service_name, rpc_name):
+def create_capnp_rpc_parameter_type_str(service_name, rpc_name):
+    return "CAPNPParameter" + service_name +  upperfirst(rpc_name)
+
+def create_capnp_rpc_return_type_str(service_name, rpc_name):
     return "CAPNPReturn" + service_name +  upperfirst(rpc_name)
+
+def create_capnp_signal_param_type_str(service_name, signal_name):
+    return "CAPNPSignalParameter" + service_name +  upperfirst(signal_name)
 
 def map_descr_type_to_capnp_type(type):
     import re
@@ -151,21 +157,32 @@ def create_capnp_file_content_str(data):
 
     # Create capnp type for parameter and return types
     for service_name in data["services"]:
-        for rpc_name in data["services"][service_name]["rpc"]:
-            if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                parameter_struct_str = "struct Parameter" + service_name +  upperfirst(rpc_name) + " {\n"
-                params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
-                for idx, key in enumerate(params.keys()):
-                    parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(params[key]) + ";\n"  
-                parameter_struct_str += "}\n"
-                outStr += parameter_struct_str
-            if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                return_struct_str = "struct " + create_capnp_return_type_str(service_name, rpc_name) + " {\n"
-                members = data["services"][service_name]["rpc"][rpc_name]["returns"]
-                for idx, key in enumerate(members.keys()):
-                    return_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(members[key]) + ";\n"  
-                return_struct_str += "}\n"
-                outStr += return_struct_str
+        if "rpc" in data["services"][service_name]:
+            for rpc_name in data["services"][service_name]["rpc"]:
+                if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                    parameter_struct_str = "struct {}{{\n".format(create_capnp_rpc_parameter_type_str(service_name, rpc_name))
+                    params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
+                    for idx, key in enumerate(params.keys()):
+                        parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(params[key]) + ";\n"  
+                    parameter_struct_str += "}\n"
+                    outStr += parameter_struct_str
+                if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                    return_struct_str = "struct " + create_capnp_rpc_return_type_str(service_name, rpc_name) + " {\n"
+                    members = data["services"][service_name]["rpc"][rpc_name]["returns"]
+                    for idx, key in enumerate(members.keys()):
+                        return_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(members[key]) + ";\n"  
+                    return_struct_str += "}\n"
+                    outStr += return_struct_str
+
+        if "signal" in data["services"][service_name]:
+            for signal_name in data["services"][service_name]["signal"]:
+                if "parameter" in data["services"][service_name]["signal"][signal_name]:
+                    parameter_struct_str = "struct {}{{\n".format(create_capnp_signal_param_type_str(service_name, signal_name))
+                    params = data["services"][service_name]["signal"][signal_name]["parameter"]
+                    for idx, key in enumerate(params.keys()):
+                        parameter_struct_str += "\t" + key + " @" + str(idx) + " :" + map_descr_type_to_capnp_type(params[key]) + ";\n"  
+                    parameter_struct_str += "}\n"
+                    outStr += parameter_struct_str
 
     return outStr
 
@@ -271,7 +288,7 @@ using namespace capnzero;
             outStr += "\t}\n"
             if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
                 outStr += " \t{\n"
-                outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format("Parameter" + service_name +  upperfirst(rpc_name))
+                outStr += "\t\tauto paramBuilder = message.initRoot<{0}>();\n".format(create_capnp_rpc_parameter_type_str(service_name, rpc_name))
                 params = data["services"][service_name]["rpc"][rpc_name]["parameter"]
                 for param_name, param_type in params.items():
                     if(map_descr_type_to_capnp_type(param_type) == 'Data'):
@@ -292,7 +309,7 @@ using namespace capnzero;
                 outStr += "\t::capnp::FlatArrayMessageReader readMessage(\n"
                 outStr += "\tkj::ArrayPtr<const capnp::word>(reinterpret_cast<const capnp::word*>(revcMsg.data()), revcMsg.size() / sizeof(capnp::word) )\n"
                 outStr += "\t);\n"
-                outStr += "\tauto reader = readMessage.getRoot<{}>();\n".format(create_capnp_return_type_str(service_name, rpc_name))
+                outStr += "\tauto reader = readMessage.getRoot<{}>();\n".format(create_capnp_rpc_return_type_str(service_name, rpc_name))
                 outStr += "\t" + create_return_type_str_client(service_name, rpc_name) + " retVal;\n"
                 ret_members = data["services"][service_name]["rpc"][rpc_name]["returns"]
                 for member_name, member_type in ret_members.items():
@@ -324,6 +341,7 @@ def create_capnzero_server_file_h_content_str(data, file_we):
     cbif_includes = ""
     cbif_members = ""
     constructor_parameters = ""
+    signal_fn_declarations = ""
     for service_name in data["services"]:
         cbif_includes += "#include \"{}{}.h\"\n".format(file_we, create_member_cb_if_type(service_name))
         constructor_parameters += "std::unique_ptr<{}> {}".format(create_member_cb_if_type(service_name), \
@@ -333,7 +351,8 @@ def create_capnzero_server_file_h_content_str(data, file_we):
         cbif_members += "\tstd::unique_ptr<{}> {};\n".format(create_member_cb_if_type(service_name), \
                                                              create_member_cb_if(service_name))
 
-
+        for signal_name in data["services"][service_name]["signal"]:
+            signal_fn_declarations += "\tvoid {}({});\n".format(signal_name, create_fn_parameter_str(data["services"][service_name]["signal"][signal_name]))
 
     outStr = """\
 #ifndef {0}_SERVER_H
@@ -356,19 +375,16 @@ class {2}Server
 public:
     {2}Server({3});
     void peekForRequests();
-""".format(file_we.upper(), cbif_includes, file_we, constructor_parameters)
-
-    outStr += """\
+    {4}
 private:
     zmq::context_t m_zmqContext;
     zmq::socket_t m_zmqRepSocket;
-{}
-    void send(::capnp::MallocMessageBuilder& message,
-              const zmq::send_flags& sendFlags);
+    zmq::socket_t m_zmqPubSocket;
+{5}
 }};
 }} // namespace capnzero
 #endif
-""".format(cbif_members)
+""".format(file_we.upper(), cbif_includes, file_we, constructor_parameters, signal_fn_declarations, cbif_members)
 
     return outStr
 
@@ -402,7 +418,7 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
                 cases_str += "\t\t\t\t\tzmq::message_t paramBuf;\n"
                 cases_str += "\t\t\t\t\tauto res2 = m_zmqRepSocket.recv(paramBuf, zmq::recv_flags::dontwait);\n"
                 cases_str += "\t\t\t\t\tif (!res2) { throw std::runtime_error(\"No received msg\"); }\n"
-                cases_str += "\t\t\t\t\tauto paramReader = getReader<Parameter{}{}>(paramBuf);\n".format(service_name, upperfirst(rpc_name))
+                cases_str += "\t\t\t\t\tauto paramReader = getReader<{}>(paramBuf);\n".format(create_capnp_rpc_parameter_type_str(service_name, rpc_name))
                 param_info = rpc_info["parameter"]
                 for param_name, param_type in param_info.items():
                     cpp_rpc_if_type = map_2_rpc_if_param_type(param_type)
@@ -420,19 +436,36 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
             cases_str += "\t\t\t\t\t{}{}->{}({});\n".format(return_expr, create_member_cb_if(service_name), rpc_name, params)
             if "returns" in rpc_info:
                 cases_str += "\t\t\t\t\t::capnp::MallocMessageBuilder retMessage;\n"
-                cases_str += "\t\t\t\t\tauto builder = retMessage.initRoot<{}>();\n".format(create_capnp_return_type_str(service_name, rpc_name))
+                cases_str += "\t\t\t\t\tauto builder = retMessage.initRoot<{}>();\n".format(create_capnp_rpc_return_type_str(service_name, rpc_name))
                 for return_name, return_type in rpc_info["returns"].items():
                     if map_descr_type_to_capnp_type(return_type) == "Data":
                         cases_str += "\t\t\t\t\tbuilder.set{0}(capnp::Data::Reader(ret.{1}.data(), ret.{1}.size()));\n".format(upperfirst(return_name), return_name)
                     else:
                         cases_str += "\t\t\t\t\tbuilder.set{}(ret.{});\n".format(upperfirst(return_name), return_name)
-                cases_str += "\t\t\t\t\tsend(retMessage, zmq::send_flags::dontwait);\n"
+                cases_str += "\t\t\t\t\tsendOverZmq(retMessage, m_zmqRepSocket, zmq::send_flags::dontwait);\n"
             cases_str += "\t\t\t\t\tbreak;\n"
             cases_str += "\t\t\t\t}\n"
         cases_str += "\t\t\t}\n"
         cases_str +=  "\t\t\tbreak;\n"
         cases_str +=  "\t\t}\n"
 
+    signal_fn_definitions = ""
+    for service_name in data["services"]:
+        for signal_name in data["services"][service_name]["signal"]:
+            signal_fn_definitions += "void {0}Server::{1}({2})\n".format(file_we, signal_name, create_fn_parameter_str(data["services"][service_name]["signal"][signal_name]))
+            signal_fn_definitions += "{\n"
+            signal_fn_definitions += "\tm_zmqPubSocket.send(zmq::const_buffer(\"{}{}\", {}), zmq::send_flags::sndmore);\n".format(service_name, signal_name, len(service_name) + len(signal_name))
+            signal_info = data["services"][service_name]["signal"][signal_name]
+            if "parameter" in signal_info:
+                signal_fn_definitions += "\t::capnp::MallocMessageBuilder message;\n"
+                signal_fn_definitions += "\tauto builder = message.initRoot<{}>();\n".format(format(create_capnp_signal_param_type_str(service_name, signal_name)))
+                for param_name, param_type in signal_info["parameter"].items():
+                    if map_descr_type_to_capnp_type(param_type) == "Data":
+                        signal_fn_definitions += "\tbuilder.set{0}(capnp::Data::Reader({1}.data(), {1}.size()));\n".format(upperfirst(param_name), param_name)
+                    else:
+                        signal_fn_definitions += "\tbuilder.set{}({});\n".format(upperfirst(param_name), param_name)
+                signal_fn_definitions += "\tsendOverZmq(message, m_zmqPubSocket, zmq::send_flags::dontwait);\n"
+            signal_fn_definitions += "}\n\n"
 
     outStr = '''\
 #include "{0}_Server.h"
@@ -455,9 +488,20 @@ typename T::Reader getReader(MsgBuf& msgBuf)
 	return msgReader.getRoot<T>();
 }}
 
+void sendOverZmq(::capnp::MallocMessageBuilder& message,
+                  zmq::socket_t& zmqSocket,
+                  const zmq::send_flags& sendFlags){{
+    kj::Array<capnp::word> words = messageToFlatArray(message);
+    kj::ArrayPtr<kj::byte> bytes = words.asBytes();
+    zmqSocket.send(
+        zmq::const_buffer(bytes.begin(), bytes.size()),
+        sendFlags);
+}}
+
 {0}Server::{0}Server({1}):
     m_zmqContext(0),
     m_zmqRepSocket(m_zmqContext, zmq::socket_type::rep),
+    m_zmqPubSocket(m_zmqContext, zmq::socket_type::pub),
 {2}
 {{}}
 
@@ -472,16 +516,9 @@ void {0}Server::peekForRequests() {{
     }}
 }}
 
-void {0}Server::send(::capnp::MallocMessageBuilder& message,
-                  const zmq::send_flags& sendFlags){{
-    kj::Array<capnp::word> words = messageToFlatArray(message);
-    kj::ArrayPtr<kj::byte> bytes = words.asBytes();
-    m_zmqRepSocket.send(
-        zmq::const_buffer(bytes.begin(), bytes.size()),
-        sendFlags);
-}}
+{4}
 
-'''.format(file_we, constructor_parameters, constructor_initializer_list, cases_str)
+'''.format(file_we, constructor_parameters, constructor_initializer_list, cases_str, signal_fn_definitions)
 
     return outStr
 

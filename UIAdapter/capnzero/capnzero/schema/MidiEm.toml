@@ -16,4 +16,4 @@
     [services.MusicDevices.signal.musicDeviceListChanged]
         parameter = { deviceNameList = 'Text' }
     [services.MusicDevices.signal.parameterChanged]
-        parameter =  { deviceId = 'Text', voiceId = 'Int16', paramIdx = 'Int16', commanded = 'Float32', actual = 'Float32'}
+        parameter =  { deviceId = 'Text', voiceId = 'Int16', paramIdx = 'Span', commanded = 'Data<8>', actual = 'Float32'}
