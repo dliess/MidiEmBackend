@@ -50,7 +50,7 @@ def create_rpc_if_fn_parameter_str(rpc_info):
     params = rpc_info["parameter"]
     ret = ""
     for param_name, param_type in params.items():
-        ret += type_to_fn_parameter_pass_str(map_2_rpc_if_param_type(param_type)) + " " + param_name
+        ret += type_to_fn_parameter_pass_str(map_2_ca_call_param_type(param_type)) + " " + param_name
         if list(params.keys())[-1] != param_name:
             ret += ", "
     return ret
@@ -86,7 +86,7 @@ def map_2_ret_type(type):
     else:
         return type
 
-def map_2_rpc_if_param_type(type):
+def map_2_ca_call_param_type(type):
     import re
     p = re.compile(r'Data<(\d+)>')
     m = p.match(type) 
@@ -116,6 +116,12 @@ def create_return_type_definition(return_type, content, tabs):
 {0}{{
 {2}{0}}};
 """.format(tabs, return_type, struct_content)
+
+def create_signal_cb_type(service_name, signal_name):
+    return "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+
+def create_signal_cb_member(service_name, signal_name):
+    return "m_{}".format(lowerfirst(create_signal_cb_type(service_name, signal_name)))
 
 #####################################################
 ################### CAPNP FILE ######################
@@ -219,7 +225,7 @@ def create_capnzero_client_file_h_content_str(data, file_we):
         if "signal" in data["services"][service_name]:
             for signal_name in data["services"][service_name]["signal"]:
                 signal_info = data["services"][service_name]["signal"][signal_name]
-                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_type_name = create_signal_cb_type(service_name, signal_name)
                 public_section += "\tusing {} = std::function<void({})>;\n".format(cb_type_name, create_rpc_if_fn_parameter_str(signal_info))
                 cb_register_fn_name = "on{}{}".format(upperfirst(service_name), upperfirst(signal_name))
                 public_section += "\tvoid {}({} cb);\n".format(cb_register_fn_name, cb_type_name)
@@ -229,8 +235,7 @@ def create_capnzero_client_file_h_content_str(data, file_we):
         if "signal" in data["services"][service_name]:
             for signal_name in data["services"][service_name]["signal"]:
                 signal_info = data["services"][service_name]["signal"][signal_name]
-                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
-                cb_members += "\t{} m_{};\n".format(cb_type_name, lowerfirst(cb_type_name))
+                cb_members += "\t{} {};\n".format(create_signal_cb_type(service_name, signal_name), create_signal_cb_member(service_name, signal_name))
 
     outStr = """\
 #ifndef {0}_CLIENT_H
@@ -371,6 +376,24 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
                 cb_member = "m_{}".format(lowerfirst(cb_type_name))
                 zmq_sub_key = "{}{}".format(service_name, signal_name)
                 string_comparisons += "\t{}(key == \"{}\"){{\n".format("if" if (string_comparisons == "") else "else if", zmq_sub_key)
+                if "parameter" in signal_info:
+                    string_comparisons += "\t\tzmq::message_t paramBuf;\n"
+                    string_comparisons += "\t\tauto res2 = m_zmqSubSocket.recv(paramBuf, zmq::recv_flags::dontwait);\n"
+                    string_comparisons += "\t\tif (!res2) { throw std::runtime_error(\"No received msg\"); }\n"
+                    string_comparisons += "\t\tauto paramReader = getReader<{}>(paramBuf);\n".format(create_capnp_signal_param_type_str(service_name, signal_name))
+                    param_info = signal_info["parameter"]
+                    params = ""
+                    for param_name, param_type in param_info.items():
+                        cpp_rpc_if_type = map_2_ca_call_param_type(param_type)
+                        if cpp_rpc_if_type.startswith("Span"):
+                            params += "{0}(paramReader.get{1}().begin(), paramReader.get{1}().end())".format(cpp_rpc_if_type, upperfirst(param_name))
+                        elif cpp_rpc_if_type == "TextView":
+                            params += "TextView(paramReader.get{0}().begin(), paramReader.get{0}().size())".format(upperfirst(param_name))
+                        else:
+                            params += "paramReader.get{}()".format(upperfirst(param_name))
+                        if list(param_info.keys())[-1] != param_name:
+                            params += ", "
+                string_comparisons += "\t\tif({0}) {0}({1});\n".format(create_signal_cb_member(service_name, signal_name), params)
                 string_comparisons += "\t}\n"
 
     outStr += """\
@@ -490,7 +513,7 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
                 cases_str += "\t\t\t\t\tauto paramReader = getReader<{}>(paramBuf);\n".format(create_capnp_rpc_parameter_type_str(service_name, rpc_name))
                 param_info = rpc_info["parameter"]
                 for param_name, param_type in param_info.items():
-                    cpp_rpc_if_type = map_2_rpc_if_param_type(param_type)
+                    cpp_rpc_if_type = map_2_ca_call_param_type(param_type)
                     if cpp_rpc_if_type.startswith("Span"):
                         params += "{0}(paramReader.get{1}().begin(), paramReader.get{1}().end())".format(cpp_rpc_if_type, upperfirst(param_name))
                     elif cpp_rpc_if_type == "TextView":
@@ -544,28 +567,6 @@ def create_capnzero_server_file_cpp_content_str(data, file_we):
 #include "capnzero_utils.h"
 
 using namespace capnzero;
-
-template<typename T, typename MsgBuf>
-typename T::Reader getReader(MsgBuf& msgBuf)
-{{
-	::capnp::FlatArrayMessageReader msgReader(
-		kj::ArrayPtr<const capnp::word>(
-			reinterpret_cast<const capnp::word*>( msgBuf.data() ), 
-			msgBuf.size() / sizeof(capnp::word)
-		)
-	);
-	return msgReader.getRoot<T>();
-}}
-
-void sendOverZmq(::capnp::MallocMessageBuilder& message,
-                  zmq::socket_t& zmqSocket,
-                  const zmq::send_flags& sendFlags){{
-    kj::Array<capnp::word> words = messageToFlatArray(message);
-    kj::ArrayPtr<kj::byte> bytes = words.asBytes();
-    zmqSocket.send(
-        zmq::const_buffer(bytes.begin(), bytes.size()),
-        sendFlags);
-}}
 
 {0}Server::{0}Server({1}):
     m_zmqContext(0),
