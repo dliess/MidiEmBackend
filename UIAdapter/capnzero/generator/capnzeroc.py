@@ -190,6 +190,48 @@ def create_capnp_file_content_str(data):
 ################### CLIENT H ########################
 #####################################################
 def create_capnzero_client_file_h_content_str(data, file_we):
+
+    public_section = ""
+    for service_name in data["services"]:
+        if "rpc" in data["services"][service_name]:
+            for rpc_name in data["services"][service_name]["rpc"]:
+                return_type_str = "void"
+                if "returns" in data["services"][service_name]["rpc"][rpc_name]:
+                    return_type_str = create_return_type_str_client(service_name, rpc_name)
+                    return_struct_str = "\tstruct " + return_type_str + " {\n"
+                    members = data["services"][service_name]["rpc"][rpc_name]["returns"]
+                    for member_name, member_type in members.items():
+                        return_struct_str += "\t\t" + map_2_ret_type(member_type) + " " + member_name + ";\n"  
+                    return_struct_str += "\t};\n"
+                    public_section += return_struct_str
+
+                #if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
+                #    return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
+                parameter_str = ""
+                if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
+                    parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name])
+                method_name = service_name + "__" + rpc_name
+                public_section +=  "\t" + return_type_str
+                public_section += " " if len(return_type_str) < 8 else "\n\t"
+                public_section += method_name + "(" + parameter_str + ");\n"
+    public_section += "\n"
+    for service_name in data["services"]:
+        if "signal" in data["services"][service_name]:
+            for signal_name in data["services"][service_name]["signal"]:
+                signal_info = data["services"][service_name]["signal"][signal_name]
+                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+                public_section += "\tusing {} = std::function<void({})>;\n".format(cb_type_name, create_rpc_if_fn_parameter_str(signal_info))
+                cb_register_fn_name = "on{}{}".format(upperfirst(service_name), upperfirst(signal_name))
+                public_section += "\tvoid {}({} cb);\n".format(cb_register_fn_name, cb_type_name)
+
+    cb_members = ""
+    for service_name in data["services"]:
+        if "signal" in data["services"][service_name]:
+            for signal_name in data["services"][service_name]["signal"]:
+                signal_info = data["services"][service_name]["signal"][signal_name]
+                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_members += "\t{} m_{};\n".format(cb_type_name, lowerfirst(cb_type_name))
+
     outStr = """\
 #ifndef {0}_CLIENT_H
 #define {0}_CLIENT_H
@@ -208,40 +250,8 @@ class {1}Client
 {{
 public:
     {1}Client();
-""".format(file_we.upper(), file_we)
-    for service_name in data["services"]:
-        if "rpc" in data["services"][service_name]:
-            for rpc_name in data["services"][service_name]["rpc"]:
-                return_type_str = "void"
-                if "returns" in data["services"][service_name]["rpc"][rpc_name]:
-                    return_type_str = create_return_type_str_client(service_name, rpc_name)
-                    return_struct_str = "\tstruct " + return_type_str + " {\n"
-                    members = data["services"][service_name]["rpc"][rpc_name]["returns"]
-                    for member_name, member_type in members.items():
-                        return_struct_str += "\t\t" + map_2_ret_type(member_type) + " " + member_name + ";\n"  
-                    return_struct_str += "\t};\n"
-                    outStr += return_struct_str
+{2}
 
-                #if "returnType" in data["services"][service_name]["rpc"][rpc_name]:
-                #    return_type_str = data["services"][service_name]["rpc"][rpc_name]["returnType"]
-                parameter_str = ""
-                if "parameter" in data["services"][service_name]["rpc"][rpc_name]:
-                    parameter_str = create_fn_parameter_str(data["services"][service_name]["rpc"][rpc_name])
-                method_name = service_name + "__" + rpc_name
-                outStr +=  "\t" + return_type_str
-                outStr += " " if len(return_type_str) < 8 else "\n\t"
-                outStr += method_name + "(" + parameter_str + ");\n"
-    outStr += "\n"
-    for service_name in data["services"]:
-        if "signal" in data["services"][service_name]:
-            for signal_name in data["services"][service_name]["signal"]:
-                signal_info = data["services"][service_name]["signal"][signal_name]
-                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
-                outStr += "\tusing {} = std::function<void({})>;\n".format(cb_type_name, create_rpc_if_fn_parameter_str(signal_info))
-                cb_register_fn_name = "on{}{}".format(upperfirst(service_name), upperfirst(signal_name))
-                outStr += "\tvoid {}({} cb);\n".format(cb_register_fn_name, cb_type_name)
-
-    outStr += """\
 private:
     zmq::context_t m_zmqContext;
     zmq::socket_t m_zmqReqSocket;
@@ -251,10 +261,11 @@ private:
 
     void receiveSignals();
 
-};
-} // namespace capnzero
+{3}
+}};
+}} // namespace capnzero
 #endif
-"""
+""".format(file_we.upper(), file_we, public_section, cb_members)
     return outStr
 
 #####################################################
@@ -579,6 +590,9 @@ public:
     return outStr
 
 
+#####################################################
+#################### MAIN ###########################
+#####################################################
 outdir="undefined"
 descrfile="undefined"
 options, remainder = getopt.getopt(sys.argv[1:], ['o:d:'], ['outdir=', 'descrfile='])
