@@ -365,8 +365,6 @@ def create_capnzero_server_file_h_content_str(data, file_we):
 
 {1}
 
-namespace capnp {{ class MallocMessageBuilder; }}
-
 namespace capnzero
 {{
 
