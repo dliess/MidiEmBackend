@@ -357,6 +357,7 @@ void {0}Client::send(::capnp::MallocMessageBuilder& message,
         zmq::const_buffer(bytes.begin(), bytes.size()),
         sendFlags);
 }}
+
 """.format(file_we)
     outStr += """\
 void {0}Client::receiveSignals()
@@ -366,6 +367,25 @@ void {0}Client::receiveSignals()
     if (!res) {{ return; }}
 }}
 """.format(file_we)
+    outStr += "\n"
+    for service_name in data["services"]:
+        if "signal" in data["services"][service_name]:
+            for signal_name in data["services"][service_name]["signal"]:
+                signal_info = data["services"][service_name]["signal"][signal_name]
+                cb_type_name = "{}{}Cb".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_register_fn_name = "on{}{}".format(upperfirst(service_name), upperfirst(signal_name))
+                cb_member = "m_{}".format(lowerfirst(cb_type_name))
+                zmq_sub_key = "{}{}".format(service_name, signal_name)
+                outStr += """\
+void {0}Client::{1}({2} cb)
+{{
+    if({3}) return; // set it only once
+    {3} = cb;
+    m_zmqSubSocket.set(zmq::sockopt::subscribe, "{4}");
+}}
+
+""".format(file_we, cb_register_fn_name, cb_type_name, cb_member, zmq_sub_key)
+
 
     return outStr
 
