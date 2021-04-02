@@ -1,17 +1,28 @@
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/generator/cmake")
 include(capnzero_generate_cpp)
-capnzero_generate_cpp(CAPNZERO_GEN_SRCS CAPNZERO__GEN_HDRS "capnzero/schema/MidiEm.toml")
 
-add_subdirectory(generator)
+set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 
-set(SOURCES
-#    "ZeroMqAdapter.cpp"
+capnzero_generate_cpp(
+    GEN_CPP_SOURCES gen_cpp_sources
+    GEN_CPP_HEADERS gen_cpp_headers
+    GEN_OUT_DIR ${OUTPUT_DIR}
+    IDL_FILE "schema/MidiEm.toml"
 )
 
-add_library(ZeroMqAdapter STATIC ${SOURCES} ${CAPNZERO_GEN_SRCS})
-target_include_directories(ZeroMqAdapter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set(TARGET_NAME "midiem-backend-capnzero")
 
-target_link_libraries(ZeroMqAdapter
-    PUBLIC cppzmq
-    PUBLIC capnzero
+add_library(${TARGET_NAME} STATIC 
+    ${gen_cpp_sources}
+    ${gen_cpp_headers}
+)
+target_include_directories(${TARGET_NAME}
+    PUBLIC
+        ${OUTPUT_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(${TARGET_NAME}
+    PRIVATE cppzmq
+    PRIVATE CapnProto::capnp-rpc
+    PUBLIC CAPNZERO::capnzero
 )

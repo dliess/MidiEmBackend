@@ -81,17 +81,9 @@ CPMAddPackage(
 )
 
 CPMFindPackage(
-  NAME cppzmq
-  GITHUB_REPOSITORY zeromq/cppzmq
-  VERSION 4.7.0
-  OPTIONS
-   "CPPZMQ_BUILD_TESTS OFF"
-)
-
-CPMFindPackage(
-  NAME span
-  GITHUB_REPOSITORY tcbrindle/span
-  GIT_TAG 5d8d366eca918d0ed3d2d196cbeae6abfd874736
+  NAME midiem-capnzero
+  GITHUB_REPOSITORY dliess/MidiEmCapnZero
+  GIT_TAG 8004a73081d40547d9b6bb86a068e9e4c20f02b8
 )
 
 #CPMFindPackage(
