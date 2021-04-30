@@ -1,12 +1,10 @@
 set(SOURCES
     "Server.cpp"
-    "MusicDevicesRpc.cpp"
     "InstrumentsRpc.cpp"
 )
 
 set(HEADERS
     "Interface/Server.h"
-    "MusicDevicesRpc.h"
     "InstrumentsRpc.h"
 )
 

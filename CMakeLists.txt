@@ -83,41 +83,8 @@ CPMAddPackage(
 CPMFindPackage(
   NAME midiem-capnzero
   GITHUB_REPOSITORY dliess/MidiEmCapnZero
-  GIT_TAG 8004a73081d40547d9b6bb86a068e9e4c20f02b8
+  GIT_TAG f7d9b03e702c69d775c5590600f26adafed968c2
 )
-
-#CPMFindPackage(
-#  NAME grpc
-#  GITHUB_REPOSITORY grpc/grpc
-#  VERSION 1.28.0
-#  OPTIONS
-#    "BUILD_TESTING OFF"
-#    "gRPC_ZLIB_PROVIDER module"
-#    "gRPC_CARES_PROVIDER module"
-#    "gRPC_RE2_PROVIDER module"
-#    "gRPC_SSL_PROVIDER module"
-#    "gRPC_PROTOBUF_PROVIDER module"
-#    "gRPC_ABSL_PROVIDER module"
-#    "gRPC_BUILD_GRPC_CPP_PLUGIN ON"
-#    "gRPC_BUILD_TESTS OFF"
-#    "gRPC_BUILD_CSHARP_EXT OFF"
-#    "gRPC_BUILD_GRPC_CPP_PLUGIN ON"
-#    "gRPC_BUILD_GRPC_CSHARP_PLUGIN OFF"
-#    "gRPC_BUILD_GRPC_NODE_PLUGIN OFF"
-#    "gRPC_BUILD_GRPC_OBJECTIVE_C_PLUGIN OFF"
-#    "gRPC_BUILD_GRPC_PHP_PLUGIN OFF"
-#    "gRPC_BUILD_GRPC_PYTHON_PLUGIN ON"
-#    "gRPC_BUILD_GRPC_RUBY_PLUGIN OFF"
-#)
-#
-#if (grpc_ADDED)
-#   if (NOT TARGET gRPC::grpc_cpp_plugin)
-#      add_executable(gRPC::grpc_cpp_plugin ALIAS grpc_cpp_plugin)
-#   endif()
-#   if (NOT TARGET gRPC::grpc++_reflection)
-#      add_library(gRPC::grpc++_reflection ALIAS grpc++_reflection)
-#   endif()
-#endif()
 
 add_subdirectory(3rdparty)
 add_subdirectory(Base)
@@ -134,7 +101,6 @@ set(TARGET_NAME ${PROJECT_NAME}Backend)
 add_executable(${TARGET_NAME} ${SOURCES})
 
 target_link_libraries(${TARGET_NAME}
-  #UIAdaptGrpcServer
   UIAdapterQt
   Base
   docopt_s

@@ -3,8 +3,10 @@
 #include <cassert>
 #include <exception>
 #include <loguru.hpp>
+#include <sys/timerfd.h>
 
 #include "BeatTick.h"
+#include "FdSet.h"
 #include "Server.h"
 #include "ThreadedLoop.h"
 #include "UsbMidiPortNotifier.h"
@@ -53,7 +55,9 @@ void base::Base::start() {
     throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
   }
   m_mainRtThread = std::make_unique<util::Thread>(
-      [this](const std::atomic<bool> &terminateRequest) { mainRtThreadFunction(terminateRequest); });
+      [this](const std::atomic<bool> &terminateRequest) {
+        mainRtThreadFunction(terminateRequest);
+      });
 
   m_portNotifierThread = std::make_unique<util::ThreadedLoop>(
       std::chrono::milliseconds(2),
@@ -68,37 +72,55 @@ void base::Base::waitForEnd() {
 void base::Base::mainRtThreadFunction(
     const std::atomic<bool> &terminateRequest) {
   uiadapter::capnzero::Server server(instruments);
+
+  int timerFd = timerfd_create(CLOCK_MONOTONIC, 0);
+  constexpr auto Period = std::chrono::milliseconds(1);
+  constexpr auto PeriodNs =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(Period);
+  itimerspec t(
+      {.it_interval = {0, PeriodNs.count()}, .it_value = {0, 1000000}});
+  timerfd_settime(timerFd, 0, &t, NULL);
+
+  utils::FdSet fdSet;
+  fdSet.AddFd(timerFd, [this](int fd) { loopFn(); });
+  fdSet.AddFd(server.getFd(),
+              [&server](int fd) { server.processNextRequestAllNonBlock(); });
+  fdSet.AddFd(server.signals().getFd(),
+              [&server](int fd) { server.signals().handleAllSubscriptions(); });
+
   while (!terminateRequest) {
-    auto start = std::chrono::high_resolution_clock::now();
-    // LOG_SCOPE_FUNCTION(INFO);
+    fdSet.Select();
+  }
+}
 
-    // VLOG_SCOPE_F(0, "Base::mainRtThreadFunction()");
-    //{
-    // VLOG_SCOPE_F(1, "PortNotifier update");
-    // ... some code to measure ...
-    //}
+void base::Base::loopFn() {
+  auto start = std::chrono::high_resolution_clock::now();
+  // LOG_SCOPE_FUNCTION(INFO);
 
-    tempo::BeatTick::instance().nextTimeSlot();
-    {
-      MeasurerUs<0>::Guard guard;
-      musicDeviceHolder.midiHolder.midiClock();
-    }
-    musicDeviceHolder.midiHolder.processMidiInBuffers();
-    {
-      MeasurerUs<1>::Guard guard;
-      musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
-    }
-    musicDeviceHolder.musicDevices.updateSoundParameterUI();
-    musicDeviceFactory.invokeInserterQueueActions();
-    // MeasurerMs<0>::instance().sample();
+  // VLOG_SCOPE_F(0, "Base::mainRtThreadFunction()");
+  //{
+  // VLOG_SCOPE_F(1, "PortNotifier update");
+  // ... some code to measure ...
+  //}
 
-    server.processNextRequest(uiadapter::capnzero::Server::WaitMode::NonBlocking);
+  tempo::BeatTick::instance().nextTimeSlot();
+  {
+    MeasurerUs<0>::Guard guard;
+    musicDeviceHolder.midiHolder.midiClock();
+  }
+  musicDeviceHolder.midiHolder.processMidiInBuffers();
+  {
+    MeasurerUs<1>::Guard guard;
+    musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
+  }
+  musicDeviceHolder.musicDevices.updateSoundParameterUI();
+  musicDeviceFactory.invokeInserterQueueActions();
+  // MeasurerMs<0>::instance().sample();
 
-    auto end = std::chrono::high_resolution_clock::now();
-    const std::chrono::nanoseconds diff = end - start;
-    auto period = std::chrono::nanoseconds(1000000);
-    if (diff < period) {
-      std::this_thread::sleep_for(period - diff);
-    }
+  auto end = std::chrono::high_resolution_clock::now();
+  const std::chrono::nanoseconds diff = end - start;
+  auto period = std::chrono::nanoseconds(1000000);
+  if (diff < period) {
+    std::this_thread::sleep_for(period - diff);
   }
 }
