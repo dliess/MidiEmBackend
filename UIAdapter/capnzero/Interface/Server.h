@@ -3,16 +3,19 @@
 
 #include "MidiEm_Server.h"
 
+namespace base::instruments { struct Instruments; }
+
 namespace uiadapter::capnzero
 {
 
-class Server
+class Server : public ::capnzero::MidiEm::MidiEmServer
 {
 public:
-    Server();
+    Server(base::instruments::Instruments& rInstruments);
+    using Super = ::capnzero::MidiEm::MidiEmServer;
+    using WaitMode = Super::WaitMode;
 private:
     zmq::context_t m_zmqContext;
-    ::capnzero::MidiEm::MidiEmServer m_server;
 };
 
 } // namespace uiadapter::capnzero

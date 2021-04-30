@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <thread>
 
 #include "Instruments.h"
 #include "InstrumentsFactory.h"
@@ -27,9 +28,9 @@ public:
    void waitForEnd();
 
 private:
-   std::unique_ptr<util::ThreadedLoop> m_mainRtThread;
+   std::unique_ptr<util::Thread> m_mainRtThread;
    std::unique_ptr<util::ThreadedLoop> m_portNotifierThread;
-   void mainRtThreadFunction();
+   void mainRtThreadFunction(const std::atomic<bool>& terminateRequest);
 };
 
 } // namespace base

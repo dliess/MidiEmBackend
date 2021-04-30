@@ -21,7 +21,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 # Package installs
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
 	sudo \
         cmake \
         clang-format \
@@ -31,46 +31,45 @@ RUN apt-get install -y \
         libasound2-dev \
         libgtest-dev \
         libusb-1.0-0-dev \
-        uuid-dev
-
-# install gRPC build dependencies
-RUN apt-get install -y \
-        libssl-dev
+        uuid-dev \
+        && rm -rf /var/lib/apt/lists/*
 
 # install Qt build common dependencies
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
         qtbase5-dev \
         qtdeclarative5-dev \
         libqt5websockets5-dev \
-        libqt5webchannel5-dev
+        libqt5webchannel5-dev \
+        && rm -rf /var/lib/apt/lists/*
 
 # install Qt build dependencies for frontend
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
         qml-module-qtquick-layouts \
         qml-module-qtquick-controls \
         qml-module-qtquick-controls2 \
         qml-module-qtquick-dialogs \
         qml-module-qtquick-shapes \
-        qml-module-qt-websockets
+        qml-module-qt-websockets \
+        && rm -rf /var/lib/apt/lists/*
 
 # some utilities for runtime
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
         vim \
         feedgnuplot \
         netcat \
         curl \
         zsh \
-        wget
+        wget \
+        && rm -rf /var/lib/apt/lists/*
 
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
         pkg-config \
         libcapnp-dev \
         capnproto \
         libzmq3-dev \
-        python3-toml
-
-RUN rm -rf /var/lib/apt/lists/*
+        python3-toml \
+        && rm -rf /var/lib/apt/lists/*
 
 # Create group and user
 RUN groupadd --gid=$GID $BUILD_USER

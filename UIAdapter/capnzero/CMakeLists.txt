@@ -5,7 +5,7 @@ set(SOURCES
 )
 
 set(HEADERS
-    "Server.h"
+    "Interface/Server.h"
     "MusicDevicesRpc.h"
     "InstrumentsRpc.h"
 )
@@ -17,7 +17,12 @@ add_library(${TARGET_NAME} STATIC
     ${HEADERS}
 )
 
+target_include_directories(${TARGET_NAME}
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Interface"
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 target_link_libraries(${TARGET_NAME} 
-    PUBLIC 
-        midiem-capnzero
+    PUBLIC midiem-capnzero
+    PRIVATE Instruments
 )

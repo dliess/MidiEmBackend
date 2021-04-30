@@ -8,10 +8,46 @@
 
 namespace util
 {
-class ThreadedLoop
+class Thread
 {
 public:
-   ThreadedLoop(){};
+   Thread(){};
+   template<class Function, class... Args>
+   explicit Thread(Function&& f,
+                         Args&&... args)
+   {
+      m_thread = std::thread([this, f, args...]() {
+            std::invoke(f, m_terminateRequest, args...);
+      });
+   }
+
+   Thread(const Thread&) = delete;
+   Thread(Thread&& rhs) noexcept :
+      m_thread(std::move(rhs.m_thread)), m_terminateRequest()
+   {
+      m_terminateRequest.exchange(rhs.m_terminateRequest);
+   }
+   Thread& operator=(Thread&& rhs) noexcept
+   {
+      m_thread = std::move(rhs.m_thread);
+      m_terminateRequest.exchange(rhs.m_terminateRequest);
+      return *this;
+   }
+   ~Thread()
+   {
+      m_terminateRequest.store(true);
+      m_thread.join();
+   }
+   void join() { m_thread.join(); }
+
+protected:
+   std::thread m_thread;
+   std::atomic<bool> m_terminateRequest{false};
+};
+
+class ThreadedLoop : public Thread
+{
+public:
    template<class Function, class... Args>
    explicit ThreadedLoop(std::chrono::nanoseconds period, Function&& f,
                          Args&&... args)
@@ -32,29 +68,9 @@ public:
          }
       });
    }
-   ThreadedLoop(const ThreadedLoop&) = delete;
-   ThreadedLoop(ThreadedLoop&& rhs) noexcept :
-      m_thread(std::move(rhs.m_thread)), m_terminateRequest()
-   {
-      m_terminateRequest.exchange(rhs.m_terminateRequest);
-   }
-   ThreadedLoop& operator=(ThreadedLoop&& rhs) noexcept
-   {
-      m_thread = std::move(rhs.m_thread);
-      m_terminateRequest.exchange(rhs.m_terminateRequest);
-      return *this;
-   }
-   ~ThreadedLoop()
-   {
-      m_terminateRequest.store(true);
-      m_thread.join();
-   }
-   void join() { m_thread.join(); }
 
-private:
-   std::thread m_thread;
-   std::atomic<bool> m_terminateRequest{false};
 };
+
 
 } // namespace util
 
