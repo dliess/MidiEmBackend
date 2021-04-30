@@ -11,11 +11,9 @@ namespace uiadapter::capnzero
 class Server : public ::capnzero::MidiEm::MidiEmServer
 {
 public:
-    Server(base::instruments::Instruments& rInstruments);
+    Server(zmq::context_t& rZmqContext, base::instruments::Instruments& rInstruments);
     using Super = ::capnzero::MidiEm::MidiEmServer;
     using WaitMode = Super::WaitMode;
-private:
-    zmq::context_t m_zmqContext;
 };
 
 } // namespace uiadapter::capnzero
