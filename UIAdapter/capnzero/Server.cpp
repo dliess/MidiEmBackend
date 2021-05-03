@@ -11,18 +11,23 @@ Server::Server(zmq::context_t &rZmqContext,
     : ::capnzero::MidiEm::MidiEmServer(
           rZmqContext, "tcp://*:5555", "tcp://*:5556",
           std::make_unique<InstrumentsRpc>(rInstruments)) {
-  rInstruments.registerForDataChange([this, rInstruments]() {
-    LOG_F(INFO, "Sending {}",
-          meta::serialize(rInstruments.data).dump().c_str());
-    Super::signals().Instruments__dataChanged(
-        meta::serialize(rInstruments.data).dump().c_str());
+  rInstruments.registerForDataChange([this, &rInstruments]() {
+    Super::signals().Instruments__kitInstrumentsChanged(
+        meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
+    Super::signals().Instruments__melodicInstrumentsChanged(
+        meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
   });
 
-  Super::signals().registerInstrumentsDataChangedSubscrCb(
+  Super::signals().registerInstrumentsKitInstrumentsChangedSubscrCb(
       [rInstruments](Signals &rSignals) {
-        LOG_F(INFO, "Sending {}",
-              meta::serialize(rInstruments.data).dump().c_str());
-        rSignals.Instruments__dataChanged(
-            meta::serialize(rInstruments.data).dump().c_str());
+        rSignals.Instruments__kitInstrumentsChanged(
+            meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
+      });
+  Super::signals().registerInstrumentsMelodicInstrumentsChangedSubscrCb(
+      [rInstruments](Signals &rSignals) {
+        rSignals.Instruments__melodicInstrumentsChanged(
+            meta::serialize(rInstruments.data.melodicInstruments)
+                .dump()
+                .c_str());
       });
 }

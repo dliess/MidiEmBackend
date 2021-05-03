@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
         clang-format \
         ninja-build \
         g++ \
+        gdb \
         git \
         libasound2-dev \
         libgtest-dev \

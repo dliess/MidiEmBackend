@@ -9,8 +9,7 @@
 #include <QWebChannel>
 #include <QWebSocketServer>
 
-#include "QtAdaptInstruments.h"
-#include "QtAdaptMusicDevices.h"
+#include "MidiEm_QObjectClient.h"
 
 int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
 {
@@ -27,10 +26,9 @@ int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
    QObject::connect(&clientWrapper, &WebSocketClientWrapper::clientConnected,
                     &channel, &QWebChannel::connectTo);
 
-   uiadapter::qt::Instruments instrumentsAdapter(base.instruments);
-   uiadapter::qt::MusicDevices musicDevicesAdapter(base.musicDeviceHolder);
+   zmq::context_t m_zmqContext;
+   capnzero::MidiEm::QClient client(m_zmqContext, "tcp://localhost:5555", "tcp://localhost:5556");
 
-   channel.registerObject(QStringLiteral("Instruments"), &instrumentsAdapter);
-   channel.registerObject(QStringLiteral("MusicDevices"), &musicDevicesAdapter);
+   channel.registerObject(QStringLiteral("MidiEmBackendServer"), &client);
    return app.exec();
 }

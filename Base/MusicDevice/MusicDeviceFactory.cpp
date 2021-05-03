@@ -17,7 +17,7 @@
 #include <loguru.hpp>
 #include <memory>
 
-#define IGNODER_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
+#define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
 
 using namespace base::musicDevice;
 
@@ -29,6 +29,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
       [this](rtmidiadapt::PortIndex index,
              const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
+         LOG_F(INFO, "------------------> input added: {}", devOnUsbPort.getDeviceName());
          auto pMidiIn =
             createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
          if (!pMidiIn)
@@ -54,11 +55,12 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                         getDescription(nextDeviceId));
             });
       },
-      {{}, {IGNODER_DEVICES}, false});
+      {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
       [this](rtmidiadapt::PortIndex index,
              const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
+            LOG_F(INFO, "------------------> output added: {}", devOnUsbPort.getDeviceName());
          auto pMidiOut =
             createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
          if (!pMidiOut)
@@ -84,10 +86,11 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                         getDescription(nextDeviceId));
             });
       },
-      {{}, {IGNODER_DEVICES}, false});
+      {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
       [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
+         LOG_F(INFO, "------------------> input removed: {}", devOnUsbPort.getDeviceName());
          const auto [resType, deviceName] =
             m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
          const MusicDeviceId deviceId(deviceName,
@@ -107,10 +110,11 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                   MidiHolder::Id(devOnUsbPort.getDeviceName(),
                                  devOnUsbPort.getUsbPortName()));
       },
-      {{}, {IGNODER_DEVICES}, false});
+      {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
       [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
+         LOG_F(INFO, "------------------> output removed: {}", devOnUsbPort.getDeviceName());
          const auto [resType, deviceName] =
             m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
          const MusicDeviceId deviceId(deviceName,
@@ -129,7 +133,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                   MidiHolder::Id(devOnUsbPort.getDeviceName(),
                                  devOnUsbPort.getUsbPortName()));
       },
-      {{}, {IGNODER_DEVICES}, false});
+      {{}, {IGNORED_DEVICES}, false});
 #else
    insertMusicDeviceDummies();
 #endif

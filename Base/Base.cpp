@@ -16,6 +16,7 @@
 #include "Histogram.h"
 #include "Measurer.h"
 
+/*
 using DataHolderUs = TimeMeasure::Histogram<std::chrono::microseconds>;
 using DataHolderMs = TimeMeasure::Histogram<std::chrono::milliseconds>;
 
@@ -31,6 +32,7 @@ TimeMeasure::CyclicDataOutputterThread<DataHolderUs,
         &MeasurerUs<1>::instance().dataHolder(),
     });
 // --------------------------
+*/
 
 base::Base::Base(const std::string &configDir)
     : musicDeviceHolder(), musicDeviceFactory(musicDeviceHolder, configDir),
@@ -41,6 +43,7 @@ base::Base::Base(const std::string &configDir)
 }
 
 void base::Base::start() {
+/*
   MeasurerMs<0>::instance().dataHolder().setHistogramRange(100);
   MeasurerUs<0>::instance().dataHolder().setHistogramRange(100);
   MeasurerUs<1>::instance().dataHolder().setHistogramRange(100);
@@ -49,18 +52,19 @@ void base::Base::start() {
     exit(1);
   }
   outThreadUdp.startThread(1000);
-
+*/
   if (!midi::PortNotifiers::instance().init()) {
     // TODO: put this code to Midi lib
     throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
   }
+  
   m_mainRtThread = std::make_unique<util::Thread>(
       [this](const std::atomic<bool> &terminateRequest) {
         mainRtThreadFunction(terminateRequest);
       });
-
+ 
   m_portNotifierThread = std::make_unique<util::ThreadedLoop>(
-      std::chrono::milliseconds(2),
+      std::chrono::milliseconds(800),
       [this]() { midi::PortNotifiers::instance().update(); });
 }
 
@@ -95,7 +99,6 @@ void base::Base::mainRtThreadFunction(
 }
 
 void base::Base::loopFn() {
-  auto start = std::chrono::high_resolution_clock::now();
   // LOG_SCOPE_FUNCTION(INFO);
 
   // VLOG_SCOPE_F(0, "Base::mainRtThreadFunction()");
@@ -106,22 +109,15 @@ void base::Base::loopFn() {
 
   tempo::BeatTick::instance().nextTimeSlot();
   {
-    MeasurerUs<0>::Guard guard;
+    //MeasurerUs<0>::Guard guard;
     musicDeviceHolder.midiHolder.midiClock();
   }
   musicDeviceHolder.midiHolder.processMidiInBuffers();
   {
-    MeasurerUs<1>::Guard guard;
+    //MeasurerUs<1>::Guard guard;
     musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
   }
   musicDeviceHolder.musicDevices.updateSoundParameterUI();
   musicDeviceFactory.invokeInserterQueueActions();
   // MeasurerMs<0>::instance().sample();
-
-  auto end = std::chrono::high_resolution_clock::now();
-  const std::chrono::nanoseconds diff = end - start;
-  auto period = std::chrono::nanoseconds(1000000);
-  if (diff < period) {
-    std::this_thread::sleep_for(period - diff);
-  }
 }
