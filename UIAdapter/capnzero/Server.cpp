@@ -19,12 +19,12 @@ Server::Server(zmq::context_t &rZmqContext,
   });
 
   Super::signals().registerInstrumentsKitInstrumentsChangedSubscrCb(
-      [rInstruments](Signals &rSignals) {
+      [&rInstruments](Signals &rSignals) {
         rSignals.Instruments__kitInstrumentsChanged(
             meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
       });
   Super::signals().registerInstrumentsMelodicInstrumentsChangedSubscrCb(
-      [rInstruments](Signals &rSignals) {
+      [&rInstruments](Signals &rSignals) {
         rSignals.Instruments__melodicInstrumentsChanged(
             meta::serialize(rInstruments.data.melodicInstruments)
                 .dump()
