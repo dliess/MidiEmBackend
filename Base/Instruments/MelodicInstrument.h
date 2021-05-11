@@ -60,8 +60,9 @@ private:
    int m_currentVoiceIndex{-1};
 
    static constexpr int NUM_NOTES = 128;
-   static constexpr int FREE      = -1;
-   std::array<int, NUM_NOTES> m_noteAllocations{FREE};
+   static constexpr int FREE      = -1; 
+    
+   std::array<int, NUM_NOTES> m_noteAllocations;
 
    inline void incrementVoiceIndex() noexcept;
 };

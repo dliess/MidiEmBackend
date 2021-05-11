@@ -117,7 +117,9 @@ void base::Base::loopFn() {
     //MeasurerUs<1>::Guard guard;
     musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
   }
+  /*
   musicDeviceHolder.musicDevices.updateSoundParameterUI();
+  */
   musicDeviceFactory.invokeInserterQueueActions();
   // MeasurerMs<0>::instance().sample();
 }

@@ -6,6 +6,7 @@
    "runArgs" : ["--rm", "--privileged",
      "--group-add", "audio"
    ],
+   "forwardPorts": [5555, 5556],
    "mounts" : [
       "type=bind,source=/dev,target=/dev",
       "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",

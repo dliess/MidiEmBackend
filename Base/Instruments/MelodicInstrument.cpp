@@ -7,10 +7,15 @@ using namespace base::instruments;
 MelodicInstrument::MelodicInstrument(std::string name) noexcept :
    m_name(std::move(name))
 {
+   for(auto& e : m_noteAllocations)
+   {
+      e = FREE;
+   }
 }
 
 void MelodicInstrument::noteOn(int note, float velocity) noexcept
 {
+   if(note < 0 || note >= m_noteAllocations.size()) return;
    if (m_noteAllocations[note] != FREE)
       return;
    incrementVoiceIndex();
@@ -20,11 +25,13 @@ void MelodicInstrument::noteOn(int note, float velocity) noexcept
       assert(m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler);
       m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->noteOn(
          m_voices[m_currentVoiceIndex].voiceIndex, note, velocity);
+//    LOG_F(INFO, "sending.. {} {} {} {}", m_currentVoiceIndex, m_voices[m_currentVoiceIndex].voiceIndex, note, velocity);
    }
 }
 
 void MelodicInstrument::noteOff(int note, float velocity) noexcept
 {
+   if(note < 0 || note >= m_noteAllocations.size()) return;
    if (m_noteAllocations[note] == FREE)
       return;
    const auto& voice = m_voices[m_noteAllocations[note]];

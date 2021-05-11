@@ -14,7 +14,8 @@
     "SUONOBUONO nABC:SUONOBUONO nABC MIDI 1" : "SuonoBuono/nABC",
     "Elektron Model:Samples:Elektron Model:Samples MIDI 1" : "Elektron/Model_Samples",
     "therapKid:therapKid MIDI 1" : "TwistedElectrons/TherapKid",
-
+    "DSI Tetra:DSI Tetra MIDI 1" : "DaveSmithInstruments/Tetra",
+    
     "__JUST_4_TEST__Elektron/Octatrack_Mk1": "Elektron/Octatrack_Mk1",
     "__JUST_4_TEST__Elektron/Analog4_Mk1": "Elektron/Analog4_Mk1",
     "__JUST_4_TEST__Elektron/AnalogRytm_Mk1": "Elektron/AnalogRytm_Mk1",

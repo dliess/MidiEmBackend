@@ -32,7 +32,7 @@ void SoundHandler::initMidiInHandler(
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
       pMidiIn, m_rSoundSection, [this](int voiceId, int parameterId, float value) {
-         LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId, parameterId, value);
+         //LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId, parameterId, value);
          m_paramStorage.setSoundParameterActualValue(voiceId, parameterId, value);
       });
    if(m_midiOutHandler)
