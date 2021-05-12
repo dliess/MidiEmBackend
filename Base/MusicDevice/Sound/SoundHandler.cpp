@@ -146,6 +146,7 @@ void SoundHandler::doParameterDumpRequest() noexcept
 {
    if (!m_midiOutHandler->sendParameterDumpRequest())
    {
-      m_paramStorage.markAllDirty();
+      // TODO: do something else here
+      //m_paramStorage.markAllDirty();
    }
 }
