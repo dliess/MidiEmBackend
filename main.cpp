@@ -19,8 +19,9 @@ static const char USAGE[] = R"(
 int main(int argc, char *argv[])
 {
    loguru::init(argc, argv);
-   loguru::add_file("/tmp/push2backend.log", loguru::Truncate,
-                    loguru::Verbosity_MAX);
+   loguru::g_flush_interval_ms = 500;
+   //loguru::add_file("/tmp/push2backend.log", loguru::Truncate,
+   //                 loguru::Verbosity_MAX);
 
    std::map<std::string, docopt::value> args =
       docopt::docopt(USAGE, {argv + 1, argv + argc},
