@@ -25,11 +25,11 @@ void InstrumentsRpc::melodicNoteOff(::capnzero::UInt8 instrumentIndex, ::capnzer
 
 void InstrumentsRpc::kitNoteOn(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOn(instrumentIndex, note, velocity);
+    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOn(soundIndex, note, velocity);
 }
 
 void InstrumentsRpc::kitNoteOff(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOff(instrumentIndex, note, velocity);
+    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOff(soundIndex, note, velocity);
 }
 
