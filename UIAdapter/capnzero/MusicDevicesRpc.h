@@ -12,8 +12,8 @@ namespace uiadapter::capnzero {
 class MusicDevicesRpc : public ::capnzero::MidiEm::MusicDevicesRpcIf {
 public:
   MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
-  void noteOn(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
-	void noteOff(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+  void noteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+	void noteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
 private:
   base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
 };

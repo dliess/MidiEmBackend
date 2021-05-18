@@ -1,7 +1,7 @@
 #include "Server.h"
 #include "Instruments.h"
-#include "MusicDeviceContainer.h"
 #include "InstrumentsRpc.h"
+#include "MusicDeviceContainer.h"
 #include "MusicDevicesRpc.h"
 
 #include "JsonCast.h" // meta::serialize
@@ -33,5 +33,22 @@ Server::Server(zmq::context_t &rZmqContext,
             meta::serialize(rInstruments.data.melodicInstruments)
                 .dump()
                 .c_str());
+      });
+
+  Super::signals().registerMusicDevicesMusicDevicesChangedSubscrCb(
+      [&rMusicDeviceContainer](Signals &rSignals) {
+        rSignals.MusicDevices__musicDevicesChanged(
+            meta::serialize(rMusicDeviceContainer).dump().c_str());
+      });
+
+  rMusicDeviceContainer.registerForAdd(
+      [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+        signals().MusicDevices__musicDevicesChanged(
+            meta::serialize(rMusicDeviceContainer).dump().c_str());
+      });
+  rMusicDeviceContainer.registerForAboutToRemove(
+      [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+        signals().MusicDevices__musicDevicesChanged(
+            meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
 }

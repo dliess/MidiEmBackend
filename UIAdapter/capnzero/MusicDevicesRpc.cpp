@@ -8,12 +8,26 @@ MusicDevicesRpc::MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusic
 {
 }
 
-void MusicDevicesRpc::noteOn(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void MusicDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    //m_rMusicDeviceContainer . noteOn();
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rMusicDeviceContainer.find(uuid_);
+    if(iter != m_rMusicDeviceContainer.end())
+    {
+        assert(iter->second->soundHandler);
+        iter->second->soundHandler->noteOn(voiceIndex, note, velocity);
+    }
 }
 
-void MusicDevicesRpc::noteOff(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void MusicDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rMusicDeviceContainer.find(uuid_);
+    if(iter != m_rMusicDeviceContainer.end())
+    {
+        assert(iter->second->soundHandler);
+        iter->second->soundHandler->noteOff(voiceIndex, note, velocity);
+    }
 }
