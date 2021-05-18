@@ -174,7 +174,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
    const MusicDeviceId& deviceId,
    std::shared_ptr<description::Description> pDescr) noexcept
 {
-   auto itCntrlDev = m_rHolder.musicDevices.find(deviceId);
+   auto itCntrlDev = m_rHolder.musicDevices.findByDeviceId(deviceId);
    if (itCntrlDev != m_rHolder.musicDevices.end())
    {
       return itCntrlDev->second;
@@ -198,7 +198,7 @@ Factory::MusicDeviceInserter::createAndInsertMusicDevice(
 {
    std::shared_ptr<sound::SoundPresets> pSoundPresets;
 
-   const auto itSimilarDev = m_rHolder.musicDevices.find(
+   const auto itSimilarDev = m_rHolder.musicDevices.findByDeviceId(
       {deviceId.deviceName, MusicDeviceId::ANY_PORT});
    if (itSimilarDev != m_rHolder.musicDevices.end())
    {
@@ -221,7 +221,7 @@ Factory::MusicDeviceInserter::createAndInsertMusicDevice(
    LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
       deviceId, m_resourceRootDir, std::move(pDescr), std::move(pSoundPresets));
-   m_rHolder.musicDevices.insert(std::make_pair(deviceId, pMusicDevice));
+   m_rHolder.musicDevices.insert(std::make_pair(pMusicDevice->id(), pMusicDevice));
 
    return std::move(pMusicDevice);
 }
@@ -283,7 +283,7 @@ void Factory::MusicDeviceInserter::action(
 void Factory::MusicDeviceInserter::action(EraseFromDevices,
                                           const MusicDeviceId& deviceId)
 {
-   m_rHolder.musicDevices.erase(deviceId);
+   m_rHolder.musicDevices.eraseByDeviceId(deviceId);
 }
 
 void Factory::MusicDeviceInserter::action(EraseFromMidiInHolder,

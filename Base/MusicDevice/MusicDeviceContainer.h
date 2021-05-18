@@ -7,16 +7,17 @@
 
 #include "MusicDevice.h"
 #include "MusicDeviceId.h"
+#include "Identifiable.h"
 
 namespace base::musicDevice
 {
 class MusicDeviceContainer
-   : private std::unordered_map<MusicDeviceId, std::shared_ptr<MusicDevice>>
+   : private std::unordered_map<util::Identifiable::UUID, std::shared_ptr<MusicDevice>>
 //: public util::KeyValueVector<MusicDeviceId, std::shared_ptr<MusicDevice>>
 {
 public:
    using Super =
-      std::unordered_map<MusicDeviceId, std::shared_ptr<MusicDevice>>;
+      std::unordered_map<util::Identifiable::UUID, std::shared_ptr<MusicDevice>>;
    using Cb = std::function<void(std::shared_ptr<MusicDevice>)>;
    inline void registerForAdd(Cb cb) noexcept;
    inline void registerForAboutToRemove(Cb cb) noexcept;
@@ -35,10 +36,13 @@ public:
    inline iterator end() noexcept;
    inline const_iterator end() const noexcept;
    inline iterator find(const key_type& key) noexcept;
+   inline const_iterator findByDeviceId(const MusicDeviceId& mdId) const noexcept;
+   inline iterator findByDeviceId(const MusicDeviceId& mdId) noexcept;
    inline const_iterator find(const key_type& key) const noexcept;
    inline std::pair<iterator, bool> insert(const value_type& val);
    inline size_type erase(const key_type& k);
-
+   inline size_type eraseByDeviceId(const MusicDeviceId& mdId);
+   
    inline size_t size() const noexcept;
 
 private:

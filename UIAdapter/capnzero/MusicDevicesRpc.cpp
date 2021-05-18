@@ -1,12 +1,19 @@
 #include "MusicDevicesRpc.h"
+#include "MusicDeviceContainer.h"
 
 using namespace uiadapter::capnzero;
 
-void MusicDevicesRpc::triggerSendMusicDeviceList() {}
+MusicDevicesRpc::MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer) :
+    m_rMusicDeviceContainer(rMusicDeviceContainer)
+{
+}
 
-void MusicDevicesRpc::registerForParameterChange(
-    const ::capnzero::TextView &deviceIdStr, ::capnzero::Int16 voiceIdx) {}
-MusicDevicesRpc::ReturnUnregisterForParameterChange
-MusicDevicesRpc::unregisterForParameterChange(
-    const ::capnzero::TextView &deviceIdStr, ::capnzero::Int16 voiceIdx,
-    const ::capnzero::Span &instrumentUUID) {}
+void MusicDevicesRpc::noteOn(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+{
+    //m_rMusicDeviceContainer . noteOn();
+}
+
+void MusicDevicesRpc::noteOff(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+{
+
+}

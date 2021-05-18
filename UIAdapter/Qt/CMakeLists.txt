@@ -10,14 +10,10 @@ find_package(Qt5 5.11.3
    COMPONENTS Core WebSockets WebChannel REQUIRED)
 
 set(SOURCES
-   "QtAdaptInstruments.cpp"
-   "QtAdaptMusicDevices.cpp"
    "StartQt.cpp"
 )
 
 set(HEADERS
-   "QtAdaptInstruments.h"
-   "QtAdaptMusicDevices.h"
    "StartQt.h"
 )
 

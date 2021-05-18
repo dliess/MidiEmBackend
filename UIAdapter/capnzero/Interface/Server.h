@@ -4,6 +4,7 @@
 #include "MidiEm_Server.h"
 
 namespace base::instruments { struct Instruments; }
+namespace base::musicDevice { class MusicDeviceContainer; }
 
 namespace uiadapter::capnzero
 {
@@ -11,7 +12,9 @@ namespace uiadapter::capnzero
 class Server : public ::capnzero::MidiEm::MidiEmServer
 {
 public:
-    Server(zmq::context_t& rZmqContext, base::instruments::Instruments& rInstruments);
+    Server(zmq::context_t& rZmqContext,
+           base::instruments::Instruments& rInstruments,
+           base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
     using Super = ::capnzero::MidiEm::MidiEmServer;
     using WaitMode = Super::WaitMode;
 };

@@ -9,6 +9,7 @@
 #include "MusicDeviceId.h"
 #include "DoubleBufferedMessageDrain.h"
 #include "MusicDeviceSequencer.h"
+#include "Identifiable.h"
 
 namespace midi { class IMidiInMedium; }
 namespace midi { class IMidiOutMedium; }
@@ -22,7 +23,7 @@ namespace base::musicDevice
 
 namespace description { struct Description; }
 namespace sound { class SoundPresets; }
-struct MusicDevice
+struct MusicDevice : public util::Identifiable
 {
    MusicDevice(MusicDeviceId deviceId, const std::string& resourceRootDir,
                std::shared_ptr<description::Description> descr,

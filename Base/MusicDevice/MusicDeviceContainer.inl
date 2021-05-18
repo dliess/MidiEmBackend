@@ -89,6 +89,30 @@ inline MusicDeviceContainer::const_iterator MusicDeviceContainer::find(
    return Super::find(key);
 }
 
+inline MusicDeviceContainer::const_iterator MusicDeviceContainer::findByDeviceId(const MusicDeviceId& mdId) const noexcept
+{
+   for(auto iter = Super::begin(); iter != Super::end(); ++iter)
+   {
+      if(iter->second.get()->deviceId() == mdId)
+      {
+         return iter;
+      }
+   }
+   return Super::end();
+}
+
+inline MusicDeviceContainer::iterator MusicDeviceContainer::findByDeviceId(const MusicDeviceId& mdId) noexcept
+{
+   for(auto iter = Super::begin(); iter != Super::end(); ++iter)
+   {
+      if(iter->second.get()->deviceId() == mdId)
+      {
+         return iter;
+      }
+   }
+   return Super::end();
+}
+
 inline std::pair<MusicDeviceContainer::iterator, bool>
 MusicDeviceContainer::insert(const value_type& val)
 {
@@ -106,6 +130,17 @@ inline MusicDeviceContainer::size_type MusicDeviceContainer::erase(
       invokeAboutToRemoveCbs(it->second);
    }
    return Super::erase(k);
+}
+
+inline MusicDeviceContainer::size_type MusicDeviceContainer::eraseByDeviceId(const MusicDeviceId& mdId)
+{
+   auto it = findByDeviceId(mdId);
+   if(it != end())
+   {
+      invokeAboutToRemoveCbs(it->second);
+      return Super::erase(it->first);
+   }
+   return 0; // Number of elements removed
 }
 
 inline size_t MusicDeviceContainer::size() const noexcept

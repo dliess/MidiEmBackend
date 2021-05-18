@@ -1,11 +1,13 @@
 set(SOURCES
     "Server.cpp"
     "InstrumentsRpc.cpp"
+    "MusicDevicesRpc.cpp"
 )
 
 set(HEADERS
     "Interface/Server.h"
     "InstrumentsRpc.h"
+    "MusicDevicesRpc.h"
 )
 
 set(TARGET_NAME capnzero-server)
@@ -23,4 +25,5 @@ target_include_directories(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} 
     PUBLIC midiem-capnzero
     PRIVATE Instruments
+    PRIVATE MusicDevice
 )

@@ -76,7 +76,7 @@ void base::Base::waitForEnd() {
 void base::Base::mainRtThreadFunction(
     const std::atomic<bool> &terminateRequest) {
   zmq::context_t zmqContext;
-  uiadapter::capnzero::Server server(zmqContext, instruments);
+  uiadapter::capnzero::Server server(zmqContext, instruments, musicDeviceHolder.musicDevices);
 
   int timerFd = timerfd_create(CLOCK_MONOTONIC, 0);
   constexpr auto Period = std::chrono::milliseconds(1);

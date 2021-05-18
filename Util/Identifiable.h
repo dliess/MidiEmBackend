@@ -29,6 +29,18 @@ protected:
 
 } // namespace util
 
+namespace std
+{
+  template <>
+  struct hash<util::Identifiable::UUID>
+  {
+      size_t operator()(const util::Identifiable::UUID& uuid) const noexcept
+      {
+         return uuid[0] + uuid[7] + uuid[15];
+      }
+  };
+} // namespace std
+
 #include "Identifiable.inl"
 
 #endif

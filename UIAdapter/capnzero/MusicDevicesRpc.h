@@ -3,16 +3,19 @@
 
 #include "MidiEmMusicDevicesRpcIf.h"
 
+namespace base::musicDevice {
+  class MusicDeviceContainer;
+}
+
 namespace uiadapter::capnzero {
 
 class MusicDevicesRpc : public ::capnzero::MidiEm::MusicDevicesRpcIf {
 public:
-  void triggerSendMusicDeviceList() override;
-  void registerForParameterChange(const ::capnzero::TextView &deviceIdStr,
-                                  ::capnzero::Int16 voiceIdx) override;
-  ReturnUnregisterForParameterChange
-  unregisterForParameterChange(const ::capnzero::TextView &deviceIdStr, ::capnzero::Int16 voiceIdx,
-                               const ::capnzero::Span &instrumentUUID) override;
+  MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
+  void noteOn(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+	void noteOff(::capnzero::UInt8 mdIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+private:
+  base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
 };
 
 } // namespace uiadapter::capnzero

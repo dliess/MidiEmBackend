@@ -124,7 +124,7 @@ void Instruments::addVoiceToKitInstrumentSound(
          VoiceDescr voiceDescriptor;
          voiceDescriptor.soundDeviceId = soundDeviceId;
          voiceDescriptor.voiceIndex    = voiceIdx;
-         auto sndDevIt = m_rMusicDeviceContainer.find(soundDeviceId);
+         auto sndDevIt = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
          if (sndDevIt != m_rMusicDeviceContainer.end())
          {
             voiceDescriptor.pSoundDevice = sndDevIt->second;
@@ -168,7 +168,7 @@ void Instruments::addVoiceToMelodicInstrument(
       MelodicInstrumentVoice voiceDescriptor;
       voiceDescriptor.soundDeviceId = soundDeviceId;
       voiceDescriptor.voiceIndex    = voiceIdx;
-      auto sndDevIt       = m_rMusicDeviceContainer.find(soundDeviceId);
+      auto sndDevIt       = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
       if (sndDevIt != m_rMusicDeviceContainer.end())
       {
          voiceDescriptor.pSoundDevice = sndDevIt->second;
