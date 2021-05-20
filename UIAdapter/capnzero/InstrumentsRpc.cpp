@@ -12,24 +12,51 @@ void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView &name) {}
 void InstrumentsRpc::removeKitInstrument(
     const ::capnzero::SpanCL<8> &instrumentUUID) {}
 
-void InstrumentsRpc::melodicNoteOn(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    //LOG_F(INFO, "melodicNoteOn {} {} {}", instrumentIndex, note, velocity);
-    m_rInstruments.data.melodicInstruments[instrumentIndex]->noteOn(note, velocity);
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
+    if(iter != m_rInstruments.data.melodicInstruments.end())
+    {
+        iter->get()->noteOn(note, velocity);
+        return;
+    }
 }
 
-void InstrumentsRpc::melodicNoteOff(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    m_rInstruments.data.melodicInstruments[instrumentIndex]->noteOff(note, velocity);
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
+    if(iter != m_rInstruments.data.melodicInstruments.end())
+    {
+        iter->get()->noteOff(note, velocity);
+        return;
+    }
 }
 
-void InstrumentsRpc::kitNoteOn(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOn(soundIndex, note, velocity);
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
+    if(iter != m_rInstruments.data.kitInstruments.end())
+    {
+        iter->get()->noteOn(soundIndex, note, velocity);
+        return;
+    }
 }
 
-void InstrumentsRpc::kitNoteOff(::capnzero::UInt8 instrumentIndex, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {
-    m_rInstruments.data.kitInstruments[instrumentIndex]->noteOff(soundIndex, note, velocity);
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
+    if(iter != m_rInstruments.data.kitInstruments.end())
+    {
+        iter->get()->noteOff(soundIndex, note, velocity);
+        return;
+    }
 }
 
