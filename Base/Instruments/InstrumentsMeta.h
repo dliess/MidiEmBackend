@@ -4,6 +4,38 @@
 #include "Meta.h"
 
 template<>
+inline void to_json<base::instruments::KitInstruments>(
+   nlohmann::json& j,
+   const base::instruments::KitInstruments& obj)
+{
+   j = meta::serialize(*static_cast<const base::instruments::KitInstruments::Super*>(&obj));
+}
+
+template<>
+inline void from_json<base::instruments::KitInstruments>(
+   const nlohmann::json& j,
+   base::instruments::KitInstruments& obj)
+{
+   obj = meta::deserialize<base::instruments::KitInstruments::Super>(j);
+}
+
+template<>
+inline void to_json<base::instruments::MelodicInstruments>(
+   nlohmann::json& j,
+   const base::instruments::MelodicInstruments& obj)
+{
+   j = meta::serialize(*static_cast<const base::instruments::MelodicInstruments::Super*>(&obj));
+}
+
+template<>
+inline void from_json<base::instruments::MelodicInstruments>(
+   const nlohmann::json& j,
+   base::instruments::MelodicInstruments& obj)
+{
+   obj = meta::deserialize<base::instruments::MelodicInstruments::Super>(j);
+}
+
+template<>
 inline void to_json<std::shared_ptr<base::instruments::KitInstrument>>(
    nlohmann::json& j,
    const std::shared_ptr<base::instruments::KitInstrument>& obj)

@@ -23,6 +23,8 @@ namespace instruments
 struct KitInstruments : public std::vector<std::shared_ptr<KitInstrument>>
 {
    using Super = std::vector<std::shared_ptr<KitInstrument>>;
+   KitInstruments() = default;
+   KitInstruments(const Super& rhs) : Super(rhs) {}
    Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
          if(iter->get()->id() == uuid) return iter;
@@ -38,6 +40,8 @@ struct KitInstruments : public std::vector<std::shared_ptr<KitInstrument>>
 struct MelodicInstruments : public std::vector<std::shared_ptr<MelodicInstrument>>
 {
    using Super = std::vector<std::shared_ptr<MelodicInstrument>>;
+   MelodicInstruments() = default;
+   MelodicInstruments(const Super& rhs) : Super(rhs) {}
    Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
          if(iter->get()->id() == uuid) return iter;
