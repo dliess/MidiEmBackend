@@ -34,7 +34,7 @@ Server::Server(zmq::context_t &rZmqContext,
                 .dump()
                 .c_str());
       });
-
+/*
   Super::signals().registerMusicDevicesMusicDevicesChangedSubscrCb(
       [&rMusicDeviceContainer](Signals &rSignals) {
         rSignals.MusicDevices__musicDevicesChanged(
@@ -51,4 +51,5 @@ Server::Server(zmq::context_t &rZmqContext,
         signals().MusicDevices__musicDevicesChanged(
             meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
+*/
 }
