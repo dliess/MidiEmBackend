@@ -55,5 +55,6 @@ private:
 } // namespace base::musicDevice
 
 #include "MusicDeviceContainer.inl"
+#include "MusicDeviceContainerMeta.h"
 
 #endif

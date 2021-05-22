@@ -55,4 +55,7 @@ private:
 };
 
 } // namespace base::musicDevice
+
+#include "MusicDeviceMeta.h"
+
 #endif
