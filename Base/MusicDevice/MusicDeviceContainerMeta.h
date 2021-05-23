@@ -11,7 +11,7 @@ inline void to_json<base::musicDevice::MusicDeviceContainer>(
    j = nlohmann::json::array();
    for(auto& it : obj)
    {
-      j.push_back(meta::serialize(it.second.get()));
+      j.push_back(meta::serialize(*it.second.get()));
    }
 }
 
