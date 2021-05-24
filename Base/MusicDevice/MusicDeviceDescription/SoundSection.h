@@ -24,9 +24,8 @@ struct ParameterId
 // This is just a helper struct, don't reflect
 struct CacheHelpers
 {
-   static constexpr int UNSET = -1;
-   std::string name;
-   int index{UNSET};
+   std::optional<std::string> name;
+   std::optional<int> index;
 };
 
 struct NoteRange
@@ -37,7 +36,8 @@ struct NoteRange
 
 struct NoteSettingsMidiRouting
 {
-   int destinationParameterIdx{CacheHelpers::UNSET}; // not to reflect
+   static constexpr int UNSET = -1;
+   int destinationParameterIdx{UNSET}; // not to reflect
    std::string destinationParameter;
    std::optional<std::vector<int>> mapping;
 };

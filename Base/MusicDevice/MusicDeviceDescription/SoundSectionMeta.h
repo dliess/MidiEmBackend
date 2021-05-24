@@ -77,6 +77,8 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::Component>()
 {
    return members(
+      member("name", &base::musicDevice::description::sound::Component::name),
+      member("index", &base::musicDevice::description::sound::Component::index),
       member("type", &base::musicDevice::description::sound::Component::type),
       member("parameterIds", &base::musicDevice::description::sound::Component::parameterIds)
    );
@@ -112,6 +114,8 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::Parameter>()
 {
    return members(
+      member("name", &base::musicDevice::description::sound::Parameter::name),
+      member("index", &base::musicDevice::description::sound::Parameter::index),
       member("type", &base::musicDevice::description::sound::Parameter::type),
       member("component", &base::musicDevice::description::sound::Parameter::component),
       member("role", &base::musicDevice::description::sound::Parameter::role),

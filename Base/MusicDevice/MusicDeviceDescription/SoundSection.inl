@@ -52,6 +52,7 @@ std::string base::musicDevice::description::sound::Component::type2String(Type t
       case Type::Envelope: return "Envelope";
       case Type::Arpeggiator: return "Arpeggiator";
    }
+   return "Unknown";
 }
 
 inline 

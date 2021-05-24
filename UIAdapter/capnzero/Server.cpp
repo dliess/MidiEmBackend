@@ -3,6 +3,7 @@
 #include "InstrumentsRpc.h"
 #include "MusicDeviceContainer.h"
 #include "MusicDevicesRpc.h"
+#include "MusicDeviceDescription.h"
 
 #include "JsonCast.h" // meta::serialize
 
@@ -43,12 +44,24 @@ Server::Server(zmq::context_t &rZmqContext,
 
   rMusicDeviceContainer.registerForAdd(
       [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
-        signals().MusicDevices__musicDevicesChanged(
-            meta::serialize(rMusicDeviceContainer).dump().c_str());
+        signals().MusicDevices__musicDevicesChanged(meta::serialize(rMusicDeviceContainer).dump().c_str());
+
+        const auto& deviceName = ptr.get()->deviceId().deviceName;
+        const base::musicDevice::description::Description& description = *ptr.get()->description();
+        signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
+
       });
   rMusicDeviceContainer.registerForAboutToRemove(
       [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
         signals().MusicDevices__musicDevicesChanged(
             meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
+
+    Super::signals().registerMusicDevicesMusicDeviceDescriptionAddedSubscrCb([&rMusicDeviceContainer, this](Signals &rSignals) {
+        for(auto& it : rMusicDeviceContainer){
+            const auto& deviceName = it.second.get()->deviceId().deviceName;
+            const base::musicDevice::description::Description& description = *it.second.get()->description();
+            signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
+        }
+    });
 }

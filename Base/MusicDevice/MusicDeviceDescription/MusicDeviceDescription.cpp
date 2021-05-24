@@ -122,8 +122,9 @@ void Description::initCaches() noexcept
                );
                if(iter != engine.parameters.end())
                {
+                  assert(iter->second.index);
                   engine.noteSettings->midi->pitchRouting->destinationParameterIdx =
-                     iter->second.index;
+                     *iter->second.index;
                }
             }
             if(engine.noteSettings->midi->velocityRouting)
@@ -133,8 +134,9 @@ void Description::initCaches() noexcept
                );
                if(iter != engine.parameters.end())
                {
+                  assert(iter->second.index);
                   engine.noteSettings->midi->velocityRouting->destinationParameterIdx =
-                     iter->second.index;
+                     *iter->second.index;
                }
             }
          }
