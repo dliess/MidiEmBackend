@@ -47,7 +47,7 @@ Server::Server(zmq::context_t &rZmqContext,
         signals().MusicDevices__musicDevicesChanged(meta::serialize(rMusicDeviceContainer).dump().c_str());
 
         const auto& deviceName = ptr.get()->deviceId().deviceName;
-        const base::musicDevice::description::Description& description = *ptr.get()->description();
+        const auto& description = *ptr.get()->description();
         signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
 
       });
@@ -60,7 +60,7 @@ Server::Server(zmq::context_t &rZmqContext,
     Super::signals().registerMusicDevicesMusicDeviceDescriptionAddedSubscrCb([&rMusicDeviceContainer, this](Signals &rSignals) {
         for(auto& it : rMusicDeviceContainer){
             const auto& deviceName = it.second.get()->deviceId().deviceName;
-            const base::musicDevice::description::Description& description = *it.second.get()->description();
+            const auto& description = *it.second.get()->description();
             signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
         }
     });
