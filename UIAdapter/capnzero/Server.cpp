@@ -23,23 +23,23 @@ Server::Server(zmq::context_t &rZmqContext,
         meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
   });
 
-  Super::signals().registerInstrumentsKitInstrumentsChangedSubscrCb(
-      [&rInstruments](Signals &rSignals) {
+    //ATTENTION: to send all initial subscription data in ordered manner,
+    // we use only one of the Subscription callbacks, since we dont know
+    // the call order otherwise 
+  Super::signals().registerMusicDevicesMusicDevicesChangedSubscrCb(
+      [&rMusicDeviceContainer, &rInstruments](Signals &rSignals) {
+        for(auto& it : rMusicDeviceContainer){
+            const auto& deviceName = it.second.get()->deviceId().deviceName;
+            const base::musicDevice::description::Description& description = *it.second.get()->description();
+            rSignals.MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
+        }
+        rSignals.MusicDevices__musicDevicesChanged(meta::serialize(rMusicDeviceContainer).dump().c_str());
         rSignals.Instruments__kitInstrumentsChanged(
             meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
-      });
-  Super::signals().registerInstrumentsMelodicInstrumentsChangedSubscrCb(
-      [&rInstruments](Signals &rSignals) {
         rSignals.Instruments__melodicInstrumentsChanged(
             meta::serialize(rInstruments.data.melodicInstruments)
                 .dump()
                 .c_str());
-      });
-
-  Super::signals().registerMusicDevicesMusicDevicesChangedSubscrCb(
-      [&rMusicDeviceContainer](Signals &rSignals) {
-        rSignals.MusicDevices__musicDevicesChanged(
-            meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
 
   rMusicDeviceContainer.registerForAdd(
@@ -49,19 +49,11 @@ Server::Server(zmq::context_t &rZmqContext,
         const auto& deviceName = ptr.get()->deviceId().deviceName;
         const auto& description = *ptr.get()->description();
         signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
-
       });
+
   rMusicDeviceContainer.registerForAboutToRemove(
       [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
         signals().MusicDevices__musicDevicesChanged(
             meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
-
-    Super::signals().registerMusicDevicesMusicDeviceDescriptionAddedSubscrCb([&rMusicDeviceContainer, this](Signals &rSignals) {
-        for(auto& it : rMusicDeviceContainer){
-            const auto& deviceName = it.second.get()->deviceId().deviceName;
-            const auto& description = *it.second.get()->description();
-            signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
-        }
-    });
 }
