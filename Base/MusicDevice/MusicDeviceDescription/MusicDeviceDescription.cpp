@@ -77,16 +77,20 @@ void Description::initCaches() noexcept
       // For global section
       if(soundSection->global)
       {
+         int j = 0;
          for(auto& [paramName, paramDescr] : soundSection->global->parameters)
          {
             paramDescr.name = paramName;
+            paramDescr.index = j++;
             soundSection->global->parametersCached.push_back(paramDescr);
          }
+         j = 0;
          if(soundSection->global->components)
          {
             for(auto& [componentName, componentDescr] : *soundSection->global->components)
             {
                componentDescr.name = componentName;
+               componentDescr.index = j++;
                soundSection->global->componentsCached.push_back(componentDescr);
             }
          }
