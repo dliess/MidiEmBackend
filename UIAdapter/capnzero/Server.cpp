@@ -2,9 +2,9 @@
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "MusicDeviceContainer.h"
+#include "MusicDeviceDescription.h"
 #include "MusicDevicesRpc.h"
 #include "SoundDevicesRpc.h"
-#include "MusicDeviceDescription.h"
 
 #include "JsonCast.h" // meta::serialize
 
@@ -25,17 +25,20 @@ Server::Server(zmq::context_t &rZmqContext,
         meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
   });
 
-    //ATTENTION: to send all initial subscription data in ordered manner,
-    // we use only one of the Subscription callbacks, since we dont know
-    // the call order otherwise 
+  // ATTENTION: to send all initial subscription data in ordered manner,
+  // we use only one of the Subscription callbacks, since we dont know
+  // the call order otherwise
   Super::signals().registerMusicDevicesMusicDevicesChangedSubscrCb(
       [&rMusicDeviceContainer, &rInstruments](Signals &rSignals) {
-        for(auto& it : rMusicDeviceContainer){
-            const auto& deviceName = it.second.get()->deviceId().deviceName;
-            const base::musicDevice::description::Description& description = *it.second.get()->description();
-            rSignals.MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
+        for (auto &it : rMusicDeviceContainer) {
+          const auto &deviceName = it.second.get()->deviceId().deviceName;
+          const base::musicDevice::description::Description &description =
+              *it.second.get()->description();
+          rSignals.MusicDevices__musicDeviceDescriptionAdded(
+              deviceName, meta::serialize(description).dump().c_str());
         }
-        rSignals.MusicDevices__musicDevicesChanged(meta::serialize(rMusicDeviceContainer).dump().c_str());
+        rSignals.MusicDevices__musicDevicesChanged(
+            meta::serialize(rMusicDeviceContainer).dump().c_str());
         rSignals.Instruments__kitInstrumentsChanged(
             meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
         rSignals.Instruments__melodicInstrumentsChanged(
@@ -45,22 +48,28 @@ Server::Server(zmq::context_t &rZmqContext,
       });
 
   rMusicDeviceContainer.registerForAdd(
-      [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
-        signals().MusicDevices__musicDevicesChanged(meta::serialize(rMusicDeviceContainer).dump().c_str());
+      [this, &rMusicDeviceContainer](
+          std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+        signals().MusicDevices__musicDevicesChanged(
+            meta::serialize(rMusicDeviceContainer).dump().c_str());
 
-        const auto& deviceName = ptr.get()->deviceId().deviceName;
-        const auto& description = *ptr.get()->description();
-        signals().MusicDevices__musicDeviceDescriptionAdded(deviceName, meta::serialize(description).dump().c_str());    
+        const auto &deviceName = ptr.get()->deviceId().deviceName;
+        const auto &description = *ptr.get()->description();
+        signals().MusicDevices__musicDeviceDescriptionAdded(
+            deviceName, meta::serialize(description).dump().c_str());
       });
 
   rMusicDeviceContainer.registerForAboutToRemove(
-      [this, &rMusicDeviceContainer](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+      [this, &rMusicDeviceContainer](
+          std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
         signals().MusicDevices__musicDevicesChanged(
             meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
 
-    rMusicDeviceContainer.registerSoundDevParamChangeCbUI([this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
-                                            float commanded, float actual){
-      signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx, commanded, actual);
-    });
+  rMusicDeviceContainer.registerSoundDevParamChangeCbUI(
+      [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+             float commanded, float actual) {
+        signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx,
+                                                 commanded, actual);
+      });
 }
