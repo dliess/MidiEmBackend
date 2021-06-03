@@ -165,33 +165,36 @@ inline ParameterStorage::EngineData& ParameterStorage::elementContainer(
    }
 }
 
-inline void ParameterStorage::registerForParameterChange(
-   int voiceId, ParamChangeCb cb) noexcept
+inline void ParameterStorage::registerParamChangeCbUI(ParamChangeCb cb)
 {
-   auto& voiceElement = elementContainer(voiceId);
-   voiceElement.m_parameterChangeCb = cb;
-   for(auto& paramDescr : voiceElement.parameters)
-   {
-      paramDescr.dirtyFlagUi = true;
-   }
+   m_paramChangeCbsUI.push_back(cb);
 }
 
-inline void ParameterStorage::unregisterForParameterChange(int voiceId) noexcept
+inline void ParameterStorage::uiShowsInterestInParameter(int voiceId, 
+                                                         int parameterId) noexcept
 {
-   elementContainer(voiceId).m_parameterChangeCb = nullptr;
+   forEachParameter([](int voiceIdx, int paramIdx, Element& element){
+      element.dirtyFlagUi = true;
+      element.uiInterestCount++;
+   });
+}
+
+inline void ParameterStorage::uiLoosesInterestInParameter(int voiceId, int parameterId ) noexcept
+{
+   forEachParameter([](int voiceIdx, int paramIdx, Element& element){
+      element.uiInterestCount--;
+   });  
 }
 
 inline void ParameterStorage::updateUI() noexcept
 {
    forEachParameter([this](int voiceIdx, int paramIdx, Element& element) {
-      if (!element.dirtyFlagUi)
+      if (element.dirtyFlagUi && element.uiInterestCount)
       {
-         return;
-      }
-      if (elementContainer(voiceIdx).m_parameterChangeCb)
-      {
-         elementContainer(voiceIdx).m_parameterChangeCb(
-            voiceIdx, paramIdx, element.commanded, element.actual);
+         for(auto &cb : m_paramChangeCbsUI)
+         {
+            cb(voiceIdx, paramIdx, element.commanded, element.actual);
+         }
          element.dirtyFlagUi = false;
       }
    });

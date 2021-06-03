@@ -54,8 +54,10 @@ public:
    void updateUI() noexcept;
    std::shared_ptr<SoundPresets> presets() const noexcept;
    using ParamChangeCb = ParameterStorage::ParamChangeCb;
-   void registerForParameterChange(int voiceId, ParamChangeCb cb) noexcept;
-   void unregisterForParameterChange(int voiceId) noexcept;
+   void registerParamChangeCbUI(ParamChangeCb cb);
+   constexpr static int ALL = ParameterStorage::ALL;
+   void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
+   void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
 
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;

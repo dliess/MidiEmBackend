@@ -127,14 +127,19 @@ void SoundHandler::updateUI() noexcept
    m_paramStorage.updateUI();
 }
 
-void SoundHandler::registerForParameterChange(int voiceId, ParamChangeCb cb) noexcept
+void SoundHandler::registerParamChangeCbUI(ParamChangeCb cb)
 {
-   m_paramStorage.registerForParameterChange(voiceId, cb);
+   m_paramStorage.registerParamChangeCbUI(cb);
 }
 
-void SoundHandler::unregisterForParameterChange(int voiceId) noexcept
+void SoundHandler::uiShowsInterestInParameter(int voiceId, int parameterId) noexcept
 {
-   m_paramStorage.unregisterForParameterChange(voiceId);
+   m_paramStorage.uiShowsInterestInParameter(voiceId, parameterId);
+}
+
+void SoundHandler::uiLoosesInterestInParameter(int voiceId, int parameterId) noexcept
+{
+   m_paramStorage.uiLoosesInterestInParameter(voiceId, parameterId);
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

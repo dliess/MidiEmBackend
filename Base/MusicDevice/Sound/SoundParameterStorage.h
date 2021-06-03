@@ -46,8 +46,11 @@ public:
 
    using ParamChangeCb = std::function<void(int voiceId, int paramIdx,
                                             float commanded, float actual)>;
-   inline void registerForParameterChange(int voiceId, ParamChangeCb cb) noexcept;
-   inline void unregisterForParameterChange(int voiceId) noexcept;
+   inline void registerParamChangeCbUI(ParamChangeCb cb);
+
+   constexpr static int ALL = -2;
+   inline void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
+   inline void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
    inline void updateUI() noexcept;
 private:
    struct Element
@@ -65,6 +68,7 @@ private:
       float actual{0};
       bool dirtyFlagRt{false};
       bool dirtyFlagUi{true};
+      int uiInterestCount{0};
 
       inline bool updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
@@ -82,6 +86,8 @@ private:
    };
    EngineData m_globalData;
    std::vector<EngineData> m_voicesData;
+
+   std::vector<ParamChangeCb> m_paramChangeCbsUI;
 
    template<typename Cb>
    void forEachParameter(Cb&& cb) const noexcept;
