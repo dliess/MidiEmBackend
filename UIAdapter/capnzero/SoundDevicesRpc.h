@@ -14,6 +14,8 @@ public:
   SoundDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
 	void registerForParameterChange(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx) override;
 	void unregisterForParameterChange(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx) override;
+	void incrementParameterValue(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceId, ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment) override;
+	void setParameterValue(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceId, ::capnzero::Int16 paramIdx, ::capnzero::Float32 value) override;
 private:
   base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
 };

@@ -111,6 +111,21 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
 }
 
+void SoundHandler::incrementParameterValue(int voiceId, int parameterId, float increment) noexcept
+{
+   if (!m_midiOutHandler)
+   {
+      LOG_F(
+         ERROR,
+         "setSoundParameterValue() called but there is no m_midiOutHandler in "
+         "device '{}'",
+         m_deviceName);
+      return;
+   }
+   const float actualValue = m_paramStorage.getCommandedValue(voiceId, parameterId);
+   setParameterValue(voiceId, parameterId, actualValue + increment);
+}
+
 void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)

@@ -50,6 +50,7 @@ public:
    void noteOff(int voiceIndex, int note, float velocity) noexcept;
    void pitchBend(int voiceIndex, float value) noexcept;
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
+   void incrementParameterValue(int voiceId, int parameterId, float increment) noexcept;
    void updateActualSoundStorageValues() noexcept;
    std::shared_ptr<SoundPresets> presets() const noexcept;
    constexpr static int ALL = ParameterStorage::ALL;

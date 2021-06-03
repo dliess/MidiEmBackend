@@ -126,6 +126,11 @@ inline void ParameterStorage::markAllDirty() noexcept
    });
 }
 
+inline float ParameterStorage::getCommandedValue(int voiceIdx, int parameterId) const noexcept
+{
+   return elementContainer(voiceIdx).parameters[parameterId].commanded;
+}
+
 inline std::vector<float> ParameterStorage::getCommandedValuesOfVoice(
    int voiceIdx) const noexcept
 {
@@ -244,6 +249,7 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
 
 inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
 {
+   if(value < 0.0 || value > 1.0) return;
    if (commanded != value)
    {
       commanded   = value;
