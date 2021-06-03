@@ -643,7 +643,7 @@
             }
           },
           "EG Amount": {
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Filter",
             "source": {
               "midi": {
