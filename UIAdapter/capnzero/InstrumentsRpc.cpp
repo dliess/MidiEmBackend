@@ -10,7 +10,7 @@ InstrumentsRpc::InstrumentsRpc(base::instruments::Instruments& rInstruments) :
 void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView &name) {}
 
 void InstrumentsRpc::removeKitInstrument(
-    const ::capnzero::SpanCL<8> &instrumentUUID) {}
+    const ::capnzero::SpanCL<16> &instrumentUUID) {}
 
 void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
 {

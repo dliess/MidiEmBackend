@@ -3,6 +3,7 @@
 #include "InstrumentsRpc.h"
 #include "MusicDeviceContainer.h"
 #include "MusicDevicesRpc.h"
+#include "SoundDevicesRpc.h"
 #include "MusicDeviceDescription.h"
 
 #include "JsonCast.h" // meta::serialize
@@ -15,7 +16,8 @@ Server::Server(zmq::context_t &rZmqContext,
     : ::capnzero::MidiEm::MidiEmServer(
           rZmqContext, "tcp://*:5555", "tcp://*:5556",
           std::make_unique<InstrumentsRpc>(rInstruments),
-          std::make_unique<MusicDevicesRpc>(rMusicDeviceContainer)) {
+          std::make_unique<MusicDevicesRpc>(rMusicDeviceContainer),
+          std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer)) {
   rInstruments.registerForDataChange([this, &rInstruments]() {
     Super::signals().Instruments__kitInstrumentsChanged(
         meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
@@ -56,4 +58,9 @@ Server::Server(zmq::context_t &rZmqContext,
         signals().MusicDevices__musicDevicesChanged(
             meta::serialize(rMusicDeviceContainer).dump().c_str());
       });
+
+    rMusicDeviceContainer.registerSoundDevParamChangeCbUI([this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+                                            float commanded, float actual){
+      signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx, commanded, actual);
+    });
 }

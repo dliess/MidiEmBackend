@@ -1,0 +1,23 @@
+#ifndef SOUND_DEVICES_RPC_H
+#define SOUND_DEVICES_RPC_H
+
+#include "MidiEmSoundDevicesRpcIf.h"
+
+namespace base::musicDevice {
+  class MusicDeviceContainer;
+}
+
+namespace uiadapter::capnzero {
+
+class SoundDevicesRpc : public ::capnzero::MidiEm::SoundDevicesRpcIf {
+public:
+  SoundDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
+	void registerForParameterChange(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx) override;
+	void unregisterForParameterChange(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx) override;
+private:
+  base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
+};
+
+} // namespace uiadapter::capnzero
+
+#endif // SOUND_DEVICES_RPC_H

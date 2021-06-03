@@ -51,13 +51,14 @@ public:
    void pitchBend(int voiceIndex, float value) noexcept;
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
    void updateActualSoundStorageValues() noexcept;
-   void updateUI() noexcept;
    std::shared_ptr<SoundPresets> presets() const noexcept;
-   using ParamChangeCb = ParameterStorage::ParamChangeCb;
-   void registerParamChangeCbUI(ParamChangeCb cb);
    constexpr static int ALL = ParameterStorage::ALL;
    void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
    void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
+   template<typename Cb>
+   void forEachParameter(Cb&& cb) const noexcept;
+   template<typename Cb>
+   void forEachParameter(Cb&& cb) noexcept;
 
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;
@@ -76,6 +77,20 @@ private:
 
    void doParameterDumpRequest() noexcept;
 };
+
+
+
+template<typename Cb>
+void SoundHandler::forEachParameter(Cb&& cb) const noexcept
+{
+   m_paramStorage.forEachParameter(cb);
+}
+
+template<typename Cb>
+void SoundHandler::forEachParameter(Cb&& cb) noexcept
+{
+   m_paramStorage.forEachParameter(cb);
+}
 
 } // namespace sound
 } // namespace base::musicDevice

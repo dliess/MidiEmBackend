@@ -122,16 +122,6 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
    }
 }
 
-void SoundHandler::updateUI() noexcept
-{
-   m_paramStorage.updateUI();
-}
-
-void SoundHandler::registerParamChangeCbUI(ParamChangeCb cb)
-{
-   m_paramStorage.registerParamChangeCbUI(cb);
-}
-
 void SoundHandler::uiShowsInterestInParameter(int voiceId, int parameterId) noexcept
 {
    m_paramStorage.uiShowsInterestInParameter(voiceId, parameterId);

@@ -11,7 +11,7 @@ class InstrumentsRpc : public ::capnzero::MidiEm::InstrumentsRpcIf {
 public:
 	InstrumentsRpc(base::instruments::Instruments& rInstruments);
 	void createKitInstrument(const ::capnzero::TextView& name) override;
-	void removeKitInstrument(const ::capnzero::SpanCL<8>& instrumentUUID) override;
+	void removeKitInstrument(const ::capnzero::SpanCL<16>& instrumentUUID) override;
 	void melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
 	void melodicNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
 	void kitNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;

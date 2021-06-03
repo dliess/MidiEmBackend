@@ -23,6 +23,8 @@ public:
    inline void registerForAboutToRemove(Cb cb) noexcept;
    inline void updateSoundParameterActualValues();
    inline void updateSoundParameterUI();
+   using SoundDevParamChangeCb = std::function<void(util::Identifiable::UUID, int, int, float, float)>;
+   inline void registerSoundDevParamChangeCbUI(SoundDevParamChangeCb cb);
 
    using iterator       = Super::iterator;
    using const_iterator = Super::const_iterator;
@@ -44,10 +46,12 @@ public:
    inline size_type eraseByDeviceId(const MusicDeviceId& mdId);
    
    inline size_t size() const noexcept;
+   
 
 private:
    std::vector<Cb> m_addedCb;
    std::vector<Cb> m_aboutToRemoveCbs;
+   std::vector<SoundDevParamChangeCb> m_paramChangeCbsUI;
    inline void invokeAddCbs(const std::shared_ptr<MusicDevice>& ptr);
    inline void invokeAboutToRemoveCbs(const std::shared_ptr<MusicDevice>& ptr);
 };

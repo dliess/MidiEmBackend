@@ -2,12 +2,14 @@ set(SOURCES
     "Server.cpp"
     "InstrumentsRpc.cpp"
     "MusicDevicesRpc.cpp"
+    "SoundDevicesRpc.cpp"
 )
 
 set(HEADERS
     "Interface/Server.h"
     "InstrumentsRpc.h"
     "MusicDevicesRpc.h"
+    "SoundDevicesRpc.h"
 )
 
 set(TARGET_NAME capnzero-server)

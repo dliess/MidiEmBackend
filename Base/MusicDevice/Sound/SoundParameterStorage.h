@@ -44,15 +44,10 @@ public:
    inline std::vector<float> getCommandedValuesOfVoice(
       int voiceIdx) const noexcept;
 
-   using ParamChangeCb = std::function<void(int voiceId, int paramIdx,
-                                            float commanded, float actual)>;
-   inline void registerParamChangeCbUI(ParamChangeCb cb);
-
-   constexpr static int ALL = -2;
+   constexpr static int ALL = -1;
    inline void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
    inline void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
-   inline void updateUI() noexcept;
-private:
+
    struct Element
    {
       static constexpr int NUM_MODIFIERS = 10;
@@ -70,6 +65,7 @@ private:
       bool dirtyFlagUi{true};
       int uiInterestCount{0};
 
+      inline std::optional<std::pair<float, float>> uiAsksForChangedValues() noexcept;
       inline bool updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
       inline void setCommandedValue(float value) noexcept;
@@ -78,21 +74,21 @@ private:
       float m_cachedLfoValue{0.0};
       inline float calcModified() const noexcept;
    };
-   struct EngineData
-   {
-      std::vector<Element> parameters;
-      std::optional<std::string> actualPreset;
-      ParamChangeCb m_parameterChangeCb;
-   };
-   EngineData m_globalData;
-   std::vector<EngineData> m_voicesData;
-
-   std::vector<ParamChangeCb> m_paramChangeCbsUI;
 
    template<typename Cb>
    void forEachParameter(Cb&& cb) const noexcept;
    template<typename Cb>
    void forEachParameter(Cb&& cb) noexcept;
+
+private:
+   struct EngineData
+   {
+      std::vector<Element> parameters;
+      std::optional<std::string> actualPreset;
+   };
+   EngineData m_globalData;
+   std::vector<EngineData> m_voicesData;
+
 
    inline const EngineData& elementContainer(int voiceIdx) const noexcept;
    inline EngineData& elementContainer(int voiceIdx) noexcept;

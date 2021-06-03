@@ -165,39 +165,41 @@ inline ParameterStorage::EngineData& ParameterStorage::elementContainer(
    }
 }
 
-inline void ParameterStorage::registerParamChangeCbUI(ParamChangeCb cb)
+inline void ParameterStorage::uiShowsInterestInParameter(int voiceId_, 
+                                                         int parameterId_) noexcept
 {
-   m_paramChangeCbsUI.push_back(cb);
-}
-
-inline void ParameterStorage::uiShowsInterestInParameter(int voiceId, 
-                                                         int parameterId) noexcept
-{
-   forEachParameter([](int voiceIdx, int paramIdx, Element& element){
-      element.dirtyFlagUi = true;
-      element.uiInterestCount++;
-   });
-}
-
-inline void ParameterStorage::uiLoosesInterestInParameter(int voiceId, int parameterId ) noexcept
-{
-   forEachParameter([](int voiceIdx, int paramIdx, Element& element){
-      element.uiInterestCount--;
-   });  
-}
-
-inline void ParameterStorage::updateUI() noexcept
-{
-   forEachParameter([this](int voiceIdx, int paramIdx, Element& element) {
-      if (element.dirtyFlagUi && element.uiInterestCount)
+   forEachParameter([voiceId_, parameterId_](int voiceIdx, int paramIdx, Element& element){
+      if(voiceId_ == voiceIdx)
       {
-         for(auto &cb : m_paramChangeCbsUI)
+         if(parameterId_ == ALL || parameterId_ == paramIdx)
          {
-            cb(voiceIdx, paramIdx, element.commanded, element.actual);
+            element.dirtyFlagUi = true;
+            element.uiInterestCount++;
          }
-         element.dirtyFlagUi = false;
       }
    });
+}
+
+inline void ParameterStorage::uiLoosesInterestInParameter(int voiceId_, int parameterId_ ) noexcept
+{
+   forEachParameter([voiceId_, parameterId_](int voiceIdx, int paramIdx, Element& element){
+      if(voiceId_ == voiceIdx)
+      {
+         if(parameterId_ == ALL || parameterId_ == paramIdx)
+         {
+            element.uiInterestCount--;
+         }
+      }
+   });  
+}
+inline std::optional<std::pair<float, float>> ParameterStorage::Element::uiAsksForChangedValues() noexcept
+{
+   if (dirtyFlagUi && uiInterestCount)
+   {
+      dirtyFlagUi = false;
+      return std::make_pair(commanded, actual);
+   }
+   return std::nullopt;
 }
 
 inline bool ParameterStorage::Element::updateActualValue() noexcept

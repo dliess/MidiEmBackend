@@ -4,6 +4,7 @@
 #include <loguru.hpp>
 
 #include "MusicDeviceContainer.h"
+#include "SoundParameterStorage.h"
 
 namespace base::musicDevice
 {
@@ -26,7 +27,16 @@ inline void MusicDeviceContainer::updateSoundParameterUI()
       assert(e.second);
       if (e.second->soundHandler)
       {
-         e.second->soundHandler->updateUI();
+         e.second->soundHandler->forEachParameter([this, &e](int voiceIdx, int paramIdx, sound::ParameterStorage::Element& element) {
+            const auto changedValues = element.uiAsksForChangedValues();
+            if(changedValues)
+            {
+               for(auto &cb : m_paramChangeCbsUI)
+               {
+                  cb(e.second->id(), voiceIdx, paramIdx, changedValues->first, changedValues->second);
+               }
+            }
+         });
       }
    }
 }
@@ -43,6 +53,11 @@ inline void MusicDeviceContainer::registerForAdd(Cb cb) noexcept
 inline void MusicDeviceContainer::registerForAboutToRemove(Cb cb) noexcept
 {
    m_aboutToRemoveCbs.push_back(cb);
+}
+
+inline void MusicDeviceContainer::registerSoundDevParamChangeCbUI(SoundDevParamChangeCb cb)
+{
+   m_paramChangeCbsUI.push_back(cb);
 }
 
 inline void MusicDeviceContainer::invokeAddCbs(const std::shared_ptr<MusicDevice>& ptr)
