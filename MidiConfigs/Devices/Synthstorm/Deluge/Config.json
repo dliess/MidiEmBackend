@@ -3,20 +3,112 @@
   "manufacturer": "Synthstorm",
   "productName": "Deluge",
   "soundSection": {
-    "defaultInstrumentType": "InstrumentPerVoice",
+    "defaultInstrumentType": "DrumKit",
     "voices": [
       {
-        "name": "1",
+        "name": "drum 1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 36
+      },
+      {
+        "name": "drum 2",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 37
+      },
+      {
+        "name": "drum 3",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 38
+      },
+      {
+        "name": "drum 4",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 39
+      },
+      {
+        "name": "drum 5",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 40
+      },
+      {
+        "name": "drum 6",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 41
+      },
+      {
+        "name": "drum 7",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 42
+      },
+      {
+        "name": "drum 8",
+        "engineId": 0,
+        "midiChannel" : 1,
+        "midiTriggerNoteNumber" : 43
+      },
+      {
+        "name": "melodic 1",
+        "engineId": 0,
+        "midiChannel" : 2
+      },
+      {
+        "name": "melodic 2",
+        "engineId": 0,
+        "midiChannel" : 3
+      },
+      {
+        "name": "melodic 3",
+        "engineId": 0,
+        "midiChannel" : 4
+      },
+      {
+        "name": "melodic 4",
+        "engineId": 0,
+        "midiChannel" : 5
+      },
+      {
+        "name": "melodic 5",
+        "engineId": 0,
+        "midiChannel" : 6
+      },
+      {
+        "name": "melodic 6",
+        "engineId": 0,
+        "midiChannel" : 7
+      },
+      {
+        "name": "melodic 7",
+        "engineId": 0,
+        "midiChannel" : 8
+      },
+      {
+        "name": "melodic 8",
+        "engineId": 0,
+        "midiChannel" : 9
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
+        "noteSettings" : {
+          "noteRange" : { "from" : 27, "to" : 75 },
+          "midi" : {
+            "pitchRouting" : {
+              "destinationParameter" : "Pitch"
+            }
+          }
+        },
         "components": {
           "Filter": {
             "parameterIds": [
+              "Pitch",
               "Filter Cutoff",
               "Filter Resonance",
               "Filt Env Amount",
@@ -41,6 +133,19 @@
           }
         },
         "parameters": {
+          "Pitch":{
+            "description": "Adjusts the Filter Cutoff",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
           "Filter Cutoff": {
             "description": "Adjusts the Filter Cutoff",
             "type": "continous",
