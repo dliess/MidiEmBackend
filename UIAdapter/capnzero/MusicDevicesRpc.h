@@ -14,6 +14,9 @@ public:
   MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
   void noteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
 	void noteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+	void pitchBend(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::Float32 value) override;
+	void afterTouchPoly(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 value) override;
+	void afterTouch(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::Float32 value) override;
 private:
   base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
 };

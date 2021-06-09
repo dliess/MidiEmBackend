@@ -20,6 +20,8 @@ public:
    void noteOn(int voiceIndex, int note, float velocity) noexcept;
    void noteOff(int voiceIndex, int note, float velocity) noexcept;
    void pitchBend(int voiceIndex, float value) noexcept;
+   void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
+   void afterTouch(int voiceIndex, float value) noexcept;
 
 private:
    MidiOutIfPtr m_pMidiOutIf;

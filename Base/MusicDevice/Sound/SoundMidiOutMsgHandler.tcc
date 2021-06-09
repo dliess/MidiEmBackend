@@ -142,3 +142,15 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIndex, float val
 {
    m_pMidiOutIf->pitchBend(voiceIndex + 1, value * m_pitchBendFactor * 16383);
 }
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouchPoly(int voiceIndex, int note, float value) noexcept
+{
+   m_pMidiOutIf->afterTouchPoly(voiceIndex + 1, note, value * 127);
+}
+
+template<typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouch(int voiceIndex, float value) noexcept
+{
+   m_pMidiOutIf->afterTouch(voiceIndex + 1, value * 127);
+}

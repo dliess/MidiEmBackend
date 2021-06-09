@@ -95,6 +95,32 @@ void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
    m_midiOutHandler->pitchBend(voiceIndex, value);
 }
 
+void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcept
+{
+   if (!m_midiOutHandler)
+   {
+      LOG_F(
+         ERROR,
+         "afterTouchPoly() called but there is no m_midiOutHandler in device '{}'",
+         m_deviceName);
+      return;
+   }
+   m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
+}
+
+void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
+{
+   if (!m_midiOutHandler)
+   {
+      LOG_F(
+         ERROR,
+         "afterTouch() called but there is no m_midiOutHandler in device '{}'",
+         m_deviceName);
+      return;
+   }
+   m_midiOutHandler->afterTouch(voiceIndex, value);
+}
+
 void SoundHandler::setParameterValue(int voiceId, int parameterId,
                                      float value) noexcept
 {
