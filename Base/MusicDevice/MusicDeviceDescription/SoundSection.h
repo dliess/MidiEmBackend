@@ -21,13 +21,6 @@ struct ParameterId
    int parameterId{UNSET};
 };
 
-// This is just a helper struct, don't reflect
-struct CacheHelpers
-{
-   std::optional<std::string> name;
-   std::optional<int> index;
-};
-
 struct NoteRange
 {
    int from;
@@ -62,8 +55,9 @@ struct Voice
    std::optional<int> midiTriggerNoteNumber;
 };
 
-struct Component : public CacheHelpers
+struct Component
 {
+   std::string name;
    enum class Type
    { // Todo: maybe string is enough?
       Unknown,
@@ -95,8 +89,9 @@ struct ParameterSource
    std::optional<ParameterSourceMidi> midi;
 };
 
-struct Parameter : public CacheHelpers
+struct Parameter
 {
+   std::string name;
    enum class Type
    {
       Continous,
@@ -115,24 +110,16 @@ struct Parameter : public CacheHelpers
 struct Global
 {
    int midiChannel;
-   std::optional<std::unordered_map<std::string, Component>> components;
-   std::unordered_map<std::string, Parameter> parameters;
-   std::vector<std::reference_wrapper<Component>>
-      componentsCached; // not to reflect
-   std::vector<std::reference_wrapper<Parameter>>
-      parametersCached; // not to reflect
+   std::optional<std::vector<Component>> components;
+   std::vector<Parameter> parameters;
 };
 
 struct Engine
 {
    std::string name;
    std::optional<NoteSettings> noteSettings;
-   std::optional<std::unordered_map<std::string, Component>> components;
-   std::unordered_map<std::string, Parameter> parameters;
-   std::vector<std::reference_wrapper<Component>>
-      componentsCached; // not to reflect
-   std::vector<std::reference_wrapper<Parameter>>
-      parametersCached; // not to reflect
+   std::optional<std::vector<Component>> components;
+   std::vector<Parameter> parameters;
 };
 
 struct MidiCCAndValue
@@ -181,6 +168,8 @@ struct Section
    void forEachParameterDescr(T&& cb) const noexcept;
    inline bool hasParameters() const noexcept;
    inline int voice2EngineIdx(int voiceIdx) const noexcept;
+   template<typename T>
+   static int linSearchByName(const std::vector<T>& vector, const std::string& name) noexcept;
 };
 
 } // namespace base::musicDevice::description::sound

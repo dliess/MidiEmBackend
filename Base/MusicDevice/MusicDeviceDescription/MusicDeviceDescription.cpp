@@ -74,73 +74,28 @@ void Description::initCaches() noexcept
 {
    if(soundSection)
    {
-      // For global section
-      if(soundSection->global)
-      {
-         int j = 0;
-         for(auto& [paramName, paramDescr] : soundSection->global->parameters)
-         {
-            paramDescr.name = paramName;
-            paramDescr.index = j++;
-            soundSection->global->parametersCached.push_back(paramDescr);
-         }
-         j = 0;
-         if(soundSection->global->components)
-         {
-            for(auto& [componentName, componentDescr] : *soundSection->global->components)
-            {
-               componentDescr.name = componentName;
-               componentDescr.index = j++;
-               soundSection->global->componentsCached.push_back(componentDescr);
-            }
-         }
-      }
-
       // For every engine
       for(auto& engine : soundSection->engines)
       {
-         int j = 0;
-         for(auto& [paramName, paramDescr] : engine.parameters)
-         {
-            paramDescr.name = paramName;
-            paramDescr.index = j++;
-            engine.parametersCached.push_back(paramDescr);
-         }
-         j = 0;
-         if(engine.components)
-         {
-            for(auto& [componentName, componentDescr] : *engine.components)
-            {
-               componentDescr.name = componentName;
-               componentDescr.index = j++;
-               engine.componentsCached.push_back(componentDescr);
-            }
-         }
          // Note pitch mapping
          if(engine.noteSettings && engine.noteSettings->midi)
          {
             if(engine.noteSettings->midi->pitchRouting)
             {
-               const auto iter = engine.parameters.find(
-                  engine.noteSettings->midi->pitchRouting->destinationParameter
-               );
-               if(iter != engine.parameters.end())
+               const int idx = 
+                  sound::Section::linSearchByName(engine.parameters, engine.noteSettings->midi->pitchRouting->destinationParameter);
+               if(idx != -1)
                {
-                  assert(iter->second.index);
-                  engine.noteSettings->midi->pitchRouting->destinationParameterIdx =
-                     *iter->second.index;
+                  engine.noteSettings->midi->pitchRouting->destinationParameterIdx = idx;
                }
             }
             if(engine.noteSettings->midi->velocityRouting)
             {
-               const auto iter = engine.parameters.find(
-                  engine.noteSettings->midi->velocityRouting->destinationParameter
-               );
-               if(iter != engine.parameters.end())
+               const int idx = 
+                  sound::Section::linSearchByName(engine.parameters, engine.noteSettings->midi->velocityRouting->destinationParameter);
+               if(idx != -1)
                {
-                  assert(iter->second.index);
-                  engine.noteSettings->midi->velocityRouting->destinationParameterIdx =
-                     *iter->second.index;
+                  engine.noteSettings->midi->velocityRouting->destinationParameterIdx = idx;
                }
             }
          }

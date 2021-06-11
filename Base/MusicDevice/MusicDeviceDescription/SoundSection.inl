@@ -122,14 +122,14 @@ const base::musicDevice::description::sound::Parameter& base::musicDevice::descr
    if(base::musicDevice::description::sound::GlobalSectionId == voiceId)
    {
       assert(global);
-      assert(parameterId >=0 && parameterId < global->parametersCached.size());
-      return global->parametersCached[parameterId];
+      assert(parameterId >=0 && parameterId < global->parameters.size());
+      return global->parameters[parameterId];
    }
    else
    {
       assert(voiceId >=0 && voiceId < voices.size());
-      assert(parameterId >=0 && parameterId < engines[voices[voiceId].engineId].parametersCached.size());
-      return engines[voices[voiceId].engineId].parametersCached[parameterId];
+      assert(parameterId >=0 && parameterId < engines[voices[voiceId].engineId].parameters.size());
+      return engines[voices[voiceId].engineId].parameters[parameterId];
    }
 }
 
@@ -153,16 +153,16 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(T&& c
 {
    if(global)
    {
-      for(int paramIdx = 0; paramIdx < global->parametersCached.size(); ++paramIdx)
+      for(int paramIdx = 0; paramIdx < global->parameters.size(); ++paramIdx)
       {
-         cb({GlobalSectionId, paramIdx}, global->parametersCached[paramIdx]);
+         cb({GlobalSectionId, paramIdx}, global->parameters[paramIdx]);
       }
    }
    for(int engineIdx = 0; engineIdx < engines.size(); ++engineIdx)
    {
-      for(int paramIdx = 0; paramIdx < engines[engineIdx].parametersCached.size(); ++paramIdx)
+      for(int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size(); ++paramIdx)
       {
-         cb({engineIdx, paramIdx}, engines[engineIdx].parametersCached[paramIdx]);
+         cb({engineIdx, paramIdx}, engines[engineIdx].parameters[paramIdx]);
       }
    }
 }
@@ -172,16 +172,16 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(T&& c
 {
    if(global)
    {
-      for(int paramIdx = 0; paramIdx < global->parametersCached.size(); ++paramIdx)
+      for(int paramIdx = 0; paramIdx < global->parameters.size(); ++paramIdx)
       {
-         cb({GlobalSectionId, paramIdx}, global->parametersCached[paramIdx]);
+         cb({GlobalSectionId, paramIdx}, global->parameters[paramIdx]);
       }
    }
    for(int engineIdx = 0; engineIdx < engines.size(); ++engineIdx)
    {
-      for(int paramIdx = 0; paramIdx < engines[engineIdx].parametersCached.size(); ++paramIdx)
+      for(int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size(); ++paramIdx)
       {
-         cb({engineIdx, paramIdx}, engines[engineIdx].parametersCached[paramIdx]);
+         cb({engineIdx, paramIdx}, engines[engineIdx].parameters[paramIdx]);
       }
    }
 }
@@ -213,5 +213,15 @@ int base::musicDevice::description::sound::Section::voice2EngineIdx(int voiceIdx
    }
 }
 
+template<typename T>
+int base::musicDevice::description::sound::Section::linSearchByName(const std::vector<T>& vector, const std::string& name) noexcept
+{
+   for(int i = 0; i < vector.size(); ++i)
+   {
+      if(vector[i].name == name)
+         return i;
+   }
+   return -1;
+}
 
 #endif
