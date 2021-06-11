@@ -8,7 +8,7 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "parameterDumpRequest": {
@@ -25,71 +25,29 @@
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Modulation": {
-            "parameterIds": [
-              "LFO Rate",
-              "LFO VCO Amount",
-              "LFO VCF Amount",
-              "LFO Midi Sync",
-              "LFO Sync Clock Div",
-              "LFO Key Trigger"
-            ]
+        "components": [
+          {
+            "name": "Modulation"
           },
-          "Oscillator": {
-            "parameterIds": [
-              "VCO 1 Wave",
-              "VCO 2 Wave",
-              "VCO 2 Freq",
-              "VCO 2 Breat Freq",
-              "Note Sync",
-              "Glide Rate",
-              "Glide Switch",
-              "Glide Type",
-              "Glide on Legato Only"
-            ]
+          {
+            "name": "Oscillator"
           },
-          "Mixer": {
-            "parameterIds": [
-              "VCO1",
-              "VCO2",
-              "External In Level"
-            ]
+          {
+            "name": "Mixer"
           },
-          "Filter": {
-            "parameterIds": [
-              "Cutoff",
-              "Resonance",
-              "EG Amount",
-              "Filter KB Track",
-              "Filter Velocity Sens"
-            ]
+          {
+            "name": "Filter"
           },
-          "Envelopes": {
-            "parameterIds": [
-              "VCF Attack_1",
-              "VCF Decay Release",
-              "VCF Sustain",
-              "VCF Attack_2",
-              "VCA Decay/Release",
-              "VCA Sustain",
-              "Release Switch",
-              "Trigger Mode"
-            ]
+          {
+            "name": "Envelopes"
           },
-          "Volume/Misc": {
-            "parameterIds": [
-              "VCA Output Level",
-              "Volume Velocity Sens",
-              "Key Priority",
-              "Modwheel Response",
-              "Pitch Wheel Bend Up Amnt",
-              "Pitch Wheel Bend Down Amnt"
-            ]
+          {
+            "name": "Volume/Misc"
           }
-        },
-        "parameters": {
-          "LFO Rate": {
+        ],
+        "parameters": [
+          {
+            "name": "LFO Rate",
             "description": "Adjusts the LFO frequency",
             "type": "continous",
             "component": "Modulation",
@@ -103,7 +61,8 @@
               }
             }
           },
-          "LFO VCO Amount": {
+          {
+            "name": "LFO VCO Amount",
             "description": "Adjusts the Modulation amount to the VCOs",
             "type": "continous",
             "component": "Modulation",
@@ -117,7 +76,8 @@
               }
             }
           },
-          "LFO VCF Amount": {
+          {
+            "name": "LFO VCF Amount",
             "description": "Adjusts the Modulation amount to the VCF",
             "type": "continous",
             "component": "Modulation",
@@ -131,7 +91,8 @@
               }
             }
           },
-          "LFO Midi Sync": {
+          {
+            "name": "LFO Midi Sync",
             "description": "Enables or disables ability of LFO to sync with MIDI Clock messages",
             "type": "list",
             "component": "Modulation",
@@ -160,7 +121,8 @@
               }
             }
           },
-          "LFO Sync Clock Div": {
+          {
+            "name": "LFO Sync Clock Div",
             "description": "Sets the LFO Synchronization CLock Divider",
             "type": "list",
             "component": "Modulation",
@@ -322,7 +284,8 @@
               }
             }
           },
-          "LFO Key Trigger": {
+          {
+            "name": "LFO Key Trigger",
             "description": "Re-triggers the LFO to the start of the cycle",
             "type": "list",
             "component": "Modulation",
@@ -351,7 +314,8 @@
               }
             }
           },
-          "VCO 1 Wave": {
+          {
+            "name": "VCO 1 Wave",
             "description": "Selects the waveform of VCO 1",
             "type": "list",
             "component": "Oscillator",
@@ -380,7 +344,8 @@
               }
             }
           },
-          "VCO 2 Wave": {
+          {
+            "name": "VCO 2 Wave",
             "description": "Selects the waveform of VCO 2",
             "type": "list",
             "component": "Oscillator",
@@ -409,7 +374,8 @@
               }
             }
           },
-          "VCO 2 Freq": {
+          {
+            "name": "VCO 2 Freq",
             "description": "Adjusts the Frequency of VCO 2",
             "type": "continous",
             "component": "Oscillator",
@@ -423,7 +389,8 @@
               }
             }
           },
-          "VCO 2 Breat Freq": {
+          {
+            "name": "VCO 2 Breat Freq",
             "description": "Adjusts the Beat Frequency of VCO 2",
             "type": "continous",
             "component": "Oscillator",
@@ -437,7 +404,8 @@
               }
             }
           },
-          "Note Sync": {
+          {
+            "name": "Note Sync",
             "description": "Enables/Disables Note Sync",
             "type": "list",
             "component": "Oscillator",
@@ -466,7 +434,8 @@
               }
             }
           },
-          "Glide Rate": {
+          {
+            "name": "Glide Rate",
             "description": "Adjusts the glide(portamento) rate time",
             "type": "continous",
             "component": "Oscillator",
@@ -479,7 +448,8 @@
               }
             }
           },
-          "Glide Switch": {
+          {
+            "name": "Glide Switch",
             "description": "Sets the state of the Glide switch",
             "type": "list",
             "component": "Oscillator",
@@ -508,7 +478,8 @@
               }
             }
           },
-          "Glide Type": {
+          {
+            "name": "Glide Type",
             "description": "Selects the type of Glide; Linear Constant Rate, Linear Constant Time, or Exponential.",
             "type": "list",
             "component": "Oscillator",
@@ -544,7 +515,8 @@
               }
             }
           },
-          "Glide on Legato Only": {
+          {
+            "name": "Glide on Legato Only",
             "description": "Sets the state of the Legato Glide parameter when Glide is enabled",
             "type": "list",
             "component": "Oscillator",
@@ -573,7 +545,8 @@
               }
             }
           },
-          "VCO1": {
+          {
+            "name": "VCO1",
             "description": "Adjusts the glide(portamento) rate time",
             "type": "continous",
             "component": "Mixer",
@@ -587,7 +560,8 @@
               }
             }
           },
-          "VCO2": {
+          {
+            "name": "VCO2",
             "description": "Adjusts the glide(portamento) rate time",
             "type": "continous",
             "component": "Mixer",
@@ -601,7 +575,8 @@
               }
             }
           },
-          "External In Level": {
+          {
+            "name": "External In Level",
             "description": "Adjusts the glide(portamento) rate time",
             "type": "continous",
             "component": "Mixer",
@@ -615,7 +590,8 @@
               }
             }
           },
-          "Cutoff": {
+          {
+            "name": "Cutoff",
             "description": "Adjust the Filter Cutoff Frequency",
             "type": "continous",
             "component": "Filter",
@@ -629,7 +605,8 @@
               }
             }
           },
-          "Resonance": {
+          {
+            "name": "Resonance",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -642,7 +619,8 @@
               }
             }
           },
-          "EG Amount": {
+          {
+            "name": "EG Amount",
             "type": "continous-bipolar",
             "component": "Filter",
             "source": {
@@ -655,7 +633,8 @@
               }
             }
           },
-          "Filter KB Track": {
+          {
+            "name": "Filter KB Track",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -668,7 +647,8 @@
               }
             }
           },
-          "Filter Velocity Sens": {
+          {
+            "name": "Filter Velocity Sens",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -680,7 +660,8 @@
               }
             }
           },
-          "VCF Attack_1": {
+          {
+            "name": "VCF Attack_1",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -693,7 +674,8 @@
               }
             }
           },
-          "VCF Decay Release": {
+          {
+            "name": "VCF Decay Release",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -706,7 +688,8 @@
               }
             }
           },
-          "VCF Sustain": {
+          {
+            "name": "VCF Sustain",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -719,7 +702,8 @@
               }
             }
           },
-          "VCF Attack_2": {
+          {
+            "name": "VCF Attack_2",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -732,7 +716,8 @@
               }
             }
           },
-          "VCA Decay/Release": {
+          {
+            "name": "VCA Decay/Release",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -745,7 +730,8 @@
               }
             }
           },
-          "VCA Sustain": {
+          {
+            "name": "VCA Sustain",
             "type": "continous",
             "component": "Envelopes",
             "source": {
@@ -758,7 +744,8 @@
               }
             }
           },
-          "Release Switch": {
+          {
+            "name": "Release Switch",
             "type": "list",
             "component": "Envelopes",
             "source": {
@@ -786,7 +773,8 @@
               }
             }
           },
-          "Trigger Mode": {
+          {
+            "name": "Trigger Mode",
             "type": "list",
             "component": "Envelopes",
             "source": {
@@ -821,7 +809,8 @@
               }
             }
           },
-          "VCA Output Level": {
+          {
+            "name": "VCA Output Level",
             "type": "continous",
             "component": "Volume/Misc",
             "source": {
@@ -834,7 +823,8 @@
               }
             }
           },
-          "Volume Velocity Sens": {
+          {
+            "name": "Volume Velocity Sens",
             "type": "continous",
             "component": "Volume/Misc",
             "source": {
@@ -846,7 +836,8 @@
               }
             }
           },
-          "Key Priority": {
+          {
+            "name": "Key Priority",
             "type": "list",
             "component": "Volume/Misc",
             "source": {
@@ -881,7 +872,8 @@
               }
             }
           },
-          "Modwheel Response": {
+          {
+            "name": "Modwheel Response",
             "type": "continous",
             "component": "Volume/Misc",
             "source": {
@@ -894,7 +886,8 @@
               }
             }
           },
-          "Pitch Wheel Bend Up Amnt": {
+          {
+            "name": "Pitch Wheel Bend Up Amnt",
             "type": "list",
             "component": "Volume/Misc",
             "source": {
@@ -964,7 +957,8 @@
               }
             }
           },
-          "Pitch Wheel Bend Down Amnt": {
+          {
+            "name": "Pitch Wheel Bend Down Amnt",
             "type": "list",
             "component": "Volume/Misc",
             "source": {
@@ -1034,7 +1028,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   }

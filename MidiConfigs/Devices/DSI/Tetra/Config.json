@@ -8,31 +8,29 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       },
       {
         "name": "2",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "3",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "4",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-        },
-        "parameters": {
-        }
+        "components": [],
+        "parameters": []
       }
     ]
   },

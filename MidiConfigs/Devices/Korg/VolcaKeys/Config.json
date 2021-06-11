@@ -8,44 +8,26 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Osc": {
-            "parameterIds": [
-              "Portamento",
-              "Expression",
-              "Voice",
-              "Octave",
-              "Detune"
-            ]
+        "components": [
+          {
+            "name": "Osc"
           },
-          "Filter/Env": {
-            "parameterIds": [
-              "Filter Cutoff",
-              "VCF Eg",
-              "VCO Eg",
-              "Eg Attack",
-              "Eg Decay",
-              "Eg Sustain"
-            ]
+          {
+            "name": "Filter/Env"
           },
-          "Modulation/Fx": {
-            "parameterIds": [
-              "LFO Rate",
-              "LFO Pitch",
-              "LFO Cutoff",
-              "Delay Time",
-              "Delay Feedback"
-            ]
+          {
+            "name": "Modulation/Fx"
           }
-        },
-        "parameters": {
-          "Portamento": {
+        ],
+        "parameters": [
+          {
+            "name": "Portamento",
             "type": "continous",
             "component": "Osc",
             "source": {
@@ -57,7 +39,8 @@
               }
             }
           },
-          "Expression": {
+          {
+            "name": "Expression",
             "type": "continous",
             "component": "Osc",
             "source": {
@@ -69,7 +52,8 @@
               }
             }
           },
-          "Voice": {
+          {
+            "name": "Voice",
             "type": "continous",
             "component": "Osc",
             "source": {
@@ -81,7 +65,8 @@
               }
             }
           },
-          "Octave": {
+          {
+            "name": "Octave",
             "type": "continous",
             "component": "Osc",
             "source": {
@@ -93,7 +78,8 @@
               }
             }
           },
-          "Detune": {
+          {
+            "name": "Detune",
             "type": "continous",
             "component": "Osc",
             "source": {
@@ -105,7 +91,8 @@
               }
             }
           },
-          "VCO Eg": {
+          {
+            "name": "VCO Eg",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -117,7 +104,8 @@
               }
             }
           },
-          "Filter Cutoff": {
+          {
+            "name": "Filter Cutoff",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -129,7 +117,8 @@
               }
             }
           },
-          "VCF Eg": {
+          {
+            "name": "VCF Eg",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -141,7 +130,8 @@
               }
             }
           },
-          "LFO Rate": {
+          {
+            "name": "LFO Rate",
             "type": "continous",
             "component": "Modulation/Fx",
             "source": {
@@ -153,7 +143,8 @@
               }
             }
           },
-          "LFO Pitch": {
+          {
+            "name": "LFO Pitch",
             "type": "continous",
             "component": "Modulation/Fx",
             "source": {
@@ -165,7 +156,8 @@
               }
             }
           },
-          "LFO Cutoff": {
+          {
+            "name": "LFO Cutoff",
             "type": "continous",
             "component": "Modulation/Fx",
             "source": {
@@ -177,7 +169,8 @@
               }
             }
           },
-          "Eg Attack": {
+          {
+            "name": "Eg Attack",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -189,7 +182,8 @@
               }
             }
           },
-          "Eg Decay": {
+          {
+            "name": "Eg Decay",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -201,7 +195,8 @@
               }
             }
           },
-          "Eg Sustain": {
+          {
+            "name": "Eg Sustain",
             "type": "continous",
             "component": "Filter/Env",
             "source": {
@@ -213,7 +208,8 @@
               }
             }
           },
-          "Delay Time": {
+          {
+            "name": "Delay Time",
             "type": "continous",
             "component": "Modulation/Fx",
             "source": {
@@ -225,7 +221,8 @@
               }
             }
           },
-          "Delay Feedback": {
+          {
+            "name": "Delay Feedback",
             "type": "continous",
             "component": "Modulation/Fx",
             "source": {
@@ -237,7 +234,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

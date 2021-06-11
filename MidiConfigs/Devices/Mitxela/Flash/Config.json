@@ -8,38 +8,20 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Params": {
-            "parameterIds": [
-              "Modulation",
-              "Portamento",
-              "Sustain",
-              "LFO Freq",
-              "Attack rate",
-              "Release",
-              "Oscillator Detune",
-              "FM Ratio",
-              "Effect Depth",
-              "Effect Attack",
-              "Effect Decay",
-              "Algorithm",
-              "Waveform",
-              "Wave parameter",
-              "Arpeggiator Speed",
-              "Per Channel Tuning",
-              "All channels Tuning",
-              "Output Gain"
-            ]
+        "components": [
+          {
+            "name": "Params"
           }
-        },
-        "parameters": {
-          "Modulation": {
+        ],
+        "parameters": [
+          {
+            "name": "Modulation",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -51,7 +33,8 @@
               }
             }
           },
-          "Portamento": {
+          {
+            "name": "Portamento",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -63,7 +46,8 @@
               }
             }
           },
-          "Sustain": {
+          {
+            "name": "Sustain",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -75,7 +59,8 @@
               }
             }
           },
-          "LFO Freq": {
+          {
+            "name": "LFO Freq",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -87,7 +72,8 @@
               }
             }
           },
-          "Attack rate": {
+          {
+            "name": "Attack rate",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -99,7 +85,8 @@
               }
             }
           },
-          "Release": {
+          {
+            "name": "Release",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -111,7 +98,8 @@
               }
             }
           },
-          "Oscillator Detune": {
+          {
+            "name": "Oscillator Detune",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -123,7 +111,8 @@
               }
             }
           },
-          "FM Ratio": {
+          {
+            "name": "FM Ratio",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -136,7 +125,8 @@
               }
             }
           },
-          "Effect Depth": {
+          {
+            "name": "Effect Depth",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -148,7 +138,8 @@
               }
             }
           },
-          "Effect Attack": {
+          {
+            "name": "Effect Attack",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -160,7 +151,8 @@
               }
             }
           },
-          "Effect Decay": {
+          {
+            "name": "Effect Decay",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -172,7 +164,8 @@
               }
             }
           },
-          "Algorithm": {
+          {
+            "name": "Algorithm",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -184,7 +177,8 @@
               }
             }
           },
-          "Waveform": {
+          {
+            "name": "Waveform",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -196,7 +190,8 @@
               }
             }
           },
-          "Wave parameter": {
+          {
+            "name": "Wave parameter",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -208,7 +203,8 @@
               }
             }
           },
-          "Arpeggiator Speed": {
+          {
+            "name": "Arpeggiator Speed",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -220,7 +216,8 @@
               }
             }
           },
-          "Per Channel Tuning": {
+          {
+            "name": "Per Channel Tuning",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -232,7 +229,8 @@
               }
             }
           },
-          "All channels Tuning": {
+          {
+            "name": "All channels Tuning",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -244,7 +242,8 @@
               }
             }
           },
-          "Output Gain": {
+          {
+            "name": "Output Gain",
             "type": "continous",
             "component": "Params",
             "source": {
@@ -256,7 +255,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

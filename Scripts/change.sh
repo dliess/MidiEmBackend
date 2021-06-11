@@ -1,0 +1,2 @@
+for config in $(find MidiConfigs/Devices -name Config.json); do ./Scripts/modifyConfigs_3.py $config > "${config}2"; done
+for config in $(find MidiConfigs/Devices -name Config.json); do mv "${config}2"  $config; done

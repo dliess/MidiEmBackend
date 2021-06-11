@@ -8,30 +8,20 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Main": {
-            "parameterIds": [
-              "Pulse Color",
-              "Pulse Level",
-              "Amp Attack",
-              "Amp Decay",
-              "Drive",
-              "Tone",
-              "Resonator Pitch",
-              "Resonator Bend",
-              "Resonator Time",
-              "Accent"
-            ]
+        "components": [
+          {
+            "name": "Main"
           }
-        },
-        "parameters": {
-          "Pulse Color": {
+        ],
+        "parameters": [
+          {
+            "name": "Pulse Color",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -43,7 +33,8 @@
               }
             }
           },
-          "Pulse Level": {
+          {
+            "name": "Pulse Level",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -55,7 +46,8 @@
               }
             }
           },
-          "Amp Attack": {
+          {
+            "name": "Amp Attack",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -67,7 +59,8 @@
               }
             }
           },
-          "Amp Decay": {
+          {
+            "name": "Amp Decay",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -79,7 +72,8 @@
               }
             }
           },
-          "Drive": {
+          {
+            "name": "Drive",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -91,7 +85,8 @@
               }
             }
           },
-          "Tone": {
+          {
+            "name": "Tone",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -103,7 +98,8 @@
               }
             }
           },
-          "Resonator Pitch": {
+          {
+            "name": "Resonator Pitch",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -115,7 +111,8 @@
               }
             }
           },
-          "Resonator Bend": {
+          {
+            "name": "Resonator Bend",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -127,7 +124,8 @@
               }
             }
           },
-          "Resonator Time": {
+          {
+            "name": "Resonator Time",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -139,7 +137,8 @@
               }
             }
           },
-          "Accent": {
+          {
+            "name": "Accent",
             "type": "continous",
             "component": "Main",
             "source": {
@@ -151,7 +150,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

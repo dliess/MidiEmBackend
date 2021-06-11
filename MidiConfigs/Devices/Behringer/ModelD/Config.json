@@ -9,14 +9,14 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {},
-        "parameters": {}
+        "components": [],
+        "parameters": []
       }
     ]
   }

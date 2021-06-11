@@ -8,86 +8,54 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       },
       {
         "name": "2",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "3",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "4",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       },
       {
         "name": "5",
         "engineId": 0,
-        "midiChannel" : 5
+        "midiChannel": 5
       },
       {
         "name": "6",
         "engineId": 0,
-        "midiChannel" : 6
+        "midiChannel": 6
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Track Params": {
-            "parameterIds": [
-              "Note",
-              "Mute",
-              "Track Level",
-              "Pan",
-              "Pitch",
-              "Decay Time",
-              "Sample Start",
-              "Sample Length",
-              "Cutoff",
-              "Resonance",
-              "Delay Send",
-              "Reverb Send",
-              "Volume+Dist",
-              "Swing",
-              "Chance"
-            ]
+        "components": [
+          {
+            "name": "Track Params"
           },
-          "Playback": {
-            "parameterIds": [
-              "Loop",
-              "Reverse"
-            ]
+          {
+            "name": "Playback"
           },
-          "LFO": {
-            "parameterIds": [
-              "LFO Speed",
-              "LFO Multiplier",
-              "LFO Fade In/Out",
-              "LFO Destination",
-              "LFO Waveform",
-              "LFO Start Phase",
-              "LFO Reset",
-              "LFO Depth"
-            ]
+          {
+            "name": "LFO"
           },
-          "FX Parameters": {
-            "parameterIds": [
-              "Delay Time",
-              "Delay Feedback",
-              "Reverb Size",
-              "Delay Tone"
-            ]
+          {
+            "name": "FX Parameters"
           }
-        },
-        "parameters": {
-          "Note": {
+        ],
+        "parameters": [
+          {
+            "name": "Note",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -99,7 +67,8 @@
               }
             }
           },
-          "Mute": {
+          {
+            "name": "Mute",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -111,7 +80,8 @@
               }
             }
           },
-          "Track Level": {
+          {
+            "name": "Track Level",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -123,7 +93,8 @@
               }
             }
           },
-          "Pan": {
+          {
+            "name": "Pan",
             "type": "continous-bipolar",
             "component": "Track Params",
             "source": {
@@ -135,7 +106,8 @@
               }
             }
           },
-          "Pitch": {
+          {
+            "name": "Pitch",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -147,7 +119,8 @@
               }
             }
           },
-          "Decay Time": {
+          {
+            "name": "Decay Time",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -159,7 +132,8 @@
               }
             }
           },
-          "Sample Start": {
+          {
+            "name": "Sample Start",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -171,7 +145,8 @@
               }
             }
           },
-          "Sample Length": {
+          {
+            "name": "Sample Length",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -183,7 +158,8 @@
               }
             }
           },
-          "Cutoff": {
+          {
+            "name": "Cutoff",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -195,7 +171,8 @@
               }
             }
           },
-          "Resonance": {
+          {
+            "name": "Resonance",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -207,7 +184,8 @@
               }
             }
           },
-          "Delay Send": {
+          {
+            "name": "Delay Send",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -219,7 +197,8 @@
               }
             }
           },
-          "Reverb Send": {
+          {
+            "name": "Reverb Send",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -231,7 +210,8 @@
               }
             }
           },
-          "Volume+Dist": {
+          {
+            "name": "Volume+Dist",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -243,7 +223,8 @@
               }
             }
           },
-          "Swing": {
+          {
+            "name": "Swing",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -255,7 +236,8 @@
               }
             }
           },
-          "Chance": {
+          {
+            "name": "Chance",
             "type": "continous",
             "component": "Track Params",
             "source": {
@@ -267,7 +249,8 @@
               }
             }
           },
-          "Loop": {
+          {
+            "name": "Loop",
             "type": "continous",
             "component": "Playback",
             "source": {
@@ -279,7 +262,8 @@
               }
             }
           },
-          "Reverse": {
+          {
+            "name": "Reverse",
             "type": "continous",
             "component": "Playback",
             "source": {
@@ -291,7 +275,8 @@
               }
             }
           },
-          "LFO Speed": {
+          {
+            "name": "LFO Speed",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -303,7 +288,8 @@
               }
             }
           },
-          "LFO Multiplier": {
+          {
+            "name": "LFO Multiplier",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -315,7 +301,8 @@
               }
             }
           },
-          "LFO Fade In/Out": {
+          {
+            "name": "LFO Fade In/Out",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -327,7 +314,8 @@
               }
             }
           },
-          "LFO Destination": {
+          {
+            "name": "LFO Destination",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -339,7 +327,8 @@
               }
             }
           },
-          "LFO Waveform": {
+          {
+            "name": "LFO Waveform",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -351,7 +340,8 @@
               }
             }
           },
-          "LFO Start Phase": {
+          {
+            "name": "LFO Start Phase",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -363,7 +353,8 @@
               }
             }
           },
-          "LFO Reset": {
+          {
+            "name": "LFO Reset",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -375,7 +366,8 @@
               }
             }
           },
-          "LFO Depth": {
+          {
+            "name": "LFO Depth",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -387,7 +379,8 @@
               }
             }
           },
-          "Delay Time": {
+          {
+            "name": "Delay Time",
             "type": "continous",
             "component": "FX Parameters",
             "source": {
@@ -399,7 +392,8 @@
               }
             }
           },
-          "Delay Feedback": {
+          {
+            "name": "Delay Feedback",
             "type": "continous",
             "component": "FX Parameters",
             "source": {
@@ -411,7 +405,8 @@
               }
             }
           },
-          "Reverb Size": {
+          {
+            "name": "Reverb Size",
             "type": "continous",
             "component": "FX Parameters",
             "source": {
@@ -423,7 +418,8 @@
               }
             }
           },
-          "Delay Tone": {
+          {
+            "name": "Delay Tone",
             "type": "continous",
             "component": "FX Parameters",
             "source": {
@@ -435,7 +431,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

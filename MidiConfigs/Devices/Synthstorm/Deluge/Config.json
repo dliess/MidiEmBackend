@@ -8,132 +8,120 @@
       {
         "name": "drum 1",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 36
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 36
       },
       {
         "name": "drum 2",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 37
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 37
       },
       {
         "name": "drum 3",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 38
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 38
       },
       {
         "name": "drum 4",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 39
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 39
       },
       {
         "name": "drum 5",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 40
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 40
       },
       {
         "name": "drum 6",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 41
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 41
       },
       {
         "name": "drum 7",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 42
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 42
       },
       {
         "name": "drum 8",
         "engineId": 0,
-        "midiChannel" : 1,
-        "midiTriggerNoteNumber" : 43
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 43
       },
       {
         "name": "melodic 1",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "melodic 2",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "melodic 3",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       },
       {
         "name": "melodic 4",
         "engineId": 0,
-        "midiChannel" : 5
+        "midiChannel": 5
       },
       {
         "name": "melodic 5",
         "engineId": 0,
-        "midiChannel" : 6
+        "midiChannel": 6
       },
       {
         "name": "melodic 6",
         "engineId": 0,
-        "midiChannel" : 7
+        "midiChannel": 7
       },
       {
         "name": "melodic 7",
         "engineId": 0,
-        "midiChannel" : 8
+        "midiChannel": 8
       },
       {
         "name": "melodic 8",
         "engineId": 0,
-        "midiChannel" : 9
+        "midiChannel": 9
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "noteSettings" : {
-          "noteRange" : { "from" : 27, "to" : 75 },
-          "midi" : {
-            "pitchRouting" : {
-              "destinationParameter" : "Pitch"
+        "noteSettings": {
+          "noteRange": {
+            "from": 27,
+            "to": 75
+          },
+          "midi": {
+            "pitchRouting": {
+              "destinationParameter": "Pitch"
             }
           }
         },
-        "components": {
-          "Filter": {
-            "parameterIds": [
-              "Pitch",
-              "Filter Cutoff",
-              "Filter Resonance",
-              "Filt Env Amount",
-              "Filt Env Attack",
-              "Filt Env Decay",
-              "Filt Env Sustain",
-              "Filt Env Release"
-            ]
+        "components": [
+          {
+            "name": "Filter"
           },
-          "Shape": {
-            "parameterIds": [
-              "Noise"
-            ]
+          {
+            "name": "Shape"
           },
-          "Amp": {
-            "parameterIds": [
-              "Attack",
-              "Decay",
-              "Sustain",
-              "Release"
-            ]
+          {
+            "name": "Amp"
           }
-        },
-        "parameters": {
-          "Pitch":{
+        ],
+        "parameters": [
+          {
+            "name": "Pitch",
             "description": "Adjusts the Filter Cutoff",
             "type": "continous",
             "component": "Filter",
@@ -146,7 +134,8 @@
               }
             }
           },
-          "Filter Cutoff": {
+          {
+            "name": "Filter Cutoff",
             "description": "Adjusts the Filter Cutoff",
             "type": "continous",
             "component": "Filter",
@@ -159,7 +148,8 @@
               }
             }
           },
-          "Filter Resonance": {
+          {
+            "name": "Filter Resonance",
             "description": "Adjusts the Filter Resonance",
             "type": "continous",
             "component": "Filter",
@@ -172,7 +162,8 @@
               }
             }
           },
-          "Filt Env Amount": {
+          {
+            "name": "Filt Env Amount",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -184,7 +175,8 @@
               }
             }
           },
-          "Noise": {
+          {
+            "name": "Noise",
             "type": "continous",
             "component": "Shape",
             "source": {
@@ -196,7 +188,8 @@
               }
             }
           },
-          "Attack": {
+          {
+            "name": "Attack",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -208,7 +201,8 @@
               }
             }
           },
-          "Decay": {
+          {
+            "name": "Decay",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -220,7 +214,8 @@
               }
             }
           },
-          "Sustain": {
+          {
+            "name": "Sustain",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -232,7 +227,8 @@
               }
             }
           },
-          "Release": {
+          {
+            "name": "Release",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -244,7 +240,8 @@
               }
             }
           },
-          "Filt Env Attack": {
+          {
+            "name": "Filt Env Attack",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -256,7 +253,8 @@
               }
             }
           },
-          "Filt Env Decay": {
+          {
+            "name": "Filt Env Decay",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -268,7 +266,8 @@
               }
             }
           },
-          "Filt Env Sustain": {
+          {
+            "name": "Filt Env Sustain",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -280,7 +279,8 @@
               }
             }
           },
-          "Filt Env Release": {
+          {
+            "name": "Filt Env Release",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -292,7 +292,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

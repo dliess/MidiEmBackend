@@ -8,64 +8,29 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "LFO/Filt/Arp": {
-            "parameterIds": [
-              "LFO1 Depth",
-              "LFO1 Rate",
-              "LFO2 Depth",
-              "LFO2 Rate",
-              "Filter Cutoff",
-              "Filter Resonance",
-              "Arp rate",
-              "Arp range"
-            ]
+        "components": [
+          {
+            "name": "LFO/Filt/Arp"
           },
-          "Amp": {
-            "parameterIds": [
-              "Attack",
-              "Sustain",
-              "Release",
-              "Mix",
-              "PW1",
-              "PW2",
-              "Glide",
-              "Tune"
-            ]
+          {
+            "name": "Amp"
           },
-          "Vol Waveform": {
-            "parameterIds": [
-              "Vol WavF1",
-              "Vol WavF2",
-              "Vol WavF3",
-              "Vol WavF4",
-              "Vol WavF5",
-              "Vol WavF6",
-              "Vol WavF7",
-              "Vol WavF8"
-            ]
+          {
+            "name": "Vol Waveform"
           },
-          "Tune Waveform": {
-            "parameterIds": [
-              "Tune WavF1",
-              "Tune WavF2",
-              "Tune WavF3",
-              "Tune WavF4",
-              "Tune WavF5",
-              "Tune WavF6",
-              "Tune WavF7",
-              "Tune WavF8"
-            ]
+          {
+            "name": "Tune Waveform"
           }
-        },
-        "parameters": {
-          "LFO1 Depth": {
+        ],
+        "parameters": [
+          {
+            "name": "LFO1 Depth",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -77,7 +42,8 @@
               }
             }
           },
-          "LFO1 Rate": {
+          {
+            "name": "LFO1 Rate",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -89,7 +55,8 @@
               }
             }
           },
-          "LFO2 Depth": {
+          {
+            "name": "LFO2 Depth",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -101,7 +68,8 @@
               }
             }
           },
-          "LFO2 Rate": {
+          {
+            "name": "LFO2 Rate",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -113,7 +81,8 @@
               }
             }
           },
-          "Filter Cutoff": {
+          {
+            "name": "Filter Cutoff",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -125,7 +94,8 @@
               }
             }
           },
-          "Filter Resonance": {
+          {
+            "name": "Filter Resonance",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -137,7 +107,8 @@
               }
             }
           },
-          "Arp rate": {
+          {
+            "name": "Arp rate",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -149,7 +120,8 @@
               }
             }
           },
-          "Arp range": {
+          {
+            "name": "Arp range",
             "type": "continous",
             "component": "LFO/Filt/Arp",
             "source": {
@@ -161,7 +133,8 @@
               }
             }
           },
-          "Attack": {
+          {
+            "name": "Attack",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -173,7 +146,8 @@
               }
             }
           },
-          "Sustain": {
+          {
+            "name": "Sustain",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -185,7 +159,8 @@
               }
             }
           },
-          "Release": {
+          {
+            "name": "Release",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -197,7 +172,8 @@
               }
             }
           },
-          "Mix": {
+          {
+            "name": "Mix",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -209,7 +185,8 @@
               }
             }
           },
-          "Vol WavF1": {
+          {
+            "name": "Vol WavF1",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -221,7 +198,8 @@
               }
             }
           },
-          "Vol WavF2": {
+          {
+            "name": "Vol WavF2",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -233,7 +211,8 @@
               }
             }
           },
-          "Vol WavF3": {
+          {
+            "name": "Vol WavF3",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -245,7 +224,8 @@
               }
             }
           },
-          "Vol WavF4": {
+          {
+            "name": "Vol WavF4",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -257,7 +237,8 @@
               }
             }
           },
-          "Vol WavF5": {
+          {
+            "name": "Vol WavF5",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -269,7 +250,8 @@
               }
             }
           },
-          "Vol WavF6": {
+          {
+            "name": "Vol WavF6",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -281,7 +263,8 @@
               }
             }
           },
-          "Vol WavF7": {
+          {
+            "name": "Vol WavF7",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -293,7 +276,8 @@
               }
             }
           },
-          "Vol WavF8": {
+          {
+            "name": "Vol WavF8",
             "type": "continous",
             "component": "Vol Waveform",
             "source": {
@@ -305,7 +289,8 @@
               }
             }
           },
-          "Tune WavF1": {
+          {
+            "name": "Tune WavF1",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -317,7 +302,8 @@
               }
             }
           },
-          "Tune WavF2": {
+          {
+            "name": "Tune WavF2",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -329,7 +315,8 @@
               }
             }
           },
-          "Tune WavF3": {
+          {
+            "name": "Tune WavF3",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -341,7 +328,8 @@
               }
             }
           },
-          "Tune WavF4": {
+          {
+            "name": "Tune WavF4",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -353,7 +341,8 @@
               }
             }
           },
-          "Tune WavF5": {
+          {
+            "name": "Tune WavF5",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -365,7 +354,8 @@
               }
             }
           },
-          "Tune WavF6": {
+          {
+            "name": "Tune WavF6",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -377,7 +367,8 @@
               }
             }
           },
-          "Tune WavF7": {
+          {
+            "name": "Tune WavF7",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -389,7 +380,8 @@
               }
             }
           },
-          "Tune WavF8": {
+          {
+            "name": "Tune WavF8",
             "type": "continous",
             "component": "Tune Waveform",
             "source": {
@@ -401,7 +393,8 @@
               }
             }
           },
-          "PW1": {
+          {
+            "name": "PW1",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -413,7 +406,8 @@
               }
             }
           },
-          "PW2": {
+          {
+            "name": "PW2",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -425,7 +419,8 @@
               }
             }
           },
-          "Glide": {
+          {
+            "name": "Glide",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -437,7 +432,8 @@
               }
             }
           },
-          "Tune": {
+          {
+            "name": "Tune",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -449,7 +445,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

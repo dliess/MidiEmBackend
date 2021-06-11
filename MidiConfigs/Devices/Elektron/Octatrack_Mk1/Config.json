@@ -8,42 +8,42 @@
       {
         "name": "Track-1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       },
       {
         "name": "Track-2",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "Track-3",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "Track-4",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       },
       {
         "name": "Track-5",
         "engineId": 0,
-        "midiChannel" : 5
+        "midiChannel": 5
       },
       {
         "name": "Track-6",
         "engineId": 0,
-        "midiChannel" : 6
+        "midiChannel": 6
       },
       {
         "name": "Track-7",
         "engineId": 0,
-        "midiChannel" : 7
+        "midiChannel": 7
       },
       {
         "name": "Track-8",
         "engineId": 0,
-        "midiChannel" : 8
+        "midiChannel": 8
       }
     ],
     "parameterDumpRequest": {
@@ -57,61 +57,26 @@
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Track/Playback": {
-            "parameterIds": [
-              "Track Level",
-              "Cue Level",
-              "Playback Param #1",
-              "Playback Param #2",
-              "Playback Param #3",
-              "Playback Param #4",
-              "Playback Param #5",
-              "Playback Param #6"
-            ]
+        "components": [
+          {
+            "name": "Track/Playback"
           },
-          "Amp": {
-            "parameterIds": [
-              "Attack",
-              "Hold",
-              "Release",
-              "Volume",
-              "Balance"
-            ]
+          {
+            "name": "Amp"
           },
-          "LFO": {
-            "parameterIds": [
-              "Lfo Spped #1",
-              "Lfo Speed #2",
-              "Lfo Depth #1",
-              "Lfo Depth #2",
-              "Lfo Depth #3",
-              "Lfo Param #6"
-            ]
+          {
+            "name": "LFO"
           },
-          "Effect 1": {
-            "parameterIds": [
-              "Param #1_1",
-              "Param #2_1",
-              "Param #3_1",
-              "Param #4_1",
-              "Param #5_1",
-              "Param #6_1"
-            ]
+          {
+            "name": "Effect 1"
           },
-          "Effect 2": {
-            "parameterIds": [
-              "Param #1_2",
-              "Param #2_2",
-              "Param #3_2",
-              "Param #4_2",
-              "Param #5_2",
-              "Param #6_2"
-            ]
+          {
+            "name": "Effect 2"
           }
-        },
-        "parameters": {
-          "Track Level": {
+        ],
+        "parameters": [
+          {
+            "name": "Track Level",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -123,7 +88,8 @@
               }
             }
           },
-          "Cue Level": {
+          {
+            "name": "Cue Level",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -135,7 +101,8 @@
               }
             }
           },
-          "Playback Param #1": {
+          {
+            "name": "Playback Param #1",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -147,7 +114,8 @@
               }
             }
           },
-          "Playback Param #2": {
+          {
+            "name": "Playback Param #2",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -159,7 +127,8 @@
               }
             }
           },
-          "Playback Param #3": {
+          {
+            "name": "Playback Param #3",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -171,7 +140,8 @@
               }
             }
           },
-          "Playback Param #4": {
+          {
+            "name": "Playback Param #4",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -183,7 +153,8 @@
               }
             }
           },
-          "Playback Param #5": {
+          {
+            "name": "Playback Param #5",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -195,7 +166,8 @@
               }
             }
           },
-          "Playback Param #6": {
+          {
+            "name": "Playback Param #6",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -207,7 +179,8 @@
               }
             }
           },
-          "Attack": {
+          {
+            "name": "Attack",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -219,7 +192,8 @@
               }
             }
           },
-          "Hold": {
+          {
+            "name": "Hold",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -231,7 +205,8 @@
               }
             }
           },
-          "Release": {
+          {
+            "name": "Release",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -243,7 +218,8 @@
               }
             }
           },
-          "Volume": {
+          {
+            "name": "Volume",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -255,7 +231,8 @@
               }
             }
           },
-          "Balance": {
+          {
+            "name": "Balance",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -267,7 +244,8 @@
               }
             }
           },
-          "Lfo Spped #1": {
+          {
+            "name": "Lfo Spped #1",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -279,7 +257,8 @@
               }
             }
           },
-          "Lfo Speed #2": {
+          {
+            "name": "Lfo Speed #2",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -291,7 +270,8 @@
               }
             }
           },
-          "Lfo Depth #1": {
+          {
+            "name": "Lfo Depth #1",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -303,7 +283,8 @@
               }
             }
           },
-          "Lfo Depth #2": {
+          {
+            "name": "Lfo Depth #2",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -315,7 +296,8 @@
               }
             }
           },
-          "Lfo Depth #3": {
+          {
+            "name": "Lfo Depth #3",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -327,7 +309,8 @@
               }
             }
           },
-          "Lfo Param #6": {
+          {
+            "name": "Lfo Param #6",
             "type": "continous",
             "component": "LFO",
             "source": {
@@ -339,7 +322,8 @@
               }
             }
           },
-          "Param #1_1": {
+          {
+            "name": "Param #1_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -351,7 +335,8 @@
               }
             }
           },
-          "Param #2_1": {
+          {
+            "name": "Param #2_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -363,7 +348,8 @@
               }
             }
           },
-          "Param #3_1": {
+          {
+            "name": "Param #3_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -375,7 +361,8 @@
               }
             }
           },
-          "Param #4_1": {
+          {
+            "name": "Param #4_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -387,7 +374,8 @@
               }
             }
           },
-          "Param #5_1": {
+          {
+            "name": "Param #5_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -399,7 +387,8 @@
               }
             }
           },
-          "Param #6_1": {
+          {
+            "name": "Param #6_1",
             "type": "continous",
             "component": "Effect 1",
             "source": {
@@ -411,7 +400,8 @@
               }
             }
           },
-          "Param #1_2": {
+          {
+            "name": "Param #1_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -423,7 +413,8 @@
               }
             }
           },
-          "Param #2_2": {
+          {
+            "name": "Param #2_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -435,7 +426,8 @@
               }
             }
           },
-          "Param #3_2": {
+          {
+            "name": "Param #3_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -447,7 +439,8 @@
               }
             }
           },
-          "Param #4_2": {
+          {
+            "name": "Param #4_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -459,7 +452,8 @@
               }
             }
           },
-          "Param #5_2": {
+          {
+            "name": "Param #5_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -471,7 +465,8 @@
               }
             }
           },
-          "Param #6_2": {
+          {
+            "name": "Param #6_2",
             "type": "continous",
             "component": "Effect 2",
             "source": {
@@ -483,7 +478,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

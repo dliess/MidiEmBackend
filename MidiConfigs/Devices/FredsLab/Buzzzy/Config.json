@@ -8,68 +8,44 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       },
       {
         "name": "2",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "3",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "4",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "Amp/Arp": {
-            "parameterIds": [
-              "Volume",
-              "Pan",
-              "Tempo",
-              "Div",
-              "Repeat",
-              "Gate"
-            ]
+        "components": [
+          {
+            "name": "Amp/Arp"
           },
-          "Sound/Filter": {
-            "parameterIds": [
-              "Engine",
-              "Wave",
-              "Decay",
-              "Attack",
-              "Cutoff",
-              "Resonance",
-              "Filter Type"
-            ]
+          {
+            "name": "Sound/Filter"
           },
-          "Space Effect": {
-            "parameterIds": [
-              "Space Model",
-              "Space Mix",
-              "Space Decay",
-              "Space Diffuse"
-            ]
+          {
+            "name": "Space Effect"
           },
-          "Delay Effect": {
-            "parameterIds": [
-              "Delay Model",
-              "Delay Mix",
-              "Delay Feedback",
-              "Delay Time"
-            ]
+          {
+            "name": "Delay Effect"
           }
-        },
-        "parameters": {
-          "Volume": {
+        ],
+        "parameters": [
+          {
+            "name": "Volume",
             "type": "continous",
             "component": "Amp/Arp",
             "source": {
@@ -81,7 +57,8 @@
               }
             }
           },
-          "Pan": {
+          {
+            "name": "Pan",
             "type": "continous-bipolar",
             "component": "Amp/Arp",
             "source": {
@@ -93,7 +70,8 @@
               }
             }
           },
-          "Tempo": {
+          {
+            "name": "Tempo",
             "type": "continous",
             "component": "Amp/Arp",
             "source": {
@@ -105,7 +83,8 @@
               }
             }
           },
-          "Div": {
+          {
+            "name": "Div",
             "type": "continous",
             "component": "Amp/Arp",
             "source": {
@@ -117,7 +96,8 @@
               }
             }
           },
-          "Repeat": {
+          {
+            "name": "Repeat",
             "type": "continous",
             "component": "Amp/Arp",
             "source": {
@@ -129,7 +109,8 @@
               }
             }
           },
-          "Gate": {
+          {
+            "name": "Gate",
             "type": "continous",
             "component": "Amp/Arp",
             "source": {
@@ -141,7 +122,8 @@
               }
             }
           },
-          "Engine": {
+          {
+            "name": "Engine",
             "type": "list",
             "component": "Sound/Filter",
             "source": {
@@ -183,7 +165,8 @@
               }
             }
           },
-          "Wave": {
+          {
+            "name": "Wave",
             "type": "continous",
             "component": "Sound/Filter",
             "source": {
@@ -195,7 +178,8 @@
               }
             }
           },
-          "Decay": {
+          {
+            "name": "Decay",
             "type": "continous",
             "component": "Sound/Filter",
             "source": {
@@ -207,7 +191,8 @@
               }
             }
           },
-          "Attack": {
+          {
+            "name": "Attack",
             "type": "continous",
             "component": "Sound/Filter",
             "source": {
@@ -219,7 +204,8 @@
               }
             }
           },
-          "Cutoff": {
+          {
+            "name": "Cutoff",
             "type": "continous",
             "component": "Sound/Filter",
             "source": {
@@ -231,7 +217,8 @@
               }
             }
           },
-          "Resonance": {
+          {
+            "name": "Resonance",
             "type": "continous",
             "component": "Sound/Filter",
             "source": {
@@ -243,7 +230,8 @@
               }
             }
           },
-          "Space Model": {
+          {
+            "name": "Space Model",
             "type": "list",
             "component": "Space Effect",
             "source": {
@@ -285,7 +273,8 @@
               }
             }
           },
-          "Delay Model": {
+          {
+            "name": "Delay Model",
             "type": "list",
             "component": "Delay Effect",
             "source": {
@@ -327,7 +316,8 @@
               }
             }
           },
-          "Filter Type": {
+          {
+            "name": "Filter Type",
             "type": "list",
             "component": "Sound/Filter",
             "source": {
@@ -369,7 +359,8 @@
               }
             }
           },
-          "Space Mix": {
+          {
+            "name": "Space Mix",
             "type": "continous",
             "component": "Space Effect",
             "source": {
@@ -381,7 +372,8 @@
               }
             }
           },
-          "Delay Mix": {
+          {
+            "name": "Delay Mix",
             "type": "continous",
             "component": "Delay Effect",
             "source": {
@@ -393,7 +385,8 @@
               }
             }
           },
-          "Space Decay": {
+          {
+            "name": "Space Decay",
             "type": "continous",
             "component": "Space Effect",
             "source": {
@@ -405,7 +398,8 @@
               }
             }
           },
-          "Space Diffuse": {
+          {
+            "name": "Space Diffuse",
             "type": "continous",
             "component": "Space Effect",
             "source": {
@@ -417,7 +411,8 @@
               }
             }
           },
-          "Delay Feedback": {
+          {
+            "name": "Delay Feedback",
             "type": "continous",
             "component": "Delay Effect",
             "source": {
@@ -429,7 +424,8 @@
               }
             }
           },
-          "Delay Time": {
+          {
+            "name": "Delay Time",
             "type": "continous",
             "component": "Delay Effect",
             "source": {
@@ -441,7 +437,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },

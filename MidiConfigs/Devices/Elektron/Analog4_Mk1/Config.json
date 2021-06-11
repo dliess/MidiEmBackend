@@ -8,162 +8,62 @@
       {
         "name": "1",
         "engineId": 0,
-        "midiChannel" : 1
+        "midiChannel": 1
       },
       {
         "name": "2",
         "engineId": 0,
-        "midiChannel" : 2
+        "midiChannel": 2
       },
       {
         "name": "3",
         "engineId": 0,
-        "midiChannel" : 3
+        "midiChannel": 3
       },
       {
         "name": "4",
         "engineId": 0,
-        "midiChannel" : 4
+        "midiChannel": 4
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": {
-          "OSC 1": {
-            "parameterIds": [
-              "Pitch_1",
-              "Detune_1",
-              "Keytracking_1",
-              "Level_1",
-              "Waveform_1",
-              "Sub-Oscillator_1",
-              "Pulsewidth_1",
-              "PWM Speed_1",
-              "PWM Depth_1"
-            ]
+        "components": [
+          {
+            "name": "OSC 1"
           },
-          "OSC 2": {
-            "parameterIds": [
-              "Pitch_2",
-              "Detune_2",
-              "Keytracking_2",
-              "Level_2",
-              "Waveform_2",
-              "Sub-Oscillator_2",
-              "Pulsewidth_2",
-              "PWM Speed_2",
-              "PWM Depth_2"
-            ]
+          {
+            "name": "OSC 2"
           },
-          "Noise": {
-            "parameterIds": [
-              "Noise S&H",
-              "Noise Fade",
-              "Noise Level"
-            ]
+          {
+            "name": "Noise"
           },
-          "OSC Common": {
-            "parameterIds": [
-              "OSC1 AM",
-              "Sync Mode",
-              "Sync Amount",
-              "Bend Amount",
-              "Slide Time",
-              "OSC2 AM",
-              "Note Sync",
-              "Vibrato Fade",
-              "Vibrato Speed",
-              "Vibrato Depth"
-            ]
+          {
+            "name": "OSC Common"
           },
-          "Filter": {
-            "parameterIds": [
-              "Filter1 Cutoff",
-              "Filter1 Resonance",
-              "Filter Overdrive",
-              "Filter1 Keytrack",
-              "Filter1 Envelop Am",
-              "Filter2 Cutoff",
-              "Filter2 Resonance",
-              "Filter2 Type",
-              "Filter2 Keytracking",
-              "Filter2 Envelope Am"
-            ]
+          {
+            "name": "Filter"
           },
-          "Amp": {
-            "parameterIds": [
-              "EnvA Attack Time",
-              "EnvA Decay Time",
-              "EnvA Sustain Level",
-              "EnvA Release Time",
-              "EnvA Env Shape",
-              "Chorus Send Level",
-              "Delay Send Level",
-              "Reverb Send Level",
-              "Pan",
-              "Volume"
-            ]
+          {
+            "name": "Amp"
           },
-          "Filter1 Envelope": {
-            "parameterIds": [
-              "ENVF Attack",
-              "ENVF Decay",
-              "ENVF Sustain",
-              "ENVF Release",
-              "ENVF Env Shape",
-              "ENVF Env Gate Length",
-              "ENVF Env Destination A",
-              "ENVF Depth A",
-              "ENVF Env Destination B",
-              "ENVF Depth B"
-            ]
+          {
+            "name": "Filter1 Envelope"
           },
-          "Filter2 Envelope": {
-            "parameterIds": [
-              "ENV2 Attack",
-              "ENV2 Decay",
-              "ENV2 Sustain",
-              "ENV2 Release",
-              "ENV2 Env Shape",
-              "ENV2 Env Gate Length",
-              "ENV2 Env Destination A",
-              "ENV2 Depth A",
-              "ENV2 Env Destination B",
-              "ENV2 Depth B"
-            ]
+          {
+            "name": "Filter2 Envelope"
           },
-          "LFO 1": {
-            "parameterIds": [
-              "LFO1 Speed",
-              "LFO1 Multiplier",
-              "LFO1 Fade",
-              "LFO1 Start Phase",
-              "LFO1 Mode",
-              "LFO1 Waveform",
-              "LFO1 Destination A",
-              "LFO1 Depth A",
-              "LFO1 Destination B",
-              "LFO1 Depth B"
-            ]
+          {
+            "name": "LFO 1"
           },
-          "LFO 2": {
-            "parameterIds": [
-              "LFO2 Speed",
-              "LFO2 Multiplier",
-              "LFO2 Fade",
-              "LFO2 Start Phase",
-              "LFO2 Mode",
-              "LFO2 Waveform",
-              "LFO2 Destination A",
-              "LFO2 Depth A",
-              "LFO2 Destination B",
-              "LFO2 Depth B"
-            ]
+          {
+            "name": "LFO 2"
           }
-        },
-        "parameters": {
-          "Pitch_1": {
+        ],
+        "parameters": [
+          {
+            "name": "Pitch_1",
             "id": 0,
             "type": "continous",
             "component": "OSC 1",
@@ -177,7 +77,8 @@
               }
             }
           },
-          "Detune_1": {
+          {
+            "name": "Detune_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -190,7 +91,8 @@
               }
             }
           },
-          "Keytracking_1": {
+          {
+            "name": "Keytracking_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -203,7 +105,8 @@
               }
             }
           },
-          "Level_1": {
+          {
+            "name": "Level_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -216,7 +119,8 @@
               }
             }
           },
-          "Waveform_1": {
+          {
+            "name": "Waveform_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -229,7 +133,8 @@
               }
             }
           },
-          "Sub-Oscillator_1": {
+          {
+            "name": "Sub-Oscillator_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -242,7 +147,8 @@
               }
             }
           },
-          "Pulsewidth_1": {
+          {
+            "name": "Pulsewidth_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -255,7 +161,8 @@
               }
             }
           },
-          "PWM Speed_1": {
+          {
+            "name": "PWM Speed_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -267,7 +174,8 @@
               }
             }
           },
-          "PWM Depth_1": {
+          {
+            "name": "PWM Depth_1",
             "type": "continous",
             "component": "OSC 1",
             "source": {
@@ -280,7 +188,8 @@
               }
             }
           },
-          "Pitch_2": {
+          {
+            "name": "Pitch_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -293,7 +202,8 @@
               }
             }
           },
-          "Detune_2": {
+          {
+            "name": "Detune_2",
             "id": 10,
             "type": "continous",
             "component": "OSC 2",
@@ -307,7 +217,8 @@
               }
             }
           },
-          "Keytracking_2": {
+          {
+            "name": "Keytracking_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -320,7 +231,8 @@
               }
             }
           },
-          "Level_2": {
+          {
+            "name": "Level_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -333,7 +245,8 @@
               }
             }
           },
-          "Waveform_2": {
+          {
+            "name": "Waveform_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -346,7 +259,8 @@
               }
             }
           },
-          "Sub-Oscillator_2": {
+          {
+            "name": "Sub-Oscillator_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -359,7 +273,8 @@
               }
             }
           },
-          "Pulsewidth_2": {
+          {
+            "name": "Pulsewidth_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -372,7 +287,8 @@
               }
             }
           },
-          "PWM Speed_2": {
+          {
+            "name": "PWM Speed_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -384,7 +300,8 @@
               }
             }
           },
-          "PWM Depth_2": {
+          {
+            "name": "PWM Depth_2",
             "type": "continous",
             "component": "OSC 2",
             "source": {
@@ -397,7 +314,8 @@
               }
             }
           },
-          "Noise S&H": {
+          {
+            "name": "Noise S&H",
             "type": "continous",
             "component": "Noise",
             "source": {
@@ -410,7 +328,8 @@
               }
             }
           },
-          "Noise Fade": {
+          {
+            "name": "Noise Fade",
             "type": "continous",
             "component": "Noise",
             "source": {
@@ -423,7 +342,8 @@
               }
             }
           },
-          "Noise Level": {
+          {
+            "name": "Noise Level",
             "id": 20,
             "type": "continous",
             "component": "Noise",
@@ -437,7 +357,8 @@
               }
             }
           },
-          "OSC1 AM": {
+          {
+            "name": "OSC1 AM",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -450,7 +371,8 @@
               }
             }
           },
-          "Sync Mode": {
+          {
+            "name": "Sync Mode",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -463,7 +385,8 @@
               }
             }
           },
-          "Sync Amount": {
+          {
+            "name": "Sync Amount",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -476,7 +399,8 @@
               }
             }
           },
-          "Bend Amount": {
+          {
+            "name": "Bend Amount",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -489,7 +413,8 @@
               }
             }
           },
-          "Slide Time": {
+          {
+            "name": "Slide Time",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -502,7 +427,8 @@
               }
             }
           },
-          "OSC2 AM": {
+          {
+            "name": "OSC2 AM",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -515,7 +441,8 @@
               }
             }
           },
-          "Note Sync": {
+          {
+            "name": "Note Sync",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -528,7 +455,8 @@
               }
             }
           },
-          "Vibrato Fade": {
+          {
+            "name": "Vibrato Fade",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -541,7 +469,8 @@
               }
             }
           },
-          "Vibrato Speed": {
+          {
+            "name": "Vibrato Speed",
             "type": "continous",
             "component": "OSC Common",
             "source": {
@@ -554,7 +483,8 @@
               }
             }
           },
-          "Vibrato Depth": {
+          {
+            "name": "Vibrato Depth",
             "id": 30,
             "type": "continous",
             "component": "OSC Common",
@@ -568,7 +498,8 @@
               }
             }
           },
-          "Filter1 Cutoff": {
+          {
+            "name": "Filter1 Cutoff",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -581,7 +512,8 @@
               }
             }
           },
-          "Filter1 Resonance": {
+          {
+            "name": "Filter1 Resonance",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -594,7 +526,8 @@
               }
             }
           },
-          "Filter Overdrive": {
+          {
+            "name": "Filter Overdrive",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -607,7 +540,8 @@
               }
             }
           },
-          "Filter1 Keytrack": {
+          {
+            "name": "Filter1 Keytrack",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -620,7 +554,8 @@
               }
             }
           },
-          "Filter1 Envelop Am": {
+          {
+            "name": "Filter1 Envelop Am",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -633,7 +568,8 @@
               }
             }
           },
-          "Filter2 Cutoff": {
+          {
+            "name": "Filter2 Cutoff",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -646,7 +582,8 @@
               }
             }
           },
-          "Filter2 Resonance": {
+          {
+            "name": "Filter2 Resonance",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -659,7 +596,8 @@
               }
             }
           },
-          "Filter2 Type": {
+          {
+            "name": "Filter2 Type",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -672,7 +610,8 @@
               }
             }
           },
-          "Filter2 Keytracking": {
+          {
+            "name": "Filter2 Keytracking",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -685,7 +624,8 @@
               }
             }
           },
-          "Filter2 Envelope Am": {
+          {
+            "name": "Filter2 Envelope Am",
             "id": 40,
             "type": "continous",
             "component": "Filter",
@@ -699,7 +639,8 @@
               }
             }
           },
-          "EnvA Attack Time": {
+          {
+            "name": "EnvA Attack Time",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -712,7 +653,8 @@
               }
             }
           },
-          "EnvA Decay Time": {
+          {
+            "name": "EnvA Decay Time",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -725,7 +667,8 @@
               }
             }
           },
-          "EnvA Sustain Level": {
+          {
+            "name": "EnvA Sustain Level",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -738,7 +681,8 @@
               }
             }
           },
-          "EnvA Release Time": {
+          {
+            "name": "EnvA Release Time",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -751,7 +695,8 @@
               }
             }
           },
-          "EnvA Env Shape": {
+          {
+            "name": "EnvA Env Shape",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -764,7 +709,8 @@
               }
             }
           },
-          "Chorus Send Level": {
+          {
+            "name": "Chorus Send Level",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -777,7 +723,8 @@
               }
             }
           },
-          "Delay Send Level": {
+          {
+            "name": "Delay Send Level",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -790,7 +737,8 @@
               }
             }
           },
-          "Reverb Send Level": {
+          {
+            "name": "Reverb Send Level",
             "type": "continous",
             "component": "Amp",
             "source": {
@@ -803,7 +751,8 @@
               }
             }
           },
-          "Pan": {
+          {
+            "name": "Pan",
             "type": "continous-bipolar",
             "component": "Amp",
             "source": {
@@ -816,7 +765,8 @@
               }
             }
           },
-          "Volume": {
+          {
+            "name": "Volume",
             "id": 50,
             "type": "continous",
             "component": "Amp",
@@ -830,7 +780,8 @@
               }
             }
           },
-          "ENVF Attack": {
+          {
+            "name": "ENVF Attack",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -843,7 +794,8 @@
               }
             }
           },
-          "ENVF Decay": {
+          {
+            "name": "ENVF Decay",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -856,7 +808,8 @@
               }
             }
           },
-          "ENVF Sustain": {
+          {
+            "name": "ENVF Sustain",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -869,7 +822,8 @@
               }
             }
           },
-          "ENVF Release": {
+          {
+            "name": "ENVF Release",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -882,7 +836,8 @@
               }
             }
           },
-          "ENVF Env Shape": {
+          {
+            "name": "ENVF Env Shape",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -895,7 +850,8 @@
               }
             }
           },
-          "ENVF Env Gate Length": {
+          {
+            "name": "ENVF Env Gate Length",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -908,7 +864,8 @@
               }
             }
           },
-          "ENVF Env Destination A": {
+          {
+            "name": "ENVF Env Destination A",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -921,7 +878,8 @@
               }
             }
           },
-          "ENVF Depth A": {
+          {
+            "name": "ENVF Depth A",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -934,7 +892,8 @@
               }
             }
           },
-          "ENVF Env Destination B": {
+          {
+            "name": "ENVF Env Destination B",
             "type": "continous",
             "component": "Filter1 Envelope",
             "source": {
@@ -947,7 +906,8 @@
               }
             }
           },
-          "ENVF Depth B": {
+          {
+            "name": "ENVF Depth B",
             "id": 60,
             "type": "continous",
             "component": "Filter1 Envelope",
@@ -961,7 +921,8 @@
               }
             }
           },
-          "ENV2 Attack": {
+          {
+            "name": "ENV2 Attack",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -974,7 +935,8 @@
               }
             }
           },
-          "ENV2 Decay": {
+          {
+            "name": "ENV2 Decay",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -987,7 +949,8 @@
               }
             }
           },
-          "ENV2 Sustain": {
+          {
+            "name": "ENV2 Sustain",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1000,7 +963,8 @@
               }
             }
           },
-          "ENV2 Release": {
+          {
+            "name": "ENV2 Release",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1013,7 +977,8 @@
               }
             }
           },
-          "ENV2 Env Shape": {
+          {
+            "name": "ENV2 Env Shape",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1026,7 +991,8 @@
               }
             }
           },
-          "ENV2 Env Gate Length": {
+          {
+            "name": "ENV2 Env Gate Length",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1039,7 +1005,8 @@
               }
             }
           },
-          "ENV2 Env Destination A": {
+          {
+            "name": "ENV2 Env Destination A",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1052,7 +1019,8 @@
               }
             }
           },
-          "ENV2 Depth A": {
+          {
+            "name": "ENV2 Depth A",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1065,7 +1033,8 @@
               }
             }
           },
-          "ENV2 Env Destination B": {
+          {
+            "name": "ENV2 Env Destination B",
             "type": "continous",
             "component": "Filter2 Envelope",
             "source": {
@@ -1078,7 +1047,8 @@
               }
             }
           },
-          "ENV2 Depth B": {
+          {
+            "name": "ENV2 Depth B",
             "id": 70,
             "type": "continous",
             "component": "Filter2 Envelope",
@@ -1092,7 +1062,8 @@
               }
             }
           },
-          "LFO1 Speed": {
+          {
+            "name": "LFO1 Speed",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1105,7 +1076,8 @@
               }
             }
           },
-          "LFO1 Multiplier": {
+          {
+            "name": "LFO1 Multiplier",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1118,7 +1090,8 @@
               }
             }
           },
-          "LFO1 Fade": {
+          {
+            "name": "LFO1 Fade",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1131,7 +1104,8 @@
               }
             }
           },
-          "LFO1 Start Phase": {
+          {
+            "name": "LFO1 Start Phase",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1144,7 +1118,8 @@
               }
             }
           },
-          "LFO1 Mode": {
+          {
+            "name": "LFO1 Mode",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1157,7 +1132,8 @@
               }
             }
           },
-          "LFO1 Waveform": {
+          {
+            "name": "LFO1 Waveform",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1170,7 +1146,8 @@
               }
             }
           },
-          "LFO1 Destination A": {
+          {
+            "name": "LFO1 Destination A",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1183,7 +1160,8 @@
               }
             }
           },
-          "LFO1 Depth A": {
+          {
+            "name": "LFO1 Depth A",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1196,7 +1174,8 @@
               }
             }
           },
-          "LFO1 Destination B": {
+          {
+            "name": "LFO1 Destination B",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1209,7 +1188,8 @@
               }
             }
           },
-          "LFO1 Depth B": {
+          {
+            "name": "LFO1 Depth B",
             "type": "continous",
             "component": "LFO 1",
             "source": {
@@ -1222,7 +1202,8 @@
               }
             }
           },
-          "LFO2 Speed": {
+          {
+            "name": "LFO2 Speed",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1235,7 +1216,8 @@
               }
             }
           },
-          "LFO2 Multiplier": {
+          {
+            "name": "LFO2 Multiplier",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1248,7 +1230,8 @@
               }
             }
           },
-          "LFO2 Fade": {
+          {
+            "name": "LFO2 Fade",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1261,7 +1244,8 @@
               }
             }
           },
-          "LFO2 Start Phase": {
+          {
+            "name": "LFO2 Start Phase",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1274,7 +1258,8 @@
               }
             }
           },
-          "LFO2 Mode": {
+          {
+            "name": "LFO2 Mode",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1287,7 +1272,8 @@
               }
             }
           },
-          "LFO2 Waveform": {
+          {
+            "name": "LFO2 Waveform",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1300,7 +1286,8 @@
               }
             }
           },
-          "LFO2 Destination A": {
+          {
+            "name": "LFO2 Destination A",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1313,7 +1300,8 @@
               }
             }
           },
-          "LFO2 Depth A": {
+          {
+            "name": "LFO2 Depth A",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1326,7 +1314,8 @@
               }
             }
           },
-          "LFO2 Destination B": {
+          {
+            "name": "LFO2 Destination B",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1339,7 +1328,8 @@
               }
             }
           },
-          "LFO2 Depth B": {
+          {
+            "name": "LFO2 Depth B",
             "type": "continous",
             "component": "LFO 2",
             "source": {
@@ -1352,7 +1342,7 @@
               }
             }
           }
-        }
+        ]
       }
     ]
   },
