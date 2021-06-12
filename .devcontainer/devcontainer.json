@@ -8,6 +8,7 @@
    ],
    "forwardPorts": [5555, 5556],
    "mounts" : [
+      "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
       "type=bind,source=/dev,target=/dev"
    ],
    "settings": { 
@@ -23,6 +24,7 @@
       "plex.vscode-protolint",
       "xaver.clang-format",
       "abronan.capnproto-syntax",
-      "be5invis.toml"
+      "be5invis.toml",
+      "mitaki28.vscode-clang"
    ]
 }
