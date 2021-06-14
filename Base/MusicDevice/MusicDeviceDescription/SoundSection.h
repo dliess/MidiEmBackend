@@ -66,7 +66,6 @@ struct Component
       Arpeggiator
    };
    std::optional<Type> type;
-   std::vector<std::string> parameterIds;
 
    static inline std::string type2String(Type type);
    static inline Type typeFromString(const std::string& str);
