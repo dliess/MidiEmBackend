@@ -18,13 +18,14 @@ public:
    uint64_t getBeatJiffies() const noexcept;
    void start() noexcept;
    void stop() noexcept;
+   bool running() const noexcept;
    void nextTimeSlot() noexcept;
    void incBpm(int cents) noexcept;
    void setBpmCents(int cents) noexcept;
    void setNudgeCents(int cents) noexcept;
    int getBpmCents() const noexcept;
+   void registerRunningChangeNotifCb(std::function<void(int)> cb) noexcept;
    void registerBpmChangeNotifCb(std::function<void(int)> cb) noexcept;
-   void registerMidiClockNotifCb(std::function<void()> cb) noexcept;
    std::chrono::nanoseconds getBeatPeriodNs() const noexcept;
 
 private:
@@ -35,6 +36,7 @@ private:
    std::atomic<int> m_bpmCents{12000};
    std::atomic<int> m_nudgeCents{0};
    std::chrono::system_clock::time_point m_nextNotificationTimePoint;
+   std::function<void(bool)> m_runningChangeNotifCb;
    std::function<void(int)> m_bpmChangeNotifCb;
 };
 

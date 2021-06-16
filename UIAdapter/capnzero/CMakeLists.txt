@@ -3,6 +3,7 @@ set(SOURCES
     "InstrumentsRpc.cpp"
     "MusicDevicesRpc.cpp"
     "SoundDevicesRpc.cpp"
+    "TempoRpc.cpp"
 )
 
 set(HEADERS
@@ -10,6 +11,7 @@ set(HEADERS
     "InstrumentsRpc.h"
     "MusicDevicesRpc.h"
     "SoundDevicesRpc.h"
+    "TempoRpc.h"
 )
 
 set(TARGET_NAME capnzero-server)

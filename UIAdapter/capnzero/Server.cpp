@@ -5,6 +5,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDevicesRpc.h"
 #include "SoundDevicesRpc.h"
+#include "TempoRpc.h"
 
 #include "JsonCast.h" // meta::serialize
 
@@ -17,7 +18,8 @@ Server::Server(zmq::context_t &rZmqContext,
           rZmqContext, "tcp://*:5555", "tcp://*:5556",
           std::make_unique<InstrumentsRpc>(rInstruments),
           std::make_unique<MusicDevicesRpc>(rMusicDeviceContainer),
-          std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer)) {
+          std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
+          std::make_unique<TempoRpc>(Super::signals())) {
   rInstruments.registerForDataChange([this, &rInstruments]() {
     Super::signals().Instruments__kitInstrumentsChanged(
         meta::serialize(rInstruments.data.kitInstruments).dump().c_str());

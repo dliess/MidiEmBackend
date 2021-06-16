@@ -12,11 +12,19 @@ void BeatTick::start() noexcept
    if(m_running) return;
    m_nextNotificationTimePoint = std::chrono::high_resolution_clock::now();
    m_running = true;
+   if(m_runningChangeNotifCb) m_runningChangeNotifCb(true);
 }
 
 void BeatTick::stop() noexcept
 {
+   if(!m_running) return;
    m_running = false;
+   if(m_runningChangeNotifCb) m_runningChangeNotifCb(false);
+}
+
+bool BeatTick::running() const noexcept
+{
+   return m_running;
 }
 
 void BeatTick::nextTimeSlot() noexcept
@@ -53,6 +61,11 @@ void BeatTick::setNudgeCents(int cents) noexcept
 int BeatTick::getBpmCents() const noexcept
 {
    return m_bpmCents + m_nudgeCents;
+}
+
+void BeatTick::registerRunningChangeNotifCb(std::function<void(int)> cb) noexcept
+{
+   m_runningChangeNotifCb = cb;
 }
 
 void BeatTick::registerBpmChangeNotifCb(std::function<void(int)> cb) noexcept
