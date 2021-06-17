@@ -35,12 +35,13 @@ Server::Server(zmq::context_t &rZmqContext,
         for (auto &it : rMusicDeviceContainer) {
           const auto uuid = it.second.get()->id();
           const auto &deviceName = it.second.get()->deviceId().deviceName;
+          const auto &portName = it.second.get()->deviceId().portName;
           const base::musicDevice::description::Description &description =
               *it.second.get()->description();
           rSignals.MusicDevices__musicDeviceDescriptionAdded(
               deviceName, meta::serialize(description).dump().c_str());
           rSignals.MusicDevices__deviceAdded(
-              uuid, deviceName); // TODO: rename to devcieType
+              uuid, deviceName, portName);
         }
         rSignals.Instruments__kitInstrumentsChanged(
             meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
@@ -61,7 +62,8 @@ Server::Server(zmq::context_t &rZmqContext,
 
         signals().MusicDevices__deviceAdded(
             ptr.get()->id(),
-            ptr.get()->deviceId().deviceName); // TODO: rename to deviceType
+            ptr.get()->deviceId().deviceName,
+            ptr.get()->deviceId().portName);
       });
 
   rMusicDeviceContainer.registerForAboutToRemove(

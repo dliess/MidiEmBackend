@@ -39,6 +39,10 @@ description::Loader::Loader(const std::string& configDir) :
          deviceChainsFile >> jDeviceChains;
          m_deviceChains = jDeviceChains.get<DeviceChains>();
       }
+      catch(json::type_error& e)
+      {
+         LOG_F(ERROR, "ERROR at parsing ill formed '{}' reason: {}", deviceChainsFileName, e.what());
+      }
       catch (...)
       {
          LOG_F(ERROR, "ERROR at parsing ill formed '{}'", deviceChainsFileName);

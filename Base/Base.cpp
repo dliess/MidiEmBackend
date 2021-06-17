@@ -37,7 +37,9 @@ TimeMeasure::CyclicDataOutputterThread<DataHolderUs,
 base::Base::Base(const std::string &configDir)
     : musicDeviceHolder(), musicDeviceFactory(musicDeviceHolder, configDir),
       instruments(musicDeviceHolder.musicDevices),
-      instrumentsFactory(instruments, musicDeviceHolder) {
+      instrumentsFactory(instruments, musicDeviceHolder) /*,
+      transportControl(musicDeviceHolder.midiHolder)*/
+{
   // TODO: Remove Dummy
   instruments.load("relDir", "filename", "section");
 }

@@ -12,6 +12,7 @@
 #include "MusicDeviceFactory.h"
 #include "MusicDeviceHolder.h"
 #include "ThreadedLoop.h"
+#include "TransportControl.h"
 
 namespace base
 {
@@ -23,7 +24,8 @@ public:
    musicDevice::Factory musicDeviceFactory;
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;
-
+   //TransportControl transportControl;
+   
    void start();
    void waitForEnd();
 

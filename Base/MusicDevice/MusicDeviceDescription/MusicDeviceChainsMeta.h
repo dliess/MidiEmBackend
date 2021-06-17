@@ -14,7 +14,7 @@ template<>
 inline auto registerMembers<base::musicDevice::DeviceChains>()
 {
    return members(
-      member("inputChains", &base::musicDevice::DeviceChains::deviceChains)
+      member("deviceChains", &base::musicDevice::DeviceChains::deviceChains)
    );
 }
 

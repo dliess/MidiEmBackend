@@ -26,6 +26,7 @@ target_link_libraries(Base
    PUBLIC  MidiFriends
    PUBLIC  MusicDevice
    PUBLIC  Tempo
+   PUBLIC  Transport
    PUBLIC  Util
    PRIVATE Loguru
    PRIVATE usbmidi

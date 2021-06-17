@@ -11,12 +11,14 @@ TempoRpc::TempoRpc(::capnzero::MidiEm::MidiEmServer::Signals& rSignals)
 	base::tempo::BeatTick::instance().registerBpmChangeNotifCb([&rSignals](int bpmCents){
 		rSignals.Tempo__bpmCentsChanged(bpmCents);
 	});
+/*
 	rSignals.registerTempoBeatTickStartedChangedSubscrCb([](::capnzero::MidiEm::MidiEmServer::Signals& rSignals){
 		rSignals.Tempo__beatTickStartedChanged(base::tempo::BeatTick::instance().running());
 	});
 	rSignals.registerTempoBpmCentsChangedSubscrCb([](::capnzero::MidiEm::MidiEmServer::Signals& rSignals){
 		rSignals.Tempo__bpmCentsChanged(base::tempo::BeatTick::instance().getBpmCents());
 	});
+*/
 }
 
 void TempoRpc::start()
