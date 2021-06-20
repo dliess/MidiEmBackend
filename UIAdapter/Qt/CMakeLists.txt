@@ -28,4 +28,5 @@ target_link_libraries(UIAdapterQt
    PUBLIC Qt5::WebChannel
    PUBLIC QtWebSocketClientWrapper
    PUBLIC midiem-capnzero-rt-qt
+   PUBLIC midiem-capnzero-loader-qt
 )
