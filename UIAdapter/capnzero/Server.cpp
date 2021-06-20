@@ -14,7 +14,7 @@ using namespace uiadapter::capnzero;
 Server::Server(zmq::context_t &rZmqContext,
                base::instruments::Instruments &rInstruments,
                base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer)
-    : ::capnzero::MidiEm::MidiEmServer(
+    : ::capnzero::MidiEmRt::MidiEmRtServer(
           rZmqContext, "tcp://*:5555", "tcp://*:5556",
           std::make_unique<InstrumentsRpc>(rInstruments),
           std::make_unique<MusicDevicesRpc>(rMusicDeviceContainer),

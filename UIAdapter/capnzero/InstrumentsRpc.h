@@ -1,13 +1,13 @@
 #ifndef INSTRUMENTS_RPC_H
 #define INSTRUMENTS_RPC_H
 
-#include "MidiEmInstrumentsRpcIf.h"
+#include "MidiEmRtInstrumentsRpcIf.h"
 
 namespace base::instruments { struct Instruments; }
 
 namespace uiadapter::capnzero {
 
-class InstrumentsRpc : public ::capnzero::MidiEm::InstrumentsRpcIf {
+class InstrumentsRpc : public ::capnzero::MidiEmRt::InstrumentsRpcIf {
 public:
 	InstrumentsRpc(base::instruments::Instruments& rInstruments);
 	void createKitInstrument(const ::capnzero::TextView& name) override;

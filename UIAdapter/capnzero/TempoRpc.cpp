@@ -3,7 +3,7 @@
 
 using namespace uiadapter::capnzero;
 
-TempoRpc::TempoRpc(::capnzero::MidiEm::MidiEmServer::Signals& rSignals)
+TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals)
 {
 	base::tempo::BeatTick::instance().registerRunningChangeNotifCb([&rSignals](bool running){
 		rSignals.Tempo__beatTickStartedChanged(running);
@@ -12,10 +12,10 @@ TempoRpc::TempoRpc(::capnzero::MidiEm::MidiEmServer::Signals& rSignals)
 		rSignals.Tempo__bpmCentsChanged(bpmCents);
 	});
 /*
-	rSignals.registerTempoBeatTickStartedChangedSubscrCb([](::capnzero::MidiEm::MidiEmServer::Signals& rSignals){
+	rSignals.registerTempoBeatTickStartedChangedSubscrCb([](::capnzero::MidiEmRt::MidiEmServer::Signals& rSignals){
 		rSignals.Tempo__beatTickStartedChanged(base::tempo::BeatTick::instance().running());
 	});
-	rSignals.registerTempoBpmCentsChangedSubscrCb([](::capnzero::MidiEm::MidiEmServer::Signals& rSignals){
+	rSignals.registerTempoBpmCentsChangedSubscrCb([](::capnzero::MidiEmRt::MidiEmServer::Signals& rSignals){
 		rSignals.Tempo__bpmCentsChanged(base::tempo::BeatTick::instance().getBpmCents());
 	});
 */

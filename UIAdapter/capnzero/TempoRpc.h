@@ -1,17 +1,17 @@
 #ifndef TEMPO_RPC_H
 #define TEMPO_RPC_H
 
-#include "MidiEmTempoRpcIf.h"
+#include "MidiEmRtTempoRpcIf.h"
 #include "TapTempoHandler.h"
-#include "MidiEm_Server.h"
+#include "MidiEmRt_Server.h"
 
 namespace uiadapter::capnzero
 {
 
-class TempoRpc : public ::capnzero::MidiEm::TempoRpcIf
+class TempoRpc : public ::capnzero::MidiEmRt::TempoRpcIf
 {
 public:
-    TempoRpc(::capnzero::MidiEm::MidiEmServer::Signals& rSignals);
+    TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals);
 	void start() override;
 	void stop() override;
 	void tapTempo() override;

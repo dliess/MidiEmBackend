@@ -27,7 +27,7 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME} 
-    PUBLIC midiem-capnzero
+    PUBLIC midiem-capnzero-rt
     PRIVATE Instruments
     PRIVATE MusicDevice
 )

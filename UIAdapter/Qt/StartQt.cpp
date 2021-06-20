@@ -9,7 +9,7 @@
 #include <QWebChannel>
 #include <QWebSocketServer>
 
-#include "MidiEm_QObjectClient.h"
+#include "MidiEmRt_QObjectClient.h"
 
 int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
 {
@@ -27,7 +27,7 @@ int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
                     &channel, &QWebChannel::connectTo);
 
    zmq::context_t m_zmqContext;
-   capnzero::MidiEm::QClient client(m_zmqContext, "tcp://localhost:5555", "tcp://localhost:5556");
+   capnzero::MidiEmRt::QClient client(m_zmqContext, "tcp://localhost:5555", "tcp://localhost:5556");
 
    channel.registerObject(QStringLiteral("MidiEmBackendServer"), &client);
    return app.exec();

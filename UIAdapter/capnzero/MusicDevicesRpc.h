@@ -1,7 +1,7 @@
 #ifndef MUSIC_DEVICES_RPC_H
 #define MUSIC_DEVICES_RPC_H
 
-#include "MidiEmMusicDevicesRpcIf.h"
+#include "MidiEmRtMusicDevicesRpcIf.h"
 
 namespace base::musicDevice {
   class MusicDeviceContainer;
@@ -9,7 +9,7 @@ namespace base::musicDevice {
 
 namespace uiadapter::capnzero {
 
-class MusicDevicesRpc : public ::capnzero::MidiEm::MusicDevicesRpcIf {
+class MusicDevicesRpc : public ::capnzero::MidiEmRt::MusicDevicesRpcIf {
 public:
   MusicDevicesRpc(base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
   void noteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 voiceIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
