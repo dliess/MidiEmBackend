@@ -31,5 +31,6 @@ target_link_libraries(Base
    PRIVATE Loguru
    PRIVATE usbmidi
    PRIVATE TimeMeasure
-   PRIVATE capnzero-server
+   PRIVATE capnzero-rt-server
+   PRIVATE capnzero-loader-server
 )

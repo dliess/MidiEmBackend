@@ -7,7 +7,7 @@
 
 #include "BeatTick.h"
 #include "FdSet.h"
-#include "Server.h"
+#include "RtServer.h"
 #include "ThreadedLoop.h"
 #include "UsbMidiPortNotifier.h"
 
@@ -78,7 +78,7 @@ void base::Base::waitForEnd() {
 void base::Base::mainRtThreadFunction(
     const std::atomic<bool> &terminateRequest) {
   zmq::context_t zmqContext;
-  uiadapter::capnzero::Server server(zmqContext, instruments, musicDeviceHolder.musicDevices);
+  uiadapter::capnzero::RtServer rtServer(zmqContext, instruments, musicDeviceHolder.musicDevices);
 
   int timerFd = timerfd_create(CLOCK_MONOTONIC, 0);
   constexpr auto Period = std::chrono::milliseconds(1);
@@ -90,10 +90,10 @@ void base::Base::mainRtThreadFunction(
 
   utils::FdSet fdSet;
   fdSet.AddFd(timerFd, [this](int fd) { loopFn(); });
-  fdSet.AddFd(server.getFd(),
-              [&server](int fd) { server.processNextRequestAllNonBlock(); });
-  fdSet.AddFd(server.signals().getFd(),
-              [&server](int fd) { server.signals().handleAllSubscriptions(); });
+  fdSet.AddFd(rtServer.getFd(),
+              [&rtServer](int fd) { rtServer.processNextRequestAllNonBlock(); });
+  fdSet.AddFd(rtServer.signals().getFd(),
+              [&rtServer](int fd) { rtServer.signals().handleAllSubscriptions(); });
 
   while (!terminateRequest) {
     fdSet.Select();

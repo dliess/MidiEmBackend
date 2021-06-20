@@ -1,4 +1,4 @@
-#include "Server.h"
+#include "RtServer.h"
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "MusicDeviceContainer.h"
@@ -11,7 +11,7 @@
 
 using namespace uiadapter::capnzero;
 
-Server::Server(zmq::context_t &rZmqContext,
+RtServer::RtServer(zmq::context_t &rZmqContext,
                base::instruments::Instruments &rInstruments,
                base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer)
     : ::capnzero::MidiEmRt::MidiEmRtServer(
