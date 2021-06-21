@@ -146,7 +146,7 @@ void Factory::invokeInserterQueueActions()
 
 std::string Factory::getAllDevicesAsJson() const
 {
-
+   return m_descriptionLoader.getAllDevicesAsJson();
 }
 
 void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot, const MusicDeviceId& device)

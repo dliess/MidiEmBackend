@@ -12,4 +12,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext, base::musicDevice::Facto
                                            std::make_unique<LoaderRpc>()),
     m_rMDFactory(rMDFactory)
 {
+    signals().registerAllMusicDevicesChangedSubscrCb([&rMDFactory](Signals& rSignals){
+        rSignals.allMusicDevicesChanged(rMDFactory.getAllDevicesAsJson());
+    });
 }

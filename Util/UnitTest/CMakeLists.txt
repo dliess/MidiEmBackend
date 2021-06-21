@@ -12,7 +12,7 @@ set(SOURCES "UT_main.cpp"
             "UT_Overload.cpp"
             "UT_Ringbuffer.cpp"
             "UT_ReflectionWithNamespace.cpp"
-            "UT_ThreadedLoop.cpp"
+            "UT_ThreadHelpers.cpp"
 )
 
 add_executable(UtilsTest ${SOURCES})

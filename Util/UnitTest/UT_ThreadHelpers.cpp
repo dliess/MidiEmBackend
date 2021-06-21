@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ThreadedLoop.h"
+#include "ThreadHelpers.h"
 
 using namespace util;
 

@@ -36,6 +36,7 @@ public:
       const MusicDeviceId& rootDeviceId,
       std::function<void(const MusicDeviceId& nextDeviceId)> cb);
 
+   std::string getAllDevicesAsJson() const;
 private:
    std::string m_configDir;
    using json = nlohmann::json;

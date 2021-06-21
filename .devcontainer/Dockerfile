@@ -24,6 +24,7 @@ ENV LANGUAGE en_US.UTF-8
 RUN apt-get update && apt-get install -y \
 	sudo \
         cmake \
+        clang \
         clang-format \
         ninja-build \
         g++ \
