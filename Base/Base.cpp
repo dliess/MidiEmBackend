@@ -96,7 +96,11 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd, [this](int fd) { loopFn(); });
+   fdSet.AddFd(timerFd, [this](int fd) {
+      std::array<uint8_t, 8> buf;
+      read(fd, buf.data(), buf.size());
+      loopFn(); 
+   });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
       rtServer.processNextRequestAllNonBlock();
    });
@@ -111,16 +115,18 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext, musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
-   constexpr auto Period = std::chrono::milliseconds(1000);
-   constexpr auto PeriodNs =
-       std::chrono::duration_cast<std::chrono::nanoseconds>(Period);
+   constexpr auto Period = std::chrono::seconds(1);
    itimerspec t(
-       {.it_interval = {0, PeriodNs.count()}, .it_value = {0, 1000000}});
+       {.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
    fdSet.AddFd(timerFd,
-               [this](int fd) { midi::PortNotifiers::instance().update(); });
+               [this](int fd) {
+      std::array<uint8_t, 8> buf;
+      read(fd, buf.data(), buf.size());
+      midi::PortNotifiers::instance().update();
+   });
    fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd) {
       loaderServer.processNextRequestAllNonBlock();
    });
