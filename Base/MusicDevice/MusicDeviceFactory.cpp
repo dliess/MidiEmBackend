@@ -144,6 +144,21 @@ void Factory::invokeInserterQueueActions()
    m_actionQueue.popCallAll();
 }
 
+std::string Factory::getAllDevicesAsJson() const
+{
+
+}
+
+void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot, const MusicDeviceId& device)
+{
+
+}
+
+void Factory::removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot)
+{
+   
+}
+
 std::shared_ptr<description::Description> Factory::getDescription(
    const MusicDeviceId& deviceId) noexcept
 {

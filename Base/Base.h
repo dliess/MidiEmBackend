@@ -33,6 +33,7 @@ private:
    std::unique_ptr<util::Thread> m_mainRtThread;
    std::unique_ptr<util::ThreadedLoop> m_portNotifierThread;
    void mainRtThreadFunction(const std::atomic<bool>& terminateRequest);
+   void loaderThreadFunction(const std::atomic<bool>& terminateRequest);
    void loopFn();
 };
 

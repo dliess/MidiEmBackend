@@ -100,6 +100,12 @@ void base::Base::mainRtThreadFunction(
   }
 }
 
+void base::Base::loaderThreadFunction(const std::atomic<bool>& terminateRequest)
+{
+  
+}
+
+
 void base::Base::loopFn() {
   // LOG_SCOPE_FUNCTION(INFO);
 

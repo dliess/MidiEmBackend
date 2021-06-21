@@ -29,6 +29,11 @@ public:
 
    void invokeInserterQueueActions();
 
+   std::string getAllDevicesAsJson() const;
+	void loadMusicDeviceToChain(const MusicDeviceId& chainRoot, const MusicDeviceId& device);
+	void removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot);
+   
+
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__
    void insertMusicDeviceDummies();
 #endif
