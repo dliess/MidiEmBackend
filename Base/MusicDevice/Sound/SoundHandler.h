@@ -63,6 +63,9 @@ public:
    template<typename Cb>
    void forEachParameter(Cb&& cb) noexcept;
 
+   void setMidiVoiceOffset(int newOffset) noexcept;
+   int getMidiVoiceOffset() const noexcept;
+
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
@@ -73,6 +76,7 @@ private:
    const description::sound::Section& m_rSoundSection;
    using MidiInMsgHandlerT  = MidiInMsgHandler<std::shared_ptr<MidiInput>>;
    using MidiOutMsgHandlerT = MidiOutMsgHandler<std::shared_ptr<MidiOutput>>;
+   int m_midiVoiceOffset{0};
    std::unique_ptr<MidiInMsgHandlerT> m_midiInMsgHandler;
    std::unique_ptr<MidiOutMsgHandlerT> m_midiOutHandler;
    ParameterStorage m_paramStorage;

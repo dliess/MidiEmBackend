@@ -33,7 +33,7 @@ void SoundHandler::initMidiInHandler(
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
       pMidiIn, m_rSoundSection, [this](int voiceId, int parameterId, float value) {
          //LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId, parameterId, value);
-         m_paramStorage.setSoundParameterActualValue(voiceId, parameterId, value);
+         m_paramStorage.setSoundParameterActualValue(voiceId - m_midiVoiceOffset, parameterId, value);
       });
    if(m_midiOutHandler)
    {
@@ -67,7 +67,7 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOn(voiceIndex, note, velocity);
+   m_midiOutHandler->noteOn(voiceIndex + m_midiVoiceOffset, note, velocity);
 }
 
 void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
@@ -79,7 +79,7 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOff(voiceIndex, note, velocity);
+   m_midiOutHandler->noteOff(voiceIndex + m_midiVoiceOffset, note, velocity);
 }
 
 void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
@@ -92,7 +92,7 @@ void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
          m_deviceName);
       return;
    }
-   m_midiOutHandler->pitchBend(voiceIndex, value);
+   m_midiOutHandler->pitchBend(voiceIndex + m_midiVoiceOffset, value);
 }
 
 void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcept
@@ -105,7 +105,7 @@ void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcep
          m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
+   m_midiOutHandler->afterTouchPoly(voiceIndex + m_midiVoiceOffset, note, value);
 }
 
 void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
@@ -118,7 +118,7 @@ void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
          m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouch(voiceIndex, value);
+   m_midiOutHandler->afterTouch(voiceIndex + m_midiVoiceOffset, value);
 }
 
 void SoundHandler::setParameterValue(int voiceId, int parameterId,
@@ -135,7 +135,7 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    }
    if(value < 0.0 || value >= 1.0) return;
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
-   m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
+   m_midiOutHandler->sendSoundParameter(voiceId + m_midiVoiceOffset, parameterId, value);
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId, float increment) noexcept
@@ -159,7 +159,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
    {
       m_paramStorage.updateActualValues(
          [this](int voiceIdx, int paramIdx, float value) {
-            m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
+            m_midiOutHandler->sendSoundParameter(voiceIdx + m_midiVoiceOffset, paramIdx, value);
          });
    }
 }
@@ -172,6 +172,19 @@ void SoundHandler::uiShowsInterestInParameter(int voiceId, int parameterId) noex
 void SoundHandler::uiLoosesInterestInParameter(int voiceId, int parameterId) noexcept
 {
    m_paramStorage.uiLoosesInterestInParameter(voiceId, parameterId);
+}
+
+void SoundHandler::setMidiVoiceOffset(int newOffset) noexcept
+{
+   if(newOffset < 0 || newOffset >= (15 - m_rSoundSection.voices.size()))
+   {
+      m_midiVoiceOffset = newOffset;
+   }
+}
+
+int SoundHandler::getMidiVoiceOffset() const noexcept
+{
+   return m_midiVoiceOffset;
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

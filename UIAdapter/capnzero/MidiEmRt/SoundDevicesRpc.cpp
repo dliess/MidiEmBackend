@@ -55,3 +55,27 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid, ::ca
         iter->second->soundHandler->setParameterValue(voiceId, paramIdx, value);
     }
 }
+
+void SoundDevicesRpc::increaseMidiVoiceOffset(const ::capnzero::SpanCL<16>& uuid)
+{
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rMusicDeviceContainer.find(uuid_);
+    if(iter != m_rMusicDeviceContainer.end())
+    {
+        assert(iter->second->soundHandler);
+        iter->second->soundHandler->setMidiVoiceOffset(iter->second->soundHandler->getMidiVoiceOffset() + 1);
+    }
+}
+
+void SoundDevicesRpc::decreaseMidiVoiceOffset(const ::capnzero::SpanCL<16>& uuid)
+{
+    util::Identifiable::UUID uuid_;
+    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+    auto iter = m_rMusicDeviceContainer.find(uuid_);
+    if(iter != m_rMusicDeviceContainer.end())
+    {
+        assert(iter->second->soundHandler);
+        iter->second->soundHandler->setMidiVoiceOffset(iter->second->soundHandler->getMidiVoiceOffset() - 1);
+    }
+}
