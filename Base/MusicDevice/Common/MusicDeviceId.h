@@ -7,9 +7,11 @@
 namespace base::musicDevice
 {
 
+using MusicDeviceName = std::string; // TODO: struct with manufacturer/product
+
 struct MusicDeviceId
 {
-    std::string deviceName;
+    MusicDeviceName deviceName;
     std::string portName;
     inline static const std::string ANY_PORT = "";
     MusicDeviceId() noexcept = default;
@@ -19,16 +21,16 @@ struct MusicDeviceId
     MusicDeviceId(const MusicDeviceId&) = default;
     MusicDeviceId& operator=(const MusicDeviceId&) = default;
     MusicDeviceId(MusicDeviceId&&) noexcept = default;
-    MusicDeviceId(std::string _deviceName) noexcept
+    MusicDeviceId(std::string deviceIdStr) noexcept
     {
-        auto n = _deviceName.find("@");
+        auto n = deviceIdStr.find("@");
         if(n == std::string::npos)
         {
-            deviceName = _deviceName;
+            deviceName = deviceIdStr;
             return;
         }
-        deviceName = _deviceName.substr(0, n);
-        portName = _deviceName.substr(n+1);
+        deviceName = deviceIdStr.substr(0, n);
+        portName = deviceIdStr.substr(n+1);
     }
     bool operator==(const MusicDeviceId& rhs) const noexcept
     {

@@ -26,21 +26,18 @@ inline void MidiHolder::registerForOutputRemoved(CbRem cb) noexcept
 
 inline void MidiHolder::processMidiInBuffers()
 {
-   for (auto& midiInput : m_midiInputs)
-   {
-      midiInput->update();
-   }
+   for (auto& midiInput : m_midiInputs) { midiInput->update(); }
 }
 
 inline void MidiHolder::addMidiIn(
-   std::shared_ptr<MusicDevice::MidiInput> pMidiInput) noexcept
+    std::shared_ptr<MusicDevice::MidiInput> pMidiInput) noexcept
 {
    m_midiInputs.emplace_back(std::move(pMidiInput));
    for (auto& cb : m_inputAddedCbs) cb(pMidiInput);
 }
 
 inline void MidiHolder::addMidiOut(
-   std::shared_ptr<MusicDevice::MidiOutput> pMidiOutput) noexcept
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOutput) noexcept
 {
    m_midiOutputs.emplace_back(std::move(pMidiOutput));
    for (auto& cb : m_outputAddedCbs) cb(pMidiOutput);
@@ -53,10 +50,7 @@ inline void MidiHolder::removeMidiIn(const Id& id) noexcept
       if (id == Id(m_midiInputs[i]->medium().getDeviceName(),
                    m_midiInputs[i]->medium().getPortName()))
       {
-         for (auto& cb : m_inputRemovedCbs)
-         {
-            cb(id);
-         }
+         for (auto& cb : m_inputRemovedCbs) { cb(id); }
          m_midiInputs[i].reset();
          m_midiInputs.erase(m_midiInputs.begin() + i);
       }
@@ -70,18 +64,29 @@ inline void MidiHolder::removeMidiOut(const Id& id) noexcept
       if (id == Id(m_midiOutputs[i]->medium().getDeviceName(),
                    m_midiOutputs[i]->medium().getPortName()))
       {
-         for (auto& cb : m_outputRemovedCbs)
-         {
-            cb(id);
-         }
+         for (auto& cb : m_outputRemovedCbs) { cb(id); }
          m_midiOutputs[i].reset();
          m_midiOutputs.erase(m_midiOutputs.begin() + i);
       }
    }
 }
 
+inline std::shared_ptr<MusicDevice::MidiInput> MidiHolder::getMidiIn(
+    const Id& id) const noexcept
+{
+   for (auto& e : m_midiInputs)
+   {
+      const Id actId(e->medium().getDeviceName(), e->medium().getPortName());
+      if (actId == id)
+      {
+         return e;
+      }
+   }
+   return nullptr;
+}
+
 inline std::shared_ptr<MusicDevice::MidiOutput> MidiHolder::getMidiOut(
-   const Id& id) const noexcept
+    const Id& id) const noexcept
 {
    for (auto& e : m_midiOutputs)
    {
@@ -100,17 +105,14 @@ inline void MidiHolder::midiClock() noexcept
    constexpr int MIDI_CLOCK_SEND_PERIOD = tempo::BeatTick::PPQ / MIDI_PPQ;
    static int lastMidiSendPeriodCnt     = -1;
    const auto midiSendPeriodCnt =
-      tempo::BeatTick::instance().getBeatJiffies() / MIDI_CLOCK_SEND_PERIOD;
+       tempo::BeatTick::instance().getBeatJiffies() / MIDI_CLOCK_SEND_PERIOD;
    if (midiSendPeriodCnt != lastMidiSendPeriodCnt)
    {
-      for (auto& e : m_midiOutputs)
-      {
-         e->send(midi::Message<midi::Clock>());
-      }
+      for (auto& e : m_midiOutputs) { e->send(midi::Message<midi::Clock>()); }
       lastMidiSendPeriodCnt = midiSendPeriodCnt;
    }
 }
 
-} // namespace base::musicDevice
+}   // namespace base::musicDevice
 
 #endif

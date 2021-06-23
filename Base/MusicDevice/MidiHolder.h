@@ -37,6 +37,7 @@ public:
    friend midifriends::Dumper;
    friend midifriends::Router;
 
+   inline std::shared_ptr<MusicDevice::MidiInput> getMidiIn(const Id& id) const noexcept;
    inline std::shared_ptr<MusicDevice::MidiOutput> getMidiOut(const Id& id) const noexcept;
 
    inline void midiClock() noexcept;

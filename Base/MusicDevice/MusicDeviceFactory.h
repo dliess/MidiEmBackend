@@ -25,12 +25,11 @@ class Factory
 {
 public:
    Factory(Holder& rMusicDeviceHolder, const std::string& resourceRootDir);
-   // void chainDeviceTo(const std::string& musicDeviceName, );
 
    void invokeInserterQueueActions();
 
    std::string getAllDevicesAsJson() const;
-	void loadMusicDeviceToChain(const MusicDeviceId& chainRoot, const MusicDeviceId& device);
+	void loadMusicDeviceToChain(const MusicDeviceId& chainRoot, const MusicDeviceName& deviceName);
 	void removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot);
    
 
@@ -38,6 +37,7 @@ public:
    void insertMusicDeviceDummies();
 #endif
 private:
+   Holder& m_rHolder;
    description::Loader m_descriptionLoader;
    std::unordered_map<MusicDeviceId, std::shared_ptr<description::Description>>
       m_descriptionCache;
@@ -64,6 +64,10 @@ private:
    struct EraseFromMidiOutHolder
    {
    };
+   struct HandleDeviceInsertChained
+   {
+   };
+
 
    class MusicDeviceInserter
    {
@@ -75,7 +79,7 @@ private:
          std::shared_ptr<description::Description> pDescr);
       void action(
          HandleMidiOutInsert, MusicDeviceId deviceId,
-         std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiIn,
+         std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiOut,
          std::shared_ptr<description::Description> pDescr);
       void action(
          HandleMidiInInsertChained, MusicDeviceId deviceId,
@@ -83,11 +87,16 @@ private:
          std::shared_ptr<description::Description> pDescr);
       void action(
          HandleMidiOutInsertChained, MusicDeviceId deviceId,
-         std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiIn,
+         std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiOut,
          std::shared_ptr<description::Description> pDescr);
       void action(EraseFromDevices, const MusicDeviceId& deviceId);
       void action(EraseFromMidiInHolder, const MidiHolder::Id& holderId);
       void action(EraseFromMidiOutHolder, const MidiHolder::Id& holderId);
+      void action(
+         HandleDeviceInsertChained, MusicDeviceId deviceId,
+         std::shared_ptr<base::musicDevice::MusicDevice::MidiInput> pMidiIn,
+         std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiOut,
+         std::shared_ptr<description::Description> pDescr);
 
       Holder& m_rHolder;
       const std::string m_resourceRootDir;

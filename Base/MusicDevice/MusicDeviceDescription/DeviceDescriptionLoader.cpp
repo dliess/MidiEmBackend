@@ -13,24 +13,22 @@
 using namespace base::musicDevice;
 
 description::Loader::Loader(const std::string &configDir) :
-    m_configDir(configDir.empty() ? "." : configDir)
+    m_configDir(configDir.empty() ? "." : configDir),
+    m_mapFileName(fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
+    m_deviceChainsFileName(fmt::format("{}/MidiConfigs/midiDeviceChains.json", m_configDir))
 {
-   const std::string mapFileName(
-       fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir));
-   const std::string deviceChainsFileName(
-       fmt::format("{}/MidiConfigs/midiDeviceChains.json", m_configDir));
-   std::ifstream mapFile(mapFileName);
-   std::ifstream deviceChainsFile(deviceChainsFileName);
+   std::ifstream mapFile(m_mapFileName);
+   std::ifstream deviceChainsFile(m_deviceChainsFileName);
    if (mapFile.fail())
    {
       throw std::runtime_error(
-          fmt::format("could not find file '{}'", mapFileName));
+          fmt::format("could not find file '{}'", m_mapFileName));
    }
    if (deviceChainsFile.fail())
    {
       LOG_F(INFO,
             "There is no custom midi interface connection config file '{}'",
-            deviceChainsFileName);
+            m_deviceChainsFileName);
    }
    else
    {
@@ -43,11 +41,11 @@ description::Loader::Loader(const std::string &configDir) :
       catch (json::type_error &e)
       {
          LOG_F(ERROR, "ERROR at parsing ill formed '{}' reason: {}",
-               deviceChainsFileName, e.what());
+               m_deviceChainsFileName, e.what());
       }
       catch (...)
       {
-         LOG_F(ERROR, "ERROR at parsing ill formed '{}'", deviceChainsFileName);
+         LOG_F(ERROR, "ERROR at parsing ill formed '{}'", m_deviceChainsFileName);
       }
    }
 
@@ -57,7 +55,7 @@ description::Loader::Loader(const std::string &configDir) :
    }
    catch (...)
    {
-      LOG_F(ERROR, "ERROR at parsing ill formed '{}'", mapFileName);
+      LOG_F(ERROR, "ERROR at parsing ill formed '{}'", m_mapFileName);
    }
 }
 
@@ -110,7 +108,25 @@ std::shared_ptr<description::Description> description::Loader::load(
 }
 
 template <typename T>
-auto searchByDeviceId(const T &container, const MusicDeviceId &deviceId)
+typename T::const_iterator searchByDeviceId(const T &container, const MusicDeviceId &deviceId)
+{
+   auto it = container.find(deviceId.toStr());
+   if (it == container.end())
+   {
+      for (auto iter = container.begin(); iter != container.end(); ++iter)
+      {
+         const MusicDeviceId keyAsId(iter->first, MusicDeviceId::ANY_PORT);
+         if (keyAsId == deviceId)
+         {
+            it = iter;
+         }
+      }
+   }
+   return it;
+}
+
+template <typename T>
+typename T::iterator searchByDeviceId(T &container, const MusicDeviceId &deviceId)
 {
    auto it = container.find(deviceId.toStr());
    if (it == container.end())
@@ -134,6 +150,7 @@ void description::Loader::forEachDeviceInChain(
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
+      assert(false);
       return;
    }
    std::string port(rootDeviceId.toStr());
@@ -146,17 +163,35 @@ void description::Loader::forEachDeviceInChain(
 
 void description::Loader::forFirstDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &nextDeviceId)> cb)
+    std::function<void(const MusicDeviceId &firstDeviceId)> cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
+      assert(false);
       return;
    }
    std::string port(rootDeviceId.toStr());
    if (it->second.size())
    {
       cb(MusicDeviceId(it->second[0], port));
+   }
+}
+
+void description::Loader::forLastDeviceInChain(
+    const MusicDeviceId &rootDeviceId,
+    std::function<void(const MusicDeviceId &lastDeviceId)> cb)
+{
+   auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
+   if (it == m_deviceChains.deviceChains.end())
+   {
+      assert(false);
+      return;
+   }
+   std::string port(rootDeviceId.toStr());
+   if (it->second.size())
+   {
+      cb(MusicDeviceId(it->second[it->second.size() - 1], port));
    }
 }
 
@@ -167,15 +202,12 @@ struct ManufacturerEntry
 };
 namespace meta
 {
-template<>
-inline auto registerMembers<ManufacturerEntry>()
+template <> inline auto registerMembers<ManufacturerEntry>()
 {
-   return members(
-      member("manufacturer", &ManufacturerEntry::manufacturer),
-      member("devices", &ManufacturerEntry::devices)
-   );
+   return members(member("manufacturer", &ManufacturerEntry::manufacturer),
+                  member("devices", &ManufacturerEntry::devices));
 }
-} // namespace meta
+}   // namespace meta
 
 std::string description::Loader::getAllDevicesAsJson() const
 {
@@ -213,4 +245,49 @@ std::string description::Loader::getAllDevicesAsJson() const
       }
    }
    return meta::serialize(ret).dump();
+}
+
+void description::Loader::appendDeviceToChain(
+    const MusicDeviceId &rootDeviceId, const MusicDeviceName &deviceName) noexcept
+{
+   auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
+   if (it == m_deviceChains.deviceChains.end())
+   {
+      assert(false);
+      return;
+   }
+   it->second.push_back(deviceName);
+   try{
+      saveDeviceChainsToFile();
+   } catch(std::exception& e){
+      LOG_F(ERROR, "Exception occured at saving device chains to file: {}", e.what());
+   }
+}
+
+void description::Loader::removeDeviceFromEndOf(
+    const MusicDeviceId &rootDeviceId) noexcept
+{
+   auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
+   if (it == m_deviceChains.deviceChains.end())
+   {
+      assert(false);
+      return;
+   }
+   it->second.pop_back();
+   try{
+      saveDeviceChainsToFile();
+   } catch(std::exception& e){
+      LOG_F(ERROR, "Exception occured at saving device chains to file: {}", e.what());
+   }
+}
+
+void description::Loader::saveDeviceChainsToFile()
+{
+   std::ofstream deviceChainsFile(m_deviceChainsFileName);
+   if (deviceChainsFile.fail())
+   {
+      LOG_F(INFO,
+            "deviceChainsFile.fail() {}", m_deviceChainsFileName);
+   }
+   deviceChainsFile << meta::serialize(m_deviceChains).dump();
 }
