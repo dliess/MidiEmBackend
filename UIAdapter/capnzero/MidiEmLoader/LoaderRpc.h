@@ -3,11 +3,17 @@
 
 #include "MidiEmLoaderRpcIf.h"
 
+namespace base::musicDevice
+{
+class Factory;
+}
+
 namespace uiadapter::capnzero
 {
 class LoaderRpc : public ::capnzero::MidiEmLoader::RpcIf
 {
 public:
+   LoaderRpc(base::musicDevice::Factory& rMusicDevicFactory) noexcept;
    void loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,
                                const ::capnzero::TextView& manufacturer,
                                const ::capnzero::TextView& device) override;
@@ -15,6 +21,7 @@ public:
        const ::capnzero::TextView& chainRoot) override;
 
 private:
+   base::musicDevice::Factory& m_rMusicDevicFactory;
 };
 
 }   // namespace uiadapter::capnzero

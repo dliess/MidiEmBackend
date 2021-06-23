@@ -155,11 +155,15 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
                                      const MusicDeviceName& device)
 {
    m_descriptionLoader.appendDeviceToChain(chainRoot, device);
-   util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-       .push(HandleDeviceInsertChained(), device,
-             m_rHolder.midiHolder.getMidiIn(chainRoot),
-             m_rHolder.midiHolder.getMidiOut(chainRoot),
-             getDescription(device));
+
+   m_descriptionLoader.forLastDeviceInChain(
+       chainRoot, [this, &chainRoot](const MusicDeviceId& lastDeviceId) {
+          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
+              .push(HandleDeviceInsertChained(), lastDeviceId,
+                    m_rHolder.midiHolder.getMidiIn(chainRoot),
+                    m_rHolder.midiHolder.getMidiOut(chainRoot),
+                    getDescription(lastDeviceId));
+       });
 }
 
 void Factory::removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot)

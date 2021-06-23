@@ -150,7 +150,6 @@ void description::Loader::forEachDeviceInChain(
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      assert(false);
       return;
    }
    std::string port(rootDeviceId.toStr());
@@ -168,7 +167,6 @@ void description::Loader::forFirstDeviceInChain(
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      assert(false);
       return;
    }
    std::string port(rootDeviceId.toStr());
@@ -185,13 +183,17 @@ void description::Loader::forLastDeviceInChain(
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      assert(false);
       return;
    }
+
    std::string port(rootDeviceId.toStr());
-   if (it->second.size())
+   for (int i = 0; i < it->second.size(); ++i)
    {
-      cb(MusicDeviceId(it->second[it->second.size() - 1], port));
+      if(i == (it->second.size() - 1))
+      {
+         cb(MusicDeviceId(it->second[i], port));
+      }
+      port = fmt::format("{}@{}", it->second[i], port);
    }
 }
 
@@ -249,12 +251,12 @@ std::string description::Loader::getAllDevicesAsJson() const
 
 void description::Loader::appendDeviceToChain(
     const MusicDeviceId &rootDeviceId, const MusicDeviceName &deviceName) noexcept
-{
+{ 
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      assert(false);
-      return;
+      m_deviceChains.deviceChains.insert(std::make_pair( rootDeviceId.toStr(), std::vector<std::string>() ));
+      it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    }
    it->second.push_back(deviceName);
    try{
@@ -270,7 +272,10 @@ void description::Loader::removeDeviceFromEndOf(
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      assert(false);
+      return;
+   }
+   if(it->second.empty())
+   {
       return;
    }
    it->second.pop_back();
@@ -289,5 +294,5 @@ void description::Loader::saveDeviceChainsToFile()
       LOG_F(INFO,
             "deviceChainsFile.fail() {}", m_deviceChainsFileName);
    }
-   deviceChainsFile << meta::serialize(m_deviceChains).dump();
+   deviceChainsFile << meta::serialize(m_deviceChains).dump(3);
 }
