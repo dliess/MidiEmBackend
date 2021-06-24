@@ -47,6 +47,8 @@ RtServer::RtServer(
              rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
                                                 midiVoiceOffset);
           }
+          rSignals.Tempo__beatTickStartedChanged(base::tempo::BeatTick::instance().running());
+          rSignals.Tempo__bpmCentsChanged(base::tempo::BeatTick::instance().getBpmCents());
           rSignals.Instruments__kitInstrumentsChanged(
               meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
           rSignals.Instruments__melodicInstrumentsChanged(
