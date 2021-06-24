@@ -105,7 +105,7 @@ private:
       std::shared_ptr<MusicDevice> findOrCreateDevice(
           const MusicDeviceId& deviceId,
           std::shared_ptr<description::Description> pDescr) noexcept;
-      std::shared_ptr<MusicDevice> createAndInsertMusicDevice(
+      std::shared_ptr<MusicDevice> createMusicDevice(
           const MusicDeviceId& deviceId,
           std::shared_ptr<description::Description> pDescr);
    };
