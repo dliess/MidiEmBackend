@@ -35,9 +35,11 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
           auto iter         = m_map.find(midiId);
           if (m_map.end() == iter)
           {
-             LOG_F(ERROR, "CONTROLLER --- {} No mapping for Midi msg id {}",
+             /*
+             LOG_F(INFO, "CONTROLLER --- {} No mapping for Midi msg id {}",
                    m_pMidiInIf->medium().getDeviceName(),
                    meta::serialize(midiId).dump());
+             */
              return;
           }
           handleRouting(iter->second, midiMsg);
