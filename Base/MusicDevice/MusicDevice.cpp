@@ -13,17 +13,17 @@
 using namespace base::musicDevice;
 
 MusicDevice::MusicDevice(
-   MusicDeviceId deviceId, const std::string& resourceRootDir,
-   std::shared_ptr<description::Description> descr,
-   std::shared_ptr<sound::SoundPresets> soundPresets,
-   uint8_t midiVoiceOffset) noexcept :
-   m_deviceId(std::move(deviceId)),
-   m_pDescr(std::move(descr)), m_pluginHandler(resourceRootDir)
+    MusicDeviceId deviceId, const std::string& resourceRootDir,
+    std::shared_ptr<description::Description> descr,
+    std::shared_ptr<sound::SoundPresets> soundPresets) noexcept :
+    m_deviceId(std::move(deviceId)),
+    m_pDescr(std::move(descr)),
+    m_pluginHandler(resourceRootDir)
 {
    if (m_pDescr->soundSection)
    {
       soundHandler.emplace(deviceId.deviceName, *m_pDescr->soundSection,
-                           std::move(soundPresets), midiVoiceOffset);
+                           std::move(soundPresets));
    }
 
    if (m_pDescr->controllerSection)
@@ -52,12 +52,12 @@ MusicDevice::MusicDevice(MusicDevice&& other) noexcept = default;
 
 MusicDeviceId MusicDevice::deviceId() const noexcept { return m_deviceId; }
 
-void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput) noexcept
+void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput, uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiInput);
    if (soundHandler)
    {
-      soundHandler->initMidiInHandler(pMidiInput);
+      soundHandler->initMidiInHandler(pMidiInput, midiVoiceOffset);
    }
    if (controllerHandler)
    {
@@ -65,12 +65,13 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput) noexcept
    }
 }
 
-void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput) noexcept
+void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
+                              uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiOutput);
    if (soundHandler)
    {
-      soundHandler->initMidiOutHandler(pMidiOutput);
+      soundHandler->initMidiOutHandler(pMidiOutput, midiVoiceOffset);
    }
    if (controllerHandler)
    {
@@ -79,7 +80,7 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput) noexcept
 }
 
 std::shared_ptr<description::Description> MusicDevice::description()
-   const noexcept
+    const noexcept
 {
    return m_pDescr;
 }

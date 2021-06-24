@@ -35,8 +35,7 @@ class SoundHandler
 public:
    SoundHandler(std::string deviceName,
                 const description::sound::Section& rSoundSection,
-                std::shared_ptr<SoundPresets> soundPresets,
-                uint8_t midiVoiceOffset) noexcept;
+                std::shared_ptr<SoundPresets> soundPresets) noexcept;
    ~SoundHandler();
    SoundHandler(const SoundHandler& other) = delete;
    SoundHandler& operator=(const SoundHandler& other) = delete;
@@ -44,8 +43,8 @@ public:
 
    using MidiInput  = midi::Midi1Input<midi::DoubleBufferedMessageDrain>;
    using MidiOutput = midi::Midi1Output;
-   void initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn) noexcept;
-   void initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut) noexcept;
+   void initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn, uint8_t midiVoiceOffset) noexcept;
+   void initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut, uint8_t midiVoiceOffset) noexcept;
    void initEvdevHandler();
    void noteOn(int voiceIndex, int note, float velocity) noexcept;
    void noteOff(int voiceIndex, int note, float velocity) noexcept;

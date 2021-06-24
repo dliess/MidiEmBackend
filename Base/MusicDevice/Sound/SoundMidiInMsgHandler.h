@@ -20,6 +20,7 @@ public:
    using Cb = std::function<void(int voiceId, int parameterId, float value)>;
    MidiInMsgHandler(MidiInIfPtr pMidiInIf,
                     const description::sound::Section& rSoundSection,
+                    uint8_t midiVoiceOffset,
                     Cb cb) noexcept;
 private:
    MidiInIfPtr m_pMidiInIf;
@@ -33,6 +34,7 @@ private:
       const description::sound::ParameterId& id) const noexcept;
 
    int midiChannelNr2VoiceId(int midiChannel, int engineId) const noexcept;
+   uint8_t m_midiVoiceOffset{0};
    Cb m_drainCb;
    void initCacheBySoundSection() noexcept;
 };

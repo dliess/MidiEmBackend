@@ -104,12 +104,10 @@ private:
       const std::string m_resourceRootDir;
       std::shared_ptr<MusicDevice> findOrCreateDevice(
           const MusicDeviceId& deviceId,
-          std::shared_ptr<description::Description> pDescr,
-          uint8_t midiVoiceOffset = 0) noexcept;
+          std::shared_ptr<description::Description> pDescr) noexcept;
       std::shared_ptr<MusicDevice> createAndInsertMusicDevice(
           const MusicDeviceId& deviceId,
-          std::shared_ptr<description::Description> pDescr,
-          uint8_t midiVoiceOffset);
+          std::shared_ptr<description::Description> pDescr);
    };
    MusicDeviceInserter m_musicDeviceInserter;
 

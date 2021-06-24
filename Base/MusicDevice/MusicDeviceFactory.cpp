@@ -205,8 +205,7 @@ Factory::MusicDeviceInserter::MusicDeviceInserter(
 
 std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
     const MusicDeviceId& deviceId,
-    std::shared_ptr<description::Description> pDescr,
-    uint8_t midiVoiceOffset) noexcept
+    std::shared_ptr<description::Description> pDescr) noexcept
 {
    auto itCntrlDev = m_rHolder.musicDevices.findByDeviceId(deviceId);
    if (itCntrlDev != m_rHolder.musicDevices.end())
@@ -215,7 +214,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
    }
    try
    {
-      return createAndInsertMusicDevice(deviceId, std::move(pDescr), midiVoiceOffset);
+      return createAndInsertMusicDevice(deviceId, std::move(pDescr));
    }
    catch (std::exception& e)
    {
@@ -228,8 +227,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
 std::shared_ptr<MusicDevice>
 Factory::MusicDeviceInserter::createAndInsertMusicDevice(
     const MusicDeviceId& deviceId,
-    std::shared_ptr<description::Description> pDescr,
-    uint8_t midiVoiceOffset)
+    std::shared_ptr<description::Description> pDescr)
 {
    std::shared_ptr<sound::SoundPresets> pSoundPresets;
 
@@ -256,7 +254,7 @@ Factory::MusicDeviceInserter::createAndInsertMusicDevice(
    LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, m_resourceRootDir, std::move(pDescr),
-       std::move(pSoundPresets), midiVoiceOffset);
+       std::move(pSoundPresets));
    m_rHolder.musicDevices.insert(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
 
@@ -342,13 +340,13 @@ void Factory::MusicDeviceInserter::action(
     std::shared_ptr<description::Description> pDescr,
     uint8_t midiVoiceOffset)
 {
-   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr), midiVoiceOffset);
+   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr));
    if (!pDevice)
    {
       return;
    }
-   pDevice->initMidiIn(std::move(pMidiIn));
-   pDevice->initMidiOut(std::move(pMidiOut));
+   pDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
+   pDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
 }
 
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__

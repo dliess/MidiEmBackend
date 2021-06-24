@@ -12,12 +12,10 @@ using namespace base::musicDevice::sound;
 
 SoundHandler::SoundHandler(
    std::string deviceName, const description::sound::Section& rSoundSection,
-   std::shared_ptr<SoundPresets> soundPresets,
-   uint8_t midiVoiceOffset) noexcept :
+   std::shared_ptr<SoundPresets> soundPresets) noexcept :
    m_deviceName(std::move(deviceName)),
    m_rSoundSection(rSoundSection),
-   m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets)),
-   m_midiVoiceOffset(midiVoiceOffset)
+   m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
 {
    m_paramStorage.resizeBy(rSoundSection);
 }
@@ -29,13 +27,13 @@ SoundHandler::~SoundHandler() =
 SoundHandler::SoundHandler(SoundHandler&& other) noexcept = default;
 
 void SoundHandler::initMidiInHandler(
-   std::shared_ptr<MidiInput> pMidiIn) noexcept
+   std::shared_ptr<MidiInput> pMidiIn, uint8_t midiVoiceOffset) noexcept
 {
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
-      pMidiIn, m_rSoundSection, [this](int voiceId, int parameterId, float value) {
+      pMidiIn, m_rSoundSection, midiVoiceOffset, [this](int voiceId, int parameterId, float value) {
          //LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId, parameterId, value);
-         m_paramStorage.setSoundParameterActualValue(voiceId - m_midiVoiceOffset, parameterId, value);
+         m_paramStorage.setSoundParameterActualValue(voiceId, parameterId, value);
       });
    if(m_midiOutHandler)
    {
@@ -44,11 +42,11 @@ void SoundHandler::initMidiInHandler(
 }
 
 void SoundHandler::initMidiOutHandler(
-   std::shared_ptr<MidiOutput> pMidiOut) noexcept
+   std::shared_ptr<MidiOutput> pMidiOut, uint8_t midiVoiceOffset) noexcept
 {
    assert(!m_midiOutHandler);
    m_midiOutHandler =
-      std::make_unique<MidiOutMsgHandlerT>(pMidiOut, m_rSoundSection);
+      std::make_unique<MidiOutMsgHandlerT>(pMidiOut, m_rSoundSection, midiVoiceOffset);
    if(m_midiInMsgHandler)
    {
       doParameterDumpRequest();
@@ -69,7 +67,7 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOn(voiceIndex + m_midiVoiceOffset, note, velocity);
+   m_midiOutHandler->noteOn(voiceIndex, note, velocity);
 }
 
 void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
@@ -81,7 +79,7 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOff(voiceIndex + m_midiVoiceOffset, note, velocity);
+   m_midiOutHandler->noteOff(voiceIndex, note, velocity);
 }
 
 void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
@@ -94,7 +92,7 @@ void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
          m_deviceName);
       return;
    }
-   m_midiOutHandler->pitchBend(voiceIndex + m_midiVoiceOffset, value);
+   m_midiOutHandler->pitchBend(voiceIndex, value);
 }
 
 void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcept
@@ -107,7 +105,7 @@ void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcep
          m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouchPoly(voiceIndex + m_midiVoiceOffset, note, value);
+   m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
 }
 
 void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
@@ -120,7 +118,7 @@ void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
          m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouch(voiceIndex + m_midiVoiceOffset, value);
+   m_midiOutHandler->afterTouch(voiceIndex, value);
 }
 
 void SoundHandler::setParameterValue(int voiceId, int parameterId,
@@ -137,7 +135,7 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    }
    if(value < 0.0 || value >= 1.0) return;
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
-   m_midiOutHandler->sendSoundParameter(voiceId + m_midiVoiceOffset, parameterId, value);
+   m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId, float increment) noexcept
@@ -161,7 +159,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
    {
       m_paramStorage.updateActualValues(
          [this](int voiceIdx, int paramIdx, float value) {
-            m_midiOutHandler->sendSoundParameter(voiceIdx + m_midiVoiceOffset, paramIdx, value);
+            m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
          });
    }
 }
@@ -178,7 +176,8 @@ void SoundHandler::uiLoosesInterestInParameter(int voiceId, int parameterId) noe
 
 uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 {
-   return m_midiVoiceOffset;
+   if(!m_midiOutHandler) return 0;
+   return m_midiOutHandler->getMidiChannelOffset();
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

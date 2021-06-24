@@ -27,8 +27,7 @@ struct MusicDevice : public util::Identifiable
 {
    MusicDevice(MusicDeviceId deviceId, const std::string& resourceRootDir,
                std::shared_ptr<description::Description> descr,
-               std::shared_ptr<sound::SoundPresets> soundPresets,
-               uint8_t midiVoiceOffset) noexcept;
+               std::shared_ptr<sound::SoundPresets> soundPresets) noexcept;
    ~MusicDevice() noexcept;
    MusicDevice(const MusicDevice& other) = delete;
    MusicDevice& operator=(const MusicDevice& other) = delete;
@@ -37,8 +36,8 @@ struct MusicDevice : public util::Identifiable
 
    using MidiInput = midi::Midi1Input<midi::DoubleBufferedMessageDrain>;
    using MidiOutput = midi::Midi1Output;
-   void initMidiIn(std::shared_ptr<MidiInput> pMidiInput) noexcept;
-   void initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput) noexcept;
+   void initMidiIn(std::shared_ptr<MidiInput> pMidiInput, uint8_t midiVoiceOffset = 0) noexcept;
+   void initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput, uint8_t midiVoiceOffset = 0) noexcept;
 
    std::shared_ptr<description::Description> description() const noexcept;
 

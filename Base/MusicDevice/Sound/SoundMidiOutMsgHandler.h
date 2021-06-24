@@ -12,7 +12,8 @@ class MidiOutMsgHandler
 {
 public:
    MidiOutMsgHandler(MidiOutIfPtr rMidiOutIf,
-                     const description::sound::Section& rSoundSection) noexcept;
+                     const description::sound::Section& rSoundSection,
+                     uint8_t midiChannelOffset) noexcept;
    void sendSoundParameter(uint32_t voiceId, uint32_t parameterId,
                            float value) noexcept;
    bool sendParameterDumpRequest() noexcept;
@@ -23,10 +24,13 @@ public:
    void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
    void afterTouch(int voiceIndex, float value) noexcept;
 
+   uint8_t getMidiChannelOffset() const noexcept;
+
 private:
    MidiOutIfPtr m_pMidiOutIf;
    const description::sound::Section& m_rSoundSection;
    float m_pitchBendFactor{1.0};
+   uint8_t m_midiChannelOffset{0};
 };
 
 } // namespace sound

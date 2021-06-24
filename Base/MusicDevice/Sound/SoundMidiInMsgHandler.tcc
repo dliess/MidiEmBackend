@@ -7,7 +7,7 @@
 
 namespace base::musicDevice
 {
-template<typename MidiInIfPtr>
+template <typename MidiInIfPtr>
 std::string sound::MidiInMsgHandler<MidiInIfPtr>::cache2Str(const Map& map)
 {
    std::string ret;
@@ -19,26 +19,26 @@ std::string sound::MidiInMsgHandler<MidiInIfPtr>::cache2Str(const Map& map)
    return ret;
 }
 
-template<typename MidiInIfPtr>
+template <typename MidiInIfPtr>
 sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
-   MidiInIfPtr pMidiInIf, const description::sound::Section& rSoundSection,
-   Cb cb) noexcept :
-   m_pMidiInIf(pMidiInIf),
-   m_rSoundSection(rSoundSection), m_drainCb(cb)
+    MidiInIfPtr pMidiInIf, const description::sound::Section& rSoundSection,
+    uint8_t midiVoiceOffset, Cb cb) noexcept :
+    m_pMidiInIf(pMidiInIf), m_rSoundSection(rSoundSection), m_midiVoiceOffset(midiVoiceOffset), m_drainCb(cb)
 {
    initCacheBySoundSection();
    LOG_F(INFO, "Initialized Controller cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
       const auto midiId = midiMessageToId(midiMsg);
-      if(mpark::holds_alternative<mpark::monostate>(midiId))
+      if (mpark::holds_alternative<mpark::monostate>(midiId))
       {
          return;
       }
-      auto iter         = m_map.find(midiId);
+      auto iter = m_map.find(midiId);
       if (m_map.end() == iter)
       {
-         LOG_F(ERROR, "No mapping for Midi msg id {} created by midi msg idx: {} ",
+         LOG_F(ERROR,
+               "No mapping for Midi msg id {} created by midi msg idx: {} ",
                meta::serialize(midiId).dump(), midiMsg.index());
          return;
       }
@@ -46,9 +46,9 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    });
 }
 
-template<typename MidiInIfPtr>
+template <typename MidiInIfPtr>
 int sound::MidiInMsgHandler<MidiInIfPtr>::midiChannelNr2VoiceId(
-   int midiChannel, int engineId) const noexcept
+    int midiChannel, int engineId) const noexcept
 {
    if (engineId == base::musicDevice::description::sound::GlobalSectionId)
    {
@@ -57,7 +57,7 @@ int sound::MidiInMsgHandler<MidiInIfPtr>::midiChannelNr2VoiceId(
    for (int i = 0; i < m_rSoundSection.voices.size(); ++i)
    {
       const auto& voice = m_rSoundSection.voices[i];
-      if (voice.midiChannel == midiChannel && voice.engineId == engineId)
+      if (voice.midiChannel == (midiChannel - m_midiVoiceOffset) && voice.engineId == engineId)
       {
          return i;
       }
@@ -66,50 +66,50 @@ int sound::MidiInMsgHandler<MidiInIfPtr>::midiChannelNr2VoiceId(
    return -2;
 }
 
-template<typename MidiInIfPtr>
+template <typename MidiInIfPtr>
 void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
-   const midi::MidiMessage& midiMsg,
-   const base::musicDevice::description::sound::ParameterId& id) const noexcept
+    const midi::MidiMessage& midiMsg,
+    const base::musicDevice::description::sound::ParameterId& id) const noexcept
 {
    mpark::visit(
-      midi::overload{
-         [this, &id](const midi::Message<midi::ControlChange>& msg) {
-            m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                      id.parameterId, msg.getRelativeValue());
-         },
-         [this, &id](const midi::Message<midi::ControlChangeHighRes>& msg) {
-            m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                      id.parameterId, msg.getRelativeValue());
-         },
-         [this, &id](const midi::Message<midi::NRPN>& msg) {
-            m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                      id.parameterId, msg.getRelativeValue());
-         },
-         [this, &id](const midi::Message<midi::RPN>& msg) {
-            m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                      id.parameterId, msg.getRelativeValue());
-         },
-         [](auto&& other) {}},
-      midiMsg);
+       midi::overload{
+           [this, &id](const midi::Message<midi::ControlChange>& msg) {
+              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
+                        id.parameterId, msg.getRelativeValue());
+           },
+           [this, &id](const midi::Message<midi::ControlChangeHighRes>& msg) {
+              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
+                        id.parameterId, msg.getRelativeValue());
+           },
+           [this, &id](const midi::Message<midi::NRPN>& msg) {
+              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
+                        id.parameterId, msg.getRelativeValue());
+           },
+           [this, &id](const midi::Message<midi::RPN>& msg) {
+              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
+                        id.parameterId, msg.getRelativeValue());
+           },
+           [](auto&& other) {}},
+       midiMsg);
 }
 
-template<typename MidiInIfPtr>
+template <typename MidiInIfPtr>
 void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
 {
    m_rSoundSection.forEachParameterDescr(
-      [this](const description::sound::ParameterId& paramId,
-             const description::sound::Parameter& parameter) {
-         assert(parameter.source.midi);
-         mpark::visit(
-            midi::overload{
-               [this](
-                  const midi::MidiMsgId<midi::ControlChangeHighRes>& msgId) {
-                  m_pMidiInIf->setCCHighResPair(msgId.idMsb, msgId.idLsb);
-               },
-               [](auto&& other) {}},
-            parameter.source.midi->id);
-         m_map[parameter.source.midi->id] = paramId;
-      });
+       [this](const description::sound::ParameterId& paramId,
+              const description::sound::Parameter& parameter) {
+          assert(parameter.source.midi);
+          mpark::visit(
+              midi::overload{
+                  [this](const midi::MidiMsgId<midi::ControlChangeHighRes>&
+                             msgId) {
+                     m_pMidiInIf->setCCHighResPair(msgId.idMsb, msgId.idLsb);
+                  },
+                  [](auto&& other) {}},
+              parameter.source.midi->id);
+          m_map[parameter.source.midi->id] = paramId;
+       });
 }
 
-} // namespace base::musicDevice
+}   // namespace base::musicDevice
