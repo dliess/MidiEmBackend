@@ -11,6 +11,15 @@ namespace meta
 {
 
 template<>
+inline auto registerMembers<base::musicDevice::DeviceChainsDeviceDescription>()
+{
+   return members(
+      member("musicDeviceName", &base::musicDevice::DeviceChainsDeviceDescription::musicDeviceName),
+      member("midiVoiceOffset", &base::musicDevice::DeviceChainsDeviceDescription::midiVoiceOffset)
+   );
+}
+
+template<>
 inline auto registerMembers<base::musicDevice::DeviceChains>()
 {
    return members(

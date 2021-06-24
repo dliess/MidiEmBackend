@@ -35,7 +35,8 @@ class SoundHandler
 public:
    SoundHandler(std::string deviceName,
                 const description::sound::Section& rSoundSection,
-                std::shared_ptr<SoundPresets> soundPresets) noexcept;
+                std::shared_ptr<SoundPresets> soundPresets,
+                uint8_t midiVoiceOffset) noexcept;
    ~SoundHandler();
    SoundHandler(const SoundHandler& other) = delete;
    SoundHandler& operator=(const SoundHandler& other) = delete;
@@ -63,8 +64,7 @@ public:
    template<typename Cb>
    void forEachParameter(Cb&& cb) noexcept;
 
-   void setMidiVoiceOffset(int newOffset) noexcept;
-   int getMidiVoiceOffset() const noexcept;
+   uint8_t getMidiVoiceOffset() const noexcept;
 
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;

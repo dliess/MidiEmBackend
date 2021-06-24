@@ -5,6 +5,7 @@
 #include <optional>
 #include <vector>
 #include <unordered_map>
+#include "MusicDeviceId.h"
 
 /* Sample midiDeviceChains.json
 {
@@ -24,9 +25,14 @@
 namespace base::musicDevice
 {
 
+struct DeviceChainsDeviceDescription
+{
+   MusicDeviceName musicDeviceName;
+   uint8_t midiVoiceOffset{0};
+};
 struct DeviceChains
 {
-   std::unordered_map<std::string, std::vector<std::string>> deviceChains;
+   std::unordered_map<std::string, std::vector<DeviceChainsDeviceDescription>> deviceChains;
 };
 
 } // namespace base::musicDevice

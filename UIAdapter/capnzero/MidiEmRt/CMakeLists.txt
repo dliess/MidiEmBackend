@@ -1,7 +1,6 @@
 set(SOURCES
     "RtServer.cpp"
     "InstrumentsRpc.cpp"
-    "MusicDevicesRpc.cpp"
     "SoundDevicesRpc.cpp"
     "TempoRpc.cpp"
 )
@@ -9,7 +8,6 @@ set(SOURCES
 set(HEADERS
     "Interface/RtServer.h"
     "InstrumentsRpc.h"
-    "MusicDevicesRpc.h"
     "SoundDevicesRpc.h"
     "TempoRpc.h"
 )

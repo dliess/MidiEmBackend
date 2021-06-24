@@ -12,10 +12,12 @@ using namespace base::musicDevice::sound;
 
 SoundHandler::SoundHandler(
    std::string deviceName, const description::sound::Section& rSoundSection,
-   std::shared_ptr<SoundPresets> soundPresets) noexcept :
+   std::shared_ptr<SoundPresets> soundPresets,
+   uint8_t midiVoiceOffset) noexcept :
    m_deviceName(std::move(deviceName)),
    m_rSoundSection(rSoundSection),
-   m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
+   m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets)),
+   m_midiVoiceOffset(midiVoiceOffset)
 {
    m_paramStorage.resizeBy(rSoundSection);
 }
@@ -174,15 +176,7 @@ void SoundHandler::uiLoosesInterestInParameter(int voiceId, int parameterId) noe
    m_paramStorage.uiLoosesInterestInParameter(voiceId, parameterId);
 }
 
-void SoundHandler::setMidiVoiceOffset(int newOffset) noexcept
-{
-   if(newOffset < 0 || newOffset >= (15 - m_rSoundSection.voices.size()))
-   {
-      m_midiVoiceOffset = newOffset;
-   }
-}
-
-int SoundHandler::getMidiVoiceOffset() const noexcept
+uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 {
    return m_midiVoiceOffset;
 }

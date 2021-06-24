@@ -27,7 +27,8 @@ struct MusicDevice : public util::Identifiable
 {
    MusicDevice(MusicDeviceId deviceId, const std::string& resourceRootDir,
                std::shared_ptr<description::Description> descr,
-               std::shared_ptr<sound::SoundPresets> soundPresets) noexcept;
+               std::shared_ptr<sound::SoundPresets> soundPresets,
+               uint8_t midiVoiceOffset) noexcept;
    ~MusicDevice() noexcept;
    MusicDevice(const MusicDevice& other) = delete;
    MusicDevice& operator=(const MusicDevice& other) = delete;

@@ -51,7 +51,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(HandleMidiInInsert(), deviceId, pMidiIn,
                     getDescription(deviceId));
           m_descriptionLoader.forFirstDeviceInChain(
-              deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId) {
+              deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId, uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
                      .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
                            getDescription(nextDeviceId));
@@ -83,7 +83,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(HandleMidiOutInsert(), deviceId, pMidiOut,
                     getDescription(deviceId));
           m_descriptionLoader.forEachDeviceInChain(
-              deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId) {
+              deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId, uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
                      .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
                            getDescription(nextDeviceId));
@@ -104,7 +104,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromDevices(), deviceId);
 
           m_descriptionLoader.forEachDeviceInChain(
-              deviceId, [this](const MusicDeviceId& nextDeviceId) {
+              deviceId, [this](const MusicDeviceId& nextDeviceId, uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
                      .push(EraseFromDevices(), nextDeviceId);
               });
@@ -129,7 +129,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromDevices(), deviceId);
 
           m_descriptionLoader.forEachDeviceInChain(
-              deviceId, [this](const MusicDeviceId& nextDeviceId) {
+              deviceId, [this](const MusicDeviceId& nextDeviceId, uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
                      .push(EraseFromDevices(), nextDeviceId);
               });
@@ -152,24 +152,26 @@ std::string Factory::getAllDevicesAsJson() const
 }
 
 void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
-                                     const MusicDeviceName& device)
+                                     const MusicDeviceName& device,
+                                     uint8_t midiVoiceOffset)
 {
-   m_descriptionLoader.appendDeviceToChain(chainRoot, device);
+   m_descriptionLoader.appendDeviceToChain(chainRoot, device, midiVoiceOffset);
 
    m_descriptionLoader.forLastDeviceInChain(
-       chainRoot, [this, &chainRoot](const MusicDeviceId& lastDeviceId) {
+       chainRoot, [this, &chainRoot](const MusicDeviceId& lastDeviceId, uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(HandleDeviceInsertChained(), lastDeviceId,
                     m_rHolder.midiHolder.getMidiIn(chainRoot),
                     m_rHolder.midiHolder.getMidiOut(chainRoot),
-                    getDescription(lastDeviceId));
+                    getDescription(lastDeviceId),
+                    midiVoiceOffset);
        });
 }
 
 void Factory::removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot)
 {
    m_descriptionLoader.forLastDeviceInChain(
-       chainRoot, [this](const MusicDeviceId& lastDeviceId) {
+       chainRoot, [this](const MusicDeviceId& lastDeviceId, uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), lastDeviceId);
        });
@@ -203,7 +205,8 @@ Factory::MusicDeviceInserter::MusicDeviceInserter(
 
 std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
     const MusicDeviceId& deviceId,
-    std::shared_ptr<description::Description> pDescr) noexcept
+    std::shared_ptr<description::Description> pDescr,
+    uint8_t midiVoiceOffset) noexcept
 {
    auto itCntrlDev = m_rHolder.musicDevices.findByDeviceId(deviceId);
    if (itCntrlDev != m_rHolder.musicDevices.end())
@@ -212,7 +215,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
    }
    try
    {
-      return createAndInsertMusicDevice(deviceId, std::move(pDescr));
+      return createAndInsertMusicDevice(deviceId, std::move(pDescr), midiVoiceOffset);
    }
    catch (std::exception& e)
    {
@@ -225,7 +228,8 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
 std::shared_ptr<MusicDevice>
 Factory::MusicDeviceInserter::createAndInsertMusicDevice(
     const MusicDeviceId& deviceId,
-    std::shared_ptr<description::Description> pDescr)
+    std::shared_ptr<description::Description> pDescr,
+    uint8_t midiVoiceOffset)
 {
    std::shared_ptr<sound::SoundPresets> pSoundPresets;
 
@@ -252,7 +256,7 @@ Factory::MusicDeviceInserter::createAndInsertMusicDevice(
    LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, m_resourceRootDir, std::move(pDescr),
-       std::move(pSoundPresets));
+       std::move(pSoundPresets), midiVoiceOffset);
    m_rHolder.musicDevices.insert(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
 
@@ -335,9 +339,10 @@ void Factory::MusicDeviceInserter::action(
     HandleDeviceInsertChained, MusicDeviceId deviceId,
     std::shared_ptr<base::musicDevice::MusicDevice::MidiInput> pMidiIn,
     std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput> pMidiOut,
-    std::shared_ptr<description::Description> pDescr)
+    std::shared_ptr<description::Description> pDescr,
+    uint8_t midiVoiceOffset)
 {
-   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr));
+   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr), midiVoiceOffset);
    if (!pDevice)
    {
       return;

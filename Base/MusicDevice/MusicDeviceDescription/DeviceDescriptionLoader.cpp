@@ -145,7 +145,7 @@ typename T::iterator searchByDeviceId(T &container, const MusicDeviceId &deviceI
 
 void description::Loader::forEachDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &nextDeviceId)> cb)
+    std::function<void(const MusicDeviceId &nextDeviceId, uint8_t midiVoiceOffset)> cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -153,16 +153,16 @@ void description::Loader::forEachDeviceInChain(
       return;
    }
    std::string port(rootDeviceId.toStr());
-   for (const auto &deviceName : it->second)
+   for (const auto &deviceDescr : it->second)
    {
-      cb(MusicDeviceId(deviceName, port));
-      port = fmt::format("{}@{}", deviceName, port);
+      cb(MusicDeviceId(deviceDescr.musicDeviceName, port), deviceDescr.midiVoiceOffset);
+      port = fmt::format("{}@{}", deviceDescr.musicDeviceName, port);
    }
 }
 
 void description::Loader::forFirstDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &firstDeviceId)> cb)
+    std::function<void(const MusicDeviceId &firstDeviceId, uint8_t midiVoiceOffset)> cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -172,13 +172,13 @@ void description::Loader::forFirstDeviceInChain(
    std::string port(rootDeviceId.toStr());
    if (it->second.size())
    {
-      cb(MusicDeviceId(it->second[0], port));
+      cb(MusicDeviceId(it->second[0].musicDeviceName, port), it->second[0].midiVoiceOffset);
    }
 }
 
 void description::Loader::forLastDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &lastDeviceId)> cb)
+    std::function<void(const MusicDeviceId &lastDeviceId, uint8_t midiVoiceOffset)> cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -191,9 +191,9 @@ void description::Loader::forLastDeviceInChain(
    {
       if(i == (it->second.size() - 1))
       {
-         cb(MusicDeviceId(it->second[i], port));
+         cb(MusicDeviceId(it->second[i].musicDeviceName, port), it->second[i].midiVoiceOffset);
       }
-      port = fmt::format("{}@{}", it->second[i], port);
+      port = fmt::format("{}@{}", it->second[i].musicDeviceName, port);
    }
 }
 
@@ -250,15 +250,15 @@ std::string description::Loader::getAllDevicesAsJson() const
 }
 
 void description::Loader::appendDeviceToChain(
-    const MusicDeviceId &rootDeviceId, const MusicDeviceName &deviceName) noexcept
+    const MusicDeviceId &rootDeviceId, const MusicDeviceName &deviceName, uint8_t midiVoiceOffset) noexcept
 { 
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      m_deviceChains.deviceChains.insert(std::make_pair( rootDeviceId.toStr(), std::vector<std::string>() ));
+      m_deviceChains.deviceChains.insert(std::make_pair( rootDeviceId.toStr(), std::vector<DeviceChainsDeviceDescription>() ));
       it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    }
-   it->second.push_back(deviceName);
+   it->second.push_back({deviceName, midiVoiceOffset});
    try{
       saveDeviceChainsToFile();
    } catch(std::exception& e){

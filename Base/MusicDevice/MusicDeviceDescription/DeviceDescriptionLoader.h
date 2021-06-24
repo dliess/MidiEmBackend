@@ -29,19 +29,20 @@ public:
 
    void forEachDeviceInChain(
        const MusicDeviceId& rootDeviceId,
-       std::function<void(const MusicDeviceId& nextDeviceId)> cb);
+       std::function<void(const MusicDeviceId& nextDeviceId, uint8_t midiVoiceOffset)> cb);
 
    void forFirstDeviceInChain(
        const MusicDeviceId& rootDeviceId,
-       std::function<void(const MusicDeviceId& firstDeviceId)> cb);
+       std::function<void(const MusicDeviceId& firstDeviceId, uint8_t midiVoiceOffset)> cb);
 
    void forLastDeviceInChain(
        const MusicDeviceId& rootDeviceId,
-       std::function<void(const MusicDeviceId& lastDeviceId)> cb);
+       std::function<void(const MusicDeviceId& lastDeviceId, uint8_t midiVoiceOffset)> cb);
 
    std::string getAllDevicesAsJson() const;
    void appendDeviceToChain(const MusicDeviceId& rootDeviceId,
-                            const MusicDeviceName& deviceName) noexcept;
+                            const MusicDeviceName& deviceName,
+                            uint8_t midiVoiceOffset) noexcept;
    void removeDeviceFromEndOf(const MusicDeviceId& rootDeviceId) noexcept;
 
 private:

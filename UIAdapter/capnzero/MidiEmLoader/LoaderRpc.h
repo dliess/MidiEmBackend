@@ -16,7 +16,8 @@ public:
    LoaderRpc(base::musicDevice::Factory& rMusicDevicFactory) noexcept;
    void loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,
                                const ::capnzero::TextView& manufacturer,
-                               const ::capnzero::TextView& device) override;
+                               const ::capnzero::TextView& device,
+                               ::capnzero::UInt8 midiVoiceOffset) override;
    void removeLastMusicDeviceFromChain(
        const ::capnzero::TextView& chainRoot) override;
 
