@@ -23,27 +23,31 @@ template <typename MidiInIfPtr>
 sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
     MidiInIfPtr pMidiInIf, const description::sound::Section& rSoundSection,
     uint8_t midiVoiceOffset, Cb cb) noexcept :
-    m_pMidiInIf(pMidiInIf), m_rSoundSection(rSoundSection), m_midiVoiceOffset(midiVoiceOffset), m_drainCb(cb)
+    m_pMidiInIf(pMidiInIf),
+    m_rSoundSection(rSoundSection),
+    m_midiVoiceOffset(midiVoiceOffset),
+    m_drainCb(cb)
 {
    initCacheBySoundSection();
-   LOG_F(INFO, "Initialized Controller cache \n{}", cache2Str(m_map));
+   // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
-   m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
-      const auto midiId = midiMessageToId(midiMsg);
-      if (mpark::holds_alternative<mpark::monostate>(midiId))
-      {
-         return;
-      }
-      auto iter = m_map.find(midiId);
-      if (m_map.end() == iter)
-      {
-         LOG_F(ERROR,
-               "No mapping for Midi msg id {} created by midi msg idx: {} ",
-               meta::serialize(midiId).dump(), midiMsg.index());
-         return;
-      }
-      handleSoundDevParameterRouting(midiMsg, iter->second);
-   });
+   m_pMidiInIf->registerMidiInCb(
+       [this](const midi::MidiMessage& midiMsg) {
+          const auto midiId = midiMessageToId(midiMsg);
+          if (mpark::holds_alternative<mpark::monostate>(midiId))
+          {
+             return;
+          }
+          auto iter = m_map.find(midiId);
+          if (m_map.end() == iter)
+          {
+             LOG_F(ERROR, "SOUND --- {} No mapping for Midi msg id {}",
+                   m_pMidiInIf->medium().getDeviceName(),
+                   meta::serialize(midiId).dump());
+             return;
+          }
+          handleSoundDevParameterRouting(midiMsg, iter->second);
+       });
 }
 
 template <typename MidiInIfPtr>
@@ -57,7 +61,8 @@ int sound::MidiInMsgHandler<MidiInIfPtr>::midiChannelNr2VoiceId(
    for (int i = 0; i < m_rSoundSection.voices.size(); ++i)
    {
       const auto& voice = m_rSoundSection.voices[i];
-      if (voice.midiChannel == (midiChannel - m_midiVoiceOffset) && voice.engineId == engineId)
+      if (voice.midiChannel == (midiChannel - m_midiVoiceOffset) &&
+          voice.engineId == engineId)
       {
          return i;
       }

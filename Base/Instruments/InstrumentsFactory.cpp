@@ -18,14 +18,14 @@ InstrumentsFactory::InstrumentsFactory(
        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
          add(std::move(ptr));
          m_rInstruments.triggerChanged();
-         LOG_F(INFO, "m_rInstruments.triggerChanged();");
+         //LOG_F(INFO, "m_rInstruments.triggerChanged();");
       });
    rMusicDeviceHolder.musicDevices.registerForAboutToRemove(
       [this,
        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
          remove(std::move(ptr));
          m_rInstruments.triggerChanged();
-         LOG_F(INFO, "m_rInstruments.triggerChanged();");
+         //LOG_F(INFO, "m_rInstruments.triggerChanged();");
       });
 }
 

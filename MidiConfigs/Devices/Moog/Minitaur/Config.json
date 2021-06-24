@@ -1027,6 +1027,177 @@
                 ]
               }
             }
+          },
+          {
+            "name": "Duplicate1",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 26,
+                  "idLsb": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate2",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 31,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate3",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate4",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate3",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate4",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate5",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate6",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate7",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate8",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate9",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate10",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Duplicate11",
+            "type": "continous",
+            "component": "_TO_BE_IGNORED_",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
           }
         ]
       }

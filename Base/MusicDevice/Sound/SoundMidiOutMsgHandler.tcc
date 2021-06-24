@@ -72,7 +72,7 @@ bool sound::MidiOutMsgHandler<MidiOutIfPtr>::sendParameterDumpRequest() noexcept
       if (m_rSoundSection.parameterDumpRequest->midiMsg)
       {
          m_pMidiOutIf->controlParameter(
-             1, m_rSoundSection.parameterDumpRequest->midiMsg->cc[0],
+             1 + m_midiChannelOffset, m_rSoundSection.parameterDumpRequest->midiMsg->cc[0],
              m_rSoundSection.parameterDumpRequest->midiMsg->value);
       }
       return true;

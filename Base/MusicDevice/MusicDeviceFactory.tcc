@@ -10,8 +10,8 @@ std::shared_ptr<MidiType> Factory::createMidi(
    rtmidiadapt::PortIndex index) noexcept
 {
    auto pMedium = std::make_unique<MidiMediumType>();
-   LOG_SCOPE_FUNCTION(INFO);
-   VLOG_SCOPE_F(1, "open port");
+   //LOG_SCOPE_FUNCTION(INFO);
+   //VLOG_SCOPE_F(1, "open port");
    if (!pMedium->openPort(index))
    {
       LOG_F(ERROR, "failed to open port with index {}", index);
