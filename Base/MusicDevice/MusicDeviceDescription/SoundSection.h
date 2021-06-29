@@ -32,7 +32,7 @@ struct NoteSettingsMidiRouting
    static constexpr int UNSET = -1;
    int destinationParameterIdx{UNSET}; // not to reflect
    std::string destinationParameter;
-   std::optional<std::vector<int>> mapping;
+   std::optional<std::vector<float>> mapping;
 };
 
 struct NoteSettingsMidi
