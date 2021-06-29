@@ -1,37 +1,85 @@
 #include "TransportControl.h"
-
+#include "MusicDevice.h"
 #include <loguru.hpp>
 
-using namespace base;
+using namespace base::musicDevice;
 
 TransportControl::TransportControl(
-   musicDevice::MidiHolder& rMidiHolder) noexcept :
-   m_rMidiHolder(rMidiHolder)
+  musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
+   m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
-   rMidiHolder.registerForOutputAdded(
-      [this](
-         const std::shared_ptr<musicDevice::MusicDevice::MidiOutput>& pMidiIn) {
-         const musicDevice::MidiHolder::Id id(pMidiIn->medium().getDeviceName(),
-                                              pMidiIn->medium().getPortName());
-
-         auto it = m_enabledDevices.find(id);
-         if (it != m_enabledDevices.end())
-         {
-            it->second = pMidiIn;
-         }
-         else
-         {
-            m_enabledDevices.emplace(std::make_pair(id, pMidiIn));
-         }
+   m_rMusicDeviceContainer.registerForAdd([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){
+      if(ptr->sequencer)
+      {
+         auto uuid = ptr->id();
+         ptr->sequencer->registerTransportMaskChangedCb([this, uuid](bool masked){
+            for(auto& cb : m_transportMaskChangedCbs) cb(uuid, masked);
+         });
       }
-   );
-
-   rMidiHolder.registerForOutputRemoved(
-      [this](const musicDevice::MidiHolder::Id& id) {
-         m_enabledDevices.erase(id);
-      }
-   );
+   });
 }
+
+void TransportControl::toggleEnabled(const util::Identifiable::UUID& uuid) noexcept
+{
+   auto it = m_rMusicDeviceContainer.find(uuid);
+   if(it == m_rMusicDeviceContainer.end())
+   {
+      //LOG_F(ERROR, "UUID {} should be found in MusicDevices", uuid);
+      return;
+   }
+   if(it->second->sequencer)
+   {
+      //LOG_F(ERROR, "UUID {} in MusicDevices has no sequencer", uuid);
+      return;
+   }
+   it->second->sequencer->toggleEnabled();
+   if(m_started) it->second->sequencer->start();
+}
+
+void TransportControl::start() noexcept
+{
+   if(m_started) return;
+   m_started = true;
+   for(auto& md : m_rMusicDeviceContainer)
+   {
+      if(md.second->sequencer)
+      {
+         md.second->sequencer->start();
+      }
+   }
+   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+}
+
+void TransportControl::stop() noexcept
+{
+   if(!m_started) return;
+   m_started = false;
+   for(auto& md : m_rMusicDeviceContainer)
+   {
+      if(md.second->sequencer)
+      {
+         md.second->sequencer->stop();
+      }
+   }
+   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+}
+
+void TransportControl::registerStartedChangeNotifCb(StartedChangeNotifCb cb)
+{
+   m_startedChangeNotifCb.push_back(cb);
+}
+
+void TransportControl::registerTransportMaskChangedCb(TransportMaskChangedCb cb)
+{
+   m_transportMaskChangedCbs.push_back(cb);
+}
+
+
+
+
+/*
+
+
 
 void TransportControl::startAllEnabled() noexcept
 {
@@ -134,3 +182,5 @@ void TransportControl::setSettings(const Settings& settings) noexcept
       m_enabledDevices.emplace(std::make_pair(id, std::move(pMidiOut)));
    }
 }
+
+*/

@@ -9,35 +9,41 @@
 #include "MusicDeviceHolder.h"
 #include "Settings.h"
 
-namespace base
+namespace base::musicDevice
 {
-class TransportControl : public utils::Settings<TransportControl>
+class TransportControl   //: public utils::Settings<TransportControl>
 {
 public:
-   TransportControl(musicDevice::MidiHolder& rMidiHolder) noexcept;
-   void startAllEnabled() noexcept;
-   void stopAllEnabled() noexcept;
-   bool getStarted() const noexcept;
-   void toggleEnabled(const musicDevice::MidiHolder::Id& id) noexcept;
-   bool getIfEnabled(const musicDevice::MidiHolder::Id& id) const noexcept;
-   void registerStartedChangeNotifCb(std::function<void(bool)> cb) noexcept;
-   void registerEnableMaskChangeNotifCb(
-      std::function<void(const musicDevice::MidiHolder::Id&)> cb) noexcept;
-   // ============== Settings ===============
-   using Settings = std::vector<std::string>;
-   Settings getSettings() const noexcept;
-   void setSettings(const Settings& settings) noexcept;
-   // =======================================
+   TransportControl(
+       musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
+   void toggleEnabled(const util::Identifiable::UUID& uuid) noexcept;
+   void start() noexcept;
+   void stop() noexcept;
+   using StartedChangeNotifCb = std::function<void(bool)>;
+   void registerStartedChangeNotifCb(StartedChangeNotifCb cb);
+   using TransportMaskChangedCb = std::function<void(const util::Identifiable::UUID&, bool)>;
+   void registerTransportMaskChangedCb(TransportMaskChangedCb cb);
+
+   /*
+      void startAllEnabled() noexcept;
+      void stopAllEnabled() noexcept;
+      bool getStarted() const noexcept;
+      void toggleEnabled(const musicDevice::MidiHolder::Id& id) noexcept;
+      bool getIfEnabled(const musicDevice::MidiHolder::Id& id) const noexcept;
+      void registerEnableMaskChangeNotifCb(
+         std::function<void(const musicDevice::MidiHolder::Id&)> cb) noexcept;
+      // ============== Settings ===============
+      using Settings = std::vector<std::string>;
+      Settings getSettings() const noexcept;
+      void setSettings(const Settings& settings) noexcept;
+      // =======================================
+   */
 private:
-   musicDevice::MidiHolder& m_rMidiHolder;
-   std::unordered_map<musicDevice::MidiHolder::Id,
-                      std::shared_ptr<musicDevice::MusicDevice::MidiOutput>>
-      m_enabledDevices;
+   musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    bool m_started{false};
-   std::function<void(bool)> m_startedChangeNotifCb;
-   std::function<void(const musicDevice::MidiHolder::Id&)>
-      m_enableMaskChangeNotifCb;
+   std::vector<StartedChangeNotifCb> m_startedChangeNotifCb;
+   std::vector<TransportMaskChangedCb> m_transportMaskChangedCbs;
 };
 
-} // namespace base
+}   // namespace base::musicDevice
 #endif

@@ -77,6 +77,10 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
    {
       controllerHandler->initMidiOutHandler(pMidiOutput);
    }
+   if (sequencer)
+   {
+      sequencer->initMidiOutHandler(pMidiOutput);
+   }
 }
 
 std::shared_ptr<description::Description> MusicDevice::description()

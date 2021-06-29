@@ -3,6 +3,7 @@ set(SOURCES
     "InstrumentsRpc.cpp"
     "SoundDevicesRpc.cpp"
     "TempoRpc.cpp"
+    "TransportControlRpc.cpp"
 )
 
 set(HEADERS
@@ -10,6 +11,7 @@ set(HEADERS
     "InstrumentsRpc.h"
     "SoundDevicesRpc.h"
     "TempoRpc.h"
+    "TransportControlRpc.h"
 )
 
 set(TARGET_NAME capnzero-rt-server)
@@ -28,4 +30,5 @@ target_link_libraries(${TARGET_NAME}
     PUBLIC midiem-capnzero-rt
     PRIVATE Instruments
     PRIVATE MusicDevice
+    PRIVATE Transport
 )

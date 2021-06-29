@@ -7,17 +7,21 @@
 #include "MusicDeviceDescription.h"
 #include "SoundDevicesRpc.h"
 #include "TempoRpc.h"
+#include "TransportControl.h"
+#include "TransportControlRpc.h"
 
 using namespace uiadapter::capnzero;
 
 RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
-    base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer) :
+    base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
+    base::musicDevice::TransportControl &rTransportControl) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:5555", "tcp://*:5556",
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
-        std::make_unique<TempoRpc>(Super::signals()))
+        std::make_unique<TempoRpc>(Super::signals()),
+        std::make_unique<TransportControlRpc>(rTransportControl))
 {
    rInstruments.registerForDataChange([this, &rInstruments]() {
       Super::signals().Instruments__kitInstrumentsChanged(
@@ -47,8 +51,10 @@ RtServer::RtServer(
              rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
                                                 midiVoiceOffset);
           }
-          rSignals.Tempo__beatTickStartedChanged(base::tempo::BeatTick::instance().running());
-          rSignals.Tempo__bpmCentsChanged(base::tempo::BeatTick::instance().getBpmCents());
+          rSignals.Tempo__beatTickStartedChanged(
+              base::tempo::BeatTick::instance().running());
+          rSignals.Tempo__bpmCentsChanged(
+              base::tempo::BeatTick::instance().getBpmCents());
           rSignals.Instruments__kitInstrumentsChanged(
               meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
           rSignals.Instruments__melodicInstrumentsChanged(
@@ -87,4 +93,12 @@ RtServer::RtServer(
           signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx,
                                                    commanded, actual);
        });
+
+   rTransportControl.registerTransportMaskChangedCb(
+       [this](const util::Identifiable::UUID &uuid, bool masked) {
+          signals().TransportControl__enabledChanged(uuid, !masked);
+       });
+    rTransportControl.registerStartedChangeNotifCb([this](bool started){
+        signals().TransportControl__startedChanged(started ? 1 : 0);
+    });
 }

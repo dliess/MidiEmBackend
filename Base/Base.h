@@ -22,9 +22,9 @@ public:
    Base(const std::string& configDir);
    musicDevice::Holder musicDeviceHolder;
    musicDevice::Factory musicDeviceFactory;
+   musicDevice::TransportControl transportControl;
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;
-   //TransportControl transportControl;
    
    void start();
    void waitForEnd();

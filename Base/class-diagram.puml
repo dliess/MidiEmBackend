@@ -8,8 +8,8 @@ class MusicDevice
    +void setSoundParameterValue(uint32_t voiceId, uint32_t parameterId, float value) noexcept;
    +float getControllerParameterValue(uint32_t presetId, uint32_t parameterId) const noexcept;
    +void quarterNotePer24Tick() noexcept;
-   +void startSequencer() noexcept;
-   +void stopSequencer() noexcept;
+   +void start() noexcept;
+   +void stop() noexcept;
    +void registerForControllerParameterChange(ParameterChangeCb cb) noexcept;
 
    +std::unique_ptr<MusicDeviceDescription> pDescr;
