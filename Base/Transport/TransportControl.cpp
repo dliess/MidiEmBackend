@@ -64,6 +64,18 @@ void TransportControl::stop() noexcept
    for(auto& cb : m_startedChangeNotifCb) cb(m_started);
 }
 
+void TransportControl::toggleStartStop() noexcept
+{
+   if(m_started)
+   {
+      stop();
+   }
+   else
+   {
+      start();
+   }
+}
+
 void TransportControl::registerStartedChangeNotifCb(StartedChangeNotifCb cb)
 {
    m_startedChangeNotifCb.push_back(cb);
@@ -86,89 +98,7 @@ void TransportControl::retriggerTransportMaskChangedCbs()
    }
 }
 
-
 /*
-
-
-
-void TransportControl::startAllEnabled() noexcept
-{
-   if (m_started)
-      return;
-   for (auto& e : m_enabledDevices)
-   {
-      if (e.second)
-      {
-         e.second->send(midi::Message<midi::Start>());
-      }
-   }
-   m_started = true;
-   if (m_startedChangeNotifCb)
-      m_startedChangeNotifCb(m_started);
-}
-
-void TransportControl::stopAllEnabled() noexcept
-{
-   if (!m_started)
-      return;
-   for (auto& e : m_enabledDevices)
-   {
-      if (e.second)
-      {
-         e.second->send(midi::Message<midi::Stop>());
-      }
-   }
-   m_started = false;
-   if (m_startedChangeNotifCb)
-      m_startedChangeNotifCb(m_started);
-}
-
-bool TransportControl::getStarted() const noexcept { return m_started; }
-
-void TransportControl::toggleEnabled(
-   const musicDevice::MidiHolder::Id& id) noexcept
-{
-   auto it = m_enabledDevices.find(id);
-   if (it != m_enabledDevices.end())
-   {
-      if (it->second)
-      {
-         it->second->send(midi::Message<midi::Stop>());
-      }
-      m_enabledDevices.erase(id);
-   }
-   else
-   {
-      auto pMidiOut = m_rMidiHolder.getMidiOut(id);
-      if (pMidiOut && m_started)
-      {
-         pMidiOut->send(midi::Message<midi::Start>());
-      }
-      m_enabledDevices.emplace(std::make_pair(id, std::move(pMidiOut)));
-   }
-   if (m_enableMaskChangeNotifCb)
-   {
-      m_enableMaskChangeNotifCb(id);
-   }
-}
-
-bool TransportControl::getIfEnabled(const musicDevice::MidiHolder::Id& id) const
-   noexcept
-{
-   return m_enabledDevices.find(id) != m_enabledDevices.end();
-}
-
-void TransportControl::registerStartedChangeNotifCb(
-   std::function<void(bool)> cb) noexcept
-{
-   m_startedChangeNotifCb = cb;
-}
-
-void TransportControl::registerEnableMaskChangeNotifCb(
-   std::function<void(const musicDevice::MidiHolder::Id&)> cb) noexcept
-{
-   m_enableMaskChangeNotifCb = cb;
-}
 
 TransportControl::Settings TransportControl::getSettings() const noexcept
 {

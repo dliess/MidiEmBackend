@@ -19,6 +19,7 @@ public:
    void toggleEnabled(const util::Identifiable::UUID& uuid) noexcept;
    void start() noexcept;
    void stop() noexcept;
+   void toggleStartStop() noexcept;
    using StartedChangeNotifCb = std::function<void(bool)>;
    void registerStartedChangeNotifCb(StartedChangeNotifCb cb);
    using TransportMaskChangedCb = std::function<void(const util::Identifiable::UUID&, bool)>;
@@ -26,13 +27,6 @@ public:
    void retriggerTransportMaskChangedCbs();
 
    /*
-      void startAllEnabled() noexcept;
-      void stopAllEnabled() noexcept;
-      bool getStarted() const noexcept;
-      void toggleEnabled(const musicDevice::MidiHolder::Id& id) noexcept;
-      bool getIfEnabled(const musicDevice::MidiHolder::Id& id) const noexcept;
-      void registerEnableMaskChangeNotifCb(
-         std::function<void(const musicDevice::MidiHolder::Id&)> cb) noexcept;
       // ============== Settings ===============
       using Settings = std::vector<std::string>;
       Settings getSettings() const noexcept;

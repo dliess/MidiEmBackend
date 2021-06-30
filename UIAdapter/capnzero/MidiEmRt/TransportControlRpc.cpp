@@ -10,6 +10,11 @@ TransportControlRpc::TransportControlRpc(
 {
 }
 
+void TransportControlRpc::toggleStartAllEnabled()
+{
+    m_rTransportControl.toggleStartStop();
+}
+
 void TransportControlRpc::toggleEnabled(const ::capnzero::SpanCL<16>& uuid)
 {
    util::Identifiable::UUID uuid_;
