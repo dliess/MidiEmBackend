@@ -23,6 +23,7 @@ public:
    void registerStartedChangeNotifCb(StartedChangeNotifCb cb);
    using TransportMaskChangedCb = std::function<void(const util::Identifiable::UUID&, bool)>;
    void registerTransportMaskChangedCb(TransportMaskChangedCb cb);
+   void retriggerTransportMaskChangedCbs();
 
    /*
       void startAllEnabled() noexcept;

@@ -56,3 +56,11 @@ void Sequencer::toggleEnabled() noexcept
     }
 }
 
+bool Sequencer::getEnabled() const noexcept
+{
+    if(m_midiOutHandler)
+    {
+        return !m_midiOutHandler->getTransportMasked();
+    }
+    return false;
+}

@@ -22,6 +22,7 @@ public:
    void start() noexcept;
    void stop() noexcept;
    void toggleEnabled() noexcept;
+   bool getEnabled() const noexcept;
 
 private:
    std::shared_ptr<midi::Midi1Output> m_midiOutHandler;

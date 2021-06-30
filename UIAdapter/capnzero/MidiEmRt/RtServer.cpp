@@ -34,7 +34,7 @@ RtServer::RtServer(
    // we use only one of the Subscription callbacks, since we dont know
    // the call order otherwise
    Super::signals().registerMusicDevicesDeviceAddedSubscrCb(
-       [&rMusicDeviceContainer, &rInstruments](Signals &rSignals) {
+       [&rMusicDeviceContainer, &rInstruments, &rTransportControl](Signals &rSignals) {
           for (auto &it : rMusicDeviceContainer)
           {
              const auto uuid        = it.second.get()->id();
@@ -61,6 +61,7 @@ RtServer::RtServer(
               meta::serialize(rInstruments.data.melodicInstruments)
                   .dump()
                   .c_str());
+          rTransportControl.retriggerTransportMaskChangedCbs();
        });
 
    rMusicDeviceContainer.registerForAdd(

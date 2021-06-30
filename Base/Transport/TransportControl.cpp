@@ -74,7 +74,17 @@ void TransportControl::registerTransportMaskChangedCb(TransportMaskChangedCb cb)
    m_transportMaskChangedCbs.push_back(cb);
 }
 
-
+void TransportControl::retriggerTransportMaskChangedCbs()
+{
+   for(auto& md : m_rMusicDeviceContainer)
+   {
+      if(md.second->sequencer)
+      {
+         const auto masked = !md.second->sequencer->getEnabled();
+         for(auto& cb : m_transportMaskChangedCbs) cb(md.second->id(), masked);
+      }
+   }
+}
 
 
 /*
