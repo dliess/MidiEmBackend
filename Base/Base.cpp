@@ -110,6 +110,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
       rtServer.signals().handleAllSubscriptions();
    });
 
+   tempo::BeatTick::instance().start();
    while (!terminateRequest) { fdSet.Select(); }
 }
 

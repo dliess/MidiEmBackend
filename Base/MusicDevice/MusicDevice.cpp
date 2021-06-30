@@ -32,6 +32,9 @@ MusicDevice::MusicDevice(
                                 *m_pDescr->controllerSection);
    }
 
+   // TODO: in config
+   sequencer.emplace();
+
    try
    {
       m_pluginHandler.load(m_pDescr->relDevicePath);

@@ -86,7 +86,7 @@ void TransportControl::registerTransportMaskChangedCb(TransportMaskChangedCb cb)
    m_transportMaskChangedCbs.push_back(cb);
 }
 
-void TransportControl::retriggerTransportMaskChangedCbs()
+void TransportControl::retriggerCallbacks()
 {
    for(auto& md : m_rMusicDeviceContainer)
    {
@@ -96,6 +96,7 @@ void TransportControl::retriggerTransportMaskChangedCbs()
          for(auto& cb : m_transportMaskChangedCbs) cb(md.second->id(), masked);
       }
    }
+   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
 }
 
 /*

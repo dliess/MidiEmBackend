@@ -61,7 +61,7 @@ RtServer::RtServer(
               meta::serialize(rInstruments.data.melodicInstruments)
                   .dump()
                   .c_str());
-          rTransportControl.retriggerTransportMaskChangedCbs();
+          rTransportControl.retriggerCallbacks();
        });
 
    rMusicDeviceContainer.registerForAdd(
