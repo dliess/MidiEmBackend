@@ -15,8 +15,8 @@ public:
 	void start() override;
 	void stop() override;
 	void tapTempo() override;
-	void setNudge(::capnzero::UInt32 bpmCents) override;
-	void increaseBpm(::capnzero::UInt32 bpmCents) override;
+	void setNudge(::capnzero::Int32 bpmCents) override;
+	void increaseBpm(::capnzero::Int32 bpmCents) override;
 	void setBpmCents(::capnzero::UInt32 val) override;
 private:
     base::tempo::TapTempoHandler m_tapTempoHandler;

@@ -28,12 +28,12 @@ void TempoRpc::tapTempo()
 	m_tapTempoHandler.tap();
 }
 
-void TempoRpc::setNudge(::capnzero::UInt32 bpmCents)
+void TempoRpc::setNudge(::capnzero::Int32 bpmCents)
 {
 	base::tempo::BeatTick::instance().setNudgeCents(bpmCents);
 }
 
-void TempoRpc::increaseBpm(::capnzero::UInt32 bpmCents)
+void TempoRpc::increaseBpm(::capnzero::Int32 bpmCents)
 {
 	base::tempo::BeatTick::instance().incBpm(bpmCents);
 }
