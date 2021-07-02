@@ -27,7 +27,7 @@ void TransportControl::toggleEnabled(const util::Identifiable::UUID& uuid) noexc
       //LOG_F(ERROR, "UUID {} should be found in MusicDevices", uuid);
       return;
    }
-   if(it->second->sequencer)
+   if(!it->second->sequencer)
    {
       //LOG_F(ERROR, "UUID {} in MusicDevices has no sequencer", uuid);
       return;
