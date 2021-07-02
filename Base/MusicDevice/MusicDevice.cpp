@@ -32,8 +32,11 @@ MusicDevice::MusicDevice(
                                 *m_pDescr->controllerSection);
    }
 
-   // TODO: in config
-   sequencer.emplace();
+   if (m_pDescr->reactsToTransportCommands &&
+       *m_pDescr->reactsToTransportCommands)
+   {
+      sequencer.emplace();
+   }
 
    try
    {
@@ -55,7 +58,8 @@ MusicDevice::MusicDevice(MusicDevice&& other) noexcept = default;
 
 MusicDeviceId MusicDevice::deviceId() const noexcept { return m_deviceId; }
 
-void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput, uint8_t midiVoiceOffset) noexcept
+void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
+                             uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiInput);
    if (soundHandler)
