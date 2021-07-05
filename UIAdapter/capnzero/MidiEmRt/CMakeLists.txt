@@ -1,6 +1,7 @@
 set(SOURCES
     "RtServer.cpp"
     "InstrumentsRpc.cpp"
+    "MidiRoutingRpc.cpp"
     "SoundDevicesRpc.cpp"
     "TempoRpc.cpp"
     "TransportControlRpc.cpp"
@@ -9,6 +10,7 @@ set(SOURCES
 set(HEADERS
     "Interface/RtServer.h"
     "InstrumentsRpc.h"
+    "MidiRoutingRpc.h"
     "SoundDevicesRpc.h"
     "TempoRpc.h"
     "TransportControlRpc.h"

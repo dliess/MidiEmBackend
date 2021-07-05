@@ -9,6 +9,7 @@
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
+#include "MidiRoutingRpc.h"
 
 using namespace uiadapter::capnzero;
 
@@ -21,7 +22,8 @@ RtServer::RtServer(
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
         std::make_unique<TempoRpc>(Super::signals()),
-        std::make_unique<TransportControlRpc>(rTransportControl))
+        std::make_unique<TransportControlRpc>(rTransportControl),
+        std::make_unique<MidiRoutingRpc>())
 {
    rInstruments.registerForDataChange([this, &rInstruments]() {
       Super::signals().Instruments__kitInstrumentsChanged(
