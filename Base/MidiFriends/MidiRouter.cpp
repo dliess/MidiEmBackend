@@ -3,38 +3,29 @@
 using namespace base::midifriends;
 
 Router::Router(musicDevice::MidiHolder& rMidiHolder) noexcept :
-   m_rMidiHolder(rMidiHolder)
+    m_rMidiHolder(rMidiHolder)
 {
    m_rMidiHolder.registerForInputAdded(
-      [this](
-         const std::shared_ptr<musicDevice::MusicDevice::MidiInput>& pMidiIn) {
-         const musicDevice::MidiHolder::Id id(pMidiIn->medium().getDeviceName(),
-                                              pMidiIn->medium().getPortName());
-         pMidiIn->registerMidiInCb(
-            [this, &id](const midi::MidiMessage& midiMsg) {
-               handleMidiIn(id, midiMsg);
-            }
-         );
-         for (auto& cb : m_cb) cb();
-      }
-   );
+       [this](const std::shared_ptr<musicDevice::MusicDevice::MidiInput>&
+                  pMidiIn) {
+          const musicDevice::MidiHolder::Id id(
+              pMidiIn->medium().getDeviceName(),
+              pMidiIn->medium().getPortName());
+          pMidiIn->registerMidiInCb(
+              [this, &id](const midi::MidiMessage& midiMsg) {
+                 handleMidiIn(id, midiMsg);
+              });
+       });
 
    m_rMidiHolder.registerForInputRemoved(
-      [this](const musicDevice::MidiHolder::Id& id) {
-         m_routingData.erase(id);
-         for (auto& cb : m_cb) cb();
-      }
-   );
+       [this](const musicDevice::MidiHolder::Id& id) {
+          m_routingData.erase(id);
+       });
 
    m_rMidiHolder.registerForOutputRemoved(
-      [this](const musicDevice::MidiHolder::Id& id) {
-         for(auto& e : m_routingData)
-         {
-            e.second.erase(id);
-         }
-         for (auto& cb : m_cb) cb();
-      }
-   );
+       [this](const musicDevice::MidiHolder::Id& id) {
+          for (auto& e : m_routingData) { e.second.erase(id); }
+       });
 }
 
 void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
@@ -61,47 +52,47 @@ void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
 }
 
 void Router::handleSpecialized(
-   const midi::MidiMessage& midiMsg, const RoutingDataSpecialized& specialized,
-   musicDevice::MusicDevice::MidiOutput& midiOut) noexcept
+    const midi::MidiMessage& midiMsg, const RoutingDataSpecialized& specialized,
+    musicDevice::MusicDevice::MidiOutput& midiOut) noexcept
 {
    mpark::visit(
-      midi::overload{
-         [&specialized, &midiOut](const midi::Message<midi::Clock>& msg) {
-            if (specialized.transmitClockMsg)
-            {
-               midiOut.send(msg);
-            }
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::NoteOn>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::NoteOff>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::AfterTouchPoly>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::ControlChange>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::ProgramChange>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::AfterTouchChannel>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [this, &specialized,
-          &midiOut](const midi::Message<midi::PitchBend>& msg) {
-            handleVoiceMsg(specialized.channelMapping, msg, midiOut);
-         },
-         [](auto&& other) {}},
-      midiMsg);
+       midi::overload{
+           [&specialized, &midiOut](const midi::Message<midi::Clock>& msg) {
+              if (specialized.transmitClockMsg)
+              {
+                 midiOut.send(msg);
+              }
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::NoteOn>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::NoteOff>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::AfterTouchPoly>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::ControlChange>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::ProgramChange>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::AfterTouchChannel>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [this, &specialized,
+            &midiOut](const midi::Message<midi::PitchBend>& msg) {
+              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           },
+           [](auto&& other) {}},
+       midiMsg);
 }
 
 bool Router::isRoutedTo(const musicDevice::MidiHolder::Id& source,
@@ -118,7 +109,7 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
    {
       auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
       m_routingData.emplace(std::make_pair(
-         source, DstType({{dest, {std::move(pMidiOut), std::nullopt}}})));
+          source, DstType({{dest, {std::move(pMidiOut), std::nullopt}}})));
    }
    else
    {
@@ -127,7 +118,7 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
       {
          auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
          itSrc->second.emplace(
-            std::make_pair(dest, RoutingData{pMidiOut, std::nullopt}));
+             std::make_pair(dest, RoutingData{pMidiOut, std::nullopt}));
       }
       else
       {
@@ -138,12 +129,13 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
          }
       }
    }
-   for (auto& cb : m_cb) cb();
+   for (auto& cb : m_routedChangedCBs)
+      cb(source, dest, isRoutedTo(source, dest));
 }
 
-bool Router::hasSpecializedData(const musicDevice::MidiHolder::Id& source,
-                                const musicDevice::MidiHolder::Id& dest) const
-   noexcept
+bool Router::hasSpecializedData(
+    const musicDevice::MidiHolder::Id& source,
+    const musicDevice::MidiHolder::Id& dest) const noexcept
 {
    const auto pRoutingData = getRoutingData(source, dest);
    if (nullptr == pRoutingData)
@@ -164,7 +156,7 @@ void Router::initSpecialized(const musicDevice::MidiHolder::Id& source,
    if (pRoutingData->specialized)
       return;
    pRoutingData->specialized.emplace(RoutingDataSpecialized());
-   for (auto& cb : m_cb) cb();
+   for (auto& cb : m_specialRoutedChangedCBs) cb(source, dest, true);
 }
 
 void Router::clearSpecialized(const musicDevice::MidiHolder::Id& source,
@@ -176,7 +168,7 @@ void Router::clearSpecialized(const musicDevice::MidiHolder::Id& source,
       return;
    }
    pRoutingData->specialized.reset();
-   for (auto& cb : m_cb) cb();
+   for (auto& cb : m_specialRoutedChangedCBs) cb(source, dest, false);
 }
 
 uint16_t Router::getMappingFor(const musicDevice::MidiHolder::Id& source,
@@ -225,24 +217,58 @@ void Router::setMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
    if (enable)
    {
       pRoutingData->specialized->channelMapping[sourceChannelIdx] |=
-         (1 << destinationChannelIdx);
+          (1 << destinationChannelIdx);
    }
    else
    {
       pRoutingData->specialized->channelMapping[sourceChannelIdx] &=
-         ~(1 << destinationChannelIdx);
+          ~(1 << destinationChannelIdx);
    }
-   for (auto& cb : m_cbSpecSchanged) cb();
+   for (auto& cb : m_specialRouteChangedCBs)
+      cb(source, dest, sourceChannelIdx, destinationChannelIdx, enable);
 }
 
-void Router::registerChangedCb(std::function<void(void)> cb) noexcept
+void Router::registerRoutedChangedCB(RoutedChangedCB cb)
 {
-   m_cb.push_back(cb);
+   m_routedChangedCBs.push_back(cb);
 }
 
-void Router::registerSpecChangedCb(std::function<void(void)> cb) noexcept
+void Router::registerSpecialRoutedChangedCB(SpecialRoutedChangedCB cb)
 {
-   m_cbSpecSchanged.push_back(cb);
+   m_specialRoutedChangedCBs.push_back(cb);
+}
+
+void Router::registerSpecialRouteChangedCB(SpecialRouteChangedCB cb)
+{
+   m_specialRouteChangedCBs.push_back(cb);
+}
+
+void Router::retriggerCallbacks()
+{
+   for (auto& [inId, dest] : m_routingData)
+   {
+      for (auto& [outId, routingData] : dest)
+      {
+         for (auto& cb : m_routedChangedCBs) cb(inId, outId, true);
+         if (routingData.specialized)
+         {
+            for (auto& cb : m_specialRoutedChangedCBs) cb(inId, outId, true);
+            for (int i = 0; i < routingData.specialized->channelMapping.size();
+                 ++i)
+            {
+               const auto mapData = routingData.specialized->channelMapping[i];
+               for (int j = 0; j < 16; ++j)
+               {
+                  if (mapData & (1 << j))
+                  {
+                     for (auto& cb : m_specialRouteChangedCBs)
+                        cb(inId, outId, i, j, true);
+                  }
+               }
+            }
+         }
+      }
+   }
 }
 
 Router::Settings Router::getSettings() const noexcept { return m_routingData; }

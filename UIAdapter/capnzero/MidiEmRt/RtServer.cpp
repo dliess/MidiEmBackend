@@ -3,14 +3,14 @@
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "JsonCast.h"   // meta::serialize
+#include "MidiRouter.h"
+#include "MidiRoutingRpc.h"
 #include "MusicDeviceContainer.h"
 #include "MusicDeviceDescription.h"
 #include "SoundDevicesRpc.h"
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
-#include "MidiRoutingRpc.h"
-#include "MidiRouter.h"
 
 using namespace uiadapter::capnzero;
 
@@ -18,7 +18,7 @@ RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
     base::musicDevice::TransportControl &rTransportControl,
-    base::midifriends::Router& rMidiRouter) :
+    base::midifriends::Router &rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:5555", "tcp://*:5556",
         std::make_unique<InstrumentsRpc>(rInstruments),
@@ -38,7 +38,8 @@ RtServer::RtServer(
    // we use only one of the Subscription callbacks, since we dont know
    // the call order otherwise
    Super::signals().registerMusicDevicesDeviceAddedSubscrCb(
-       [&rMusicDeviceContainer, &rInstruments, &rTransportControl](Signals &rSignals) {
+       [&rMusicDeviceContainer, &rInstruments, &rTransportControl,
+        &rMidiRouter](Signals &rSignals) {
           for (auto &it : rMusicDeviceContainer)
           {
              const auto uuid        = it.second.get()->id();
@@ -66,6 +67,7 @@ RtServer::RtServer(
                   .dump()
                   .c_str());
           rTransportControl.retriggerCallbacks();
+          rMidiRouter.retriggerCallbacks();
        });
 
    rMusicDeviceContainer.registerForAdd(
@@ -103,7 +105,42 @@ RtServer::RtServer(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);
        });
-    rTransportControl.registerStartedChangeNotifCb([this](bool started){
-        signals().TransportControl__startedChanged(started ? 1 : 0);
-    });
+   rTransportControl.registerStartedChangeNotifCb([this](bool started) {
+      signals().TransportControl__startedChanged(started ? 1 : 0);
+   });
+
+   rMidiRouter.registerRoutedChangedCB(
+       [this](const base::musicDevice::MidiHolder::Id &source,
+              const base::musicDevice::MidiHolder::Id &dest, bool routed) {
+          if (routed)
+          {
+             signals().MidiRouting__routedAdded(source.toStr(), dest.toStr());
+          }
+          else
+          {
+             signals().MidiRouting__routedRemoved(source.toStr(), dest.toStr());
+          }
+       });
+   rMidiRouter.registerSpecialRoutedChangedCB(
+       [this](const base::musicDevice::MidiHolder::Id &source,
+              const base::musicDevice::MidiHolder::Id &dest, bool created) {
+          if (created)
+          {
+             signals().MidiRouting__specializedRoutingInited(source.toStr(),
+                                                             dest.toStr());
+          }
+          else
+          {
+             signals().MidiRouting__specializedRoutingCleared(source.toStr(),
+                                                              dest.toStr());
+          }
+       });
+   rMidiRouter.registerSpecialRouteChangedCB(
+       [this](const base::musicDevice::MidiHolder::Id &source,
+              const base::musicDevice::MidiHolder::Id &dest,
+              uint8_t sourceChannel, uint8_t destChannel, bool enabled) {
+          signals().MidiRouting__specializedRoutingSet(
+              source.toStr(), dest.toStr(), sourceChannel, destChannel,
+              enabled);
+       });
 }

@@ -42,8 +42,8 @@ public:
    void toggleRouted(const musicDevice::MidiHolder::Id& source,
                      const musicDevice::MidiHolder::Id& dest) noexcept;
    bool hasSpecializedData(
-      const musicDevice::MidiHolder::Id& source,
-      const musicDevice::MidiHolder::Id& dest) const noexcept;
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest) const noexcept;
    void initSpecialized(const musicDevice::MidiHolder::Id& source,
                         const musicDevice::MidiHolder::Id& dest) noexcept;
    void clearSpecialized(const musicDevice::MidiHolder::Id& source,
@@ -55,44 +55,60 @@ public:
                                 const musicDevice::MidiHolder::Id& dest,
                                 int sourceChannelIdx, int destinationChannelIdx,
                                 bool enable) noexcept;
-   void registerChangedCb(std::function<void(void)> cb) noexcept;
-   void registerSpecChangedCb(std::function<void(void)> cb) noexcept;
 
    using DstType = std::unordered_map<musicDevice::MidiHolder::Id, RoutingData>;
-   using RoutingDataMap = std::unordered_map<musicDevice::MidiHolder::Id, DstType>;
+   using RoutingDataMap =
+       std::unordered_map<musicDevice::MidiHolder::Id, DstType>;
    // ============== Settings ===============
    using Settings = RoutingDataMap;
    Settings getSettings() const noexcept;
    void setSettings(const Settings& settings) noexcept;
    // =======================================
+   using RoutedChangedCB        = std::function<void(
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest, bool routed)>;
+   using SpecialRoutedChangedCB = std::function<void(
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest, bool created)>;
+   using SpecialRouteChangedCB  = std::function<void(
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest, uint8_t sourceChannel,
+       uint8_t destChannel, bool enabled)>;
+
+   void registerRoutedChangedCB(RoutedChangedCB cb);
+   void registerSpecialRoutedChangedCB(SpecialRoutedChangedCB cb);
+   void registerSpecialRouteChangedCB(SpecialRouteChangedCB cb);
+   void retriggerCallbacks();
 private:
    musicDevice::MidiHolder& m_rMidiHolder;
    RoutingDataMap m_routingData;
-   std::vector<std::function<void(void)>> m_cb;
-   std::vector<std::function<void(void)>> m_cbSpecSchanged;
+
+   std::vector<RoutedChangedCB> m_routedChangedCBs;
+   std::vector<SpecialRoutedChangedCB> m_specialRoutedChangedCBs;
+   std::vector<SpecialRouteChangedCB> m_specialRouteChangedCBs;
 
    void handleMidiIn(const musicDevice::MidiHolder::Id& id,
                      const midi::MidiMessage& midiMsg) noexcept;
    void handleSpecialized(
-      const midi::MidiMessage& midiMsg,
-      const RoutingDataSpecialized& routingData,
-      musicDevice::MusicDevice::MidiOutput& midiOut) noexcept;
+       const midi::MidiMessage& midiMsg,
+       const RoutingDataSpecialized& routingData,
+       musicDevice::MusicDevice::MidiOutput& midiOut) noexcept;
 
-   template<typename Msg>
+   template <typename Msg>
    void handleVoiceMsg(const RoutingDataSpecialized::ChannelMap& channelMap,
                        const Msg& msg,
                        musicDevice::MusicDevice::MidiOutput& midiOut) noexcept;
 
    inline const RoutingData* getRoutingData(
-      const musicDevice::MidiHolder::Id& source,
-      const musicDevice::MidiHolder::Id& dest) const noexcept;
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest) const noexcept;
    inline RoutingData* getRoutingData(
-      const musicDevice::MidiHolder::Id& source,
-      const musicDevice::MidiHolder::Id& dest) noexcept;
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest) noexcept;
 };
 
-} // namespace midifriends
-} // namespace base
+}   // namespace midifriends
+}   // namespace base
 
 #include "MidiRouter.inl"
 #include "MidiRouterMeta.h"
