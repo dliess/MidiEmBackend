@@ -33,4 +33,5 @@ target_link_libraries(${TARGET_NAME}
     PRIVATE Instruments
     PRIVATE MusicDevice
     PRIVATE Transport
+    PRIVATE MidiFriends
 )

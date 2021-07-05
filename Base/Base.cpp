@@ -41,8 +41,8 @@ base::Base::Base(const std::string &configDir) :
     musicDeviceFactory(musicDeviceHolder, configDir),
     transportControl(musicDeviceHolder.musicDevices),
     instruments(musicDeviceHolder.musicDevices),
-    instrumentsFactory(instruments, musicDeviceHolder) /*,
-    transportControl(musicDeviceHolder.midiHolder)*/
+    instrumentsFactory(instruments, musicDeviceHolder),
+    midiRouter(musicDeviceHolder.midiHolder)
 {
    // TODO: Remove Dummy
    instruments.load("relDir", "filename", "section");
@@ -87,7 +87,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    uiadapter::capnzero::RtServer rtServer(m_zmqContext, instruments,
                                           musicDeviceHolder.musicDevices,
-                                          transportControl);
+                                          transportControl, midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);

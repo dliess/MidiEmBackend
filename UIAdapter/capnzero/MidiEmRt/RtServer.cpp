@@ -10,20 +10,22 @@
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
 #include "MidiRoutingRpc.h"
+#include "MidiRouter.h"
 
 using namespace uiadapter::capnzero;
 
 RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
-    base::musicDevice::TransportControl &rTransportControl) :
+    base::musicDevice::TransportControl &rTransportControl,
+    base::midifriends::Router& rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:5555", "tcp://*:5556",
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
         std::make_unique<TempoRpc>(Super::signals()),
         std::make_unique<TransportControlRpc>(rTransportControl),
-        std::make_unique<MidiRoutingRpc>())
+        std::make_unique<MidiRoutingRpc>(rMidiRouter))
 {
    rInstruments.registerForDataChange([this, &rInstruments]() {
       Super::signals().Instruments__kitInstrumentsChanged(

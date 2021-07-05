@@ -13,6 +13,7 @@
 #include "MusicDeviceFactory.h"
 #include "MusicDeviceHolder.h"
 #include "TransportControl.h"
+#include "MidiRouter.h"
 
 namespace base
 {
@@ -25,7 +26,8 @@ public:
    musicDevice::TransportControl transportControl;
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;
-   
+   midifriends::Router midiRouter;
+
    void start();
    void waitForEnd();
 
