@@ -12,7 +12,7 @@ Router::Router(musicDevice::MidiHolder& rMidiHolder) noexcept :
               pMidiIn->medium().getDeviceName(),
               pMidiIn->medium().getPortName());
           pMidiIn->registerMidiInCb(
-              [this, &id](const midi::MidiMessage& midiMsg) {
+              [this, id](const midi::MidiMessage& midiMsg) {
                  handleMidiIn(id, midiMsg);
               });
        });

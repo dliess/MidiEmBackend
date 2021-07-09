@@ -2,6 +2,7 @@
 #define MUSIC_DEVICE_MIDI_HOLDER_INL
 
 #include "BeatTick.h"
+#include <loguru.hpp>
 namespace base::musicDevice
 {
 inline void MidiHolder::registerForInputAdded(CbIn cb) noexcept
@@ -32,15 +33,15 @@ inline void MidiHolder::processMidiInBuffers()
 inline void MidiHolder::addMidiIn(
     std::shared_ptr<MusicDevice::MidiInput> pMidiInput) noexcept
 {
+   for (auto& cb : m_inputAddedCbs) cb(pMidiInput);
    m_midiInputs.emplace_back(std::move(pMidiInput));
-   for (auto& cb : m_inputAddedCbs) cb(m_midiInputs.back());
 }
 
 inline void MidiHolder::addMidiOut(
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOutput) noexcept
 {
+   for (auto& cb : m_outputAddedCbs) cb(pMidiOutput);
    m_midiOutputs.emplace_back(std::move(pMidiOutput));
-   for (auto& cb : m_outputAddedCbs) cb(m_midiOutputs.back());
 }
 
 inline void MidiHolder::removeMidiIn(const Id& id) noexcept
