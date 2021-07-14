@@ -45,6 +45,9 @@ public:
    bool hasSpecializedData(
        const musicDevice::MidiHolder::Id& source,
        const musicDevice::MidiHolder::Id& dest) const noexcept;
+   void toggleSpecializedRoutingEnabled(
+       const musicDevice::MidiHolder::Id& source,
+       const musicDevice::MidiHolder::Id& dest) noexcept;
    void initSpecialized(const musicDevice::MidiHolder::Id& source,
                         const musicDevice::MidiHolder::Id& dest) noexcept;
    void clearSpecialized(const musicDevice::MidiHolder::Id& source,
@@ -80,6 +83,7 @@ public:
    void registerSpecialRoutedChangedCB(SpecialRoutedChangedCB cb);
    void registerSpecialRouteChangedCB(SpecialRouteChangedCB cb);
    void retriggerCallbacks();
+
 private:
    musicDevice::MidiHolder& m_rMidiHolder;
    RoutingDataMap m_routingData;

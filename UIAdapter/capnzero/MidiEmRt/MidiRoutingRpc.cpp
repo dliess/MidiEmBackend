@@ -4,8 +4,7 @@
 
 using namespace uiadapter::capnzero;
 
-MidiRoutingRpc::MidiRoutingRpc(
-    base::midifriends::Router& rMidiRouter) :
+MidiRoutingRpc::MidiRoutingRpc(base::midifriends::Router& rMidiRouter) :
     m_rMidiRouter(rMidiRouter)
 {
 }
@@ -14,6 +13,12 @@ void MidiRoutingRpc::toggleRouted(const ::capnzero::TextView& from,
                                   const ::capnzero::TextView& to)
 {
    m_rMidiRouter.toggleRouted(std::string(from), std::string(to));
+}
+
+void MidiRoutingRpc::toggleSpecializedRoutingEnabled(
+    const ::capnzero::TextView& from, const ::capnzero::TextView& to)
+{
+   m_rMidiRouter.toggleSpecializedRoutingEnabled(std::string(from), std::string(to));
 }
 
 void MidiRoutingRpc::initSpecializedRouting(const ::capnzero::TextView& from,

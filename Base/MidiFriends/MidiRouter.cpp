@@ -114,7 +114,8 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
    {
       auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
       m_routingData.emplace(std::make_pair(
-          source, DstType({{dest, {true, std::move(pMidiOut), std::nullopt}}})));
+          source,
+          DstType({{dest, {true, std::move(pMidiOut), std::nullopt}}})));
    }
    else
    {
@@ -122,8 +123,8 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
       if (itDst == itSrc->second.end())
       {
          auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
-         itSrc->second.emplace(
-             std::make_pair(dest, RoutingData{true, std::move(pMidiOut), std::nullopt}));
+         itSrc->second.emplace(std::make_pair(
+             dest, RoutingData{true, std::move(pMidiOut), std::nullopt}));
       }
       else
       {
@@ -144,6 +145,20 @@ bool Router::hasSpecializedData(
       return false;
    }
    return pRoutingData->specialized.has_value();
+}
+
+void Router::toggleSpecializedRoutingEnabled(
+    const musicDevice::MidiHolder::Id& source,
+    const musicDevice::MidiHolder::Id& dest) noexcept
+{
+   if(hasSpecializedData(source, dest))
+   {
+      clearSpecialized(source, dest);
+   }
+   else
+   {
+      initSpecialized(source, dest);
+   }
 }
 
 void Router::initSpecialized(const musicDevice::MidiHolder::Id& source,
