@@ -29,6 +29,7 @@ struct RoutingDataSpecialized
 
 struct RoutingData
 {
+   bool routed{true};
    std::shared_ptr<musicDevice::MusicDevice::MidiOutput> pMidiOut;
    std::optional<RoutingDataSpecialized> specialized;
 };

@@ -56,7 +56,8 @@ RtServer::RtServer(
              rSignals.MusicDevices__musicDeviceDescriptionAdded(
                  deviceName, meta::serialize(description).dump().c_str());
              rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
-                                                mediumId->toStr(), midiVoiceOffset);
+                                                mediumId->toStr(),
+                                                midiVoiceOffset);
           }
           rSignals.Tempo__beatTickStartedChanged(
               base::tempo::BeatTick::instance().running());
@@ -73,11 +74,10 @@ RtServer::RtServer(
        });
 
    rMusicDeviceContainer.registerForAdd(
-       [this, &rMusicDeviceContainer](
-           std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+       [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           const auto &deviceName  = ptr.get()->deviceId().deviceName;
           const auto &description = *ptr.get()->description();
-          const auto mediumId     = ptr.get()->mediumId();
+          const auto &mediumId    = ptr.get()->mediumId();
           assert(mediumId.has_value());
           const auto midiVoiceOffset =
               ptr.get()->soundHandler
@@ -88,13 +88,13 @@ RtServer::RtServer(
               deviceName, meta::serialize(description).dump().c_str());
 
           signals().MusicDevices__deviceAdded(
-              ptr.get()->id(), ptr.get()->deviceId().deviceName, mediumId->toStr(),
-              ptr.get()->deviceId().portName, midiVoiceOffset);
+              ptr.get()->id(), ptr.get()->deviceId().deviceName,
+              ptr.get()->deviceId().portName, mediumId->toStr(),
+              midiVoiceOffset);
        });
 
    rMusicDeviceContainer.registerForAboutToRemove(
-       [this, &rMusicDeviceContainer](
-           std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
+       [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           signals().MusicDevices__deviceRemoved(ptr.get()->id());
        });
 

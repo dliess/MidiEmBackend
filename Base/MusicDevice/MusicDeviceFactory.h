@@ -104,7 +104,10 @@ private:
       const std::string m_resourceRootDir;
       std::shared_ptr<MusicDevice> findOrCreateDevice(
           const MusicDeviceId& deviceId,
-          std::shared_ptr<description::Description> pDescr) noexcept;
+          std::shared_ptr<description::Description> pDescr,
+          std::shared_ptr<base::musicDevice::MusicDevice::MidiInput> pMidiIn,
+          std::shared_ptr<base::musicDevice::MusicDevice::MidiOutput>
+              pMidiOut) noexcept;
       std::shared_ptr<MusicDevice> createMusicDevice(
           const MusicDeviceId& deviceId,
           std::shared_ptr<description::Description> pDescr);

@@ -39,6 +39,10 @@ void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
    for (const auto& [outId, routingData] : itIn->second)
    {
       assert(routingData.pMidiOut);
+      if (!routingData.routed)
+      {
+         continue;
+      }
       if (routingData.specialized)
       {
          handleSpecialized(midiMsg, *routingData.specialized,
@@ -98,7 +102,8 @@ void Router::handleSpecialized(
 bool Router::isRoutedTo(const musicDevice::MidiHolder::Id& source,
                         const musicDevice::MidiHolder::Id& dest) const noexcept
 {
-   return nullptr != getRoutingData(source, dest);
+   const auto routingData = getRoutingData(source, dest);
+   return (nullptr != routingData && routingData->routed);
 }
 
 void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
@@ -109,24 +114,20 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
    {
       auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
       m_routingData.emplace(std::make_pair(
-          source, DstType({{dest, {std::move(pMidiOut), std::nullopt}}})));
+          source, DstType({{dest, {true, std::move(pMidiOut), std::nullopt}}})));
    }
    else
    {
-      const auto itDst = itSrc->second.find(source);
+      const auto itDst = itSrc->second.find(dest);
       if (itDst == itSrc->second.end())
       {
          auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
          itSrc->second.emplace(
-             std::make_pair(dest, RoutingData{pMidiOut, std::nullopt}));
+             std::make_pair(dest, RoutingData{true, std::move(pMidiOut), std::nullopt}));
       }
       else
       {
-         itSrc->second.erase(dest);
-         if (itSrc->second.empty())
-         {
-            m_routingData.erase(itSrc);
-         }
+         itDst->second.routed = !itDst->second.routed;
       }
    }
    for (auto& cb : m_routedChangedCBs)
