@@ -4,7 +4,8 @@
 
 using namespace uiadapter::capnzero;
 
-MidiRoutingRpc::MidiRoutingRpc(base::midifriends::Router& rMidiRouter) :
+MidiRoutingRpc::MidiRoutingRpc(
+    base::midifriends::Router& rMidiRouter) :
     m_rMidiRouter(rMidiRouter)
 {
 }

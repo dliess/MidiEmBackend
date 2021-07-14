@@ -38,6 +38,7 @@ struct MusicDevice : public util::Identifiable
    using MidiOutput = midi::Midi1Output;
    void initMidiIn(std::shared_ptr<MidiInput> pMidiInput, uint8_t midiVoiceOffset = 0) noexcept;
    void initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput, uint8_t midiVoiceOffset = 0) noexcept;
+   const std::optional<MusicDeviceId> &mediumId() const;
 
    std::shared_ptr<description::Description> description() const noexcept;
 
@@ -50,6 +51,7 @@ struct MusicDevice : public util::Identifiable
 
 private:
    MusicDeviceId m_deviceId;
+   std::optional<MusicDeviceId> m_mediumId;
    PluginHandler m_pluginHandler;
    std::shared_ptr<description::Description> m_pDescr;
 };

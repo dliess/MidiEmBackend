@@ -45,6 +45,8 @@ RtServer::RtServer(
              const auto uuid        = it.second.get()->id();
              const auto &deviceName = it.second.get()->deviceId().deviceName;
              const auto &portName   = it.second.get()->deviceId().portName;
+             const auto mediumId    = it.second.get()->mediumId();
+             assert(mediumId.has_value());
              const auto midiVoiceOffset =
                  it.second.get()->soundHandler
                      ? it.second.get()->soundHandler->getMidiVoiceOffset()
@@ -54,7 +56,7 @@ RtServer::RtServer(
              rSignals.MusicDevices__musicDeviceDescriptionAdded(
                  deviceName, meta::serialize(description).dump().c_str());
              rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
-                                                midiVoiceOffset);
+                                                mediumId->toStr(), midiVoiceOffset);
           }
           rSignals.Tempo__beatTickStartedChanged(
               base::tempo::BeatTick::instance().running());
@@ -75,6 +77,8 @@ RtServer::RtServer(
            std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           const auto &deviceName  = ptr.get()->deviceId().deviceName;
           const auto &description = *ptr.get()->description();
+          const auto mediumId     = ptr.get()->mediumId();
+          assert(mediumId.has_value());
           const auto midiVoiceOffset =
               ptr.get()->soundHandler
                   ? ptr.get()->soundHandler->getMidiVoiceOffset()
@@ -84,7 +88,7 @@ RtServer::RtServer(
               deviceName, meta::serialize(description).dump().c_str());
 
           signals().MusicDevices__deviceAdded(
-              ptr.get()->id(), ptr.get()->deviceId().deviceName,
+              ptr.get()->id(), ptr.get()->deviceId().deviceName, mediumId->toStr(),
               ptr.get()->deviceId().portName, midiVoiceOffset);
        });
 

@@ -62,6 +62,10 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
                              uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiInput);
+   if(!m_mediumId)
+   {
+      m_mediumId.emplace(pMidiInput->medium().getDeviceName(), pMidiInput->medium().getPortName());
+   }
    if (soundHandler)
    {
       soundHandler->initMidiInHandler(pMidiInput, midiVoiceOffset);
@@ -76,6 +80,10 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
                               uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiOutput);
+   if(!m_mediumId)
+   {
+      m_mediumId.emplace(pMidiOutput->medium().getDeviceName(), pMidiOutput->medium().getPortName());
+   }
    if (soundHandler)
    {
       soundHandler->initMidiOutHandler(pMidiOutput, midiVoiceOffset);
@@ -88,6 +96,11 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
    {
       sequencer->initMidiOutHandler(pMidiOutput);
    }
+}
+
+const std::optional<MusicDeviceId>& MusicDevice::mediumId() const
+{
+   return m_mediumId;
 }
 
 std::shared_ptr<description::Description> MusicDevice::description()
