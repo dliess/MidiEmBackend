@@ -55,10 +55,10 @@ public:
    uint16_t getMappingFor(const musicDevice::MidiHolder::Id& source,
                           const musicDevice::MidiHolder::Id& dest,
                           int sourceChannelIdx) const noexcept;
-   void setMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
-                                const musicDevice::MidiHolder::Id& dest,
-                                int sourceChannelIdx, int destinationChannelIdx,
-                                bool enable) noexcept;
+   void toggleMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
+                                   const musicDevice::MidiHolder::Id& dest,
+                                   int sourceChannelIdx,
+                                   int destinationChannelIdx) noexcept;
 
    using DstType = std::unordered_map<musicDevice::MidiHolder::Id, RoutingData>;
    using RoutingDataMap =

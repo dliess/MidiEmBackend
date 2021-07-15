@@ -207,11 +207,10 @@ uint16_t Router::getMappingFor(const musicDevice::MidiHolder::Id& source,
    return pRoutingData->specialized->channelMapping[sourceChannelIdx];
 }
 
-void Router::setMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
-                                     const musicDevice::MidiHolder::Id& dest,
-                                     int sourceChannelIdx,
-                                     int destinationChannelIdx,
-                                     bool enable) noexcept
+void Router::toggleMappingForChannelIdx(
+    const musicDevice::MidiHolder::Id& source,
+    const musicDevice::MidiHolder::Id& dest, int sourceChannelIdx,
+    int destinationChannelIdx) noexcept
 {
    const auto pRoutingData = getRoutingData(source, dest);
    if (nullptr == pRoutingData)
@@ -230,6 +229,9 @@ void Router::setMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
    {
       return;
    }
+   const bool enable =
+       pRoutingData->specialized->channelMapping[sourceChannelIdx] &
+       (1 << destinationChannelIdx);
    if (enable)
    {
       pRoutingData->specialized->channelMapping[sourceChannelIdx] |=
@@ -241,7 +243,7 @@ void Router::setMappingForChannelIdx(const musicDevice::MidiHolder::Id& source,
           ~(1 << destinationChannelIdx);
    }
    for (auto& cb : m_specialRouteChangedCBs)
-      cb(source, dest, sourceChannelIdx, destinationChannelIdx, enable);
+      cb(source, dest, sourceChannelIdx, destinationChannelIdx, !enable);
 }
 
 void Router::registerRoutedChangedCB(RoutedChangedCB cb)

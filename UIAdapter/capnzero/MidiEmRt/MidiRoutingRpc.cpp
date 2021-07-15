@@ -33,12 +33,11 @@ void MidiRoutingRpc::clearSpecializedRouting(const ::capnzero::TextView& from,
    m_rMidiRouter.clearSpecialized(std::string(from), std::string(to));
 }
 
-void MidiRoutingRpc::setSpecializedRouting(const ::capnzero::TextView& from,
-                                           const ::capnzero::TextView& to,
-                                           ::capnzero::UInt8 sourceChannel,
-                                           ::capnzero::UInt8 destChannel,
-                                           ::capnzero::UInt8 enable)
+void MidiRoutingRpc::toggleSpecializedRouting(const ::capnzero::TextView& from,
+                                              const ::capnzero::TextView& to,
+                                              ::capnzero::UInt8 sourceChannel,
+                                              ::capnzero::UInt8 destChannel)
 {
-   m_rMidiRouter.setMappingForChannelIdx(std::string(from), std::string(to),
-                                         sourceChannel, destChannel, enable);
+   m_rMidiRouter.toggleMappingForChannelIdx(std::string(from), std::string(to),
+                                            sourceChannel, destChannel);
 }
