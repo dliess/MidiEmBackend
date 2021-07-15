@@ -167,7 +167,9 @@ void Router::initSpecialized(const musicDevice::MidiHolder::Id& source,
    auto pRoutingData = getRoutingData(source, dest);
    if (nullptr == pRoutingData)
    {
-      return;
+      toggleRouted(source, dest);
+      toggleRouted(source, dest);
+      pRoutingData = getRoutingData(source, dest);
    }
    if (pRoutingData->specialized)
       return;
