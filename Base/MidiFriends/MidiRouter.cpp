@@ -231,21 +231,21 @@ void Router::toggleMappingForChannelIdx(
    {
       return;
    }
-   const bool enable =
+   const bool enabled =
        pRoutingData->specialized->channelMapping[sourceChannelIdx] &
        (1 << destinationChannelIdx);
-   if (enable)
-   {
-      pRoutingData->specialized->channelMapping[sourceChannelIdx] |=
-          (1 << destinationChannelIdx);
-   }
-   else
+   if (enabled)
    {
       pRoutingData->specialized->channelMapping[sourceChannelIdx] &=
           ~(1 << destinationChannelIdx);
    }
+   else
+   {
+      pRoutingData->specialized->channelMapping[sourceChannelIdx] |=
+          (1 << destinationChannelIdx);
+   }
    for (auto& cb : m_specialRouteChangedCBs)
-      cb(source, dest, sourceChannelIdx, destinationChannelIdx, !enable);
+      cb(source, dest, sourceChannelIdx, destinationChannelIdx, !enabled);
 }
 
 void Router::registerRoutedChangedCB(RoutedChangedCB cb)
