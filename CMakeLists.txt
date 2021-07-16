@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_DEBUG_POSTFIX _g)
 
-include(GNUInstallDirs)
 project(MidiEmBackend LANGUAGES CXX)
+include(GNUInstallDirs)
 
 include(cmake/CPM.cmake)
 
