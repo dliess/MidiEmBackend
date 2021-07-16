@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_DEBUG_POSTFIX _g)
-include(GNUInstallDirs)
 
+include(GNUInstallDirs)
 project(MidiEmBackend LANGUAGES CXX)
 
 include(cmake/CPM.cmake)
@@ -110,4 +110,9 @@ target_link_libraries(${TARGET_NAME}
 
 install(TARGETS ${TARGET_NAME}
    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+  DIRECTORY "MidiConfigs"
+  DESTINATION "${SYSCONFDIR}/midiem-backend/"
 )
