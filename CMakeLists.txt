@@ -3,7 +3,7 @@ set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_DEBUG_POSTFIX _g)
 include(GNUInstallDirs)
 
-project(MidiEmBackend)
+project(MidiEmBackend LANGUAGES CXX)
 
 include(cmake/CPM.cmake)
 
