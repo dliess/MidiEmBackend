@@ -108,11 +108,11 @@ target_link_libraries(${TARGET_NAME}
   gtest
 )
 
-install(TARGETS ${TARGET_NAME}
-   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MidiEmBackendBackend
+  DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(
   DIRECTORY "MidiConfigs"
-  DESTINATION "${SYSCONFDIR}/midiem-backend/"
+  DESTINATION "/etc/midiem-backend/"
 )
