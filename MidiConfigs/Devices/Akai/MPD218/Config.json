@@ -3,6 +3,7 @@
   "manufacturer": "Akai",
   "productName": "MPD218",
   "controllerSection": {
+    "widgets" : [],
     "parameter_categories": []
   }
 }
