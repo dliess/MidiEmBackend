@@ -69,8 +69,188 @@
     "engines": [
       {
         "name": "MainEngine",
-        "components": [],
-        "parameters": []
+        "components": [
+          {
+          "name" : "Trig Parameters"
+          },
+          {
+            "name" : "Common"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Note",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 1
+                }
+              }
+            }
+          },          {
+            "name": "Length",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 2
+                }
+              }
+            }
+          },          {
+            "name": "Synth Trig",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 3
+                }
+              }
+            }
+          },          {
+            "name": "Sample Trig",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 4
+                }
+              }
+            }
+          },          {
+            "name": "ENV Trig",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 5
+                }
+              }
+            }
+          },          {
+            "name": "LFO Trig",
+            "id": 0,
+            "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Track Level",
+            "id": 0,
+            "type": "continous",
+            "component": "Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },          {
+            "name": "Track Mute",
+            "id": 0,
+            "type": "continous",
+            "component": "Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },          {
+            "name": "Track Solo",
+            "id": 0,
+            "type": "continous",
+            "component": "Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },          {
+            "name": "Track Machine Type",
+            "id": 0,
+            "type": "continous",
+            "component": "Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },          {
+            "name": "Active Scene",
+            "id": 0,
+            "type": "continous",
+            "component": "Common",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+        ]
       }
     ]
   },
