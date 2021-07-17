@@ -75,12 +75,41 @@
           },
           {
             "name" : "Common"
+          },
+          {
+            "name" : "Performance"
+          },
+          {
+            "name" : "Synth"
+          },
+          {
+            "name" : "Sample"
+          },
+          {
+            "name" : "Filter"
+          },
+          {
+            "name" : "AMP"
+          },
+          {
+            "name" : "LFO"
+          },
+          {
+            "name" : "Delay"
+          },
+          {
+            "name" : "Reverb"
+          },
+          {
+            "name" : "Distortion"
+          },
+          {
+            "name" : "Compressor"
           }
         ],
         "parameters": [
           {
             "name": "Note",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -95,7 +124,6 @@
           },
           {
             "name": "Velocity",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -109,7 +137,6 @@
             }
           },          {
             "name": "Length",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -123,7 +150,6 @@
             }
           },          {
             "name": "Synth Trig",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -137,7 +163,6 @@
             }
           },          {
             "name": "Sample Trig",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -151,7 +176,6 @@
             }
           },          {
             "name": "ENV Trig",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -165,7 +189,6 @@
             }
           },          {
             "name": "LFO Trig",
-            "id": 0,
             "type": "continous",
             "component": "Trig Parameters",
             "source": {
@@ -178,78 +201,1196 @@
               }
             }
           },
-
           {
             "name": "Track Level",
-            "id": 0,
             "type": "continous",
             "component": "Common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 0
+                  "idMsb": 1,
+                  "idLsb": 100
                 }
               }
             }
-          },          {
+          }, 
+          {
             "name": "Track Mute",
-            "id": 0,
             "type": "continous",
             "component": "Common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 0
+                  "idMsb": 1,
+                  "idLsb": 101
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Track Solo",
-            "id": 0,
             "type": "continous",
             "component": "Common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 0
+                  "idMsb": 1,
+                  "idLsb": 102
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Track Machine Type",
-            "id": 0,
             "type": "continous",
             "component": "Common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 0
+                  "idMsb": 1,
+                  "idLsb": 103
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Active Scene",
-            "id": 0,
             "type": "continous",
             "component": "Common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 1,
+                  "idLsb": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 1",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
                   "idLsb": 0
                 }
               }
             }
           },
+          {
+            "name": "Perf. Param 2",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 3",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 4",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 5",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 6",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 7",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 8",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 9",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 10",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 11",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Perf. Param 12",
+            "type": "continous",
+            "component": "Performance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 1",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 2",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 3",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 4",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 5",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 6",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 7",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Param 8",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Tune",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample FineTune",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Bit Reduction",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Slot",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Start",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample End",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Loop",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Level",
+            "type": "continous",
+            "component": "Synth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Attack Time",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Decay Time",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Sustain Level",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Release Time",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Frequency",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Resonance",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Mode",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Env Depth",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Attack Time",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Hold Time",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Decay Time",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Override",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Delay Send",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Reverb Send",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Pan",
+            "type": "continous-bipolar",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Volume",
+            "type": "continous",
+            "component": "AMP",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Speed",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Multiplier",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Fade In/Out",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Destination",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Waveform",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Start Phase",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Trig Mode",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO Depth",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Time",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay PingPong",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Stereo Width",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Feedback",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Highpass Filter",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Lowpass Filter",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Reverb Send",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Mix Volume",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Predelay",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Decay Time",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Shelving Freq",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Shelving Gain",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Highpass Filter",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Lowpass Filter",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Mix Volume",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Dist Amount",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Dist Symmetry",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Overdrive",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Dist/Comp Routing",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Dist/Comp Routing",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Threshold",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Attack Time",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Release Time",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Makeup Gain",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Ratio",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Sidechain EQ",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Dry/Wet Mix",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Output Volume",
+            "type": "continous",
+            "component": "Compressor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 31
+                }
+              }
+            }
+          }
         ]
       }
     ]
