@@ -97,7 +97,7 @@ set(SOURCES
    "main.cpp"
 )
 
-set(TARGET_NAME ${PROJECT_NAME}Backend)
+set(TARGET_NAME ${PROJECT_NAME})
 
 add_executable(${TARGET_NAME} ${SOURCES})
 
