@@ -1,0 +1,9 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Generic",
+  "productName": "Controller",
+  "controllerSection": {
+    "widgets" : [],
+    "parameter_categories": []
+  }
+}
