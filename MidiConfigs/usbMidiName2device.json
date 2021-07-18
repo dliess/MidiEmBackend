@@ -16,6 +16,7 @@
     "therapKid:therapKid MIDI 1" : "TwistedElectrons/TherapKid",
     "DSI Tetra:DSI Tetra MIDI 1" : "DSI/Tetra",
     "Elektron Analog Rytm:Elektron Analog Rytm MIDI 1" : "Elektron/AnalogRytm_Mk1",
+    "MPD218:MPD218 MIDI 1" : "Akai/MPD218",
     
     "__JUST_4_TEST__Elektron/Octatrack_Mk1": "Elektron/Octatrack_Mk1",
     "__JUST_4_TEST__Elektron/Analog4_Mk1": "Elektron/Analog4_Mk1",
