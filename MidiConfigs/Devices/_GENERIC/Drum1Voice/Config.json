@@ -1,0 +1,23 @@
+{
+  "type": "sounddevice",
+  "version": "0.0.0",
+  "manufacturer": "Generic",
+  "productName": "1 Voice",
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": []
+      }
+    ]
+  }
+}
