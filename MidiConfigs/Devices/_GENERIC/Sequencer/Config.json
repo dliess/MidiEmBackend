@@ -1,0 +1,6 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Generic",
+  "productName": "Sequencer",
+  "reactsToTransportCommands":true
+}
