@@ -71,7 +71,7 @@ endif()
 CPMAddPackage(
   NAME Midi
   GITHUB_REPOSITORY dliess/Midi
-  GIT_TAG 6f30466b4a1ea26f2bd6bd11788e77aeaac07353
+  GIT_TAG b3d59461fd46b2692f57fbdff78cdd4108f4ee44
 )
 
 CPMAddPackage(
