@@ -34,10 +34,13 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    m_pMidiInIf->registerMidiInCb(
        [this](const midi::MidiMessage& midiMsg) {
           const auto midiId = midiMessageToId(midiMsg);
+
           if (mpark::holds_alternative<mpark::monostate>(midiId))
           {
              return;
           }
+//          LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
+//                   toString(midiMsg));
           auto iter = m_map.find(midiId);
           if (m_map.end() == iter)
           {

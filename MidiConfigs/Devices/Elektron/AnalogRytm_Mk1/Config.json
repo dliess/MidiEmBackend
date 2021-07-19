@@ -554,7 +554,7 @@
           {
             "name": "Sample Tune",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -568,7 +568,7 @@
           {
             "name": "Sample FineTune",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -582,7 +582,7 @@
           {
             "name": "Sample Bit Reduction",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -596,7 +596,7 @@
           {
             "name": "Sample Slot",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -610,7 +610,7 @@
           {
             "name": "Sample Start",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -624,7 +624,7 @@
           {
             "name": "Sample End",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -638,7 +638,7 @@
           {
             "name": "Sample Loop",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -652,7 +652,7 @@
           {
             "name": "Sample Level",
             "type": "continous",
-            "component": "Synth",
+            "component": "Sample",
             "source": {
               "midi": {
                 "id": {
@@ -749,7 +749,7 @@
           },
           {
             "name": "Filter Mode",
-            "type": "continous",
+            "type": "list",
             "component": "Filter",
             "source": {
               "midi": {
@@ -757,7 +757,58 @@
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 22
-                }
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Lowpass2",
+                    "range": [
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "name": "Lowpass1",
+                    "range": [
+                      1,
+                      1
+                    ]
+                  },
+                  {
+                    "name": "Bandpass",
+                    "range": [
+                      2,
+                      2
+                    ]
+                  },
+                  {
+                    "name": "Highpass1",
+                    "range": [
+                      3,
+                      3
+                    ]
+                  },
+                  {
+                    "name": "Highpass2",
+                    "range": [
+                      4,
+                      4
+                    ]
+                  },
+                  {
+                    "name": "BS",
+                    "range": [
+                      5,
+                      5
+                    ]
+                  },
+                  {
+                    "name": "Peak",
+                    "range": [
+                      6,
+                      6
+                    ]
+                  }
+                ]
               }
             }
           },
@@ -987,7 +1038,7 @@
           },
           {
             "name": "LFO Depth",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "LFO",
             "source": {
               "midi": {
