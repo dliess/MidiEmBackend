@@ -77,9 +77,15 @@ struct ParameterSourceRange
    std::array<float, 2> range;
 };
 
+struct ParameterSourceValueRange
+{
+   uint32_t from;
+   uint32_t to;
+};
 struct ParameterSourceMidi
 {
    midi::MidiMessageId id;
+   std::optional<ParameterSourceValueRange> sourceValueRange;
    std::optional<std::vector<ParameterSourceRange>> sourceRanges;
 };
 
