@@ -92,6 +92,15 @@ inline auto registerMembers<base::musicDevice::description::sound::ParameterSour
 }
 
 template <>
+inline auto registerMembers<base::musicDevice::description::sound::ValueRange>()
+{
+   return members(
+      member("from", &base::musicDevice::description::sound::ValueRange::from),
+      member("to", &base::musicDevice::description::sound::ValueRange::to)
+   );
+}
+
+template <>
 inline auto registerMembers<base::musicDevice::description::sound::ParameterSourceRange>()
 {
    return members(
@@ -105,8 +114,7 @@ inline auto registerMembers<base::musicDevice::description::sound::ParameterSour
 {
    return members(
       member("id", &base::musicDevice::description::sound::ParameterSourceMidi::id),
-      member("sourceValueRange", &base::musicDevice::description::sound::ParameterSourceMidi::sourceValueRange),
-      member("sourceRanges", &base::musicDevice::description::sound::ParameterSourceMidi::sourceRanges)
+      member("sourceValueRange", &base::musicDevice::description::sound::ParameterSourceMidi::sourceValueRange)
    );
 }
 
@@ -114,7 +122,8 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::ParameterSource>()
 {
    return members(
-      member("midi", &base::musicDevice::description::sound::ParameterSource::midi)
+      member("midi", &base::musicDevice::description::sound::ParameterSource::midi),
+      member("sourceRanges", &base::musicDevice::description::sound::ParameterSource::sourceRanges)
    );
 }
 

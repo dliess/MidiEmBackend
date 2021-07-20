@@ -71,10 +71,16 @@ struct Component
    static inline Type typeFromString(const std::string& str);
 };
 
+struct ValueRange
+{
+   float from;
+   float to;
+};
+
 struct ParameterSourceRange
 {
    std::string name;
-   std::array<float, 2> range;
+   ValueRange range;
 };
 
 struct ParameterSourceValueRange
@@ -86,12 +92,12 @@ struct ParameterSourceMidi
 {
    midi::MidiMessageId id;
    std::optional<ParameterSourceValueRange> sourceValueRange;
-   std::optional<std::vector<ParameterSourceRange>> sourceRanges;
 };
 
 struct ParameterSource
 {
    std::optional<ParameterSourceMidi> midi;
+   std::optional<std::vector<ParameterSourceRange>> sourceRanges;
 };
 
 struct Parameter
