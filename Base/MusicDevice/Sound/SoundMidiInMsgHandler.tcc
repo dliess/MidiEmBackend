@@ -31,28 +31,27 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    initCacheBySoundSection();
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
-   m_pMidiInIf->registerMidiInCb(
-       [this](const midi::MidiMessage& midiMsg) {
-          const auto midiId = midiMessageToId(midiMsg);
+   m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
+      const auto midiId = midiMessageToId(midiMsg);
 
-          if (mpark::holds_alternative<mpark::monostate>(midiId))
-          {
-             return;
-          }
-//          LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
-//                   toString(midiMsg));
-          auto iter = m_map.find(midiId);
-          if (m_map.end() == iter)
-          {
-             /*
-             LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
-                   m_pMidiInIf->medium().getDeviceName(),
-                   meta::serialize(midiId).dump());
-             */
-             return;
-          }
-          handleSoundDevParameterRouting(midiMsg, iter->second);
-       });
+      if (mpark::holds_alternative<mpark::monostate>(midiId))
+      {
+         return;
+      }
+      LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
+            toString(midiMsg));
+      auto iter = m_map.find(midiId);
+      if (m_map.end() == iter)
+      {
+         /*
+         LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
+               m_pMidiInIf->medium().getDeviceName(),
+               meta::serialize(midiId).dump());
+         */
+         return;
+      }
+      handleSoundDevParameterRouting(midiMsg, iter->second);
+   });
 }
 
 template <typename MidiInIfPtr>
@@ -81,23 +80,44 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
     const midi::MidiMessage& midiMsg,
     const base::musicDevice::description::sound::ParameterId& id) const noexcept
 {
+   assert(m_rSoundSection.parameterDescr(id).source.midi.has_value());
+   const auto& valueRange =
+       m_rSoundSection.parameterDescr(id).source.midi->sourceValueRange;
    mpark::visit(
        midi::overload{
-           [this, &id](const midi::Message<midi::ControlChange>& msg) {
+           [this, &id,
+            &valueRange](const midi::Message<midi::ControlChange>& msg) {
+              const float val =
+                  valueRange.has_value()
+                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
+                      : msg.getRelativeValue();
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, msg.getRelativeValue());
+                        id.parameterId, val);
            },
-           [this, &id](const midi::Message<midi::ControlChangeHighRes>& msg) {
+           [this, &id,
+            &valueRange](const midi::Message<midi::ControlChangeHighRes>& msg) {
+              const float val =
+                  valueRange.has_value()
+                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
+                      : msg.getRelativeValue();
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, msg.getRelativeValue());
+                        id.parameterId, val);
            },
-           [this, &id](const midi::Message<midi::NRPN>& msg) {
+           [this, &id, &valueRange](const midi::Message<midi::NRPN>& msg) {
+              const float val =
+                  valueRange.has_value()
+                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
+                      : msg.getRelativeValue();
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, msg.getRelativeValue());
+                        id.parameterId, val);
            },
-           [this, &id](const midi::Message<midi::RPN>& msg) {
+           [this, &id, &valueRange](const midi::Message<midi::RPN>& msg) {
+              const float val =
+                  valueRange.has_value()
+                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
+                      : msg.getRelativeValue();
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, msg.getRelativeValue());
+                        id.parameterId, val);
            },
            [](auto&& other) {}},
        midiMsg);

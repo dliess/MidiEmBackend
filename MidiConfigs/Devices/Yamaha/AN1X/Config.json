@@ -124,24 +124,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 9
-                },
-                "sourceRanges": [
-                  {
-                    "name": "Poly",
-                    "range": [
-                      0,
-                      63
-                    ]
-                  },
-                  {
-                    "name": "Mono",
-                    "range": [
-                      64,
-                      127
-                    ]
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Poly",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
                   }
-                ]
-              }
+                },
+                {
+                  "name": "Mono",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
@@ -961,24 +961,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 90
-                },
-                "sourceRanges": [
-                  {
-                    "name": "Off",
-                    "range": [
-                      0,
-                      63
-                    ]
-                  },
-                  {
-                    "name": "On",
-                    "range": [
-                      64,
-                      127
-                    ]
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
                   }
-                ]
-              }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {

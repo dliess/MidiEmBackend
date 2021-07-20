@@ -1,7 +1,7 @@
 #ifndef SOUND_SECTION_H
 #define SOUND_SECTION_H
 
-#include <JsonCast.h> // needed because of "JsonCastNamespaceFix.h"
+#include <JsonCast.h>   // needed because of "JsonCastNamespaceFix.h"
 
 #include <mpark/variant.hpp>
 #include <optional>
@@ -30,7 +30,7 @@ struct NoteRange
 struct NoteSettingsMidiRouting
 {
    static constexpr int UNSET = -1;
-   int destinationParameterIdx{UNSET}; // not to reflect
+   int destinationParameterIdx{UNSET};   // not to reflect
    std::string destinationParameter;
    std::optional<std::vector<float>> mapping;
 };
@@ -59,7 +59,7 @@ struct Component
 {
    std::string name;
    enum class Type
-   { // Todo: maybe string is enough?
+   {   // Todo: maybe string is enough?
       Unknown,
       Filter,
       Envelope,
@@ -156,28 +156,29 @@ struct Section
    std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(
-      DefaultInstrumentType type);
+       DefaultInstrumentType type);
    static inline DefaultInstrumentType defaultInstrumentTypeFromString(
-      const std::string& str);
+       const std::string& str);
 
    //---------------------------------------------------
    //------------- Additional helpers ------------------
    //---------------------------------------------------
 
+   inline const Parameter& parameterDescr(
+       const ParameterId& parameterId) const noexcept;
    inline const Parameter& parameterDescr(int voiceId,
                                           int parameterId) const noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
-   template<typename T>
-   void forEachParameterDescr(T&& cb) noexcept;
-   template<typename T>
-   void forEachParameterDescr(T&& cb) const noexcept;
+   template <typename T> void forEachParameterDescr(T&& cb) noexcept;
+   template <typename T> void forEachParameterDescr(T&& cb) const noexcept;
    inline bool hasParameters() const noexcept;
    inline int voice2EngineIdx(int voiceIdx) const noexcept;
-   template<typename T>
-   static int linSearchByName(const std::vector<T>& vector, const std::string& name) noexcept;
+   template <typename T>
+   static int linSearchByName(const std::vector<T>& vector,
+                              const std::string& name) noexcept;
 };
 
-} // namespace base::musicDevice::description::sound
+}   // namespace base::musicDevice::description::sound
 
 #include "SoundSection.inl"
 #include "SoundSectionMeta.h"

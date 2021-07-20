@@ -71,40 +71,40 @@
         "name": "MainEngine",
         "components": [
           {
-          "name" : "Trig Parameters"
+            "name": "Trig Parameters"
           },
           {
-            "name" : "Common"
+            "name": "Common"
           },
           {
-            "name" : "Performance"
+            "name": "Performance"
           },
           {
-            "name" : "Synth"
+            "name": "Synth"
           },
           {
-            "name" : "Sample"
+            "name": "Sample"
           },
           {
-            "name" : "Filter"
+            "name": "Filter"
           },
           {
-            "name" : "AMP"
+            "name": "AMP"
           },
           {
-            "name" : "LFO"
+            "name": "LFO"
           },
           {
-            "name" : "Delay"
+            "name": "Delay"
           },
           {
-            "name" : "Reverb"
+            "name": "Reverb"
           },
           {
-            "name" : "Distortion"
+            "name": "Distortion"
           },
           {
-            "name" : "Compressor"
+            "name": "Compressor"
           }
         ],
         "parameters": [
@@ -135,7 +135,8 @@
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Length",
             "type": "continous",
             "component": "Trig Parameters",
@@ -148,7 +149,8 @@
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Synth Trig",
             "type": "continous",
             "component": "Trig Parameters",
@@ -161,7 +163,8 @@
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "Sample Trig",
             "type": "continous",
             "component": "Trig Parameters",
@@ -174,7 +177,8 @@
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "ENV Trig",
             "type": "continous",
             "component": "Trig Parameters",
@@ -187,7 +191,8 @@
                 }
               }
             }
-          },          {
+          },
+          {
             "name": "LFO Trig",
             "type": "continous",
             "component": "Trig Parameters",
@@ -214,7 +219,7 @@
                 }
               }
             }
-          }, 
+          },
           {
             "name": "Track Mute",
             "type": "continous",
@@ -758,58 +763,62 @@
                   "idMsb": 1,
                   "idLsb": 22
                 },
-                "sourceRanges": [
-                  {
-                    "name": "Lowpass2",
-                    "range": [
-                      0,
-                      0
-                    ]
-                  },
-                  {
-                    "name": "Lowpass1",
-                    "range": [
-                      1,
-                      1
-                    ]
-                  },
-                  {
-                    "name": "Bandpass",
-                    "range": [
-                      2,
-                      2
-                    ]
-                  },
-                  {
-                    "name": "Highpass1",
-                    "range": [
-                      3,
-                      3
-                    ]
-                  },
-                  {
-                    "name": "Highpass2",
-                    "range": [
-                      4,
-                      4
-                    ]
-                  },
-                  {
-                    "name": "BS",
-                    "range": [
-                      5,
-                      5
-                    ]
-                  },
-                  {
-                    "name": "Peak",
-                    "range": [
-                      6,
-                      6
-                    ]
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 895
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Lowpass2",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.14285714285714285
                   }
-                ]
-              }
+                },
+                {
+                  "name": "Lowpass1",
+                  "range": {
+                    "from": 0.14285714285714285,
+                    "to": 0.2857142857142857
+                  }
+                },
+                {
+                  "name": "Bandpass",
+                  "range": {
+                    "from": 0.2857142857142857,
+                    "to": 0.42857142857142855
+                  }
+                },
+                {
+                  "name": "Highpass1",
+                  "range": {
+                    "from": 0.42857142857142855,
+                    "to": 0.5714285714285714
+                  }
+                },
+                {
+                  "name": "Highpass2",
+                  "range": {
+                    "from": 0.5714285714285714,
+                    "to": 0.7142857142857143
+                  }
+                },
+                {
+                  "name": "BS",
+                  "range": {
+                    "from": 0.7142857142857143,
+                    "to": 0.8571428571428571
+                  }
+                },
+                {
+                  "name": "Peak",
+                  "range": {
+                    "from": 0.8571428571428571,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
