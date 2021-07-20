@@ -64,6 +64,11 @@
         "name": "12",
         "engineId": 0,
         "midiChannel": 12
+      },
+      {
+        "name": "Effects",
+        "engineId": 1,
+        "midiChannel": 13
       }
     ],
     "engines": [
@@ -93,24 +98,12 @@
           },
           {
             "name": "LFO"
-          },
-          {
-            "name": "Delay"
-          },
-          {
-            "name": "Reverb"
-          },
-          {
-            "name": "Distortion"
-          },
-          {
-            "name": "Compressor"
           }
         ],
         "parameters": [
           {
             "name": "Note",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Trig Parameters",
             "source": {
               "midi": {
@@ -151,8 +144,22 @@
             }
           },
           {
-            "name": "Synth Trig",
+            "name": "Propability",
             "type": "continous",
+            "component": "Trig Parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Synth Trig",
+            "type": "list",
             "component": "Trig Parameters",
             "source": {
               "midi": {
@@ -160,13 +167,33 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 255
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
             "name": "Sample Trig",
-            "type": "continous",
+            "type": "list",
             "component": "Trig Parameters",
             "source": {
               "midi": {
@@ -174,13 +201,33 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 255
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
             "name": "ENV Trig",
-            "type": "continous",
+            "type": "list",
             "component": "Trig Parameters",
             "source": {
               "midi": {
@@ -188,13 +235,33 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 255
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
             "name": "LFO Trig",
-            "type": "continous",
+            "type": "list",
             "component": "Trig Parameters",
             "source": {
               "midi": {
@@ -202,8 +269,28 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 255
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.5
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.5,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
@@ -1058,7 +1145,26 @@
                 }
               }
             }
+          }
+        ]
+      },
+      {
+        "name": "EffectsEngine",
+        "components": [
+          {
+            "name": "Delay"
           },
+          {
+            "name": "Reverb"
+          },
+          {
+            "name": "Distortion"
+          },
+          {
+            "name": "Compressor"
+          }
+        ],
+        "parameters": [
           {
             "name": "Delay Time",
             "type": "continous",
