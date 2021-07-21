@@ -34,7 +34,19 @@
             "name": "Oscillators"
           },
           {
+            "name": "Osc Misc"
+          },
+          {
             "name": "Filter"
+          },
+          {
+            "name": "VCA"
+          },
+          {
+            "name": "Envelope3"
+          },
+          {
+            "name": "LFO"
           }
         ],
         "parameters": [
@@ -787,6 +799,84 @@
             }
           },
           {
+            "name": "OSC Mix",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub Osc 1 Level",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub Osc 2 Level",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback Volume",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback Gain",
+            "type": "continous",
+            "component": "Osc Misc",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
             "name": "Cutoff Freq",
             "type": "continous",
             "component": "Filter",
@@ -811,7 +901,477 @@
                 }
               }
             }
-          } 
+          },
+          {
+            "name": "Fil Key Amount",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil AUdio Mod",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Env Amt",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Env Vel Amt",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Delay",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Attack",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Decay",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Sustain",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "Fil Release",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Amnt",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Env Vel Amnt",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Delay",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Attack",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Decay",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Sustain",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Release",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Destination",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Amount",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Vel Amount",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Delay",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Attack",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Decay",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Sustain",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV3 Release",
+            "type": "continous",
+            "component": "Envelope3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Freq",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 166
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Div by 32",
+                  "range": {
+                    "from": 0.9041916167664671,
+                    "to": 0.9101796407185628
+                  }
+                },
+                {
+                  "name": "Div by 16",
+                  "range": {
+                    "from": 0.9101796407185628,
+                    "to": 0.9161676646706587
+                  }
+                },
+                {
+                  "name": "Div by 8",
+                  "range": {
+                    "from": 0.9161676646706587,
+                    "to": 0.9221556886227545
+                  }
+                },
+                {
+                  "name": "Div by 6",
+                  "range": {
+                    "from": 0.9221556886227545,
+                    "to": 0.9281437125748503
+                  }
+                },
+                {
+                  "name": "Div by 4",
+                  "range": {
+                    "from": 0.9281437125748503,
+                    "to": 0.9341317365269461
+                  }
+                },
+                {
+                  "name": "Div by 3",
+                  "range": {
+                    "from": 0.9341317365269461,
+                    "to": 0.9401197604790419
+                  }
+                },
+                {
+                  "name": "Div by 2",
+                  "range": {
+                    "from": 0.9401197604790419,
+                    "to": 0.9461077844311377
+                  }
+                },
+                {
+                  "name": "Div by 1.5",
+                  "range": {
+                    "from": 0.9461077844311377,
+                    "to": 0.9520958083832335
+                  }
+                },
+                {
+                  "name": "1 cycle/step",
+                  "range": {
+                    "from": 0.9520958083832335,
+                    "to": 0.9580838323353293
+                  }
+                },
+                {
+                  "name": "2 cycle/3 steps",
+                  "range": {
+                    "from": 0.9580838323353293,
+                    "to": 0.9640718562874252
+                  }
+                },
+                {
+                  "name": "2 cycles/step",
+                  "range": {
+                    "from": 0.9640718562874252,
+                    "to": 0.9700598802395209
+                  }
+                },
+                {
+                  "name": "1 cycle/3 steps",
+                  "range": {
+                    "from": 0.9700598802395209,
+                    "to": 0.9760479041916168
+                  }
+                },
+                {
+                  "name": "4 cycles/step",
+                  "range": {
+                    "from": 0.9760479041916168,
+                    "to": 0.9820359281437125
+                  }
+                },
+                {
+                  "name": "6 cycles/step",
+                  "range": {
+                    "from": 0.9820359281437125,
+                    "to": 0.9880239520958084
+                  }
+                },
+                {
+                  "name": "8 cycles/step",
+                  "range": {
+                    "from": 0.9880239520958084,
+                    "to": 0.9940119760479041
+                  }
+                },
+                {
+                  "name": "16 cycles/step",
+                  "range": {
+                    "from": 0.9940119760479041,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          }
         ]
       }
     ]
