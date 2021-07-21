@@ -110,28 +110,10 @@
     "engines": [
       {
         "name": "Base Drum 1",
-        "components": [
-          {
-            "name": "AmpEnvelope"
-          },
-          {
-            "name": "Osc"
-          },
-          {
-            "name": "Filter"
-          },
-          {
-            "name": "Distortion"
-          },
-          {
-            "name": "Misc"
-          }
-        ],
         "parameters": [
           {
             "name": "Attack",
             "type": "continous",
-            "component": "AmpEnvelope",
             "source": {
               "midi": {
                 "id": {
@@ -144,7 +126,6 @@
           {
             "name": "Decay",
             "type": "continous",
-            "component": "AmpEnvelope",
             "source": {
               "midi": {
                 "id": {
@@ -157,7 +138,6 @@
           {
             "name": "Pitch",
             "type": "continous",
-            "component": "Osc",
             "source": {
               "midi": {
                 "id": {
@@ -170,7 +150,6 @@
           {
             "name": "Tune",
             "type": "continous",
-            "component": "Osc",
             "source": {
               "midi": {
                 "id": {
@@ -183,7 +162,6 @@
           {
             "name": "Noise",
             "type": "continous",
-            "component": "Osc",
             "source": {
               "midi": {
                 "id": {
@@ -196,7 +174,6 @@
           {
             "name": "Cutoff",
             "type": "continous",
-            "component": "Filter",
             "source": {
               "midi": {
                 "id": {
@@ -209,7 +186,6 @@
           {
             "name": "Distortion",
             "type": "continous",
-            "component": "Distortion",
             "source": {
               "midi": {
                 "id": {
@@ -222,7 +198,6 @@
           {
             "name": "Trigger",
             "type": "continous",
-            "component": "Misc",
             "source": {
               "midi": {
                 "id": {

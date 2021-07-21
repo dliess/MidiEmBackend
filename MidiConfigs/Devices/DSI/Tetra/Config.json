@@ -29,8 +29,790 @@
     "engines": [
       {
         "name": "MainEngine",
-        "components": [],
-        "parameters": []
+        "components": [
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "Filter"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Osc 1 Freq",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Freq Fine",
+            "type": "continous-bipolar",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape",
+            "type": "list",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 103
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OSC Off"
+                },
+                {
+                  "name": "Sawtooth"
+                },
+                {
+                  "name": "Triangle"
+                },
+                {
+                  "name": "Saw-Triangle"
+                },
+                {
+                  "name": "Pulse 0"
+                },
+                {
+                  "name": "Pulse 1"
+                },
+                {
+                  "name": "Pulse 2"
+                },
+                {
+                  "name": "Pulse 3"
+                },
+                {
+                  "name": "Pulse 4"
+                },
+                {
+                  "name": "Pulse 5"
+                },
+                {
+                  "name": "Pulse 6"
+                },
+                {
+                  "name": "Pulse 7"
+                },
+                {
+                  "name": "Pulse 8"
+                },
+                {
+                  "name": "Pulse 9"
+                },
+                {
+                  "name": "Pulse 10"
+                },
+                {
+                  "name": "Pulse 11"
+                },
+                {
+                  "name": "Pulse 12"
+                },
+                {
+                  "name": "Pulse 13"
+                },
+                {
+                  "name": "Pulse 14"
+                },
+                {
+                  "name": "Pulse 15"
+                },
+                {
+                  "name": "Pulse 16"
+                },
+                {
+                  "name": "Pulse 17"
+                },
+                {
+                  "name": "Pulse 18"
+                },
+                {
+                  "name": "Pulse 19"
+                },
+                {
+                  "name": "Pulse 20"
+                },
+                {
+                  "name": "Pulse 21"
+                },
+                {
+                  "name": "Pulse 22"
+                },
+                {
+                  "name": "Pulse 23"
+                },
+                {
+                  "name": "Pulse 24"
+                },
+                {
+                  "name": "Pulse 25"
+                },
+                {
+                  "name": "Pulse 26"
+                },
+                {
+                  "name": "Pulse 27"
+                },
+                {
+                  "name": "Pulse 28"
+                },
+                {
+                  "name": "Pulse 29"
+                },
+                {
+                  "name": "Pulse 30"
+                },
+                {
+                  "name": "Pulse 31"
+                },
+                {
+                  "name": "Pulse 32"
+                },
+                {
+                  "name": "Pulse 33"
+                },
+                {
+                  "name": "Pulse 34"
+                },
+                {
+                  "name": "Pulse 35"
+                },
+                {
+                  "name": "Pulse 36"
+                },
+                {
+                  "name": "Pulse 37"
+                },
+                {
+                  "name": "Pulse 38"
+                },
+                {
+                  "name": "Pulse 39"
+                },
+                {
+                  "name": "Pulse 40"
+                },
+                {
+                  "name": "Pulse 41"
+                },
+                {
+                  "name": "Pulse 42"
+                },
+                {
+                  "name": "Pulse 43"
+                },
+                {
+                  "name": "Pulse 44"
+                },
+                {
+                  "name": "Pulse 45"
+                },
+                {
+                  "name": "Pulse 46"
+                },
+                {
+                  "name": "Pulse 47"
+                },
+                {
+                  "name": "Pulse 48"
+                },
+                {
+                  "name": "Pulse 49"
+                },
+                {
+                  "name": "Pulse 50"
+                },
+                {
+                  "name": "Pulse 51"
+                },
+                {
+                  "name": "Pulse 52"
+                },
+                {
+                  "name": "Pulse 53"
+                },
+                {
+                  "name": "Pulse 54"
+                },
+                {
+                  "name": "Pulse 55"
+                },
+                {
+                  "name": "Pulse 56"
+                },
+                {
+                  "name": "Pulse 57"
+                },
+                {
+                  "name": "Pulse 58"
+                },
+                {
+                  "name": "Pulse 59"
+                },
+                {
+                  "name": "Pulse 60"
+                },
+                {
+                  "name": "Pulse 61"
+                },
+                {
+                  "name": "Pulse 62"
+                },
+                {
+                  "name": "Pulse 63"
+                },
+                {
+                  "name": "Pulse 64"
+                },
+                {
+                  "name": "Pulse 65"
+                },
+                {
+                  "name": "Pulse 66"
+                },
+                {
+                  "name": "Pulse 67"
+                },
+                {
+                  "name": "Pulse 68"
+                },
+                {
+                  "name": "Pulse 69"
+                },
+                {
+                  "name": "Pulse 70"
+                },
+                {
+                  "name": "Pulse 71"
+                },
+                {
+                  "name": "Pulse 72"
+                },
+                {
+                  "name": "Pulse 73"
+                },
+                {
+                  "name": "Pulse 74"
+                },
+                {
+                  "name": "Pulse 75"
+                },
+                {
+                  "name": "Pulse 76"
+                },
+                {
+                  "name": "Pulse 77"
+                },
+                {
+                  "name": "Pulse 78"
+                },
+                {
+                  "name": "Pulse 79"
+                },
+                {
+                  "name": "Pulse 80"
+                },
+                {
+                  "name": "Pulse 81"
+                },
+                {
+                  "name": "Pulse 82"
+                },
+                {
+                  "name": "Pulse 83"
+                },
+                {
+                  "name": "Pulse 84"
+                },
+                {
+                  "name": "Pulse 85"
+                },
+                {
+                  "name": "Pulse 86"
+                },
+                {
+                  "name": "Pulse 87"
+                },
+                {
+                  "name": "Pulse 88"
+                },
+                {
+                  "name": "Pulse 89"
+                },
+                {
+                  "name": "Pulse 90"
+                },
+                {
+                  "name": "Pulse 91"
+                },
+                {
+                  "name": "Pulse 92"
+                },
+                {
+                  "name": "Pulse 93"
+                },
+                {
+                  "name": "Pulse 94"
+                },
+                {
+                  "name": "Pulse 95"
+                },
+                {
+                  "name": "Pulse 96"
+                },
+                {
+                  "name": "Pulse 97"
+                },
+                {
+                  "name": "Pulse 98"
+                },
+                {
+                  "name": "Pulse 99"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Glide 1",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq Fine",
+            "type": "continous-bipolar",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape",
+            "type": "list",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 103
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OSC Off"
+                },
+                {
+                  "name": "Sawtooth"
+                },
+                {
+                  "name": "Triangle"
+                },
+                {
+                  "name": "Saw-Triangle"
+                },
+                {
+                  "name": "Pulse 0"
+                },
+                {
+                  "name": "Pulse 1"
+                },
+                {
+                  "name": "Pulse 2"
+                },
+                {
+                  "name": "Pulse 3"
+                },
+                {
+                  "name": "Pulse 4"
+                },
+                {
+                  "name": "Pulse 5"
+                },
+                {
+                  "name": "Pulse 6"
+                },
+                {
+                  "name": "Pulse 7"
+                },
+                {
+                  "name": "Pulse 8"
+                },
+                {
+                  "name": "Pulse 9"
+                },
+                {
+                  "name": "Pulse 10"
+                },
+                {
+                  "name": "Pulse 11"
+                },
+                {
+                  "name": "Pulse 12"
+                },
+                {
+                  "name": "Pulse 13"
+                },
+                {
+                  "name": "Pulse 14"
+                },
+                {
+                  "name": "Pulse 15"
+                },
+                {
+                  "name": "Pulse 16"
+                },
+                {
+                  "name": "Pulse 17"
+                },
+                {
+                  "name": "Pulse 18"
+                },
+                {
+                  "name": "Pulse 19"
+                },
+                {
+                  "name": "Pulse 20"
+                },
+                {
+                  "name": "Pulse 21"
+                },
+                {
+                  "name": "Pulse 22"
+                },
+                {
+                  "name": "Pulse 23"
+                },
+                {
+                  "name": "Pulse 24"
+                },
+                {
+                  "name": "Pulse 25"
+                },
+                {
+                  "name": "Pulse 26"
+                },
+                {
+                  "name": "Pulse 27"
+                },
+                {
+                  "name": "Pulse 28"
+                },
+                {
+                  "name": "Pulse 29"
+                },
+                {
+                  "name": "Pulse 30"
+                },
+                {
+                  "name": "Pulse 31"
+                },
+                {
+                  "name": "Pulse 32"
+                },
+                {
+                  "name": "Pulse 33"
+                },
+                {
+                  "name": "Pulse 34"
+                },
+                {
+                  "name": "Pulse 35"
+                },
+                {
+                  "name": "Pulse 36"
+                },
+                {
+                  "name": "Pulse 37"
+                },
+                {
+                  "name": "Pulse 38"
+                },
+                {
+                  "name": "Pulse 39"
+                },
+                {
+                  "name": "Pulse 40"
+                },
+                {
+                  "name": "Pulse 41"
+                },
+                {
+                  "name": "Pulse 42"
+                },
+                {
+                  "name": "Pulse 43"
+                },
+                {
+                  "name": "Pulse 44"
+                },
+                {
+                  "name": "Pulse 45"
+                },
+                {
+                  "name": "Pulse 46"
+                },
+                {
+                  "name": "Pulse 47"
+                },
+                {
+                  "name": "Pulse 48"
+                },
+                {
+                  "name": "Pulse 49"
+                },
+                {
+                  "name": "Pulse 50"
+                },
+                {
+                  "name": "Pulse 51"
+                },
+                {
+                  "name": "Pulse 52"
+                },
+                {
+                  "name": "Pulse 53"
+                },
+                {
+                  "name": "Pulse 54"
+                },
+                {
+                  "name": "Pulse 55"
+                },
+                {
+                  "name": "Pulse 56"
+                },
+                {
+                  "name": "Pulse 57"
+                },
+                {
+                  "name": "Pulse 58"
+                },
+                {
+                  "name": "Pulse 59"
+                },
+                {
+                  "name": "Pulse 60"
+                },
+                {
+                  "name": "Pulse 61"
+                },
+                {
+                  "name": "Pulse 62"
+                },
+                {
+                  "name": "Pulse 63"
+                },
+                {
+                  "name": "Pulse 64"
+                },
+                {
+                  "name": "Pulse 65"
+                },
+                {
+                  "name": "Pulse 66"
+                },
+                {
+                  "name": "Pulse 67"
+                },
+                {
+                  "name": "Pulse 68"
+                },
+                {
+                  "name": "Pulse 69"
+                },
+                {
+                  "name": "Pulse 70"
+                },
+                {
+                  "name": "Pulse 71"
+                },
+                {
+                  "name": "Pulse 72"
+                },
+                {
+                  "name": "Pulse 73"
+                },
+                {
+                  "name": "Pulse 74"
+                },
+                {
+                  "name": "Pulse 75"
+                },
+                {
+                  "name": "Pulse 76"
+                },
+                {
+                  "name": "Pulse 77"
+                },
+                {
+                  "name": "Pulse 78"
+                },
+                {
+                  "name": "Pulse 79"
+                },
+                {
+                  "name": "Pulse 80"
+                },
+                {
+                  "name": "Pulse 81"
+                },
+                {
+                  "name": "Pulse 82"
+                },
+                {
+                  "name": "Pulse 83"
+                },
+                {
+                  "name": "Pulse 84"
+                },
+                {
+                  "name": "Pulse 85"
+                },
+                {
+                  "name": "Pulse 86"
+                },
+                {
+                  "name": "Pulse 87"
+                },
+                {
+                  "name": "Pulse 88"
+                },
+                {
+                  "name": "Pulse 89"
+                },
+                {
+                  "name": "Pulse 90"
+                },
+                {
+                  "name": "Pulse 91"
+                },
+                {
+                  "name": "Pulse 92"
+                },
+                {
+                  "name": "Pulse 93"
+                },
+                {
+                  "name": "Pulse 94"
+                },
+                {
+                  "name": "Pulse 95"
+                },
+                {
+                  "name": "Pulse 96"
+                },
+                {
+                  "name": "Pulse 97"
+                },
+                {
+                  "name": "Pulse 98"
+                },
+                {
+                  "name": "Pulse 99"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Glide 2",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff Freq",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          } 
+        ]
       }
     ]
   },

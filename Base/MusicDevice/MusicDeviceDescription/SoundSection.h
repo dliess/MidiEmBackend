@@ -80,7 +80,7 @@ struct ValueRange
 struct ParameterSourceRange
 {
    std::string name;
-   ValueRange range;
+   std::optional<ValueRange> range;
 };
 
 struct ParameterSourceValueRange
