@@ -95,6 +95,8 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
               return midi::MidiMessage();
            }},
        paramDescr.source.midi->id);
+   LOG_F(INFO, "--> Sending midi msg:{} {}", m_pMidiOutIf->medium().getDeviceName(),
+         toString(midiMsg));
    m_pMidiOutIf->send(midiMsg);
 }
 

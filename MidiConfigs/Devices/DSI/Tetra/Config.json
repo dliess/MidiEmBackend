@@ -1249,7 +1249,7 @@
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 0,
-                  "idLsb": 39
+                  "idLsb": 37
                 },
                 "sourceValueRange": {
                   "from": 0,

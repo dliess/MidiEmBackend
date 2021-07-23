@@ -4,6 +4,417 @@
   "productName": "Analog Rytm",
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
+    "global" : {
+      "midiChannel": 13,
+      "components": [
+        {
+          "name": "Delay"
+        },
+        {
+          "name": "Reverb"
+        },
+        {
+          "name": "Distortion"
+        },
+        {
+          "name": "Compressor"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Delay Time",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 0
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay PingPong",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Stereo Width",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 2
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Feedback",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 3
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Highpass Filter",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 4
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Lowpass Filter",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 5
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Reverb Send",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 6
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Mix Volume",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 7
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Predelay",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 8
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Decay Time",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 9
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Shelving Freq",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 10
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Shelving Gain",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 11
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Highpass Filter",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 12
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Lowpass Filter",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 13
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Mix Volume",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 15
+              }
+            }
+          }
+        },
+        {
+          "name": "Dist Amount",
+          "type": "continous",
+          "component": "Distortion",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 16
+              }
+            }
+          }
+        },
+        {
+          "name": "Dist Symmetry",
+          "type": "continous",
+          "component": "Distortion",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 17
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Overdrive",
+          "type": "continous",
+          "component": "Distortion",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 18
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Dist/Comp Routing",
+          "type": "continous",
+          "component": "Distortion",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 22
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Dist/Comp Routing",
+          "type": "continous",
+          "component": "Distortion",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 23
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Threshold",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 24
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Attack Time",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 25
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Release Time",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 26
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Makeup Gain",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 27
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Ratio",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 28
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Sidechain EQ",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 29
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Dry/Wet Mix",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 30
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Output Volume",
+          "type": "continous",
+          "component": "Compressor",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiNRPN",
+                "idMsb": 2,
+                "idLsb": 31
+              }
+            }
+          }
+        }
+      ]
+    },
     "voices": [
       {
         "name": "1",
@@ -64,11 +475,6 @@
         "name": "12",
         "engineId": 0,
         "midiChannel": 12
-      },
-      {
-        "name": "Effects",
-        "engineId": 1,
-        "midiChannel": 13
       }
     ],
     "engines": [
@@ -1142,417 +1548,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 39
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "EffectsEngine",
-        "components": [
-          {
-            "name": "Delay"
-          },
-          {
-            "name": "Reverb"
-          },
-          {
-            "name": "Distortion"
-          },
-          {
-            "name": "Compressor"
-          }
-        ],
-        "parameters": [
-          {
-            "name": "Delay Time",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 0
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay PingPong",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 1
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Stereo Width",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 2
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Feedback",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Highpass Filter",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 4
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Lowpass Filter",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 5
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Reverb Send",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 6
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Mix Volume",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 7
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Predelay",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 8
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Decay Time",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 9
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Shelving Freq",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 10
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Shelving Gain",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 11
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Highpass Filter",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 12
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Lowpass Filter",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 13
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Mix Volume",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 15
-                }
-              }
-            }
-          },
-          {
-            "name": "Dist Amount",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 16
-                }
-              }
-            }
-          },
-          {
-            "name": "Dist Symmetry",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 17
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Overdrive",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 18
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Dist/Comp Routing",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 22
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Dist/Comp Routing",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 23
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Threshold",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 24
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Attack Time",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 25
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Release Time",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 26
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Makeup Gain",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 27
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Ratio",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 28
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Sidechain EQ",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 29
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Dry/Wet Mix",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 30
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Output Volume",
-            "type": "continous",
-            "component": "Compressor",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 31
                 }
               }
             }
