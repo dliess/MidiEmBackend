@@ -118,19 +118,22 @@ struct Parameter
    static inline std::string type2String(Type type);
    static inline Type typeFromString(const std::string& str);
 };
-struct Global
+
+struct EngineBase
 {
-   int midiChannel;
    std::optional<std::vector<Component>> components;
    std::vector<Parameter> parameters;
 };
 
-struct Engine
+struct Global : public EngineBase
+{
+   int midiChannel;
+};
+
+struct Engine : public EngineBase
 {
    std::string name;
    std::optional<NoteSettings> noteSettings;
-   std::optional<std::vector<Component>> components;
-   std::vector<Parameter> parameters;
 };
 
 struct MidiCCAndValue
@@ -174,6 +177,7 @@ struct Section
        const ParameterId& parameterId) const noexcept;
    inline const Parameter& parameterDescr(int voiceId,
                                           int parameterId) const noexcept;
+   inline const EngineBase* engineBase(int voiceId) const noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) const noexcept;

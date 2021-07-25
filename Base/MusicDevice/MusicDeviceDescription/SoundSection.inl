@@ -195,6 +195,21 @@ base::musicDevice::description::sound::Section::parameterDescr(
    }
 }
 
+inline const base::musicDevice::description::sound::EngineBase*
+base::musicDevice::description::sound::Section::engineBase(int voiceId) const noexcept
+{
+   if (base::musicDevice::description::sound::GlobalSectionId == voiceId)
+   {
+      assert(global);
+      return &global.value();
+   }
+   else
+   {
+      assert(voiceId >= 0 && voiceId < voices.size());
+      return &engines[voices[voiceId].engineId];
+   }
+}
+
 inline int base::musicDevice::description::sound::Section::getMidiChannel(
     int voiceId) const noexcept
 {
