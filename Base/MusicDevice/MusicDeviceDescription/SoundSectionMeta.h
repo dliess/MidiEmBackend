@@ -58,7 +58,8 @@ inline auto registerMembers<base::musicDevice::description::sound::NoteSettings>
 {
    return members(
       member("noteRange", &base::musicDevice::description::sound::NoteSettings::noteRange),
-      member("midi", &base::musicDevice::description::sound::NoteSettings::midi)
+      member("midi", &base::musicDevice::description::sound::NoteSettings::midi),
+      member("defaultTriggerNote", &base::musicDevice::description::sound::NoteSettings::defaultTriggerNote)
    );
 }
 

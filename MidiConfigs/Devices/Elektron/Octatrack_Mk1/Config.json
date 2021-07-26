@@ -57,6 +57,13 @@
     "engines": [
       {
         "name": "MainEngine",
+        "noteSettings": {
+          "noteRange": {
+            "from": 72,
+            "to": 96
+          },
+          "defaultTriggerNote" : 84
+        },
         "components": [
           {
             "name": "Track/Playback"

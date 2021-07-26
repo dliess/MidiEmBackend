@@ -39,6 +39,12 @@
     "engines": [
       {
         "name": "MainEngine",
+        "noteSettings": {
+          "noteRange": {
+            "from": 31,
+            "to": 60
+          }
+        },
         "components": [
           {
             "name": "Track Params"

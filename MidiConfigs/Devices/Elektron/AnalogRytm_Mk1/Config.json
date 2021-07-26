@@ -480,6 +480,12 @@
     "engines": [
       {
         "name": "MainEngine",
+        "noteSettings": {
+          "noteRange": {
+            "from": 12,
+            "to": 59
+          }
+        },
         "components": [
           {
             "name": "Trig Parameters"

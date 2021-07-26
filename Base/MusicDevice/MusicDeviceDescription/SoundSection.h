@@ -45,6 +45,7 @@ struct NoteSettings
 {
    NoteRange noteRange;
    std::optional<NoteSettingsMidi> midi;
+   std::optional<int> defaultTriggerNote;
 };
 
 struct Voice

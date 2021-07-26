@@ -25,6 +25,12 @@
     "engines": [
       {
         "name": "MainEngine",
+        "noteSettings": {
+          "noteRange": {
+            "from": 0,
+            "to": 72
+          }
+        },
         "components": [
           {
             "name": "Modulation"

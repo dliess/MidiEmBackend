@@ -55,48 +55,48 @@
       },
       {
         "name": "melodic 1",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 2
       },
       {
         "name": "melodic 2",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 3
       },
       {
         "name": "melodic 3",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 4
       },
       {
         "name": "melodic 4",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 5
       },
       {
         "name": "melodic 5",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 6
       },
       {
         "name": "melodic 6",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 7
       },
       {
         "name": "melodic 7",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 8
       },
       {
         "name": "melodic 8",
-        "engineId": 0,
+        "engineId": 1,
         "midiChannel": 9
       }
     ],
     "engines": [
       {
-        "name": "MainEngine",
+        "name": "DrumEngine",
         "noteSettings": {
           "noteRange": {
             "from": 27,
@@ -108,6 +108,194 @@
             }
           }
         },
+        "components": [
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Shape"
+          },
+          {
+            "name": "Amp"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Pitch",
+            "description": "Adjusts the Filter Cutoff",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Cutoff",
+            "description": "Adjusts the Filter Cutoff",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Resonance",
+            "description": "Adjusts the Filter Resonance",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Amount",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise",
+            "type": "continous",
+            "component": "Shape",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Attack",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Decay",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Sustain",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Release",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "MelodicEngine",
         "components": [
           {
             "name": "Filter"
