@@ -43,6 +43,9 @@ public:
    void setParameterValue(const ::capnzero::SpanCL<16>& uuid,
                           ::capnzero::Int16 voiceId, ::capnzero::Int16 paramIdx,
                           ::capnzero::Float32 value) override;
+   void blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
+                             ::capnzero::Int16 voiceId) override;
+   void blankAllVoiceParameters(const ::capnzero::SpanCL<16>& uuid) override;
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;

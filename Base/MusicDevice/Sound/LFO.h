@@ -12,6 +12,7 @@ public:
    [[nodiscard]] inline float calculateValue() const noexcept;
    inline void setAmplitude(float amplitude) noexcept;
    inline void setFrequency(float frequency) noexcept;
+   inline void reset() noexcept;
    struct Sine
    {
       [[nodiscard]] inline float operator()(float t) const noexcept;

@@ -24,6 +24,7 @@ template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
     uint32_t voiceId, uint32_t parameterId, float value) noexcept
 {
+   //LOG_F(INFO, "sendSoundParameter {} {} {}", voiceId, parameterId, value);
    const auto& paramDescr =
        m_rSoundSection.parameterDescr(voiceId, parameterId);
    const auto midiChannel =

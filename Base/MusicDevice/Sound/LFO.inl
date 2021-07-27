@@ -32,6 +32,13 @@ inline void LFO::setFrequency(float frequency) noexcept
    m_frequency = frequency;
 }
 
+inline void LFO::reset() noexcept
+{
+   setAmplitude(0);
+   setFrequency(0);
+   m_waveform.emplace<Sine>();
+}
+
 inline float LFO::Sine::operator()(float t) const noexcept
 {
    return sin(2 * M_PI * t);

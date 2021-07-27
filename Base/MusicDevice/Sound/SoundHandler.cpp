@@ -135,7 +135,7 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    }
    if(value < 0.0 || value >= 1.0) return;
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
-   m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
+   //m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId, float increment) noexcept
@@ -178,6 +178,16 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 {
    if(!m_midiOutHandler) return 0;
    return m_midiOutHandler->getMidiChannelOffset();
+}
+
+void SoundHandler::blankVoiceParameters(int voiceId) noexcept
+{
+
+}
+
+void SoundHandler::blankAllVoiceParameters() noexcept
+{
+
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

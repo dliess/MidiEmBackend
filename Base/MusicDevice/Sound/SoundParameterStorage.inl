@@ -1,10 +1,10 @@
 #include "SoundParameterStorage.h"
-#include "SoundSection.h"
+#include <loguru.hpp>
 
 namespace base::musicDevice::sound
 {
 inline void ParameterStorage::resizeBy(
-   const description::sound::Section& soundSection) noexcept
+    const description::sound::Section& soundSection) noexcept
 {
    if (soundSection.global)
    {
@@ -14,12 +14,12 @@ inline void ParameterStorage::resizeBy(
    for (int voiceIdx = 0; voiceIdx < soundSection.voices.size(); ++voiceIdx)
    {
       const auto& engineDescr =
-         soundSection.engines[soundSection.voices[voiceIdx].engineId];
+          soundSection.engines[soundSection.voices[voiceIdx].engineId];
       m_voicesData[voiceIdx].parameters.resize(engineDescr.parameters.size());
    }
 }
 
-template<typename T>
+template <typename T>
 void ParameterStorage::setParameterOfVoice(int voiceIdx,
                                            const T& container) noexcept
 {
@@ -41,19 +41,12 @@ inline void ParameterStorage::setSoundParameterActualValue(int voiceIdx,
                                                            int parameterIdx,
                                                            float value) noexcept
 {
-   assert(util::vector_index_in_range(parameterIdx,  elementContainer(voiceIdx).parameters));
+   assert(util::vector_index_in_range(parameterIdx,
+                                      elementContainer(voiceIdx).parameters));
    elementContainer(voiceIdx).parameters[parameterIdx].setActualValue(value);
 }
 
-template<typename Cb>
-void ParameterStorage::forEachParametersActualValue(Cb&& cb) const noexcept
-{
-   forEachParameter([cb](int voiceIdx, int paramIdx, const Element& element) {
-      cb(voiceIdx, paramIdx, element.actual);
-   });
-}
-
-template<typename Cb>
+template <typename Cb>
 void ParameterStorage::forEachParameter(Cb&& cb) const noexcept
 {
    for (int paramIdx = 0; paramIdx < m_globalData.parameters.size(); ++paramIdx)
@@ -71,8 +64,7 @@ void ParameterStorage::forEachParameter(Cb&& cb) const noexcept
    }
 }
 
-template<typename Cb>
-void ParameterStorage::forEachParameter(Cb&& cb) noexcept
+template <typename Cb> void ParameterStorage::forEachParameter(Cb&& cb) noexcept
 {
    for (int paramIdx = 0; paramIdx < m_globalData.parameters.size(); ++paramIdx)
    {
@@ -89,26 +81,75 @@ void ParameterStorage::forEachParameter(Cb&& cb) noexcept
    }
 }
 
-inline void ParameterStorage::resetToInitialValues(
-   int voiceIdx,
-   const base::musicDevice::description::sound::Section& soundSection) noexcept
+template <typename Cb>
+void ParameterStorage::forEachParameter(Cb&& cb, int voiceId) const noexcept
 {
-   // TODO
+   if (voiceId == GLOBAL)
+   {
+      for (int paramIdx = 0; paramIdx < m_globalData.parameters.size();
+           ++paramIdx)
+      {
+         cb(paramIdx, m_globalData.parameters[paramIdx]);
+      }
+   }
+   else
+   {
+      const int voiceIdx = voiceId;
+      for (int paramIdx = 0;
+           paramIdx < m_voicesData[voiceIdx].parameters.size(); ++paramIdx)
+      {
+         cb(paramIdx, m_voicesData[voiceIdx].parameters[paramIdx]);
+      }
+   }
+}
+
+template <typename Cb>
+void ParameterStorage::forEachParameter(Cb&& cb, int voiceId) noexcept
+{
+   if (voiceId == GLOBAL)
+   {
+      for (int paramIdx = 0; paramIdx < m_globalData.parameters.size();
+           ++paramIdx)
+      {
+         cb(paramIdx, m_globalData.parameters[paramIdx]);
+      }
+   }
+   else
+   {
+      const int voiceIdx = voiceId;
+      for (int paramIdx = 0;
+           paramIdx < m_voicesData[voiceIdx].parameters.size(); ++paramIdx)
+      {
+         cb(paramIdx, m_voicesData[voiceIdx].parameters[paramIdx]);
+      }
+   }
+}
+
+inline void ParameterStorage::resetToInitialValues(
+    int voiceIdx,
+    const base::musicDevice::description::sound::Section& soundSection) noexcept
+{
+   forEachParameter(
+       [&soundSection](int paramIdx, Element& element) {
+          for (auto& e : element.modifiers) { e.reset(); }
+          element.lfo.reset();
+          element.setCommandedValue(0);
+       }, voiceIdx);
 }
 
 inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
-   int voiceIdx) const noexcept
+    int voiceIdx) const noexcept
 {
    return elementContainer(voiceIdx).actualPreset;
 }
 
 inline void ParameterStorage::setActualPresetOfVoice(
-   int voiceIdx, const std::string& presetName) noexcept
+    int voiceIdx, const std::string& presetName) noexcept
 {
    elementContainer(voiceIdx).actualPreset = presetName;
 }
 
-template<typename Cb>
+template <typename Cb>
 void ParameterStorage::updateActualValues(Cb&& cb) noexcept
 {
    forEachParameter([cb](int voiceIdx, int paramIdx, Element& element) {
@@ -126,13 +167,14 @@ inline void ParameterStorage::markAllDirty() noexcept
    });
 }
 
-inline float ParameterStorage::getCommandedValue(int voiceIdx, int parameterId) const noexcept
+inline float ParameterStorage::getCommandedValue(int voiceIdx,
+                                                 int parameterId) const noexcept
 {
    return elementContainer(voiceIdx).parameters[parameterId].commanded;
 }
 
 inline std::vector<float> ParameterStorage::getCommandedValuesOfVoice(
-   int voiceIdx) const noexcept
+    int voiceIdx) const noexcept
 {
    std::vector<float> ret;
    for (const auto& parameter : elementContainer(voiceIdx).parameters)
@@ -143,7 +185,7 @@ inline std::vector<float> ParameterStorage::getCommandedValuesOfVoice(
 }
 
 inline const ParameterStorage::EngineData& ParameterStorage::elementContainer(
-   int voiceIdx) const noexcept
+    int voiceIdx) const noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == voiceIdx)
    {
@@ -157,7 +199,7 @@ inline const ParameterStorage::EngineData& ParameterStorage::elementContainer(
 }
 
 inline ParameterStorage::EngineData& ParameterStorage::elementContainer(
-   int voiceIdx) noexcept
+    int voiceIdx) noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == voiceIdx)
    {
@@ -170,34 +212,34 @@ inline ParameterStorage::EngineData& ParameterStorage::elementContainer(
    }
 }
 
-inline void ParameterStorage::uiShowsInterestInParameter(int voiceId_, 
-                                                         int parameterId_) noexcept
+inline void ParameterStorage::uiShowsInterestInParameter(
+    int voiceId_, int parameterId_) noexcept
 {
-   forEachParameter([voiceId_, parameterId_](int voiceIdx, int paramIdx, Element& element){
-      if(voiceId_ == voiceIdx)
-      {
-         if(parameterId_ == ALL || parameterId_ == paramIdx)
-         {
-            element.dirtyFlagUi = true;
-            element.uiInterestCount++;
-         }
-      }
-   });
+   forEachParameter(
+       [parameterId_](int paramIdx, Element& element) {
+          if (parameterId_ == ALL || parameterId_ == paramIdx)
+          {
+             element.dirtyFlagUi = true;
+             element.uiInterestCount++;
+          }
+       },
+       voiceId_);
 }
 
-inline void ParameterStorage::uiLoosesInterestInParameter(int voiceId_, int parameterId_ ) noexcept
+inline void ParameterStorage::uiLoosesInterestInParameter(
+    int voiceId_, int parameterId_) noexcept
 {
-   forEachParameter([voiceId_, parameterId_](int voiceIdx, int paramIdx, Element& element){
-      if(voiceId_ == voiceIdx)
-      {
-         if(parameterId_ == ALL || parameterId_ == paramIdx)
-         {
-            element.uiInterestCount--;
-         }
-      }
-   });  
+   forEachParameter(
+       [parameterId_](int paramIdx, Element& element) {
+          if (parameterId_ == ALL || parameterId_ == paramIdx)
+          {
+             element.uiInterestCount--;
+          }
+       },
+       voiceId_);
 }
-inline std::optional<std::pair<float, float>> ParameterStorage::Element::uiAsksForChangedValues() noexcept
+inline std::optional<std::pair<float, float>>
+ParameterStorage::Element::uiAsksForChangedValues() noexcept
 {
    if (dirtyFlagUi && uiInterestCount)
    {
@@ -209,12 +251,13 @@ inline std::optional<std::pair<float, float>> ParameterStorage::Element::uiAsksF
 
 inline bool ParameterStorage::Element::updateActualValue() noexcept
 {
-   if (!dirtyFlagRt)
+   if (!dirtyFlagRt && !lfo.enabled()) // performance improving shortcut
    {
       return false;
    }
+   float actualBefore = actual;
    actual = calcModified();
-   if(lfo.enabled())
+   if (lfo.enabled())
    {
       m_cachedLfoValue = lfo.calculateValue();
       actual += m_cachedLfoValue;
@@ -225,9 +268,9 @@ inline bool ParameterStorage::Element::updateActualValue() noexcept
    {
       m_cachedLfoValue = 0.0;
    }
-   
+
    dirtyFlagRt = false;
-   return true;
+   return actualBefore != actual;
 }
 
 inline void ParameterStorage::Element::setActualValue(float value) noexcept
@@ -249,13 +292,14 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
 
 inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
 {
-   if(value < 0.0 || value > 1.0) return;
-   if (commanded != value)
+   if (value < 0.0 || value > 1.0)
    {
-      commanded   = value;
-      dirtyFlagRt = true;
-      dirtyFlagUi = true;
+      LOG_F(ERROR, "Commanded parameter value out of range: {}", value);
+      return;
    }
+   commanded   = value;
+   dirtyFlagRt = true;
+   dirtyFlagUi = true;
 }
 
 inline float ParameterStorage::Element::calcModified() const noexcept
@@ -271,4 +315,4 @@ inline float ParameterStorage::Element::calcModified() const noexcept
    return ret;
 }
 
-} // namespace base::musicDevice::sound
+}   // namespace base::musicDevice::sound

@@ -65,6 +65,9 @@ public:
 
    uint8_t getMidiVoiceOffset() const noexcept;
 
+   void blankVoiceParameters(int voiceId) noexcept;
+   void blankAllVoiceParameters() noexcept;
+
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;
    // inline SoundPresetHandler* soundPresetHandler() noexcept;

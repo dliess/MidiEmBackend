@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "LFO.h"
+#include "SoundSection.h"
 
 namespace base::musicDevice
 {
@@ -23,10 +24,6 @@ public:
                                       float value) noexcept;
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
-
-   template<typename Cb>
-   void forEachParametersActualValue(Cb&& cb) const noexcept;
-
    inline void resetToInitialValues(
       int voiceIdx, const base::musicDevice::description::sound::Section&
                        soundSection) noexcept;
@@ -80,6 +77,11 @@ public:
    void forEachParameter(Cb&& cb) const noexcept;
    template<typename Cb>
    void forEachParameter(Cb&& cb) noexcept;
+   static constexpr int GLOBAL = base::musicDevice::description::sound::GlobalSectionId;
+   template<typename Cb>
+   void forEachParameter(Cb&& cb, int voiceId) const noexcept;
+   template<typename Cb>
+   void forEachParameter(Cb&& cb, int voiceId) noexcept;
 
 private:
    struct EngineData
