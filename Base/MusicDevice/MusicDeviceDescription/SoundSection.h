@@ -128,7 +128,21 @@ struct Parameter
       Attack,
       Decay,
       Sustain,
-      Release
+      Release,
+      SampleStart,
+      SampleEnd,
+      SampleLength,
+      SampleLoop,
+      SampleReverse,
+      SampleRate,
+      DelaySend,
+      ReverbSend,
+      LFOSpeed,
+      LFOMultiplier,
+      LFOWaveform,
+      LFODestination,
+      LFODepth,
+      TrigChance
    };
    std::optional<Role> role;
    std::optional<std::string> description;

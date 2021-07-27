@@ -204,6 +204,20 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::Decay: return "Decay";
       case Role::Sustain: return "Sustain";
       case Role::Release: return "Release";
+      case Role::SampleStart: return "SampleStart";
+      case Role::SampleEnd: return "SampleEnd";
+      case Role::SampleLength: return "SampleLength";
+      case Role::SampleLoop: return "SampleLoop";
+      case Role::SampleReverse: return "SampleReverse";
+      case Role::SampleRate: return "SampleRate";
+      case Role::DelaySend: return "DelaySend";
+      case Role::ReverbSend: return "ReverbSend";
+      case Role::LFOSpeed: return "LFOSpeed";
+      case Role::LFOMultiplier: return "LFOMultiplier";
+      case Role::LFOWaveform: return "LFOWaveform";
+      case Role::LFODestination: return "LFODestination";
+      case Role::LFODepth: return "LFODepth";
+      case Role::TrigChance: return "TrigChance";
       default: return "Unknown";
    }
 }
@@ -234,6 +248,34 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::Sustain;
    else if (roleStr == "Release")
       return Role::Release;
+   else if (roleStr == "SampleStart")
+      return Role::SampleStart;
+   else if (roleStr == "SampleEnd")
+      return Role::SampleEnd;
+   else if (roleStr == "SampleLength")
+      return Role::SampleLength;
+   else if (roleStr == "SampleLoop")
+      return Role::SampleLoop;
+   else if (roleStr == "SampleReverse")
+      return Role::SampleReverse;
+   else if (roleStr == "SampleRate")
+      return Role::SampleRate;
+   else if (roleStr == "DelaySend")
+      return Role::DelaySend;
+   else if (roleStr == "ReverbSend")
+      return Role::ReverbSend;
+   else if (roleStr == "LFOSpeed")
+      return Role::LFOSpeed;
+   else if (roleStr == "LFOMultiplier")
+      return Role::LFOMultiplier;
+   else if (roleStr == "LFOWaveform")
+      return Role::LFOWaveform;
+   else if (roleStr == "LFODestination")
+      return Role::LFODestination;
+   else if (roleStr == "LFODepth")
+      return Role::LFODepth;
+   else if (roleStr == "TrigChance")
+      return Role::TrigChance;
    return Role::Unknown;
 }
 
@@ -400,14 +442,28 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
       case Parameter::Role::FilterCutoff: return 0.5;
       case Parameter::Role::FilterType: return 0.0;
       case Parameter::Role::FilterResonance: return 0.0;
-      case Parameter::Role::Pitch: return 0.0;
+      case Parameter::Role::Pitch: return 0.5;
       case Parameter::Role::Volume: return 0.8;
       case Parameter::Role::Pan: return 0.5;
       case Parameter::Role::Mute: return 0.0;
       case Parameter::Role::Attack: return 0.0;
-      case Parameter::Role::Decay: return 0.0;
+      case Parameter::Role::Decay: return 0.3;
       case Parameter::Role::Sustain: return 1.0;
-      case Parameter::Role::Release: return 0.0;
+      case Parameter::Role::Release: return 0.3;
+      case Parameter::Role::SampleStart: return 0.0;
+      case Parameter::Role::SampleEnd: return 0.99;
+      case Parameter::Role::SampleLength: return 0.99;
+      case Parameter::Role::SampleLoop: return 0.0;
+      case Parameter::Role::SampleReverse: return 0.0;
+      case Parameter::Role::SampleRate: return 1.0;
+      case Parameter::Role::DelaySend: return 0.0;
+      case Parameter::Role::ReverbSend: return 0.0;
+      case Parameter::Role::LFOSpeed: return 0.0;
+      case Parameter::Role::LFOMultiplier: return 0.0;
+      case Parameter::Role::LFOWaveform: return 0.0;
+      case Parameter::Role::LFODestination: return 0.0;
+      case Parameter::Role::LFODepth: return 0.0;
+      case Parameter::Role::TrigChance: return 0.99;
    }
    return 0.0;
 }

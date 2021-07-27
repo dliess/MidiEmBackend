@@ -47,10 +47,13 @@
         },
         "components": [
           {
-            "name": "Track Params"
+            "name": "Trig"
           },
           {
-            "name": "Playback"
+            "name": "Filter"
+          },
+          {
+            "name": "Sample"
           },
           {
             "name": "LFO"
@@ -61,35 +64,10 @@
         ],
         "parameters": [
           {
-            "name": "Note",
-            "type": "continous",
-            "component": "Track Params",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "Mute",
-            "type": "continous",
-            "component": "Track Params",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 94
-                }
-              }
-            }
-          },
-          {
             "name": "Track Level",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -102,7 +80,8 @@
           {
             "name": "Pan",
             "type": "continous-bipolar",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Pan",
             "source": {
               "midi": {
                 "id": {
@@ -115,7 +94,8 @@
           {
             "name": "Pitch",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Pitch",
             "source": {
               "midi": {
                 "id": {
@@ -128,7 +108,9 @@
           {
             "name": "Decay Time",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Decay",
+            "overrideInitialValue" : 0.3,
             "source": {
               "midi": {
                 "id": {
@@ -139,27 +121,28 @@
             }
           },
           {
-            "name": "Sample Start",
+            "name": "Note",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 19
+                  "id": 3
                 }
               }
             }
           },
           {
-            "name": "Sample Length",
+            "name": "Mute",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Mute",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 20
+                  "id": 94
                 }
               }
             }
@@ -167,7 +150,8 @@
           {
             "name": "Cutoff",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Filter",
+            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -180,7 +164,8 @@
           {
             "name": "Resonance",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Filter",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -193,7 +178,8 @@
           {
             "name": "Delay Send",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "DelaySend",
             "source": {
               "midi": {
                 "id": {
@@ -206,7 +192,8 @@
           {
             "name": "Reverb Send",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "ReverbSend",
             "source": {
               "midi": {
                 "id": {
@@ -219,7 +206,8 @@
           {
             "name": "Volume+Dist",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -232,7 +220,7 @@
           {
             "name": "Swing",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
             "source": {
               "midi": {
                 "id": {
@@ -245,7 +233,8 @@
           {
             "name": "Chance",
             "type": "continous",
-            "component": "Track Params",
+            "component": "Trig",
+            "role": "TrigChance",
             "source": {
               "midi": {
                 "id": {
@@ -258,7 +247,8 @@
           {
             "name": "Loop",
             "type": "continous",
-            "component": "Playback",
+            "component": "Sample",
+            "role": "SampleLoop",
             "source": {
               "midi": {
                 "id": {
@@ -271,7 +261,8 @@
           {
             "name": "Reverse",
             "type": "continous",
-            "component": "Playback",
+            "component": "Sample",
+            "role": "SampleReverse",
             "source": {
               "midi": {
                 "id": {
@@ -282,9 +273,38 @@
             }
           },
           {
+            "name": "Sample Start",
+            "type": "continous",
+            "component": "Sample",
+            "role": "SampleStart",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Length",
+            "type": "continous",
+            "component": "Sample",
+            "role": "SampleLength",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
             "name": "LFO Speed",
             "type": "continous",
             "component": "LFO",
+            "role": "LFOSpeed",
             "source": {
               "midi": {
                 "id": {
@@ -298,6 +318,7 @@
             "name": "LFO Multiplier",
             "type": "continous",
             "component": "LFO",
+            "role": "LFOMultiplier",
             "source": {
               "midi": {
                 "id": {
@@ -324,6 +345,7 @@
             "name": "LFO Destination",
             "type": "continous",
             "component": "LFO",
+            "role": "LFODestination",
             "source": {
               "midi": {
                 "id": {
@@ -337,6 +359,7 @@
             "name": "LFO Waveform",
             "type": "continous",
             "component": "LFO",
+            "role": "LFOWaveform",
             "source": {
               "midi": {
                 "id": {
@@ -376,6 +399,7 @@
             "name": "LFO Depth",
             "type": "continous",
             "component": "LFO",
+            "role": "LFODepth",
             "source": {
               "midi": {
                 "id": {
