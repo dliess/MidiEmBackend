@@ -207,6 +207,7 @@ struct Section
    template <typename T>
    static int linSearchByName(const std::vector<T>& vector,
                               const std::string& name) noexcept;
+   inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
 };
 
 }   // namespace base::musicDevice::description::sound

@@ -212,17 +212,28 @@ inline base::musicDevice::description::sound::Parameter::Role
 base::musicDevice::description::sound::Parameter::roleFromString(
     const std::string& roleStr)
 {
-   if (roleStr == "FilterCutoff") return Role::FilterCutoff;
-   else if (roleStr == "FilterType") return Role::FilterType;
-   else if (roleStr == "FilterResonance") return Role::FilterResonance;
-   else if (roleStr == "Pitch") return Role::Pitch;
-   else if (roleStr == "Volume") return Role::Volume;
-   else if (roleStr == "Pan") return Role::Pan;
-   else if (roleStr == "Mute") return Role::Mute;
-   else if (roleStr == "Attack") return Role::Attack;
-   else if (roleStr == "Decay") return Role::Decay;
-   else if (roleStr == "Sustain") return Role::Sustain;
-   else if (roleStr == "Release") return Role::Release;
+   if (roleStr == "FilterCutoff")
+      return Role::FilterCutoff;
+   else if (roleStr == "FilterType")
+      return Role::FilterType;
+   else if (roleStr == "FilterResonance")
+      return Role::FilterResonance;
+   else if (roleStr == "Pitch")
+      return Role::Pitch;
+   else if (roleStr == "Volume")
+      return Role::Volume;
+   else if (roleStr == "Pan")
+      return Role::Pan;
+   else if (roleStr == "Mute")
+      return Role::Mute;
+   else if (roleStr == "Attack")
+      return Role::Attack;
+   else if (roleStr == "Decay")
+      return Role::Decay;
+   else if (roleStr == "Sustain")
+      return Role::Sustain;
+   else if (roleStr == "Release")
+      return Role::Release;
    return Role::Unknown;
 }
 
@@ -264,7 +275,8 @@ base::musicDevice::description::sound::Section::parameterDescr(
 }
 
 inline const base::musicDevice::description::sound::EngineBase*
-base::musicDevice::description::sound::Section::engineBase(int voiceId) const noexcept
+base::musicDevice::description::sound::Section::engineBase(
+    int voiceId) const noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == voiceId)
    {
@@ -372,6 +384,32 @@ int base::musicDevice::description::sound::Section::linSearchByName(
          return i;
    }
    return -1;
+}
+
+inline float base::musicDevice::description::sound::Section::getInitialValueFor(
+    int voiceId, int parameterId) const noexcept
+{
+   const auto& paramDescr = parameterDescr(voiceId, parameterId);
+   if(!paramDescr.role.has_value())
+   {
+      return 0.0;
+   }
+   switch(*paramDescr.role)
+   {
+      case Parameter::Role::Unknown: return 0.0;
+      case Parameter::Role::FilterCutoff: return 0.5;
+      case Parameter::Role::FilterType: return 0.0;
+      case Parameter::Role::FilterResonance: return 0.0;
+      case Parameter::Role::Pitch: return 0.0;
+      case Parameter::Role::Volume: return 0.8;
+      case Parameter::Role::Pan: return 0.5;
+      case Parameter::Role::Mute: return 0.0;
+      case Parameter::Role::Attack: return 0.0;
+      case Parameter::Role::Decay: return 0.0;
+      case Parameter::Role::Sustain: return 1.0;
+      case Parameter::Role::Release: return 0.0;
+   }
+   return 0.0;
 }
 
 #endif

@@ -182,12 +182,12 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 
 void SoundHandler::blankVoiceParameters(int voiceId) noexcept
 {
-
+   m_paramStorage.resetToInitialValues(voiceId, m_rSoundSection);
 }
 
 void SoundHandler::blankAllVoiceParameters() noexcept
 {
-
+   m_paramStorage.resetToInitialValues(m_rSoundSection);
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

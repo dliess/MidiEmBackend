@@ -5,46 +5,55 @@
 #include <optional>
 #include <string>
 #include <vector>
+
 #include "LFO.h"
 #include "SoundSection.h"
 
 namespace base::musicDevice
 {
-namespace description::sound { struct Section; }
+namespace description::sound
+{
+struct Section;
+}
 namespace sound
 {
 class ParameterStorage
 {
 public:
-   inline void resizeBy(const description::sound::Section&
-                           soundSection) noexcept;
-   template<typename T>
+   inline void resizeBy(
+       const description::sound::Section& soundSection) noexcept;
+   template <typename T>
    void setParameterOfVoice(int voiceId, const T& container) noexcept;
    inline void setSoundParameterValue(int voiceId, int parameterId,
                                       float value) noexcept;
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
    inline void resetToInitialValues(
-      int voiceIdx, const base::musicDevice::description::sound::Section&
-                       soundSection) noexcept;
+       int voiceIdx, const base::musicDevice::description::sound::Section&
+                         soundSection) noexcept;
+
+   inline void resetToInitialValues(
+       const base::musicDevice::description::sound::Section&
+           soundSection) noexcept;
 
    inline std::optional<std::string> getActualPresetOfVoice(
-      int voiceIdx) const noexcept;
+       int voiceIdx) const noexcept;
    inline void setActualPresetOfVoice(int voiceIdx,
                                       const std::string& presetName) noexcept;
 
-   template<typename Cb>
-   void updateActualValues(Cb&& cb) noexcept;
+   template <typename Cb> void updateActualValues(Cb&& cb) noexcept;
 
    inline void markAllDirty() noexcept;
 
    inline float getCommandedValue(int voiceIdx, int parameterId) const noexcept;
    inline std::vector<float> getCommandedValuesOfVoice(
-      int voiceIdx) const noexcept;
+       int voiceIdx) const noexcept;
 
    constexpr static int ALL = -1;
-   inline void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
-   inline void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
+   inline void uiShowsInterestInParameter(int voiceId,
+                                          int parameterId = ALL) noexcept;
+   inline void uiLoosesInterestInParameter(int voiceId,
+                                           int parameterId = ALL) noexcept;
 
    struct Element
    {
@@ -58,12 +67,13 @@ public:
       float commanded{0};
       std::array<std::optional<Modifier>, NUM_MODIFIERS> modifiers;
       LFO lfo;
-      float actual{0};
+      float actual{-1};
       bool dirtyFlagRt{false};
       bool dirtyFlagUi{true};
       int uiInterestCount{0};
 
-      inline std::optional<std::pair<float, float>> uiAsksForChangedValues() noexcept;
+      inline std::optional<std::pair<float, float>>
+      uiAsksForChangedValues() noexcept;
       inline bool updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
       inline void setCommandedValue(float value) noexcept;
@@ -73,15 +83,13 @@ public:
       inline float calcModified() const noexcept;
    };
 
-   template<typename Cb>
-   void forEachParameter(Cb&& cb) const noexcept;
-   template<typename Cb>
-   void forEachParameter(Cb&& cb) noexcept;
-   static constexpr int GLOBAL = base::musicDevice::description::sound::GlobalSectionId;
-   template<typename Cb>
+   template <typename Cb> void forEachParameter(Cb&& cb) const noexcept;
+   template <typename Cb> void forEachParameter(Cb&& cb) noexcept;
+   static constexpr int GLOBAL =
+       base::musicDevice::description::sound::GlobalSectionId;
+   template <typename Cb>
    void forEachParameter(Cb&& cb, int voiceId) const noexcept;
-   template<typename Cb>
-   void forEachParameter(Cb&& cb, int voiceId) noexcept;
+   template <typename Cb> void forEachParameter(Cb&& cb, int voiceId) noexcept;
 
 private:
    struct EngineData
@@ -92,13 +100,12 @@ private:
    EngineData m_globalData;
    std::vector<EngineData> m_voicesData;
 
-
    inline const EngineData& elementContainer(int voiceIdx) const noexcept;
    inline EngineData& elementContainer(int voiceIdx) noexcept;
 };
 
-} // namespace sound
-} // namespace base::musicDevice
+}   // namespace sound
+}   // namespace base::musicDevice
 
 #include "SoundParameterStorage.inl"
 

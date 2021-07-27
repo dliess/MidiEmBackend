@@ -130,12 +130,26 @@ inline void ParameterStorage::resetToInitialValues(
     const base::musicDevice::description::sound::Section& soundSection) noexcept
 {
    forEachParameter(
-       [&soundSection](int paramIdx, Element& element) {
+       [&soundSection, voiceIdx](int paramIdx, Element& element) {
           for (auto& e : element.modifiers) { e.reset(); }
           element.lfo.reset();
-          element.setCommandedValue(0);
+          const auto& descr = soundSection.parameterDescr(voiceIdx, paramIdx);
+          element.setCommandedValue(soundSection.getInitialValueFor(voiceIdx, paramIdx));
        }, voiceIdx);
 }
+
+inline void ParameterStorage::resetToInitialValues(
+    const base::musicDevice::description::sound::Section& soundSection) noexcept
+{
+   forEachParameter(
+       [&soundSection](int voiceId, int paramIdx, Element& element) {
+          for (auto& e : element.modifiers) { e.reset(); }
+          element.lfo.reset();
+          const auto& descr = soundSection.parameterDescr(voiceId, paramIdx);
+          element.setCommandedValue(soundSection.getInitialValueFor(voiceId, paramIdx));
+       });
+}
+
 
 inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
     int voiceIdx) const noexcept
