@@ -91,6 +91,8 @@ public:
    void forEachParameter(Cb&& cb, int voiceId) const noexcept;
    template <typename Cb> void forEachParameter(Cb&& cb, int voiceId) noexcept;
 
+   template <typename Cb> void forEachElementContainer(Cb&& cb);
+
 private:
    struct EngineData
    {
