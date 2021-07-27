@@ -109,7 +109,7 @@
             }
           },
           {
-            "name": "Playback Param #1",
+            "name": "Pitch/Param #1",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -122,7 +122,7 @@
             }
           },
           {
-            "name": "Playback Param #2",
+            "name": "Start/Param #2",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -135,7 +135,7 @@
             }
           },
           {
-            "name": "Playback Param #3",
+            "name": "Len/Param #3",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -148,7 +148,7 @@
             }
           },
           {
-            "name": "Playback Param #4",
+            "name": "Rate/Param #4",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -161,7 +161,7 @@
             }
           },
           {
-            "name": "Playback Param #5",
+            "name": "Retrig/Param #5",
             "type": "continous",
             "component": "Track/Playback",
             "source": {
@@ -174,7 +174,7 @@
             }
           },
           {
-            "name": "Playback Param #6",
+            "name": "RetrigTime/Param #6",
             "type": "continous",
             "component": "Track/Playback",
             "source": {

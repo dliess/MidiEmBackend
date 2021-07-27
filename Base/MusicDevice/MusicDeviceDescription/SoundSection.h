@@ -59,17 +59,20 @@ struct Voice
 struct Component
 {
    std::string name;
-   enum class Type
-   {   // Todo: maybe string is enough?
+   enum class Role
+   {
       Unknown,
+      NoteTrigger,
+      Amp,
       Filter,
       Envelope,
+      LFO,
       Arpeggiator
    };
-   std::optional<Type> type;
+   std::optional<Role> role;
 
-   static inline std::string type2String(Type type);
-   static inline Type typeFromString(const std::string& str);
+   static inline std::string role2String(Role role);
+   static inline Role roleFromString(const std::string& roleStr);
 };
 
 struct ValueRange
@@ -112,12 +115,29 @@ struct Parameter
    };
    Type type;
    std::optional<std::string> component;
-   std::optional<std::string> role;
+   enum class Role
+   {
+      Unknown,
+      FilterCutoff,
+      FilterType,
+      FilterResonance,
+      Pitch,
+      Volume,
+      Pan,
+      Mute,
+      Attack,
+      Decay,
+      Sustain,
+      Release
+   };
+   std::optional<Role> role;
    std::optional<std::string> description;
    ParameterSource source;
 
    static inline std::string type2String(Type type);
    static inline Type typeFromString(const std::string& str);
+   static inline std::string role2String(Role role);
+   static inline Role roleFromString(const std::string& roleStr);
 };
 
 struct EngineBase

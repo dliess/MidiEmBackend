@@ -63,47 +63,56 @@ inline void from_json<
 }
 
 // --------------------------------------------------------
-// base::musicDevice::description::sound::Component::Type
+// base::musicDevice::description::sound::Component::Role
 // --------------------------------------------------------
 inline std::string
-base::musicDevice::description::sound::Component::type2String(Type type)
+base::musicDevice::description::sound::Component::role2String(Role role)
 {
-   switch (type)
+   switch (role)
    {
-      case Type::Filter: return "Filter";
-      case Type::Envelope: return "Envelope";
-      case Type::Arpeggiator: return "Arpeggiator";
+      case Role::NoteTrigger: return "NoteTrigger";
+      case Role::Amp: return "Amp";
+      case Role::Filter: return "Filter";
+      case Role::Envelope: return "Envelope";
+      case Role::LFO: return "LFO";
+      case Role::Arpeggiator: return "Arpeggiator";
    }
    return "Unknown";
 }
 
-inline base::musicDevice::description::sound::Component::Type
-base::musicDevice::description::sound::Component::typeFromString(
-    const std::string& str)
+inline base::musicDevice::description::sound::Component::Role
+base::musicDevice::description::sound::Component::roleFromString(
+    const std::string& roleStr)
 {
-   if (str == "Filter")
-      return Type::Filter;
-   else if (str == "Envelope")
-      return Type::Envelope;
-   else if (str == "Arpeggiator")
-      return Type::Arpeggiator;
-   return Type::Unknown;
+   if (roleStr == "NoteTrigger")
+      return Role::NoteTrigger;
+   else if (roleStr == "Amp")
+      return Role::Amp;
+   else if (roleStr == "Filter")
+      return Role::Filter;
+   else if (roleStr == "Envelope")
+      return Role::Envelope;
+   else if (roleStr == "LFO")
+      return Role::LFO;
+   else if (roleStr == "Arpeggiator")
+      return Role::Arpeggiator;
+   return Role::Unknown;
 }
 
 template <>
-inline void to_json<base::musicDevice::description::sound::Component::Type>(
+inline void to_json<base::musicDevice::description::sound::Component::Role>(
     nlohmann::json& j,
-    const base::musicDevice::description::sound::Component::Type& obj)
+    const base::musicDevice::description::sound::Component::Role& obj)
 {
-   j = base::musicDevice::description::sound::Component::type2String(obj);
+   j = base::musicDevice::description::sound::Component::role2String(obj);
 }
 
 template <>
-inline void from_json<base::musicDevice::description::sound::Component::Type>(
+inline void from_json<base::musicDevice::description::sound::Component::Role>(
     const nlohmann::json& j,
-    base::musicDevice::description::sound::Component::Type& obj)
+    base::musicDevice::description::sound::Component::Role& obj)
 {
-   obj = base::musicDevice::description::sound::Component::typeFromString(
+   obj = base::musicDevice::description::sound::Component::roleFromString(
        j.get<std::string>());
 }
 
@@ -156,6 +165,65 @@ base::musicDevice::description::sound::Parameter::typeFromString(
    else if (str == "list")
       return base::musicDevice::description::sound::Parameter::Type::List;
    return base::musicDevice::description::sound::Parameter::Type::Continous;
+}
+
+// --------------------------------------------------------
+// SoundDeviceParameter::Role
+// --------------------------------------------------------
+template <>
+inline void to_json<base::musicDevice::description::sound::Parameter::Role>(
+    nlohmann::json& j,
+    const base::musicDevice::description::sound::Parameter::Role& obj)
+{
+   j = base::musicDevice::description::sound::Parameter::role2String(obj);
+}
+
+template <>
+inline void from_json<base::musicDevice::description::sound::Parameter::Role>(
+    const nlohmann::json& j,
+    base::musicDevice::description::sound::Parameter::Role& obj)
+{
+   obj = base::musicDevice::description::sound::Parameter::roleFromString(
+       j.get<std::string>());
+}
+
+inline std::string
+base::musicDevice::description::sound::Parameter::role2String(Role role)
+{
+   switch (role)
+   {
+      case Role::Unknown: return "Unknown";
+      case Role::FilterCutoff: return "FilterCutoff";
+      case Role::FilterType: return "FilterType";
+      case Role::FilterResonance: return "FilterResonance";
+      case Role::Pitch: return "Pitch";
+      case Role::Volume: return "Volume";
+      case Role::Pan: return "Pan";
+      case Role::Mute: return "Mute";
+      case Role::Attack: return "Attack";
+      case Role::Decay: return "Decay";
+      case Role::Sustain: return "Sustain";
+      case Role::Release: return "Release";
+      default: return "Unknown";
+   }
+}
+
+inline base::musicDevice::description::sound::Parameter::Role
+base::musicDevice::description::sound::Parameter::roleFromString(
+    const std::string& roleStr)
+{
+   if (roleStr == "FilterCutoff") return Role::FilterCutoff;
+   else if (roleStr == "FilterType") return Role::FilterType;
+   else if (roleStr == "FilterResonance") return Role::FilterResonance;
+   else if (roleStr == "Pitch") return Role::Pitch;
+   else if (roleStr == "Volume") return Role::Volume;
+   else if (roleStr == "Pan") return Role::Pan;
+   else if (roleStr == "Mute") return Role::Mute;
+   else if (roleStr == "Attack") return Role::Attack;
+   else if (roleStr == "Decay") return Role::Decay;
+   else if (roleStr == "Sustain") return Role::Sustain;
+   else if (roleStr == "Release") return Role::Release;
+   return Role::Unknown;
 }
 
 // --------------------------------------------------------
