@@ -1,0 +1,5377 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Behringer",
+  "productName": "DeepMind 12",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "Modulation",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Controller",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Controller",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Channel Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Balance",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Gate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Lfo 1 Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Lfo 1 Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Lfo 2 Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Lfo 2 Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 PWM",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Tone Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Pitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Detune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Freq",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Res",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Amt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF LFO Amt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Key Amt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "HPF Freq",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain Pedal",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 1 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 2 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 3 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 4 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 1 Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 2 Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 3 Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Slot 4 Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Analog Thru",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "3D Controller X-Axis",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "3D Controller Y-Axis",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "3D Controller Z-Axis",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Key Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Arp Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Mono Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Slew Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Key Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Arp Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Mono Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 12
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Slew Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 13
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 PWM Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 16
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Tone Mod Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 17
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Pulse Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 18
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Saw Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Sync Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Pitch Mod Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Pitch Mod Select",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Aftertouch to Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 MW to Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 24
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 PWM Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Pitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 27
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Tone Mod Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Pitch Mod Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 29
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Aftertouch to Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 30
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 MW to Pitch Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 31
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Pitch Mod Select",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 32
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 33
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 34
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 35
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1664
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitchbend Up Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 36
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3072
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitchbend Down Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3072
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Pitchbend Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Freq",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF HPF Freq",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Res",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Pitch Bend Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 44
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF LFO Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF LFO Select",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Aftertouch to LFO",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF MW to LFO",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Key Track",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 49
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Polarity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF 2-4 Pole Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Boost",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Trigger",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 57
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 59
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 60
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 61
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 62
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 63
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 64
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 65
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Trigger",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 66
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 67
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 68
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 69
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 71
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 72
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 73
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 74
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Trigger",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 75
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Attack Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 76
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Decay Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 77
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Sustain Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 78
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "MOD Env Release Curve",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 79
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 80
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 81
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 82
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Pan Spread",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 83
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Voice Parity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 84
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Polyphony Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 85
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Env Trigger Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Detune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Voice Drift",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 88
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Parameter Drift",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 89
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Drift Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 90
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento Balance",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 91
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC Key Down Reset",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 92
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 93
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 94
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 95
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 96
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 97
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 98
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 99
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 100
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 101
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 102
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 103
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 104
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 105
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 106
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 107
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 108
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 109
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 110
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 112
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 113
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 114
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 115
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 16512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Ctrl Seq Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Ctrl Seq Clock Divider",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1920
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Length",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 119
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3968
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Swing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 120
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3200
+                }
+              }
+            }
+          },
+          {
+            "name": "Key Sync and Loop",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 121
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Slew Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 122
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 123
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 124
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 125
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 126
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 127
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 130
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 132
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 133
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 134
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 13",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 135
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 14",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 136
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 15",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 137
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 16",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 138
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 17",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 139
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 18",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 140
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 19",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 141
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 20",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 142
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 21",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 143
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 22",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 144
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 23",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 145
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 24",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 146
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 25",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 147
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 26",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 148
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 27",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 149
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 28",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 150
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 29",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 151
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 30",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 152
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 31",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 153
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Step Seq Val 32",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 154
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 155
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 156
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 157
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Clock",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 158
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Key Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 159
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Gate Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 160
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Hold",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 161
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Pattern",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 162
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 8192
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Swing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 163
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3200
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Octaves",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 164
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Routing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 165
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1152
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 166
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4224
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 167
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 168
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 169
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 170
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 171
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 172
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 173
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 174
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 175
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 176
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 177
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 178
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 179
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4224
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 180
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 181
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 182
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 183
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 184
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 185
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 186
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 187
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 188
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 189
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 190
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 191
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 192
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4224
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 193
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 194
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 195
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 196
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 197
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 198
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 199
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 200
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 201
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 202
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 203
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 204
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 205
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4224
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 206
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 207
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 208
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 209
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 210
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 211
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 212
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 213
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 214
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 215
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 11",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 216
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Param 12",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 217
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 Output Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 218
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 Output Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 219
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 3 Output Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 220
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Output Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 221
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 4 Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 222
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

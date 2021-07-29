@@ -1,0 +1,5515 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "DSI/Sequential",
+  "productName": "Prophet Rev2",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "Mod Wheel",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Master Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub Oscillator",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Slop",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Mod Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "BPM",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Clock Divide",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "FX On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Mix",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "A/B Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequencer Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Frequency",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Fine Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Glide Rate/Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Frequency",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Fine Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Glide Rate/Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Mix",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Repeats",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Voice Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Split Point",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain Pedal",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Amount",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Frequency",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Key Amount",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Audio Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Env Amount",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Env Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Spread",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Amount",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Freq Fine Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12800
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Freq Fine Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12800
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 2
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Glide Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Glide Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 KBD On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 KBD On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq Fine Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12800
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Freq Fine Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12800
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Glide Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Glide Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 KBD On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 KBD On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Sync On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Sync On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "Slop Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Slop Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Mix Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Cutoff Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20992
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Resonance Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard Tracking Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Audio Mod Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "2 pole/4 pole mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Vel Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Dly Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Attack Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Decay Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Sustain Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Release Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Spread Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Program Volume Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Velo Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Del Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env A Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env D Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env S Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env R Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Clock Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Clock Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Clock Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Freq Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Shape Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Clock Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 57
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Velo Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Del Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 A Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 D Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 S Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 R Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 65
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 66
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 67
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 68
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 69
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 71
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 72
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 73
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 74
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 75
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 76
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 77
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 78
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 79
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 80
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 81
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 82
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 83
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 84
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 85
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Source Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Amount Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 88
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Rpt On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 97
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 98
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Note Reset Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 99
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape Mod Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 102
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12672
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape Mod Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 103
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12672
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Note Reset Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 104
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Key Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 105
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Key Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 106
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Key Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 107
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Key Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 108
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub Osc Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch Bend Range Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 113
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 114
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Wheel Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Wheel Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Pressure Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Pressure Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 119
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 120
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 121
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 122
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 123
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Cntrl Amt Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 124
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Cntrl Dest Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 125
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "FX On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 153
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "FX select Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 154
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1664
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Mix Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 155
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 1 Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 156
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 2 Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 157
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Clock Sync Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 158
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "A/B Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 163
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Start/Stop Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 164
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Detune Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 167
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 168
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 169
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 170
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "Split Point",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 171
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 172
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 173
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Range Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 174
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Clock Divide Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 175
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Repeats Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 177
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Relatch Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 178
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "BPM Tempo Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 179
+                },
+                "sourceValueRange": {
+                  "from": 3840,
+                  "to": 32000
+                }
+              }
+            }
+          },
+          {
+            "name": "Gated Seq Mode Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 182
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Gated Seq On/Off Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 183
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 1 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 184
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 2 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 185
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6784
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 3 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 186
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 4 Destination Layer A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 187
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6784
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Play/Stop",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 8,
+                  "idLsb": 64
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Rec On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 127,
+                  "idLsb": 255
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Mix Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Cutoff Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20992
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Resonance Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard Tracking Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Audio Mod Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "2 pole/4 pole mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Vel Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Envelope Dly Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Attack Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Decay Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Sustain Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Filt Env Release Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Spread Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Program Volume Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Velo Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env Del Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env A Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env D Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env S Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Env R Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Clock Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Clock Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Clock Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Freq Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 19200
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Shape Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Clock Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 57
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Velo Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Del Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 A Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 D Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 S Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 R Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 65
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 66
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 67
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 68
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 69
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 71
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 72
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 3 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 73
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 74
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 75
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 4 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 76
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 77
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 78
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 5 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 79
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 80
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 81
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 6 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 82
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 83
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 84
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 7 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 85
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Source Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2816
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Amount Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 8 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 88
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Env 3 Rpt On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 97
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA Level Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 98
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Note Reset Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 99
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Shape Mod Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 102
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12672
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Shape Mod Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 103
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12672
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Note Reset Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 104
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Key Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 105
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 Key Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 106
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 3 Key Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 107
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 4 Key Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 108
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub Osc Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch Bend Range Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 113
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 114
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Wheel Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Wheel Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Pressure Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Pressure Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 119
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 120
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 121
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 122
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 123
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Cntrl Amt Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 124
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32512
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Cntrl Dest Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 125
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "FX On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 153
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "FX select Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 154
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1664
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Mix Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 155
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 1 Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 156
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Param 2 Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 157
+                }
+              }
+            }
+          },
+          {
+            "name": "FX Clock Sync Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 158
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq Start/Stop Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 164
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Detune Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 167
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 168
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Unison Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 169
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 170
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 172
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 173
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Range Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 174
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Clock Divide Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 175
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1536
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Repeats Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 177
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Relatch Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 178
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "BPM Tempo Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 179
+                },
+                "sourceValueRange": {
+                  "from": 3840,
+                  "to": 32000
+                }
+              }
+            }
+          },
+          {
+            "name": "Gated Seq Mode Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 182
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Gated Seq On/Off Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 183
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 1 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 184
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 2 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 185
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6784
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 3 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 186
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6656
+                }
+              }
+            }
+          },
+          {
+            "name": "Seq 4 Destination Layer B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 17,
+                  "idLsb": 187
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6784
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

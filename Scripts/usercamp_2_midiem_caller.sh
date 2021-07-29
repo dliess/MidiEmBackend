@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Start from repo_dir/..
+
 IFS=$'\n'
 for file in $(find . -name "*.csv")
 do
