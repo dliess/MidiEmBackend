@@ -1,0 +1,718 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "JP-08",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "VCO"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "VCA"
+          },
+          {
+            "name": "VCF"
+          },
+          {
+            "name": "Envelopes"
+          },
+          {
+            "name": "Decay"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Modulation",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression pedal",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Source mix",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Dual switch",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Current part",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Assign mode",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Bend range",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO modulation LFO modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO modulation envelope modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO modulation frequency modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO modulation PWM",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO modulation PWM SEL",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-1 cross modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-1 range",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-1 wave",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-2 sync",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-2 range",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-2 tune",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO-2 wave",
+            "description": "",
+            "type": "continous",
+            "component": "VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO delay time",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO wave",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA level",
+            "description": "",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA LFO modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCA",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "HPF cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF slope",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF envelope modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF envelope modulation SEL",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO LFO modulation",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF key follow",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF resonance",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "VCF",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-1 attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-1 decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-1 sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-1 release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-1 polarity",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-2 attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-2 decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-2 sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-2 release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV-2 key follow",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay time",
+            "description": "",
+            "type": "continous",
+            "component": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay feedback",
+            "description": "",
+            "type": "continous",
+            "component": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay level",
+            "description": "",
+            "type": "continous",
+            "component": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

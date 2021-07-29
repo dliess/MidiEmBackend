@@ -1,0 +1,334 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "MeeBlip",
+  "productName": "triode",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "MIDI MOD Wheel"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Envelopes"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "LFO Depth",
+            "description": "",
+            "type": "continous",
+            "component": "MIDI MOD Wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Detune",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplitude Decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Accent",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope Modulation",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Pulse Width",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplitude Attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Sub-oscillator",
+            "description": "on/off",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "PWM Sweep",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                }
+              }
+            }
+          },
+          {
+            "name": "Destination",
+            "description": "osc/filter",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "Wave",
+            "description": "pusle/saw",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                }
+              }
+            }
+          },
+          {
+            "name": "Randomize",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Note retrigger",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

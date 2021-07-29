@@ -1,0 +1,289 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Yamaha",
+  "productName": "reface YC",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Sound"
+          },
+          {
+            "name": "Vibrato/chorus"
+          },
+          {
+            "name": "Percussion"
+          },
+          {
+            "name": "Effects"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Rotary speed",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Wave",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 16'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 5 1/3'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 8'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 4'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 2 2/3'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 2'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 1 3/5'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 1 1/3'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Footage 1'",
+            "description": "",
+            "type": "continous",
+            "component": "Sound",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato/chorus switch",
+            "description": "",
+            "type": "continous",
+            "component": "Vibrato/chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato/chorus depth",
+            "description": "",
+            "type": "continous",
+            "component": "Vibrato/chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Percussion on/off switch",
+            "description": "",
+            "type": "continous",
+            "component": "Percussion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "Percussion type switch",
+            "description": "",
+            "type": "continous",
+            "component": "Percussion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Percussion length",
+            "description": "",
+            "type": "continous",
+            "component": "Percussion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect dist",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect reverb",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

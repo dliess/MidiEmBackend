@@ -10,6 +10,7 @@ jsonBase = """
   "version": "0.0.0",
   "manufacturer": "Generic",
   "productName": "1 Voice",
+  "reactsToTransportCommands": true,
   "soundSection": {
     "defaultInstrumentType": "InstrumentPerVoice",
     "voices": [
@@ -68,20 +69,20 @@ with open(sys.argv[1]) as csv_file:
             csv_row["cc_max_value"] = "127"
          valueRange = int(csv_row["cc_max_value"]) - int(csv_row["cc_min_value"]) + 1
          if csv_row["cc_lsb"] == "":
-            midiParamId = {".type": "MidiControlChange", "id" : csv_row["cc_msb"]}
+            midiParamId = {".type": "MidiControlChange", "id" : int(csv_row["cc_msb"])}
             if csv_row["cc_min_value"] != "0" or csv_row["cc_max_value"] != "127":
-               param["source"]["midi"]["sourceValueRange"] = { "from": csv_row["cc_min_value"], "to": csv_row["cc_max_value"]}
+               param["source"]["midi"]["sourceValueRange"] = { "from": int(csv_row["cc_min_value"]), "to": int(csv_row["cc_max_value"])}
          else:
-            midiParamId = {".type": "MidiControlChangeHighRes", "idMsb" : csv_row["cc_msb"], "idLsb" : csv_row["cc_lsb"]}
+            midiParamId = {".type": "MidiControlChangeHighRes", "idMsb" : int(csv_row["cc_msb"]), "idLsb" : int(csv_row["cc_lsb"])}
       elif csv_row["nrpn_msb"] != "" or csv_row["nrpn_lsb"] != "":
          if csv_row["nrpn_min_value"] == "":
             csv_row["nrpn_min_value"] = "0"
          if csv_row["nrpn_max_value"] == "":
             csv_row["nrpn_max_value"] = "127"
          valueRange = int(csv_row["nrpn_max_value"]) - int(csv_row["nrpn_min_value"]) + 1
-         midiParamId = {".type": "MidiNRPN", "idMsb" : csv_row["nrpn_msb"], "idLsb" : csv_row["nrpn_lsb"]}
+         midiParamId = {".type": "MidiNRPN", "idMsb" : int(csv_row["nrpn_msb"]), "idLsb" : int(csv_row["nrpn_lsb"])}
          if csv_row["nrpn_min_value"] != "0" or csv_row["nrpn_max_value"] != "127":
-            param["source"]["midi"]["sourceValueRange"] = { "from": csv_row["nrpn_min_value"], "to": csv_row["nrpn_max_value"]}
+            param["source"]["midi"]["sourceValueRange"] = { "from": int(csv_row["nrpn_min_value"]), "to": int(csv_row["nrpn_max_value"])}
 
       if "usage" in csv_row:
          if csv_row["usage"] != "":

@@ -1,0 +1,127 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "GAIA SH-01",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Bank select",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 0,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Modulation",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Panpot",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold 1",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

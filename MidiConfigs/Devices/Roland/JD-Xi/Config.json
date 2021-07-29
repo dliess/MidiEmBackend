@@ -1,0 +1,308 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "JD-Xi",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "Envelope"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Vibrato"
+          },
+          {
+            "name": "Effects"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Bank select",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 0,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Modulation",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Data entry",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 6,
+                  "idLsb": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Panpot",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold 1",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack time",
+            "description": "",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay time",
+            "description": "",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Release time",
+            "description": "",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato rate",
+            "description": "",
+            "type": "continous",
+            "component": "Vibrato",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato depth",
+            "description": "",
+            "type": "continous",
+            "component": "Vibrato",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato delay",
+            "description": "",
+            "type": "continous",
+            "component": "Vibrato",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb send level",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay send level",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

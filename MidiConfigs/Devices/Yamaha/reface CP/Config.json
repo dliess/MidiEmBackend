@@ -1,0 +1,205 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Yamaha",
+  "productName": "reface CP",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "Tremolo/wah"
+          },
+          {
+            "name": "Chorus/phaser"
+          },
+          {
+            "name": "Digital delay/analog delay"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Type",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Tremolo/wah switch",
+            "description": "",
+            "type": "continous",
+            "component": "Tremolo/wah",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Tremolo/wah depth",
+            "description": "",
+            "type": "continous",
+            "component": "Tremolo/wah",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Tremolo/wah rate",
+            "description": "",
+            "type": "continous",
+            "component": "Tremolo/wah",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus/phaser switch",
+            "description": "",
+            "type": "continous",
+            "component": "Chorus/phaser",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus/phaser depth",
+            "description": "",
+            "type": "continous",
+            "component": "Chorus/phaser",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus/phaser speed",
+            "description": "",
+            "type": "continous",
+            "component": "Chorus/phaser",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Digital delay/analog delay switch",
+            "description": "",
+            "type": "continous",
+            "component": "Digital delay/analog delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Digital delay/analog delay depth",
+            "description": "",
+            "type": "continous",
+            "component": "Digital delay/analog delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Digital delay/analog delay time",
+            "description": "",
+            "type": "continous",
+            "component": "Digital delay/analog delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb depth",
+            "description": "",
+            "type": "continous",
+            "component": "Digital delay/analog delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

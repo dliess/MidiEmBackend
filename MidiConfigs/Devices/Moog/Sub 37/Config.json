@@ -1,0 +1,1231 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Moog",
+  "productName": "Sub 37",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "Glide"
+          },
+          {
+            "name": "Mod"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Filter EG"
+          },
+          {
+            "name": "Amp EG"
+          },
+          {
+            "name": "Arpeggiator"
+          },
+          {
+            "name": "Levels"
+          },
+          {
+            "name": "Other"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "OSC 1 wave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 9,
+                  "idLsb": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 frequency",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 beat frequency",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 13,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 wave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 14,
+                  "idLsb": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 octave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 octave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 hard sync on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC duo mode on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC KB reset on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 3,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 8,
+                  "idLsb": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 range",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 range",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 KB reset",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 KB reset",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide type",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide legato",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide dest OSC 1/2/both",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 destination",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 PGM destination amount",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 20,
+                  "idLsb": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 OSC 1/2 select",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 pitch amount",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 15,
+                  "idLsb": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 filter amount",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 16,
+                  "idLsb": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 PGM destination amount",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 17,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 destination",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 2 OSC 1/2 SEL",
+            "description": "",
+            "type": "continous",
+            "component": "Mod",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter multidrive",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 18,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 19,
+                  "idLsb": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter resonance",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 21,
+                  "idLsb": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter KB amount",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 22,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter slopes (poles)",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG attack time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 23,
+                  "idLsb": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG decay time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 24,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG sustain time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 25,
+                  "idLsb": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG release time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 26,
+                  "idLsb": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG amount",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 27,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG KB amount",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG reset",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG velocity amount",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG delay",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG hold",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG multi trig",
+            "description": "",
+            "type": "continous",
+            "component": "Filter EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG attack time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 28,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG decay time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 29,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG sustain time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 30,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG release time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 31,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG KB amount",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG reset",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG velocity amount",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG delay",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG hold",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp EG multi trig",
+            "description": "",
+            "type": "continous",
+            "component": "Amp EG",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator latch",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 level",
+            "description": "",
+            "type": "continous",
+            "component": "Levels",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 sub level",
+            "description": "",
+            "type": "continous",
+            "component": "Levels",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 level",
+            "description": "",
+            "type": "continous",
+            "component": "Levels",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise level",
+            "description": "",
+            "type": "continous",
+            "component": "Levels",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback ext/level",
+            "description": "",
+            "type": "continous",
+            "component": "Levels",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "KB transpose",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "Local control on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 122
+                }
+              }
+            }
+          },
+          {
+            "name": "Bank select (MSB)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Bank select (LSB)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Mod wheel",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI breath control (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 2,
+                  "idLsb": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 pitch amount",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 4,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide time",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 5,
+                  "idLsb": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Data entry (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 6,
+                  "idLsb": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Master volume",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 7,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI pan (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 10,
+                  "idLsb": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod 1 filter amount",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 11,
+                  "idLsb": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold pedal/sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento control (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "Data decrement (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 97
+                }
+              }
+            }
+          },
+          {
+            "name": "KB octave",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Data increment (reserved)",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 96
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend up amount",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend down amount",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "KB control lo/hi",
+            "description": "",
+            "type": "continous",
+            "component": "Other",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

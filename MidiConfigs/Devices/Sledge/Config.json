@@ -1,0 +1,996 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Studiologic",
+  "productName": "Sledge",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Mod wheel"
+          },
+          {
+            "name": "General"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "OSC 1"
+          },
+          {
+            "name": "OSC 2"
+          },
+          {
+            "name": "OSC 3"
+          },
+          {
+            "name": "Mix"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Effects"
+          },
+          {
+            "name": "Amplifier"
+          },
+          {
+            "name": "Mode"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Modulation wheel",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide rate",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Master volume",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 shape",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 speed",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 destination",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 shape",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 speed",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 destination",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel shape",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel speed",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel destination",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 octave",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 semitone",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 waveform",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 wave/PW",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 wavetable",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 octave",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 semitone",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 detune",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 waveform",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 FM/PW",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 octave",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 semitone",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 detune",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 waveform",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 FM / PW",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 3",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 sync to OSC 3",
+            "description": "",
+            "type": "continous",
+            "component": "OSC 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 volume",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 1 on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 volume",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 2 on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 volume",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC 3 on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise volume",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise color",
+            "description": "",
+            "type": "continous",
+            "component": "Mix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide on/off",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter type/slope",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter resonance",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter drive",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter keytrack",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter amount",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 1 type",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 1 rate",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 1 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 2 time",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 2 level",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 2 type",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplifier velocity",
+            "description": "",
+            "type": "continous",
+            "component": "Amplifier",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect 1 on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter attack",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter decay",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 96
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 97
+                }
+              }
+            }
+          },
+          {
+            "name": "Trigger mode",
+            "description": "",
+            "type": "continous",
+            "component": "Mode",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 98
+                }
+              }
+            }
+          },
+          {
+            "name": "Mono mode",
+            "description": "",
+            "type": "continous",
+            "component": "Mode",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 99
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter release",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplifier attack",
+            "description": "",
+            "type": "continous",
+            "component": "Amplifier",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplifier decay",
+            "description": "",
+            "type": "continous",
+            "component": "Amplifier",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 101
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplifier sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Amplifier",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Amplifier release",
+            "description": "",
+            "type": "continous",
+            "component": "Amplifier",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

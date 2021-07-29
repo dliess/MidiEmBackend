@@ -1,0 +1,1584 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Elektron",
+  "productName": "Digitone",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Track parameters"
+          },
+          {
+            "name": "Trig parameters"
+          },
+          {
+            "name": "FM parameters syn 1"
+          },
+          {
+            "name": "FM parameters syn 2"
+          },
+          {
+            "name": "FM parameters combined"
+          },
+          {
+            "name": "Filter parameters"
+          },
+          {
+            "name": "Amp parameters"
+          },
+          {
+            "name": "LFO parameters"
+          },
+          {
+            "name": "FX parameters chorus"
+          },
+          {
+            "name": "FX parameters delay"
+          },
+          {
+            "name": "FX parameters reverb"
+          },
+          {
+            "name": "FX master"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Mute",
+            "description": "",
+            "type": "continous",
+            "component": "Track parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "Track level",
+            "description": "",
+            "type": "continous",
+            "component": "Track parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "Root",
+            "description": "",
+            "type": "continous",
+            "component": "Trig parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity",
+            "description": "",
+            "type": "continous",
+            "component": "Trig parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Length",
+            "description": "",
+            "type": "continous",
+            "component": "Trig parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter trig",
+            "description": "",
+            "type": "continous",
+            "component": "Trig parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO trig",
+            "description": "",
+            "type": "continous",
+            "component": "Trig parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Algorithm",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio C",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio A",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio B",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Harmonics",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Detune",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Mix",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "A env attack",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "A env decay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "A env end",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "A level",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "B env attack",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "B env decay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "B env end",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "B level",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "A delay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "A trig",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "A env reset",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "B delay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "B trig",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "B env reset",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Phase reset",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters syn 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch all",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch 2 and 4",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio all",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "AB level",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "AB attack",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "AB decay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "AB end",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "AB delay",
+            "description": "",
+            "type": "continous",
+            "component": "FM parameters combined",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter frequency",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 23,
+                  "idLsb": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 24,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter type",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter attack time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter decay time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter sustain level",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter release time",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter envelope depth",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Base",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 26,
+                  "idLsb": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Width",
+            "description": "",
+            "type": "continous",
+            "component": "Filter parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 27,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp attack time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp decay time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp sustain level",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp release time",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 9,
+                  "idLsb": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 10,
+                  "idLsb": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 7,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus send",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp delay send",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 13,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp reverb send",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 14,
+                  "idLsb": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp env reset",
+            "description": "",
+            "type": "continous",
+            "component": "Amp parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 102,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 speed",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 multiplier",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 fade in/out",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 destination",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 waveform",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 start phase",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 trig mode",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 29,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 speed",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 30,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 multiplier",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 fade in/out",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 destination",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 waveform",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 start phase",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 trig mode",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 2 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 31,
+                  "idLsb": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus depth",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 3,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus speed",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 9,
+                  "idLsb": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus high-pass",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus width",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus delay send",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus reverb send",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 13,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus mix volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters chorus",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay time",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 15,
+                  "idLsb": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Pingpoing",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 16,
+                  "idLsb": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo width",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 17,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay feedback",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 18,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay highpass filter",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay lowpass filter",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay reverb send",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 19,
+                  "idLsb": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay mix volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb predelay",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 21,
+                  "idLsb": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb decay time",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb shelving frequency",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb shelving gain",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 22,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb highpass filter",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb lowpass filter",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb mix volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX parameters reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Input L volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 24,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Input R volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 25,
+                  "idLsb": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan L",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan R",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Maxter chorus send",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 26,
+                  "idLsb": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Master delay send",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 27,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Master reverb send",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 28,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Master overdrive",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 29,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Master pattern volume",
+            "description": "",
+            "type": "continous",
+            "component": "FX master",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

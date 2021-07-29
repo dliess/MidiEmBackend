@@ -1,0 +1,405 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "MFB",
+  "productName": "Tanzbar Lite",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Bass drum"
+          },
+          {
+            "name": "Snare drum"
+          },
+          {
+            "name": "Claps"
+          },
+          {
+            "name": "Toms"
+          },
+          {
+            "name": "Conga"
+          },
+          {
+            "name": "Cowbell"
+          },
+          {
+            "name": "Claves"
+          },
+          {
+            "name": "Cymbal"
+          },
+          {
+            "name": "Open hi hat"
+          },
+          {
+            "name": "Closed hi hat"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Bass drum tune",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum tone",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum decay",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum tone",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum decay",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum noise",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Claps decay",
+            "description": "",
+            "type": "continous",
+            "component": "Claps",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Claps filter",
+            "description": "",
+            "type": "continous",
+            "component": "Claps",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Claps attack",
+            "description": "",
+            "type": "continous",
+            "component": "Claps",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Claps trigger",
+            "description": "",
+            "type": "continous",
+            "component": "Claps",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Toms tune",
+            "description": "",
+            "type": "continous",
+            "component": "Toms",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Toms decay",
+            "description": "",
+            "type": "continous",
+            "component": "Toms",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Conga tune",
+            "description": "",
+            "type": "continous",
+            "component": "Conga",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Conga decay",
+            "description": "",
+            "type": "continous",
+            "component": "Conga",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Conga pan",
+            "description": "",
+            "type": "continous",
+            "component": "Conga",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Toms pan",
+            "description": "",
+            "type": "continous",
+            "component": "Toms",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Cowbell tune",
+            "description": "",
+            "type": "continous",
+            "component": "Cowbell",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "Cowbell decay",
+            "description": "",
+            "type": "continous",
+            "component": "Cowbell",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Claves tune",
+            "description": "",
+            "type": "continous",
+            "component": "Claves",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Claves decay",
+            "description": "",
+            "type": "continous",
+            "component": "Claves",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Cymbal tune",
+            "description": "",
+            "type": "continous",
+            "component": "Cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Cymbal tone",
+            "description": "",
+            "type": "continous",
+            "component": "Cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Cymbal decay",
+            "description": "",
+            "type": "continous",
+            "component": "Cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Open hi hat decay",
+            "description": "",
+            "type": "continous",
+            "component": "Open hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed hi hat decay",
+            "description": "",
+            "type": "continous",
+            "component": "Closed hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Teenage Engineering",
+  "productName": "OP-1",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "MIDI LFO"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Synth",
+            "description": "",
+            "type": "continous",
+            "component": "MIDI LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope",
+            "description": "",
+            "type": "continous",
+            "component": "MIDI LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "FX",
+            "description": "",
+            "type": "continous",
+            "component": "MIDI LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "component": "MIDI LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

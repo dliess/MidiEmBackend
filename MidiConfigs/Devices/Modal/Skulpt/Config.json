@@ -1,0 +1,1496 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Modal",
+  "productName": "Skulpt",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "Mod wheel"
+          },
+          {
+            "name": "Effects"
+          },
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "Envelopes"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "Arpeggiator"
+          },
+          {
+            "name": "Sequencer"
+          },
+          {
+            "name": "Animate"
+          },
+          {
+            "name": "Mod slots"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Seq load",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Modulation wheel",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Headphone volume",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Voice mode",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression pedal",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay time",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay feedback",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC1 wave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC2 wave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC mix",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "FM amount",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Spread",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Chord mode",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "FEG attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "FEG decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "FEG sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "FEG release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "AEG attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "AEG decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "AEG sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "AEG release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC2 course detune",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC2 fine detune",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "FEG amount",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Morph",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Reso",
+            "description": "",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 shape",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Octave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "MEG attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "MEG decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "MEG sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "MEG release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 rate",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 depth",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "MEG amount",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 shape",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "AEG amount",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 MIDI sync",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Ring mod",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 MIDI sync",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay MIDI sync",
+            "description": "",
+            "type": "continous",
+            "component": "Effects",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 mode",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 mode",
+            "description": "",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp status",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp octave",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp direction",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp division",
+            "description": "",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Velo depth",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Note depth",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain pedal",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Aftertouch depth",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Ext depth",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequence length",
+            "description": "",
+            "type": "continous",
+            "component": "Sequencer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequence hold",
+            "description": "",
+            "type": "continous",
+            "component": "Sequencer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequence loop",
+            "description": "",
+            "type": "continous",
+            "component": "Sequencer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Swing",
+            "description": "",
+            "type": "continous",
+            "component": "Sequencer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Anim 1 cc",
+            "description": "",
+            "type": "continous",
+            "component": "Animate",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Anim 2 cc",
+            "description": "",
+            "type": "continous",
+            "component": "Animate",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Anim 3 cc",
+            "description": "",
+            "type": "continous",
+            "component": "Animate",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Anim 4 cc",
+            "description": "",
+            "type": "continous",
+            "component": "Animate",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "All envelope attack",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "All envelope decay",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "All envelope sustain",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "All envelope release",
+            "description": "",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 1 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 2 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 3 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 4 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 5 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 6 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 7 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 8 depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel depth",
+            "description": "",
+            "type": "continous",
+            "component": "Mod wheel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 96
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 1 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 101
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 2 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 3 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 4 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 5 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 6 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 7 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 8 source",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 1 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 2 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 3 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 4 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 5 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 6 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 7 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod slot 8 dest",
+            "description": "",
+            "type": "continous",
+            "component": "Mod slots",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Randomise patch",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 121
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,607 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "TR-09",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "Bass drum"
+          },
+          {
+            "name": "Snare drum"
+          },
+          {
+            "name": "Low tom"
+          },
+          {
+            "name": "Mid tom"
+          },
+          {
+            "name": "High tom"
+          },
+          {
+            "name": "Rim shot"
+          },
+          {
+            "name": "Hand clap"
+          },
+          {
+            "name": "Closed hi hat"
+          },
+          {
+            "name": "Open hi hat"
+          },
+          {
+            "name": "Crash cymbal"
+          },
+          {
+            "name": "Ride cymbal"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Shuffle",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Total accent",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum tune",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum attack",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum compression",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum decay",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass drum level",
+            "description": "",
+            "type": "continous",
+            "component": "Bass drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum tune",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum snappy",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum compression",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum tone",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare drum level",
+            "description": "",
+            "type": "continous",
+            "component": "Snare drum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Low tom tune",
+            "description": "",
+            "type": "continous",
+            "component": "Low tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Low tom decay",
+            "description": "",
+            "type": "continous",
+            "component": "Low tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Low tom level",
+            "description": "",
+            "type": "continous",
+            "component": "Low tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Mid tom tune",
+            "description": "",
+            "type": "continous",
+            "component": "Mid tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Mid tom decay",
+            "description": "",
+            "type": "continous",
+            "component": "Mid tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Mid tom level",
+            "description": "",
+            "type": "continous",
+            "component": "Mid tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "High tom tune",
+            "description": "",
+            "type": "continous",
+            "component": "High tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "High tom decay",
+            "description": "",
+            "type": "continous",
+            "component": "High tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "High tom level",
+            "description": "",
+            "type": "continous",
+            "component": "High tom",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim shot tune",
+            "description": "",
+            "type": "continous",
+            "component": "Rim shot",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim shot decay",
+            "description": "",
+            "type": "continous",
+            "component": "Rim shot",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim shot level",
+            "description": "",
+            "type": "continous",
+            "component": "Rim shot",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Hand clap tune",
+            "description": "",
+            "type": "continous",
+            "component": "Hand clap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Hand clap decay",
+            "description": "",
+            "type": "continous",
+            "component": "Hand clap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Hand clap level",
+            "description": "",
+            "type": "continous",
+            "component": "Hand clap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed hi hat tune",
+            "description": "",
+            "type": "continous",
+            "component": "Closed hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed hi hat decay",
+            "description": "",
+            "type": "continous",
+            "component": "Closed hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed hi hat level",
+            "description": "",
+            "type": "continous",
+            "component": "Closed hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Open hi hat tune",
+            "description": "",
+            "type": "continous",
+            "component": "Open hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Open hi hat decay",
+            "description": "",
+            "type": "continous",
+            "component": "Open hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Open hi hat level",
+            "description": "",
+            "type": "continous",
+            "component": "Open hi hat",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Crash cymbal tune",
+            "description": "",
+            "type": "continous",
+            "component": "Crash cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Crash cymbal decay",
+            "description": "",
+            "type": "continous",
+            "component": "Crash cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "Crash cymbal level",
+            "description": "",
+            "type": "continous",
+            "component": "Crash cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride cymbal tune",
+            "description": "",
+            "type": "continous",
+            "component": "Ride cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride cymbal decay",
+            "description": "",
+            "type": "continous",
+            "component": "Ride cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride cymbal level",
+            "description": "",
+            "type": "continous",
+            "component": "Ride cymbal",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

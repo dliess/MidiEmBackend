@@ -1,0 +1,272 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Make Noise",
+  "productName": "0-Coast",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Arpeggiator"
+          },
+          {
+            "name": "General"
+          },
+          {
+            "name": "MIDI and CV control"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Arpeggiator switch",
+            "description": "Turns the arpeggiator on or off",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator type",
+            "description": "Sets the arpeggiator type",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "Legato switch",
+            "description": "Turns legato on or off",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI A channel",
+            "description": "Sets the MIDI A channel",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI B channel",
+            "description": "Sets the MIDI B channel",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI channel A CV",
+            "description": "Sets what comes out of MIDI channel A's CV output",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI channel B CV",
+            "description": "Sets what comes out of MIDI channel B's CV output",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI channel A gate",
+            "description": "Sets what comes out of MIDI channel A's gate output",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI channel B gate",
+            "description": "Sets what comes out of MIDI channel B's gate output",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend scale A",
+            "description": "Sets the amount of bend on MIDI channel A, in semitones",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend scale B",
+            "description": "Sets the amount of bend on MIDI channel B, in semitones",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Aftertouch scale A",
+            "description": "Sets the amount of aftertouch on MIDI channel A, in semitones",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Aftertouch scale B",
+            "description": "Sets the amount of aftertouch on MIDI channel B, in semitones",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity scale A",
+            "description": "Sets the minimum velocity value for MIDI channel A",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity scale B",
+            "description": "Sets the minimum velocity value for MIDI channel B",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI block switch",
+            "description": "Turns the MIDI clock on or off",
+            "type": "continous",
+            "component": "MIDI and CV control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "Tempo in divisor",
+            "description": "Divides the tempo in as reflected in clock out",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

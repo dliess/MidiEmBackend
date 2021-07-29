@@ -1,0 +1,508 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "SH-01A",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "General"
+          },
+          {
+            "name": "LFO"
+          },
+          {
+            "name": "Oscillator"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Ampifier"
+          },
+          {
+            "name": "Envelope"
+          },
+          {
+            "name": "Chord voices"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Modulation",
+            "description": "1",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "5",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Expression pedal",
+            "description": "11",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Portament mode",
+            "description": "31",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Hold",
+            "description": "64",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Portamento",
+            "description": "65",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "description": "76",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Transpose SW",
+            "description": "77",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Noise mode",
+            "description": "78",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Assign mode",
+            "description": "80",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "LFO rate",
+            "description": "3",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "LFO mode",
+            "description": "79",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "LFO wave form",
+            "description": "12",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO modulation depth",
+            "description": "13",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO range",
+            "description": "14",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO pulse width",
+            "description": "15",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO PWM source",
+            "description": "16",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO mod sens",
+            "description": "17",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO bend depth",
+            "description": "18",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO PWM level",
+            "description": "19",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO saw level",
+            "description": "20",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO sub level",
+            "description": "21",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO sub type",
+            "description": "22",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCO noise level",
+            "description": "23",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF envelope depth",
+            "description": "24",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF modulation depth",
+            "description": "25",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF key follow",
+            "description": "26",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF cutoff",
+            "description": "74",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF resonance",
+            "description": "71",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCF bend depth",
+            "description": "27",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCA envelope SW",
+            "description": "28",
+            "type": "continous",
+            "component": "Ampifier",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "VCA envelope mode",
+            "description": "29",
+            "type": "continous",
+            "component": "Ampifier",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Envelope attack",
+            "description": "73",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Envelope sustain",
+            "description": "30",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Envelope decay",
+            "description": "75",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Envelope release",
+            "description": "72",
+            "type": "continous",
+            "component": "Envelope",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 2 SW",
+            "description": "81",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 3 SW",
+            "description": "82",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 4 SW",
+            "description": "83",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 2 key shift",
+            "description": "85",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 3 key shift",
+            "description": "86",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "Chord voice 4 key shift",
+            "description": "87",
+            "type": "continous",
+            "component": "Chord voices",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

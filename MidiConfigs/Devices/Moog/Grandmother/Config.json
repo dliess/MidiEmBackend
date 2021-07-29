@@ -1,0 +1,353 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Moog",
+  "productName": "Grandmother",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Modulation"
+          },
+          {
+            "name": "Glide"
+          },
+          {
+            "name": "Arp/seq"
+          },
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "General"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Mod wheel",
+            "description": "",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Modulation rate",
+            "description": "",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 3,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide time",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 5,
+                  "idLsb": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer rate",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 8,
+                  "idLsb": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Oscillator 2 frequency",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide on/off",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer hold",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer play",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Oscillator 1 octave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Oscillator 2 octave",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Oscillator 2 sync",
+            "description": "",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide type",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard octave",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer clock division",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer mode",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer pattern",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Arpeggiator/sequencer number",
+            "description": "",
+            "type": "continous",
+            "component": "Arp/seq",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Legato glide",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "Gated glide",
+            "description": "",
+            "type": "continous",
+            "component": "Glide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend up amount",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch bend down amount",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Keyboard transpose (semitones",
+            "description": "",
+            "type": "continous",
+            "component": "General",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

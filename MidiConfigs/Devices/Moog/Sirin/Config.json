@@ -1,0 +1,642 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Moog",
+  "productName": "Sirin",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Modulation"
+          },
+          {
+            "name": "Oscillators"
+          },
+          {
+            "name": "Mixer"
+          },
+          {
+            "name": "Filter"
+          },
+          {
+            "name": "Envelopes"
+          },
+          {
+            "name": "Volume"
+          },
+          {
+            "name": "Keyboard response"
+          },
+          {
+            "name": "Mod wheel response"
+          },
+          {
+            "name": "Pitch wheel response"
+          },
+          {
+            "name": "Control"
+          },
+          {
+            "name": "All sounds off"
+          },
+          {
+            "name": "All notes off"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "LFO rate",
+            "description": "Adjusts the LFO frequency",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 3,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO VCO amount",
+            "description": "Adjusts the modulation amount to the VCOs",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 13,
+                  "idLsb": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO VCF amount",
+            "description": "Adjusts the modulation amount to the VCF",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 12,
+                  "idLsb": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO MIDI sync",
+            "description": "Enables or disables syncing the LFO to MIDI clock messages",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO sync clock div",
+            "description": "Sets the LFO sync clock divider",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO key trigger",
+            "description": "Retriggers the LFO to the start of the cycle",
+            "type": "continous",
+            "component": "Modulation",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 1 wave",
+            "description": "Sets the waveform of VCO 1",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 2 wave",
+            "description": "Sets the waveform of VCO 2",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 2 frequency",
+            "description": "Adjusts the frequency of VCO 2",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 17,
+                  "idLsb": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 2 beat",
+            "description": "Adjusts the beat frequency of VCO 2 (default is 64)",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 18,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Note sync",
+            "description": "Enables or disables note sync (default is off)",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide rate",
+            "description": "Adjusts the glide (portamento) rate time",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide switch",
+            "description": "Sets the state of the glide switch",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Glide type",
+            "description": "Selects the type of glide: linear, constant rate, linear constant time, or exponential",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Legato glide",
+            "description": "Sets the state of the legato glide parameter when glide is enabled",
+            "type": "continous",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 1 level",
+            "description": "Adjusts the level of VCO 1",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 15,
+                  "idLsb": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO 2 level",
+            "description": "Adjusts the level of VCO 2",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 16,
+                  "idLsb": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "External In level",
+            "description": "Adjusts the level of the external audio input (default is 64 for 50% level)",
+            "type": "continous",
+            "component": "Mixer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 27,
+                  "idLsb": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter cutoff",
+            "description": "Adjusts the filter cutoff frequency",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 19,
+                  "idLsb": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter resonance",
+            "description": "Adjusts the filter resonance parameter",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 21,
+                  "idLsb": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter EG amount",
+            "description": "Adjusts the EG",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 22,
+                  "idLsb": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter KB track",
+            "description": "Sets the amount of keyboard tracking for the filter (default is 32 - about 50%)",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 20,
+                  "idLsb": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter velocity sensitivity",
+            "description": "Setgs the amount of filter velocity sensitivity (default is 64 for 50%)",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF attack",
+            "description": "Adjusts the filter envelope attack time",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 23,
+                  "idLsb": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF delay / release",
+            "description": "Adjusts the filter envelope decay and release time",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 24,
+                  "idLsb": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF sustain",
+            "description": "Adjusts the filter envelope sustain level",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 25,
+                  "idLsb": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA attack",
+            "description": "Adjusts the volume envelope attack time",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 28,
+                  "idLsb": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA decay / release",
+            "description": "Adjusts the volume envelope decay and release time",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 29,
+                  "idLsb": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "CVA sustain",
+            "description": "Adjusts the volume envelope sustain level",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 30,
+                  "idLsb": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Release switch",
+            "description": "Sets the state of the release parameter",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Trigger mode",
+            "description": "Sets the state of the envelope trigger",
+            "type": "continous",
+            "component": "Envelopes",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "VCA (output) level",
+            "description": "Adjusts the audio output and the headphone volume",
+            "type": "continous",
+            "component": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 7,
+                  "idLsb": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume velocity sensitivity",
+            "description": "Sets the amount of volume velocity sensitivity (default is 64 for 50%)",
+            "type": "continous",
+            "component": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Key priority",
+            "description": "Sets the note priority (default is last)",
+            "type": "continous",
+            "component": "Keyboard response",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 91,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod wheel",
+            "description": "Modulation performance control",
+            "type": "continous",
+            "component": "Mod wheel response",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 1,
+                  "idLsb": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Bend up amount",
+            "description": "Pitch wheel up performance control (default is +3 semitones)",
+            "type": "continous",
+            "component": "Pitch wheel response",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Bend down amount",
+            "description": "Pitch wheel down performance control (default is -3 semitones)",
+            "type": "continous",
+            "component": "Pitch wheel response",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Local control off",
+            "description": "Sets the state of the local control off parameter",
+            "type": "continous",
+            "component": "Control",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 122
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI panic message",
+            "description": "",
+            "type": "continous",
+            "component": "All sounds off",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "MIDI panic message",
+            "description": "",
+            "type": "continous",
+            "component": "All notes off",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 123
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

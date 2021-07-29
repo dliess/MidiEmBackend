@@ -1,0 +1,153 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Roland",
+  "productName": "D-05",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "All CCs"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Bank select A",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Bank select B",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Modulation",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento time",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Data entry",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 6,
+                  "idLsb": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold 1",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Portament SW",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": null
+              }
+            }
+          },
+          {
+            "name": "RPC",
+            "description": "",
+            "type": "continous",
+            "component": "All CCs",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 100,
+                  "idLsb": 101
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

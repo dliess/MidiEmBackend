@@ -1,0 +1,813 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Teenage Engineering",
+  "productName": "OP-Z",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [
+          {
+            "name": "Absolute parameters"
+          },
+          {
+            "name": "Relative parameters"
+          },
+          {
+            "name": "System"
+          },
+          {
+            "name": "Track"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Parameter 1 absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Parameter 2 absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter cutoff absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter resonance absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope attack absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope decay absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope sustain absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope release absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO depth absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO speed absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO target absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO shape absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 send absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 send absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Note style absolute",
+            "description": "",
+            "type": "continous",
+            "component": "Absolute parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Parameter 1 relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Parameter 2 relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter cutoff relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter resonance relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope attack relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope decay relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope sustain relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Envelope release relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO depth relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO speed relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO target relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO shape relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 1 send relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "FX 2 send relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Note style relative",
+            "description": "",
+            "type": "continous",
+            "component": "Relative parameters",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Track gain absolute",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Track gain relative",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Reset track gains",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Mute",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Audio mute",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Mute group",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Tempo",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Swing",
+            "description": "",
+            "type": "continous",
+            "component": "System",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Track step count",
+            "description": "",
+            "type": "continous",
+            "component": "Track",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Track step length",
+            "description": "",
+            "type": "continous",
+            "component": "Track",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Quantize",
+            "description": "",
+            "type": "continous",
+            "component": "Track",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Note length",
+            "description": "",
+            "type": "continous",
+            "component": "Track",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                },
+                "sourceValueRange": {
+                  "from": 1,
+                  "to": 16
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
