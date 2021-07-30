@@ -1,0 +1,1033 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Line-6",
+  "productName": "POD XT",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "Tweak",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Wah Position",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Gain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Split/Blend",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Compression Threshold",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Pan",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Select w/ defaults",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Select w/o defaults",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Drive",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Bass",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Mid",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Treble",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Effect Setup",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive 2/EQ Freq 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Presence",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Gate Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Gate Threshold",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Gate Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Comp Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 1 MSB",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 1 Subdivision",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Mix",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Model",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Tone",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Pre-Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Pre-Post",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Freq 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Wah Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume Pedal Min",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume Pre-Post",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 1 Subdivision",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Mix",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Pre-Post",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Model",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Freq 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Param 1 LSB",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 1 LSB",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "TAP Tempo",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Pedal Assign",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Tuner Enable",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Mic Model Select",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Cabinet Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Model",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Room Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Freq 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Param 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Param 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Stomp Param 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Param 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Pre-Post",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Model",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Tempo MSB",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Tempo LSB",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Bypass Channel Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Tweak Param Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp 1 Engage",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Gain 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Gain 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Gain 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "EQ Gain 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

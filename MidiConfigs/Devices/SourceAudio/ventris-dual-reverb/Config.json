@@ -1,0 +1,724 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Source Audio",
+  "productName": "Ventris Dual Reverb",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "Reverb Engine A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Time A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mix A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Output A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Diffusion A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Depth A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Rate A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay Feedback A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay Mod Depth A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Size A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Input Low Cut A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 1 A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 2 A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 3 A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 4 A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 5 A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Special Control A",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Engine B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Time B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Mix B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Output B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Diffusion B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Depth B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Rate B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay Feedback B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay Mod Depth B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Size B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Input Low Cut B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 1 B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 2 B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 3 B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 4 B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Param 5 B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Engine Special Control B",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dual/Single Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "I/O Routing Option",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Send",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "A/B Crossfade",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Preset Decrement",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Preset Increment",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Remote Tap Tempo",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Remote Expression",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Bypass/Engage",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 101
+                }
+              }
+            }
+          },
+          {
+            "name": "Toggle Bypass/Engage",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Recall Preset - Bypass",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Recall Preset - Engage",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

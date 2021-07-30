@@ -1,0 +1,1005 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Strymon",
+  "productName": "BigSky",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Value",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Pre-Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Mix",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Tone",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Param 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Param 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Boost",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Persist On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Freeze/Infinite On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Midi Clock On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Room - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Room - Size",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Room - Diffusion",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Hall - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Hall - Size",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Hall - Mid",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Plate - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Plate - Size",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Spring - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Spring - Dwell",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Spring - Num Springs",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Swell - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Swell - Rise",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Swell - Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Bloom - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Bloom - Length",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Bloom - Feedback",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Cloud - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Cloud - Diffusion",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorale - Vowel",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorale - Reso",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Shimmer - Shift 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Shimmer - Shift 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Shimmer - Amount",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Shimmer - Mode",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Shimmer - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Magneto - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Magneto - Diffusion",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Magneto - Heads",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Magneto - Spacing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Diffusion",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Late Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Late Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Nonlinear - Mod Speed",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Reflections - Low End",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Reflections - Loc Y",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Reflections - Loc X",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Reflections - Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "A Footswitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "B Footswitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "C Footswitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Press/Hold Switch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 97
+                }
+              }
+            }
+          },
+          {
+            "name": "Remote Tap",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Expression",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Bypass",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

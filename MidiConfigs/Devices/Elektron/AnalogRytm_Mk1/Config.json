@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "manufacturer": "Elektron",
-  "productName": "Analog Rytm",
+  "productName": "Analog Rytm MKI/MKII",
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
     "global" : {

@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
-  "manufacturer": "Elektron",
-  "productName": "Analog Four MKI/MKII",
+  "manufacturer": "Novation",
+  "productName": "Peak",
   "reactsToTransportCommands": true,
   "soundSection": {
     "defaultInstrumentType": "InstrumentPerVoice",
@@ -10,252 +10,17 @@
         "name": "1",
         "engineId": 0,
         "midiChannel": 1
-      },
-      {
-        "name": "2",
-        "engineId": 0,
-        "midiChannel": 2
-      },
-      {
-        "name": "3",
-        "engineId": 0,
-        "midiChannel": 3
-      },
-      {
-        "name": "4",
-        "engineId": 0,
-        "midiChannel": 4
       }
     ],
     "engines": [
       {
         "name": "MainEngine",
-        "components": [
-          {
-            "name": "Performance parameters"
-          },
-          {
-            "name": "Modulation parameters"
-          },
-          {
-            "name": "Synth OSC1"
-          },
-          {
-            "name": "Synth noise"
-          },
-          {
-            "name": "Synth OSC2"
-          },
-          {
-            "name": "Synth OSC common"
-          },
-          {
-            "name": "Synth filters"
-          },
-          {
-            "name": "Synth amp"
-          },
-          {
-            "name": "Synth envF"
-          },
-          {
-            "name": "Synth env2"
-          },
-          {
-            "name": "Synth LFO1"
-          },
-          {
-            "name": "Synth LFO2"
-          },
-          {
-            "name": "FX track ext in"
-          },
-          {
-            "name": "FX track chorus"
-          },
-          {
-            "name": "FX track delay"
-          },
-          {
-            "name": "FX track reverb"
-          },
-          {
-            "name": "FX track LFO1"
-          },
-          {
-            "name": "FX track LFO2"
-          },
-          {
-            "name": "CV A"
-          },
-          {
-            "name": "CV B"
-          },
-          {
-            "name": "CV C"
-          },
-          {
-            "name": "CV D"
-          },
-          {
-            "name": "CV track env1"
-          },
-          {
-            "name": "CV track env2"
-          },
-          {
-            "name": "CV track LFO1"
-          },
-          {
-            "name": "CV track LFO2"
-          }
-        ],
+        "components": [],
         "parameters": [
           {
-            "name": "Performance parameter A",
+            "name": "Modulation",
             "description": "",
             "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter B",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 4
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter C",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 8
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter D",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 9
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter E",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 11
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter F",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 64
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter G",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 65
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter H",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 66
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter I",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 67
-                }
-              }
-            }
-          },
-          {
-            "name": "Performance parameter J",
-            "description": "",
-            "type": "continous",
-            "component": "Performance parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 68
-                }
-              }
-            }
-          },
-          {
-            "name": "Modwheel",
-            "description": "",
-            "type": "continous",
-            "component": "Modulation parameters",
             "source": {
               "midi": {
                 "id": {
@@ -266,396 +31,9 @@
             }
           },
           {
-            "name": "Breath controller",
+            "name": "Portamento Rate",
             "description": "",
             "type": "continous",
-            "component": "Modulation parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 2
-                }
-              }
-            }
-          },
-          {
-            "name": "Track level",
-            "description": "",
-            "type": "continous",
-            "component": "Modulation parameters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 95
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Pitch",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 16,
-                  "idLsb": 48
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Detune",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 2
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Keytracking",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 69
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Waveform",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 70
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Sub oscillator",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 71
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 Pulsewidth",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 72
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 PWM speed",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 73
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 PWM depth",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 74
-                }
-              }
-            }
-          },
-          {
-            "name": "Noise S&H",
-            "description": "",
-            "type": "continous",
-            "component": "Synth noise",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 75
-                }
-              }
-            }
-          },
-          {
-            "name": "Noise fade",
-            "description": "",
-            "type": "continous",
-            "component": "Synth noise",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 76
-                }
-              }
-            }
-          },
-          {
-            "name": "Noise level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth noise",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 77
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Pitch",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 17,
-                  "idLsb": 49
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Detune",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 22
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Keytracking",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 23
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 78
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Waveform",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 79
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Sub oscillator",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 80
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 Pulsewidth",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 81
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 PWM speed",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC2 PWM depth",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "OSC1 AM",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 30
-                }
-              }
-            }
-          },
-          {
-            "name": "Sync mode",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 31
-                }
-              }
-            }
-          },
-          {
-            "name": "Sync amount",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 84
-                }
-              }
-            }
-          },
-          {
-            "name": "Bend amount",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 85
-                }
-              }
-            }
-          },
-          {
-            "name": "Slide time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
             "source": {
               "midi": {
                 "id": {
@@ -666,824 +44,61 @@
             }
           },
           {
-            "name": "OSC2 AM",
+            "name": "Glide On/Off",
             "description": "",
             "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 35
-                }
-              }
-            }
-          },
-          {
-            "name": "Note sync",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 36
-                }
-              }
-            }
-          },
-          {
-            "name": "Vibrato fade",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 37
-                }
-              }
-            }
-          },
-          {
-            "name": "Vibrato speed",
-            "description": "",
-            "type": "continous",
-            "component": "Synth OSC common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 87
+                  "id": 35
                 }
               }
             }
           },
           {
-            "name": "Vibrato depth",
+            "name": "Osc 1 Range",
             "description": "",
             "type": "continous",
-            "component": "Synth OSC common",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 88
+                  "id": 3
                 }
               }
             }
           },
           {
-            "name": "Synth filter 1 frequency",
+            "name": "Osc 1 ModEnv2 Pitch",
             "description": "",
             "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 18,
-                  "idLsb": 50
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 1 resonance",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 89
+                  "id": 9
                 }
               }
             }
           },
           {
-            "name": "Synth filter overdrive",
+            "name": "Osc 1 Manual Shape",
             "description": "",
             "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 42
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 1 keytracking",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 43
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 1 envelope amount",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 102
+                  "id": 12
                 }
               }
             }
           },
           {
-            "name": "Synth filter 2 frequency",
+            "name": "Osc 1 ModEnv1 Shape",
             "description": "",
             "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 19,
-                  "idLsb": 51
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 2 resonance",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 90
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 2 type",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 47
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 2 keytracking",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 48
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth filter 2 envelope amount",
-            "description": "",
-            "type": "continous",
-            "component": "Synth filters",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 103
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp envA attack time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 104
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp envA decay time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 105
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp envA sustain level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 106
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp envA release time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 107
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp envA shape",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 54
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp chorus send level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 91
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp delay send level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 92
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp reverb send level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 93
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp pan",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 10
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth amp volume",
-            "description": "",
-            "type": "continous",
-            "component": "Synth amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 7
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF attack time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 108
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF decay time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 109
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF sustain level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 110
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF release time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 111
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF env shape",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 64
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF gate length",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 65
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF destination A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 66
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF depth A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 20,
-                  "idLsb": 52
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF destination B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 68
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth envF depth B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth envF",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 21,
-                  "idLsb": 53
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 attack time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 112
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 decay time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 113
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 sustain level",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 114
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 release time",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 115
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 env shape",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 74
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 gate length",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 75
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 destination A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 76
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 depth A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 22,
-                  "idLsb": 54
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 destination B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 78
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth env2 depth B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 2,
-                  "idLsb": 55
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 speed",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 116
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 speed multiplier",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 117
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 fade",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 start phase",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 83
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 mode",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 84
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 waveform",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 85
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 destination A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 depth A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 24,
-                  "idLsb": 56
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 destination B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 88
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO1 depth B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 25,
-                  "idLsb": 57
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 speed",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 118
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 speed multiplier",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1494,1981 +109,3517 @@
             }
           },
           {
-            "name": "Synth LFO2 fade",
+            "name": "Osc 1 LFO1 Shape",
             "description": "",
             "type": "continous",
-            "component": "Synth LFO2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 1 Vsync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Post Drive",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 ModEnv2 Pitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Manual Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 ModEnv1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 LFO1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Vsync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 ModEnv2 Pitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Manual Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 ModEnv1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 LFO1 Shape",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Vsync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter KBD Tracking",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Resonance",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Osc3 Filter",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Amp Env Filter",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter ModEnv1 Filter",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          },
+          {
+            "name": "Filter Overdrive",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 1 Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 1 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 1 Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 1 Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 93
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 2 Attack",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 94
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 2 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 95
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 2 Sustain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 2 Release",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 Sync Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 Fade Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 Sync Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 Fade Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay Feedback",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus Feedback",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp Clock/Gate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "Animate 1 Hold",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "Animate 2 Hold",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "Voice Mode",
+            "description": "",
+            "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 92
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 start phase",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 93
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 mode",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 94
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 waveform",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 95
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 destination A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 96
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 depth A",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 26,
-                  "idLsb": 58
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 destination B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 1,
-                  "idLsb": 98
-                }
-              }
-            }
-          },
-          {
-            "name": "Synth LFO2 depth B",
-            "description": "",
-            "type": "continous",
-            "component": "Synth LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChangeHighRes",
-                  "idMsb": 27,
-                  "idLsb": 59
-                }
-              }
-            }
-          },
-          {
-            "name": "Ext in ch1 chorus send",
-            "description": "",
-            "type": "continous",
-            "component": "FX track ext in",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 0
-                }
-              }
-            }
-          },
-          {
-            "name": "Ext in ch1 delay send",
-            "description": "",
-            "type": "continous",
-            "component": "FX track ext in",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 1
-                }
-              }
-            }
-          },
-          {
-            "name": "Ext in ch1 reverb send",
-            "description": "",
-            "type": "continous",
-            "component": "FX track ext in",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 2
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
                 }
               }
             }
           },
           {
-            "name": "Ext in ch1 level",
+            "name": "Voice Unison",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
                 }
               }
             }
           },
           {
-            "name": "Ext in ch1 pan",
+            "name": "Voice Unison Detune",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 4
                 }
               }
             }
           },
           {
-            "name": "Ext in ch2 chorus send",
+            "name": "Voice Unison Spread",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 5
                 }
               }
             }
           },
           {
-            "name": "Ext in ch2 delay send",
+            "name": "Voice KBD Octave",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 7808,
+                  "to": 8576
                 }
               }
             }
           },
           {
-            "name": "Ext in ch2 reverb send",
+            "name": "Voice Pre-Glide",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 6656,
+                  "to": 9728
                 }
               }
             }
           },
           {
-            "name": "Ext in ch2 pan",
+            "name": "Osc Common Divergence",
             "description": "",
             "type": "continous",
-            "component": "FX track ext in",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 8
-                }
-              }
-            }
-          },
-          {
-            "name": "Ext in ch2 level",
-            "description": "",
-            "type": "continous",
-            "component": "FX track ext in",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 0,
                   "idLsb": 9
                 }
               }
             }
           },
           {
-            "name": "FX track chorus predelay",
+            "name": "Osc Common Drift",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 40
+                  "idMsb": 0,
+                  "idLsb": 10
                 }
               }
             }
           },
           {
-            "name": "FX track chorus speed",
+            "name": "Osc Common Noise LPF",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 41
+                  "idMsb": 0,
+                  "idLsb": 11
                 }
               }
             }
           },
           {
-            "name": "FX track chorus depth",
+            "name": "Osc Common Noise HPF",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 42
+                  "idMsb": 0,
+                  "idLsb": 12
                 }
               }
             }
           },
           {
-            "name": "FX track chorus width",
+            "name": "Osc 1 Coarse",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 43
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track chorus feedback",
-            "description": "",
-            "type": "continous",
-            "component": "FX track chorus",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 44
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track chorus HP filter",
-            "description": "",
-            "type": "continous",
-            "component": "FX track chorus",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 45
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track chorus LP filter",
-            "description": "",
-            "type": "continous",
-            "component": "FX track chorus",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 14,
                   "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "FX track chorus delay send",
+            "name": "Osc 1 Fine",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 47
+                  "idMsb": 15,
+                  "idLsb": 175
+                },
+                "sourceValueRange": {
+                  "from": 3584,
+                  "to": 29184
                 }
               }
             }
           },
           {
-            "name": "FX track chorus reverb send",
+            "name": "Osc 1 LFO2 Pitch",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
+                  "idMsb": 16,
                   "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "FX track chorus send level",
+            "name": "Osc 1 Wave",
             "description": "",
             "type": "continous",
-            "component": "FX track chorus",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 49
+                  "idMsb": 0,
+                  "idLsb": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
                 }
               }
             }
           },
           {
-            "name": "FX track delay time",
+            "name": "Osc 1 Wave More",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 50
+                  "idMsb": 0,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 512,
+                  "to": 2560
                 }
               }
             }
           },
           {
-            "name": "FX track delay mode",
+            "name": "Osc 1 Shape Source",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 51
+                  "idMsb": 0,
+                  "idLsb": 16
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
                 }
               }
             }
           },
           {
-            "name": "FX track delay width",
+            "name": "Osc 1 Saw Density",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 53
+                  "idMsb": 0,
+                  "idLsb": 17
                 }
               }
             }
           },
           {
-            "name": "FX track delay feedback",
+            "name": "Osc 1 Saw Density Detune",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 54
+                  "idMsb": 0,
+                  "idLsb": 18
                 }
               }
             }
           },
           {
-            "name": "FX track delay HP filter",
+            "name": "Osc 1 Fixed Note",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 55
+                  "idMsb": 0,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 11264
                 }
               }
             }
           },
           {
-            "name": "FX track delay LP filter",
+            "name": "Osc 1 Bend Range",
             "description": "",
             "type": "continous",
-            "component": "FX track delay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 56
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track delay overdrive",
-            "description": "",
-            "type": "continous",
-            "component": "FX track delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 57
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track delay reverb send",
-            "description": "",
-            "type": "continous",
-            "component": "FX track delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 58
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track delay send level",
-            "description": "",
-            "type": "continous",
-            "component": "FX track delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 59
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb predelay",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 60
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb decay time",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 61
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb shelving frequency",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 62
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb shelving gain",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 63
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb HP filter",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 65
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb LP filter",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 66
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track reverb send level",
-            "description": "",
-            "type": "continous",
-            "component": "FX track reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 69
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 speed",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 80
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 speed multiplier",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 81
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 fade",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 start phase",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 83
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 mode",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 84
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 waveform",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 85
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 destination 1",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 depth 1",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 87
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 destination 2",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 88
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO1 depth 2",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 89
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 speed",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 90
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 speed multiplier",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 91
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 fade",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 92
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 start phase",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 93
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 mode",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 94
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 waveform",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 95
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 destination 1",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 96
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 depth 1",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 97
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 destination 2",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 98
-                }
-              }
-            }
-          },
-          {
-            "name": "FX track LFO2 depth 2",
-            "description": "",
-            "type": "continous",
-            "component": "FX track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 2,
-                  "idLsb": 99
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A coarse tune",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 0
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A fine tune",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 1
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A value",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 2
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A clock",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A source",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 4
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A bend depth",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 5
-                }
-              }
-            }
-          },
-          {
-            "name": "CV A note slide time",
-            "description": "",
-            "type": "continous",
-            "component": "CV A",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 6
-                }
-              }
-            }
-          },
-          {
-            "name": "CV B coarse tune",
-            "description": "",
-            "type": "continous",
-            "component": "CV B",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 5120,
+                  "to": 11264
                 }
               }
             }
           },
           {
-            "name": "CV B fine tune",
+            "name": "Osc 2 Coarse",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 21
+                  "idMsb": 17,
+                  "idLsb": 177
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "CV B value",
+            "name": "Osc 2 Fine",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 22
+                  "idMsb": 18,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 3584,
+                  "to": 29184
                 }
               }
             }
           },
           {
-            "name": "CV B clock",
+            "name": "Osc 2 LFO2 Pitch",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 19,
+                  "idLsb": 179
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Wave",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
                   "idLsb": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
                 }
               }
             }
           },
           {
-            "name": "CV B source",
+            "name": "Osc 2 Wave More",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 24
+                },
+                "sourceValueRange": {
+                  "from": 1024,
+                  "to": 3072
                 }
               }
             }
           },
           {
-            "name": "CV B bend depth",
+            "name": "Osc 2 Shape Source",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3200
                 }
               }
             }
           },
           {
-            "name": "CV B note slide time",
+            "name": "Osc 2 Saw Density",
             "description": "",
             "type": "continous",
-            "component": "CV B",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 26
                 }
               }
             }
           },
           {
-            "name": "CV C coarse tune",
+            "name": "Osc 2 Saw Density Detune",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 40
+                  "idMsb": 27,
+                  "idLsb": 146
                 }
               }
             }
           },
           {
-            "name": "CV C fine tune",
+            "name": "Osc 2 Fixed Note",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
+                  "idLsb": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 11264
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 2 Bend Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 29
+                },
+                "sourceValueRange": {
+                  "from": 5120,
+                  "to": 11264
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Coarse",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 20,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Fine",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 21,
+                  "idLsb": 181
+                },
+                "sourceValueRange": {
+                  "from": 3584,
+                  "to": 29184
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 LFO2 Pitch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 22,
+                  "idLsb": 54
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Wave",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 32
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 512
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Wave More",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 33
+                },
+                "sourceValueRange": {
+                  "from": 1024,
+                  "to": 3072
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Shape Source",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 34
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3200
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Saw Density",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Saw Density Detune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Fixed Note",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 11264
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc 3 Bend Range",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 5120,
+                  "to": 11264
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Osc 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 23,
+                  "idLsb": 183
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Osc 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 24,
+                  "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Osc 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 25,
+                  "idLsb": 185
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Ring 1*2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 26,
+                  "idLsb": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Noise",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 27,
+                  "idLsb": 187
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "Mixer Patch Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
                   "idLsb": 41
                 }
               }
             }
           },
           {
-            "name": "CV C value",
+            "name": "Mixer VCA Gain",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 42
                 }
               }
             }
           },
           {
-            "name": "CV C clock",
+            "name": "Mixer Dry Level",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 43
                 }
               }
             }
           },
           {
-            "name": "CV C source",
+            "name": "Mixer Wet Level",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 44
                 }
               }
             }
           },
           {
-            "name": "CV C bend depth",
+            "name": "Filter Slope",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV C note slide time",
+            "name": "Filter Shape",
             "description": "",
             "type": "continous",
-            "component": "CV C",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
                 }
               }
             }
           },
           {
-            "name": "CV D coarse tune",
+            "name": "Filter Frequency",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 50
+                  "idMsb": 29,
+                  "idLsb": 189
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "CV D fine tune",
+            "name": "Filter LFO1 Filter",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 51
+                  "idMsb": 28,
+                  "idLsb": 60
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "CV D value",
+            "name": "Filter Env Select",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 52
+                  "idMsb": 0,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV D clock",
+            "name": "Filter Divergence",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 53
+                  "idMsb": 0,
+                  "idLsb": 48
                 }
               }
             }
           },
           {
-            "name": "CV D source",
+            "name": "Amp Env Velocity",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 54
-                }
-              }
-            }
-          },
-          {
-            "name": "CV D bend depth",
-            "description": "",
-            "type": "continous",
-            "component": "CV D",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 55
                 }
               }
             }
           },
           {
-            "name": "CV D note slide time",
+            "name": "Amp Env Trig",
             "description": "",
             "type": "continous",
-            "component": "CV D",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track env1 attack time",
+            "name": "Mod Env Select",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
+                  "idLsb": 59
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Env 1 Velocity",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
                   "idLsb": 60
                 }
               }
             }
           },
           {
-            "name": "CV track env1 decay time",
+            "name": "Mod Env 1 Trig",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 61
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track env1 sustain level",
+            "name": "Mod Env 2 Velocity",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 62
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env1 release time",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 63
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env1 env shape",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 64
                 }
               }
             }
           },
           {
-            "name": "CV track env1 gate length",
+            "name": "Mod Env 2 Trig",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 65
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track env1 destination 1",
+            "name": "LFO1 Range",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 66
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env1 depth 1",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 67
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env1 destination 2",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 68
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
                 }
               }
             }
           },
           {
-            "name": "CV track env1 depth 2",
+            "name": "LFO1 Rate",
             "description": "",
             "type": "continous",
-            "component": "CV track env1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 30,
+                  "idLsb": 62
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 Wave",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
                   "idLsb": 69
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
                 }
               }
             }
           },
           {
-            "name": "CV track env2 attack time",
+            "name": "LFO1 Phase",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
                 }
               }
             }
           },
           {
-            "name": "CV track env2 decay time",
+            "name": "LFO1 Slew",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 71
                 }
               }
             }
           },
           {
-            "name": "CV track env2 sustain level",
+            "name": "LFO1 Fade In/Out",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 72
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
                 }
               }
             }
           },
           {
-            "name": "CV track env2 release time",
+            "name": "LFO1 One Shot",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 73
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env2 env shape",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 74
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track env2 gate length",
-            "description": "",
-            "type": "continous",
-            "component": "CV track env2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 75
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track env2 destination 1",
+            "name": "LFO1 Common",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 76
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track env2 depth 1",
+            "name": "LFO2 Rate",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 77
+                  "idMsb": 31,
+                  "idLsb": 191
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 32640
                 }
               }
             }
           },
           {
-            "name": "CV track env2 destination 2",
+            "name": "LFO2 Wave",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 78
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
                 }
               }
             }
           },
           {
-            "name": "CV track env2 depth 2",
+            "name": "LFO2 Phase",
             "description": "",
             "type": "continous",
-            "component": "CV track env2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 79
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 speed",
+            "name": "LFO2 Slew",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 80
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 speed multiplier",
+            "name": "LFO2 Fade In/Out",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 81
+                  "idMsb": 81,
+                  "idLsb": 200
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 fade",
+            "name": "LFO2 One Shot",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO1 start phase",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 83
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO1 mode",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 84
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 waveform",
+            "name": "LFO2 Common",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 85
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 destination 1",
+            "name": "FX Master Bypass",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO1 depth 1",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 87
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO1 destination 2",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 88
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track LFO1 depth 2",
+            "name": "FX Routing",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 89
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 speed",
+            "name": "Delay Width",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 90
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO2 speed multiplier",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 91
-                }
-              }
-            }
-          },
-          {
-            "name": "CV track LFO2 fade",
-            "description": "",
-            "type": "continous",
-            "component": "CV track LFO2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 92
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 start phase",
+            "name": "Delay Sync",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 93
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 mode",
+            "name": "Delay Sync Time",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 94
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2304
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 waveform",
+            "name": "Delay Low Pass",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 95
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 destination 1",
+            "name": "Delay High Pass",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 96
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 depth 1",
+            "name": "Delay Slew",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
+                  "idMsb": 0,
                   "idLsb": 97
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 destination 2",
+            "name": "Reverb Type",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 3,
-                  "idLsb": 98
+                  "idMsb": 0,
+                  "idLsb": 101
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
                 }
               }
             }
           },
           {
-            "name": "CV track LFO2 depth 2",
+            "name": "Reverb Damping LF",
             "description": "",
             "type": "continous",
-            "component": "CV track LFO2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Damping HF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 103
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Size",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 104
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Mod",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Mod Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Low Pass",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb High Pass",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Reverb Pre Delay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus Mod Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus LP",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Chorus HP",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Sync Rate",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2304
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 768
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Rhythm",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4096
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Octave",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 119
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 640
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Swing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 120
+                },
+                "sourceValueRange": {
+                  "from": 2560,
+                  "to": 10240
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock On",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 121
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Key Latch",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 122
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Arp/Clock Key Sync",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 123
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix Selection",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 125
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1920
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 1 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 1 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 1 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 1 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 2 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 2 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 2 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 2 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 2,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 3 Source 1",
+            "description": "",
+            "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 3,
-                  "idLsb": 99
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 3 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 3 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 3 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 3,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 4 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 4,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 4 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 4,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 4 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 4,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 4 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 4,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 5 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 5,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 5 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 5,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 5 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 5,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 5 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 5,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 6 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 6,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 6 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 6,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 6 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 6,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 6 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 6,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 7 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 7,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 7 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 7,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 7 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 7,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 7 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 7,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 8 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 8,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 8 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 8,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 8 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 8,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 8 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 8,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 9 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 9,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 9 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 9,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 9 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 9,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 9 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 9,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 10 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 10,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 10 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 10,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 10 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 10,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 10 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 10,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 11 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 11,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 11 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 11,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 11 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 11,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 11 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 11,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 12 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 12,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 12 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 12,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 12 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 12,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Matrix 12 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 12,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 13 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 13,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 13 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 13,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 13 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 13,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 13 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 13,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 14 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 14,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 14 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 14,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 14 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 14,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 14 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 14,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 15 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 15,
+                  "idLsb": 128
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 15 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 15,
+                  "idLsb": 129
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 15 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 15,
+                  "idLsb": 130
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 15 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 15,
+                  "idLsb": 131
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 16 Source 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 16 Source 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2048
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 16 Depth",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Mot Matrix 16 Destination",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 16,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4608
                 }
               }
             }

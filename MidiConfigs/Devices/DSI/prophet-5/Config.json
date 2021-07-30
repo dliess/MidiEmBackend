@@ -1,0 +1,2223 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "DSI/Sequential",
+  "productName": "Prophet-5/10 (Rev4)",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": [
+          {
+            "name": "OSC A FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "MASTER VOLUME",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B FINE TUNE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A SAW ON/FF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A PULSE WIDTH",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B PULSE WIDTH",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC SYNC ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B LOW FREQ ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B KEYBOARD ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "GLIDE RATE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "NOISE LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B SAW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "RESONANCE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "FILTER KEYBOARD TRACK OFF/HALF/FULL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "FILTER REV SELECT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO INITIAL AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B TRI ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SOURCE MIX",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ B ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ PW A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ PW B ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FILTER ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FILT ENV AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD OSC B AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FREQ A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD PW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FILTER ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "PITCH WHEEL RANGE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "RETRIGGER AND UNISON ASSIGN",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "CUTOFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "BRIGHTNESS",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "VINTAGE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "PRESSURE FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "PRESSURE LFO",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "ENVELOPE FILTER AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "ENVELOPE FILTER VELOCITY ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "ENVELOPE VCA VELOCITY ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "ATTACK FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 103
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "ATTACK VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 104
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "DECAY FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "DECAY VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "SUSTAIN FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "SUSTAIN VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON VOICE COUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON DETUNE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SAW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO TRI ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B FINE TUNE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A SAW ON/FF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B SAW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B TRI ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A PULSE WIDTH",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B PULSE WIDTH",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC SYNC ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B LOW FREQ ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B KEYBOARD ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 12
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "GLIDE RATE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 13
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC A LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC B LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "NOISE LEVEL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 16
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "CUTOFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 17
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "RESONANCE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 18
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "FILTER KEYBOARD TRACK OFF/HALF/FULL",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 256
+                }
+              }
+            }
+          },
+          {
+            "name": "FILTER REV SELECT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQUENCY",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO INITIAL AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SAW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO TRI ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 24
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SQUARE ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO SOURCE MIX",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 27
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ B ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ PW A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 29
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FREQ PW B ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 30
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO FILTER ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 31
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FILT ENV AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD OSC B AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 33
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FREQ A ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 34
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD PW ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 35
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "POLY MOD FILTER ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 36
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VINTAGE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "AFTERTOUCH > FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "AFTERTOUCH > AMP",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "ENV FILTER AMOUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "VELOCTIY > FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "VELOCITY > AMP",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "ATTACK FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "ATTACK VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 44
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "DECAY FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "DECAY VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "SUSTAIN FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "SUSTAIN VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE FILTER",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 49
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE VCA",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 15360
+                }
+              }
+            }
+          },
+          {
+            "name": "RELEASE SWITCH",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON ON/OFF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 128
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON VOICE COUNT",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON DETUNE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 896
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 1",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 55
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 2",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 56
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 3",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 57
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 4",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 58
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 59
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 6",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 60
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 7",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 61
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 8",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 62
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 9",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 63
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "UNISON NOTE 10",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 64
+                },
+                "sourceValueRange": {
+                  "from": 128,
+                  "to": 1280
+                }
+              }
+            }
+          },
+          {
+            "name": "PITCH WHEEL RANGE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1408
+                }
+              }
+            }
+          },
+          {
+            "name": "RETRIGGER AND UNISON",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 384
+                }
+              }
+            }
+          },
+          {
+            "name": "TRANSPOSE",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 32,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3072
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
