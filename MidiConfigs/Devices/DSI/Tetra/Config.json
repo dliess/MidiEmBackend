@@ -423,7 +423,7 @@
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 22
+                  "id": 23
                 }
               }
             }
@@ -887,6 +887,7 @@
             "name": "Cutoff Freq",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -900,6 +901,7 @@
             "name": "Resonance",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -923,7 +925,7 @@
             }
           },
           {
-            "name": "Fil AUdio Mod",
+            "name": "Fil Audio Mod",
             "type": "continous",
             "component": "Filter",
             "source": {
@@ -1030,6 +1032,7 @@
             "name": "VCA Level",
             "type": "continous",
             "component": "VCA",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -1043,6 +1046,7 @@
             "name": "Pan",
             "type": "continous-bipolar",
             "component": "VCA",
+            "role": "Pan",
             "source": {
               "midi": {
                 "id": {
@@ -1095,6 +1099,7 @@
             "name": "VCA Attack",
             "type": "continous",
             "component": "VCA",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -1108,6 +1113,7 @@
             "name": "VCA Decay",
             "type": "continous",
             "component": "VCA",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -1120,6 +1126,7 @@
           {
             "name": "VCA Sustain",
             "type": "continous",
+            "role": "Sustain",
             "component": "VCA",
             "source": {
               "midi": {
@@ -1134,6 +1141,7 @@
             "name": "VCA Release",
             "type": "continous",
             "component": "VCA",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
