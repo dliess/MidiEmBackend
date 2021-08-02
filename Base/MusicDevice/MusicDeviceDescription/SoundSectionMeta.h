@@ -136,6 +136,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Parameter>()
       member("type", &base::musicDevice::description::sound::Parameter::type),
       member("component", &base::musicDevice::description::sound::Parameter::component),
       member("role", &base::musicDevice::description::sound::Parameter::role),
+      member("defaultValue", &base::musicDevice::description::sound::Parameter::defaultValue),
       member("description", &base::musicDevice::description::sound::Parameter::description),
       member("source", &base::musicDevice::description::sound::Parameter::source)
    );

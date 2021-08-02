@@ -197,6 +197,8 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::FilterType: return "FilterType";
       case Role::FilterResonance: return "FilterResonance";
       case Role::Pitch: return "Pitch";
+      case Role::PitchFinetune: return "PitchFinetune";
+      case Role::OscShape: return "OscShape";
       case Role::Volume: return "Volume";
       case Role::Pan: return "Pan";
       case Role::Mute: return "Mute";
@@ -234,6 +236,10 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::FilterResonance;
    else if (roleStr == "Pitch")
       return Role::Pitch;
+   else if (roleStr == "PitchFinetune")
+      return Role::PitchFinetune;
+   else if (roleStr == "OscShape")
+      return Role::OscShape;
    else if (roleStr == "Volume")
       return Role::Volume;
    else if (roleStr == "Pan")
@@ -431,31 +437,52 @@ int base::musicDevice::description::sound::Section::linSearchByName(
 inline float base::musicDevice::description::sound::Section::getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {
+   const float val = _getInitialValueFor(voiceId, parameterId);
+   if (val >= 1.0)
+   {
+      const auto& paramDescr = parameterDescr(voiceId, parameterId);
+      const int idx = int(val) - 1;
+      return paramDescr.getListValueByIndex(idx);
+   }
+   return val;
+}
+
+inline float
+base::musicDevice::description::sound::Section::_getInitialValueFor(
+    int voiceId, int parameterId) const noexcept
+{
    const auto& paramDescr = parameterDescr(voiceId, parameterId);
-   if(!paramDescr.role.has_value())
+   if (paramDescr.defaultValue.has_value())
+   {
+      return *paramDescr.defaultValue;
+   }
+   if (!paramDescr.role.has_value())
    {
       return 0.0;
    }
-   switch(*paramDescr.role)
-   {
+   switch (*paramDescr.role)
+   {   // Use value range from 0.0 .. 0.99 for continous values, 1.0 2.0 3.0 for
+       // list items
       case Parameter::Role::Unknown: return 0.0;
       case Parameter::Role::FilterCutoff: return 0.5;
       case Parameter::Role::FilterType: return 0.0;
       case Parameter::Role::FilterResonance: return 0.0;
       case Parameter::Role::Pitch: return 0.5;
+      case Parameter::Role::PitchFinetune: return 0.5;
+      case Parameter::Role::OscShape: return 1;
       case Parameter::Role::Volume: return 0.8;
       case Parameter::Role::Pan: return 0.5;
       case Parameter::Role::Mute: return 0.0;
       case Parameter::Role::Attack: return 0.0;
       case Parameter::Role::Decay: return 0.3;
-      case Parameter::Role::Sustain: return 1.0;
+      case Parameter::Role::Sustain: return 0.99;
       case Parameter::Role::Release: return 0.3;
       case Parameter::Role::SampleStart: return 0.0;
       case Parameter::Role::SampleEnd: return 0.99;
       case Parameter::Role::SampleLength: return 0.99;
       case Parameter::Role::SampleLoop: return 0.0;
       case Parameter::Role::SampleReverse: return 0.0;
-      case Parameter::Role::SampleRate: return 1.0;
+      case Parameter::Role::SampleRate: return 0.99;
       case Parameter::Role::DelaySend: return 0.0;
       case Parameter::Role::ReverbSend: return 0.0;
       case Parameter::Role::LFOSpeed: return 0.0;
@@ -466,6 +493,23 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
       case Parameter::Role::TrigChance: return 0.99;
    }
    return 0.0;
+}
+
+inline float
+base::musicDevice::description::sound::Parameter::getListValueByIndex(
+    int idx) const noexcept
+{
+   assert(source.sourceRanges.has_value());
+   if (source.sourceRanges->at(idx).range.has_value())
+   {
+      const auto& range = *source.sourceRanges->at(idx).range;
+      return (range.from + range.to) / 2.0;
+   }
+   else
+   {
+      const float arcLen = 1.0 / source.sourceRanges->size();
+      return (arcLen * idx + arcLen * (idx + 1)) / 2.0;
+   }
 }
 
 #endif

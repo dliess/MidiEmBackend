@@ -122,6 +122,8 @@ struct Parameter
       FilterType,
       FilterResonance,
       Pitch,
+      PitchFinetune,
+      OscShape,
       Volume,
       Pan,
       Mute,
@@ -145,6 +147,7 @@ struct Parameter
       TrigChance
    };
    std::optional<Role> role;
+   std::optional<float> defaultValue;
    std::optional<std::string> description;
    ParameterSource source;
 
@@ -152,6 +155,8 @@ struct Parameter
    static inline Type typeFromString(const std::string& str);
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
+
+   inline float getListValueByIndex(int idx) const noexcept;
 };
 
 struct EngineBase
@@ -222,6 +227,8 @@ struct Section
    static int linSearchByName(const std::vector<T>& vector,
                               const std::string& name) noexcept;
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
+private:
+   inline float _getInitialValueFor(int voiceId, int parameterId) const noexcept;
 };
 
 }   // namespace base::musicDevice::description::sound
