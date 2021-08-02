@@ -2,6 +2,6 @@
 
 TOPDIR=$(git rev-parse --show-toplevel)
 
-sudo cp "$TOPDIR/build/MidiEmBackend" /usr/bin/
-sudo cp -r "$TOPDIR/MidiConfigs" /etc/MidiConfigs
-sudo cp "$TOPDIR/systemd/midiem-backend.service" /usr/lib/systemd/user
+sudo cp -v "$TOPDIR/build/MidiEmBackend" /usr/bin/
+sudo cp -v -r "$TOPDIR/MidiConfigs" /etc
+sudo cp -v "$TOPDIR/systemd/midiem-backend.service" /usr/lib/systemd/user
