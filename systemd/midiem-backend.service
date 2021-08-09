@@ -6,7 +6,7 @@ After=default.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/MidiEmBackend /etc
+ExecStart=/usr/bin/MidiEmBackend /etc/midiem
 Restart=on-failure
 RestartSec=3s
 

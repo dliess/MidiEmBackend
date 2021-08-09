@@ -10,5 +10,6 @@ if [[ -d $1 ]]; then
 fi
 
 $SUDO cp -v "$TOPDIR/build/MidiEmBackend" $INSTALL_ROOT_DIR/usr/bin/
-$SUDO cp -v -r "$TOPDIR/MidiConfigs" $INSTALL_ROOT_DIR/etc
+$SUDO mkdir -p $INSTALL_ROOT_DIR/etc/midiem
+$SUDO cp -v -r "$TOPDIR/MidiConfigs" $INSTALL_ROOT_DIR/etc/midiem
 $SUDO cp -v "$TOPDIR/systemd/midiem-backend.service" $INSTALL_ROOT_DIR/usr/lib/systemd/user
