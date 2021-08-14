@@ -70,9 +70,9 @@ roleMap = {
       "Effects" : []
 }
 
-def getComponentRole(parameterRole):
-   for compRole, paramRoles in roleMap.items():
-      for paramRole in paramRoles:
+def getComponentRole(db, parameterRole):
+   for compRole, compRoleData in db["components"].items():
+      for paramRole in compRoleData["parameters"]:
          if parameterRole == paramRole:
             return compRole
    return "Unknown"
@@ -99,7 +99,7 @@ with open(sys.argv[1]) as source_json_file:
 
          for parameter in engine["parameters"]:
             if "role" in parameter:
-               component_role = getComponentRole(parameter["role"])
+               component_role = getComponentRole(db, parameter["role"])
                max_ratio = 0
                name_of_best_match = ""
                for name in db["components"][component_role]["names"]:
