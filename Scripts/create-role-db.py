@@ -8,7 +8,7 @@ from fuzzywuzzy import fuzz
 roleMap = {
       "Unknown" : [],
       "NoteTrigger" : [
-         "TrackVolume" #new
+         "TrackVolume", #new
          "TrigChance",
          "Swing" # new
       ],
@@ -109,7 +109,7 @@ with open(sys.argv[1]) as source_json_file:
                      name_of_best_match = name
                new_param_name = ""
                for comp_name_part in name_of_best_match.split():
-                  for param_name_part in parameter["name"].split:
+                  for param_name_part in parameter["name"].split():
                      ratio = fuzz.ratio(comp_name_part.lower(), param_name_part.lower())
                      if ratio < 90:
                         new_param_name += param_name_part
