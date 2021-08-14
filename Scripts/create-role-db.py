@@ -70,7 +70,11 @@ roleMap = {
          "SampleBitReduction", # new+
          "SampleSlot" #new+
       ],
-      "Effects" : []
+      "Effects" : [],
+      "Delay": [], #new+
+      "Reverb": [], #new+
+      "Distortion": [], #new+
+      "Compressor" : [] #new+
 }
 
 def getComponentRole(db, parameterRole):
