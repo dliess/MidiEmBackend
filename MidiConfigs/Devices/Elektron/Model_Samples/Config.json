@@ -56,7 +56,7 @@
           },
           {
             "name": "Filter",
-            "role": "Filter"
+            "role": "LPHPFilter"
           },
           {
             "name": "Sample",
@@ -160,7 +160,7 @@
             "name": "Cutoff",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterCutoff",
+            "role": "LPHPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -171,10 +171,10 @@
             }
           },
           {
-            "name": "Resonance",
+            "name": "Filt Resonance",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterResonance",
+            "role": "LPHPFilterResonance",
             "source": {
               "midi": {
                 "id": {

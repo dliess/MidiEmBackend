@@ -13,7 +13,8 @@
       ],
       "parameters": {
         "TrackVolume": [
-          "TrackLevel"
+          "TrackLevel",
+          "Track Level"
         ],
         "TrigChance": [
           "Chance"
@@ -51,10 +52,12 @@
           "Mute"
         ],
         "DelaySend": [
-          "DelaySend"
+          "DelaySend",
+          "Delay Send"
         ],
         "ReverbSend": [
-          "ReverbSend"
+          "ReverbSend",
+          "Reverb Send"
         ]
       }
     },
@@ -64,13 +67,9 @@
         "Filter"
       ],
       "parameters": {
-        "FilterCutoff": [
-          "CutoffCutoff"
-        ],
+        "FilterCutoff": [],
         "FilterType": [],
-        "FilterResonance": [
-          "ResonanceResonance"
-        ],
+        "FilterResonance": [],
         "FilterSlope": []
       }
     },
@@ -100,11 +99,16 @@
     },
     "LPHPFilter": {
       "names": [
-        "Filter"
+        "Filter",
+        "Filt"
       ],
       "parameters": {
-        "LPHPFilterCutoff": [],
-        "LPHPFilterResonance": [],
+        "LPHPFilterCutoff": [
+          "Cutoff"
+        ],
+        "LPHPFilterResonance": [
+          "Resonance"
+        ],
         "LPHPFilterSlope": []
       }
     },
@@ -116,7 +120,8 @@
       "parameters": {
         "Attack": [],
         "Decay": [
-          "DecayTime"
+          "DecayTime",
+          "Decay Time"
         ],
         "Sustain": [],
         "Release": []

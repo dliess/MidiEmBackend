@@ -112,6 +112,8 @@ with open(sys.argv[1]) as source_json_file:
                   for param_name_part in parameter["name"].split():
                      ratio = fuzz.ratio(comp_name_part.lower(), param_name_part.lower())
                      if ratio < 90:
+                        if new_param_name != "":
+                            new_param_name += " "
                         new_param_name += param_name_part
                
                if not parameter["role"] in db["components"][component_role]["parameters"]:
