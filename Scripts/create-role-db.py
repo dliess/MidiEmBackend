@@ -10,7 +10,9 @@ roleMap = {
       "NoteTrigger" : [
          "TrackVolume", #new
          "TrigChance",
-         "Swing" # new
+         "Swing", # new
+         "Mute", # new+
+         "Solo" # new+
       ],
       "Oscillator" : [
          "Pitch",
@@ -20,7 +22,6 @@ roleMap = {
       "Amp" : [
          "Volume",
          "Pan",
-         "Mute",
          "DelaySend",
          "ReverbSend"
       ],
@@ -65,7 +66,9 @@ roleMap = {
          "SampleLength",
          "SampleLoop",
          "SampleReverse",
-         "SampleRate"
+         "SampleRate",
+         "SampleBitReduction", # new+
+         "SampleSlot" #new+
       ],
       "Effects" : []
 }

@@ -17,28 +17,36 @@
         "name": "MainEngine",
         "components": [
           {
-            "name": "Track parameters"
+            "name": "Track parameters",
+            "role": "NoteTrigger"
           },
           {
-            "name": "Trig parameters"
+            "name": "Trig parameters",
+            "role": "NoteTrigger"
           },
           {
-            "name": "Source parameters"
+            "name": "Source parameters",
+            "role": "Sample"
           },
           {
-            "name": "Filter parameters"
+            "name": "Filter parameters",
+            "role" : "Filter"
           },
           {
-            "name": "Amp parameters"
+            "name": "Amp parameters",
+            "role": "Amp"
           },
           {
-            "name": "LFO parameters"
+            "name": "LFO parameters",
+            "role": "LFO"
           },
           {
-            "name": "FX parameters - delay"
+            "name": "FX parameters - delay",
+            "role": "Effects"
           },
           {
-            "name": "FX parameters - reverb"
+            "name": "FX parameters - reverb",
+            "role": "Effects"
           }
         ],
         "parameters": [
