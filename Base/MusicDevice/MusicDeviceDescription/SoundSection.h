@@ -63,11 +63,14 @@ struct Component
    {
       Unknown,
       NoteTrigger,
+      Oscillator,
       Amp,
       Filter,
       Envelope,
       LFO,
-      Arpeggiator
+      Arpeggiator,
+      Sample,
+      Effects
    };
    std::optional<Role> role;
 
@@ -123,7 +126,7 @@ struct Parameter
       FilterResonance,
       Pitch,
       PitchFinetune,
-      OscShape,
+      OSCWaveform,
       Volume,
       Pan,
       Mute,

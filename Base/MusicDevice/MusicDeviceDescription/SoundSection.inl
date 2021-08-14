@@ -71,11 +71,14 @@ base::musicDevice::description::sound::Component::role2String(Role role)
    switch (role)
    {
       case Role::NoteTrigger: return "NoteTrigger";
+      case Role::Oscillator: return "Oscillator";
       case Role::Amp: return "Amp";
       case Role::Filter: return "Filter";
       case Role::Envelope: return "Envelope";
       case Role::LFO: return "LFO";
       case Role::Arpeggiator: return "Arpeggiator";
+      case Role::Sample: return "Sample";
+      case Role::Effects: return "Effects";
    }
    return "Unknown";
 }
@@ -86,6 +89,8 @@ base::musicDevice::description::sound::Component::roleFromString(
 {
    if (roleStr == "NoteTrigger")
       return Role::NoteTrigger;
+   else if (roleStr == "Oscillator")
+      return Role::Oscillator;
    else if (roleStr == "Amp")
       return Role::Amp;
    else if (roleStr == "Filter")
@@ -96,6 +101,10 @@ base::musicDevice::description::sound::Component::roleFromString(
       return Role::LFO;
    else if (roleStr == "Arpeggiator")
       return Role::Arpeggiator;
+   else if (roleStr == "Sample")
+      return Role::Sample;
+   else if (roleStr == "Effects")
+      return Role::Effects;
    return Role::Unknown;
 }
 
@@ -198,7 +207,7 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::FilterResonance: return "FilterResonance";
       case Role::Pitch: return "Pitch";
       case Role::PitchFinetune: return "PitchFinetune";
-      case Role::OscShape: return "OscShape";
+      case Role::OSCWaveform: return "OSCWaveform";
       case Role::Volume: return "Volume";
       case Role::Pan: return "Pan";
       case Role::Mute: return "Mute";
@@ -238,8 +247,8 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::Pitch;
    else if (roleStr == "PitchFinetune")
       return Role::PitchFinetune;
-   else if (roleStr == "OscShape")
-      return Role::OscShape;
+   else if (roleStr == "OSCWaveform")
+      return Role::OSCWaveform;
    else if (roleStr == "Volume")
       return Role::Volume;
    else if (roleStr == "Pan")
@@ -469,7 +478,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::FilterResonance: return 0.0;
       case Parameter::Role::Pitch: return 0.5;
       case Parameter::Role::PitchFinetune: return 0.5;
-      case Parameter::Role::OscShape: return 1;
+      case Parameter::Role::OSCWaveform: return 1;
       case Parameter::Role::Volume: return 0.8;
       case Parameter::Role::Pan: return 0.5;
       case Parameter::Role::Mute: return 0.0;

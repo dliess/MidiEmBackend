@@ -86,7 +86,7 @@
             "name": "Osc 1 Shape",
             "type": "list",
             "component": "Oscillators",
-            "role": "OscShape",
+            "role": "OSCWaveform",
             "defaultValue" : 2,
             "source": {
               "midi": {
@@ -464,7 +464,7 @@
             "name": "Osc 2 Shape",
             "type": "list",
             "component": "Oscillators",
-            "role": "OscShape",
+            "role": "OSCWaveform",
             "source": {
               "midi": {
                 "id": {

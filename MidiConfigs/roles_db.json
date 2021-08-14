@@ -1,0 +1,191 @@
+{
+  "components": {
+    "Unknown": {
+        "names": [],
+        "parameters" : {}
+    },
+    "NoteTrigger": { 
+        "names" : [
+            "NoteTrigger",
+            "Trig",
+            "Sequencer",
+            "Trigger"
+        ],
+        "parameters": {
+            "TrackVolume" : [],
+            "TrigChance" : [],
+            "Swing" : []
+        }
+    },
+    "Oscillator" : {
+        "names" : ["Oscillator"],
+        "parameters": {
+            "Pitch" : [],
+            "PitchFinetune" : [],
+            "OSCWaveform" : []
+        }
+    },
+    "Amp" : {
+        "names" : ["Amp", "Amplifier"],
+        "parameters": {
+            "Volume" : [],
+            "Pan" : [],
+            "Mute": [],
+            "DelaySend" : [],
+            "ReverbSend" : []
+        }
+    },
+    "Filter": {
+        "names": [
+            "Multimode Filter",
+            "Filter"
+        ],
+        "parameters": {
+            "FilterCutoff" : [],
+            "FilterType" : [],
+            "FilterResonance" : [],
+            "FilterSlope" : []  
+        }
+    },
+    "LPFilter": {
+        "names": [
+            "Lowpass Filter",
+            "LPFilter",
+            "Filter"
+        ],
+        "parameters": {
+            "LPFilterCutoff" : [],
+            "LPFilterResonance" : [],
+            "LPFilterSlope" : []  
+        }
+    },
+    "HPFilter": {
+        "names": [
+            "Highpass Filter",
+            "HPFilter",
+            "Filter"
+        ],
+        "parameters": {
+            "HPFilterCutoff" : [],
+            "HPFilterResonance" : [],
+            "HPFilterSlope" : []  
+        }
+    },
+    "LPHPFilter": {
+        "names": [
+            "Filter"
+        ],
+        "parameters": {
+            "LPHPFilterCutoff" : [],
+            "LPHPFilterResonance" : [],
+            "LPHPFilterSlope" : []  
+        }
+    },
+    "Envelope" : {
+        "names": ["Env", "Envelope"],
+        "parameters": {
+            "Attack" : [],
+            "Decay" : [],
+            "Sustain" : [],
+            "Release" : []
+        }
+    },
+    "LFO": {
+        "names": [ "LFO"  ],
+        "parameters": {
+            "LFOSpeed" : [],
+            "LFOMultiplier" : [],
+            "LFOWaveform" : [],
+            "LFODestination" : [],
+            "LFODepth" : []  
+        }
+    },
+    "Arpeggiator": {
+        "names": ["Arpeggiator", "Arp"],
+        "parameters" : {}
+    },
+    "Sample": { 
+        "names": [ "Sample" ],
+        "parameters": {
+            "SampleStart" : [],
+            "SampleEnd" : [],
+            "SampleLength" : [],
+            "SampleLoop" : [],
+            "SampleReverse" : [],
+            "SampleRate" : []
+        }
+    },
+    "Effects": {"names": [
+      "Effects",
+      "FX Parameters"
+    ], "parameters": {}}
+  },
+  "parameters": {
+    "Volume": [
+      "Track Level",
+      "Volume+Dist"
+    ],
+    "Pan": [
+      "Pan"
+    ],
+    "Pitch": [
+      "Pitch"
+    ],
+    "Decay": [
+      "Decay",
+      "Decay Time"
+    ],
+    "Mute": [
+      "Mute"
+    ],
+    "FilterCutoff": [
+      "FilterCutoff",
+      "Cutoff",
+      "Filter Cutoff",
+      "Filter Frequency"
+    ],
+    "FilterResonance": [
+      "FilterResonance",
+      "Resonance",
+      "Filter Resonance"
+    ],
+    "DelaySend": [
+      "Delay Send"
+    ],
+    "ReverbSend": [
+      "Reverb Send"
+    ],
+    "TrigChance": [
+      "TrigChance",
+      "Chance"
+    ],
+    "SampleLoop": [
+      "SampleLoop",
+      "Loop"
+    ],
+    "SampleReverse": [
+      "Reverse"
+    ],
+    "SampleStart": [
+      "Sample Start"
+    ],
+    "SampleLength": [
+      "Sample Length"
+    ],
+    "LFOSpeed": [
+      "LFO Speed"
+    ],
+    "LFOMultiplier": [
+      "LFO Multiplier"
+    ],
+    "LFODestination": [
+      "LFO Destination"
+    ],
+    "LFOWaveform": [
+      "LFO Waveform"
+    ],
+    "LFODepth": [
+      "LFO Depth"
+    ]
+  }
+}
