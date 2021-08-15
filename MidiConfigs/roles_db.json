@@ -21,6 +21,12 @@
         ],
         "Swing": [
           "Swing"
+        ],
+        "Mute": [
+          "Mute"
+        ],
+        "Solo": [
+          "Solo"
         ]
       }
     },
@@ -174,13 +180,40 @@
         "SampleReverse": [
           "Reverse"
         ],
-        "SampleRate": []
+        "SampleRate": [],
+        "SampleBitReduction": [],
+        "SampleSlot": []
       }
     },
     "Effects": {
       "names": [
         "Effects",
         "FX Parameters"
+      ],
+      "parameters": {}
+    },
+    "Delay": {
+      "names": [
+        "Delay"
+      ],
+      "parameters": {}
+    },
+    "Reverb": {
+      "names": [
+        "Reverb"
+      ],
+      "parameters": {}
+    },
+    "Distortion": {
+      "names": [
+        "Distortion",
+      ],
+      "parameters": {}
+    },
+    "Compressor": {
+      "names": [
+        "Compressor",
+        "Comp"
       ],
       "parameters": {}
     }

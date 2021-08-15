@@ -11,8 +11,8 @@ roleMap = {
          "TrackVolume", #new
          "TrigChance",
          "Swing", # new
-         "Mute", # new+
-         "Solo" # new+
+         "Mute", # new
+         "Solo" # new
       ],
       "Oscillator" : [
          "Pitch",
@@ -67,14 +67,14 @@ roleMap = {
          "SampleLoop",
          "SampleReverse",
          "SampleRate",
-         "SampleBitReduction", # new+
-         "SampleSlot" #new+
+         "SampleBitReduction", # new
+         "SampleSlot" #new
       ],
       "Effects" : [],
-      "Delay": [], #new+
-      "Reverb": [], #new+
-      "Distortion": [], #new+
-      "Compressor" : [] #new+
+      "Delay": [], #new
+      "Reverb": [], #new
+      "Distortion": [], #new
+      "Compressor" : [] #new
 }
 
 def getComponentRole(db, parameterRole):

@@ -7,6 +7,13 @@ from fuzzywuzzy import fuzz
 
 THRESHOLD = 80
 
+def getComponentRole(db, parameterRole):
+   for compRole, compRoleData in db["components"].items():
+      for paramRole in compRoleData["parameters"]:
+         if parameterRole == paramRole:
+            return compRole
+   return "Unknown"
+
 if len(sys.argv) != 3:
    print("2 args needed: <source json file> <db json file>")
    sys.exit(1)
@@ -21,35 +28,33 @@ with open(sys.argv[1]) as source_json_file:
       for engine in source["soundSection"]["engines"]:
          for parameter in engine["parameters"]:
             if not "component" in parameter:
-               max_ratio_key = ""
-               max_ratio_value = 0
-               for key, names in db["parameters"].items():
-                  max_ratio_for_key = 0
-                  for name in names:
-                     ratio = fuzz.token_set_ratio(name.lower(), parameter["name"].lower())
-                     max_ratio_for_key = max(ratio, max_ratio_for_key)
-                  if max_ratio_for_key > max_ratio_value:
-                      max_ratio_value = max_ratio_for_key
-                      max_ratio_key = key
-                  if max_ratio_value >= THRESHOLD:
-                     component_name = ""
-                     if not "components" in engine:
-                        engine["components"] = []
-                     for comp in engine["components"]:
-                        if "role" in comp:
-                           if comp["role"] == max_ratio_key
-                              component_name = comp["name"]
-                     if component_name == "":
-                        component_name = max_ratio_key
-                        engine["components"].append({ "name" : max_ratio_key, "role" : max_ratio_key })
-                     parameter["component"] = component_name
+               best_match_component_role = ""
+               best_match_component_ratio = 0
+               for component_role, component_data in db["components"].items():
+                  for component_name in component_data["names"]:
+                     ratio = fuzz.token_set_ratio(component_name.lower(), parameter["name"].lower())
+                     if ratio > best_match_component_ratio:
+                        best_match_component_ratio = ratio
+                        best_match_component_role = component_role
+               if best_match_component_ratio < THRESHOLD:
+                  best_match_component_role = "Unknown"
+               component_name = ""
+               if not "components" in engine:
+                  engine["components"] = []
+               for comp in engine["components"]:
+                  if "role" in comp:
+                     if comp["role"] == best_match_component_role
+                        component_name = comp["name"]
+               if component_name == "":
+                  component_name = best_match_component_role
+                  engine["components"].append({ "name" : best_match_component_role, "role" : best_match_component_role })
+               parameter["component"] = component_name
 
             if not "role" in parameter:
-               for key, names in db["parameters"].items():
-                  
-                  for name in names:
-                     ratio = fuzz.token_sort_ratio(name.lower(), parameter["name"].lower())
+               for parameter_role, parameter_names in db["components"][getComponentRole(db, parameter["component"])]["parameters"].items():
+                  for parameter_name in parameter_names:
+                     ratio = fuzz.token_sort_ratio(parameter_name.lower(), parameter["name"].lower())
                      if ratio >= THRESHOLD:
-                        parameter["role"] = key
-                        #print("Ratio between {} <-> {} = {} --> {}".format(name, parameter["name"], ratio, key))
+                        parameter["role"] = parameter_role
+                        #print("Ratio between {} <-> {} = {} --> {}".format(name, parameter["name"], ratio, parameter_role))
       print(json.dumps(source, indent=2))
