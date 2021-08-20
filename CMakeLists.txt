@@ -77,7 +77,7 @@ CPMAddPackage(
 CPMAddPackage(
   NAME timemeasure
   GITHUB_REPOSITORY dliess/TimeMeasure
-  GIT_TAG ca69776f75fe7775943c411a4e3cf624d37c67f8
+  GIT_TAG develop
 )
 
 CPMFindPackage(

@@ -17,24 +17,22 @@
 #include "CyclicDataOutputterThread.h"
 #include "Histogram.h"
 #include "Measurer.h"
+#include "OutputterDestinationsZmq.h"
 
-/*
-using DataHolderUs = TimeMeasure::Histogram<std::chrono::microseconds>;
-using DataHolderMs = TimeMeasure::Histogram<std::chrono::milliseconds>;
+using TenthMs = std::chrono::duration<int, std::ratio<1, 10000>>;
+using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
 
 template <unsigned int Id>
-using MeasurerMs = TimeMeasure::Measurer<Id, DataHolderMs>;
-template <unsigned int Id>
-using MeasurerUs = TimeMeasure::Measurer<Id, DataHolderUs>;
+using MeasurerTenthMs = TimeMeasure::Measurer<Id, DataHolderTenthMs>;
 
-TimeMeasure::CyclicDataOutputterThread<DataHolderUs,
-                                       TimeMeasure::Destination::Udp>
-    outThreadUdp({
-        &MeasurerUs<0>::instance().dataHolder(),
-        &MeasurerUs<1>::instance().dataHolder(),
+TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
+                                       TimeMeasure::Destination::Zmq>
+    outThreadZmq({
+        &MeasurerTenthMs<0>::instance().dataHolder(),
+        &MeasurerTenthMs<1>::instance().dataHolder(),
     });
 // --------------------------
-*/
+
 
 base::Base::Base(const std::string &configDir) :
     musicDeviceHolder(),
@@ -50,16 +48,13 @@ base::Base::Base(const std::string &configDir) :
 
 void base::Base::start()
 {
-   /*
-     MeasurerMs<0>::instance().dataHolder().setHistogramRange(100);
-     MeasurerUs<0>::instance().dataHolder().setHistogramRange(100);
-     MeasurerUs<1>::instance().dataHolder().setHistogramRange(100);
+   MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
+   MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
 
-     if (!outThreadUdp.destination().connect("127.0.0.1", 12341)) {
-       exit(1);
-     }
-     outThreadUdp.startThread(1000);
-   */
+   if (!outThreadZmq.destination().bind("tcp://*:12341")) {
+      exit(1);
+   }
+   outThreadZmq.startThread(3000);
    if (!midi::PortNotifiers::instance().init())
    {
       // TODO: put this code to Midi lib
@@ -151,16 +146,13 @@ void base::Base::loopFn()
 
    tempo::BeatTick::instance().nextTimeSlot();
    {
-      // MeasurerUs<0>::Guard guard;
+      MeasurerTenthMs<0>::Guard guard;
       musicDeviceHolder.midiHolder.midiClock();
-   }
-   musicDeviceHolder.midiHolder.processMidiInBuffers();
-   {
-      // MeasurerUs<1>::Guard guard;
+      musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
 
    musicDeviceHolder.musicDevices.updateSoundParameterUI();
    musicDeviceFactory.invokeInserterQueueActions();
-   // MeasurerMs<0>::instance().sample();
+   MeasurerTenthMs<1>::instance().sample();
 }
