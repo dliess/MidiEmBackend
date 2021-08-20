@@ -51,9 +51,7 @@ void base::Base::start()
    MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
    MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
 
-   if (!outThreadZmq.destination().bind("tcp://*:12341")) {
-      exit(1);
-   }
+   outThreadZmq.destination().bind("tcp://*:12341");
    outThreadZmq.startThread(500);
    if (!midi::PortNotifiers::instance().init())
    {
