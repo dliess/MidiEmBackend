@@ -54,7 +54,7 @@ void base::Base::start()
    if (!outThreadZmq.destination().bind("tcp://*:12341")) {
       exit(1);
    }
-   outThreadZmq.startThread(3000);
+   outThreadZmq.startThread(500);
    if (!midi::PortNotifiers::instance().init())
    {
       // TODO: put this code to Midi lib
