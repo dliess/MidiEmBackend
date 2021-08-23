@@ -8,8 +8,8 @@
 
 #include "BeatTick.h"
 #include "FdSet.h"
-#include "RtServer.h"
 #include "LoaderServer.h"
+#include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
 
@@ -19,7 +19,7 @@
 #include "Measurer.h"
 #include "OutputterDestinationsZmq.h"
 
-using TenthMs = std::chrono::duration<int, std::ratio<1, 10000>>;
+using TenthMs           = std::chrono::duration<int, std::ratio<1, 10000>>;
 using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
 
 template <unsigned int Id>
@@ -32,7 +32,6 @@ TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
         &MeasurerTenthMs<1>::instance().dataHolder(),
     });
 // --------------------------
-
 
 base::Base::Base(const std::string &configDir) :
     musicDeviceHolder(),
@@ -76,8 +75,27 @@ void base::Base::waitForEnd()
    m_mainRtThread->join();
 }
 
+/*
+/etc/security/limits.conf
+<username> hard rtprio 99
+<username> soft rtprio 99
+logout, login
+*/
+void base::Base::setRtScheduling()
+{
+   sched_param schedParam;
+   schedParam.sched_priority = 40;
+   int policy                = SCHED_FIFO;
+   if (sched_setscheduler(0, policy, &schedParam) == -1)
+   {
+      LOG_F(ERROR, "sched_setscheduler failed: {}", strerror(errno));
+   }
+   pthread_setname_np(pthread_self(), "MidiemBackend Main RT");
+}
+
 void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
+   setRtScheduling();
    uiadapter::capnzero::RtServer rtServer(m_zmqContext, instruments,
                                           musicDeviceHolder.musicDevices,
                                           transportControl, midiRouter);
@@ -94,7 +112,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    fdSet.AddFd(timerFd, [this](int fd) {
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
-      loopFn(); 
+      loopFn();
    });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
       rtServer.processNextRequestAllNonBlock();
@@ -109,16 +127,15 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
-   uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext, musicDeviceFactory);
+   uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
+                                                  musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
-   itimerspec t(
-       {.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
+   itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd,
-               [this](int fd) {
+   fdSet.AddFd(timerFd, [this](int fd) {
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
       midi::PortNotifiers::instance().update();

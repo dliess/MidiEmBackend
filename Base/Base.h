@@ -38,6 +38,7 @@ private:
    void mainRtThreadFunction(const std::atomic<bool>& terminateRequest);
    void loaderThreadFunction(const std::atomic<bool>& terminateRequest);
    void loopFn();
+   void setRtScheduling();
 };
 
 } // namespace base
