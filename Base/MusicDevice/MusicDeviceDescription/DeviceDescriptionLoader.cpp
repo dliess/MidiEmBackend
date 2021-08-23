@@ -15,7 +15,7 @@ using namespace base::musicDevice;
 description::Loader::Loader(const std::string &configDir) :
     m_configDir(configDir.empty() ? "." : configDir),
     m_mapFileName(fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
-    m_deviceChainsFileName(fmt::format("{}/MidiConfigs/midiDeviceChains.json", m_configDir))
+    m_deviceChainsFileName(fmt::format("~/.nomidi/MidiConfigs/midiDeviceChains.json", m_configDir))
 {
    std::ifstream mapFile(m_mapFileName);
    std::ifstream deviceChainsFile(m_deviceChainsFileName);
@@ -27,8 +27,13 @@ description::Loader::Loader(const std::string &configDir) :
    if (deviceChainsFile.fail())
    {
       LOG_F(INFO,
-            "There is no custom midi interface connection config file '{}'",
+            "There is no custom midi interface connection config file '{}' so lets create an empty one",
             m_deviceChainsFileName);
+      std::filesystem::path path(m_deviceChainsFileName);
+      std::filesystem::create_directories(path.parent_path());
+      std::ofstream ofs(path);
+      ofs << "\n"; 
+      ofs.close();
    }
    else
    {
