@@ -30,7 +30,7 @@ bool BeatTick::running() const noexcept
 void BeatTick::nextTimeSlot() noexcept
 {
    if(!m_running) return;
-   if(std::chrono::high_resolution_clock::now() >= m_nextNotificationTimePoint)
+   while(std::chrono::high_resolution_clock::now() > m_nextNotificationTimePoint)
    {
      // LOG_F(INFO, "period {} ns", calcPeriodNs().count());
       m_nextNotificationTimePoint += calcPeriodNs();
