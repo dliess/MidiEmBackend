@@ -143,6 +143,20 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
    }
 }
 
+void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
+                                          ::capnzero::Int16 voiceId,
+                                          ::capnzero::Int16 paramIdx)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->blankVoiceParameter(voiceId, paramIdx);
+   }
+}
+
 void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
                                            ::capnzero::Int16 voiceId)
 {

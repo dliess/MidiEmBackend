@@ -28,6 +28,12 @@ public:
                                       float value) noexcept;
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
+
+   inline void resetToInitialValue(
+       int voiceIdx, int paramIdx,
+       const base::musicDevice::description::sound::Section&
+           soundSection) noexcept;
+
    inline void resetToInitialValues(
        int voiceIdx, const base::musicDevice::description::sound::Section&
                          soundSection) noexcept;

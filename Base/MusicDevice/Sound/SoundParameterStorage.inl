@@ -138,6 +138,18 @@ void ParameterStorage::forEachElementContainer(Cb&& cb)
    }
 }
 
+inline void ParameterStorage::resetToInitialValue(
+    int voiceIdx,
+    int paramIdx,
+    const base::musicDevice::description::sound::Section& soundSection) noexcept
+{
+   auto& element = elementContainer(voiceIdx).parameters[paramIdx];
+   for (auto& e : element.modifiers) { e.reset(); }
+   element.lfo.reset();
+   const auto& descr = soundSection.parameterDescr(voiceIdx, paramIdx);
+   element.setCommandedValue(soundSection.getInitialValueFor(voiceIdx, paramIdx));
+}
+
 inline void ParameterStorage::resetToInitialValues(
     int voiceIdx,
     const base::musicDevice::description::sound::Section& soundSection) noexcept

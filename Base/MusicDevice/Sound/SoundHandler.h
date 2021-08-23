@@ -65,6 +65,7 @@ public:
 
    uint8_t getMidiVoiceOffset() const noexcept;
 
+   void blankVoiceParameter(int voiceId, int paramIdx) noexcept;
    void blankVoiceParameters(int voiceId) noexcept;
    void blankAllVoiceParameters() noexcept;
 

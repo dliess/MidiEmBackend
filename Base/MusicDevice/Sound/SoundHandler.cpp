@@ -180,6 +180,11 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
    return m_midiOutHandler->getMidiChannelOffset();
 }
 
+void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
+{
+   m_paramStorage.resetToInitialValue(voiceId, paramIdx, m_rSoundSection);
+}
+
 void SoundHandler::blankVoiceParameters(int voiceId) noexcept
 {
    m_paramStorage.resetToInitialValues(voiceId, m_rSoundSection);
