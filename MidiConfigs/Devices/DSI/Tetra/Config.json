@@ -31,13 +31,16 @@
         "name": "MainEngine",
         "components": [
           {
-            "name": "Oscillators"
+            "name": "Oscillators",
+            "role": "Oscillator"
           },
           {
-            "name": "Osc Misc"
+            "name": "Amp",
+            "role": "Amp"
           },
           {
-            "name": "Filter"
+            "name": "Filter",
+            "role": "LPFilter"
           },
           {
             "name": "VCA"
@@ -79,7 +82,7 @@
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 0,
-                  "idLsb": 0
+                  "idLsb": 1
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -97,8 +100,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 22
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 2
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -422,16 +426,49 @@
             }
           },
           {
-            "name": "Glide 1",
+            "name": "OSC 1 Glide",
             "type": "continous",
             "component": "Oscillators",
+            "role" : "OSCGlide",
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 23
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
+            }
+          },
+          {
+            "name": "Osc 1 Keyboard ON/OFF",
+            "type": "list",
+            "component": "Oscillators",
+            "role" : "OSCKeyboardTracking",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OFF"
+                },
+                {
+                  "name": "ON"
+                }
+              ]
             }
           },
           {
@@ -442,8 +479,13 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 24
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
                 }
               }
             }
@@ -456,8 +498,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 25
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 6
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -474,8 +517,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 26
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 7
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -799,22 +843,55 @@
             }
           },
           {
-            "name": "Glide 2",
+            "name": "OSC 2 Glide",
             "type": "continous",
             "component": "Oscillators",
+            "role" : "OSCGlide",
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 27
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 8
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
+            "name": "OSC 2 Keyboard ON/OFF",
+            "type": "list",
+            "component": "Oscillators",
+            "role" : "OSCGlide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OFF"
+                },
+                {
+                  "name": "ON"
+                }
+              ]
+            }
+          },
+          {
             "name": "OSC Mix",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -827,7 +904,7 @@
           {
             "name": "Noise Level",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -840,7 +917,7 @@
           {
             "name": "Sub Osc 1 Level",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -853,7 +930,7 @@
           {
             "name": "Sub Osc 2 Level",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -866,7 +943,7 @@
           {
             "name": "Feedback Volume",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -879,7 +956,7 @@
           {
             "name": "Feedback Gain",
             "type": "continous",
-            "component": "Osc Misc",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {

@@ -17,7 +17,9 @@ roleMap = {
       "Oscillator" : [
          "Pitch",
          "PitchFinetune",
-         "OSCWaveform"
+         "OSCWaveform",
+         "OSCGlide", # new
+         "OSCKeyboardTracking", #new
       ],
       "Amp" : [
          "Volume",
