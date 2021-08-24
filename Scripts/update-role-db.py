@@ -88,6 +88,10 @@ roleMap = {
          "ArpOnOff", #new
          "ArpMode" #new
       ],
+      "Sequencer" : [
+         "SequencerOnOff", #new
+         "SequenceTrig" #new
+      ],
       "Sample" : [
          "SampleStart",
          "SampleEnd",
