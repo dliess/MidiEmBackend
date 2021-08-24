@@ -68,6 +68,7 @@ roleMap = {
          "EnvAmount", #new
          "EnvVelAmount", #new
          "EnvDelay", #new
+         "EnvDestination", #new
          "Attack",
          "Decay",
          "Sustain",
