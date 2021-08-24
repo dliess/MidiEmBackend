@@ -67,6 +67,7 @@ roleMap = {
       "Envelope" : [
          "EnvAmount", #new
          "EnvVelAmount", #new
+         "EnvRepeat", #new
          "EnvDelay", #new
          "EnvDestination", #new
          "Attack",
@@ -83,7 +84,10 @@ roleMap = {
          "LFODepth",
          "LFOKeySync" #new
       ],
-      "Arpeggiator" : [],
+      "Arpeggiator" : [
+         "ArpOnOff", #new
+         "ArpMode" #new
+      ],
       "Sample" : [
          "SampleStart",
          "SampleEnd",
