@@ -2059,67 +2059,67 @@
                   "name": "All LFO Freq"
                 },
                 {
-                  "name": ""
+                  "name": "LFO1 Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "LFO2 Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "LFO3 Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "LFO4 Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "All LFO Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "Filter Env Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "Amp Env Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env3 Amt"
                 },
                 {
-                  "name": "Off"
+                  "name": "All Env Amts"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env1 Attack"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env2 Attack"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env3 Attack"
                 },
                 {
-                  "name": "Off"
+                  "name": "All Env Attacks"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env1 Decay"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env2 Decay"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env3 Decay"
                 },
                 {
-                  "name": "Off"
+                  "name": "All Env Decays"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env1 Release"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env2 Release"
                 },
                 {
-                  "name": "Off"
+                  "name": "Env3 Release"
                 },
                 {
-                  "name": "Off"
+                  "name": "All Env Releases"
                 },
                 {
                   "name": "Off"
