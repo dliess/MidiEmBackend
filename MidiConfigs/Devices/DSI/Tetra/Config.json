@@ -58,8 +58,13 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 20
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 120
                 }
               }
             }
@@ -72,8 +77,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 21
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 0
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -891,8 +897,13 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 102
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 164
                 }
               }
             }
@@ -905,8 +916,13 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 103
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 16
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
