@@ -79,7 +79,8 @@ roleMap = {
          "LFOMultiplier",
          "LFOWaveform",
          "LFODestination",
-         "LFODepth"
+         "LFODepth",
+         "LFOKeySync" #new
       ],
       "Arpeggiator" : [],
       "Sample" : [
