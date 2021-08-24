@@ -20,41 +20,61 @@ roleMap = {
          "OSCWaveform",
          "OSCGlide", # new
          "OSCKeyboardTracking", #new
+         "OSCSync", #new,
+         "OSCSlop", #new
+         "OSCMix", #new
+         "OSCNoise", #new
+         "SubOSCLevel" #new
       ],
       "Amp" : [
+         "InitialVolume", #new
          "Volume",
          "Pan",
          "DelaySend",
-         "ReverbSend"
+         "ReverbSend",
+         "FeedbackVolume", #new
+         "FeedbackGain" #new
       ],
       "Filter" : [
          "FilterCutoff",
          "FilterType",
          "FilterResonance",
-         "FilterSlope"  #new
+         "FilterSlope",  #new
+         "FilterKeyAmount", #new
+         "FilterAudioModuation" #new
       ],
       "LPFilter" : [           # new
          "LPFilterCutoff",     # new
          "LPFilterResonance",  # new
-         "LPFilterSlope"       # new
+         "LPFilterSlope",       # new
+         "LPFilterKeyAmount", #new
+         "LPFilterAudioModuation" #new
       ],
       "HPFilter" : [           # new
          "HPFilterCutoff",     # new
          "HPFilterResonance",  # new
-         "HPFilterSlope"       # new
+         "HPFilterSlope",       # new
+         "HPFilterKeyAmount", #new
+         "HPFilterAudioModuation" #new
       ],
       "LPHPFilter" : [           # new
          "LPHPFilterCutoff",     # new
          "LPHPFilterResonance",  # new
-         "LPHPFilterSlope"       # new
+         "LPHPFilterSlope",       # new
+         "LPHPFilterKeyAmount", #new
+         "LPHPFilterAudioModuation" #new
       ],
       "Envelope" : [
+         "EnvAmount", #new
+         "EnvVelAmount", #new
+         "EnvDelay", #new
          "Attack",
          "Decay",
          "Sustain",
          "Release"
       ],
       "LFO" : [
+         "LFOAmount", # new
          "LFOSpeed",
          "LFOMultiplier",
          "LFOWaveform",

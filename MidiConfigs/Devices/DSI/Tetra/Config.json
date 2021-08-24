@@ -43,13 +43,20 @@
             "role": "LPFilter"
           },
           {
-            "name": "VCA"
+            "name": "Filter Env",
+            "role": "Envelope"
           },
           {
-            "name": "Envelope3"
+            "name": "Amp Env",
+            "role": "Envelope"
           },
           {
-            "name": "LFO"
+            "name": "LFO",
+            "role": "LFO"
+          },
+          {
+            "name": "Envelope3",
+            "role": "Envelope"
           }
         ],
         "parameters": [
@@ -889,14 +896,98 @@
             }
           },
           {
-            "name": "OSC Mix",
-            "type": "continous",
-            "component": "Amp",
+            "name": "OSC Sync On/Off",
+            "type": "list",
+            "component": "Oscillators",
+            "role" : "OSCSync",
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 28
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OFF"
+                },
+                {
+                  "name": "ON"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Glide Mode",
+            "type": "list",
+            "component": "Oscillators",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 3
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "fixed rate"
+                },
+                {
+                  "name": "fixed rate auto"
+                },
+                {
+                  "name": "fixed time"
+                },
+                {
+                  "name": "fixed time auto"
+                }
+              ]
+            }
+          },
+          {
+            "name": "OSC Slop",
+            "type": "continous",
+            "component": "Oscillators",
+            "role" : "OSCSlop",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 12
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC Mix",
+            "type": "continous",
+            "component": "Oscillators",
+            "role": "OSCMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 13
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
@@ -904,12 +995,18 @@
           {
             "name": "Noise Level",
             "type": "continous",
-            "component": "Amp",
+            "component": "Oscillators",
+            "role": "OSCNoise",
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 29
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
@@ -917,7 +1014,8 @@
           {
             "name": "Sub Osc 1 Level",
             "type": "continous",
-            "component": "Amp",
+            "component": "Oscillators",
+            "role": "SubOSCLevel",
             "source": {
               "midi": {
                 "id": {
@@ -930,7 +1028,8 @@
           {
             "name": "Sub Osc 2 Level",
             "type": "continous",
-            "component": "Amp",
+            "component": "Oscillators",
+            "role": "SubOSCLevel",
             "source": {
               "midi": {
                 "id": {
@@ -944,6 +1043,7 @@
             "name": "Feedback Volume",
             "type": "continous",
             "component": "Amp",
+            "role": "FeedbackVolume",
             "source": {
               "midi": {
                 "id": {
@@ -957,6 +1057,7 @@
             "name": "Feedback Gain",
             "type": "continous",
             "component": "Amp",
+            "role": "FeedbackGain",
             "source": {
               "midi": {
                 "id": {
@@ -970,7 +1071,7 @@
             "name": "Cutoff Freq",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterCutoff",
+            "role": "LPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -989,7 +1090,7 @@
             "name": "Resonance",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterResonance",
+            "role": "LPFilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -1008,6 +1109,7 @@
             "name": "Fil Key Amount",
             "type": "continous",
             "component": "Filter",
+            "role": "LPFilterKeyAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1021,6 +1123,7 @@
             "name": "Fil Audio Mod",
             "type": "continous",
             "component": "Filter",
+            "role": "LPFilterAudioModuation",
             "source": {
               "midi": {
                 "id": {
@@ -1031,14 +1134,48 @@
             }
           },
           {
-            "name": "Fil Env Amt",
-            "type": "continous",
+            "name": "Filter Poles",
+            "type": "list",
             "component": "Filter",
+            "role": "LPFilterSlope",
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 106
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "2-Pole"
+                },
+                {
+                  "name": "4-Pole"
+                }
+              ]
+            }
+          },
+
+          {
+            "name": "Fil Env Amt",
+            "type": "continous-bipolar",
+            "component": "Filter Env",
+            "role": "EnvAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
                 }
               }
             }
@@ -1046,7 +1183,7 @@
           {
             "name": "Fil Env Vel Amt",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
             "source": {
               "midi": {
                 "id": {
@@ -1059,7 +1196,8 @@
           {
             "name": "Fil Delay",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
+            "role": "EnvDelay",
             "source": {
               "midi": {
                 "id": {
@@ -1072,7 +1210,8 @@
           {
             "name": "Fil Attack",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -1085,7 +1224,8 @@
           {
             "name": "Fil Decay",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -1098,7 +1238,8 @@
           {
             "name": "Fil Sustain",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -1111,7 +1252,8 @@
           {
             "name": "Fil Release",
             "type": "continous",
-            "component": "Filter",
+            "component": "Filter Env",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -1122,10 +1264,10 @@
             }
           },
           {
-            "name": "VCA Level",
+            "name": "Amp initial Level",
             "type": "continous",
-            "component": "VCA",
-            "role": "Volume",
+            "component": "Amp",
+            "role": "InitialVolume",
             "source": {
               "midi": {
                 "id": {
@@ -1138,7 +1280,7 @@
           {
             "name": "Pan",
             "type": "continous-bipolar",
-            "component": "VCA",
+            "component": "Amp",
             "role": "Pan",
             "source": {
               "midi": {
@@ -1150,9 +1292,29 @@
             }
           },
           {
-            "name": "VCA Env Amnt",
+            "name": "Volume",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 29
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Env Amnt",
+            "type": "continous",
+            "component": "Amp Env",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1165,7 +1327,8 @@
           {
             "name": "AMP Env Vel Amnt",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp Env",
+            "role": "EnvVelAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1176,9 +1339,10 @@
             }
           },
           {
-            "name": "VCA Delay",
+            "name": "Amp Env Delay",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp Env",
+            "role": "EnvDelay",
             "source": {
               "midi": {
                 "id": {
@@ -1189,9 +1353,9 @@
             }
           },
           {
-            "name": "VCA Attack",
+            "name": "Amp Env Attack",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp Env",
             "role": "Attack",
             "source": {
               "midi": {
@@ -1203,9 +1367,9 @@
             }
           },
           {
-            "name": "VCA Decay",
+            "name": "Amp Env Decay",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp Env",
             "role": "Decay",
             "source": {
               "midi": {
@@ -1217,10 +1381,10 @@
             }
           },
           {
-            "name": "VCA Sustain",
+            "name": "Amp Env Sustain",
             "type": "continous",
+            "component": "Amp Env",
             "role": "Sustain",
-            "component": "VCA",
             "source": {
               "midi": {
                 "id": {
@@ -1231,9 +1395,9 @@
             }
           },
           {
-            "name": "VCA Release",
+            "name": "Amp Env Release",
             "type": "continous",
-            "component": "VCA",
+            "component": "Amp Env",
             "role": "Release",
             "source": {
               "midi": {
@@ -1244,6 +1408,733 @@
               }
             }
           },
+          {
+            "name": "LFO 1 Freq",
+            "type": "continous",
+            "component": "LFO",
+            "role": "LFOSpeed",
+            "defaultValue" : 0,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 166
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "unsynced"
+                },
+                {
+                  "name": "Div by 32"
+                },
+                {
+                  "name": "Div by 16"
+                },
+                {
+                  "name": "Div by 8"
+                },
+                {
+                  "name": "Div by 6"
+                },
+                {
+                  "name": "Div by 4"
+                },
+                {
+                  "name": "Div by 3"
+                },
+                {
+                  "name": "Div by 2"
+                },
+                {
+                  "name": "Div by 1.5"
+                },
+                {
+                  "name": "1 Cyc/Step"
+                },
+                {
+                  "name": "2 Cyc/3 Steps"
+                },
+                {
+                  "name": "2 Cyc/Step"
+                },
+                {
+                  "name": "1 Cyc/3 Steps"
+                },
+                {
+                  "name": "4 Cyc/Step"
+                },
+                {
+                  "name": "6 Cyc/Step"
+                },
+                {
+                  "name": "8 Cyc/Step"
+                },
+                {
+                  "name": "16 Cyc/Step"
+                }
+              ]
+            }
+          },
+          {
+            "name": "LFO 1 Shape",
+            "type": "list",
+            "component": "LFO",
+            "role": "LFOWaveform",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Triangle"
+                },
+                {
+                  "name": "Reverse Saw"
+                },
+                {
+                  "name": "Saw"
+                },
+                {
+                  "name": "Square"
+                },
+                {
+                  "name": "Random"
+                }
+              ]
+            }
+          },
+          {
+            "name": "LFO 1 Amount",
+            "type": "continous",
+            "component": "LFO",
+            "role": "LFOAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO 1 Destination",
+            "type": "list",
+            "component": "LFO",
+            "role": "LFODestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 43
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": ""
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "Off"
+                }
+              ]
+            }
+          },
+
+          
           {
             "name": "ENV3 Destination",
             "type": "continous",
