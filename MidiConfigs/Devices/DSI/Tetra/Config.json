@@ -57,6 +57,10 @@
           {
             "name": "Envelope3",
             "role": "Envelope"
+          },
+          {
+            "Name": "Mod",
+            "role": "ModMatrix"
           }
         ],
         "parameters": [
