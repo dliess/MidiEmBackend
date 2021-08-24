@@ -2142,7 +2142,8 @@
                 },
                 {
                   "name": "Feedback Gain"
-                }              ]
+                } 
+              ]
             }
           },
           {
@@ -2948,7 +2949,7 @@
                 },
                 "sourceValueRange": {
                   "from": 0,
-                  "to": 49
+                  "to": 47
                 }
               },
               "sourceRanges":[
@@ -3095,9 +3096,6 @@
                 },
                 {
                   "name": "Feedback Gain"
-                },
-                {
-                  "name": "Slew"
                 }
               ]
             }
@@ -3322,7 +3320,7 @@
                 },
                 "sourceValueRange": {
                   "from": 0,
-                  "to": 49
+                  "to": 47
                 }
               },
               "sourceRanges":[
@@ -3469,9 +3467,6 @@
                 },
                 {
                   "name": "Feedback Gain"
-                },
-                {
-                  "name": "Slew"
                 }
               ]
             }
@@ -3593,7 +3588,7 @@
                 },
                 "sourceValueRange": {
                   "from": 0,
-                  "to": 49
+                  "to": 47
                 }
               },
               "sourceRanges":[
@@ -3740,9 +3735,6 @@
                 },
                 {
                   "name": "Feedback Gain"
-                },
-                {
-                  "name": "Slew"
                 }
               ]
             }
@@ -3864,7 +3856,7 @@
                 },
                 "sourceValueRange": {
                   "from": 0,
-                  "to": 49
+                  "to": 47
                 }
               },
               "sourceRanges":[
@@ -4011,9 +4003,6 @@
                 },
                 {
                   "name": "Feedback Gain"
-                },
-                {
-                  "name": "Slew"
                 }
               ]
             }
@@ -4135,7 +4124,7 @@
                 },
                 "sourceValueRange": {
                   "from": 0,
-                  "to": 49
+                  "to": 47
                 }
               },
               "sourceRanges":[
@@ -4282,9 +4271,6 @@
                 },
                 {
                   "name": "Feedback Gain"
-                },
-                {
-                  "name": "Slew"
                 }
               ]
             }
