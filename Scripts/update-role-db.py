@@ -99,7 +99,11 @@ roleMap = {
       "Reverb": [], #new
       "Distortion": [], #new
       "Compressor" : [], #new
-      "ModMatrix": [] #new
+      "ModMatrix": [
+         "ModSource", #new
+         "ModDestination", #new
+         "ModAmount" #new
+      ] #new
 }
 
 def getComponentRole(db, parameterRole):
