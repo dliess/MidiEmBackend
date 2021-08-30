@@ -45,7 +45,10 @@
             "name": "Filter"
           },
           {
-            "name": "Envelopes"
+            "name": "Envelope"
+          },
+          {
+            "name": "EnvelopeMisc"
           },
           {
             "name": "Volume/Misc"
@@ -597,7 +600,7 @@
             }
           },
           {
-            "name": "Cutoff",
+            "name": "CutoffFrequency",
             "description": "Adjust the Filter Cutoff Frequency",
             "type": "continous",
             "component": "Filter",
@@ -667,9 +670,9 @@
             }
           },
           {
-            "name": "VCF Attack_1",
+            "name": "Attack",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "Envelope",
             "source": {
               "midi": {
                 "id": {
@@ -681,9 +684,9 @@
             }
           },
           {
-            "name": "VCF Decay Release",
+            "name": "Decay",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "Envelope",
             "source": {
               "midi": {
                 "id": {
@@ -695,9 +698,9 @@
             }
           },
           {
-            "name": "VCF Sustain",
+            "name": "Sustain",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "Envelope",
             "source": {
               "midi": {
                 "id": {
@@ -709,9 +712,9 @@
             }
           },
           {
-            "name": "VCF Attack_2",
+            "name": "Release",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "Envelope",
             "source": {
               "midi": {
                 "id": {
@@ -725,7 +728,7 @@
           {
             "name": "VCA Decay/Release",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "EnvelopeMisc",
             "source": {
               "midi": {
                 "id": {
@@ -739,7 +742,7 @@
           {
             "name": "VCA Sustain",
             "type": "continous",
-            "component": "Envelopes",
+            "component": "EnvelopeMisc",
             "source": {
               "midi": {
                 "id": {
@@ -753,7 +756,7 @@
           {
             "name": "Release Switch",
             "type": "list",
-            "component": "Envelopes",
+            "component": "EnvelopeMisc",
             "source": {
               "midi": {
                 "id": {
@@ -782,7 +785,7 @@
           {
             "name": "Trigger Mode",
             "type": "list",
-            "component": "Envelopes",
+            "component": "EnvelopeMisc",
             "source": {
               "midi": {
                 "id": {
