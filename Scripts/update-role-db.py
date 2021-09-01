@@ -8,92 +8,93 @@ from fuzzywuzzy import fuzz
 roleMap = {
       "Unknown" : [],
       "NoteTrigger" : [
-         "TrackVolume", #new
+         "TrackVolume", 
          "TrigChance",
-         "Swing", # new
-         "Mute", # new
-         "Solo", # new
-         "KeyPrioMode" #new
+         "Swing", 
+         "Mute", 
+         "Solo", 
+         "KeyPrioMode" 
       ],
       "Oscillator" : [
          "Pitch",
          "PitchFinetune",
          "OSCWaveform",
-         "OSCGlide", # new
-         "OSCKeyboardTracking", #new
-         "OSCSync", #new,
-         "OSCSlop", #new
-         "OSCMix", #new
-         "OSCNoise", #new
-         "SubOSCLevel", #new
-         "UnisonMode", #new
-         "UnisonOnOff" #new
+         "OSCGlide", 
+         "OSCKeyboardTracking", 
+         "OSCSync", ,
+         "OSCSlop", 
+         "OSCMix", 
+         "OSCNoise", 
+         "SubOSCLevel", 
+         "UnisonMode", 
+         "UnisonOnOff" 
       ],
       "Amp" : [
-         "InitialVolume", #new
+         "InitialVolume", 
          "Volume",
          "Pan",
          "DelaySend",
          "ReverbSend",
-         "FeedbackVolume", #new
-         "FeedbackGain" #new
+         "FeedbackVolume", 
+         "FeedbackGain" 
       ],
       "Filter" : [
          "FilterCutoff",
          "FilterType",
          "FilterResonance",
-         "FilterSlope",  #new
-         "FilterKeyAmount", #new
-         "FilterAudioModuation" #new
+         "FilterSlope",  
+         "FilterKeyAmount", 
+         "FilterAudioModuation" 
       ],
-      "LPFilter" : [           # new
-         "LPFilterCutoff",     # new
-         "LPFilterResonance",  # new
-         "LPFilterSlope",       # new
-         "LPFilterKeyAmount", #new
-         "LPFilterAudioModuation" #new
+      "LPFilter" : [           
+         "LPFilterCutoff",     
+         "LPFilterResonance",  
+         "LPFilterSlope",       
+         "LPFilterKeyAmount", 
+         "LPFilterAudioModuation" 
       ],
-      "HPFilter" : [           # new
-         "HPFilterCutoff",     # new
-         "HPFilterResonance",  # new
-         "HPFilterSlope",       # new
-         "HPFilterKeyAmount", #new
-         "HPFilterAudioModuation" #new
+      "HPFilter" : [           
+         "HPFilterCutoff",     
+         "HPFilterResonance",  
+         "HPFilterSlope",       
+         "HPFilterKeyAmount", 
+         "HPFilterAudioModuation" 
       ],
-      "LPHPFilter" : [           # new
-         "LPHPFilterCutoff",     # new
-         "LPHPFilterResonance",  # new
-         "LPHPFilterSlope",       # new
-         "LPHPFilterKeyAmount", #new
-         "LPHPFilterAudioModuation" #new
+      "LPHPFilter" : [           
+         "LPHPFilterCutoff",     
+         "LPHPFilterResonance",  
+         "LPHPFilterSlope",       
+         "LPHPFilterKeyAmount", 
+         "LPHPFilterAudioModuation" 
       ],
       "Envelope" : [
-         "EnvAmount", #new
-         "EnvVelAmount", #new
-         "EnvRepeat", #new
-         "EnvDelay", #new
-         "EnvDestination", #new
+         "AmpEnvAmount",
+         "EnvAmount", 
+         "EnvVelAmount", 
+         "EnvRepeat", 
+         "EnvDelay", 
+         "EnvDestination", 
          "Attack",
          "Decay",
          "Sustain",
          "Release"
       ],
       "LFO" : [
-         "LFOAmount", # new
+         "LFOAmount", 
          "LFOSpeed",
          "LFOMultiplier",
          "LFOWaveform",
          "LFODestination",
          "LFODepth",
-         "LFOKeySync" #new
+         "LFOKeySync" 
       ],
       "Arpeggiator" : [
-         "ArpOnOff", #new
-         "ArpMode" #new
+         "ArpOnOff", 
+         "ArpMode" 
       ],
       "Sequencer" : [
-         "SequencerOnOff", #new
-         "SequenceTrig" #new
+         "SequencerOnOff", 
+         "SequenceTrig" 
       ],
       "Sample" : [
          "SampleStart",
@@ -102,24 +103,25 @@ roleMap = {
          "SampleLoop",
          "SampleReverse",
          "SampleRate",
-         "SampleBitReduction", # new
-         "SampleSlot" #new
+         "SampleBitReduction", 
+         "SampleSlot" 
       ],
       "Effects" : [],
-      "Delay": [], #new
-      "Reverb": [], #new
-      "Distortion": [], #new
-      "Compressor" : [], #new
+      "Delay": [], 
+      "Reverb": [], 
+      "Chorus": [], 
+      "Distortion": [], 
+      "Compressor" : [], 
       "ModMatrix": [
-         "ModSource", #new
-         "ModDestination", #new
-         "ModAmount", #new
-         "PitchBendRange" #new
-      ], #new
+         "ModSource", 
+         "ModDestination", 
+         "ModAmount", 
+         "PitchBendRange" 
+      ], 
       "Tempo": [
-         "BPM", #new
-         "ClockDivide" #new
-      ] #new
+         "BPM", 
+         "ClockDivide" 
+      ] 
 }
 
 def getComponentRole(db, parameterRole):
