@@ -593,11 +593,11 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::Mute: return 0.0;
       case Parameter::Role::Solo: return 0.0;
       case Parameter::Role::KeyPrioMode: return 0.0;
-      case Parameter::Role::Pitch: return 0.0;
+      case Parameter::Role::Pitch: return 0.5;
       case Parameter::Role::PitchFinetune: return 0.5;
       case Parameter::Role::OSCWaveform: return 1;
       case Parameter::Role::OSCGlide: return 0.0;
-      case Parameter::Role::OSCKeyboardTracking: return 0.0;
+      case Parameter::Role::OSCKeyboardTracking: return 2;
       case Parameter::Role::OSCSync: return 0.0;
       case Parameter::Role::OSCSlop: return 0.0;
       case Parameter::Role::OSCMix: return 0.0;
@@ -606,7 +606,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::UnisonMode: return 0.0;
       case Parameter::Role::UnisonOnOff: return 0.0;
       case Parameter::Role::InitialVolume: return 0.0;
-      case Parameter::Role::Volume: return 0.8;
+      case Parameter::Role::Volume: return 0.4;
       case Parameter::Role::Pan: return 0.5;
       case Parameter::Role::DelaySend: return 0.0;
       case Parameter::Role::ReverbSend: return 0.0;
@@ -633,7 +633,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::LPHPFilterSlope: return 0.0;
       case Parameter::Role::LPHPFilterKeyAmount: return 0.0;
       case Parameter::Role::LPHPFilterAudioModuation: return 0.0;
-      case Parameter::Role::AmpEnvAmount: return 1.0;
+      case Parameter::Role::AmpEnvAmount: return 0.99;
       case Parameter::Role::EnvAmount: return 0.5;
       case Parameter::Role::EnvVelAmount: return 0.0;
       case Parameter::Role::EnvRepeat: return 0.0;
@@ -641,7 +641,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::EnvDestination: return 1;
       case Parameter::Role::Attack: return 0.0;
       case Parameter::Role::Decay: return 0.0;
-      case Parameter::Role::Sustain: return 1.0;
+      case Parameter::Role::Sustain: return 0.5;
       case Parameter::Role::Release: return 0.0;
       case Parameter::Role::LFOAmount: return 0.0;
       case Parameter::Role::LFOSpeed: return 0.0;
@@ -655,8 +655,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::SequencerOnOff: return 1;
       case Parameter::Role::SequenceTrig: return 0.0;
       case Parameter::Role::SampleStart: return 0.0;
-      case Parameter::Role::SampleEnd: return 1.0;
-      case Parameter::Role::SampleLength: return 1.0;
+      case Parameter::Role::SampleEnd: return 0.99;
+      case Parameter::Role::SampleLength: return 0.99;
       case Parameter::Role::SampleLoop: return 0.0;
       case Parameter::Role::SampleReverse: return 0.0;
       case Parameter::Role::SampleRate: return 0.5;
@@ -664,7 +664,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::SampleSlot: return 1;
       case Parameter::Role::ModSource: return 1;
       case Parameter::Role::ModDestination: return 1;
-      case Parameter::Role::ModAmount: return 0.0;
+      case Parameter::Role::ModAmount: return 0.5;
       case Parameter::Role::PitchBendRange: return 0.0;
       case Parameter::Role::BPM: return 0.0;
       case Parameter::Role::ClockDivide: return 0.0;
