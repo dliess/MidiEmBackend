@@ -4971,6 +4971,926 @@
             }
           },
           {
+            "name": "Mod Wheel Amount",
+            "type": "continous-bipolar",
+            "component": "Mod",
+            "role" : "ModAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 81
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
+                }
+              }
+            }
+          },
+          {
+            "name": "Mod Wheel Dest",
+            "type": "list",
+            "component": "Mod",
+            "role": "ModDestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 82
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 47
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": "LFO1 Amt"
+                },
+                {
+                  "name": "LFO2 Amt"
+                },
+                {
+                  "name": "LFO3 Amt"
+                },
+                {
+                  "name": "LFO4 Amt"
+                },
+                {
+                  "name": "All LFO Amt"
+                },
+                {
+                  "name": "Filter Env Amt"
+                },
+                {
+                  "name": "Amp Env Amt"
+                },
+                {
+                  "name": "Env3 Amt"
+                },
+                {
+                  "name": "All Env Amts"
+                },
+                {
+                  "name": "Env1 Attack"
+                },
+                {
+                  "name": "Env2 Attack"
+                },
+                {
+                  "name": "Env3 Attack"
+                },
+                {
+                  "name": "All Env Attacks"
+                },
+                {
+                  "name": "Env1 Decay"
+                },
+                {
+                  "name": "Env2 Decay"
+                },
+                {
+                  "name": "Env3 Decay"
+                },
+                {
+                  "name": "All Env Decays"
+                },
+                {
+                  "name": "Env1 Release"
+                },
+                {
+                  "name": "Env2 Release"
+                },
+                {
+                  "name": "Env3 Release"
+                },
+                {
+                  "name": "All Env Releases"
+                },
+                {
+                  "name": "Mod1 Amt"
+                },
+                {
+                  "name": "Mod2 Amt"
+                },
+                {
+                  "name": "Mod3 Amt"
+                },
+                {
+                  "name": "Mod4 Amt"
+                },
+                {
+                  "name": "Feedback Volume"
+                },
+                {
+                  "name": "Sub Osc 1 Level"
+                },
+                {
+                  "name": "Sub Osc 2 Level"
+                },
+                {
+                  "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Pressure Amount",
+            "type": "continous-bipolar",
+            "component": "Mod",
+            "role" : "ModAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 83
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
+                }
+              }
+            }
+          },
+          {
+            "name": "Pressure Dest",
+            "type": "list",
+            "component": "Mod",
+            "role": "ModDestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 84
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 47
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": "LFO1 Amt"
+                },
+                {
+                  "name": "LFO2 Amt"
+                },
+                {
+                  "name": "LFO3 Amt"
+                },
+                {
+                  "name": "LFO4 Amt"
+                },
+                {
+                  "name": "All LFO Amt"
+                },
+                {
+                  "name": "Filter Env Amt"
+                },
+                {
+                  "name": "Amp Env Amt"
+                },
+                {
+                  "name": "Env3 Amt"
+                },
+                {
+                  "name": "All Env Amts"
+                },
+                {
+                  "name": "Env1 Attack"
+                },
+                {
+                  "name": "Env2 Attack"
+                },
+                {
+                  "name": "Env3 Attack"
+                },
+                {
+                  "name": "All Env Attacks"
+                },
+                {
+                  "name": "Env1 Decay"
+                },
+                {
+                  "name": "Env2 Decay"
+                },
+                {
+                  "name": "Env3 Decay"
+                },
+                {
+                  "name": "All Env Decays"
+                },
+                {
+                  "name": "Env1 Release"
+                },
+                {
+                  "name": "Env2 Release"
+                },
+                {
+                  "name": "Env3 Release"
+                },
+                {
+                  "name": "All Env Releases"
+                },
+                {
+                  "name": "Mod1 Amt"
+                },
+                {
+                  "name": "Mod2 Amt"
+                },
+                {
+                  "name": "Mod3 Amt"
+                },
+                {
+                  "name": "Mod4 Amt"
+                },
+                {
+                  "name": "Feedback Volume"
+                },
+                {
+                  "name": "Sub Osc 1 Level"
+                },
+                {
+                  "name": "Sub Osc 2 Level"
+                },
+                {
+                  "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Breath Amount",
+            "type": "continous-bipolar",
+            "component": "Mod",
+            "role" : "ModAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 85
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
+                }
+              }
+            }
+          },
+          {
+            "name": "Breath Dest",
+            "type": "list",
+            "component": "Mod",
+            "role": "ModDestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 86
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 47
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": "LFO1 Amt"
+                },
+                {
+                  "name": "LFO2 Amt"
+                },
+                {
+                  "name": "LFO3 Amt"
+                },
+                {
+                  "name": "LFO4 Amt"
+                },
+                {
+                  "name": "All LFO Amt"
+                },
+                {
+                  "name": "Filter Env Amt"
+                },
+                {
+                  "name": "Amp Env Amt"
+                },
+                {
+                  "name": "Env3 Amt"
+                },
+                {
+                  "name": "All Env Amts"
+                },
+                {
+                  "name": "Env1 Attack"
+                },
+                {
+                  "name": "Env2 Attack"
+                },
+                {
+                  "name": "Env3 Attack"
+                },
+                {
+                  "name": "All Env Attacks"
+                },
+                {
+                  "name": "Env1 Decay"
+                },
+                {
+                  "name": "Env2 Decay"
+                },
+                {
+                  "name": "Env3 Decay"
+                },
+                {
+                  "name": "All Env Decays"
+                },
+                {
+                  "name": "Env1 Release"
+                },
+                {
+                  "name": "Env2 Release"
+                },
+                {
+                  "name": "Env3 Release"
+                },
+                {
+                  "name": "All Env Releases"
+                },
+                {
+                  "name": "Mod1 Amt"
+                },
+                {
+                  "name": "Mod2 Amt"
+                },
+                {
+                  "name": "Mod3 Amt"
+                },
+                {
+                  "name": "Mod4 Amt"
+                },
+                {
+                  "name": "Feedback Volume"
+                },
+                {
+                  "name": "Sub Osc 1 Level"
+                },
+                {
+                  "name": "Sub Osc 2 Level"
+                },
+                {
+                  "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Velocity Amount",
+            "type": "continous-bipolar",
+            "component": "Mod",
+            "role" : "ModAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 87
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
+                }
+              }
+            }
+          },
+          {
+            "name": "Velocity Dest",
+            "type": "list",
+            "component": "Mod",
+            "role": "ModDestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 88
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 47
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": "LFO1 Amt"
+                },
+                {
+                  "name": "LFO2 Amt"
+                },
+                {
+                  "name": "LFO3 Amt"
+                },
+                {
+                  "name": "LFO4 Amt"
+                },
+                {
+                  "name": "All LFO Amt"
+                },
+                {
+                  "name": "Filter Env Amt"
+                },
+                {
+                  "name": "Amp Env Amt"
+                },
+                {
+                  "name": "Env3 Amt"
+                },
+                {
+                  "name": "All Env Amts"
+                },
+                {
+                  "name": "Env1 Attack"
+                },
+                {
+                  "name": "Env2 Attack"
+                },
+                {
+                  "name": "Env3 Attack"
+                },
+                {
+                  "name": "All Env Attacks"
+                },
+                {
+                  "name": "Env1 Decay"
+                },
+                {
+                  "name": "Env2 Decay"
+                },
+                {
+                  "name": "Env3 Decay"
+                },
+                {
+                  "name": "All Env Decays"
+                },
+                {
+                  "name": "Env1 Release"
+                },
+                {
+                  "name": "Env2 Release"
+                },
+                {
+                  "name": "Env3 Release"
+                },
+                {
+                  "name": "All Env Releases"
+                },
+                {
+                  "name": "Mod1 Amt"
+                },
+                {
+                  "name": "Mod2 Amt"
+                },
+                {
+                  "name": "Mod3 Amt"
+                },
+                {
+                  "name": "Mod4 Amt"
+                },
+                {
+                  "name": "Feedback Volume"
+                },
+                {
+                  "name": "Sub Osc 1 Level"
+                },
+                {
+                  "name": "Sub Osc 2 Level"
+                },
+                {
+                  "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Foot Control Amount",
+            "type": "continous-bipolar",
+            "component": "Mod",
+            "role" : "ModAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 89
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 254
+                }
+              }
+            }
+          },
+          {
+            "name": "Foot Control Dest",
+            "type": "list",
+            "component": "Mod",
+            "role": "ModDestination",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 90
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 47
+                }
+              },
+              "sourceRanges":[
+                {
+                  "name": "Off"
+                },
+                {
+                  "name": "OSC1 Freq"
+                },
+                {
+                  "name": "OSC2 Freq"
+                },
+                {
+                  "name": "OSC1 & OSC2 Freq"
+                },
+                {
+                  "name": "OSC Mix"
+                },
+                {
+                  "name": "Noise Level"
+                },
+                {
+                  "name": "OSC1 Pulse Width"
+                },
+                {
+                  "name": "OSC2 Pulse Width"
+                },
+                {
+                  "name": "OSC1 & OSC2 Pulse Width"
+                },
+                {
+                  "name": "Filter Freq"
+                },
+                {
+                  "name": "Resonance"
+                },
+                {
+                  "name": "Filter Audio Mod Amt"
+                },
+                {
+                  "name": "VCA Level"
+                },
+                {
+                  "name": "Pan"
+                },
+                {
+                  "name": "LFO1 Freq"
+                },
+                {
+                  "name": "LFO2 Freq"
+                },
+                {
+                  "name": "LFO3 Freq"
+                },
+                {
+                  "name": "LFO4 Freq"
+                },
+                {
+                  "name": "All LFO Freq"
+                },
+                {
+                  "name": "LFO1 Amt"
+                },
+                {
+                  "name": "LFO2 Amt"
+                },
+                {
+                  "name": "LFO3 Amt"
+                },
+                {
+                  "name": "LFO4 Amt"
+                },
+                {
+                  "name": "All LFO Amt"
+                },
+                {
+                  "name": "Filter Env Amt"
+                },
+                {
+                  "name": "Amp Env Amt"
+                },
+                {
+                  "name": "Env3 Amt"
+                },
+                {
+                  "name": "All Env Amts"
+                },
+                {
+                  "name": "Env1 Attack"
+                },
+                {
+                  "name": "Env2 Attack"
+                },
+                {
+                  "name": "Env3 Attack"
+                },
+                {
+                  "name": "All Env Attacks"
+                },
+                {
+                  "name": "Env1 Decay"
+                },
+                {
+                  "name": "Env2 Decay"
+                },
+                {
+                  "name": "Env3 Decay"
+                },
+                {
+                  "name": "All Env Decays"
+                },
+                {
+                  "name": "Env1 Release"
+                },
+                {
+                  "name": "Env2 Release"
+                },
+                {
+                  "name": "Env3 Release"
+                },
+                {
+                  "name": "All Env Releases"
+                },
+                {
+                  "name": "Mod1 Amt"
+                },
+                {
+                  "name": "Mod2 Amt"
+                },
+                {
+                  "name": "Mod3 Amt"
+                },
+                {
+                  "name": "Mod4 Amt"
+                },
+                {
+                  "name": "Feedback Volume"
+                },
+                {
+                  "name": "Sub Osc 1 Level"
+                },
+                {
+                  "name": "Sub Osc 2 Level"
+                },
+                {
+                  "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
             "name": "Arp On/Off",
             "type": "list",
             "component": "Arpeggiator",
