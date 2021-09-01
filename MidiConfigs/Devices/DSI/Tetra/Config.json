@@ -1031,8 +1031,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 30
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 114
                 }
               }
             }
@@ -1045,8 +1046,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 31
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 115
                 }
               }
             }
@@ -1059,8 +1061,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 52
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 116
                 }
               }
             }
@@ -1073,8 +1076,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 53
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 110
                 }
               }
             }
@@ -5886,6 +5890,241 @@
                 },
                 {
                   "name": "Feedback Gain"
+                }
+              ]
+            }
+          },
+          {
+            "name": "BPM Tempo",
+            "type": "continous",
+            "component": "Tempo",
+            "role" : "BPM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 91
+                },
+                "sourceValueRange": {
+                  "from": 30,
+                  "to": 250
+                }
+              }
+            }
+          },
+          {
+            "name": "Clock Divide",
+            "type": "list",
+            "component": "Tempo",
+            "role" : "ClockDivide",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 92
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "1/2 Note"
+                },
+                {
+                  "name": "1/4 Note"
+                },
+                {
+                  "name": "1/8 Note"
+                },
+                {
+                  "name": "1/8 Note 1/2 Swing"
+                },
+                {
+                  "name": "1/8 Note Full Swing"
+                },
+                {
+                  "name": "1/8 Note Triplets"
+                },
+                {
+                  "name": "1/16 Note"
+                },
+                {
+                  "name": "1/16 Note 1/2 Swing"
+                },
+                {
+                  "name": "1/16 Note Full Swing"
+                },
+                {
+                  "name": "1/16 Note Triplets"
+                },
+                {
+                  "name": "1/32 Note"
+                },
+                {
+                  "name": "1/32 Note Triplets"
+                },
+                {
+                  "name": "1/64 Note Triplets"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Pitch Bend Range",
+            "type": "continous",
+            "component": "Mod",
+            "role" : "PitchBendRange",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 93
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequencer Trigger",
+            "type": "list",
+            "component": "Sequencer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 94
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Normal"
+                },
+                {
+                  "name": "Normal, no reset"
+                },
+                {
+                  "name": "No Gate"
+                },
+                {
+                  "name": "No Gate, no reset"
+                },
+                {
+                  "name": "Key step"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Key Mode",
+            "type": "list",
+            "component": "NoteTrigger",
+            "role": "KeyPrioMode",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 95
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 5
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Low Note Prio"
+                },
+                {
+                  "name": "Low Note Prio w retrig"
+                },
+                {
+                  "name": "High Note Prio"
+                },
+                {
+                  "name": "High Note Prio w retrig"
+                },
+                {
+                  "name": "Last Note Prio"
+                },
+                {
+                  "name": "Last Note Prio w retrig"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Unison Mode",
+            "type": "list",
+            "component": "Oscillator",
+            "role": "UnisonMode",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 96
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 4
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "1 Voice"
+                },
+                {
+                  "name": "All Voices"
+                },
+                {
+                  "name": "All Voices Detune 1"
+                },
+                {
+                  "name": "All Voices Detune 2"
+                },
+                {
+                  "name": "All Voices Detune 3"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Unison On/Off",
+            "type": "list",
+            "component": "Oscillator",
+            "role": "UnisonOnOff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 0,
+                  "idLsb": 99
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 1
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "OFF"
+                },
+                {
+                  "name": "ON"
                 }
               ]
             }

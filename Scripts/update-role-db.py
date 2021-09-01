@@ -12,7 +12,8 @@ roleMap = {
          "TrigChance",
          "Swing", # new
          "Mute", # new
-         "Solo" # new
+         "Solo", # new
+         "KeyPrioMode" #new
       ],
       "Oscillator" : [
          "Pitch",
@@ -24,7 +25,9 @@ roleMap = {
          "OSCSlop", #new
          "OSCMix", #new
          "OSCNoise", #new
-         "SubOSCLevel" #new
+         "SubOSCLevel", #new
+         "UnisonMode", #new
+         "UnisonOnOff" #new
       ],
       "Amp" : [
          "InitialVolume", #new
@@ -110,7 +113,12 @@ roleMap = {
       "ModMatrix": [
          "ModSource", #new
          "ModDestination", #new
-         "ModAmount" #new
+         "ModAmount", #new
+         "PitchBendRange" #new
+      ], #new
+      "Tempo": [
+         "BPM", #new
+         "ClockDivide" #new
       ] #new
 }
 
