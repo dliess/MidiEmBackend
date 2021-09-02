@@ -38,8 +38,8 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       {
          return;
       }
-      LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
-            toString(midiMsg));
+      //LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
+      //      toString(midiMsg));
       auto iter = m_map.find(midiId);
       if (m_map.end() == iter)
       {
