@@ -298,80 +298,80 @@
         "name": "MelodicEngine",
         "components": [
           {
-            "name": "Filter"
+            "name": "LPFilter",
+            "role": "LPFilter"
           },
           {
-            "name": "Shape"
+            "name": "HPFilter",
+            "role": "HPFilter"
           },
           {
-            "name": "Amp"
+            "name": "Env1 (Amp)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Env2 (Filt)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Oscillator",
+            "role": "Oscillator"
           }
         ],
         "parameters": [
           {
-            "name": "Pitch",
-            "description": "Adjusts the Filter Cutoff",
+            "name": "Cutoff",
             "type": "continous",
-            "component": "Filter",
+            "component": "LPFilter",
+            "role": "LPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 14
+                  "id": 51
                 }
               }
             }
           },
           {
-            "name": "Filter Cutoff",
-            "description": "Adjusts the Filter Cutoff",
-            "type": "continous",
-            "component": "Filter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "Filter Resonance",
+            "name": "Resonance",
             "description": "Adjusts the Filter Resonance",
             "type": "continous",
-            "component": "Filter",
+            "component": "LPFilter",
+            "role": "LPFilterResonance",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 4
+                  "id": 52
                 }
               }
             }
           },
           {
-            "name": "Filt Env Amount",
+            "name": "Cutoff",
             "type": "continous",
-            "component": "Filter",
+            "component": "HPFilter",
+            "role": "HPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 2
+                  "id": 54
                 }
               }
             }
           },
           {
-            "name": "Noise",
+            "name": "Resonance",
             "type": "continous",
-            "component": "Shape",
+            "component": "HPFilter",
+            "role": "HPFilterResonance",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 5
+                  "id": 55
                 }
               }
             }
@@ -379,12 +379,13 @@
           {
             "name": "Attack",
             "type": "continous",
-            "component": "Amp",
+            "component": "Env1 (Amp)",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 6
+                  "id": 61
                 }
               }
             }
@@ -392,12 +393,13 @@
           {
             "name": "Decay",
             "type": "continous",
-            "component": "Amp",
+            "component": "Env1 (Amp)",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 7
+                  "id": 62
                 }
               }
             }
@@ -405,12 +407,13 @@
           {
             "name": "Sustain",
             "type": "continous",
-            "component": "Amp",
+            "component": "Env1 (Amp)",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 8
+                  "id": 63
                 }
               }
             }
@@ -418,64 +421,83 @@
           {
             "name": "Release",
             "type": "continous",
-            "component": "Amp",
+            "component": "Env1 (Amp)",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 9
+                  "id": 64
                 }
               }
             }
           },
           {
-            "name": "Filt Env Attack",
+            "name": "Attack",
             "type": "continous",
-            "component": "Filter",
+            "component": "Env2 (Filt)",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 10
+                  "id": 66
                 }
               }
             }
           },
           {
-            "name": "Filt Env Decay",
+            "name": "Decay",
             "type": "continous",
-            "component": "Filter",
+            "component": "Env2 (Filt)",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 11
+                  "id": 67
                 }
               }
             }
           },
           {
-            "name": "Filt Env Sustain",
+            "name": "Sustain",
             "type": "continous",
-            "component": "Filter",
+            "component": "Env2 (Filt)",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 12
+                  "id": 68
                 }
               }
             }
           },
           {
-            "name": "Filt Env Release",
+            "name": "Release",
             "type": "continous",
-            "component": "Filter",
+            "component": "Env2 (Filt)",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 13
+                  "id": 69
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Noise",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
                 }
               }
             }

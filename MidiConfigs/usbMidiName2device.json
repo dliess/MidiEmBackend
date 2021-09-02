@@ -16,5 +16,7 @@
     "therapKid:therapKid MIDI 1" : "TwistedElectrons/TherapKid",
     "DSI Tetra:DSI Tetra MIDI 1" : "DSI/Tetra",
     "Elektron Analog Rytm:Elektron Analog Rytm MIDI 1" : "Elektron/AnalogRytm_Mk1",
-    "MPD218:MPD218 MIDI 1" : "Akai/MPD218"
+    "MPD218:MPD218 MIDI 1" : "Akai/MPD218",
+    "Rocket:Rocket MIDI 1" : "Waldorf/rocket",
+    "Streichfett:Streichfett MIDI 1": "Waldorf/streichfett"
 }

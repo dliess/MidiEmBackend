@@ -42,13 +42,16 @@
             "name": "Mixer"
           },
           {
-            "name": "Filter"
+            "name": "Filter",
+            "role": "LPFilter"
           },
           {
-            "name": "Envelope"
+            "name": "Filt Envelope",
+            "role": "Envelope"
           },
           {
-            "name": "EnvelopeMisc"
+            "name": "Amp Envelope",
+            "role": "Envelope"
           },
           {
             "name": "Volume/Misc"
@@ -604,6 +607,7 @@
             "description": "Adjust the Filter Cutoff Frequency",
             "type": "continous",
             "component": "Filter",
+            "role": "LPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -618,6 +622,7 @@
             "name": "Resonance",
             "type": "continous",
             "component": "Filter",
+            "role": "LPFilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -632,6 +637,7 @@
             "name": "EG Amount",
             "type": "continous-bipolar",
             "component": "Filter",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -672,7 +678,8 @@
           {
             "name": "Attack",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Filt Envelope",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -686,7 +693,8 @@
           {
             "name": "Decay",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Filt Envelope",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -700,7 +708,8 @@
           {
             "name": "Sustain",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Filt Envelope",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -712,9 +721,10 @@
             }
           },
           {
-            "name": "Release",
+            "name": "Attack",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Amp Envelope",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -728,7 +738,8 @@
           {
             "name": "VCA Decay/Release",
             "type": "continous",
-            "component": "EnvelopeMisc",
+            "component": "Amp Envelope",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -742,7 +753,8 @@
           {
             "name": "VCA Sustain",
             "type": "continous",
-            "component": "EnvelopeMisc",
+            "component": "Amp Envelope",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -756,7 +768,7 @@
           {
             "name": "Release Switch",
             "type": "list",
-            "component": "EnvelopeMisc",
+            "component": "Amp Envelope",
             "source": {
               "midi": {
                 "id": {
@@ -785,7 +797,7 @@
           {
             "name": "Trigger Mode",
             "type": "list",
-            "component": "EnvelopeMisc",
+            "component": "Amp Envelope",
             "source": {
               "midi": {
                 "id": {
