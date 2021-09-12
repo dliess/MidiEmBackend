@@ -1172,10 +1172,12 @@
               },
               "sourceRanges":[
                 {
-                  "name": "2-Pole"
+                  "name": "2-Pole",
+                  "role": "FilterTwoPole"
                 },
                 {
-                  "name": "4-Pole"
+                  "name": "4-Pole",
+                  "role": "FilterFourPole"
                 }
               ]
             }

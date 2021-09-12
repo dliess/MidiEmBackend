@@ -99,6 +99,25 @@ struct ParameterSourceRange
 {
    std::string name;
    std::optional<ValueRange> range;
+   enum class Role
+   {
+      Unknown,
+      Off,
+      On,
+      FilterLowpass,
+      FilterHighpass,
+      FilterBandpass,
+      FilterPeak,
+      FilterTwoPole,
+      FilterFourPole,
+      WaveFormSawtooth,
+      WaveFormTriangle,
+      WaveFormSquare,
+      WaveFormPulsewidth
+   };
+   std::optional<Role> role;
+   static inline std::string role2String(Role role);
+   static inline Role roleFromString(const std::string& roleStr);
 };
 
 struct ParameterSourceValueRange
@@ -225,6 +244,8 @@ struct Parameter
    static inline Role roleFromString(const std::string& roleStr);
 
    inline float getListValueByIndex(int idx) const noexcept;
+   inline std::optional<float> getValueByListRole(
+       ParameterSourceRange::Role role) const noexcept;
 };
 
 struct EngineBase
@@ -295,8 +316,10 @@ struct Section
    static int linSearchByName(const std::vector<T>& vector,
                               const std::string& name) noexcept;
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
+
 private:
-   inline float _getInitialValueFor(int voiceId, int parameterId) const noexcept;
+   inline mpark::variant<float, ParameterSourceRange::Role> _getInitialValueFor(
+       int voiceId, int parameterId) const noexcept;
 };
 
 }   // namespace base::musicDevice::description::sound
