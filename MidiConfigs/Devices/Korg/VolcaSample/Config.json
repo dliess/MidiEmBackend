@@ -117,19 +117,49 @@
                 0.859375,
                 0.875
               ]
+            },
+            "velocityRouting": {
+              "destinationParameter": "Level"
             }
           }
         },
         "components": [
           {
-            "name": "Main"
+            "name": "Amp",
+            "role": "Amp"
+          },
+          {
+            "name": "Sample",
+            "role": "Sample"
+          },
+          {
+            "name": "Filter",
+            "role": "LPFilter"
+          },
+          {
+            "name": "AmpEnvelope",
+            "role": "Envelope",
+            "setings": {
+              "Sustain": 0,
+              "Release": 0
+            }
+          },
+          {
+            "name": "PitchEnvelope",
+            "role": "Envelope",
+            "setings": {
+              "Sustain": 0,
+              "Release": 0
+            }
           }
         ],
         "parameters": [
           {
             "name": "Level",
             "type": "continous",
-            "component": "Main",
+            "component": "Amp",
+            "role": "Volume",
+            "defaultValue" : 0.99,
             "source": {
               "midi": {
                 "id": {
@@ -141,8 +171,9 @@
           },
           {
             "name": "Pan",
-            "type": "continous",
-            "component": "Main",
+            "type": "continous-bipolar",
+            "component": "Amp",
+            "role": "Pan",
             "source": {
               "midi": {
                 "id": {
@@ -155,7 +186,8 @@
           {
             "name": "SampleStartPoint",
             "type": "continous",
-            "component": "Main",
+            "component": "Sample",
+            "role": "SampleStart",
             "source": {
               "midi": {
                 "id": {
@@ -168,7 +200,8 @@
           {
             "name": "SampleLength",
             "type": "continous",
-            "component": "Main",
+            "component": "Sample",
+            "role": "SampleLength",
             "source": {
               "midi": {
                 "id": {
@@ -179,9 +212,10 @@
             }
           },
           {
-            "name": "HighPassFilterCutoff",
+            "name": "Cutoff",
             "type": "continous",
-            "component": "Main",
+            "component": "Filter",
+            "role": "LPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -194,7 +228,8 @@
           {
             "name": "Pitch",
             "type": "continous",
-            "component": "Main",
+            "component": "Sample",
+            "role": "SampleRate",
             "source": {
               "midi": {
                 "id": {
@@ -205,9 +240,10 @@
             }
           },
           {
-            "name": "PitchEnvelopeIntensity",
-            "type": "continous",
-            "component": "Main",
+            "name": "Intensity",
+            "type": "continous-bipolar",
+            "component": "PitchEnvelope",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -218,9 +254,10 @@
             }
           },
           {
-            "name": "PitchEnvelopeAttack",
+            "name": "Attack",
             "type": "continous",
-            "component": "Main",
+            "component": "PitchEnvelope",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -231,9 +268,10 @@
             }
           },
           {
-            "name": "PitchEnvelopeDecay",
+            "name": "Decay",
             "type": "continous",
-            "component": "Main",
+            "component": "PitchEnvelope",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -244,9 +282,10 @@
             }
           },
           {
-            "name": "AmpEnvelopeAttack",
+            "name": "Attack",
             "type": "continous",
-            "component": "Main",
+            "component": "AmpEnvelope",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -257,9 +296,11 @@
             }
           },
           {
-            "name": "AmpEnvelopeDecay",
+            "name": "Decay",
             "type": "continous",
-            "component": "Main",
+            "component": "AmpEnvelope",
+            "role": "Decay",
+            "defaultValue" : 0.99,
             "source": {
               "midi": {
                 "id": {
