@@ -486,10 +486,12 @@
               },
               "sourceRanges": [
                 {
-                  "name": "OFF"
+                  "name": "OFF",
+                  "role": "Off"
                 },
                 {
-                  "name": "ON"
+                  "name": "ON",
+                  "role": "On"
                 }
               ]
             }
@@ -551,7 +553,8 @@
               },
               "sourceRanges": [
                 {
-                  "name": "OSC Off"
+                  "name": "OSC Off",
+                  "role": "Off"
                 },
                 {
                   "name": "Sawtooth"
