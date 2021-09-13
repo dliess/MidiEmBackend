@@ -282,6 +282,19 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
        },
        voiceId_);
 }
+
+inline 
+LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
+{
+   return elementContainer(voiceId).parameters[parameterId].lfo;
+}
+
+inline 
+const LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) const noexcept
+{
+   return elementContainer(voiceId).parameters[parameterId].lfo;
+}
+
 inline std::optional<std::pair<float, float>>
 ParameterStorage::Element::uiAsksForChangedValues() noexcept
 {

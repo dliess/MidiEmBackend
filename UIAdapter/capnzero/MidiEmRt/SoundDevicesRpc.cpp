@@ -182,3 +182,108 @@ void SoundDevicesRpc::blankAllVoiceParameters(
       iter->second->soundHandler->blankAllVoiceParameters();
    }
 }
+
+void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
+                                     ::capnzero::UInt8 voiceIndex,
+                                     ::capnzero::Int16 paramIdx,
+                                     ::capnzero::MidiEmRt::LFOWaveform waveform)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->setLFOWaveform(
+          voiceIndex, paramIdx,
+          static_cast<base::musicDevice::sound::LFO::Waveform>(waveform));
+   }
+}
+
+void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
+                                     ::capnzero::UInt8 voiceIndex,
+                                     ::capnzero::Int16 paramIdx,
+                                     ::capnzero::Int8 increment)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->incLFOWaveform(voiceIndex, paramIdx,
+                                                 increment);
+   }
+}
+
+void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
+                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int16 paramIdx,
+                                      ::capnzero::Float32 amplitude)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->setLFOAmplitude(voiceIndex, paramIdx,
+                                                  amplitude);
+   }
+}
+
+void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
+                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int16 paramIdx,
+                                      ::capnzero::Float32 increment)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->incLFOAmplitude(voiceIndex, paramIdx,
+                                                  increment);
+   }
+}
+
+void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
+                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int16 paramIdx,
+                                      ::capnzero::Float32 frequency)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->setLFOFrequency(voiceIndex, paramIdx,
+                                                  frequency);
+   }
+}
+
+void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
+                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int16 paramIdx,
+                                      ::capnzero::Float32 increment)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->incLFOFrequency(voiceIndex, paramIdx,
+                                                  increment);
+   }
+}
+
+void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
+                                      ::capnzero::UInt8 voiceIndex,
+                                      const ::capnzero::TextView& presetName)
+{
+   // TODO
+   return;
+}

@@ -8,6 +8,26 @@
 
 namespace base::musicDevice
 {
+
+inline MusicDeviceContainer::MusicDeviceContainer() : Super()
+{
+   registerForAdd([this](const std::shared_ptr<MusicDevice>& ptr){
+      if(ptr->soundHandler)
+      {
+         const auto uuid = ptr->id();
+         ptr->soundHandler->registerLFOWaveformChangeCB([this, &uuid](int voiceId, int paramId, sound::LFO::Waveform waveform){
+            for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
+         });
+         ptr->soundHandler->registerLFOAmplitudeChangeCB([this, &uuid](int voiceId, int paramId, float amplitude){
+            for(auto& cb : m_lFOAmplitudeChangeCB) cb(uuid, voiceId, paramId, amplitude);
+         });
+         ptr->soundHandler->registerLFOFrequencyChangeCB([this, &uuid](int voiceId, int paramId, float frequency){
+            for(auto& cb : m_lFOFrequencyChangeCB) cb(uuid, voiceId, paramId, frequency);
+         });
+      }
+   });
+}
+
 inline void MusicDeviceContainer::updateSoundParameterActualValues()
 {
    for (auto& e : *this)
@@ -162,6 +182,22 @@ inline size_t MusicDeviceContainer::size() const noexcept
 {
    return Super::size();
 }
+
+void MusicDeviceContainer::registerLFOWaveformChangeCB(LFOWaveformChangeCB cb)
+{
+   m_lFOWaveformChangeCBs.push_back(cb);
+}
+
+void MusicDeviceContainer::registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb)
+{
+   m_lFOAmplitudeChangeCB.push_back(cb);
+}
+
+void MusicDeviceContainer::registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb)
+{
+   m_lFOFrequencyChangeCB.push_back(cb);
+}
+
 
 } // namespace base::musicDevice
 

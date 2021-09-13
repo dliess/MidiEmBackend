@@ -43,12 +43,37 @@ public:
    void setParameterValue(const ::capnzero::SpanCL<16>& uuid,
                           ::capnzero::Int16 voiceId, ::capnzero::Int16 paramIdx,
                           ::capnzero::Float32 value) override;
-	void blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
-                            ::capnzero::Int16 voiceId, 
+   void blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
+                            ::capnzero::Int16 voiceId,
                             ::capnzero::Int16 paramIdx) override;
    void blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
                              ::capnzero::Int16 voiceId) override;
    void blankAllVoiceParameters(const ::capnzero::SpanCL<16>& uuid) override;
+   void setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
+                       ::capnzero::UInt8 voiceIndex, ::capnzero::Int16 paramIdx,
+                       ::capnzero::MidiEmRt::LFOWaveform waveform) override;
+   void incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
+                       ::capnzero::UInt8 voiceIndex, ::capnzero::Int16 paramIdx,
+                       ::capnzero::Int8 increment) override;
+   void setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
+                        ::capnzero::UInt8 voiceIndex,
+                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Float32 amplitude) override;
+   void incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
+                        ::capnzero::UInt8 voiceIndex,
+                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Float32 increment) override;
+   void setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
+                        ::capnzero::UInt8 voiceIndex,
+                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Float32 frequency) override;
+   void incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
+                        ::capnzero::UInt8 voiceIndex,
+                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Float32 increment) override;
+   void setActualPreset(const ::capnzero::SpanCL<16>& uuid,
+                        ::capnzero::UInt8 voiceIndex,
+                        const ::capnzero::TextView& presetName) override;
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;

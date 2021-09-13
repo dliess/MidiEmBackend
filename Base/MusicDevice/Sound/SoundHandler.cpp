@@ -10,44 +10,47 @@
 
 using namespace base::musicDevice::sound;
 
-SoundHandler::SoundHandler(
-   std::string deviceName, const description::sound::Section& rSoundSection,
-   std::shared_ptr<SoundPresets> soundPresets) noexcept :
-   m_deviceName(std::move(deviceName)),
-   m_rSoundSection(rSoundSection),
-   m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
+SoundHandler::SoundHandler(std::string deviceName,
+                           const description::sound::Section& rSoundSection,
+                           std::shared_ptr<SoundPresets> soundPresets) noexcept
+    :
+    m_deviceName(std::move(deviceName)),
+    m_rSoundSection(rSoundSection),
+    m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
 {
    m_paramStorage.resizeBy(rSoundSection);
 }
 
 SoundHandler::~SoundHandler() =
-   default; // makes forward decl in unique_ptr happy
-
+    default;   // makes forward decl in unique_ptr happy
 
 SoundHandler::SoundHandler(SoundHandler&& other) noexcept = default;
 
-void SoundHandler::initMidiInHandler(
-   std::shared_ptr<MidiInput> pMidiIn, uint8_t midiVoiceOffset) noexcept
+void SoundHandler::initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn,
+                                     uint8_t midiVoiceOffset) noexcept
 {
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
-      pMidiIn, m_rSoundSection, midiVoiceOffset, [this](int voiceId, int parameterId, float value) {
-         //LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId, parameterId, value);
-         m_paramStorage.setSoundParameterActualValue(voiceId, parameterId, value);
-      });
-   if(m_midiOutHandler)
+       pMidiIn, m_rSoundSection, midiVoiceOffset,
+       [this](int voiceId, int parameterId, float value) {
+          // LOG_F(INFO, "Received parameter values {} {} {}: ", voiceId,
+          // parameterId, value);
+          m_paramStorage.setSoundParameterActualValue(voiceId, parameterId,
+                                                      value);
+       });
+   if (m_midiOutHandler)
    {
       doParameterDumpRequest();
    }
 }
 
-void SoundHandler::initMidiOutHandler(
-   std::shared_ptr<MidiOutput> pMidiOut, uint8_t midiVoiceOffset) noexcept
+void SoundHandler::initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
+                                      uint8_t midiVoiceOffset) noexcept
 {
    assert(!m_midiOutHandler);
-   m_midiOutHandler =
-      std::make_unique<MidiOutMsgHandlerT>(pMidiOut, m_rSoundSection, midiVoiceOffset);
-   if(m_midiInMsgHandler)
+   m_midiOutHandler = std::make_unique<MidiOutMsgHandlerT>(
+       pMidiOut, m_rSoundSection, midiVoiceOffset);
+   if (m_midiInMsgHandler)
    {
       doParameterDumpRequest();
    }
@@ -87,22 +90,23 @@ void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
    if (!m_midiOutHandler)
    {
       LOG_F(
-         ERROR,
-         "pitchBend() called but there is no m_midiOutHandler in device '{}'",
-         m_deviceName);
+          ERROR,
+          "pitchBend() called but there is no m_midiOutHandler in device '{}'",
+          m_deviceName);
       return;
    }
    m_midiOutHandler->pitchBend(voiceIndex, value);
 }
 
-void SoundHandler::afterTouchPoly(int voiceIndex, int note, float value) noexcept
+void SoundHandler::afterTouchPoly(int voiceIndex, int note,
+                                  float value) noexcept
 {
    if (!m_midiOutHandler)
    {
-      LOG_F(
-         ERROR,
-         "afterTouchPoly() called but there is no m_midiOutHandler in device '{}'",
-         m_deviceName);
+      LOG_F(ERROR,
+            "afterTouchPoly() called but there is no m_midiOutHandler in "
+            "device '{}'",
+            m_deviceName);
       return;
    }
    m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
@@ -113,9 +117,9 @@ void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
    if (!m_midiOutHandler)
    {
       LOG_F(
-         ERROR,
-         "afterTouch() called but there is no m_midiOutHandler in device '{}'",
-         m_deviceName);
+          ERROR,
+          "afterTouch() called but there is no m_midiOutHandler in device '{}'",
+          m_deviceName);
       return;
    }
    m_midiOutHandler->afterTouch(voiceIndex, value);
@@ -127,29 +131,32 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    if (!m_midiOutHandler)
    {
       LOG_F(
-         ERROR,
-         "setSoundParameterValue() called but there is no m_midiOutHandler in "
-         "device '{}'",
-         m_deviceName);
+          ERROR,
+          "setSoundParameterValue() called but there is no m_midiOutHandler in "
+          "device '{}'",
+          m_deviceName);
       return;
    }
-   if(value < 0.0 || value >= 1.0) return;
+   if (value < 0.0 || value >= 1.0)
+      return;
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
-   //m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
+   // m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
 }
 
-void SoundHandler::incrementParameterValue(int voiceId, int parameterId, float increment) noexcept
+void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
+                                           float increment) noexcept
 {
    if (!m_midiOutHandler)
    {
       LOG_F(
-         ERROR,
-         "setSoundParameterValue() called but there is no m_midiOutHandler in "
-         "device '{}'",
-         m_deviceName);
+          ERROR,
+          "setSoundParameterValue() called but there is no m_midiOutHandler in "
+          "device '{}'",
+          m_deviceName);
       return;
    }
-   const float actualValue = m_paramStorage.getCommandedValue(voiceId, parameterId);
+   const float actualValue =
+       m_paramStorage.getCommandedValue(voiceId, parameterId);
    setParameterValue(voiceId, parameterId, actualValue + increment);
 }
 
@@ -158,25 +165,28 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
    if (m_midiOutHandler)
    {
       m_paramStorage.updateActualValues(
-         [this](int voiceIdx, int paramIdx, float value) {
-            m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
-         });
+          [this](int voiceIdx, int paramIdx, float value) {
+             m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
+          });
    }
 }
 
-void SoundHandler::uiShowsInterestInParameter(int voiceId, int parameterId) noexcept
+void SoundHandler::uiShowsInterestInParameter(int voiceId,
+                                              int parameterId) noexcept
 {
    m_paramStorage.uiShowsInterestInParameter(voiceId, parameterId);
 }
 
-void SoundHandler::uiLoosesInterestInParameter(int voiceId, int parameterId) noexcept
+void SoundHandler::uiLoosesInterestInParameter(int voiceId,
+                                               int parameterId) noexcept
 {
    m_paramStorage.uiLoosesInterestInParameter(voiceId, parameterId);
 }
 
 uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 {
-   if(!m_midiOutHandler) return 0;
+   if (!m_midiOutHandler)
+      return 0;
    return m_midiOutHandler->getMidiChannelOffset();
 }
 
@@ -195,6 +205,86 @@ void SoundHandler::blankAllVoiceParameters() noexcept
    m_paramStorage.resetToInitialValues(m_rSoundSection);
 }
 
+void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
+                                  LFO::Waveform waveform) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceId, paramIdx);
+   if(lfo.setWaveform(waveform))
+   {
+      for(auto& cb : m_lFOWaveformChangeCBs) cb(voiceId, paramIdx, lfo.waveform());
+   }
+}
+
+void SoundHandler::setLFOAmplitude(int voiceIndex, int paramIdx,
+                                   float amplitude) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if(lfo.setAmplitude(amplitude))
+   {
+      for(auto& cb : m_lFOAmplitudeChangeCB) cb(voiceIndex, paramIdx, lfo.amplitude());
+   }
+}
+
+void SoundHandler::setLFOFrequency(int voiceIndex, int paramIdx,
+                                   float frequency) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if(lfo.setFrequency(frequency))
+   {
+      for(auto& cb : m_lFOFrequencyChangeCB) cb(voiceIndex, paramIdx, lfo.frequency());
+   }
+}
+
+void SoundHandler::incLFOWaveform(int voiceId, int paramIdx,
+                                  int increment) noexcept
+{
+   auto& lfo     = m_paramStorage.lfoOf(voiceId, paramIdx);
+   const int idx = static_cast<int>(lfo.waveform()) + increment;
+   if (idx >= static_cast<int>(LFO::Waveform::Sine) &&
+       idx <= static_cast<int>(LFO::Waveform::Random))
+   {
+      if(lfo.setWaveform(static_cast<LFO::Waveform>(idx)))
+      {
+         for(auto& cb : m_lFOWaveformChangeCBs) cb(voiceId, paramIdx, lfo.waveform());
+      }
+   }
+}
+
+void SoundHandler::incLFOAmplitude(int voiceIndex, int paramIdx,
+                                   float increment) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if (lfo.setAmplitude(lfo.amplitude() + increment))
+   {
+      for(auto& cb : m_lFOAmplitudeChangeCB) cb(voiceIndex, paramIdx, lfo.amplitude());
+   }
+}
+
+void SoundHandler::incLFOFrequency(int voiceIndex, int paramIdx,
+                                   float increment) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if (lfo.setFrequency(lfo.frequency() + increment))
+   {
+      for(auto& cb : m_lFOFrequencyChangeCB) cb(voiceIndex, paramIdx, lfo.frequency());
+   }
+}
+
+void SoundHandler::registerLFOWaveformChangeCB(LFOWaveformChangeCB cb)
+{
+   m_lFOWaveformChangeCBs.push_back(cb);
+}
+
+void SoundHandler::registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb)
+{
+   m_lFOAmplitudeChangeCB.push_back(cb);
+}
+
+void SoundHandler::registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb)
+{
+   m_lFOFrequencyChangeCB.push_back(cb);
+}
+
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept
 {
    return m_presetHandler.getSoundPresets();
@@ -205,6 +295,6 @@ void SoundHandler::doParameterDumpRequest() noexcept
    if (!m_midiOutHandler->sendParameterDumpRequest())
    {
       // TODO: do something else here
-      //m_paramStorage.markAllDirty();
+      // m_paramStorage.markAllDirty();
    }
 }

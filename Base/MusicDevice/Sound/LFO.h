@@ -8,10 +8,21 @@ namespace base::musicDevice::sound
 class LFO
 {
 public:
+   enum class Waveform{
+      Sine = 0,
+      Square,
+      Triangle,
+      Saw,
+      Random
+   };
    [[nodiscard]] inline bool enabled() const noexcept;
    [[nodiscard]] inline float calculateValue() const noexcept;
-   inline void setAmplitude(float amplitude) noexcept;
-   inline void setFrequency(float frequency) noexcept;
+   inline bool setWaveform(Waveform waveform) noexcept;
+   inline bool setAmplitude(float amplitude) noexcept;
+   inline bool setFrequency(float frequency) noexcept;
+   [[nodiscard]] inline Waveform waveform() const noexcept;
+   [[nodiscard]] inline float amplitude() const noexcept;
+   [[nodiscard]] inline float frequency() const noexcept;
    inline void reset() noexcept;
    struct Sine
    {
@@ -23,11 +34,23 @@ public:
       float switchAt{0.5};
       bool inverted{false};
    };
+   struct Triangle
+   {
+      [[nodiscard]] inline float operator()(float t) const noexcept;
+   };
+   struct Saw
+   {
+      [[nodiscard]] inline float operator()(float t) const noexcept;
+   };
+   struct Random
+   {
+      [[nodiscard]] inline float operator()(float t) const noexcept;
+   };
 
 private:
    float m_amplitude{0.0};
    float m_frequency{0.0};
-   mpark::variant<Sine, Square> m_waveform;
+   mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
 };
 
 } // namespace base::musicDevice::sound

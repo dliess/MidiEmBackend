@@ -19,6 +19,7 @@ public:
    using Super =
       std::unordered_map<util::Identifiable::UUID, std::shared_ptr<MusicDevice>>;
    using Cb = std::function<void(std::shared_ptr<MusicDevice>)>;
+   inline MusicDeviceContainer();
    inline void registerForAdd(Cb cb) noexcept;
    inline void registerForAboutToRemove(Cb cb) noexcept;
    inline void updateSoundParameterActualValues();
@@ -48,12 +49,22 @@ public:
    inline size_t size() const noexcept;
    
 
+   using LFOWaveformChangeCB = std::function<void(util::Identifiable::UUID, int, int, sound::LFO::Waveform)>;
+   using LFOAmplitudeChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
+   using LFOFrequencyChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
+   inline void registerLFOWaveformChangeCB(LFOWaveformChangeCB cb);
+   inline void registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb);
+   inline void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
+
 private:
    std::vector<Cb> m_addedCb;
    std::vector<Cb> m_aboutToRemoveCbs;
    std::vector<SoundDevParamChangeCb> m_paramChangeCbsUI;
    inline void invokeAddCbs(const std::shared_ptr<MusicDevice>& ptr);
    inline void invokeAboutToRemoveCbs(const std::shared_ptr<MusicDevice>& ptr);
+   std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
+   std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
+   std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
 };
 
 } // namespace base::musicDevice

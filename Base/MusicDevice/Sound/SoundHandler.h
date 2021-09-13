@@ -69,10 +69,25 @@ public:
    void blankVoiceParameters(int voiceId) noexcept;
    void blankAllVoiceParameters() noexcept;
 
+   void setLFOWaveform(int voiceId, int paramIdx, LFO::Waveform waveform) noexcept;
+   void setLFOAmplitude(int voiceIndex, int paramIdx, float amplitude) noexcept;
+   void setLFOFrequency(int voiceIndex, int paramIdx, float frequency) noexcept;
+   void incLFOWaveform(int voiceId, int paramIdx, int increment) noexcept;
+   void incLFOAmplitude(int voiceIndex, int paramIdx, float increment) noexcept;
+   void incLFOFrequency(int voiceIndex, int paramIdx, float increment) noexcept;
+
+
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
    // inline const SoundPresetHandler* soundPresetHandler() const noexcept;
+
+   using LFOWaveformChangeCB = std::function<void(int, int, LFO::Waveform)>;
+   using LFOAmplitudeChangeCB = std::function<void(int, int, float)>;
+   using LFOFrequencyChangeCB = std::function<void(int, int, float)>;
+   void registerLFOWaveformChangeCB(LFOWaveformChangeCB cb);
+   void registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb);
+   void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
 
 private:
    std::string m_deviceName;
@@ -86,6 +101,10 @@ private:
    PresetHandler m_presetHandler;
 
    void doParameterDumpRequest() noexcept;
+
+   std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
+   std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
+   std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
 };
 
 

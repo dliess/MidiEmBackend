@@ -105,6 +105,28 @@ RtServer::RtServer(
                                                    commanded, actual);
        });
 
+   rMusicDeviceContainer.registerLFOWaveformChangeCB(
+       [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+              base::musicDevice::sound::LFO::Waveform waveform) {
+          signals().SoundDevices__lFOWaveformChanged(
+              uuid, voiceId, paramIdx,
+              static_cast<::capnzero::MidiEmRt::LFOWaveform>(waveform));
+       });
+
+   rMusicDeviceContainer.registerLFOAmplitudeChangeCB(
+       [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+              float amplitude) {
+          signals().SoundDevices__lFOAmplitudeChanged(uuid, voiceId, paramIdx,
+                                                      amplitude);
+       });
+
+   rMusicDeviceContainer.registerLFOFrequencyChangeCB(
+       [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+              float frequency) {
+          signals().SoundDevices__lFOFrequencyChanged(uuid, voiceId, paramIdx,
+                                                      frequency);
+       });
+
    rTransportControl.registerTransportMaskChangedCb(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);

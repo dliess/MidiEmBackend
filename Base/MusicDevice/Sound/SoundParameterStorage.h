@@ -61,6 +61,9 @@ public:
    inline void uiLoosesInterestInParameter(int voiceId,
                                            int parameterId = ALL) noexcept;
 
+   inline LFO& lfoOf(int voiceId, int parameterId) noexcept;
+   inline const LFO& lfoOf(int voiceId, int parameterId) const noexcept;
+
    struct Element
    {
       static constexpr int NUM_MODIFIERS = 10;
