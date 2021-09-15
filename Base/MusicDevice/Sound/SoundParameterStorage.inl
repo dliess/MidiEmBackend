@@ -327,6 +327,7 @@ inline bool ParameterStorage::Element::updateActualValue() noexcept
    }
 
    dirtyFlagRt = false;
+   if(actualBefore != actual) dirtyFlagUi = true;
    return actualBefore != actual;
 }
 

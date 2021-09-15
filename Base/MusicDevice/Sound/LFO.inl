@@ -15,7 +15,7 @@ inline bool LFO::enabled() const noexcept
 inline float LFO::calculateValue() const noexcept 
 {
    const auto jiffies = tempo::BeatTick::instance().getBeatJiffies();
-   const float t = ((jiffies % tempo::BeatTick::PPQ) / float(tempo::BeatTick::PPQ)) * m_frequency;
+   const float t = (float(jiffies) / float(tempo::BeatTick::PPQ)) * m_frequency;
    const auto fnVal = mpark::visit(util::overload{
       [t](auto && f){ return f(t); }
    }, m_waveform);
