@@ -107,7 +107,7 @@ inline auto registerMembers<base::musicDevice::description::sound::ParameterSour
    return members(
       member("name", &base::musicDevice::description::sound::ParameterSourceRange::name),
       member("range", &base::musicDevice::description::sound::ParameterSourceRange::range),
-      member("range", &base::musicDevice::description::sound::ParameterSourceRange::role)
+      member("role", &base::musicDevice::description::sound::ParameterSourceRange::role)
    );
 }
 
