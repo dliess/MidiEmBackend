@@ -12,10 +12,17 @@ inline bool LFO::enabled() const noexcept
    return (m_amplitude != 0.0) && (m_frequency != 0.0);
 }
 
-inline float LFO::calculateValue() const noexcept 
+inline float LFO::calculateValue() noexcept 
 {
    const auto jiffies = tempo::BeatTick::instance().getBeatJiffies();
-   const float t = (float(jiffies) / float(tempo::BeatTick::PPQ)) * m_frequency;
+   auto jiffiesInCurrentPeriod = jiffies - m_lastWaveStartJiffies;
+   const float jiffiesPerPeriod = float(tempo::BeatTick::PPQ) / m_frequency;
+   if(jiffiesInCurrentPeriod > jiffiesPerPeriod)
+   {
+      m_lastWaveStartJiffies = jiffies;
+      jiffiesInCurrentPeriod = 0;
+   }
+   const float t = jiffiesInCurrentPeriod / jiffiesPerPeriod;
    const auto fnVal = mpark::visit(util::overload{
       [t](auto && f){ return f(t); }
    }, m_waveform);
@@ -28,9 +35,9 @@ inline bool LFO::setWaveform(Waveform waveform) noexcept
    {
       case Waveform::Sine: m_waveform.emplace<Sine>(); return true;
       case Waveform::Square: m_waveform.emplace<Square>(); return true;
-      case Waveform::Triangle: /*TODO*/ return true;
-      case Waveform::Saw: /*TODO*/ return true;
-      case Waveform::Random: /*TODO*/ return true;
+      case Waveform::Triangle: m_waveform.emplace<Triangle>(); return true;
+      case Waveform::Saw: m_waveform.emplace<Saw>(); return true;
+      case Waveform::Random: m_waveform.emplace<Random>(); return true;
    }
    return false;
 }
@@ -94,23 +101,45 @@ inline float LFO::Sine::operator()(float t) const noexcept
 
 inline float LFO::Square::operator()(float t) const noexcept
 {
-   const float ret = (t <= switchAt ? (-1.0) : (1.0));
-   return inverted ? -1.0 * ret : ret;
+   return ( (t - int(t)) <= switchAt ? (-1.0) : (1.0) );
 }
 
 inline float LFO::Triangle::operator()(float t) const noexcept
 {
-   return sin(2 * M_PI * t);
+   const float t_ =  (t - int(t));
+   constexpr float b = 4.0;
+   if(t_ < 0.25)
+      return b * t_;
+   else if(0.25 <= t_ && t_ < 0.75)
+      return -b * (t_ - 0.5);
+   else
+      return b * (t_ - 1.0);
 }
 
 inline float LFO::Saw::operator()(float t) const noexcept
 {
-   return sin(2 * M_PI * t);
+   const float t_ =  (t - int(t));
+   constexpr float b = 2.0;
+   return b * (t_ - 0.5);
 }
-
-inline float LFO::Random::operator()(float t) const noexcept
+/*
+inline LFO::Random::Random() noexcept :
+   rng(dev()),
+   dist(-1.0, 1.0)
+{  
+}
+*/
+inline float LFO::Random::operator()(float t) noexcept
 {
-   return sin(2 * M_PI * t);
+   /*
+   if(lastTime != int(t))
+   {
+      lastValue = dist(rng);
+      lastTime = int(t);
+   }
+   return lastValue;
+   */
+  return 0;
 }
 
 } // namespace base::musicDevice::sound

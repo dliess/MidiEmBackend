@@ -15,13 +15,13 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       if(ptr->soundHandler)
       {
          const auto uuid = ptr->id();
-         ptr->soundHandler->registerLFOWaveformChangeCB([this, &uuid](int voiceId, int paramId, sound::LFO::Waveform waveform){
+         ptr->soundHandler->registerLFOWaveformChangeCB([this, uuid](int voiceId, int paramId, sound::LFO::Waveform waveform){
             for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
          });
-         ptr->soundHandler->registerLFOAmplitudeChangeCB([this, &uuid](int voiceId, int paramId, float amplitude){
+         ptr->soundHandler->registerLFOAmplitudeChangeCB([this, uuid](int voiceId, int paramId, float amplitude){
             for(auto& cb : m_lFOAmplitudeChangeCB) cb(uuid, voiceId, paramId, amplitude);
          });
-         ptr->soundHandler->registerLFOFrequencyChangeCB([this, &uuid](int voiceId, int paramId, float frequency){
+         ptr->soundHandler->registerLFOFrequencyChangeCB([this, uuid](int voiceId, int paramId, float frequency){
             for(auto& cb : m_lFOFrequencyChangeCB) cb(uuid, voiceId, paramId, frequency);
          });
       }

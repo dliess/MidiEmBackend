@@ -2,6 +2,7 @@
 #define BASE_MODULATION_LFO
 
 #include <mpark/variant.hpp>
+#include <random>
 
 namespace base::musicDevice::sound
 {
@@ -16,7 +17,7 @@ public:
       Random
    };
    [[nodiscard]] inline bool enabled() const noexcept;
-   [[nodiscard]] inline float calculateValue() const noexcept;
+   [[nodiscard]] inline float calculateValue() noexcept;
    inline bool setWaveform(Waveform waveform) noexcept;
    inline bool setAmplitude(float amplitude) noexcept;
    inline bool setFrequency(float frequency) noexcept;
@@ -32,7 +33,6 @@ public:
    {
       [[nodiscard]] inline float operator()(float t) const noexcept;
       float switchAt{0.5};
-      bool inverted{false};
    };
    struct Triangle
    {
@@ -44,12 +44,21 @@ public:
    };
    struct Random
    {
-      [[nodiscard]] inline float operator()(float t) const noexcept;
+      //inline Random() noexcept;
+      [[nodiscard]] inline float operator()(float t) noexcept;
+      /*
+      int lastTime{0};
+      float lastValue{0.0};
+      std::random_device dev;
+      std::mt19937 rng;
+      std::uniform_real_distribution<float> dist;
+      */
    };
 
 private:
    float m_amplitude{0.0};
-   float m_frequency{0.0};
+   float m_frequency{1.0};
+   uint64_t m_lastWaveStartJiffies{0};
    mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
 };
 
