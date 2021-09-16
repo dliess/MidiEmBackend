@@ -45,7 +45,7 @@ inline bool LFO::setWaveform(Waveform waveform) noexcept
 
 inline bool LFO::setAmplitude(float amplitude) noexcept
 {
-   if(m_amplitude != amplitude && amplitude >= 0.0 && amplitude <= 1.0)
+   if(m_amplitude != amplitude && amplitude >= -1.0 && amplitude <= 1.0)
    {
       m_amplitude = amplitude;
       return true;
