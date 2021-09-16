@@ -24,6 +24,9 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
          ptr->soundHandler->registerLFOFrequencyChangeCB([this, uuid](int voiceId, int paramId, float frequency){
             for(auto& cb : m_lFOFrequencyChangeCB) cb(uuid, voiceId, paramId, frequency);
          });
+         ptr->soundHandler->registerLFOMultiplierExpChangeCB([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
+            for(auto& cb : m_lFOMultiplierExpChangeCB) cb(uuid, voiceId, paramId, multiplierExp);
+         });
       }
    });
 }
@@ -183,20 +186,30 @@ inline size_t MusicDeviceContainer::size() const noexcept
    return Super::size();
 }
 
+inline
 void MusicDeviceContainer::registerLFOWaveformChangeCB(LFOWaveformChangeCB cb)
 {
    m_lFOWaveformChangeCBs.push_back(cb);
 }
 
+inline
 void MusicDeviceContainer::registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb)
 {
    m_lFOAmplitudeChangeCB.push_back(cb);
 }
 
+inline
 void MusicDeviceContainer::registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb)
 {
    m_lFOFrequencyChangeCB.push_back(cb);
 }
+
+inline 
+void MusicDeviceContainer::registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb)
+{
+   m_lFOMultiplierExpChangeCB.push_back(cb);
+}
+
 
 
 } // namespace base::musicDevice

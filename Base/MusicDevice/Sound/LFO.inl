@@ -1,6 +1,7 @@
 #include "LFO.h"
 
 #include <cmath>
+#include <random>
 #include "BeatTick.h"
 #include "Overload.h"
 
@@ -16,7 +17,7 @@ inline float LFO::calculateValue() noexcept
 {
    const auto jiffies = tempo::BeatTick::instance().getBeatJiffies();
    auto jiffiesInCurrentPeriod = jiffies - m_lastWaveStartJiffies;
-   const float jiffiesPerPeriod = float(tempo::BeatTick::PPQ) / m_frequency;
+   const float jiffiesPerPeriod = float(tempo::BeatTick::PPQ) / (m_frequency * (1 << m_multiplierExp));
    if(jiffiesInCurrentPeriod > jiffiesPerPeriod)
    {
       m_lastWaveStartJiffies = jiffies;
@@ -62,6 +63,16 @@ inline bool LFO::setFrequency(float frequency) noexcept
    return false;
 }
 
+inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
+{
+   if(m_multiplierExp != multiplierExp)
+   {
+      m_multiplierExp = multiplierExp;
+      return true;
+   }
+   return false;
+}
+
 inline LFO::Waveform LFO::waveform() const noexcept
 {
    if(mpark::holds_alternative<Sine>(m_waveform))
@@ -87,6 +98,11 @@ inline float LFO::frequency() const noexcept
    return m_frequency;
 }
 
+inline uint32_t LFO::multiplierExp() const noexcept
+{
+   return m_multiplierExp;
+}
+
 inline void LFO::reset() noexcept
 {
    setAmplitude(0);
@@ -101,45 +117,36 @@ inline float LFO::Sine::operator()(float t) const noexcept
 
 inline float LFO::Square::operator()(float t) const noexcept
 {
-   return ( (t - int(t)) <= switchAt ? (-1.0) : (1.0) );
+   return ( t <= switchAt ? (-1.0) : (1.0) );
 }
 
 inline float LFO::Triangle::operator()(float t) const noexcept
 {
-   const float t_ =  (t - int(t));
    constexpr float b = 4.0;
-   if(t_ < 0.25)
-      return b * t_;
-   else if(0.25 <= t_ && t_ < 0.75)
-      return -b * (t_ - 0.5);
+   if(t < 0.25)
+      return b * t;
+   else if(0.25 <= t && t < 0.75)
+      return -b * (t - 0.5);
    else
-      return b * (t_ - 1.0);
+      return b * (t - 1.0);
 }
 
 inline float LFO::Saw::operator()(float t) const noexcept
 {
-   const float t_ =  (t - int(t));
    constexpr float b = 2.0;
-   return b * (t_ - 0.5);
+   return b * (t - 0.5);
 }
-/*
-inline LFO::Random::Random() noexcept :
-   rng(dev()),
-   dist(-1.0, 1.0)
-{  
-}
-*/
+
 inline float LFO::Random::operator()(float t) noexcept
 {
-   /*
-   if(lastTime != int(t))
+   if(t == 0)
    {
-      lastValue = dist(rng);
-      lastTime = int(t);
+      std::random_device r;
+      std::default_random_engine e1(r());
+      std::uniform_real_distribution<float> uniform_dist(-1.0, 1.0);
+      lastValue = uniform_dist(e1);
    }
    return lastValue;
-   */
-  return 0;
 }
 
 } // namespace base::musicDevice::sound

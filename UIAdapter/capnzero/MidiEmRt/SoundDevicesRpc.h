@@ -71,6 +71,10 @@ public:
                         ::capnzero::UInt8 voiceIndex,
                         ::capnzero::Int16 paramIdx,
                         ::capnzero::Float32 increment) override;
+   void incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
+                            ::capnzero::UInt8 voiceIndex,
+                            ::capnzero::Int16 paramIdx,
+                            ::capnzero::UInt32 increment) override;
    void setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                         ::capnzero::UInt8 voiceIndex,
                         const ::capnzero::TextView& presetName) override;

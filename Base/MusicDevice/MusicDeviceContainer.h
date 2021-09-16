@@ -52,9 +52,11 @@ public:
    using LFOWaveformChangeCB = std::function<void(util::Identifiable::UUID, int, int, sound::LFO::Waveform)>;
    using LFOAmplitudeChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
    using LFOFrequencyChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
+   using LFOMultiplierExpChangeCB = std::function<void(util::Identifiable::UUID, int, int, uint32_t)>;
    inline void registerLFOWaveformChangeCB(LFOWaveformChangeCB cb);
    inline void registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb);
    inline void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
+   inline void registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb);
 
 private:
    std::vector<Cb> m_addedCb;
@@ -65,6 +67,7 @@ private:
    std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
    std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
+   std::vector<LFOMultiplierExpChangeCB> m_lFOMultiplierExpChangeCB;
 };
 
 } // namespace base::musicDevice

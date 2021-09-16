@@ -270,6 +270,15 @@ void SoundHandler::incLFOFrequency(int voiceIndex, int paramIdx,
    }
 }
 
+void SoundHandler::incLFOMultiplierExp(int voiceIndex, int paramIdx, uint32_t increment) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if (lfo.setMultiplierExp(lfo.multiplierExp() + increment))
+   {
+      for(auto& cb : m_lFOMultiplierExpChangeCB) cb(voiceIndex, paramIdx, lfo.multiplierExp());
+   }
+}
+
 void SoundHandler::registerLFOWaveformChangeCB(LFOWaveformChangeCB cb)
 {
    m_lFOWaveformChangeCBs.push_back(cb);
@@ -283,6 +292,11 @@ void SoundHandler::registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb)
 void SoundHandler::registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb)
 {
    m_lFOFrequencyChangeCB.push_back(cb);
+}
+
+void SoundHandler::registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb)
+{
+   m_lFOMultiplierExpChangeCB.push_back(cb);
 }
 
 std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept

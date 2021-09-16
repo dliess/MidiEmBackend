@@ -127,6 +127,13 @@ RtServer::RtServer(
                                                       frequency);
        });
 
+   rMusicDeviceContainer.registerLFOMultiplierExpChangeCB(
+       [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
+              uint32_t multiplierExp) {
+          signals().SoundDevices__lFOMultiplierExpChanged(
+              uuid, voiceId, paramIdx, multiplierExp);
+       });
+
    rTransportControl.registerTransportMaskChangedCb(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);

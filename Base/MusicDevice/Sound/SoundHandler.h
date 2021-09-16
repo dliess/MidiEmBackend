@@ -75,7 +75,7 @@ public:
    void incLFOWaveform(int voiceId, int paramIdx, int increment) noexcept;
    void incLFOAmplitude(int voiceIndex, int paramIdx, float increment) noexcept;
    void incLFOFrequency(int voiceIndex, int paramIdx, float increment) noexcept;
-
+   void incLFOMultiplierExp(int voiceIndex, int paramIdx, uint32_t increment) noexcept;
 
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;
@@ -85,9 +85,11 @@ public:
    using LFOWaveformChangeCB = std::function<void(int, int, LFO::Waveform)>;
    using LFOAmplitudeChangeCB = std::function<void(int, int, float)>;
    using LFOFrequencyChangeCB = std::function<void(int, int, float)>;
+   using LFOMultiplierExpChangeCB = std::function<void(int, int, uint32_t)>;
    void registerLFOWaveformChangeCB(LFOWaveformChangeCB cb);
    void registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb);
    void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
+   void registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb);
 
 private:
    std::string m_deviceName;
@@ -105,6 +107,7 @@ private:
    std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
    std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
+   std::vector<LFOMultiplierExpChangeCB> m_lFOMultiplierExpChangeCB;
 };
 
 
