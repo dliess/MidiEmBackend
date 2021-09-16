@@ -65,7 +65,7 @@ inline bool LFO::setFrequency(float frequency) noexcept
 
 inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 {
-   if(m_multiplierExp != multiplierExp)
+   if(m_multiplierExp != multiplierExp && multiplierExp <= MAX_MULTIPLIER_EXP)
    {
       m_multiplierExp = multiplierExp;
       return true;
@@ -107,6 +107,7 @@ inline void LFO::reset() noexcept
 {
    setAmplitude(0);
    setFrequency(0);
+   setMultiplierExp(0);
    m_waveform.emplace<Sine>();
 }
 

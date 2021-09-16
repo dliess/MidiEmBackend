@@ -55,6 +55,7 @@ private:
    uint32_t m_multiplierExp{0};
    uint64_t m_lastWaveStartJiffies{0};
    mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
+   static constexpr uint32_t MAX_MULTIPLIER_EXP = 10;
 };
 
 } // namespace base::musicDevice::sound
