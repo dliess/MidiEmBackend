@@ -89,7 +89,7 @@ void PresetHandler::storeAsSoundPreset(
 
 void PresetHandler::resetParametersToZeroState(int voiceIdx) noexcept
 {
-   m_rParameterStorage.resetToInitialValues(voiceIdx, m_rSoundSection);
+   m_rParameterStorage.resetToInitialValues(voiceIdx);
 }
 
 void PresetHandler::deleteSoundPreset(

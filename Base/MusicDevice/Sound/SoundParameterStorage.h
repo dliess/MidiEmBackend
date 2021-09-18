@@ -20,8 +20,7 @@ namespace sound
 class ParameterStorage
 {
 public:
-   inline void resizeBy(
-       const description::sound::Section& soundSection) noexcept;
+   inline ParameterStorage(const description::sound::Section& rSoundSection);
    template <typename T>
    void setParameterOfVoice(int voiceId, const T& container) noexcept;
    inline void setSoundParameterValue(int voiceId, int parameterId,
@@ -29,18 +28,9 @@ public:
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
 
-   inline void resetToInitialValue(
-       int voiceIdx, int paramIdx,
-       const base::musicDevice::description::sound::Section&
-           soundSection) noexcept;
-
-   inline void resetToInitialValues(
-       int voiceIdx, const base::musicDevice::description::sound::Section&
-                         soundSection) noexcept;
-
-   inline void resetToInitialValues(
-       const base::musicDevice::description::sound::Section&
-           soundSection) noexcept;
+   inline void resetToInitialValue(int voiceIdx, int paramIdx) noexcept;
+   inline void resetToInitialValues(int voiceIdx) noexcept;
+   inline void resetToInitialValues() noexcept;
 
    inline std::optional<std::string> getActualPresetOfVoice(
        int voiceIdx) const noexcept;
@@ -103,6 +93,7 @@ public:
    template <typename Cb> void forEachElementContainer(Cb&& cb);
 
 private:
+   const description::sound::Section& m_rSoundSection;
    struct EngineData
    {
       std::vector<Element> parameters;
@@ -111,6 +102,7 @@ private:
    EngineData m_globalData;
    std::vector<EngineData> m_voicesData;
 
+   inline void resize() noexcept;
    inline const EngineData& elementContainer(int voiceIdx) const noexcept;
    inline EngineData& elementContainer(int voiceIdx) noexcept;
 };

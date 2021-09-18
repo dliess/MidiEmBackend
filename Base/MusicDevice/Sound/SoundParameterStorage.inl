@@ -1,20 +1,27 @@
-#include "SoundParameterStorage.h"
 #include <loguru.hpp>
+
+#include "SoundParameterStorage.h"
 
 namespace base::musicDevice::sound
 {
-inline void ParameterStorage::resizeBy(
-    const description::sound::Section& soundSection) noexcept
+inline ParameterStorage::ParameterStorage(
+    const description::sound::Section& rSoundSection) :
+    m_rSoundSection(rSoundSection)
 {
-   if (soundSection.global)
+   resize();
+}
+
+inline void ParameterStorage::resize() noexcept
+{
+   if (m_rSoundSection.global)
    {
-      m_globalData.parameters.resize(soundSection.global->parameters.size());
+      m_globalData.parameters.resize(m_rSoundSection.global->parameters.size());
    }
-   m_voicesData.resize(soundSection.voices.size());
-   for (int voiceIdx = 0; voiceIdx < soundSection.voices.size(); ++voiceIdx)
+   m_voicesData.resize(m_rSoundSection.voices.size());
+   for (int voiceIdx = 0; voiceIdx < m_rSoundSection.voices.size(); ++voiceIdx)
    {
       const auto& engineDescr =
-          soundSection.engines[soundSection.voices[voiceIdx].engineId];
+          m_rSoundSection.engines[m_rSoundSection.voices[voiceIdx].engineId];
       m_voicesData[voiceIdx].parameters.resize(engineDescr.parameters.size());
    }
 }
@@ -125,8 +132,7 @@ void ParameterStorage::forEachParameter(Cb&& cb, int voiceId) noexcept
    }
 }
 
-template <typename Cb>
-void ParameterStorage::forEachElementContainer(Cb&& cb)
+template <typename Cb> void ParameterStorage::forEachElementContainer(Cb&& cb)
 {
    for (int paramIdx = 0; paramIdx < m_globalData.parameters.size(); ++paramIdx)
    {
@@ -138,48 +144,45 @@ void ParameterStorage::forEachElementContainer(Cb&& cb)
    }
 }
 
-inline void ParameterStorage::resetToInitialValue(
-    int voiceIdx,
-    int paramIdx,
-    const base::musicDevice::description::sound::Section& soundSection) noexcept
+inline void ParameterStorage::resetToInitialValue(int voiceIdx,
+                                                  int paramIdx) noexcept
 {
    auto& element = elementContainer(voiceIdx).parameters[paramIdx];
    for (auto& e : element.modifiers) { e.reset(); }
    element.lfo.reset();
-   const auto& descr = soundSection.parameterDescr(voiceIdx, paramIdx);
-   element.setCommandedValue(soundSection.getInitialValueFor(voiceIdx, paramIdx));
+   const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+   element.setCommandedValue(
+       m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx));
 }
 
-inline void ParameterStorage::resetToInitialValues(
-    int voiceIdx,
-    const base::musicDevice::description::sound::Section& soundSection) noexcept
+inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
 {
    forEachParameter(
-       [&soundSection, voiceIdx](int paramIdx, Element& element) {
+       [this, voiceIdx](int paramIdx, Element& element) {
           for (auto& e : element.modifiers) { e.reset(); }
           element.lfo.reset();
-          const auto& descr = soundSection.parameterDescr(voiceIdx, paramIdx);
-          element.setCommandedValue(soundSection.getInitialValueFor(voiceIdx, paramIdx));
-       }, voiceIdx);
-   
+          const auto& descr =
+              m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+          element.setCommandedValue(
+              m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx));
+       },
+       voiceIdx);
+
    elementContainer(voiceIdx).actualPreset.reset();
 }
 
-inline void ParameterStorage::resetToInitialValues(
-    const base::musicDevice::description::sound::Section& soundSection) noexcept
+inline void ParameterStorage::resetToInitialValues() noexcept
 {
-   forEachParameter(
-       [&soundSection, this](int voiceId, int paramIdx, Element& element) {
-          for (auto& e : element.modifiers) { e.reset(); }
-          element.lfo.reset();
-          const auto& descr = soundSection.parameterDescr(voiceId, paramIdx);
-          element.setCommandedValue(soundSection.getInitialValueFor(voiceId, paramIdx));
-       });
-   forEachElementContainer([](EngineData& engineData){
-      engineData.actualPreset.reset();
+   forEachParameter([this](int voiceId, int paramIdx, Element& element) {
+      for (auto& e : element.modifiers) { e.reset(); }
+      element.lfo.reset();
+      const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
+      element.setCommandedValue(
+          m_rSoundSection.getInitialValueFor(voiceId, paramIdx));
    });
+   forEachElementContainer(
+       [](EngineData& engineData) { engineData.actualPreset.reset(); });
 }
-
 
 inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
     int voiceIdx) const noexcept
@@ -283,14 +286,13 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
        voiceId_);
 }
 
-inline 
-LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
+inline LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
 {
    return elementContainer(voiceId).parameters[parameterId].lfo;
 }
 
-inline 
-const LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) const noexcept
+inline const LFO& ParameterStorage::lfoOf(int voiceId,
+                                          int parameterId) const noexcept
 {
    return elementContainer(voiceId).parameters[parameterId].lfo;
 }
@@ -308,12 +310,12 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
 
 inline bool ParameterStorage::Element::updateActualValue() noexcept
 {
-   if (!dirtyFlagRt && !lfo.enabled()) // performance improving shortcut
+   if (!dirtyFlagRt && !lfo.enabled())   // performance improving shortcut
    {
       return false;
    }
    float actualBefore = actual;
-   actual = calcModified();
+   actual             = calcModified();
    if (lfo.enabled())
    {
       m_cachedLfoValue = lfo.calculateValue();
@@ -327,7 +329,8 @@ inline bool ParameterStorage::Element::updateActualValue() noexcept
    }
 
    dirtyFlagRt = false;
-   if(actualBefore != actual) dirtyFlagUi = true;
+   if (actualBefore != actual)
+      dirtyFlagUi = true;
    return actualBefore != actual;
 }
 

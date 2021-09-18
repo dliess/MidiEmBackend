@@ -16,9 +16,9 @@ SoundHandler::SoundHandler(std::string deviceName,
     :
     m_deviceName(std::move(deviceName)),
     m_rSoundSection(rSoundSection),
+    m_paramStorage(rSoundSection),
     m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
 {
-   m_paramStorage.resizeBy(rSoundSection);
 }
 
 SoundHandler::~SoundHandler() =
@@ -192,17 +192,17 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 
 void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
 {
-   m_paramStorage.resetToInitialValue(voiceId, paramIdx, m_rSoundSection);
+   m_paramStorage.resetToInitialValue(voiceId, paramIdx);
 }
 
 void SoundHandler::blankVoiceParameters(int voiceId) noexcept
 {
-   m_paramStorage.resetToInitialValues(voiceId, m_rSoundSection);
+   m_paramStorage.resetToInitialValues(voiceId);
 }
 
 void SoundHandler::blankAllVoiceParameters() noexcept
 {
-   m_paramStorage.resetToInitialValues(m_rSoundSection);
+   m_paramStorage.resetToInitialValues();
 }
 
 void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
