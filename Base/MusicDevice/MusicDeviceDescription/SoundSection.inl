@@ -885,4 +885,27 @@ base::musicDevice::description::sound::Parameter::getValueByListRole(
    return std::nullopt;
 }
 
+inline int
+base::musicDevice::description::sound::Parameter::getSourceResolution()
+    const noexcept
+{
+   if (source.midi)
+   {
+      if (source.midi->sourceValueRange)
+      {
+         return source.midi->sourceValueRange->to -
+                source.midi->sourceValueRange->from;
+      }
+      //TODO: if I want higher res
+      if(mpark::holds_alternative<midi::ControlChangeHighRes>(source.midi->id) ||
+         mpark::holds_alternative<midi::NRPN>(source.midi->id)
+      )
+      {
+         return (1 << 14);
+      }
+      return 128;
+   }
+   return 0;
+}
+
 #endif

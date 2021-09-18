@@ -164,10 +164,22 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)
    {
-      m_paramStorage.updateActualValues(
-          [this](int voiceIdx, int paramIdx, float value) {
-             m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
-          });
+      m_paramStorage.updateActualValues([this](int voiceIdx, int paramIdx,
+                                               float value, float prevValue) {
+         const int paramRes = m_rSoundSection.parameterDescr(voiceIdx, paramIdx)
+                                  .getSourceResolution();
+         if (paramRes) {
+            const float p = 1.0 / float(paramRes);
+            if(int(value / p) != int(prevValue / p))
+            {
+               m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);      
+            }
+         }
+         else
+         {
+            assert(false);
+         }
+      });
    }
 }
 
@@ -209,9 +221,10 @@ void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
                                   LFO::Waveform waveform) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceId, paramIdx);
-   if(lfo.setWaveform(waveform))
+   if (lfo.setWaveform(waveform))
    {
-      for(auto& cb : m_lFOWaveformChangeCBs) cb(voiceId, paramIdx, lfo.waveform());
+      for (auto& cb : m_lFOWaveformChangeCBs)
+         cb(voiceId, paramIdx, lfo.waveform());
    }
 }
 
@@ -219,9 +232,10 @@ void SoundHandler::setLFOAmplitude(int voiceIndex, int paramIdx,
                                    float amplitude) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
-   if(lfo.setAmplitude(amplitude))
+   if (lfo.setAmplitude(amplitude))
    {
-      for(auto& cb : m_lFOAmplitudeChangeCB) cb(voiceIndex, paramIdx, lfo.amplitude());
+      for (auto& cb : m_lFOAmplitudeChangeCB)
+         cb(voiceIndex, paramIdx, lfo.amplitude());
    }
 }
 
@@ -229,9 +243,10 @@ void SoundHandler::setLFOFrequency(int voiceIndex, int paramIdx,
                                    float frequency) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
-   if(lfo.setFrequency(frequency))
+   if (lfo.setFrequency(frequency))
    {
-      for(auto& cb : m_lFOFrequencyChangeCB) cb(voiceIndex, paramIdx, lfo.frequency());
+      for (auto& cb : m_lFOFrequencyChangeCB)
+         cb(voiceIndex, paramIdx, lfo.frequency());
    }
 }
 
@@ -243,9 +258,10 @@ void SoundHandler::incLFOWaveform(int voiceId, int paramIdx,
    if (idx >= static_cast<int>(LFO::Waveform::Sine) &&
        idx <= static_cast<int>(LFO::Waveform::Random))
    {
-      if(lfo.setWaveform(static_cast<LFO::Waveform>(idx)))
+      if (lfo.setWaveform(static_cast<LFO::Waveform>(idx)))
       {
-         for(auto& cb : m_lFOWaveformChangeCBs) cb(voiceId, paramIdx, lfo.waveform());
+         for (auto& cb : m_lFOWaveformChangeCBs)
+            cb(voiceId, paramIdx, lfo.waveform());
       }
    }
 }
@@ -256,7 +272,8 @@ void SoundHandler::incLFOAmplitude(int voiceIndex, int paramIdx,
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
    if (lfo.setAmplitude(lfo.amplitude() + increment))
    {
-      for(auto& cb : m_lFOAmplitudeChangeCB) cb(voiceIndex, paramIdx, lfo.amplitude());
+      for (auto& cb : m_lFOAmplitudeChangeCB)
+         cb(voiceIndex, paramIdx, lfo.amplitude());
    }
 }
 
@@ -266,16 +283,19 @@ void SoundHandler::incLFOFrequency(int voiceIndex, int paramIdx,
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
    if (lfo.setFrequency(lfo.frequency() + increment))
    {
-      for(auto& cb : m_lFOFrequencyChangeCB) cb(voiceIndex, paramIdx, lfo.frequency());
+      for (auto& cb : m_lFOFrequencyChangeCB)
+         cb(voiceIndex, paramIdx, lfo.frequency());
    }
 }
 
-void SoundHandler::incLFOMultiplierExp(int voiceIndex, int paramIdx, uint32_t increment) noexcept
+void SoundHandler::incLFOMultiplierExp(int voiceIndex, int paramIdx,
+                                       uint32_t increment) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
    if (lfo.setMultiplierExp(lfo.multiplierExp() + increment))
    {
-      for(auto& cb : m_lFOMultiplierExpChangeCB) cb(voiceIndex, paramIdx, lfo.multiplierExp());
+      for (auto& cb : m_lFOMultiplierExpChangeCB)
+         cb(voiceIndex, paramIdx, lfo.multiplierExp());
    }
 }
 

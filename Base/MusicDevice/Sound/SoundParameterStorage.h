@@ -73,7 +73,7 @@ public:
 
       inline std::optional<std::pair<float, float>>
       uiAsksForChangedValues() noexcept;
-      inline bool updateActualValue() noexcept;
+      inline std::optional<float> updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
       inline void setCommandedValue(float value) noexcept;
 

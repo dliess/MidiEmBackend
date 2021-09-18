@@ -247,6 +247,7 @@ struct Parameter
    inline float getListValueByIndex(int idx) const noexcept;
    inline std::optional<float> getValueByListRole(
        ParameterSourceRange::Role role) const noexcept;
+   inline int getSourceResolution() const noexcept;
 };
 
 struct EngineBase
