@@ -17,28 +17,36 @@
         "name": "MainEngine",
         "components": [
           {
-            "name": "Envelope Generator"
+            "name": "Envelope",
+            "role": "Envelope"
           },
           {
-            "name": "Tremolo"
+            "name": "Tremolo",
+            "role": "LFO"
           },
           {
-            "name": "Oscillator"
+            "name": "Oscillator",
+            "role": "Oscillator"
           },
           {
-            "name": "Modulation"
+            "name": "Modulation",
+            "role": "Effects"
           },
           {
-            "name": "Delay"
+            "name": "Delay",
+            "role": "Delay"
           },
           {
-            "name": "Reverb"
+            "name": "Reverb",
+            "role": "Reverb"
           },
           {
-            "name": "Filter"
+            "name": "Filter",
+            "role": "Filter"
           },
           {
-            "name": "Arpeggiator (ARP)"
+            "name": "Arpeggiator",
+            "role": "Arpeggiator"
           }
         ],
         "parameters": [
@@ -46,7 +54,8 @@
             "name": "Type",
             "description": "Selects the amplitude EG type",
             "type": "continous",
-            "component": "Envelope Generator",
+            "component": "Envelope",
+            "role": "AmpEnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -60,7 +69,8 @@
             "name": "Attack",
             "description": "Sets the time required for the EG to reach it\u2019s maximum level once a note is played",
             "type": "continous",
-            "component": "Envelope Generator",
+            "component": "Envelope",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -74,7 +84,8 @@
             "name": "Release",
             "description": "Sets the time required for the EG to reach 0 once a note has ended",
             "type": "continous",
-            "component": "Envelope Generator",
+            "component": "Envelope",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -89,6 +100,7 @@
             "description": "",
             "type": "continous",
             "component": "Tremolo",
+            "role": "LFOAmount",
             "source": {
               "midi": {
                 "id": {
@@ -103,6 +115,7 @@
             "description": "",
             "type": "continous",
             "component": "Tremolo",
+            "role": "LFOSpeed",
             "source": {
               "midi": {
                 "id": {
@@ -117,6 +130,7 @@
             "description": "",
             "type": "continous",
             "component": "Oscillator",
+            "role": "LFOSpeed",
             "source": {
               "midi": {
                 "id": {
@@ -131,6 +145,7 @@
             "description": "",
             "type": "continous",
             "component": "Oscillator",
+            "role": "LFOAmount",
             "source": {
               "midi": {
                 "id": {
@@ -255,15 +270,74 @@
           {
             "name": "Type",
             "description": "Selects the filter type",
-            "type": "continous",
+            "type": "list",
             "component": "Filter",
+            "role": "FilterType",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 42
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Lowpass 2-Pole",
+                  "role": "FilterLowpass",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.15
+                  }
+                },
+                {
+                  "name": "Lowpass 4-Pole",
+                  "role": "FilterLowpass",
+                  "range": {
+                    "from": 0.15,
+                    "to": 0.3
+                  }
+                },
+                {
+                  "name": "Bandpass 2-Pole",
+                  "role": "FilterBandpass",
+                  "range": {
+                    "from": 0.3,
+                    "to": 0.45
+                  }
+                },
+                {
+                  "name": "Bandpass 4-Pole",
+                  "role": "FilterBandpass",
+                  "range": {
+                    "from": 0.45,
+                    "to": 0.6
+                  }
+                },
+                {
+                  "name": "Highpass 2-Pole",
+                  "role": "FilterHighpass",
+                  "range": {
+                    "from": 0.6,
+                    "to": 0.75
+                  }
+                },
+                {
+                  "name": "Highpass 4-Pole",
+                  "role": "FilterHighpass",
+                  "range": {
+                    "from": 0.75,
+                    "to": 0.9
+                  }
+                },
+                {
+                  "name": "Off",
+                  "role": "Off",
+                  "range": {
+                    "from": 0.9,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
@@ -271,6 +345,7 @@
             "description": "Sets the cutoff frequency altering the brightness of the sound",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -285,6 +360,7 @@
             "description": "Adds emphasis to the overtones occurring at the cutoff frequency",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -299,6 +375,7 @@
             "description": "",
             "type": "continous",
             "component": "Filter",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -327,6 +404,7 @@
             "description": "",
             "type": "continous",
             "component": "Oscillator",
+            "role": "OSCWaveform",
             "source": {
               "midi": {
                 "id": {
@@ -341,6 +419,7 @@
             "description": "Amount of wave-shaping applied",
             "type": "continous",
             "component": "Oscillator",
+            "role": "OSCShape",
             "source": {
               "midi": {
                 "id": {
@@ -410,7 +489,7 @@
             "name": "Pattern",
             "description": "ARP pattern length",
             "type": "continous",
-            "component": "Arpeggiator (ARP)",
+            "component": "Arpeggiator",
             "source": {
               "midi": {
                 "id": {
@@ -424,7 +503,7 @@
             "name": "Intervals",
             "description": "",
             "type": "continous",
-            "component": "Arpeggiator (ARP)",
+            "component": "Arpeggiator",
             "source": {
               "midi": {
                 "id": {
@@ -438,7 +517,7 @@
             "name": "Length",
             "description": "",
             "type": "continous",
-            "component": "Arpeggiator (ARP)",
+            "component": "Arpeggiator",
             "source": {
               "midi": {
                 "id": {

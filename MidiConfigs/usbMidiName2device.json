@@ -18,5 +18,6 @@
     "Elektron Analog Rytm:Elektron Analog Rytm MIDI 1" : "Elektron/AnalogRytm_Mk1",
     "MPD218:MPD218 MIDI 1" : "Akai/MPD218",
     "Rocket:Rocket MIDI 1" : "Waldorf/rocket",
-    "Streichfett:Streichfett MIDI 1": "Waldorf/streichfett"
+    "Streichfett:Streichfett MIDI 1": "Waldorf/streichfett",
+    "NTS-1 digital kit:NTS-1 digital kit MIDI 1": "Korg/NTS-1"
 }

@@ -160,6 +160,7 @@ struct Parameter
       Pitch,
       PitchFinetune,
       OSCWaveform,
+      OSCShape,     // NEW
       OSCGlide,
       OSCKeyboardTracking,
       OSCSync,

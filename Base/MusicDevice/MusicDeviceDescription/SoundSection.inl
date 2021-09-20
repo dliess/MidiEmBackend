@@ -323,6 +323,7 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::Pitch: return "Pitch";
       case Role::PitchFinetune: return "PitchFinetune";
       case Role::OSCWaveform: return "OSCWaveform";
+      case Role::OSCShape: return "OSCShape";
       case Role::OSCGlide: return "OSCGlide";
       case Role::OSCKeyboardTracking: return "OSCKeyboardTracking";
       case Role::OSCSync: return "OSCSync";
@@ -421,6 +422,8 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::PitchFinetune;
    else if (roleStr == "OSCWaveform")
       return Role::OSCWaveform;
+   else if (roleStr == "OSCShape")
+      return Role::OSCShape;
    else if (roleStr == "OSCGlide")
       return Role::OSCGlide;
    else if (roleStr == "OSCKeyboardTracking")
