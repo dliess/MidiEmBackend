@@ -162,11 +162,14 @@ struct Parameter
       OSCWaveform,
       OSCShape,     // NEW
       OSCGlide,
+      OSCGlideOnOff, // NEW
+      OSCGlideType, // NEW
       OSCKeyboardTracking,
       OSCSync,
       OSCSlop,
       OSCMix,
       OSCNoise,
+      OSCNoteSyncOnOff, // NEW
       SubOSCLevel,
       UnisonMode,
       UnisonOnOff,

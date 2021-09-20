@@ -119,7 +119,7 @@
             "type": "continous",
             "component": "Amp",
             "role": "Decay",
-            "overrideInitialValue" : 0.3,
+            "defaultValue" : 0.3,
             "source": {
               "midi": {
                 "id": {
