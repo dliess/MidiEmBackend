@@ -896,7 +896,6 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
          return source.midi->sourceValueRange->to -
                 source.midi->sourceValueRange->from;
       }
-      //TODO: if I want higher res
       if(mpark::holds_alternative<midi::ControlChangeHighRes>(source.midi->id) ||
          mpark::holds_alternative<midi::NRPN>(source.midi->id)
       )
