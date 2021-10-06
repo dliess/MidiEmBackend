@@ -67,7 +67,19 @@
             "role": "Arpeggiator"
           },
           {
-            "name": "Sequencer",
+            "name": "Sequencer1",
+            "role": "Sequencer"
+          },
+          {
+            "name": "Sequencer2",
+            "role": "Sequencer"
+          },
+          {
+            "name": "Sequencer3",
+            "role": "Sequencer"
+          },
+          {
+            "name": "Sequencer4",
             "role": "Sequencer"
           },
           {
@@ -6199,7 +6211,7 @@
           {
             "name": "Seq Trig 1",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6234,7 +6246,7 @@
           {
             "name": "Seq Trig 2",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6269,7 +6281,7 @@
           {
             "name": "Seq Trig 3",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6304,7 +6316,7 @@
           {
             "name": "Seq Trig 4",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6339,7 +6351,7 @@
           {
             "name": "Seq Trig 5",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6374,7 +6386,7 @@
           {
             "name": "Seq Trig 6",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6409,7 +6421,7 @@
           {
             "name": "Seq Trig 7",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6444,7 +6456,7 @@
           {
             "name": "Seq Trig 8",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
@@ -6479,14 +6491,14 @@
           {
             "name": "Seq Trig 9",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 128
+                  "idMsb": 1,
+                  "idLsb": 0
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6514,14 +6526,14 @@
           {
             "name": "Seq Trig 10",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 129
+                  "idMsb": 1,
+                  "idLsb": 1
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6549,14 +6561,14 @@
           {
             "name": "Seq Trig 11",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 130
+                  "idMsb": 1,
+                  "idLsb": 2
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6584,14 +6596,14 @@
           {
             "name": "Seq Trig 12",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 131
+                  "idMsb": 1,
+                  "idLsb": 3
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6619,14 +6631,14 @@
           {
             "name": "Seq Trig 13",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 132
+                  "idMsb": 1,
+                  "idLsb": 4
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6654,14 +6666,14 @@
           {
             "name": "Seq Trig 14",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 133
+                  "idMsb": 1,
+                  "idLsb": 5
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6689,14 +6701,14 @@
           {
             "name": "Seq Trig 15",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 134
+                  "idMsb": 1,
+                  "idLsb": 6
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6724,14 +6736,14 @@
           {
             "name": "Seq Trig 16",
             "type": "continous",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequenceTrig",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
-                  "idMsb": 0,
-                  "idLsb": 135
+                  "idMsb": 1,
+                  "idLsb": 7
                 },
                 "sourceValueRange": {
                   "from": 0,
@@ -6759,7 +6771,7 @@
           {
             "name": "Sequencer On/Off",
             "type": "list",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "role" : "SequencerOnOff",
             "source": {
               "midi": {
@@ -6786,7 +6798,7 @@
           {
             "name": "Sequencer Trigger",
             "type": "list",
-            "component": "Sequencer",
+            "component": "Sequencer1",
             "source": {
               "midi": {
                 "id": {
@@ -6814,6 +6826,1686 @@
                 },
                 {
                   "name": "Key step"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 1",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 8
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 2",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 9
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 3",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 10
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 4",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 11
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 5",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 12
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 6",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 13
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 7",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 14
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 8",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 15
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 9",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 16
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 10",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 17
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 11",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 18
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 12",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 19
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 13",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 20
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 14",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 15",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 22
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 16",
+            "type": "continous",
+            "component": "Sequencer2",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 23
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 1",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 24
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 2",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 25
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 3",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 26
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 4",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 27
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 5",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 28
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 6",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 29
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 7",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 30
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 8",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 31
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 9",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 32
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 10",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 33
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 11",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 34
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 12",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 35
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 13",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 36
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 14",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 37
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 15",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 38
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 16",
+            "type": "continous",
+            "component": "Sequencer3",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 39
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 1",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 40
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 2",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 41
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 3",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 42
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 4",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 43
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 5",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 44
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 6",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 45
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 7",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 46
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 8",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 47
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 9",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 48
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 10",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 49
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 11",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 50
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 12",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 51
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 13",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 52
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 14",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 53
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 15",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 54
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Seq Trig 16",
+            "type": "continous",
+            "component": "Sequencer4",
+            "role" : "SequenceTrig",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 55
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Reset",
+                  "range": {
+                    "from": 0.9844,
+                    "to": 0.9922
+                  }
+                },
+                {
+                  "name": "Rest",
+                  "range": {
+                    "from": 0.9922,
+                    "to": 1.0
+                  }
                 }
               ]
             }
