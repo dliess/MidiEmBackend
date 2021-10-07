@@ -6173,7 +6173,7 @@
           {
             "name": "Seq1 Destination",
             "type": "list",
-            "component": "Mod",
+            "component": "Sequencer1",
             "role": "ModDestination",
             "source": {
               "midi": {
@@ -6898,7 +6898,7 @@
           {
             "name": "Seq2 Destination",
             "type": "list",
-            "component": "Mod",
+            "component": "Sequencer2",
             "role": "ModDestination",
             "source": {
               "midi": {
@@ -7623,7 +7623,7 @@
           {
             "name": "Seq3 Destination",
             "type": "list",
-            "component": "Mod",
+            "component": "Sequencer3",
             "role": "ModDestination",
             "source": {
               "midi": {
@@ -8348,7 +8348,7 @@
           {
             "name": "Seq4 Destination",
             "type": "list",
-            "component": "Mod",
+            "component": "Sequencer4",
             "role": "ModDestination",
             "source": {
               "midi": {
