@@ -889,20 +889,40 @@ inline int
 base::musicDevice::description::sound::Parameter::getSourceResolution()
     const noexcept
 {
-   if (source.midi)
+   switch (type)
    {
-      if (source.midi->sourceValueRange)
+      case base::musicDevice::description::sound::Parameter::Type::List:
       {
-         return source.midi->sourceValueRange->to -
-                source.midi->sourceValueRange->from;
+         if (source.sourceRanges)
+         {
+            return static_cast<int>(source.sourceRanges->size());
+         }
+         break;
       }
-      if(mpark::holds_alternative<midi::ControlChangeHighRes>(source.midi->id) ||
-         mpark::holds_alternative<midi::NRPN>(source.midi->id)
-      )
+      case base::musicDevice::description::sound::Parameter::Type::Continous:
+      case base::musicDevice::description::sound::Parameter::Type::
+         ContinousBipolar:
       {
-         return (1 << 14);
+         if (source.midi)
+         {
+            if (source.midi->sourceValueRange)
+            {
+               return source.midi->sourceValueRange->to -
+                      source.midi->sourceValueRange->from;
+            }
+            if (mpark::holds_alternative<midi::MidiMsgId<midi::NRPN>>(source.midi->id) ||
+                mpark::holds_alternative<midi::MidiMsgId<midi::ControlChangeHighRes>>(
+                   source.midi->id))
+            {
+               return 128 * 128;
+            }
+            else
+            {
+               return 128;
+            }
+         }
+         break;
       }
-      return 128;
    }
    return 0;
 }
