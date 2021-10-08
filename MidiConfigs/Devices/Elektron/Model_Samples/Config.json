@@ -67,8 +67,12 @@
             "role": "LFO"
           },
           {
-            "name": "FX Parameters",
-            "role": "Effects"
+            "name": "Delay",
+            "role": "Delay"
+          },
+          {
+            "name": "Reverb",
+            "role": "Reverb"
           }
         ],
         "parameters": [
@@ -187,7 +191,7 @@
           {
             "name": "Delay Send",
             "type": "continous",
-            "component": "Amp",
+            "component": "Delay",
             "role": "DelaySend",
             "source": {
               "midi": {
@@ -201,7 +205,7 @@
           {
             "name": "Reverb Send",
             "type": "continous",
-            "component": "Amp",
+            "component": "Reverb",
             "role": "ReverbSend",
             "source": {
               "midi": {
@@ -256,7 +260,7 @@
           },
           {
             "name": "Loop",
-            "type": "continous",
+            "type": "list",
             "component": "Sample",
             "role": "SampleLoop",
             "source": {
@@ -265,12 +269,28 @@
                   ".type": "MidiControlChange",
                   "id": 17
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.0078125
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.0078125,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
             "name": "Reverse",
-            "type": "continous",
+            "type": "list",
             "component": "Sample",
             "role": "SampleReverse",
             "source": {
@@ -279,7 +299,23 @@
                   ".type": "MidiControlChange",
                   "id": 18
                 }
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0.0,
+                    "to": 0.0078125
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 0.0078125,
+                    "to": 1.0
+                  }
+                }
+              ]
             }
           },
           {
@@ -422,7 +458,7 @@
           {
             "name": "Delay Time",
             "type": "continous",
-            "component": "FX Parameters",
+            "component": "Delay",
             "source": {
               "midi": {
                 "id": {
@@ -435,7 +471,7 @@
           {
             "name": "Delay Feedback",
             "type": "continous",
-            "component": "FX Parameters",
+            "component": "Delay",
             "source": {
               "midi": {
                 "id": {
@@ -448,7 +484,7 @@
           {
             "name": "Reverb Size",
             "type": "continous",
-            "component": "FX Parameters",
+            "component": "Reverb",
             "source": {
               "midi": {
                 "id": {
@@ -459,9 +495,9 @@
             }
           },
           {
-            "name": "Delay Tone",
+            "name": "Reverb Tone",
             "type": "continous",
-            "component": "FX Parameters",
+            "component": "Reverb",
             "source": {
               "midi": {
                 "id": {

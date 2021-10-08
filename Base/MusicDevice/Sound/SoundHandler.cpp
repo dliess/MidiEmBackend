@@ -177,7 +177,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
          if (paramRes)
          {
             const float p = 1.0 / float(paramRes);
-            if (int(value / p) != int(prevValue / p))
+            if (int(value / p) != int(prevValue / p) || value == 0)
             {
                m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
             }
