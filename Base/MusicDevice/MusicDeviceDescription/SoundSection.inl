@@ -243,9 +243,12 @@ base::musicDevice::description::sound::ParameterSourceRange::role2String(
       case Role::Unknown: return "Unknown";
       case Role::Off: return "Off";
       case Role::On: return "On";
-      case Role::FilterLowpass: return "FilterLowpass";
-      case Role::FilterHighpass: return "FilterHighpass";
-      case Role::FilterBandpass: return "FilterBandpass";
+      case Role::FilterLowpass2db: return "FilterLowpass2db";
+      case Role::FilterLowpass4db: return "FilterLowpass4db";
+      case Role::FilterHighpass2db: return "FilterHighpass2db";
+      case Role::FilterHighpass4db: return "FilterHighpass4db";
+      case Role::FilterBandpass2db: return "FilterBandpass2db";
+      case Role::FilterBandpass4db: return "FilterBandpass4db";
       case Role::FilterPeak: return "FilterPeak";
       case Role::FilterTwoPole: return "FilterTwoPole";
       case Role::FilterFourPole: return "FilterFourPole";
@@ -265,12 +268,18 @@ base::musicDevice::description::sound::ParameterSourceRange::roleFromString(
       return Role::Off;
    else if (roleStr == "On")
       return Role::On;
-   else if (roleStr == "FilterLowpass")
-      return Role::FilterLowpass;
-   else if (roleStr == "FilterHighpass")
-      return Role::FilterHighpass;
-   else if (roleStr == "FilterBandpass")
-      return Role::FilterBandpass;
+   else if (roleStr == "FilterLowpass2db")
+      return Role::FilterLowpass2db;
+   else if (roleStr == "FilterLowpass4db")
+      return Role::FilterLowpass4db;
+   else if (roleStr == "FilterHighpass2db")
+      return Role::FilterHighpass2db;
+   else if (roleStr == "FilterHighpass4db")
+      return Role::FilterHighpass4db;
+   else if (roleStr == "FilterBandpass2db")
+      return Role::FilterBandpass2db;
+   else if (roleStr == "FilterBandpass4db")
+      return Role::FilterBandpass4db;
    else if (roleStr == "FilterPeak")
       return Role::FilterPeak;
    else if (roleStr == "FilterTwoPole")
@@ -791,8 +800,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::FeedbackVolume: return 0.0;
       case Parameter::Role::FeedbackGain: return 0.0;
       case Parameter::Role::FilterCutoff: return 0.99;
-      case Parameter::Role::FilterType:
-         return ParameterSourceRange::Role::FilterLowpass;
+      case Parameter::Role::FilterType: return 1;
       case Parameter::Role::FilterResonance: return 0.0;
       case Parameter::Role::FilterSlope: return 0.0;
       case Parameter::Role::FilterKeyAmount: return 0.0;
