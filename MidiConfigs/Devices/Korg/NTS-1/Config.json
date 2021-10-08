@@ -18,7 +18,8 @@
         "components": [
           {
             "name": "Envelope",
-            "role": "Envelope"
+            "role": "Envelope",
+            "constParams" : "{ \"Sustain\": 1.0 }"
           },
           {
             "name": "Tremolo",

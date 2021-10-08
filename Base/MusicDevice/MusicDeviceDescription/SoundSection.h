@@ -84,7 +84,7 @@ struct Component
       Tempo
    };
    std::optional<Role> role;
-
+   std::optional<std::string> constParams;
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
 };

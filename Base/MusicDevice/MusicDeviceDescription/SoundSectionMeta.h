@@ -79,7 +79,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Component>()
 {
    return members(
       member("name", &base::musicDevice::description::sound::Component::name),
-      member("role", &base::musicDevice::description::sound::Component::role)
+      member("role", &base::musicDevice::description::sound::Component::role),
+      member("constParams", &base::musicDevice::description::sound::Component::constParams)
    );
 }
 
