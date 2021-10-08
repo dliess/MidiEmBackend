@@ -61,6 +61,29 @@ inline auto createVoiceMsgOnChannel<Message<PitchBend>>(
 
 namespace base::midifriends
 {
+
+inline 
+void NoteOnMap::setNoteOn(int voiceIdx, int note) noexcept
+{
+   assert(voiceIdx >= 0);
+   assert(voiceIdx < midi::NUM_CHANNELS);
+   assert(note > 0);
+   assert(note < 128);
+   m_map[voiceIdx][note / 64] |= (1 << note % 64);
+}
+
+template<typename Cb> 
+void NoteOnMap::forEachNoteOn(Cb&& cb)
+{
+
+}
+
+inline 
+void NoteOnMap::clear() noexcept
+{
+
+}
+
 template<typename Msg>
 void Router::handleVoiceMsg(
    const RoutingDataSpecialized::ChannelMap& channelMap, const Msg& msg,

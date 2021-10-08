@@ -27,11 +27,23 @@ struct RoutingDataSpecialized
    ChannelMap channelMapping;
 };
 
+class NoteOnMap
+{
+public:
+    inline void setNoteOn(int voiceIdx, int note) noexcept;
+    template<typename Cb> void forEachNoteOn(Cb&& cb);
+    inline void clear() noexcept;
+private:
+   using NoteOnMapPerChannel = std::array<uint64_t, 2>;
+   using Map = std::array<NoteOnMapPerChannel, midi::NUM_CHANNELS>;
+   Map m_map{ 0 };
+};
 struct RoutingData
 {
    bool routed{true};
    std::shared_ptr<musicDevice::MusicDevice::MidiOutput> pMidiOut;
    std::optional<RoutingDataSpecialized> specialized;
+   NoteOnMap noteOnMap;
 };
 
 class Router : public utils::Settings<Router>
