@@ -856,7 +856,10 @@ inline float
 base::musicDevice::description::sound::Parameter::getListValueByIndex(
     int idx) const noexcept
 {
-   assert(source.sourceRanges.has_value());
+   if(!source.sourceRanges.has_value())
+   {
+      return 0;
+   }
    if (source.sourceRanges->at(idx).range.has_value())
    {
       const auto& range = *source.sourceRanges->at(idx).range;
