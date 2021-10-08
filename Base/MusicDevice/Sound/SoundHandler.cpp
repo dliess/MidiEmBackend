@@ -137,8 +137,14 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
           m_deviceName);
       return;
    }
-   if (value < 0.0 || value >= 1.0)
-      return;
+   if (value < 0.0)
+   {
+      value = 0.0;
+   }
+   if(value >= 1.0)
+   {
+      value = 0.999999;
+   }
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
    // m_midiOutHandler->sendSoundParameter(voiceId, parameterId, value);
 }
