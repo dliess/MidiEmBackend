@@ -11,7 +11,7 @@ SoundDevicesRpc::SoundDevicesRpc(
 }
 
 void SoundDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid,
-                             ::capnzero::UInt8 voiceIndex,
+                             ::capnzero::Int8 voiceIdx,
                              ::capnzero::UInt8 note,
                              ::capnzero::Float32 velocity)
 {
@@ -21,12 +21,12 @@ void SoundDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->noteOn(voiceIndex, note, velocity);
+      iter->second->soundHandler->noteOn(voiceIdx, note, velocity);
    }
 }
 
 void SoundDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid,
-                              ::capnzero::UInt8 voiceIndex,
+                              ::capnzero::Int8 voiceIdx,
                               ::capnzero::UInt8 note,
                               ::capnzero::Float32 velocity)
 {
@@ -36,12 +36,12 @@ void SoundDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->noteOff(voiceIndex, note, velocity);
+      iter->second->soundHandler->noteOff(voiceIdx, note, velocity);
    }
 }
 
 void SoundDevicesRpc::pitchBend(const ::capnzero::SpanCL<16>& uuid,
-                                ::capnzero::UInt8 voiceIndex,
+                                ::capnzero::Int8 voiceIdx,
                                 ::capnzero::Float32 value)
 {
    util::Identifiable::UUID uuid_;
@@ -50,12 +50,12 @@ void SoundDevicesRpc::pitchBend(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->pitchBend(voiceIndex, value);
+      iter->second->soundHandler->pitchBend(voiceIdx, value);
    }
 }
 
 void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::UInt8 voiceIndex,
+                                     ::capnzero::Int8 voiceIdx,
                                      ::capnzero::UInt8 note,
                                      ::capnzero::Float32 value)
 {
@@ -65,12 +65,12 @@ void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->afterTouchPoly(voiceIndex, note, value);
+      iter->second->soundHandler->afterTouchPoly(voiceIdx, note, value);
    }
 }
 
 void SoundDevicesRpc::afterTouch(const ::capnzero::SpanCL<16>& uuid,
-                                 ::capnzero::UInt8 voiceIndex,
+                                 ::capnzero::Int8 voiceIdx,
                                  ::capnzero::Float32 value)
 {
    util::Identifiable::UUID uuid_;
@@ -79,12 +79,12 @@ void SoundDevicesRpc::afterTouch(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->afterTouch(voiceIndex, value);
+      iter->second->soundHandler->afterTouch(voiceIdx, value);
    }
 }
 
 void SoundDevicesRpc::registerForParameterChange(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -99,7 +99,7 @@ void SoundDevicesRpc::registerForParameterChange(
 }
 
 void SoundDevicesRpc::unregisterForParameterChange(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -114,7 +114,7 @@ void SoundDevicesRpc::unregisterForParameterChange(
 }
 
 void SoundDevicesRpc::incrementParameterValue(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceId,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
     ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment)
 {
    util::Identifiable::UUID uuid_;
@@ -123,13 +123,13 @@ void SoundDevicesRpc::incrementParameterValue(
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->incrementParameterValue(voiceId, paramIdx,
+      iter->second->soundHandler->incrementParameterValue(voiceIdx, paramIdx,
                                                           increment);
    }
 }
 
 void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
-                                        ::capnzero::Int16 voiceId,
+                                        ::capnzero::Int8 voiceIdx,
                                         ::capnzero::Int16 paramIdx,
                                         ::capnzero::Float32 value)
 {
@@ -139,12 +139,12 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->setParameterValue(voiceId, paramIdx, value);
+      iter->second->soundHandler->setParameterValue(voiceIdx, paramIdx, value);
    }
 }
 
 void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
-                                          ::capnzero::Int16 voiceId,
+                                          ::capnzero::Int8 voiceIdx,
                                           ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -153,12 +153,12 @@ void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->blankVoiceParameter(voiceId, paramIdx);
+      iter->second->soundHandler->blankVoiceParameter(voiceIdx, paramIdx);
    }
 }
 
 void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
-                                           ::capnzero::Int16 voiceId)
+                                           ::capnzero::Int8 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -166,7 +166,7 @@ void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->blankVoiceParameters(voiceId);
+      iter->second->soundHandler->blankVoiceParameters(voiceIdx);
    }
 }
 
@@ -184,7 +184,7 @@ void SoundDevicesRpc::blankAllVoiceParameters(
 }
 
 void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::UInt8 voiceIndex,
+                                     ::capnzero::Int8 voiceIdx,
                                      ::capnzero::Int16 paramIdx,
                                      ::capnzero::MidiEmRt::LFOWaveform waveform)
 {
@@ -195,13 +195,13 @@ void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
    {
       assert(iter->second->soundHandler);
       iter->second->soundHandler->setLFOWaveform(
-          voiceIndex, paramIdx,
+          voiceIdx, paramIdx,
           static_cast<base::musicDevice::sound::LFO::Waveform>(waveform));
    }
 }
 
 void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::UInt8 voiceIndex,
+                                     ::capnzero::Int8 voiceIdx,
                                      ::capnzero::Int16 paramIdx,
                                      ::capnzero::Int8 increment)
 {
@@ -211,13 +211,13 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOWaveform(voiceIndex, paramIdx,
+      iter->second->soundHandler->incLFOWaveform(voiceIdx, paramIdx,
                                                  increment);
    }
 }
 
 void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int8 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 amplitude)
 {
@@ -227,13 +227,13 @@ void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOAmplitude(voiceIndex, paramIdx,
+      iter->second->soundHandler->setLFOAmplitude(voiceIdx, paramIdx,
                                                   amplitude);
    }
 }
 
 void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int8 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
@@ -243,13 +243,13 @@ void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOAmplitude(voiceIndex, paramIdx,
+      iter->second->soundHandler->incLFOAmplitude(voiceIdx, paramIdx,
                                                   increment);
    }
 }
 
 void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int8 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 frequency)
 {
@@ -259,13 +259,13 @@ void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOFrequency(voiceIndex, paramIdx,
+      iter->second->soundHandler->setLFOFrequency(voiceIdx, paramIdx,
                                                   frequency);
    }
 }
 
 void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int8 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
@@ -275,13 +275,13 @@ void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOFrequency(voiceIndex, paramIdx,
+      iter->second->soundHandler->incLFOFrequency(voiceIdx, paramIdx,
                                                   increment);
    }
 }
 
 void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
-                                          ::capnzero::UInt8 voiceIndex,
+                                          ::capnzero::Int8 voiceIdx,
                                           ::capnzero::Int16 paramIdx,
                                           ::capnzero::UInt32 increment)
 {
@@ -291,13 +291,13 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
    if (iter != m_rMusicDeviceContainer.end())
    {
       assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOMultiplierExp(voiceIndex, paramIdx,
+      iter->second->soundHandler->incLFOMultiplierExp(voiceIdx, paramIdx,
                                                   increment);
    }
 }
 
 void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::UInt8 voiceIndex,
+                                      ::capnzero::Int8 voiceIdx,
                                       const ::capnzero::TextView& presetName)
 {
    // TODO
