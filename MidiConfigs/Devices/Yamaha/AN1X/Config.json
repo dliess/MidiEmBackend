@@ -122,8 +122,9 @@
             "source": {
               "midi": {
                 "id": {
-                  ".type": "MidiControlChange",
-                  "id": 6
+                  ".type": "MidiControlChangeHighRes",
+                  "idMsb": 6,
+                  "idLsb": 38
                 }
               }
             }
@@ -200,6 +201,7 @@
             "name": "Expression",
             "type": "continous",
             "component": "Controls",
+            "defaultValue" : 0.99,
             "source": {
               "midi": {
                 "id": {
@@ -540,19 +542,6 @@
             }
           },
           {
-            "name": "Data Entry LSB",
-            "type": "continous",
-            "component": "Default",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 38
-                }
-              }
-            }
-          },
-          {
             "name": "Mixer Noise Level",
             "type": "continous",
             "component": "Amp",
@@ -671,16 +660,24 @@
               },
               "sourceRanges": [
                 {
-                  "name": "Highpass",
-                  "role": "FilterHighpass2db"
-                },
-                {
                   "name": "Lowpass",
                   "role": "FilterLowpass2db"
                 },
                 {
+                  "name": "Lowpass",
+                  "role": "FilterLowpass4db"
+                },
+                {
+                  "name": "Lowpass",
+                  "role": "FilterLowpass4db"
+                },
+                {
                   "name": "Bandpass",
                   "role": "FilterBandpass2db"
+                },
+                {
+                  "name": "Highpass",
+                  "role": "FilterHighpass2db"
                 },
                 {
                   "name": "Band Eliminate",
@@ -690,10 +687,37 @@
             }
           },
           {
-            "name": "VCF HPF Cutoff",
+            "name": "Cutoff",
             "type": "continous",
             "component": "Filter",
             "role": "FilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "type": "continous",
+            "component": "Filter",
+            "role": "FilterResonance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "VCF HPF Cutoff",
+            "type": "continous",
+            "component": "Filter",
             "source": {
               "midi": {
                 "id": {
@@ -821,20 +845,6 @@
             }
           },
           {
-            "name": "Resonance",
-            "type": "continous",
-            "component": "Filter",
-            "role": "FilterResonance",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 71
-                }
-              }
-            }
-          },
-          {
             "name": "Release",
             "type": "continous",
             "component": "AmpEnv",
@@ -858,19 +868,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 73
-                }
-              }
-            }
-          },
-          {
-            "name": "Cutoff",
-            "type": "continous",
-            "component": "Filter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 74
                 }
               }
             }
