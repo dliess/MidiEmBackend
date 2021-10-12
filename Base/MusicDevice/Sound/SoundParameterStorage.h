@@ -56,6 +56,7 @@ public:
 
    struct Element
    {
+      inline Element(bool isListIndex, int resolution) noexcept;
       static constexpr int NUM_MODIFIERS = 10;
       struct Modifier
       {
@@ -73,11 +74,13 @@ public:
 
       inline std::optional<std::pair<float, float>>
       uiAsksForChangedValues() noexcept;
-      inline std::optional<float> updateActualValue() noexcept;
+      inline bool updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
       inline void setCommandedValue(float value) noexcept;
 
    private:
+      const bool m_isListIndex;
+      const int m_resolution;
       float m_cachedLfoValue{0.0};
       inline float calcModified() const noexcept;
    };

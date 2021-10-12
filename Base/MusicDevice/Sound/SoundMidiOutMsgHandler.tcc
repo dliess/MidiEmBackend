@@ -32,6 +32,11 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
    assert(paramDescr.source.midi);
    const auto& valueRange = paramDescr.source.midi->sourceValueRange;
 
+   if(paramDescr.type == description::sound::Parameter::Type::List)
+   {
+      
+   }
+
    const auto midiMsg = mpark::visit(
        midi::overload{
            [midiChannel, value,

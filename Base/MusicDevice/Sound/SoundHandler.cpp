@@ -141,7 +141,7 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    {
       value = 0.0;
    }
-   if(value >= 1.0)
+   if (value >= 1.0)
    {
       value = 0.999999;
    }
@@ -170,23 +170,10 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)
    {
-      m_paramStorage.updateActualValues([this](int voiceIdx, int paramIdx,
-                                               float value, float prevValue) {
-         const int paramRes = m_rSoundSection.parameterDescr(voiceIdx, paramIdx)
-                                  .getSourceResolution();
-         if (paramRes)
-         {
-            const float p = 1.0 / float(paramRes);
-            if (int(value / p) != int(prevValue / p) || value == 0)
-            {
-               m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
-            }
-         }
-         else
-         {
-            assert(false);
-         }
-      });
+      m_paramStorage.updateActualValues(
+          [this](int voiceIdx, int paramIdx, float value) {
+             m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
+          });
    }
 }
 
@@ -195,7 +182,8 @@ void SoundHandler::uiShowsInterestInParameter(int voiceId,
 {
    m_paramStorage.uiShowsInterestInParameter(voiceId, parameterId);
    m_paramStorage.forEachParameter(
-       [parameterId, voiceId, this](int paramIdx, ParameterStorage::Element& element) {
+       [parameterId, voiceId, this](int paramIdx,
+                                    ParameterStorage::Element& element) {
           if (parameterId == ALL || parameterId == paramIdx)
           {
              for (auto& cb : m_lFOWaveformChangeCBs)
@@ -227,9 +215,10 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
 void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
 {
    m_paramStorage.resetToInitialValue(voiceId, paramIdx);
-   //TODO
+   // TODO
    m_paramStorage.forEachParameter(
-       [paramIdx, voiceId, this](int _paramIdx, ParameterStorage::Element& element) {
+       [paramIdx, voiceId, this](int _paramIdx,
+                                 ParameterStorage::Element& element) {
           if (paramIdx == ALL || paramIdx == _paramIdx)
           {
              for (auto& cb : m_lFOWaveformChangeCBs)
@@ -248,17 +237,17 @@ void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
 void SoundHandler::blankVoiceParameters(int voiceId) noexcept
 {
    m_paramStorage.resetToInitialValues(voiceId);
-   //TODO
+   // TODO
    m_paramStorage.forEachParameter(
        [voiceId, this](int _paramIdx, ParameterStorage::Element& element) {
-         for (auto& cb : m_lFOWaveformChangeCBs)
-            cb(voiceId, _paramIdx, element.lfo.waveform());
-         for (auto& cb : m_lFOAmplitudeChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.amplitude());
-         for (auto& cb : m_lFOFrequencyChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.frequency());
-         for (auto& cb : m_lFOMultiplierExpChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.multiplierExp());
+          for (auto& cb : m_lFOWaveformChangeCBs)
+             cb(voiceId, _paramIdx, element.lfo.waveform());
+          for (auto& cb : m_lFOAmplitudeChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.amplitude());
+          for (auto& cb : m_lFOFrequencyChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.frequency());
+          for (auto& cb : m_lFOMultiplierExpChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.multiplierExp());
        },
        voiceId);
 }
@@ -266,17 +255,17 @@ void SoundHandler::blankVoiceParameters(int voiceId) noexcept
 void SoundHandler::blankAllVoiceParameters() noexcept
 {
    m_paramStorage.resetToInitialValues();
-   //TODO
+   // TODO
    m_paramStorage.forEachParameter(
        [this](int voiceId, int _paramIdx, ParameterStorage::Element& element) {
-         for (auto& cb : m_lFOWaveformChangeCBs)
-            cb(voiceId, _paramIdx, element.lfo.waveform());
-         for (auto& cb : m_lFOAmplitudeChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.amplitude());
-         for (auto& cb : m_lFOFrequencyChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.frequency());
-         for (auto& cb : m_lFOMultiplierExpChangeCB)
-            cb(voiceId, _paramIdx, element.lfo.multiplierExp());
+          for (auto& cb : m_lFOWaveformChangeCBs)
+             cb(voiceId, _paramIdx, element.lfo.waveform());
+          for (auto& cb : m_lFOAmplitudeChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.amplitude());
+          for (auto& cb : m_lFOFrequencyChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.frequency());
+          for (auto& cb : m_lFOMultiplierExpChangeCB)
+             cb(voiceId, _paramIdx, element.lfo.multiplierExp());
        });
 }
 

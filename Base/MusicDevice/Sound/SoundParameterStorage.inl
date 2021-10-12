@@ -15,14 +15,52 @@ inline void ParameterStorage::resize() noexcept
 {
    if (m_rSoundSection.global)
    {
-      m_globalData.parameters.resize(m_rSoundSection.global->parameters.size());
+      m_globalData.parameters.reserve(
+          m_rSoundSection.global->parameters.size());
+      for (int paramIdx = 0;
+           paramIdx < m_rSoundSection.global->parameters.size(); ++paramIdx)
+      {
+         if (m_rSoundSection.global->parameters[paramIdx].type ==
+             description::sound::Parameter::Type::List)
+         {
+            const auto& sourceRanges =
+                m_rSoundSection.global->parameters[paramIdx]
+                    .source.sourceRanges;
+            assert(sourceRanges.has_value());
+            m_globalData.parameters.emplace_back(true, sourceRanges->size());
+         }
+         else
+         {
+            m_globalData.parameters.emplace_back(
+                false, m_rSoundSection.global->parameters[paramIdx]
+                           .getSourceResolution());
+         }
+      }
    }
    m_voicesData.resize(m_rSoundSection.voices.size());
    for (int voiceIdx = 0; voiceIdx < m_rSoundSection.voices.size(); ++voiceIdx)
    {
       const auto& engineDescr =
           m_rSoundSection.engines[m_rSoundSection.voices[voiceIdx].engineId];
-      m_voicesData[voiceIdx].parameters.resize(engineDescr.parameters.size());
+      m_voicesData[voiceIdx].parameters.reserve(engineDescr.parameters.size());
+      for (int paramIdx = 0; paramIdx < engineDescr.parameters.size();
+           ++paramIdx)
+      {
+         if (engineDescr.parameters[paramIdx].type ==
+             description::sound::Parameter::Type::List)
+         {
+            const auto& sourceRanges =
+                engineDescr.parameters[paramIdx].source.sourceRanges;
+            assert(sourceRanges.has_value());
+            m_voicesData[voiceIdx].parameters.emplace_back(
+                true, sourceRanges->size());
+         }
+         else
+         {
+            m_voicesData[voiceIdx].parameters.emplace_back(
+                false, engineDescr.parameters[paramIdx].getSourceResolution());
+         }
+      }
    }
 }
 
@@ -200,10 +238,10 @@ template <typename Cb>
 void ParameterStorage::updateActualValues(Cb&& cb) noexcept
 {
    forEachParameter([cb](int voiceIdx, int paramIdx, Element& element) {
-      const auto prevActValue = element.updateActualValue();
-      if (prevActValue)
+      const bool changed = element.updateActualValue();
+      if (changed)
       {
-         cb(voiceIdx, paramIdx, element.actual, *prevActValue);
+         cb(voiceIdx, paramIdx, element.actual);
       }
    });
 }
@@ -298,6 +336,12 @@ inline const LFO& ParameterStorage::lfoOf(int voiceId,
    return elementContainer(voiceId).parameters[parameterId].lfo;
 }
 
+inline ParameterStorage::Element::Element(bool isListIndex,
+                                          int resolution) noexcept :
+    m_isListIndex(isListIndex), m_resolution(resolution)
+{
+}
+
 inline std::optional<std::pair<float, float>>
 ParameterStorage::Element::uiAsksForChangedValues() noexcept
 {
@@ -309,19 +353,21 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    return std::nullopt;
 }
 
-inline std::optional<float> ParameterStorage::Element::updateActualValue() noexcept
+inline bool
+ParameterStorage::Element::updateActualValue() noexcept
 {
    if (!dirtyFlagRt && !lfo.enabled())   // performance improving shortcut
    {
-      return std::nullopt;
+      return false;
    }
    float actualBefore = actual;
    actual             = calcModified();
+   const float range  = m_isListIndex ? m_resolution : 1.0;
    if (lfo.enabled())
    {
-      m_cachedLfoValue = lfo.calculateValue();
+      m_cachedLfoValue = lfo.calculateValue() * range;
       actual += m_cachedLfoValue;
-      actual = std::min(1.0f, actual);
+      actual = std::min(range - 0.00001f, actual);
       actual = std::max(0.0f, actual);
    }
    else
@@ -330,12 +376,25 @@ inline std::optional<float> ParameterStorage::Element::updateActualValue() noexc
    }
 
    dirtyFlagRt = false;
-   if (actualBefore != actual)
+   if (m_isListIndex)
    {
-      dirtyFlagUi = true;
-      return actualBefore;
+      if (int(actualBefore) != int(actual))
+      {
+         dirtyFlagUi = true;
+         return true;
+      }
    }
-   return std::nullopt;
+   else
+   {
+      if (int(actualBefore * m_resolution) != int(actual * m_resolution)
+          //|| actual == 0
+          )
+      {
+         dirtyFlagUi = true;
+         return true;
+      }
+   }
+   return false;
 }
 
 inline void ParameterStorage::Element::setActualValue(float value) noexcept
@@ -357,7 +416,8 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
 
 inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
 {
-   if (value < 0.0 || value > 1.0)
+   const float range = m_isListIndex ? m_resolution : 1.0;
+   if (value < 0.0 || value >= range)
    {
       LOG_F(ERROR, "Commanded parameter value out of range: {}", value);
       return;
