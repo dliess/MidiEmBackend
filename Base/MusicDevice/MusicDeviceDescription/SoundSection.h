@@ -250,8 +250,9 @@ struct Parameter
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
 
+   inline int getListIndexByListValue(float value) const noexcept;
    inline float getListValueByIndex(int idx) const noexcept;
-   inline std::optional<float> getValueByListRole(
+   inline std::optional<float> getListIndexByListRole(
        ParameterSourceRange::Role role) const noexcept;
    inline int getSourceResolution() const noexcept;
 };

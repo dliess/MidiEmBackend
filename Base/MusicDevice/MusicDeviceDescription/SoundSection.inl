@@ -735,22 +735,15 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
    const auto& paramDescr = parameterDescr(voiceId, parameterId);
    return mpark::visit(
        util::overload{
-           [this, paramDescr](const float& val) -> float {
-              if (val >= 1.0)
-              {
-                 const int idx = int(val) - 1;
-                 return paramDescr.getListValueByIndex(idx);
-              }
-              return val;
-           },
+           [this, paramDescr](const float& val) -> float { return val; },
            [this, paramDescr](const base::musicDevice::description::sound::
                                   ParameterSourceRange::Role& role) -> float {
-              const auto retVal = paramDescr.getValueByListRole(role);
+              const auto retVal = paramDescr.getListIndexByListRole(role);
               if (retVal)
               {
                  return *retVal;
               }
-              return paramDescr.getListValueByIndex(1);
+              return 0;
            }},
        _getInitialValueFor(voiceId, parameterId));
 }
@@ -860,11 +853,37 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
    return 0.0;
 }
 
+inline int
+base::musicDevice::description::sound::Parameter::getListIndexByListValue(
+    float value) const noexcept
+{
+   if (!source.sourceRanges)
+   {
+      return 0;
+   }
+   const auto& ranges = *source.sourceRanges;
+   for (int idx = 0; idx < source.sourceRanges->size(); ++idx)
+   {
+      if (ranges[idx].range)
+      {
+         if (ranges[idx].range->from <= value && value < ranges[idx].range->to)
+         {
+            return idx;
+         }
+      }
+      else
+      {
+         return int(value * source.sourceRanges->size());
+      }
+   }
+   return 0;
+}
+
 inline float
 base::musicDevice::description::sound::Parameter::getListValueByIndex(
     int idx) const noexcept
 {
-   if(!source.sourceRanges.has_value())
+   if (!source.sourceRanges.has_value())
    {
       return 0;
    }
@@ -881,7 +900,7 @@ base::musicDevice::description::sound::Parameter::getListValueByIndex(
 }
 
 inline std::optional<float>
-base::musicDevice::description::sound::Parameter::getValueByListRole(
+base::musicDevice::description::sound::Parameter::getListIndexByListRole(
     ParameterSourceRange::Role role) const noexcept
 {
    assert(source.sourceRanges.has_value());
@@ -890,7 +909,7 @@ base::musicDevice::description::sound::Parameter::getValueByListRole(
       if (source.sourceRanges->at(idx).role.has_value() &&
           role == *source.sourceRanges->at(idx).role)
       {
-         return getListValueByIndex(idx);
+         return float(idx);
       }
    }
    return std::nullopt;
@@ -912,7 +931,7 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
       }
       case base::musicDevice::description::sound::Parameter::Type::Continous:
       case base::musicDevice::description::sound::Parameter::Type::
-         ContinousBipolar:
+          ContinousBipolar:
       {
          if (source.midi)
          {
@@ -921,9 +940,11 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
                return source.midi->sourceValueRange->to -
                       source.midi->sourceValueRange->from;
             }
-            if (mpark::holds_alternative<midi::MidiMsgId<midi::NRPN>>(source.midi->id) ||
-                mpark::holds_alternative<midi::MidiMsgId<midi::ControlChangeHighRes>>(
-                   source.midi->id))
+            if (mpark::holds_alternative<midi::MidiMsgId<midi::NRPN>>(
+                    source.midi->id) ||
+                mpark::holds_alternative<
+                    midi::MidiMsgId<midi::ControlChangeHighRes>>(
+                    source.midi->id))
             {
                return 128 * 128;
             }

@@ -367,7 +367,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       m_cachedLfoValue = lfo.calculateValue() * range;
       actual += m_cachedLfoValue;
-      actual = std::min(range - 0.00001f, actual);
+      actual = std::min(range - FUZZ, actual);
       actual = std::max(0.0f, actual);
    }
    else
@@ -380,6 +380,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       if (int(actualBefore) != int(actual))
       {
+         //LOG_F(INFO, "actualBefore {} actual {}", actualBefore, actual);
          dirtyFlagUi = true;
          return true;
       }
@@ -417,10 +418,13 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
 inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
 {
    const float range = m_isListIndex ? m_resolution : 1.0;
-   if (value < 0.0 || value >= range)
+   if (value < 0.0)
    {
-      LOG_F(ERROR, "Commanded parameter value out of range: {}", value);
-      return;
+      value = 0.0;
+   }
+   if(value >= range)
+   {
+      value = range - FUZZ;
    }
    commanded   = value;
    dirtyFlagRt = true;

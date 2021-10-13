@@ -34,7 +34,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
 
    if(paramDescr.type == description::sound::Parameter::Type::List)
    {
-      
+      value = paramDescr.getListValueByIndex(int(value));
    }
 
    const auto midiMsg = mpark::visit(

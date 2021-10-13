@@ -38,7 +38,8 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       {
          return;
       }
-      //LOG_F(INFO, "Got midi msg:{} {}", m_pMidiInIf->medium().getDeviceName(),
+      // LOG_F(INFO, "Got midi msg:{} {}",
+      // m_pMidiInIf->medium().getDeviceName(),
       //      toString(midiMsg));
       auto iter = m_map.find(midiId);
       if (m_map.end() == iter)
@@ -83,39 +84,68 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
    assert(m_rSoundSection.parameterDescr(id).source.midi.has_value());
    const auto& valueRange =
        m_rSoundSection.parameterDescr(id).source.midi->sourceValueRange;
+   const bool isList =
+       m_rSoundSection.parameterDescr(id).type ==
+       base::musicDevice::description::sound::Parameter::Type::List;
    mpark::visit(
        midi::overload{
-           [this, &id,
+           [this, &id, isList,
             &valueRange](const midi::Message<midi::ControlChange>& msg) {
-              const float val =
+              float val =
                   valueRange.has_value()
                       ? msg.getRelativeValue(valueRange->from, valueRange->to)
                       : msg.getRelativeValue();
+              if (isList)
+              {
+                 val =
+                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
+                         val);
+              }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
            },
-           [this, &id,
+           [this, &id, isList,
             &valueRange](const midi::Message<midi::ControlChangeHighRes>& msg) {
-              const float val =
+              float val =
                   valueRange.has_value()
                       ? msg.getRelativeValue(valueRange->from, valueRange->to)
                       : msg.getRelativeValue();
+              if (isList)
+              {
+                 val =
+                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
+                         val);
+              }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
            },
-           [this, &id, &valueRange](const midi::Message<midi::NRPN>& msg) {
-              const float val =
+           [this, &id, isList,
+            &valueRange](const midi::Message<midi::NRPN>& msg) {
+              float val =
                   valueRange.has_value()
                       ? msg.getRelativeValue(valueRange->from, valueRange->to)
                       : msg.getRelativeValue();
+              if (isList)
+              {
+                 val =
+                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
+                         val);
+              }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
            },
-           [this, &id, &valueRange](const midi::Message<midi::RPN>& msg) {
-              const float val =
+           [this, &id, isList,
+            &valueRange](const midi::Message<midi::RPN>& msg) {
+              float val =
                   valueRange.has_value()
                       ? msg.getRelativeValue(valueRange->from, valueRange->to)
                       : msg.getRelativeValue();
+              if (isList)
+              {
+                 val =
+                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
+                         val);
+              }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
            },

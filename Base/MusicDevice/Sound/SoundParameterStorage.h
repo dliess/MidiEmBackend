@@ -58,6 +58,7 @@ public:
    {
       inline Element(bool isListIndex, int resolution) noexcept;
       static constexpr int NUM_MODIFIERS = 10;
+      static constexpr float FUZZ = 0.00001f;
       struct Modifier
       {
          float destinationValue{0};
