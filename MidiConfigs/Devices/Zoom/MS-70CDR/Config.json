@@ -1,22 +1,22 @@
 {
-    "version": "0.0.0",
-    "manufacturer": "Zoom",
-    "productName": "MS-70CDR",
-    "soundSection": {
-      "defaultInstrumentType": "InstrumentPerVoice",
-      "voices": [
-        {
-          "name": "1",
-          "engineId": 0,
-          "midiChannel": 1
-        }
-      ],
-      "engines": [
-        {
-          "name": "MainEngine",
-          "components": [],
-          "parameters": []
-        }
-      ]
-    }
+  "version": "0.0.0",
+  "manufacturer": "Zoom",
+  "productName": "MS-70CDR",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MainEngine",
+        "components": [],
+        "parameters": []
+      }
+    ]
   }
+}

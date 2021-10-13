@@ -19,7 +19,7 @@
           {
             "name": "Envelope",
             "role": "Envelope",
-            "constParams" : "{ \"Sustain\": 1.0 }"
+            "constParams": "{ \"Sustain\": 1.0 }"
           },
           {
             "name": "Tremolo",
@@ -279,66 +279,66 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 42
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Lowpass 2-Pole",
-                  "role": "FilterLowpass2db",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.15
-                  }
                 },
-                {
-                  "name": "Lowpass 4-Pole",
-                  "role": "FilterLowpass4db",
-                  "range": {
-                    "from": 0.15,
-                    "to": 0.3
+                "sourceRanges": [
+                  {
+                    "name": "Lowpass 2-Pole",
+                    "role": "FilterLowpass2db",
+                    "range": {
+                      "from": 0,
+                      "to": 18
+                    }
+                  },
+                  {
+                    "name": "Lowpass 4-Pole",
+                    "role": "FilterLowpass4db",
+                    "range": {
+                      "from": 19,
+                      "to": 37
+                    }
+                  },
+                  {
+                    "name": "Bandpass 2-Pole",
+                    "role": "FilterBandpass2db",
+                    "range": {
+                      "from": 38,
+                      "to": 56
+                    }
+                  },
+                  {
+                    "name": "Bandpass 4-Pole",
+                    "role": "FilterBandpass4db",
+                    "range": {
+                      "from": 57,
+                      "to": 75
+                    }
+                  },
+                  {
+                    "name": "Highpass 2-Pole",
+                    "role": "FilterHighpass2db",
+                    "range": {
+                      "from": 76,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "Highpass 4-Pole",
+                    "role": "FilterHighpass4db",
+                    "range": {
+                      "from": 96,
+                      "to": 114
+                    }
+                  },
+                  {
+                    "name": "Off",
+                    "role": "Off",
+                    "range": {
+                      "from": 115,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Bandpass 2-Pole",
-                  "role": "FilterBandpass2db",
-                  "range": {
-                    "from": 0.3,
-                    "to": 0.45
-                  }
-                },
-                {
-                  "name": "Bandpass 4-Pole",
-                  "role": "FilterBandpass4db",
-                  "range": {
-                    "from": 0.45,
-                    "to": 0.6
-                  }
-                },
-                {
-                  "name": "Highpass 2-Pole",
-                  "role": "FilterHighpass2db",
-                  "range": {
-                    "from": 0.6,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "Highpass 4-Pole",
-                  "role": "FilterHighpass4db",
-                  "range": {
-                    "from": 0.75,
-                    "to": 0.9
-                  }
-                },
-                {
-                  "name": "Off",
-                  "role": "Off",
-                  "range": {
-                    "from": 0.9,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {

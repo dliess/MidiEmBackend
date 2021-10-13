@@ -123,7 +123,7 @@
             "type": "continous",
             "component": "Amp",
             "role": "Decay",
-            "defaultValue" : 0.3,
+            "defaultValue": 0.3,
             "source": {
               "midi": {
                 "id": {
@@ -234,7 +234,7 @@
             "name": "Swing",
             "type": "continous",
             "component": "Trig",
-            "role" : "Swing",
+            "role": "Swing",
             "source": {
               "midi": {
                 "id": {
@@ -268,24 +268,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 17
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.0078125
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.0078125,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 1,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -298,24 +298,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 18
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.0078125
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.0078125,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 1,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {

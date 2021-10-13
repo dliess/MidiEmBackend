@@ -29,7 +29,7 @@
           },
           {
             "name": "AmpEnv",
-            "role": "Envelope"    
+            "role": "Envelope"
           },
           {
             "name": "Controls"
@@ -164,24 +164,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 9
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Poly",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "Mono",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Poly",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Mono",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -201,7 +201,7 @@
             "name": "Expression",
             "type": "continous",
             "component": "Controls",
-            "defaultValue" : 0.99,
+            "defaultValue": 0.99,
             "source": {
               "midi": {
                 "id": {
@@ -656,34 +656,58 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 59
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Lowpass",
-                  "role": "FilterLowpass2db"
                 },
-                {
-                  "name": "Lowpass",
-                  "role": "FilterLowpass4db"
-                },
-                {
-                  "name": "Lowpass",
-                  "role": "FilterLowpass4db"
-                },
-                {
-                  "name": "Bandpass",
-                  "role": "FilterBandpass2db"
-                },
-                {
-                  "name": "Highpass",
-                  "role": "FilterHighpass2db"
-                },
-                {
-                  "name": "Band Eliminate",
-                  "role": "Off"
-                }
-              ]
+                "sourceRanges": [
+                  {
+                    "name": "Lowpass",
+                    "role": "FilterLowpass2db",
+                    "range": {
+                      "from": 0,
+                      "to": 20
+                    }
+                  },
+                  {
+                    "name": "Lowpass",
+                    "role": "FilterLowpass4db",
+                    "range": {
+                      "from": 21,
+                      "to": 41
+                    }
+                  },
+                  {
+                    "name": "Lowpass",
+                    "role": "FilterLowpass4db",
+                    "range": {
+                      "from": 42,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Bandpass",
+                    "role": "FilterBandpass2db",
+                    "range": {
+                      "from": 64,
+                      "to": 84
+                    }
+                  },
+                  {
+                    "name": "Highpass",
+                    "role": "FilterHighpass2db",
+                    "range": {
+                      "from": 85,
+                      "to": 105
+                    }
+                  },
+                  {
+                    "name": "Band Eliminate",
+                    "role": "Off",
+                    "range": {
+                      "from": 106,
+                      "to": 127
+                    }
+                  }
+                ]
+              }
             }
           },
           {
@@ -1027,24 +1051,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 90
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {

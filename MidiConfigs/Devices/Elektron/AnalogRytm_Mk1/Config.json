@@ -4,7 +4,7 @@
   "productName": "Analog Rytm MKI/MKII",
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
-    "global" : {
+    "global": {
       "midiChannel": 13,
       "components": [
         {
@@ -583,24 +583,24 @@
                 "sourceValueRange": {
                   "from": 0,
                   "to": 255
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 127
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 128,
+                      "to": 255
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -617,24 +617,24 @@
                 "sourceValueRange": {
                   "from": 0,
                   "to": 255
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 127
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 128,
+                      "to": 255
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -651,24 +651,24 @@
                 "sourceValueRange": {
                   "from": 0,
                   "to": 255
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 127
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 128,
+                      "to": 255
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -685,24 +685,24 @@
                 "sourceValueRange": {
                   "from": 0,
                   "to": 255
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 127
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 128,
+                      "to": 255
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -1265,59 +1265,59 @@
                 "sourceValueRange": {
                   "from": 0,
                   "to": 895
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Lowpass2",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.14285714285714285
-                  }
                 },
-                {
-                  "name": "Lowpass1",
-                  "range": {
-                    "from": 0.14285714285714285,
-                    "to": 0.2857142857142857
+                "sourceRanges": [
+                  {
+                    "name": "Lowpass2",
+                    "range": {
+                      "from": 0,
+                      "to": 127
+                    }
+                  },
+                  {
+                    "name": "Lowpass1",
+                    "range": {
+                      "from": 128,
+                      "to": 255
+                    }
+                  },
+                  {
+                    "name": "Bandpass",
+                    "range": {
+                      "from": 256,
+                      "to": 383
+                    }
+                  },
+                  {
+                    "name": "Highpass1",
+                    "range": {
+                      "from": 384,
+                      "to": 511
+                    }
+                  },
+                  {
+                    "name": "Highpass2",
+                    "range": {
+                      "from": 512,
+                      "to": 639
+                    }
+                  },
+                  {
+                    "name": "BS",
+                    "range": {
+                      "from": 640,
+                      "to": 767
+                    }
+                  },
+                  {
+                    "name": "Peak",
+                    "range": {
+                      "from": 768,
+                      "to": 895
+                    }
                   }
-                },
-                {
-                  "name": "Bandpass",
-                  "range": {
-                    "from": 0.2857142857142857,
-                    "to": 0.42857142857142855
-                  }
-                },
-                {
-                  "name": "Highpass1",
-                  "range": {
-                    "from": 0.42857142857142855,
-                    "to": 0.5714285714285714
-                  }
-                },
-                {
-                  "name": "Highpass2",
-                  "range": {
-                    "from": 0.5714285714285714,
-                    "to": 0.7142857142857143
-                  }
-                },
-                {
-                  "name": "BS",
-                  "range": {
-                    "from": 0.7142857142857143,
-                    "to": 0.8571428571428571
-                  }
-                },
-                {
-                  "name": "Peak",
-                  "range": {
-                    "from": 0.8571428571428571,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {

@@ -488,7 +488,6 @@
               }
             }
           },
-
           {
             "name": "Noise",
             "type": "continous",

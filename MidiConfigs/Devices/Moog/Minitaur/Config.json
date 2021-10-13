@@ -121,24 +121,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 87
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "INTERNAL",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "MIDI CLOCK",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "INTERNAL",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "MIDI CLOCK",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -151,157 +151,157 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 86
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "4 Whole Notes",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.0546875
-                  }
                 },
-                {
-                  "name": "3 Whole Notes",
-                  "range": {
-                    "from": 0.0546875,
-                    "to": 0.1015625
+                "sourceRanges": [
+                  {
+                    "name": "4 Whole Notes",
+                    "range": {
+                      "from": 0,
+                      "to": 6
+                    }
+                  },
+                  {
+                    "name": "3 Whole Notes",
+                    "range": {
+                      "from": 7,
+                      "to": 12
+                    }
+                  },
+                  {
+                    "name": "2 Whole Notes",
+                    "range": {
+                      "from": 13,
+                      "to": 18
+                    }
+                  },
+                  {
+                    "name": "Whole Note + Half Note",
+                    "range": {
+                      "from": 19,
+                      "to": 24
+                    }
+                  },
+                  {
+                    "name": "Whole Note",
+                    "range": {
+                      "from": 25,
+                      "to": 30
+                    }
+                  },
+                  {
+                    "name": "Dotted 1/2 Note",
+                    "range": {
+                      "from": 31,
+                      "to": 36
+                    }
+                  },
+                  {
+                    "name": "Whole Note Triplet",
+                    "range": {
+                      "from": 37,
+                      "to": 42
+                    }
+                  },
+                  {
+                    "name": "1/2 Note",
+                    "range": {
+                      "from": 43,
+                      "to": 48
+                    }
+                  },
+                  {
+                    "name": "Dotted 1/4 Note Triplet",
+                    "range": {
+                      "from": 49,
+                      "to": 54
+                    }
+                  },
+                  {
+                    "name": "1/2 Note Triplet",
+                    "range": {
+                      "from": 55,
+                      "to": 60
+                    }
+                  },
+                  {
+                    "name": "1/4 Note",
+                    "range": {
+                      "from": 61,
+                      "to": 67
+                    }
+                  },
+                  {
+                    "name": "Dotted 1/8 Note",
+                    "range": {
+                      "from": 68,
+                      "to": 73
+                    }
+                  },
+                  {
+                    "name": "1/4 Note Triplet",
+                    "range": {
+                      "from": 74,
+                      "to": 79
+                    }
+                  },
+                  {
+                    "name": "1/8 Note",
+                    "range": {
+                      "from": 80,
+                      "to": 85
+                    }
+                  },
+                  {
+                    "name": "Dotted 1/16 Note",
+                    "range": {
+                      "from": 86,
+                      "to": 91
+                    }
+                  },
+                  {
+                    "name": "1/8 Note Triplet",
+                    "range": {
+                      "from": 92,
+                      "to": 97
+                    }
+                  },
+                  {
+                    "name": "1/16 Note",
+                    "range": {
+                      "from": 98,
+                      "to": 103
+                    }
+                  },
+                  {
+                    "name": "1/16 Note Triplet",
+                    "range": {
+                      "from": 104,
+                      "to": 109
+                    }
+                  },
+                  {
+                    "name": "1/32 Note",
+                    "range": {
+                      "from": 110,
+                      "to": 115
+                    }
+                  },
+                  {
+                    "name": "1/32 Note Triplet",
+                    "range": {
+                      "from": 116,
+                      "to": 121
+                    }
+                  },
+                  {
+                    "name": "1/64 Note Triplet",
+                    "range": {
+                      "from": 122,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "2 Whole Notes",
-                  "range": {
-                    "from": 0.1015625,
-                    "to": 0.1484375
-                  }
-                },
-                {
-                  "name": "Whole Note + Half Note",
-                  "range": {
-                    "from": 0.1484375,
-                    "to": 0.1953125
-                  }
-                },
-                {
-                  "name": "Whole Note",
-                  "range": {
-                    "from": 0.1953125,
-                    "to": 0.2421875
-                  }
-                },
-                {
-                  "name": "Dotted 1/2 Note",
-                  "range": {
-                    "from": 0.2421875,
-                    "to": 0.2890625
-                  }
-                },
-                {
-                  "name": "Whole Note Triplet",
-                  "range": {
-                    "from": 0.2890625,
-                    "to": 0.3359375
-                  }
-                },
-                {
-                  "name": "1/2 Note",
-                  "range": {
-                    "from": 0.3359375,
-                    "to": 0.3828125
-                  }
-                },
-                {
-                  "name": "Dotted 1/4 Note Triplet",
-                  "range": {
-                    "from": 0.3828125,
-                    "to": 0.4296875
-                  }
-                },
-                {
-                  "name": "1/2 Note Triplet",
-                  "range": {
-                    "from": 0.4296875,
-                    "to": 0.4765625
-                  }
-                },
-                {
-                  "name": "1/4 Note",
-                  "range": {
-                    "from": 0.4765625,
-                    "to": 0.53125
-                  }
-                },
-                {
-                  "name": "Dotted 1/8 Note",
-                  "range": {
-                    "from": 0.53125,
-                    "to": 0.578125
-                  }
-                },
-                {
-                  "name": "1/4 Note Triplet",
-                  "range": {
-                    "from": 0.578125,
-                    "to": 0.625
-                  }
-                },
-                {
-                  "name": "1/8 Note",
-                  "range": {
-                    "from": 0.625,
-                    "to": 0.671875
-                  }
-                },
-                {
-                  "name": "Dotted 1/16 Note",
-                  "range": {
-                    "from": 0.671875,
-                    "to": 0.71875
-                  }
-                },
-                {
-                  "name": "1/8 Note Triplet",
-                  "range": {
-                    "from": 0.71875,
-                    "to": 0.765625
-                  }
-                },
-                {
-                  "name": "1/16 Note",
-                  "range": {
-                    "from": 0.765625,
-                    "to": 0.8125
-                  }
-                },
-                {
-                  "name": "1/16 Note Triplet",
-                  "range": {
-                    "from": 0.8125,
-                    "to": 0.859375
-                  }
-                },
-                {
-                  "name": "1/32 Note",
-                  "range": {
-                    "from": 0.859375,
-                    "to": 0.90625
-                  }
-                },
-                {
-                  "name": "1/32 Note Triplet",
-                  "range": {
-                    "from": 0.90625,
-                    "to": 0.953125
-                  }
-                },
-                {
-                  "name": "1/64 Note Triplet",
-                  "range": {
-                    "from": 0.953125,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -314,24 +314,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 82
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -340,7 +340,7 @@
             "type": "continous",
             "component": "Oscillator1",
             "role": "OSCMix",
-            "defaultValue" : 0.99,
+            "defaultValue": 0.99,
             "source": {
               "midi": {
                 "id": {
@@ -362,26 +362,26 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 70
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "SAW",
-                  "role": "WaveFormSawtooth",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "SQUARE",
-                  "role": "WaveFormSquare",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "SAW",
+                    "role": "WaveFormSawtooth",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "SQUARE",
+                    "role": "WaveFormSquare",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -411,26 +411,26 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 71
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "SAW",
-                  "role": "WaveFormSawtooth",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "SQUARE",
-                  "role": "WaveFormSquare",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "SAW",
+                    "role": "WaveFormSawtooth",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "SQUARE",
+                    "role": "WaveFormSquare",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -475,26 +475,26 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 81
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "role": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "role": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "role": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "role": "On",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -523,26 +523,26 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 65
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "role": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "role": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "role": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "role": "On",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -556,31 +556,31 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 92
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "LCR",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.3359375
-                  }
                 },
-                {
-                  "name": "LCT",
-                  "range": {
-                    "from": 0.3359375,
-                    "to": 0.6640625
+                "sourceRanges": [
+                  {
+                    "name": "LCR",
+                    "range": {
+                      "from": 0,
+                      "to": 42
+                    }
+                  },
+                  {
+                    "name": "LCT",
+                    "range": {
+                      "from": 43,
+                      "to": 84
+                    }
+                  },
+                  {
+                    "name": "EXP",
+                    "range": {
+                      "from": 85,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "EXP",
-                  "range": {
-                    "from": 0.6640625,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -593,26 +593,26 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 93
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "role": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "On",
-                  "role": "On",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "role": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "On",
+                    "role": "On",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -802,24 +802,24 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 72
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "OFF",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.5
-                  }
                 },
-                {
-                  "name": "ON",
-                  "range": {
-                    "from": 0.5,
-                    "to": 1.0
+                "sourceRanges": [
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
                   }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -831,31 +831,31 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 73
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Legato On",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.3359375
-                  }
                 },
-                {
-                  "name": "Legato Off",
-                  "range": {
-                    "from": 0.3359375,
-                    "to": 0.6640625
+                "sourceRanges": [
+                  {
+                    "name": "Legato On",
+                    "range": {
+                      "from": 0,
+                      "to": 42
+                    }
+                  },
+                  {
+                    "name": "Legato Off",
+                    "range": {
+                      "from": 43,
+                      "to": 84
+                    }
+                  },
+                  {
+                    "name": "EG Reset",
+                    "range": {
+                      "from": 85,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "EG Reset",
-                  "range": {
-                    "from": 0.6640625,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -863,7 +863,7 @@
             "type": "continous",
             "component": "Amp",
             "role": "Volume",
-            "source":  {
+            "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChangeHighRes",
@@ -896,31 +896,31 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 91
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Low",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.3359375
-                  }
                 },
-                {
-                  "name": "High",
-                  "range": {
-                    "from": 0.3359375,
-                    "to": 0.6640625
+                "sourceRanges": [
+                  {
+                    "name": "Low",
+                    "range": {
+                      "from": 0,
+                      "to": 42
+                    }
+                  },
+                  {
+                    "name": "High",
+                    "range": {
+                      "from": 43,
+                      "to": 84
+                    }
+                  },
+                  {
+                    "name": "Last",
+                    "range": {
+                      "from": 85,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Last",
-                  "range": {
-                    "from": 0.6640625,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -946,66 +946,66 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 107
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.125
-                  }
                 },
-                {
-                  "name": "2 Semitones",
-                  "range": {
-                    "from": 0.125,
-                    "to": 0.25
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 15
+                    }
+                  },
+                  {
+                    "name": "2 Semitones",
+                    "range": {
+                      "from": 16,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "3 Semitones",
+                    "range": {
+                      "from": 32,
+                      "to": 47
+                    }
+                  },
+                  {
+                    "name": "4 Semitones",
+                    "range": {
+                      "from": 48,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "5 Semitones",
+                    "range": {
+                      "from": 64,
+                      "to": 79
+                    }
+                  },
+                  {
+                    "name": "7 Semitones",
+                    "range": {
+                      "from": 80,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "12 Semitones",
+                    "range": {
+                      "from": 96,
+                      "to": 111
+                    }
+                  },
+                  {
+                    "name": "24 Semitones",
+                    "range": {
+                      "from": 112,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "3 Semitones",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.375
-                  }
-                },
-                {
-                  "name": "4 Semitones",
-                  "range": {
-                    "from": 0.375,
-                    "to": 0.5
-                  }
-                },
-                {
-                  "name": "5 Semitones",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.625
-                  }
-                },
-                {
-                  "name": "7 Semitones",
-                  "range": {
-                    "from": 0.625,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "12 Semitones",
-                  "range": {
-                    "from": 0.75,
-                    "to": 0.875
-                  }
-                },
-                {
-                  "name": "24 Semitones",
-                  "range": {
-                    "from": 0.875,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -1017,66 +1017,66 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 108
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.125
-                  }
                 },
-                {
-                  "name": "2 Semitones",
-                  "range": {
-                    "from": 0.125,
-                    "to": 0.25
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 15
+                    }
+                  },
+                  {
+                    "name": "2 Semitones",
+                    "range": {
+                      "from": 16,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "3 Semitones",
+                    "range": {
+                      "from": 32,
+                      "to": 47
+                    }
+                  },
+                  {
+                    "name": "4 Semitones",
+                    "range": {
+                      "from": 48,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "5 Semitones",
+                    "range": {
+                      "from": 64,
+                      "to": 79
+                    }
+                  },
+                  {
+                    "name": "7 Semitones",
+                    "range": {
+                      "from": 80,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "12 Semitones",
+                    "range": {
+                      "from": 96,
+                      "to": 111
+                    }
+                  },
+                  {
+                    "name": "24 Semitones",
+                    "range": {
+                      "from": 112,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "3 Semitones",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.375
-                  }
-                },
-                {
-                  "name": "4 Semitones",
-                  "range": {
-                    "from": 0.375,
-                    "to": 0.5
-                  }
-                },
-                {
-                  "name": "5 Semitones",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.625
-                  }
-                },
-                {
-                  "name": "7 Semitones",
-                  "range": {
-                    "from": 0.625,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "12 Semitones",
-                  "range": {
-                    "from": 0.75,
-                    "to": 0.875
-                  }
-                },
-                {
-                  "name": "24 Semitones",
-                  "range": {
-                    "from": 0.875,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {

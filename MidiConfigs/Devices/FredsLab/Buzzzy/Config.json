@@ -131,38 +131,38 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 75
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Pulse",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.25
-                  }
                 },
-                {
-                  "name": "Fm",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.5
+                "sourceRanges": [
+                  {
+                    "name": "Pulse",
+                    "range": {
+                      "from": 0,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "Fm",
+                    "range": {
+                      "from": 32,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Wave",
+                    "range": {
+                      "from": 64,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "Noise",
+                    "range": {
+                      "from": 96,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Wave",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "Noise",
-                  "range": {
-                    "from": 0.75,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -239,38 +239,38 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 85
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.25
-                  }
                 },
-                {
-                  "name": "Fort",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.5
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "Fort",
+                    "range": {
+                      "from": 32,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Reservoir",
+                    "range": {
+                      "from": 64,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "Abyss",
+                    "range": {
+                      "from": 96,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Reservoir",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "Abyss",
-                  "range": {
-                    "from": 0.75,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -282,38 +282,38 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 86
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.25
-                  }
                 },
-                {
-                  "name": "Mono",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.5
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "Mono",
+                    "range": {
+                      "from": 32,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Ping-Pong",
+                    "range": {
+                      "from": 64,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "Chorus/Flanger",
+                    "range": {
+                      "from": 96,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Ping-Pong",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "Chorus/Flanger",
-                  "range": {
-                    "from": 0.75,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {
@@ -325,38 +325,38 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 87
-                }
-              },
-              "sourceRanges": [
-                {
-                  "name": "Off",
-                  "range": {
-                    "from": 0.0,
-                    "to": 0.25
-                  }
                 },
-                {
-                  "name": "Lowpass",
-                  "range": {
-                    "from": 0.25,
-                    "to": 0.5
+                "sourceRanges": [
+                  {
+                    "name": "Off",
+                    "range": {
+                      "from": 0,
+                      "to": 31
+                    }
+                  },
+                  {
+                    "name": "Lowpass",
+                    "range": {
+                      "from": 32,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Bandpass",
+                    "range": {
+                      "from": 64,
+                      "to": 95
+                    }
+                  },
+                  {
+                    "name": "Highpass",
+                    "range": {
+                      "from": 96,
+                      "to": 127
+                    }
                   }
-                },
-                {
-                  "name": "Bandpass",
-                  "range": {
-                    "from": 0.5,
-                    "to": 0.75
-                  }
-                },
-                {
-                  "name": "Highpass",
-                  "range": {
-                    "from": 0.75,
-                    "to": 1.0
-                  }
-                }
-              ]
+                ]
+              }
             }
           },
           {

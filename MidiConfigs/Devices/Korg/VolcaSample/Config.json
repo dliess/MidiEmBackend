@@ -159,7 +159,7 @@
             "type": "continous",
             "component": "Amp",
             "role": "Volume",
-            "defaultValue" : 0.99,
+            "defaultValue": 0.99,
             "source": {
               "midi": {
                 "id": {
@@ -300,7 +300,7 @@
             "type": "continous",
             "component": "AmpEnvelope",
             "role": "Decay",
-            "defaultValue" : 0.99,
+            "defaultValue": 0.99,
             "source": {
               "midi": {
                 "id": {
