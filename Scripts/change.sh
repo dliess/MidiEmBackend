@@ -1,2 +1,2 @@
-for config in $(find MidiConfigs/Devices -name Config.json); do ./Scripts/modifyConfigs_change_range_to_float.py $config > "${config}2"; done
+for config in $(find MidiConfigs/Devices -name Config.json); do ./Scripts/floatRangeToInt.py $config > "${config}2"; done
 for config in $(find MidiConfigs/Devices -name Config.json); do mv "${config}2"  $config; done
