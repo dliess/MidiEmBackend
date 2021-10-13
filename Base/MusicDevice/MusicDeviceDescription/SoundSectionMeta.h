@@ -85,30 +85,21 @@ inline auto registerMembers<base::musicDevice::description::sound::Component>()
 }
 
 template <>
-inline auto registerMembers<base::musicDevice::description::sound::ParameterSourceValueRange>()
+inline auto registerMembers<base::musicDevice::description::sound::ValueRangeInt>()
 {
    return members(
-      member("from", &base::musicDevice::description::sound::ParameterSourceValueRange::from),
-      member("to", &base::musicDevice::description::sound::ParameterSourceValueRange::to)
+      member("from", &base::musicDevice::description::sound::ValueRangeInt::from),
+      member("to", &base::musicDevice::description::sound::ValueRangeInt::to)
    );
 }
 
 template <>
-inline auto registerMembers<base::musicDevice::description::sound::ValueRange>()
+inline auto registerMembers<base::musicDevice::description::sound::ParameterSourceRangeMidi>()
 {
    return members(
-      member("from", &base::musicDevice::description::sound::ValueRange::from),
-      member("to", &base::musicDevice::description::sound::ValueRange::to)
-   );
-}
-
-template <>
-inline auto registerMembers<base::musicDevice::description::sound::ParameterSourceRange>()
-{
-   return members(
-      member("name", &base::musicDevice::description::sound::ParameterSourceRange::name),
-      member("range", &base::musicDevice::description::sound::ParameterSourceRange::range),
-      member("role", &base::musicDevice::description::sound::ParameterSourceRange::role)
+      member("name", &base::musicDevice::description::sound::ParameterSourceRangeMidi::name),
+      member("range", &base::musicDevice::description::sound::ParameterSourceRangeMidi::range),
+      member("role", &base::musicDevice::description::sound::ParameterSourceRangeMidi::role)
    );
 }
 
@@ -117,7 +108,8 @@ inline auto registerMembers<base::musicDevice::description::sound::ParameterSour
 {
    return members(
       member("id", &base::musicDevice::description::sound::ParameterSourceMidi::id),
-      member("sourceValueRange", &base::musicDevice::description::sound::ParameterSourceMidi::sourceValueRange)
+      member("sourceValueRange", &base::musicDevice::description::sound::ParameterSourceMidi::sourceValueRange),
+      member("sourceRanges", &base::musicDevice::description::sound::ParameterSourceMidi::sourceRanges)
    );
 }
 
@@ -125,8 +117,7 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::ParameterSource>()
 {
    return members(
-      member("midi", &base::musicDevice::description::sound::ParameterSource::midi),
-      member("sourceRanges", &base::musicDevice::description::sound::ParameterSource::sourceRanges)
+      member("midi", &base::musicDevice::description::sound::ParameterSource::midi)
    );
 }
 

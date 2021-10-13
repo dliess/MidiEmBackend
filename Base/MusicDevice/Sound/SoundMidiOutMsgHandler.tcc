@@ -24,7 +24,7 @@ template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
     uint32_t voiceId, uint32_t parameterId, float value) noexcept
 {
-   //LOG_F(INFO, "sendSoundParameter {} {} {}", voiceId, parameterId, value);
+   // LOG_F(INFO, "sendSoundParameter {} {} {}", voiceId, parameterId, value);
    const auto& paramDescr =
        m_rSoundSection.parameterDescr(voiceId, parameterId);
    const auto midiChannel =
@@ -32,78 +32,114 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
    assert(paramDescr.source.midi);
    const auto& valueRange = paramDescr.source.midi->sourceValueRange;
 
-   if(paramDescr.type == description::sound::Parameter::Type::List)
+   if (paramDescr.type == description::sound::Parameter::Type::List)
    {
-      value = paramDescr.getListValueByIndex(int(value));
-   }
-
-   const auto midiMsg = mpark::visit(
-       midi::overload{
-           [midiChannel, value,
-            &valueRange](const midi::MidiMsgId<midi::ControlChange>& msgId)
-               -> midi::MidiMessage {
-              if (valueRange)
-              {
-                 return midi::Message<midi::ControlChange>(midiChannel, msgId.id,
-                                                    value, valueRange->from,
-                                                    valueRange->to);
-              }
-              else
-              {
+      const int val =
+          paramDescr.source.midi->sourceRanges->at(int(value)).range.from;
+      const auto midiMsg = mpark::visit(
+          midi::overload{
+              [midiChannel,
+               val](const midi::MidiMsgId<midi::ControlChange>& msgId)
+                  -> midi::MidiMessage {
                  return midi::Message<midi::ControlChange>(midiChannel,
-                                                           msgId.id, value);
-              }
-           },
-           [midiChannel, value, &valueRange](
-               const midi::MidiMsgId<midi::ControlChangeHighRes>& msgId)
-               -> midi::MidiMessage {
-              if (valueRange)
-              {
+                                                           msgId.id, val);
+              },
+              [midiChannel,
+               val](const midi::MidiMsgId<midi::ControlChangeHighRes>& msgId)
+                  -> midi::MidiMessage {
                  return midi::Message<midi::ControlChangeHighRes>(
-                     midiChannel, msgId.idMsb, msgId.idLsb, value,
-                     valueRange->from, valueRange->to);
-              }
-              else
-              {
-                 return midi::Message<midi::ControlChangeHighRes>(
-                     midiChannel, msgId.idMsb, msgId.idLsb, value);
-              }
-           },
-           [midiChannel, value, &valueRange](
-               const midi::MidiMsgId<midi::NRPN>& msgId) -> midi::MidiMessage {
-              if (valueRange)
-              {
-                 return midi::Message<midi::NRPN>(
-                     midiChannel, msgId.idMsb, msgId.idLsb, value,
-                     valueRange->from, valueRange->to);
-              }
-              else
-              {
+                     midiChannel, msgId.idMsb, msgId.idLsb, val);
+              },
+              [midiChannel, val](const midi::MidiMsgId<midi::NRPN>& msgId)
+                  -> midi::MidiMessage {
                  return midi::Message<midi::NRPN>(midiChannel, msgId.idMsb,
-                                                  msgId.idLsb, value);
-              }
-           },
-           [midiChannel, value, &valueRange](
-               const midi::MidiMsgId<midi::RPN>& msgId) -> midi::MidiMessage {
-              if (valueRange)
-              {
-                 return midi::Message<midi::RPN>(
-                     midiChannel, msgId.idMsb, msgId.idLsb, value,
-                     valueRange->from, valueRange->to);
-              }
-              else
-              {
+                                                  msgId.idLsb, val);
+              },
+              [midiChannel, val](const midi::MidiMsgId<midi::RPN>& msgId)
+                  -> midi::MidiMessage {
                  return midi::Message<midi::RPN>(midiChannel, msgId.idMsb,
-                                                 msgId.idLsb, value);
-              }
-           },
-           [](auto&& other) -> midi::MidiMessage {
-              return midi::MidiMessage();
-           }},
-       paramDescr.source.midi->id);
-   //LOG_F(INFO, "--> Sending midi msg:{} {}", m_pMidiOutIf->medium().getDeviceName(),
-   //      toString(midiMsg));
-   m_pMidiOutIf->send(midiMsg);
+                                                 msgId.idLsb, val);
+              },
+              [](auto&& other) -> midi::MidiMessage {
+                 return midi::MidiMessage();
+              }},
+          paramDescr.source.midi->id);
+      m_pMidiOutIf->send(midiMsg);
+   }
+   else
+   {
+      const auto midiMsg = mpark::visit(
+          midi::overload{
+              [midiChannel, value,
+               &valueRange](const midi::MidiMsgId<midi::ControlChange>& msgId)
+                  -> midi::MidiMessage {
+                 if (valueRange)
+                 {
+                    return midi::Message<midi::ControlChange>::
+                        fromRelativeValue(midiChannel, msgId.id, value,
+                                          valueRange->from, valueRange->to);
+                 }
+                 else
+                 {
+                    return midi::Message<
+                        midi::ControlChange>::fromRelativeValue(midiChannel,
+                                                                msgId.id,
+                                                                value);
+                 }
+              },
+              [midiChannel, value, &valueRange](
+                  const midi::MidiMsgId<midi::ControlChangeHighRes>& msgId)
+                  -> midi::MidiMessage {
+                 if (valueRange)
+                 {
+                    return midi::Message<midi::ControlChangeHighRes>::
+                        fromRelativeValue(midiChannel, msgId.idMsb, msgId.idLsb,
+                                          value, valueRange->from,
+                                          valueRange->to);
+                 }
+                 else
+                 {
+                    return midi::Message<midi::ControlChangeHighRes>::
+                        fromRelativeValue(midiChannel, msgId.idMsb, msgId.idLsb,
+                                          value);
+                 }
+              },
+              [midiChannel, value,
+               &valueRange](const midi::MidiMsgId<midi::NRPN>& msgId)
+                  -> midi::MidiMessage {
+                 if (valueRange)
+                 {
+                    return midi::Message<midi::NRPN>::fromRelativeValue(
+                        midiChannel, msgId.idMsb, msgId.idLsb, value,
+                        valueRange->from, valueRange->to);
+                 }
+                 else
+                 {
+                    return midi::Message<midi::NRPN>::fromRelativeValue(
+                        midiChannel, msgId.idMsb, msgId.idLsb, value);
+                 }
+              },
+              [midiChannel, value,
+               &valueRange](const midi::MidiMsgId<midi::RPN>& msgId)
+                  -> midi::MidiMessage {
+                 if (valueRange)
+                 {
+                    return midi::Message<midi::RPN>::fromRelativeValue(
+                        midiChannel, msgId.idMsb, msgId.idLsb, value,
+                        valueRange->from, valueRange->to);
+                 }
+                 else
+                 {
+                    return midi::Message<midi::RPN>::fromRelativeValue(
+                        midiChannel, msgId.idMsb, msgId.idLsb, value);
+                 }
+              },
+              [](auto&& other) -> midi::MidiMessage {
+                 return midi::MidiMessage();
+              }},
+          paramDescr.source.midi->id);
+      m_pMidiOutIf->send(midiMsg);
+   }
 }
 
 template <typename MidiOutIfPtr>

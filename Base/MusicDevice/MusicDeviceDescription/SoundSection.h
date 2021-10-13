@@ -89,16 +89,19 @@ struct Component
    static inline Role roleFromString(const std::string& roleStr);
 };
 
+template <typename T>
 struct ValueRange
 {
-   float from;
-   float to;
+   T from;
+   T to;
 };
 
-struct ParameterSourceRange
+using ValueRangeFloat = ValueRange<float>;
+using ValueRangeInt = ValueRange<int>;
+
+struct ParameterSourceRangeBase
 {
    std::string name;
-   std::optional<ValueRange> range;
    enum class Role
    {
       Unknown,
@@ -123,21 +126,21 @@ struct ParameterSourceRange
    static inline Role roleFromString(const std::string& roleStr);
 };
 
-struct ParameterSourceValueRange
+struct ParameterSourceRangeMidi : public ParameterSourceRangeBase
 {
-   uint32_t from;
-   uint32_t to;
+   ValueRangeInt range;
 };
+
 struct ParameterSourceMidi
 {
    midi::MidiMessageId id;
-   std::optional<ParameterSourceValueRange> sourceValueRange;
+   std::optional<ValueRangeInt> sourceValueRange;
+   std::optional<std::vector<ParameterSourceRangeMidi>> sourceRanges;
 };
 
 struct ParameterSource
 {
    std::optional<ParameterSourceMidi> midi;
-   std::optional<std::vector<ParameterSourceRange>> sourceRanges;
 };
 
 struct Parameter
@@ -250,10 +253,9 @@ struct Parameter
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
 
-   inline int getListIndexByListValue(float value) const noexcept;
-   inline float getListValueByIndex(int idx) const noexcept;
+   inline int getListIndexByValue(int value) const noexcept;
    inline std::optional<float> getListIndexByListRole(
-       ParameterSourceRange::Role role) const noexcept;
+       ParameterSourceRangeBase::Role role) const noexcept;
    inline int getSourceResolution() const noexcept;
 };
 
@@ -327,7 +329,7 @@ struct Section
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
 
 private:
-   inline mpark::variant<float, ParameterSourceRange::Role> _getInitialValueFor(
+   inline mpark::variant<float, ParameterSourceRangeBase::Role> _getInitialValueFor(
        int voiceId, int parameterId) const noexcept;
 };
 

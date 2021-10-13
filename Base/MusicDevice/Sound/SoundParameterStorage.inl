@@ -25,7 +25,7 @@ inline void ParameterStorage::resize() noexcept
          {
             const auto& sourceRanges =
                 m_rSoundSection.global->parameters[paramIdx]
-                    .source.sourceRanges;
+                    .source.midi->sourceRanges;
             assert(sourceRanges.has_value());
             m_globalData.parameters.emplace_back(true, sourceRanges->size());
          }
@@ -50,7 +50,7 @@ inline void ParameterStorage::resize() noexcept
              description::sound::Parameter::Type::List)
          {
             const auto& sourceRanges =
-                engineDescr.parameters[paramIdx].source.sourceRanges;
+                engineDescr.parameters[paramIdx].source.midi->sourceRanges;
             assert(sourceRanges.has_value());
             m_voicesData[voiceIdx].parameters.emplace_back(
                 true, sourceRanges->size());

@@ -97,9 +97,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
                       : msg.getRelativeValue();
               if (isList)
               {
-                 val =
-                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
-                         val);
+                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
+                     msg.controllerValue());
               }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
@@ -112,9 +111,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
                       : msg.getRelativeValue();
               if (isList)
               {
-                 val =
-                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
-                         val);
+                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
+                     msg.controllerValue());
               }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
@@ -127,9 +125,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
                       : msg.getRelativeValue();
               if (isList)
               {
-                 val =
-                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
-                         val);
+                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
+                     msg.getValue());
               }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);
@@ -142,9 +139,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
                       : msg.getRelativeValue();
               if (isList)
               {
-                 val =
-                     m_rSoundSection.parameterDescr(id).getListIndexByListValue(
-                         val);
+                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
+                     msg.getValue());
               }
               m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
                         id.parameterId, val);

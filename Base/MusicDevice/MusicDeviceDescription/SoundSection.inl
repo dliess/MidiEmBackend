@@ -215,27 +215,27 @@ base::musicDevice::description::sound::Parameter::typeFromString(
 // --------------------------------------------------------
 template <>
 inline void
-to_json<base::musicDevice::description::sound::ParameterSourceRange::Role>(
+to_json<base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
     nlohmann::json& j,
-    const base::musicDevice::description::sound::ParameterSourceRange::Role&
+    const base::musicDevice::description::sound::ParameterSourceRangeBase::Role&
         obj)
 {
-   j = base::musicDevice::description::sound::ParameterSourceRange::role2String(
+   j = base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
        obj);
 }
 
 template <>
 inline void
-from_json<base::musicDevice::description::sound::ParameterSourceRange::Role>(
+from_json<base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
     const nlohmann::json& j,
-    base::musicDevice::description::sound::ParameterSourceRange::Role& obj)
+    base::musicDevice::description::sound::ParameterSourceRangeBase::Role& obj)
 {
-   obj = base::musicDevice::description::sound::ParameterSourceRange::
+   obj = base::musicDevice::description::sound::ParameterSourceRangeBase::
        roleFromString(j.get<std::string>());
 }
 
 inline std::string
-base::musicDevice::description::sound::ParameterSourceRange::role2String(
+base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
     Role role)
 {
    switch (role)
@@ -260,8 +260,8 @@ base::musicDevice::description::sound::ParameterSourceRange::role2String(
    return "Unknown";
 }
 
-inline base::musicDevice::description::sound::ParameterSourceRange::Role
-base::musicDevice::description::sound::ParameterSourceRange::roleFromString(
+inline base::musicDevice::description::sound::ParameterSourceRangeBase::Role
+base::musicDevice::description::sound::ParameterSourceRangeBase::roleFromString(
     const std::string& roleStr)
 {
    if (roleStr == "Off")
@@ -737,7 +737,7 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
        util::overload{
            [this, paramDescr](const float& val) -> float { return val; },
            [this, paramDescr](const base::musicDevice::description::sound::
-                                  ParameterSourceRange::Role& role) -> float {
+                                  ParameterSourceRangeBase::Role& role) -> float {
               const auto retVal = paramDescr.getListIndexByListRole(role);
               if (retVal)
               {
@@ -749,7 +749,7 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
 }
 
 inline mpark::variant<
-    float, base::musicDevice::description::sound::ParameterSourceRange::Role>
+    float, base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
 base::musicDevice::description::sound::Section::_getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {
@@ -777,7 +777,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::OSCWaveform: return 1;
       case Parameter::Role::OSCGlide: return 0.0;
       case Parameter::Role::OSCKeyboardTracking:
-         return ParameterSourceRange::Role::On;
+         return ParameterSourceRangeBase::Role::On;
       case Parameter::Role::OSCSync: return 0.0;
       case Parameter::Role::OSCSlop: return 0.0;
       case Parameter::Role::OSCMix: return 0.0;
@@ -833,7 +833,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::ArpOnOff: return 1;
       case Parameter::Role::ArpMode: return 0.0;
       case Parameter::Role::SequencerOnOff:
-         return ParameterSourceRange::Role::Off;
+         return ParameterSourceRangeBase::Role::Off;
       case Parameter::Role::SequenceTrig: return 0.0;
       case Parameter::Role::SampleStart: return 0.0;
       case Parameter::Role::SampleEnd: return 0.99;
@@ -854,60 +854,33 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
 }
 
 inline int
-base::musicDevice::description::sound::Parameter::getListIndexByListValue(
-    float value) const noexcept
+base::musicDevice::description::sound::Parameter::getListIndexByValue(
+    int value) const noexcept
 {
-   if (!source.sourceRanges)
+   if (!source.midi->sourceRanges)
    {
       return 0;
    }
-   const auto& ranges = *source.sourceRanges;
-   for (int idx = 0; idx < source.sourceRanges->size(); ++idx)
+   const auto& ranges = *source.midi->sourceRanges;
+   for (int idx = 0; idx < source.midi->sourceRanges->size(); ++idx)
    {
-      if (ranges[idx].range)
+      if (ranges[idx].range.from <= value && value < ranges[idx].range.to)
       {
-         if (ranges[idx].range->from <= value && value < ranges[idx].range->to)
-         {
-            return idx;
-         }
-      }
-      else
-      {
-         return int(value * source.sourceRanges->size());
+         return idx;
       }
    }
    return 0;
 }
 
-inline float
-base::musicDevice::description::sound::Parameter::getListValueByIndex(
-    int idx) const noexcept
-{
-   if (!source.sourceRanges.has_value())
-   {
-      return 0;
-   }
-   if (source.sourceRanges->at(idx).range.has_value())
-   {
-      const auto& range = *source.sourceRanges->at(idx).range;
-      return (range.from + range.to) / 2.0;
-   }
-   else
-   {
-      const float arcLen = 1.0 / source.sourceRanges->size();
-      return (arcLen * idx + arcLen * (idx + 1)) / 2.0;
-   }
-}
-
 inline std::optional<float>
 base::musicDevice::description::sound::Parameter::getListIndexByListRole(
-    ParameterSourceRange::Role role) const noexcept
+    ParameterSourceRangeBase::Role role) const noexcept
 {
-   assert(source.sourceRanges.has_value());
-   for (int idx = 0; idx < source.sourceRanges->size(); ++idx)
+   assert(source.midi->sourceRanges);
+   for (int idx = 0; idx < source.midi->sourceRanges->size(); ++idx)
    {
-      if (source.sourceRanges->at(idx).role.has_value() &&
-          role == *source.sourceRanges->at(idx).role)
+      if (source.midi->sourceRanges->at(idx).role.has_value() &&
+          role == *source.midi->sourceRanges->at(idx).role)
       {
          return float(idx);
       }
@@ -923,9 +896,9 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    {
       case base::musicDevice::description::sound::Parameter::Type::List:
       {
-         if (source.sourceRanges)
+         if (source.midi->sourceRanges)
          {
-            return static_cast<int>(source.sourceRanges->size());
+            return static_cast<int>(source.midi->sourceRanges->size());
          }
          break;
       }
