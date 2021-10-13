@@ -139,10 +139,6 @@
                   "idMsb": 0,
                   "idLsb": 2
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 103
-                },
                 "sourceRanges": [
                   {
                     "name": "OSC Off",
@@ -907,10 +903,6 @@
                   "idMsb": 0,
                   "idLsb": 4
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -981,10 +973,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 7
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 103
                 },
                 "sourceRanges": [
                   {
@@ -1751,10 +1739,6 @@
                   "idMsb": 0,
                   "idLsb": 9
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -1786,10 +1770,6 @@
                   "idMsb": 0,
                   "idLsb": 10
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -1819,10 +1799,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 11
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 3
                 },
                 "sourceRanges": [
                   {
@@ -2051,10 +2027,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 19
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
                 },
                 "sourceRanges": [
                   {
@@ -2470,10 +2442,6 @@
                   "idMsb": 0,
                   "idLsb": 38
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
-                },
                 "sourceRanges": [
                   {
                     "name": "Triangle",
@@ -2544,10 +2512,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 40
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -2902,10 +2866,6 @@
                   "idMsb": 0,
                   "idLsb": 46
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -3071,10 +3031,6 @@
                   "idMsb": 0,
                   "idLsb": 43
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
-                },
                 "sourceRanges": [
                   {
                     "name": "Triangle",
@@ -3145,10 +3101,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 45
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -3503,10 +3455,6 @@
                   "idMsb": 0,
                   "idLsb": 46
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -3672,10 +3620,6 @@
                   "idMsb": 0,
                   "idLsb": 48
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
-                },
                 "sourceRanges": [
                   {
                     "name": "Triangle",
@@ -3746,10 +3690,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 50
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -4104,10 +4044,6 @@
                   "idMsb": 0,
                   "idLsb": 51
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -4273,10 +4209,6 @@
                   "idMsb": 0,
                   "idLsb": 53
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
-                },
                 "sourceRanges": [
                   {
                     "name": "Triangle",
@@ -4347,10 +4279,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 55
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -4705,10 +4633,6 @@
                   "idMsb": 0,
                   "idLsb": 56
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -4739,10 +4663,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 57
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -5116,10 +5036,6 @@
                   "idMsb": 0,
                   "idLsb": 98
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -5234,10 +5150,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 65
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 20
                 },
                 "sourceRanges": [
                   {
@@ -5421,10 +5333,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 67
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -5779,10 +5687,6 @@
                   "idMsb": 0,
                   "idLsb": 68
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 20
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -5965,10 +5869,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 70
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -6323,10 +6223,6 @@
                   "idMsb": 0,
                   "idLsb": 71
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 20
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -6509,10 +6405,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 73
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -6867,10 +6759,6 @@
                   "idMsb": 0,
                   "idLsb": 74
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 20
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -7053,10 +6941,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 76
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -7430,10 +7314,6 @@
                   "idMsb": 0,
                   "idLsb": 82
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -7805,10 +7685,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 84
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -8182,10 +8058,6 @@
                   "idMsb": 0,
                   "idLsb": 86
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -8557,10 +8429,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 88
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -8934,10 +8802,6 @@
                   "idMsb": 0,
                   "idLsb": 90
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -9310,10 +9174,6 @@
                   "idMsb": 0,
                   "idLsb": 92
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                },
                 "sourceRanges": [
                   {
                     "name": "1/2 Note",
@@ -9441,10 +9301,6 @@
                   "idMsb": 0,
                   "idLsb": 95
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 5
-                },
                 "sourceRanges": [
                   {
                     "name": "Low Note Prio",
@@ -9504,10 +9360,6 @@
                   "idMsb": 0,
                   "idLsb": 96
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
-                },
                 "sourceRanges": [
                   {
                     "name": "1 Voice",
@@ -9560,10 +9412,6 @@
                   "idMsb": 0,
                   "idLsb": 99
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -9595,10 +9443,6 @@
                   "idMsb": 0,
                   "idLsb": 100
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -9629,10 +9473,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 97
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 14
                 },
                 "sourceRanges": [
                   {
@@ -10316,10 +10156,6 @@
                   "idMsb": 0,
                   "idLsb": 101
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                },
                 "sourceRanges": [
                   {
                     "name": "OFF",
@@ -10349,10 +10185,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 94
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 4
                 },
                 "sourceRanges": [
                   {
@@ -10405,10 +10237,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 77
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {
@@ -11323,10 +11151,6 @@
                   "idMsb": 0,
                   "idLsb": 78
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -12240,10 +12064,6 @@
                   "idMsb": 0,
                   "idLsb": 79
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -13156,10 +12976,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 0,
                   "idLsb": 80
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 47
                 },
                 "sourceRanges": [
                   {

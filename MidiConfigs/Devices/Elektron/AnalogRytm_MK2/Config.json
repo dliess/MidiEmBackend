@@ -580,10 +580,6 @@
                   "idMsb": 3,
                   "idLsb": 3
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 255
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -613,10 +609,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 4
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 255
                 },
                 "sourceRanges": [
                   {
@@ -648,10 +640,6 @@
                   "idMsb": 3,
                   "idLsb": 5
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 255
-                },
                 "sourceRanges": [
                   {
                     "name": "Off",
@@ -681,10 +669,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 3,
                   "idLsb": 6
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 255
                 },
                 "sourceRanges": [
                   {
@@ -1261,10 +1245,6 @@
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 22
-                },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 895
                 },
                 "sourceRanges": [
                   {
