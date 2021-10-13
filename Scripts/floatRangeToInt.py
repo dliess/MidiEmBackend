@@ -25,8 +25,8 @@ def handleParam(parameter):
          else:
             numElements = len(parameter["source"]["sourceRanges"])
             sourceRange["range"] = {"from" : 0, "to" : 0}
-            sourceRange["range"]["from"] = int(wholeRangeStart + ((idx - 1) * wholeRange / numElements))
-            sourceRange["range"]["to"] = int(wholeRangeStart + (idx * wholeRange / numElements) - 1)
+            sourceRange["range"]["from"] = int(wholeRangeStart + (idx * wholeRange / numElements))
+            sourceRange["range"]["to"] = int(wholeRangeStart + ((idx + 1) * wholeRange / numElements) - 1)
       parameter["source"]["midi"]["sourceRanges"] = copy.deepcopy(parameter["source"]["sourceRanges"])
       del parameter["source"]["sourceRanges"]
       
