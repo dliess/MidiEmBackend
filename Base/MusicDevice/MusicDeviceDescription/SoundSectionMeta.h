@@ -109,6 +109,7 @@ inline auto registerMembers<base::musicDevice::description::sound::ParameterSour
    return members(
       member("id", &base::musicDevice::description::sound::ParameterSourceMidi::id),
       member("sourceValueRange", &base::musicDevice::description::sound::ParameterSourceMidi::sourceValueRange),
+      member("sourceRangesFrom", &base::musicDevice::description::sound::ParameterSourceMidi::sourceRangesFrom),
       member("sourceRanges", &base::musicDevice::description::sound::ParameterSourceMidi::sourceRanges)
    );
 }
@@ -182,6 +183,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("voices", &base::musicDevice::description::sound::Section::voices),
       member("global", &base::musicDevice::description::sound::Section::global),
       member("engines", &base::musicDevice::description::sound::Section::engines),
+      member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Section::parameterDumpRequest),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
    );

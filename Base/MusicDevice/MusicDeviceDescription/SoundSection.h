@@ -135,6 +135,7 @@ struct ParameterSourceMidi
 {
    midi::MidiMessageId id;
    std::optional<ValueRangeInt> sourceValueRange;
+   std::optional<std::string> sourceRangesFrom;
    std::optional<std::vector<ParameterSourceRangeMidi>> sourceRanges;
 };
 
@@ -300,7 +301,7 @@ struct Section
    std::vector<Voice> voices;
    std::optional<Global> global;
    std::vector<Engine> engines;
-
+   std::optional<std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>> sourceRanges;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
    std::optional<float> pitchBendFactor;
 
