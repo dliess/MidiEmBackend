@@ -770,7 +770,7 @@
           },
           {
             "name": "Machine Type",
-            "type": "continous",
+            "type": "list",
             "component": "Common",
             "source": {
               "midi": {
@@ -778,7 +778,30 @@
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 103
-                }
+                },
+                "sourceRanges": [
+                  {
+                    "name": "None",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "Noise",
+                    "range": {
+                      "from": 1,
+                      "to": 1
+                    }
+                  },
+                  {
+                    "name": "Impulse",
+                    "range": {
+                      "from": 2,
+                      "to": 2
+                    }
+                  }
+                ]
               }
             }
           },
