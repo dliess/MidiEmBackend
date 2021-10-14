@@ -114,6 +114,7 @@ struct ParameterSourceRangeBase
       FilterBandpass2db,
       FilterBandpass4db,
       FilterPeak,
+      FilterBandReject,
       FilterTwoPole,
       FilterFourPole,
       WaveFormSawtooth,

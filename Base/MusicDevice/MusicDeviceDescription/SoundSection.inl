@@ -250,6 +250,7 @@ base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
       case Role::FilterBandpass2db: return "FilterBandpass2db";
       case Role::FilterBandpass4db: return "FilterBandpass4db";
       case Role::FilterPeak: return "FilterPeak";
+      case Role::FilterBandReject: return "FilterBandReject";
       case Role::FilterTwoPole: return "FilterTwoPole";
       case Role::FilterFourPole: return "FilterFourPole";
       case Role::WaveFormSawtooth: return "WaveFormSawtooth";
@@ -282,6 +283,8 @@ base::musicDevice::description::sound::ParameterSourceRangeBase::roleFromString(
       return Role::FilterBandpass4db;
    else if (roleStr == "FilterPeak")
       return Role::FilterPeak;
+   else if (roleStr == "FilterBandReject")
+      return Role::FilterBandReject;
    else if (roleStr == "FilterTwoPole")
       return Role::FilterTwoPole;
    else if (roleStr == "FilterFourPole")
@@ -757,6 +760,10 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
    if (paramDescr.defaultValue.has_value())
    {
       return *paramDescr.defaultValue;
+   }
+   if (paramDescr.type == Parameter::Type::ContinousBipolar)
+   {
+      return 0.5;
    }
    if (!paramDescr.role.has_value())
    {

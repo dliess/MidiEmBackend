@@ -4,6 +4,73 @@
   "productName": "Model:Samples",
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
+    "global": {
+      "midiChannel": 1,
+      "components": [
+        {
+          "name": "Delay",
+          "role": "Delay"
+        },
+        {
+          "name": "Reverb",
+          "role": "Reverb"
+        }
+    ],
+      "parameters": [
+        {
+          "name": "Delay Time",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 85
+              }
+            }
+          }
+        },
+        {
+          "name": "Delay Feedback",
+          "type": "continous",
+          "component": "Delay",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 86
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Size",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 87
+              }
+            }
+          }
+        },
+        {
+          "name": "Reverb Tone",
+          "type": "continous",
+          "component": "Reverb",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 88
+              }
+            }
+          }
+        }
+      ]
+    },
     "voices": [
       {
         "name": "1",
@@ -65,14 +132,6 @@
           {
             "name": "LFO",
             "role": "LFO"
-          },
-          {
-            "name": "Delay",
-            "role": "Delay"
-          },
-          {
-            "name": "Reverb",
-            "role": "Reverb"
           }
         ],
         "parameters": [
@@ -91,20 +150,6 @@
             }
           },
           {
-            "name": "Pan",
-            "type": "continous-bipolar",
-            "component": "Amp",
-            "role": "Pan",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 10
-                }
-              }
-            }
-          },
-          {
             "name": "Pitch",
             "type": "continous",
             "component": "Trig",
@@ -114,21 +159,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 16
-                }
-              }
-            }
-          },
-          {
-            "name": "Decay Time",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Decay",
-            "defaultValue": 0.3,
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 80
                 }
               }
             }
@@ -189,9 +219,52 @@
             }
           },
           {
+            "name": "Volume+Dist",
+            "type": "continous",
+            "component": "Amp",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Amp",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Amp",
+            "role": "Decay",
+            "defaultValue": 0.3,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
             "name": "Delay Send",
             "type": "continous",
-            "component": "Delay",
+            "component": "Amp",
             "role": "DelaySend",
             "source": {
               "midi": {
@@ -205,27 +278,13 @@
           {
             "name": "Reverb Send",
             "type": "continous",
-            "component": "Reverb",
+            "component": "Amp",
             "role": "ReverbSend",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 13
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume+Dist",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Volume",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 7
                 }
               }
             }
@@ -451,58 +510,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 109
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Time",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 85
-                }
-              }
-            }
-          },
-          {
-            "name": "Delay Feedback",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Size",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 87
-                }
-              }
-            }
-          },
-          {
-            "name": "Reverb Tone",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 88
                 }
               }
             }

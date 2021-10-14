@@ -8,21 +8,25 @@
       "midiChannel": 13,
       "components": [
         {
-          "name": "Delay"
+          "name": "Delay",
+          "role": "Delay"
         },
         {
-          "name": "Reverb"
+          "name": "Reverb",
+          "role": "Reverb"
         },
         {
-          "name": "Distortion"
+          "name": "Distortion",
+          "role": "Distortion"
         },
         {
-          "name": "Compressor"
+          "name": "Compressor",
+          "role": "Compressor"
         }
       ],
       "parameters": [
         {
-          "name": "Delay Time",
+          "name": "Time",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -36,7 +40,7 @@
           }
         },
         {
-          "name": "Delay PingPong",
+          "name": "PingPong",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -50,7 +54,7 @@
           }
         },
         {
-          "name": "Delay Stereo Width",
+          "name": "Stereo Width",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -64,7 +68,7 @@
           }
         },
         {
-          "name": "Delay Feedback",
+          "name": "Feedback",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -78,7 +82,7 @@
           }
         },
         {
-          "name": "Delay Highpass Filter",
+          "name": "Highpass Filter",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -92,7 +96,7 @@
           }
         },
         {
-          "name": "Delay Lowpass Filter",
+          "name": "Lowpass Filter",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -106,7 +110,7 @@
           }
         },
         {
-          "name": "Delay Reverb Send",
+          "name": "Reverb Send",
           "type": "continous",
           "component": "Delay",
           "source": {
@@ -120,9 +124,10 @@
           }
         },
         {
-          "name": "Delay Mix Volume",
+          "name": "Mix Volume",
           "type": "continous",
           "component": "Delay",
+          "role": "Volume",
           "source": {
             "midi": {
               "id": {
@@ -134,7 +139,7 @@
           }
         },
         {
-          "name": "Reverb Predelay",
+          "name": "Predelay",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -148,7 +153,7 @@
           }
         },
         {
-          "name": "Reverb Decay Time",
+          "name": "Decay Time",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -162,7 +167,7 @@
           }
         },
         {
-          "name": "Reverb Shelving Freq",
+          "name": "Shelving Freq",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -176,7 +181,7 @@
           }
         },
         {
-          "name": "Reverb Shelving Gain",
+          "name": "Shelving Gain",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -190,7 +195,7 @@
           }
         },
         {
-          "name": "Reverb Highpass Filter",
+          "name": "Highpass Filter",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -204,7 +209,7 @@
           }
         },
         {
-          "name": "Reverb Lowpass Filter",
+          "name": "Lowpass Filter",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -218,7 +223,7 @@
           }
         },
         {
-          "name": "Reverb Mix Volume",
+          "name": "Mix Volume",
           "type": "continous",
           "component": "Reverb",
           "source": {
@@ -232,7 +237,7 @@
           }
         },
         {
-          "name": "Dist Amount",
+          "name": "Amount",
           "type": "continous",
           "component": "Distortion",
           "source": {
@@ -246,7 +251,7 @@
           }
         },
         {
-          "name": "Dist Symmetry",
+          "name": "Symmetry",
           "type": "continous",
           "component": "Distortion",
           "source": {
@@ -260,7 +265,7 @@
           }
         },
         {
-          "name": "Delay Overdrive",
+          "name": "Overdrive",
           "type": "continous",
           "component": "Distortion",
           "source": {
@@ -302,7 +307,7 @@
           }
         },
         {
-          "name": "Compressor Threshold",
+          "name": "Threshold",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -316,7 +321,7 @@
           }
         },
         {
-          "name": "Compressor Attack Time",
+          "name": "Attack Time",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -330,7 +335,7 @@
           }
         },
         {
-          "name": "Compressor Release Time",
+          "name": "Release Time",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -344,7 +349,7 @@
           }
         },
         {
-          "name": "Compressor Makeup Gain",
+          "name": "Makeup Gain",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -358,7 +363,7 @@
           }
         },
         {
-          "name": "Compressor Ratio",
+          "name": "Ratio",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -372,7 +377,7 @@
           }
         },
         {
-          "name": "Compressor Sidechain EQ",
+          "name": "Sidechain EQ",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -386,7 +391,7 @@
           }
         },
         {
-          "name": "Compressor Dry/Wet Mix",
+          "name": "Dry/Wet Mix",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -400,7 +405,7 @@
           }
         },
         {
-          "name": "Compressor Output Volume",
+          "name": "Output Volume",
           "type": "continous",
           "component": "Compressor",
           "source": {
@@ -488,7 +493,8 @@
         },
         "components": [
           {
-            "name": "Trig Parameters"
+            "name": "Trig Parameters",
+            "role": "NoteTrigger"
           },
           {
             "name": "Common"
@@ -497,19 +503,32 @@
             "name": "Performance"
           },
           {
-            "name": "Synth"
+            "name": "Synth",
+            "role": "Oscillator"
           },
           {
-            "name": "Sample"
+            "name": "Sample",
+            "role": "Sample"
           },
           {
-            "name": "Filter"
+            "name": "Filter",
+            "role": "Filter"
           },
           {
-            "name": "AMP"
+            "name": "FilterEnv",
+            "role": "Envelope"
           },
           {
-            "name": "LFO"
+            "name": "Amp",
+            "role": "Amp"
+          },
+          {
+            "name": "AmpEnv",
+            "role": "Envelope"
+          },
+          {
+            "name": "LFO",
+            "role": "LFO"
           }
         ],
         "parameters": [
@@ -732,7 +751,7 @@
             }
           },
           {
-            "name": "Track Machine Type",
+            "name": "Machine Type",
             "type": "continous",
             "component": "Common",
             "source": {
@@ -760,7 +779,7 @@
             }
           },
           {
-            "name": "Perf. Param 1",
+            "name": "Param 1",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -774,7 +793,7 @@
             }
           },
           {
-            "name": "Perf. Param 2",
+            "name": "Param 2",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -788,7 +807,7 @@
             }
           },
           {
-            "name": "Perf. Param 3",
+            "name": "Param 3",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -802,7 +821,7 @@
             }
           },
           {
-            "name": "Perf. Param 4",
+            "name": "Param 4",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -816,7 +835,7 @@
             }
           },
           {
-            "name": "Perf. Param 5",
+            "name": "Param 5",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -830,7 +849,7 @@
             }
           },
           {
-            "name": "Perf. Param 6",
+            "name": "Param 6",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -844,7 +863,7 @@
             }
           },
           {
-            "name": "Perf. Param 7",
+            "name": "Param 7",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -872,7 +891,7 @@
             }
           },
           {
-            "name": "Perf. Param 9",
+            "name": "Param 9",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -886,7 +905,7 @@
             }
           },
           {
-            "name": "Perf. Param 10",
+            "name": "Param 10",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -900,7 +919,7 @@
             }
           },
           {
-            "name": "Perf. Param 11",
+            "name": "Param 11",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -914,7 +933,7 @@
             }
           },
           {
-            "name": "Perf. Param 12",
+            "name": "Param 12",
             "type": "continous",
             "component": "Performance",
             "source": {
@@ -928,7 +947,7 @@
             }
           },
           {
-            "name": "Synth Param 1",
+            "name": "Param 1",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -942,7 +961,7 @@
             }
           },
           {
-            "name": "Synth Param 2",
+            "name": "Param 2",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -956,7 +975,7 @@
             }
           },
           {
-            "name": "Synth Param 3",
+            "name": "Param 3",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -970,7 +989,7 @@
             }
           },
           {
-            "name": "Synth Param 4",
+            "name": "Param 4",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -984,7 +1003,7 @@
             }
           },
           {
-            "name": "Synth Param 5",
+            "name": "Param 5",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -998,7 +1017,7 @@
             }
           },
           {
-            "name": "Synth Param 6",
+            "name": "Param 6",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -1012,7 +1031,7 @@
             }
           },
           {
-            "name": "Synth Param 7",
+            "name": "Param 7",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -1026,7 +1045,7 @@
             }
           },
           {
-            "name": "Synth Param 8",
+            "name": "Param 8",
             "type": "continous",
             "component": "Synth",
             "source": {
@@ -1040,9 +1059,10 @@
             }
           },
           {
-            "name": "Sample Tune",
+            "name": "Tune",
             "type": "continous",
             "component": "Sample",
+            "role": "SampleRate",
             "source": {
               "midi": {
                 "id": {
@@ -1054,7 +1074,7 @@
             }
           },
           {
-            "name": "Sample FineTune",
+            "name": "FineTune",
             "type": "continous",
             "component": "Sample",
             "source": {
@@ -1068,9 +1088,10 @@
             }
           },
           {
-            "name": "Sample Bit Reduction",
+            "name": "Bit Reduction",
             "type": "continous",
             "component": "Sample",
+            "role": "SampleBitReduction",
             "source": {
               "midi": {
                 "id": {
@@ -1082,23 +1103,26 @@
             }
           },
           {
-            "name": "Sample Slot",
-            "type": "continous",
+            "name": "Slot",
+            "type": "list",
             "component": "Sample",
+            "role": "SampleSlot",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 11
-                }
+                },
+                "sourceRangesFrom": "sampleSlots" 
               }
             }
           },
           {
-            "name": "Sample Start",
+            "name": "Start",
             "type": "continous",
             "component": "Sample",
+            "role": "SampleStart",
             "source": {
               "midi": {
                 "id": {
@@ -1110,9 +1134,10 @@
             }
           },
           {
-            "name": "Sample End",
+            "name": "End",
             "type": "continous",
             "component": "Sample",
+            "role": "SampleEnd",
             "source": {
               "midi": {
                 "id": {
@@ -1124,23 +1149,26 @@
             }
           },
           {
-            "name": "Sample Loop",
-            "type": "continous",
+            "name": "Loop",
+            "type": "list",
             "component": "Sample",
+            "role": "SampleLoop",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 14
-                }
+                },
+                "sourceRangesFrom": "onOff"
               }
             }
           },
           {
-            "name": "Sample Level",
+            "name": "Level",
             "type": "continous",
             "component": "Sample",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -1152,9 +1180,10 @@
             }
           },
           {
-            "name": "Filter Attack Time",
+            "name": "Attack",
             "type": "continous",
-            "component": "Filter",
+            "component": "FilterEnv",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -1166,9 +1195,10 @@
             }
           },
           {
-            "name": "Filter Decay Time",
+            "name": "Decay",
             "type": "continous",
-            "component": "Filter",
+            "component": "FilterEnv",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -1180,9 +1210,10 @@
             }
           },
           {
-            "name": "Filter Sustain Level",
+            "name": "Sustain",
             "type": "continous",
-            "component": "Filter",
+            "component": "FilterEnv",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -1194,9 +1225,10 @@
             }
           },
           {
-            "name": "Filter Release Time",
+            "name": "Release",
             "type": "continous",
-            "component": "Filter",
+            "component": "FilterEnv",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -1208,9 +1240,10 @@
             }
           },
           {
-            "name": "Filter Frequency",
+            "name": "Cutoff Freq",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -1222,9 +1255,10 @@
             }
           },
           {
-            "name": "Filter Resonance",
+            "name": "Resonance",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -1236,9 +1270,10 @@
             }
           },
           {
-            "name": "Filter Mode",
+            "name": "Type",
             "type": "list",
             "component": "Filter",
+            "role": "FilterType",
             "source": {
               "midi": {
                 "id": {
@@ -1249,6 +1284,7 @@
                 "sourceRanges": [
                   {
                     "name": "Lowpass2",
+                    "role": "FilterLowpass4db",
                     "range": {
                       "from": 0,
                       "to": 127
@@ -1256,6 +1292,7 @@
                   },
                   {
                     "name": "Lowpass1",
+                    "role": "FilterLowpass2db",
                     "range": {
                       "from": 128,
                       "to": 255
@@ -1263,6 +1300,7 @@
                   },
                   {
                     "name": "Bandpass",
+                    "role": "FilterBandpass4db",
                     "range": {
                       "from": 256,
                       "to": 383
@@ -1270,6 +1308,7 @@
                   },
                   {
                     "name": "Highpass1",
+                    "role": "FilterHighpass2db",
                     "range": {
                       "from": 384,
                       "to": 511
@@ -1277,6 +1316,7 @@
                   },
                   {
                     "name": "Highpass2",
+                    "role": "FilterHighpass4db",
                     "range": {
                       "from": 512,
                       "to": 639
@@ -1284,6 +1324,7 @@
                   },
                   {
                     "name": "BS",
+                    "role": "FilterBandReject",
                     "range": {
                       "from": 640,
                       "to": 767
@@ -1291,6 +1332,7 @@
                   },
                   {
                     "name": "Peak",
+                    "role": "FilterPeak",
                     "range": {
                       "from": 768,
                       "to": 895
@@ -1302,8 +1344,9 @@
           },
           {
             "name": "Filter Env Depth",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Filter",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1315,9 +1358,10 @@
             }
           },
           {
-            "name": "AMP Attack Time",
+            "name": "AMP Attack",
             "type": "continous",
-            "component": "AMP",
+            "component": "AmpEnv",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -1329,9 +1373,10 @@
             }
           },
           {
-            "name": "AMP Hold Time",
+            "name": "AMP Sustain",
             "type": "continous",
-            "component": "AMP",
+            "component": "AmpEnv",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -1343,9 +1388,10 @@
             }
           },
           {
-            "name": "AMP Decay Time",
+            "name": "AMP Decay",
             "type": "continous",
-            "component": "AMP",
+            "component": "AmpEnv",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -1359,7 +1405,7 @@
           {
             "name": "AMP Override",
             "type": "continous",
-            "component": "AMP",
+            "component": "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1373,7 +1419,8 @@
           {
             "name": "AMP Delay Send",
             "type": "continous",
-            "component": "AMP",
+            "component": "Amp",
+            "role": "DelaySend",
             "source": {
               "midi": {
                 "id": {
@@ -1387,7 +1434,8 @@
           {
             "name": "AMP Reverb Send",
             "type": "continous",
-            "component": "AMP",
+            "component": "Amp",
+            "role": "ReverbSend",
             "source": {
               "midi": {
                 "id": {
@@ -1401,7 +1449,8 @@
           {
             "name": "AMP Pan",
             "type": "continous-bipolar",
-            "component": "AMP",
+            "component": "Amp",
+            "role": "Pan",
             "source": {
               "midi": {
                 "id": {
@@ -1415,7 +1464,8 @@
           {
             "name": "AMP Volume",
             "type": "continous",
-            "component": "AMP",
+            "component": "Amp",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -1540,7 +1590,100 @@
           }
         ]
       }
-    ]
+    ],
+    "sourceRanges": {
+      "onOff": [
+        {
+          "name": "OFF",
+          "role": "Off",
+          "range": {
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "ON",
+          "role": "On",
+          "range": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "sampleSlots":
+      [
+        {
+          "name": "1",
+          "range": {
+            "from": 0, 
+            "to": 0
+          }
+        },
+        {
+          "name": "2",
+          "range": {
+            "from": 1, 
+            "to": 1
+          }
+        },
+        {
+          "name": "3",
+          "range": {
+            "from": 2, 
+            "to": 2
+          }
+        },
+        {
+          "name": "4",
+          "range": {
+            "from": 3, 
+            "to": 3
+          }
+        },
+        {
+          "name": "5",
+          "range": {
+            "from": 4, 
+            "to": 4
+          }
+        },
+        {
+          "name": "6",
+          "range": {
+            "from": 5, 
+            "to": 5
+          }
+        },
+        {
+          "name": "7",
+          "range": {
+            "from": 6, 
+            "to": 6
+          }
+        },
+        {
+          "name": "8",
+          "range": {
+            "from": 7, 
+            "to": 7
+          }
+        },
+        {
+          "name": "9",
+          "range": {
+            "from": 8, 
+            "to": 8
+          }
+        },
+        {
+          "name": "2",
+          "range": {
+            "from": 9, 
+            "to": 9
+          }
+        }
+      ]
+    }
   },
   "reactsToTransportCommands": true
 }
