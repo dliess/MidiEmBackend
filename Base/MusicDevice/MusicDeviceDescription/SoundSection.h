@@ -89,6 +89,20 @@ struct Component
    static inline Role roleFromString(const std::string& roleStr);
 };
 
+struct SelectorParameter
+{
+   std::string component;
+   std::string name;
+};
+
+struct OneOfComponents : public Component
+{
+   SelectorParameter selectorParam;
+   std::vector<Component> oneOfComponents;
+};
+
+using ComponentVar = mpark::variant<mpark::monostate, Component, OneOfComponents>;
+
 template <typename T>
 struct ValueRange
 {
@@ -264,7 +278,7 @@ struct Parameter
 
 struct EngineBase
 {
-   std::optional<std::vector<Component>> components;
+   std::optional<std::vector<ComponentVar>> components;
    std::vector<Parameter> parameters;
 };
 

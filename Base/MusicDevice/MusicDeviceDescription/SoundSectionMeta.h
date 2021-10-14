@@ -85,6 +85,24 @@ inline auto registerMembers<base::musicDevice::description::sound::Component>()
 }
 
 template <>
+inline auto registerMembers<base::musicDevice::description::sound::SelectorParameter>()
+{
+   return members(
+      member("component", &base::musicDevice::description::sound::SelectorParameter::component),
+      member("name", &base::musicDevice::description::sound::SelectorParameter::name)
+   );
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::sound::OneOfComponents>()
+{
+   return members(
+      member("selectorParam", &base::musicDevice::description::sound::OneOfComponents::selectorParam),
+      member("oneOfComponents", &base::musicDevice::description::sound::OneOfComponents::oneOfComponents)
+   );
+}
+
+template <>
 inline auto registerMembers<base::musicDevice::description::sound::ValueRangeInt>()
 {
    return members(
