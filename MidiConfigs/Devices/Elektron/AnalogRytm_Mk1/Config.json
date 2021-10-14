@@ -504,7 +504,25 @@
           },
           {
             "name": "Synth",
-            "role": "Oscillator"
+            "role": "Synth",
+            "selectorParam": {
+              "component": "Common",
+              "name": "Machine Type"
+            },
+            "oneOfComponents": [
+              {
+                "name": "None",
+                "role": "None"
+              },
+              {
+                "name": "Noise",
+                "role": "NoiseSynth"
+              },
+              {
+                "name": "Impulse",
+                "role": "ImpulseSynth"
+              }
+            ]
           },
           {
             "name": "Sample",
@@ -947,113 +965,243 @@
             }
           },
           {
-            "name": "Param 1",
+            "name": "LPF Cutoff",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "LPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 2",
+            "name": "LPF Resonance",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "LPFilterResonance",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 3",
+            "name": "Attack",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 2
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 4",
+            "name": "Decay",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 5",
+            "name": "HPFilter Cutoff",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "HPFilterCutoff",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 4
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 6",
-            "type": "continous",
-            "component": "Synth",
+            "name": "LPFilt Sweep Depth",
+            "type": "continous-bipolar",
+            "component": "Noise",
+            "role": "LPFilterSweep",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 5
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 7",
+            "name": "LPFilt Sweep Time",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "LPFilterSweep",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 6
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
           },
           {
-            "name": "Param 8",
+            "name": "Volume",
             "type": "continous",
-            "component": "Synth",
+            "component": "Noise",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 7
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Impulse",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Impulse",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
+                }
+              }
+            }
+          },
+          {
+            "name": "Polarity",
+            "type": "list",
+            "component": "Impulse",
+            "role": "Polarity",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                },
+                "sourceRanges": [
+                  {
+                    "name": "Positive",
+                    "role": "Positive",
+                    "range": {
+                      "from": 0,
+                      "to": 63
+                    }
+                  },
+                  {
+                    "name": "Negative",
+                    "role": "Negative",
+                    "range": {
+                      "from": 64,
+                      "to": 127
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Impulse",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 127
                 }
               }
             }
@@ -1114,7 +1262,7 @@
                   "idMsb": 1,
                   "idLsb": 11
                 },
-                "sourceRangesFrom": "sampleSlots" 
+                "sourceRangesFrom": "sampleSlots"
               }
             }
           },
@@ -1610,75 +1758,74 @@
           }
         }
       ],
-      "sampleSlots":
-      [
+      "sampleSlots": [
         {
           "name": "1",
           "range": {
-            "from": 0, 
+            "from": 0,
             "to": 0
           }
         },
         {
           "name": "2",
           "range": {
-            "from": 1, 
+            "from": 1,
             "to": 1
           }
         },
         {
           "name": "3",
           "range": {
-            "from": 2, 
+            "from": 2,
             "to": 2
           }
         },
         {
           "name": "4",
           "range": {
-            "from": 3, 
+            "from": 3,
             "to": 3
           }
         },
         {
           "name": "5",
           "range": {
-            "from": 4, 
+            "from": 4,
             "to": 4
           }
         },
         {
           "name": "6",
           "range": {
-            "from": 5, 
+            "from": 5,
             "to": 5
           }
         },
         {
           "name": "7",
           "range": {
-            "from": 6, 
+            "from": 6,
             "to": 6
           }
         },
         {
           "name": "8",
           "range": {
-            "from": 7, 
+            "from": 7,
             "to": 7
           }
         },
         {
           "name": "9",
           "range": {
-            "from": 8, 
+            "from": 8,
             "to": 8
           }
         },
         {
           "name": "2",
           "range": {
-            "from": 9, 
+            "from": 9,
             "to": 9
           }
         }
