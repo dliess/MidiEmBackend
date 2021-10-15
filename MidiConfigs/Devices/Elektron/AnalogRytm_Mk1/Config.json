@@ -772,6 +772,7 @@
             "name": "Machine Type",
             "type": "list",
             "component": "Common",
+            "role": "ComponentSelector",
             "source": {
               "midi": {
                 "id": {

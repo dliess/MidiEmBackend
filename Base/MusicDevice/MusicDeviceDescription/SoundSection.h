@@ -213,7 +213,8 @@ struct Parameter
       LPFilterSlope,
       LPFilterKeyAmount,
       LPFilterAudioModuation,
-      LPFilterSweep, // TODOOOOOOO
+      LPFilterSweep,
+      ComponentSelector,
       HPFilterCutoff,
       HPFilterResonance,
       HPFilterSlope,

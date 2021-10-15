@@ -363,6 +363,8 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::LPFilterSlope: return "LPFilterSlope";
       case Role::LPFilterKeyAmount: return "LPFilterKeyAmount";
       case Role::LPFilterAudioModuation: return "LPFilterAudioModuation";
+      case Role::LPFilterSweep: return "LPFilterSweep";
+      case Role::ComponentSelector: return "ComponentSelector";
       case Role::HPFilterCutoff: return "HPFilterCutoff";
       case Role::HPFilterResonance: return "HPFilterResonance";
       case Role::HPFilterSlope: return "HPFilterSlope";
@@ -490,6 +492,10 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::LPFilterKeyAmount;
    else if (roleStr == "LPFilterAudioModuation")
       return Role::LPFilterAudioModuation;
+   else if (roleStr == "LPFilterSweep")
+      return Role::LPFilterSweep;
+   else if (roleStr == "ComponentSelector")
+      return Role::ComponentSelector;
    else if (roleStr == "HPFilterCutoff")
       return Role::HPFilterCutoff;
    else if (roleStr == "HPFilterResonance")
