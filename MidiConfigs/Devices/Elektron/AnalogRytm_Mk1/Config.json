@@ -503,7 +503,6 @@
             "name": "Performance"
           },
           {
-            "name": "Synth",
             "role": "Synth",
             "selectorParam": {
               "component": "Common",

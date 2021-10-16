@@ -189,8 +189,9 @@ inline void ParameterStorage::resetToInitialValue(int voiceIdx,
    for (auto& e : element.modifiers) { e.reset(); }
    element.lfo.reset();
    const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
-   element.setCommandedValue(
-       m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx));
+   const float initVal = m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx);
+   if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE != initVal)
+      element.setCommandedValue(initVal);
 }
 
 inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
@@ -201,8 +202,11 @@ inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
           element.lfo.reset();
           const auto& descr =
               m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
-          element.setCommandedValue(
-              m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx));
+          const float initVal =
+              m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx);
+          if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE !=
+              initVal)
+             element.setCommandedValue(initVal);
        },
        voiceIdx);
 
@@ -215,8 +219,11 @@ inline void ParameterStorage::resetToInitialValues() noexcept
       for (auto& e : element.modifiers) { e.reset(); }
       element.lfo.reset();
       const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
-      element.setCommandedValue(
-          m_rSoundSection.getInitialValueFor(voiceId, paramIdx));
+      const float initVal =
+          m_rSoundSection.getInitialValueFor(voiceId, paramIdx);
+      if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE !=
+          initVal)
+         element.setCommandedValue(initVal);
    });
    forEachElementContainer(
        [](EngineData& engineData) { engineData.actualPreset.reset(); });
@@ -353,8 +360,7 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    return std::nullopt;
 }
 
-inline bool
-ParameterStorage::Element::updateActualValue() noexcept
+inline bool ParameterStorage::Element::updateActualValue() noexcept
 {
    if (!dirtyFlagRt && !lfo.enabled())   // performance improving shortcut
    {
@@ -380,7 +386,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       if (int(actualBefore) != int(actual))
       {
-         //LOG_F(INFO, "actualBefore {} actual {}", actualBefore, actual);
+         // LOG_F(INFO, "actualBefore {} actual {}", actualBefore, actual);
          dirtyFlagUi = true;
          return true;
       }
@@ -389,7 +395,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       if (int(actualBefore * m_resolution) != int(actual * m_resolution)
           //|| actual == 0
-          )
+      )
       {
          dirtyFlagUi = true;
          return true;
@@ -422,7 +428,7 @@ inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
    {
       value = 0.0;
    }
-   if(value >= range)
+   if (value >= range)
    {
       value = range - FUZZ;
    }

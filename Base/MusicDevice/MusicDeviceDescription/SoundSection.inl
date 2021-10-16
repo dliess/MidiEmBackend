@@ -826,6 +826,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::LPHPFilterSlope: return 0.0;
       case Parameter::Role::LPHPFilterKeyAmount: return 0.0;
       case Parameter::Role::LPHPFilterAudioModuation: return 0.0;
+      case Parameter::Role::LPFilterSweep: return 0.0;
+      case Parameter::Role::ComponentSelector: return IGNORE_INITIAL_VALUE;
       case Parameter::Role::AmpEnvAmount: return 0.99;
       case Parameter::Role::EnvAmount: return 0.5;
       case Parameter::Role::EnvVelAmount: return 0.0;

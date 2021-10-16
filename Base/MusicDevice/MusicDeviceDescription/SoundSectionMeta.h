@@ -98,7 +98,8 @@ inline auto registerMembers<base::musicDevice::description::sound::OneOfComponen
 {
    return members(
       member("selectorParam", &base::musicDevice::description::sound::OneOfComponents::selectorParam),
-      member("oneOfComponents", &base::musicDevice::description::sound::OneOfComponents::oneOfComponents)
+      member("oneOfComponents", &base::musicDevice::description::sound::OneOfComponents::oneOfComponents),
+      member("role", &base::musicDevice::description::sound::OneOfComponents::role)
    );
 }
 

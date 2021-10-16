@@ -95,13 +95,14 @@ struct SelectorParameter
    std::string name;
 };
 
-struct OneOfComponents : public Component
+struct OneOfComponents
 {
    SelectorParameter selectorParam;
    std::vector<Component> oneOfComponents;
+   std::optional<Component::Role> role;
 };
 
-using ComponentVar = mpark::variant<mpark::monostate, Component, OneOfComponents>;
+using ComponentVar = mpark::variant<Component, OneOfComponents>;
 
 template <typename T>
 struct ValueRange
@@ -350,6 +351,8 @@ private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role> _getInitialValueFor(
        int voiceId, int parameterId) const noexcept;
 };
+
+static constexpr float IGNORE_INITIAL_VALUE = -1;
 
 }   // namespace base::musicDevice::description::sound
 
