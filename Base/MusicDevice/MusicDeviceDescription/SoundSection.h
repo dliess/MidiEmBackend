@@ -104,15 +104,14 @@ struct OneOfComponents
 
 using ComponentVar = mpark::variant<Component, OneOfComponents>;
 
-template <typename T>
-struct ValueRange
+template <typename T> struct ValueRange
 {
    T from;
    T to;
 };
 
 using ValueRangeFloat = ValueRange<float>;
-using ValueRangeInt = ValueRange<int>;
+using ValueRangeInt   = ValueRange<int>;
 
 struct ParameterSourceRangeBase
 {
@@ -183,16 +182,16 @@ struct Parameter
       Pitch,
       PitchFinetune,
       OSCWaveform,
-      OSCShape,     // NEW
+      OSCShape,   // NEW
       OSCGlide,
-      OSCGlideOnOff, // NEW
-      OSCGlideType, // NEW
+      OSCGlideOnOff,   // NEW
+      OSCGlideType,    // NEW
       OSCKeyboardTracking,
       OSCSync,
       OSCSlop,
       OSCMix,
       OSCNoise,
-      OSCNoteSyncOnOff, // NEW
+      OSCNoteSyncOnOff,   // NEW
       SubOSCLevel,
       UnisonMode,
       UnisonOnOff,
@@ -319,7 +318,9 @@ struct Section
    std::vector<Voice> voices;
    std::optional<Global> global;
    std::vector<Engine> engines;
-   std::optional<std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>> sourceRanges;
+   std::optional<
+       std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
+       sourceRanges;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
    std::optional<float> pitchBendFactor;
 
@@ -340,6 +341,8 @@ struct Section
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) const noexcept;
+   template <typename T> void forEachComponentDescr(T&& cb) noexcept;
+   template <typename T> void forEachComponentDescr(T&& cb) const noexcept;
    inline bool hasParameters() const noexcept;
    inline int voice2EngineIdx(int voiceIdx) const noexcept;
    template <typename T>
@@ -348,8 +351,8 @@ struct Section
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
 
 private:
-   inline mpark::variant<float, ParameterSourceRangeBase::Role> _getInitialValueFor(
-       int voiceId, int parameterId) const noexcept;
+   inline mpark::variant<float, ParameterSourceRangeBase::Role>
+   _getInitialValueFor(int voiceId, int parameterId) const noexcept;
 };
 
 static constexpr float IGNORE_INITIAL_VALUE = -1;

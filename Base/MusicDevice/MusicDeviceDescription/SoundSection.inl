@@ -220,13 +220,13 @@ to_json<base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
     const base::musicDevice::description::sound::ParameterSourceRangeBase::Role&
         obj)
 {
-   j = base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
-       obj);
+   j = base::musicDevice::description::sound::ParameterSourceRangeBase::
+       role2String(obj);
 }
 
 template <>
-inline void
-from_json<base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
+inline void from_json<
+    base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
     const nlohmann::json& j,
     base::musicDevice::description::sound::ParameterSourceRangeBase::Role& obj)
 {
@@ -699,6 +699,54 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(
    }
 }
 
+template<typename T>
+void base::musicDevice::description::sound::Section::forEachComponentDescr(
+   T&& cb) noexcept
+{
+   if (global && global->components)
+   {
+      for (int componentIdx = 0; componentIdx < global->components->size();
+           ++componentIdx)
+      {
+         cb(GlobalSectionId, componentIdx,
+            global->components->operator[](componentIdx));
+      }
+   }
+   for (int engineIdx = 0; engineIdx < engines.size(); ++engineIdx)
+   {
+      for (int componentIdx = 0;
+           componentIdx < engines[engineIdx].components->size(); ++componentIdx)
+      {
+         cb(engineIdx, componentIdx,
+            engines[engineIdx].components->operator[](componentIdx));
+      }
+   }
+}
+
+template<typename T>
+void base::musicDevice::description::sound::Section::forEachComponentDescr(
+   T&& cb) const noexcept
+{
+   if (global && global->components)
+   {
+      for (int componentIdx = 0; componentIdx < global->components->size();
+           ++componentIdx)
+      {
+         cb(GlobalSectionId, componentIdx,
+            global->components->operator[](componentIdx));
+      }
+   }
+   for (int engineIdx = 0; engineIdx < engines.size(); ++engineIdx)
+   {
+      for (int componentIdx = 0;
+           componentIdx < engines[engineIdx].components->size(); ++componentIdx)
+      {
+         cb(engineIdx, componentIdx,
+            engines[engineIdx].components->operator[](componentIdx));
+      }
+   }
+}
+
 inline bool base::musicDevice::description::sound::Section::hasParameters()
     const noexcept
 {
@@ -745,8 +793,9 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
    return mpark::visit(
        util::overload{
            [this, paramDescr](const float& val) -> float { return val; },
-           [this, paramDescr](const base::musicDevice::description::sound::
-                                  ParameterSourceRangeBase::Role& role) -> float {
+           [this,
+            paramDescr](const base::musicDevice::description::sound::
+                            ParameterSourceRangeBase::Role& role) -> float {
               const auto retVal = paramDescr.getListIndexByListRole(role);
               if (retVal)
               {
@@ -758,7 +807,8 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
 }
 
 inline mpark::variant<
-    float, base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
+    float,
+    base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
 base::musicDevice::description::sound::Section::_getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {

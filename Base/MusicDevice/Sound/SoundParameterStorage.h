@@ -65,6 +65,7 @@ public:
          float intensity{0};
       };
 
+      bool enabled{true};
       float commanded{0};
       std::array<std::optional<Modifier>, NUM_MODIFIERS> modifiers;
       LFO lfo;
@@ -75,7 +76,7 @@ public:
 
       inline std::optional<std::pair<float, float>>
       uiAsksForChangedValues() noexcept;
-      inline bool updateActualValue() noexcept;
+      inline std::optional<float> updateActualValue() noexcept;
       inline void setActualValue(float value) noexcept;
       inline void setCommandedValue(float value) noexcept;
 

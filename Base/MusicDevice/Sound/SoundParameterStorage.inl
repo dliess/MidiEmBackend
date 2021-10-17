@@ -245,10 +245,10 @@ template <typename Cb>
 void ParameterStorage::updateActualValues(Cb&& cb) noexcept
 {
    forEachParameter([cb](int voiceIdx, int paramIdx, Element& element) {
-      const bool changed = element.updateActualValue();
-      if (changed)
+      const auto prevVal = element.updateActualValue();
+      if (prevVal)
       {
-         cb(voiceIdx, paramIdx, element.actual);
+         cb(voiceIdx, paramIdx, element.actual, *prevVal);
       }
    });
 }
@@ -360,11 +360,11 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    return std::nullopt;
 }
 
-inline bool ParameterStorage::Element::updateActualValue() noexcept
+inline std::optional<float> ParameterStorage::Element::updateActualValue() noexcept
 {
-   if (!dirtyFlagRt && !lfo.enabled())   // performance improving shortcut
+   if (!enabled || (!dirtyFlagRt && !lfo.enabled()))   // performance improving shortcut
    {
-      return false;
+      return std::nullopt;
    }
    float actualBefore = actual;
    actual             = calcModified();
@@ -388,7 +388,7 @@ inline bool ParameterStorage::Element::updateActualValue() noexcept
       {
          // LOG_F(INFO, "actualBefore {} actual {}", actualBefore, actual);
          dirtyFlagUi = true;
-         return true;
+         return actualBefore;
       }
    }
    else
@@ -398,10 +398,10 @@ inline bool ParameterStorage::Element::updateActualValue() noexcept
       )
       {
          dirtyFlagUi = true;
-         return true;
+         return actualBefore;
       }
    }
-   return false;
+   return std::nullopt;
 }
 
 inline void ParameterStorage::Element::setActualValue(float value) noexcept
