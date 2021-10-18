@@ -32,8 +32,16 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
-      const int voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
-      const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(voiceIdx) + 1];
+      LOG_F(INFO, "SOUND --- {} Received {}",
+         m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+      const std::optional<int> voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
+      if(!voiceIdx)
+      {
+         LOG_F(INFO, "SOUND --- {} Strange message received {}",
+         m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         return;
+      }
+      const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(*voiceIdx) + 1];
       const auto midiId = midiMessageToId(midiMsg);
       if (mpark::holds_alternative<mpark::monostate>(midiId))
       {
@@ -42,48 +50,51 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       auto iter = map.find(midiId);
       if (map.end() == iter)
       {
-         /*
+         
          LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
                m_pMidiInIf->medium().getDeviceName(),
                meta::serialize(midiId).dump());
-         */
+         
          return;
       }
       const float val = getValueBy(midiMsg, iter->second);
-      m_drainCb(voiceIdx, iter->second.parameterId, val);
+      m_drainCb(*voiceIdx, iter->second.parameterId, val);
    });
 }
 
 template <typename MidiInIfPtr>
-int sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
+std::optional<int> sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
     const midi::MidiMessage& midiMsg) const noexcept
 {
-   int voiceIdx = mpark::visit(
+   int midiChannelNumber = mpark::visit(
        util::overload{
-           [](const midi::Message<midi::NoteOff>& msg) -> uint8_t {
+           [](const midi::Message<midi::NoteOff>& msg) -> int {
               return msg.channel();
            },
-           [](const midi::Message<midi::NoteOn>& msg) -> uint8_t {
+           [](const midi::Message<midi::NoteOn>& msg) -> int {
               return msg.channel();
            },
-           [](const midi::Message<midi::ControlChange>& msg) -> uint8_t {
+           [](const midi::Message<midi::ControlChange>& msg) -> int {
               return msg.channel();
            },
-           [](const midi::Message<midi::ControlChangeHighRes>& msg) -> uint8_t {
+           [](const midi::Message<midi::ControlChangeHighRes>& msg) -> int {
               return msg.channel();
            },
-           [](const midi::Message<midi::RPN>& msg) -> uint8_t {
+           [](const midi::Message<midi::RPN>& msg) -> int {
               return msg.channel();
            },
-           [](const midi::Message<midi::NRPN>& msg) -> uint8_t {
+           [](const midi::Message<midi::NRPN>& msg) -> int {
               return msg.channel();
            },
-           [](auto&& msg) -> uint8_t {
-              assert(false);
-              return -1;
+           [](auto&& msg) -> int {
+              return 0;
            }},
        midiMsg);
-   voiceIdx -= m_midiVoiceOffset;
+   if(0 == midiChannelNumber)
+   { 
+      return std::nullopt;
+   }
+   int voiceIdx = midiChannelNumber -1 -m_midiVoiceOffset;
    if (m_rSoundSection.global &&
        m_rSoundSection.global->midiChannel == voiceIdx)
    {

@@ -32,7 +32,7 @@ private:
    std::vector<Map> m_maps;
    static std::string cache2Str(const Map& map);
 
-   int getVoiceIdFromMidiMsg(const midi::MidiMessage& midiMsg) const noexcept;
+   std::optional<int> getVoiceIdFromMidiMsg(const midi::MidiMessage& midiMsg) const noexcept;
    float getValueBy(
        const midi::MidiMessage& midiMsg,
        const description::sound::ParameterId& parameterId) const noexcept;
