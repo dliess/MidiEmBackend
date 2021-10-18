@@ -32,17 +32,15 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
+      const int voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
+      const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(voiceIdx) + 1];
       const auto midiId = midiMessageToId(midiMsg);
-
       if (mpark::holds_alternative<mpark::monostate>(midiId))
       {
          return;
       }
-      // LOG_F(INFO, "Got midi msg:{} {}",
-      // m_pMidiInIf->medium().getDeviceName(),
-      //      toString(midiMsg));
-      auto iter = m_map.find(midiId);
-      if (m_map.end() == iter)
+      auto iter = map.find(midiId);
+      if (map.end() == iter)
       {
          /*
          LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
@@ -51,107 +49,125 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
          */
          return;
       }
-      handleSoundDevParameterRouting(midiMsg, iter->second);
+      const float val = getValueBy(midiMsg, iter->second);
+      m_drainCb(voiceIdx, iter->second.parameterId, val);
    });
 }
 
 template <typename MidiInIfPtr>
-int sound::MidiInMsgHandler<MidiInIfPtr>::midiChannelNr2VoiceId(
-    int midiChannel, int engineId) const noexcept
+int sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
+    const midi::MidiMessage& midiMsg) const noexcept
 {
-   if (engineId == base::musicDevice::description::sound::GlobalSectionId)
+   int voiceIdx = mpark::visit(
+       util::overload{
+           [](const midi::Message<midi::NoteOff>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](const midi::Message<midi::NoteOn>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](const midi::Message<midi::ControlChange>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](const midi::Message<midi::ControlChangeHighRes>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](const midi::Message<midi::RPN>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](const midi::Message<midi::NRPN>& msg) -> uint8_t {
+              return msg.channel();
+           },
+           [](auto&& msg) -> uint8_t {
+              assert(false);
+              return -1;
+           }},
+       midiMsg);
+   voiceIdx -= m_midiVoiceOffset;
+   if (m_rSoundSection.global && m_rSoundSection.global->midiChannel == voiceIdx)
    {
-      return base::musicDevice::description::sound::GlobalSectionId;
+      voiceIdx = description::sound::GlobalSectionId;
    }
-   for (int i = 0; i < m_rSoundSection.voices.size(); ++i)
-   {
-      const auto& voice = m_rSoundSection.voices[i];
-      if (voice.midiChannel == (midiChannel - m_midiVoiceOffset) &&
-          voice.engineId == engineId)
-      {
-         return i;
-      }
-   }
-   assert(false);
-   return -2;
+   return voiceIdx;
 }
 
 template <typename MidiInIfPtr>
-void sound::MidiInMsgHandler<MidiInIfPtr>::handleSoundDevParameterRouting(
+float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
     const midi::MidiMessage& midiMsg,
-    const base::musicDevice::description::sound::ParameterId& id) const noexcept
+    const description::sound::ParameterId& id) const noexcept
 {
-   assert(m_rSoundSection.parameterDescr(id).source.midi.has_value());
-   const auto& valueRange =
-       m_rSoundSection.parameterDescr(id).source.midi->sourceValueRange;
-   const bool isList =
-       m_rSoundSection.parameterDescr(id).type ==
-       base::musicDevice::description::sound::Parameter::Type::List;
-   mpark::visit(
+   const auto& descr = m_rSoundSection.parameterDescr(id);
+   assert(descr.source.midi.has_value());
+
+   return mpark::visit(
        midi::overload{
-           [this, &id, isList,
-            &valueRange](const midi::Message<midi::ControlChange>& msg) {
-              float val =
-                  valueRange.has_value()
-                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
-                      : msg.getRelativeValue();
-              if (isList)
+           [this,
+            &descr](const midi::Message<midi::ControlChange>& msg) -> float {
+              if (descr.type == description::sound::Parameter::Type::List)
               {
-                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
-                     msg.controllerValue());
+                 return descr.getListIndexByValue(msg.controllerValue());
               }
-              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, val);
-           },
-           [this, &id, isList,
-            &valueRange](const midi::Message<midi::ControlChangeHighRes>& msg) {
-              float val =
-                  valueRange.has_value()
-                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
-                      : msg.getRelativeValue();
-              if (isList)
+              else
               {
-                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
-                     msg.controllerValue());
+                 const auto& valueRange = descr.source.midi->sourceValueRange;
+                 return valueRange.has_value()
+                            ? msg.getRelativeValue(valueRange->from,
+                                                   valueRange->to)
+                            : msg.getRelativeValue();
               }
-              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, val);
            },
-           [this, &id, isList,
-            &valueRange](const midi::Message<midi::NRPN>& msg) {
-              float val =
-                  valueRange.has_value()
-                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
-                      : msg.getRelativeValue();
-              if (isList)
+           [this, &descr](
+               const midi::Message<midi::ControlChangeHighRes>& msg) -> float {
+              if (descr.type == description::sound::Parameter::Type::List)
               {
-                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
-                     msg.getValue());
+                 return descr.getListIndexByValue(msg.controllerValue());
               }
-              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, val);
-           },
-           [this, &id, isList,
-            &valueRange](const midi::Message<midi::RPN>& msg) {
-              float val =
-                  valueRange.has_value()
-                      ? msg.getRelativeValue(valueRange->from, valueRange->to)
-                      : msg.getRelativeValue();
-              if (isList)
+              else
               {
-                 val = m_rSoundSection.parameterDescr(id).getListIndexByValue(
-                     msg.getValue());
+                 const auto& valueRange = descr.source.midi->sourceValueRange;
+                 return valueRange.has_value()
+                            ? msg.getRelativeValue(valueRange->from,
+                                                   valueRange->to)
+                            : msg.getRelativeValue();
               }
-              m_drainCb(midiChannelNr2VoiceId(msg.channel(), id.engineId),
-                        id.parameterId, val);
            },
-           [](auto&& other) {}},
+           [this, &descr](const midi::Message<midi::NRPN>& msg) -> float {
+              if (descr.type == description::sound::Parameter::Type::List)
+              {
+                 return descr.getListIndexByValue(msg.getValue());
+              }
+              else
+              {
+                 const auto& valueRange = descr.source.midi->sourceValueRange;
+                 return valueRange.has_value()
+                            ? msg.getRelativeValue(valueRange->from,
+                                                   valueRange->to)
+                            : msg.getRelativeValue();
+              }
+           },
+           [this, &descr](const midi::Message<midi::RPN>& msg) -> float {
+              if (descr.type == description::sound::Parameter::Type::List)
+              {
+                 return descr.getListIndexByValue(msg.getValue());
+              }
+              else
+              {
+                 const auto& valueRange = descr.source.midi->sourceValueRange;
+                 return valueRange.has_value()
+                            ? msg.getRelativeValue(valueRange->from,
+                                                   valueRange->to)
+                            : msg.getRelativeValue();
+              }
+           },
+           [](auto&& other) -> float { return -1; }},
        midiMsg);
 }
+
 
 template <typename MidiInIfPtr>
 void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
 {
+   m_maps.resize(m_rSoundSection.engines.size() + 1);
    m_rSoundSection.forEachParameterDescr(
        [this](const description::sound::ParameterId& paramId,
               const description::sound::Parameter& parameter) {
@@ -164,7 +180,11 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
                   },
                   [](auto&& other) {}},
               parameter.source.midi->id);
-          m_map[parameter.source.midi->id] = paramId;
+          int engineVectorIdx =
+              (description::sound::GlobalSectionId == paramId.engineId)
+                  ? 0
+                  : paramId.engineId + 1;
+          m_maps[engineVectorIdx][parameter.source.midi->id] = paramId;
        });
 }
 
