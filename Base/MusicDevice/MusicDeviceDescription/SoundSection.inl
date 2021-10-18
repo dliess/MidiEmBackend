@@ -718,7 +718,7 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(
       for (int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size();
            ++paramIdx)
       {
-         cb(engineIdx, engines[engineIdx].parameters[paramIdx]);
+         cb(paramIdx, engines[engineIdx].parameters[paramIdx]);
       }
    }
 }
@@ -743,7 +743,7 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(
       for (int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size();
            ++paramIdx)
       {
-         cb(engineIdx, engines[engineIdx].parameters[paramIdx]);
+         cb(paramIdx, engines[engineIdx].parameters[paramIdx]);
       }
    }
 }

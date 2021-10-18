@@ -32,13 +32,17 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
+      /*
       LOG_F(INFO, "SOUND --- {} Received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         */
       const std::optional<int> voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
       if(!voiceIdx)
       {
+         /*
          LOG_F(INFO, "SOUND --- {} Strange message received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         */
          return;
       }
       const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(*voiceIdx) + 1];
@@ -50,11 +54,11 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       auto iter = map.find(midiId);
       if (map.end() == iter)
       {
-         
+         /*
          LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
                m_pMidiInIf->medium().getDeviceName(),
                meta::serialize(midiId).dump());
-         
+         */
          return;
       }
       const float val = getValueBy(midiMsg, iter->second);
