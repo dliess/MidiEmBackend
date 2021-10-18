@@ -161,41 +161,46 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)
    {
-      m_paramStorage.updateActualValues(
-          [this](int voiceIdx, int paramIdx, float value, float prevValue) {
-             const auto& paramDescr =
-                 m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
-             if (paramDescr.role ==
-                 description::sound::Parameter::Role::ComponentSelector)
-             {
-                assert(paramDescr.source.midi->sourceRanges);
-                const std::string compNamePrev =
-                    paramDescr.source.midi->sourceRanges
-                        ->at(static_cast<int>(prevValue))
-                        .name;
-                const std::string compName =
-                    paramDescr.source.midi->sourceRanges
-                        ->at(static_cast<int>(value))
-                        .name;
+      m_paramStorage.updateActualValues([this](int voiceIdx, int paramIdx,
+                                               float value, float prevValue) {
+         const auto& paramDescr =
+             m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+         if (paramDescr.role ==
+             description::sound::Parameter::Role::ComponentSelector)
+         {
+            assert(paramDescr.source.midi->sourceRanges);
+            const std::string compNamePrev =
+                paramDescr.source.midi->sourceRanges
+                    ->at(static_cast<int>(prevValue))
+                    .name;
+            const std::string compName = paramDescr.source.midi->sourceRanges
+                                             ->at(static_cast<int>(value))
+                                             .name;
 
-                m_paramStorage.forEachParameter(
-                    [this, voiceIdx, &compNamePrev, &compName](int paramIdx, ParameterStorage::Element& element) {
-                       const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
-                       if(descr.component && *descr.component == compNamePrev)
-                       {
-                          element.enabled = false;
-                       }
-                       if(descr.component && *descr.component == compName)
-                       {
-                          element.enabled = true;
-                          element.actual = -1;
-                          element.dirtyFlagRt = true;
-                       }
-                    },
-                    voiceIdx);
-             }
-             m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
-          });
+            m_paramStorage.forEachParameter(
+                [this, voiceIdx, &compNamePrev, &compName](
+                    int paramIdx, ParameterStorage::Element& element) {
+                   const auto& descr =
+                       m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+                   if (descr.component && *descr.component == compNamePrev)
+                   {
+                      element.enabled = false;
+                   }
+                   if (descr.component && *descr.component == compName)
+                   {
+                      element.enabled     = true;
+                      element.actual      = -1;
+                      element.dirtyFlagRt = true;
+                   }
+                },
+                voiceIdx);
+            if (m_midiInMsgHandler)
+            {
+               m_midiInMsgHandler->changeMapping(voiceIdx, compNamePrev, compName);
+            }
+         }
+         m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
+      });
    }
 }
 

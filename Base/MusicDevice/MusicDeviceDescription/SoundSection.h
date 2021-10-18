@@ -341,8 +341,12 @@ struct Section
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) const noexcept;
+   template <typename T> void forEachParameterDescr(int engineIdx, T&& cb) noexcept;
+   template <typename T> void forEachParameterDescr(int engineIdx, T&& cb) const noexcept;
    template <typename T> void forEachComponentDescr(T&& cb) noexcept;
    template <typename T> void forEachComponentDescr(T&& cb) const noexcept;
+   template <typename T> void forEachComponentDescr(int engineIdx, T&& cb) noexcept;
+   template <typename T> void forEachComponentDescr(int engineIdx, T&& cb) const noexcept;
    inline bool hasParameters() const noexcept;
    inline int voice2EngineIdx(int voiceIdx) const noexcept;
    template <typename T>

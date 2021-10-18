@@ -21,6 +21,9 @@ public:
                     const description::sound::Section& rSoundSection,
                     uint8_t midiVoiceOffset, Cb cb) noexcept;
 
+   void changeMapping(int voiceIdx,
+      const std::string& compNamePrev, const std::string& compNameNew) noexcept;
+
 private:
    MidiInIfPtr m_pMidiInIf;
    const description::sound::Section& m_rSoundSection;

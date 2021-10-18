@@ -84,7 +84,8 @@ int sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
            }},
        midiMsg);
    voiceIdx -= m_midiVoiceOffset;
-   if (m_rSoundSection.global && m_rSoundSection.global->midiChannel == voiceIdx)
+   if (m_rSoundSection.global &&
+       m_rSoundSection.global->midiChannel == voiceIdx)
    {
       voiceIdx = description::sound::GlobalSectionId;
    }
@@ -163,7 +164,6 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
        midiMsg);
 }
 
-
 template <typename MidiInIfPtr>
 void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
 {
@@ -180,11 +180,56 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
                   },
                   [](auto&& other) {}},
               parameter.source.midi->id);
-          int engineVectorIdx =
-              (description::sound::GlobalSectionId == paramId.engineId)
-                  ? 0
-                  : paramId.engineId + 1;
-          m_maps[engineVectorIdx][parameter.source.midi->id] = paramId;
+          if (parameter.component)
+          {
+             bool found = false;
+             m_rSoundSection.forEachComponentDescr(
+                 paramId.engineId,
+                 [&parameter, &found](
+                     int componentIdx,
+                     const description::sound::ComponentVar& component) {
+                    const std::string compName = mpark::visit(
+                        util::overload{
+                            [](const description::sound::Component& c)
+                                -> std::string { return c.name; },
+                            [](const description::sound::OneOfComponents& c)
+                                -> std::string { return std::string(); }},
+                        component);
+                    if (*parameter.component == compName)
+                    {
+                       found = true;
+                    }
+                 });
+             if (!found)
+             {
+                return;
+             }
+          }
+          m_maps[paramId.engineId + 1][parameter.source.midi->id] = paramId;
+       });
+}
+
+template <typename MidiInIfPtr>
+void sound::MidiInMsgHandler<MidiInIfPtr>::changeMapping(
+    int voiceIdx, const std::string& compNamePrev,
+    const std::string& compNameNew) noexcept
+{
+   const int engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
+   m_rSoundSection.forEachParameterDescr(
+       engineIdx,
+       [this, engineIdx, &compNamePrev, &compNameNew](
+           int paramIdx, const description::sound::Parameter& parameter) {
+          if (!parameter.component)
+             return;
+          if (parameter.component.value() == compNamePrev)
+          {
+             m_maps[engineIdx + 1].erase(parameter.source.midi->id);
+          }
+          if (parameter.component.value() == compNameNew)
+          {
+             m_maps[engineIdx + 1][parameter.source.midi->id] =
+                 description::sound::ParameterId({engineIdx, paramIdx});
+          }
        });
 }
 

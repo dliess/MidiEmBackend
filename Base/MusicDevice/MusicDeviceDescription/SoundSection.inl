@@ -698,10 +698,59 @@ void base::musicDevice::description::sound::Section::forEachParameterDescr(
       }
    }
 }
+template <typename T>
+void base::musicDevice::description::sound::Section::forEachParameterDescr(
+    int engineIdx, T&& cb) noexcept
+{
+   if (engineIdx == GlobalSectionId)
+   {
+      if (global)
+      {
+         for (int paramIdx = 0; paramIdx < global->parameters.size();
+              ++paramIdx)
+         {
+            cb(paramIdx, global->parameters[paramIdx]);
+         }
+      }
+   }
+   else
+   {
+      for (int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size();
+           ++paramIdx)
+      {
+         cb(engineIdx, engines[engineIdx].parameters[paramIdx]);
+      }
+   }
+}
 
-template<typename T>
+template <typename T>
+void base::musicDevice::description::sound::Section::forEachParameterDescr(
+    int engineIdx, T&& cb) const noexcept
+{
+   if (engineIdx == GlobalSectionId)
+   {
+      if (global)
+      {
+         for (int paramIdx = 0; paramIdx < global->parameters.size();
+              ++paramIdx)
+         {
+            cb(paramIdx, global->parameters[paramIdx]);
+         }
+      }
+   }
+   else
+   {
+      for (int paramIdx = 0; paramIdx < engines[engineIdx].parameters.size();
+           ++paramIdx)
+      {
+         cb(engineIdx, engines[engineIdx].parameters[paramIdx]);
+      }
+   }
+}
+
+template <typename T>
 void base::musicDevice::description::sound::Section::forEachComponentDescr(
-   T&& cb) noexcept
+    T&& cb) noexcept
 {
    if (global && global->components)
    {
@@ -723,9 +772,9 @@ void base::musicDevice::description::sound::Section::forEachComponentDescr(
    }
 }
 
-template<typename T>
+template <typename T>
 void base::musicDevice::description::sound::Section::forEachComponentDescr(
-   T&& cb) const noexcept
+    T&& cb) const noexcept
 {
    if (global && global->components)
    {
@@ -742,6 +791,60 @@ void base::musicDevice::description::sound::Section::forEachComponentDescr(
            componentIdx < engines[engineIdx].components->size(); ++componentIdx)
       {
          cb(engineIdx, componentIdx,
+            engines[engineIdx].components->operator[](componentIdx));
+      }
+   }
+}
+
+template <typename T>
+void base::musicDevice::description::sound::Section::forEachComponentDescr(
+    int engineIdx, T&& cb) noexcept
+{
+   if (engineIdx == GlobalSectionId)
+   {
+      if (global && global->components)
+      {
+         for (int componentIdx = 0; componentIdx < global->components->size();
+              ++componentIdx)
+         {
+            cb(componentIdx, global->components->operator[](componentIdx));
+         }
+      }
+   }
+   else
+   {
+      assert(engineIdx >= 0 && engineIdx < engines.size());
+      for (int componentIdx = 0;
+           componentIdx < engines[engineIdx].components->size(); ++componentIdx)
+      {
+         cb(componentIdx,
+            engines[engineIdx].components->operator[](componentIdx));
+      }
+   }
+}
+
+template <typename T>
+void base::musicDevice::description::sound::Section::forEachComponentDescr(
+    int engineIdx, T&& cb) const noexcept
+{
+   if (engineIdx == GlobalSectionId)
+   {
+      if (global && global->components)
+      {
+         for (int componentIdx = 0; componentIdx < global->components->size();
+              ++componentIdx)
+         {
+            cb(componentIdx, global->components->operator[](componentIdx));
+         }
+      }
+   }
+   else
+   {
+      assert(engineIdx >= 0 && engineIdx < engines.size());
+      for (int componentIdx = 0;
+           componentIdx < engines[engineIdx].components->size(); ++componentIdx)
+      {
+         cb(componentIdx,
             engines[engineIdx].components->operator[](componentIdx));
       }
    }
