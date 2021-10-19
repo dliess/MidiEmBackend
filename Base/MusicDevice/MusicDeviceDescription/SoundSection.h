@@ -359,8 +359,6 @@ private:
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
 };
 
-static constexpr float IGNORE_INITIAL_VALUE = -1;
-
 }   // namespace base::musicDevice::description::sound
 
 #include "SoundSection.inl"

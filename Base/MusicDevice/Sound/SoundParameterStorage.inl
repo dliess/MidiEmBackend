@@ -189,9 +189,15 @@ inline void ParameterStorage::resetToInitialValue(int voiceIdx,
    for (auto& e : element.modifiers) { e.reset(); }
    element.lfo.reset();
    const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+   if (descr.role &&
+       descr.role.value() ==
+           description::sound::Parameter::Role::ComponentSelector &&
+       element.actual != -1)
+      return;
    const float initVal = m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx);
-   if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE != initVal)
-      element.setCommandedValue(initVal);
+   element.actual      = -1;
+   element.dirtyFlagRt = true;
+   element.setCommandedValue(initVal);
 }
 
 inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
@@ -202,11 +208,16 @@ inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
           element.lfo.reset();
           const auto& descr =
               m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+          if (descr.role &&
+              descr.role.value() ==
+                  description::sound::Parameter::Role::ComponentSelector &&
+              element.actual != -1)
+             return;
           const float initVal =
               m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx);
-          if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE !=
-              initVal)
-             element.setCommandedValue(initVal);
+          element.actual      = -1;
+          element.dirtyFlagRt = true;
+          element.setCommandedValue(initVal);
        },
        voiceIdx);
 
@@ -219,11 +230,16 @@ inline void ParameterStorage::resetToInitialValues() noexcept
       for (auto& e : element.modifiers) { e.reset(); }
       element.lfo.reset();
       const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
+      if (descr.role &&
+          descr.role.value() ==
+              description::sound::Parameter::Role::ComponentSelector &&
+          element.actual != -1)
+         return;
       const float initVal =
           m_rSoundSection.getInitialValueFor(voiceId, paramIdx);
-      if (base::musicDevice::description::sound::IGNORE_INITIAL_VALUE !=
-          initVal)
-         element.setCommandedValue(initVal);
+      element.actual      = -1;
+      element.dirtyFlagRt = true;
+      element.setCommandedValue(initVal);
    });
    forEachElementContainer(
        [](EngineData& engineData) { engineData.actualPreset.reset(); });
@@ -360,9 +376,11 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    return std::nullopt;
 }
 
-inline std::optional<float> ParameterStorage::Element::updateActualValue() noexcept
+inline std::optional<float>
+ParameterStorage::Element::updateActualValue() noexcept
 {
-   if (!enabled || (!dirtyFlagRt && !lfo.enabled()))   // performance improving shortcut
+   if (!enabled ||
+       (!dirtyFlagRt && !lfo.enabled()))   // performance improving shortcut
    {
       return std::nullopt;
    }

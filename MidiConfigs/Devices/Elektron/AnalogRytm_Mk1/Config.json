@@ -609,6 +609,7 @@
             "name": "Synth Trig",
             "type": "list",
             "component": "Trig Parameters",
+            "defaultValue": 1,
             "source": {
               "midi": {
                 "id": {
@@ -639,6 +640,7 @@
             "name": "Sample Trig",
             "type": "list",
             "component": "Trig Parameters",
+            "defaultValue": 1,
             "source": {
               "midi": {
                 "id": {
@@ -669,6 +671,7 @@
             "name": "ENV Trig",
             "type": "list",
             "component": "Trig Parameters",
+            "defaultValue": 1,
             "source": {
               "midi": {
                 "id": {
@@ -699,6 +702,7 @@
             "name": "LFO Trig",
             "type": "list",
             "component": "Trig Parameters",
+            "defaultValue": 1,
             "source": {
               "midi": {
                 "id": {
@@ -728,6 +732,7 @@
           {
             "name": "Track Level",
             "type": "continous",
+            "role": "TrackVolume",
             "component": "Common",
             "source": {
               "midi": {
@@ -741,15 +746,17 @@
           },
           {
             "name": "Track Mute",
-            "type": "continous",
+            "type": "list",
             "component": "Common",
+            "role": "Mute",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiNRPN",
                   "idMsb": 1,
                   "idLsb": 101
-                }
+                },
+                "sourceRangesFrom":"onOff"
               }
             }
           },
@@ -757,6 +764,7 @@
             "name": "Track Solo",
             "type": "continous",
             "component": "Common",
+            "role": "Solo",
             "source": {
               "midi": {
                 "id": {
