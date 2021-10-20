@@ -5,6 +5,7 @@
   "soundSection": {
     "engineTemplates": {
       "commonEngine": {
+        "name": "commonEngine",
         "noteSettings": {
           "noteRange": {
             "from": 12,

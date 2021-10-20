@@ -183,6 +183,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Engine>()
 {
    return members(
       member("name", &base::musicDevice::description::sound::Engine::name),
+      member("from", &base::musicDevice::description::sound::Engine::from),
       member("noteSettings", &base::musicDevice::description::sound::Engine::noteSettings),
       member("components", &base::musicDevice::description::sound::Engine::components),
       member("parameters", &base::musicDevice::description::sound::Engine::parameters)
@@ -215,6 +216,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("voices", &base::musicDevice::description::sound::Section::voices),
       member("global", &base::musicDevice::description::sound::Section::global),
       member("engines", &base::musicDevice::description::sound::Section::engines),
+      member("engineTemplates", &base::musicDevice::description::sound::Section::engineTemplates),
       member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Section::parameterDumpRequest),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
