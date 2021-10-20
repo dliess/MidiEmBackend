@@ -76,6 +76,7 @@ void Description::checkValidity() const
 
 void Description::initCaches() noexcept
 {
+   handleInheritance();
    if (soundSection)
    {
       // For every engine
@@ -126,5 +127,64 @@ void Description::initCaches() noexcept
                 it->second.begin(), it->second.end());
          }
       });
+   }
+}
+
+#define VAR_ACCESS(variant, member) \
+   mpark::visit(                    \
+      util::overload{               \
+         [](auto&& v) -> std::string { return v.member; }}, (variant))
+
+void Description::handleInheritance() noexcept
+{
+   if (!soundSection)
+      return;
+
+   for (auto& engine : soundSection->engines)
+   {
+      if (!engine.from)
+         continue;
+      assert(soundSection->engineTemplates);
+      const auto baseEngineIter =
+          soundSection->engineTemplates->find(*engine.from);
+      assert(baseEngineIter != soundSection->engineTemplates->end());
+      sound::Engine destEngine = baseEngineIter->second;
+      destEngine.name          = engine.name;
+      if (engine.noteSettings)
+      {
+         destEngine.noteSettings = engine.noteSettings;
+      }
+      if (engine.components)
+      {
+         for (const auto& childComponent : *engine.components)
+         {
+            if (destEngine.components)
+            {
+               auto it = std::find_if(
+                   destEngine.components->begin(), destEngine.components->end(),
+                   [childComponent](const sound::ComponentVar& c) {
+                      const std::string name1 = VAR_ACCESS(c, name);
+                      /*const std::string name1 = mpark::visit(
+                          util::overload{
+                              [](auto&& v) -> std::string { return v.name; }},
+                          c);*/
+                      const std::string name2 = mpark::visit(
+                          util::overload{
+                              [](auto&& v) -> std::string { return v.name; }},
+                          childComponent);
+                      return name1 == name2;
+                   });
+               if (it != std::end(*destEngine.components))
+               {
+                  *it = childComponent;
+               }
+               else
+               {
+                  destEngine.components->push_back(childComponent);
+               }
+            }
+            //TODO: params
+         }
+      }
    }
 }

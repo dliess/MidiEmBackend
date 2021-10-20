@@ -280,6 +280,7 @@ struct Parameter
 
 struct EngineBase
 {
+   std::optional<std::string> from;
    std::optional<std::vector<ComponentVar>> components;
    std::vector<Parameter> parameters;
 };
@@ -319,6 +320,7 @@ struct Section
    std::vector<Voice> voices;
    std::optional<Global> global;
    std::vector<Engine> engines;
+   std::optional<std::unordered_map<std::string, Engine>> engineTemplates;
    std::optional<
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
@@ -354,6 +356,8 @@ struct Section
    static int linSearchByName(const std::vector<T>& vector,
                               const std::string& name) noexcept;
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
+//   static inline Component inherit(const Component& parent, const Component& child) noexcept;
+//   static inline Parameter inherit(const Parameter& parent, const Parameter& child) noexcept;
 
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>

@@ -899,7 +899,8 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
            [this,
             paramDescr](const base::musicDevice::description::sound::
                             ParameterSourceRangeBase::Role& role) -> float {
-              if(paramDescr.type != Parameter::Type::List) return 0;
+              if (paramDescr.type != Parameter::Type::List)
+                 return 0;
               const auto retVal = paramDescr.getListIndexByListRole(role);
               if (retVal)
               {
@@ -936,10 +937,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::TrackVolume: return 0.8;
       case Parameter::Role::TrigChance: return 0.99;
       case Parameter::Role::Swing: return 0.0;
-      case Parameter::Role::Mute:
-         return ParameterSourceRangeBase::Role::Off;
-      case Parameter::Role::Solo:
-         return ParameterSourceRangeBase::Role::Off;
+      case Parameter::Role::Mute: return ParameterSourceRangeBase::Role::Off;
+      case Parameter::Role::Solo: return ParameterSourceRangeBase::Role::Off;
       case Parameter::Role::KeyPrioMode: return 0.0;
       case Parameter::Role::Pitch: return 0.5;
       case Parameter::Role::PitchFinetune: return 0.5;
@@ -1103,4 +1102,20 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    return 0;
 }
 
+/*
+inline base::musicDevice::description::sound::Component
+base::musicDevice::description::sound::inherit(const Component& parent,
+                                               const Component& child) noexcept
+{
+   Component res = parent;
+   return res;
+}
+
+inline base::musicDevice::description::sound::Parameter
+base::musicDevice::description::sound::inherit(const Parameter& parent,
+                                               const Parameter& child) noexcept
+{
+   return parent;
+}
+*/
 #endif
