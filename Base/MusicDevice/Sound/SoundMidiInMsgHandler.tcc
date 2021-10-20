@@ -35,13 +35,13 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       /*
       LOG_F(INFO, "SOUND --- {} Received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
-         */
+      */
       const std::optional<int> voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
       if(!voiceIdx)
       {
          /*
          LOG_F(INFO, "SOUND --- {} Strange message received {}",
-         m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          */
          return;
       }
@@ -54,7 +54,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       auto iter = map.find(midiId);
       if (map.end() == iter)
       {
-         /*
+        /* 
          LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
                m_pMidiInIf->medium().getDeviceName(),
                meta::serialize(midiId).dump());

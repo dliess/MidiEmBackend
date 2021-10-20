@@ -2711,82 +2711,1230 @@
                   {
                     "name": "BassDrum-Hard",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 0,
+                      "to": 0
                     }
                   },
                   {
                     "name": "BassDrum-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 128,
+                      "to": 128
                     }
                   },
                   {
                     "name": "BassDrum-FM",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1664,
+                      "to": 1664
                     }
                   },
                   {
                     "name": "BassDrum-Plastic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2688,
+                      "to": 2688
                     }
                   },
                   {
                     "name": "BassDrum-Sharp",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2816,
+                      "to": 2816
                     }
                   },
                   {
                     "name": "BassDrum-Silky",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 3328,
+                      "to": 3328
                     }
                   },
                   {
                     "name": "SnareDrum",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 384,
+                      "to": 384
                     }
                   },
                   {
                     "name": "SnareDrum-FM",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1792,
+                      "to": 1792
                     }
                   },
                   {
                     "name": "SnareDrum-Natural",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2944,
+                      "to": 2944
                     }
                   },
                   {
                     "name": "Dual-VCO",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 3584,
+                      "to": 3584
                     }
                   }
                 ]
               }
             }
+          },
+          {
+            "name": "Tune",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Snap Amount",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Waveform",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold Time",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Tick Level",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "BassDrum-Hard",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Tune",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Depth",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Waveform",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Hold Time",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Transient",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "BassDrum-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+
+          {
+            "name": "Tune",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "FM Decay Time",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "FM Tune",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "FM Sweep Time",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "FM Amount",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "BassDrum-FM",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Tune",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Depth",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "VCO Click",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Depth",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "BassDrum-Plastic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "1",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "2",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "3",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "4",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "5",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "6",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "BassDrum-Sharp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+          {
+            "name": "1",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "2",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "3",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "4",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "5",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "6",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "BassDrum-Silky",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+
+          {
+            "name": "1",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "2",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "3",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "4",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "5",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "6",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "SnareDrum",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "1",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "2",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "3",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "4",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "5",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "6",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "SnareDrum-FM",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "1",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "2",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "3",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "4",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "5",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "6",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "7",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "8",
+            "type": "continous",
+            "component": "SnareDrum-Natural",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc1 Tune",
+            "type": "continous-bipolar",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc2 Detune",
+            "type": "continous-bipolar",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc1 Decay",
+            "type": "continous",
+            "component": "Dual-VCO",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc2 Decay",
+            "type": "continous",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Balance",
+            "type": "continous",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 19
+                }
+              }
+            }
+          },
+          {
+            "name": "Osc Config",
+            "type": "continous",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Bend",
+            "type": "continous-bipolar",
+            "component": "Dual-VCO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
           }
+
+
+
+
+
+
+
+
+
         ]
       },
       {
         "name": "RS-CP",
-        "from": "commonEngine",
+        "from": "BD-SD",
         "components": [
           {
             ".type": "OneOfComponents",
@@ -2797,36 +3945,6 @@
               "name": "Machine Type"
             },
             "oneOfComponents": [
-              {
-                "name": "BassDrum-Hard"
-              },
-              {
-                "name": "BassDrum-Classic"
-              },
-              {
-                "name": "BassDrum-FM"
-              },
-              {
-                "name": "BassDrum-Plastic"
-              },
-              {
-                "name": "BassDrum-Sharp"
-              },
-              {
-                "name": "BassDrum-Silky"
-              },
-              {
-                "name": "SnareDrum"
-              },
-              {
-                "name": "SnareDrum-FM"
-              },
-              {
-                "name": "SnareDrum-Natural"
-              },
-              {
-                "name": "Dual-VCO"
-              },
               {
                 "name": "Rimshot-Hard"
               },
@@ -2854,94 +3972,24 @@
                 },
                 "sourceRanges": [
                   {
-                    "name": "BassDrum-Hard",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "BassDrum-Classic",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "BassDrum-FM",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "BassDrum-Plastic",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "BassDrum-Sharp",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "BassDrum-Silky",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "SnareDrum",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "SnareDrum-FM",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "SnareDrum-Natural",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
-                    "name": "Dual-VCO",
-                    "range": {
-                      "from": 3456,
-                      "to": 3456
-                    }
-                  },
-                  {
                     "name": "Rimshot-Hard",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 512,
+                      "to": 512
                     }
                   },
                   {
                     "name": "Rimshot-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 640,
+                      "to": 640
                     }
                   },
                   {
                     "name": "HandClap",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 768,
+                      "to": 768
                     }
                   }
                 ]
@@ -2986,8 +4034,8 @@
                   {
                     "name": "BassTom-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 896,
+                      "to": 896
                     }
                   }
                 ]
@@ -3032,8 +4080,8 @@
                   {
                     "name": "Tom-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1024,
+                      "to": 1024
                     }
                   }
                 ]
@@ -3090,36 +4138,36 @@
                   {
                     "name": "HiHat-Basic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 3072,
+                      "to": 3072
                     }
                   },
                   {
                     "name": "ClosedHiHat-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1152,
+                      "to": 1152
                     }
                   },
                   {
                     "name": "ClosedHiHat-Metallic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2176,
+                      "to": 2176
                     }
                   },
                   {
                     "name": "OpenHiHat-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1280,
+                      "to": 1280
                     }
                   },
                   {
                     "name": "OpenHiHat-Metallic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2304,
+                      "to": 2304
                     }
                   }
                 ]
@@ -3176,36 +4224,36 @@
                   {
                     "name": "Cymbal-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1408,
+                      "to": 1408
                     }
                   },
                   {
                     "name": "Cymbal-Metallic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2432,
+                      "to": 2432
                     }
                   },
                   {
                     "name": "Cymbal-Ride",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 3200,
+                      "to": 3200
                     }
                   },
                   {
                     "name": "Cowbell-Classic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 1536,
+                      "to": 1536
                     }
                   },
                   {
                     "name": "Cowbell-Metallic",
                     "range": {
-                      "from": 3456,
-                      "to": 3456
+                      "from": 2560,
+                      "to": 2560
                     }
                   }
                 ]

@@ -1206,6 +1206,7 @@ base::musicDevice::description::sound::Section::inherit(
    tmpParameters.insert(tmpParameters.end(), ret.parameters.begin(),
                         ret.parameters.end());
    ret.parameters = tmpParameters;
+   ret.from.reset();
    return ret;
 }
 
@@ -1252,8 +1253,10 @@ base::musicDevice::description::sound::paramInherit(
       if (parent.type == Parameter::Type::List &&
           ret.type == Parameter::Type::List)
       {
-         assert(ret.source.midi->sourceRanges);
-         assert(parent.source.midi->sourceRanges);
+         assert(ret.source.midi->sourceRanges || ret.source.midi->sourceRangesFrom);
+         assert(parent.source.midi->sourceRanges || parent.source.midi->sourceRangesFrom);
+         if(parent.source.midi->sourceRangesFrom && !ret.source.midi->sourceRangesFrom)
+            ret.source.midi->sourceRangesFrom = parent.source.midi->sourceRangesFrom;
          const auto tmp                = *ret.source.midi->sourceRanges;
          ret.source.midi->sourceRanges = parent.source.midi->sourceRanges;
          ret.source.midi->sourceRanges->insert(
