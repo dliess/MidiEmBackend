@@ -341,28 +341,40 @@ struct Section
    inline const Parameter& parameterDescr(int voiceId,
                                           int parameterId) const noexcept;
    inline const EngineBase* engineBase(int voiceId) const noexcept;
+   inline Engine* findParentEngineByName(const std::string& name) noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) const noexcept;
-   template <typename T> void forEachParameterDescr(int engineIdx, T&& cb) noexcept;
-   template <typename T> void forEachParameterDescr(int engineIdx, T&& cb) const noexcept;
+   template <typename T>
+   void forEachParameterDescr(int engineIdx, T&& cb) noexcept;
+   template <typename T>
+   void forEachParameterDescr(int engineIdx, T&& cb) const noexcept;
    template <typename T> void forEachComponentDescr(T&& cb) noexcept;
    template <typename T> void forEachComponentDescr(T&& cb) const noexcept;
-   template <typename T> void forEachComponentDescr(int engineIdx, T&& cb) noexcept;
-   template <typename T> void forEachComponentDescr(int engineIdx, T&& cb) const noexcept;
+   template <typename T>
+   void forEachComponentDescr(int engineIdx, T&& cb) noexcept;
+   template <typename T>
+   void forEachComponentDescr(int engineIdx, T&& cb) const noexcept;
    inline bool hasParameters() const noexcept;
    inline int voice2EngineIdx(int voiceIdx) const noexcept;
    template <typename T>
    static int linSearchByName(const std::vector<T>& vector,
                               const std::string& name) noexcept;
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
-//   static inline Component inherit(const Component& parent, const Component& child) noexcept;
-//   static inline Parameter inherit(const Parameter& parent, const Parameter& child) noexcept;
+
+   inline void handleEngineInheritance() noexcept;
 
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
+   inline Engine inherit(const Engine& parent,
+                        const Engine& child) noexcept;
 };
+
+inline ComponentVar compInherit(const ComponentVar& parent,
+                            const ComponentVar& child) noexcept;
+inline Parameter paramInherit(const Parameter& parent,
+                         const Parameter& child) noexcept;
 
 }   // namespace base::musicDevice::description::sound
 

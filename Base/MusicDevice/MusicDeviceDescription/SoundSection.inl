@@ -1102,20 +1102,166 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    return 0;
 }
 
-/*
-inline base::musicDevice::description::sound::Component
-base::musicDevice::description::sound::inherit(const Component& parent,
-                                               const Component& child) noexcept
+inline base::musicDevice::description::sound::Engine*
+base::musicDevice::description::sound::Section::findParentEngineByName(
+    const std::string& name) noexcept
 {
-   Component res = parent;
-   return res;
+   if (engineTemplates)
+   {
+      auto it = engineTemplates->find(name);
+      if (it != engineTemplates->end())
+      {
+         return &(it->second);
+      }
+   }
+   auto it =
+       std::find_if(engines.begin(), engines.end(),
+                    [&name](Engine& engine) { return engine.name == name; });
+   if (it != engines.end())
+   {
+      return &(*it);
+   }
+   return nullptr;
+}
+
+inline void base::musicDevice::description::sound::Section::
+    handleEngineInheritance() noexcept
+{
+   // we dont do it for global engines
+   for (auto& engine : engines)
+   {
+      if (engine.from)
+      {
+         Engine* parentEngine = findParentEngineByName(*engine.from);
+         assert(parentEngine);
+         engine = inherit(*parentEngine, engine);
+      }
+   }
+}
+
+inline base::musicDevice::description::sound::Engine
+base::musicDevice::description::sound::Section::inherit(
+    const Engine& _parent, const Engine& child) noexcept
+{
+   Engine parent;
+   if (_parent.from)
+   {
+      Engine* parentsParentEngine = findParentEngineByName(*_parent.from);
+      assert(parentsParentEngine);
+      parent = inherit(*parentsParentEngine, _parent);
+   }
+   else
+   {
+      parent = _parent;
+   }
+   Engine ret = child;
+   if (!ret.noteSettings)
+      ret.noteSettings = parent.noteSettings;
+   if (!ret.components)
+   {
+      ret.components = parent.components;
+   }
+   else if (parent.components)
+   {
+      std::vector<ComponentVar> tmpComponents;
+      for (auto& parentComponent : *parent.components)
+      {
+         auto it = std::find_if(ret.components->begin(), ret.components->end(),
+                                [&parentComponent](const ComponentVar& c) {
+                                   return VARIANT_GET(c, name) ==
+                                          VARIANT_GET(parentComponent, name);
+                                });
+         if (it != std::end(*ret.components))
+         {
+            tmpComponents.push_back(compInherit(parentComponent, *it));
+            ret.components->erase(it);
+         }
+         else
+         {
+            tmpComponents.push_back(parentComponent);
+         }
+      }
+      tmpComponents.insert(tmpComponents.end(), ret.components->begin(),
+                           ret.components->end());
+      ret.components = tmpComponents;
+   }
+
+   std::vector<Parameter> tmpParameters;
+   for (auto& parentParameter : parent.parameters)
+   {
+      auto it = std::find_if(ret.parameters.begin(), ret.parameters.end(),
+                             [&parentParameter](const Parameter& p) {
+                                return p.name == parentParameter.name;
+                             });
+      if (it != std::end(ret.parameters))
+      {
+         tmpParameters.push_back(paramInherit(parentParameter, *it));
+         ret.parameters.erase(it);
+      }
+      else
+      {
+         tmpParameters.push_back(parentParameter);
+      }
+   }
+   tmpParameters.insert(tmpParameters.end(), ret.parameters.begin(),
+                        ret.parameters.end());
+   ret.parameters = tmpParameters;
+   return ret;
+}
+
+inline base::musicDevice::description::sound::ComponentVar
+base::musicDevice::description::sound::compInherit(
+    const ComponentVar& parent, const ComponentVar& child) noexcept
+{
+   ComponentVar ret = child;
+   mpark::visit(util::overload{
+                    [](const Component&) {},
+                    [&parent](OneOfComponents& ret) {
+                       mpark::visit(util::overload{
+                                        [](const Component&) {},
+                                        [&ret](const OneOfComponents& parent) {
+                                           if (parent.role && !ret.role)
+                                              ret.role = parent.role;
+                                           const auto tmp = ret.oneOfComponents;
+                                           ret.oneOfComponents =
+                                               parent.oneOfComponents;
+                                           ret.oneOfComponents.insert(
+                                               ret.oneOfComponents.end(),
+                                               tmp.begin(), tmp.end());
+                                        },
+                                    },
+                                    parent);
+                    }},
+                ret);
+   return ret;
 }
 
 inline base::musicDevice::description::sound::Parameter
-base::musicDevice::description::sound::inherit(const Parameter& parent,
-                                               const Parameter& child) noexcept
+base::musicDevice::description::sound::paramInherit(
+    const Parameter& parent, const Parameter& child) noexcept
 {
-   return parent;
+   Parameter ret = child;
+   if (parent.component && !ret.component)
+      ret.component = parent.component;
+   if (parent.role && !ret.role)
+      ret.role = parent.role;
+   if (parent.defaultValue && !ret.defaultValue)
+      ret.defaultValue = parent.defaultValue;
+   if (parent.source.midi)
+   {
+      if (parent.type == Parameter::Type::List &&
+          ret.type == Parameter::Type::List)
+      {
+         assert(ret.source.midi->sourceRanges);
+         assert(parent.source.midi->sourceRanges);
+         const auto tmp                = *ret.source.midi->sourceRanges;
+         ret.source.midi->sourceRanges = parent.source.midi->sourceRanges;
+         ret.source.midi->sourceRanges->insert(
+             ret.source.midi->sourceRanges->end(), tmp.begin(), tmp.end());
+      }
+   }
+
+   return ret;
 }
-*/
+
 #endif
