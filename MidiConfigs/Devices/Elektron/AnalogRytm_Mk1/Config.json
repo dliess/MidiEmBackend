@@ -503,7 +503,9 @@
             "name": "Performance"
           },
           {
-            "role": "Synth",
+            ".type": "OneOfComponents",
+            "name": "Synth",
+            "role": "Oscillator",
             "selectorParam": {
               "component": "Common",
               "name": "Machine Type"

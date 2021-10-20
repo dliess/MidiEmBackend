@@ -97,6 +97,7 @@ struct SelectorParameter
 
 struct OneOfComponents
 {
+   std::string name;
    SelectorParameter selectorParam;
    std::vector<Component> oneOfComponents;
    std::optional<Component::Role> role;

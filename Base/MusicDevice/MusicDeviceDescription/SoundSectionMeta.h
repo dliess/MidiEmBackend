@@ -97,10 +97,23 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::OneOfComponents>()
 {
    return members(
+      member("name", &base::musicDevice::description::sound::OneOfComponents::name),
       member("selectorParam", &base::musicDevice::description::sound::OneOfComponents::selectorParam),
       member("oneOfComponents", &base::musicDevice::description::sound::OneOfComponents::oneOfComponents),
       member("role", &base::musicDevice::description::sound::OneOfComponents::role)
    );
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::sound::Component>(int i) noexcept
+{
+   return "Component";
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::sound::OneOfComponents>(int i) noexcept
+{
+   return "OneOfComponents";
 }
 
 template <>
