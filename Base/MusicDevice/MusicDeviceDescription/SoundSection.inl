@@ -253,7 +253,10 @@ base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
       case Role::FilterBandReject: return "FilterBandReject";
       case Role::FilterTwoPole: return "FilterTwoPole";
       case Role::FilterFourPole: return "FilterFourPole";
+      case Role::WaveFormSine: return "WaveFormSine";
+      case Role::WaveFormAsymSine: return "WaveFormAsymSine";
       case Role::WaveFormSawtooth: return "WaveFormSawtooth";
+      case Role::WaveFormSinetooth: return "WaveFormSinetooth";
       case Role::WaveFormTriangle: return "WaveFormTriangle";
       case Role::WaveFormSquare: return "WaveFormSquare";
       case Role::WaveFormPulsewidth: return "WaveFormPulsewidth";
@@ -289,8 +292,14 @@ base::musicDevice::description::sound::ParameterSourceRangeBase::roleFromString(
       return Role::FilterTwoPole;
    else if (roleStr == "FilterFourPole")
       return Role::FilterFourPole;
+   else if (roleStr == "WaveFormSine")
+      return Role::WaveFormSine;
+   else if (roleStr == "WaveFormAsymSine")
+      return Role::WaveFormAsymSine;
    else if (roleStr == "WaveFormSawtooth")
       return Role::WaveFormSawtooth;
+   else if (roleStr == "WaveFormSinetooth")
+      return Role::WaveFormSinetooth;
    else if (roleStr == "WaveFormTriangle")
       return Role::WaveFormTriangle;
    else if (roleStr == "WaveFormSquare")
@@ -334,6 +343,7 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::KeyPrioMode: return "KeyPrioMode";
       case Role::Pitch: return "Pitch";
       case Role::PitchFinetune: return "PitchFinetune";
+      case Role::Detune: return "Detune";
       case Role::OSCWaveform: return "OSCWaveform";
       case Role::OSCShape: return "OSCShape";
       case Role::OSCGlide: return "OSCGlide";
@@ -343,8 +353,11 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::OSCMix: return "OSCMix";
       case Role::OSCNoise: return "OSCNoise";
       case Role::SubOSCLevel: return "SubOSCLevel";
+      case Role::NoiseLevel: return "NoiseLevel";
+      case Role::NoiseDecay: return "NoiseDecay";
       case Role::UnisonMode: return "UnisonMode";
       case Role::UnisonOnOff: return "UnisonOnOff";
+      case Role::FMAmount: return "FMAmount";
       case Role::InitialVolume: return "InitialVolume";
       case Role::Volume: return "Volume";
       case Role::Pan: return "Pan";
@@ -385,6 +398,9 @@ base::musicDevice::description::sound::Parameter::role2String(Role role)
       case Role::Decay: return "Decay";
       case Role::Sustain: return "Sustain";
       case Role::Release: return "Release";
+      case Role::Hold: return "Hold";
+      case Role::SweepTime: return "SweepTime";
+      case Role::SweepDepth: return "SweepDepth";
       case Role::LFOAmount: return "LFOAmount";
       case Role::LFOSpeed: return "LFOSpeed";
       case Role::LFOMultiplier: return "LFOMultiplier";
@@ -434,6 +450,8 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::Pitch;
    else if (roleStr == "PitchFinetune")
       return Role::PitchFinetune;
+   else if (roleStr == "Detune")
+      return Role::Detune;
    else if (roleStr == "OSCWaveform")
       return Role::OSCWaveform;
    else if (roleStr == "OSCShape")
@@ -452,10 +470,16 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::OSCNoise;
    else if (roleStr == "SubOSCLevel")
       return Role::SubOSCLevel;
+   else if (roleStr == "NoiseLevel")
+      return Role::NoiseLevel;
+   else if (roleStr == "NoiseDecay")
+      return Role::NoiseDecay;
    else if (roleStr == "UnisonMode")
       return Role::UnisonMode;
    else if (roleStr == "UnisonOnOff")
       return Role::UnisonOnOff;
+   else if (roleStr == "FMAmount")
+      return Role::FMAmount;
    else if (roleStr == "InitialVolume")
       return Role::InitialVolume;
    else if (roleStr == "Volume")
@@ -536,6 +560,12 @@ base::musicDevice::description::sound::Parameter::roleFromString(
       return Role::Sustain;
    else if (roleStr == "Release")
       return Role::Release;
+   else if (roleStr == "Hold")
+      return Role::Hold;
+   else if (roleStr == "SweepTime")
+      return Role::SweepTime;
+   else if (roleStr == "SweepDepth")
+      return Role::SweepDepth;
    else if (roleStr == "LFOAmount")
       return Role::LFOAmount;
    else if (roleStr == "LFOSpeed")
@@ -942,17 +972,25 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::KeyPrioMode: return 0.0;
       case Parameter::Role::Pitch: return 0.5;
       case Parameter::Role::PitchFinetune: return 0.5;
+      case Parameter::Role::Detune: return 0.5;
       case Parameter::Role::OSCWaveform: return 1;
+      case Parameter::Role::OSCShape: return 1;
       case Parameter::Role::OSCGlide: return 0.0;
+      case Parameter::Role::OSCGlideOnOff: return ParameterSourceRangeBase::Role::Off;
+      case Parameter::Role::OSCGlideType: return 1;
       case Parameter::Role::OSCKeyboardTracking:
          return ParameterSourceRangeBase::Role::On;
       case Parameter::Role::OSCSync: return 0.0;
       case Parameter::Role::OSCSlop: return 0.0;
       case Parameter::Role::OSCMix: return 0.0;
       case Parameter::Role::OSCNoise: return 0.0;
+      case Parameter::Role::OSCNoteSyncOnOff: return ParameterSourceRangeBase::Role::On;
       case Parameter::Role::SubOSCLevel: return 0.0;
+      case Parameter::Role::NoiseLevel: return 0.0;
+      case Parameter::Role::NoiseDecay: return 0.5;
       case Parameter::Role::UnisonMode: return 0.0;
       case Parameter::Role::UnisonOnOff: return 0.0;
+      case Parameter::Role::FMAmount: return 0.0;
       case Parameter::Role::InitialVolume: return 0.0;
       case Parameter::Role::Volume: return 0.4;
       case Parameter::Role::Pan: return 0.5;
@@ -993,6 +1031,9 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::Decay: return 0.0;
       case Parameter::Role::Sustain: return 0.5;
       case Parameter::Role::Release: return 0.0;
+      case Parameter::Role::Hold: return 0.5;
+      case Parameter::Role::SweepTime: return 0.5;
+      case Parameter::Role::SweepDepth: return 0.0;
       case Parameter::Role::LFOAmount: return 0.0;
       case Parameter::Role::LFOSpeed: return 0.0;
       case Parameter::Role::LFOMultiplier: return 0.0;

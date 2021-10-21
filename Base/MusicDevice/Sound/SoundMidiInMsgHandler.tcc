@@ -32,10 +32,10 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
-      /*
+      
       LOG_F(INFO, "SOUND --- {} Received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
-      */
+      
       const std::optional<int> voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
       if(!voiceIdx)
       {
