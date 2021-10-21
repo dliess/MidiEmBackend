@@ -3310,15 +3310,15 @@
                   {
                     "name": "Lin Freq Mod",
                     "range": {
-                      "from": "0", 
-                      "to": "0"
+                      "from": 0, 
+                      "to": 0
                     }
                   },
                   {
                     "name": "Ring Mod",
                     "range": {
-                      "from": "128", 
-                      "to": "128"
+                      "from": 128, 
+                      "to": 128
                     }
                   }
                 ]
