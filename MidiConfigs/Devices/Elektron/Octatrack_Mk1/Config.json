@@ -69,19 +69,275 @@
             "name": "Track/Playback"
           },
           {
-            "name": "Amp"
+            "name": "Amp",
+            "role": "Amp"
           },
           {
-            "name": "LFO"
+            "name": "LFO",
+            "role": "LFO"
           },
           {
-            "name": "Effect 1"
+            ".type": "OneOfComponents",
+            "name": "Effect 1",
+            "role": "Effect",
+            "selectorParam": {
+              "component": "Effect 1",
+              "name": "Effect Type"
+            },
+            "oneOfComponents": [
+              {
+                "name": "None",
+                "role": "None"
+              },
+              {
+                "name": "Filter1",
+                "role": "LPHPFilter"
+              },
+              {
+                "name": "Equalizer1",
+                "role": "Equalizer"
+              },
+              {
+                "name": "DJ Equalizer1",
+                "role": "Equalizer"
+              },
+              {
+                "name": "Phaser1",
+                "role": "Phaser"
+              },
+              {
+                "name": "Flanger1",
+                "role": "Flanger"
+              },
+              {
+                "name": "Chorus1",
+                "role": "Chorus"
+              },
+              {
+                "name": "Spatializer1",
+                "role": "Spatializer"
+              },
+              {
+                "name": "Comb Filter1",
+                "role": "LPFilter"
+              },
+              {
+                "name": "Compressor1",
+                "role": "Compressor"
+              },
+              {
+                "name": "Lo-Fi1",
+                "role": "Distortion"
+              }
+            ]
           },
           {
-            "name": "Effect 2"
+            ".type": "OneOfComponents",
+            "name": "Effect 2",
+            "role": "Effect",
+            "selectorParam": {
+              "component": "Effect 2",
+              "name": "Effect Type"
+            },
+            "oneOfComponents": [
+              {
+                "name": "None",
+                "role": "None"
+              },
+              {
+                "name": "Filter2",
+                "role": "LPHPFilter"
+              },
+              {
+                "name": "Equalizer2",
+                "role": "Equalizer"
+              },
+              {
+                "name": "DJ Equalizer2",
+                "role": "Equalizer"
+              },
+              {
+                "name": "Phaser2",
+                "role": "Phaser"
+              },
+              {
+                "name": "Flanger2",
+                "role": "Flanger"
+              },
+              {
+                "name": "Chorus2",
+                "role": "Chorus"
+              },
+              {
+                "name": "Spatializer2",
+                "role": "Spatializer"
+              },
+              {
+                "name": "Comb Filter2",
+                "role": "LPFilter"
+              },
+              {
+                "name": "Compressor2",
+                "role": "Compressor"
+              },
+              {
+                "name": "Lo-Fi2",
+                "role": "Distortion"
+              },
+              {
+                "name": "Freeze Delay",
+                "role": "Delay"
+              },
+              {
+                "name": "Plate Reverb",
+                "role": "Reverb"
+              },
+              {
+                "name": "Spring Reverb",
+                "role": "Reverb"
+              },
+              {
+                "name": "Dark Reverb",
+                "role": "Reverb"
+              }
+            ]
           }
         ],
         "parameters": [
+          {
+            "name": "Effect Type",
+            "type": "list",
+            "component": "Effect 1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                },
+                "sourceRanges": [
+                  {
+                    "name": "None",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Filter1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Equalizer1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "DJ Equalizer1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Phaser1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Flanger1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Chorus1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Spatializer1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Comb Filter1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Compressor1",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Lo-Fi1",
+                    "range": {"from": 0,  "to": 0 }
+                  }    
+                ]
+              }
+            }
+          },
+          {
+            "name": "Effect Type",
+            "type": "list",
+            "component": "Effect 2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 0
+                },
+                "sourceRanges": [
+                  {
+                    "name": "None",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Filter2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Equalizer2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "DJ Equalizer2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Phaser2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Flanger2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Chorus2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Spatializer2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Comb Filter2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Compressor2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Lo-Fi2",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Freeze Delay",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Plate Reverb",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Spring Reverb",
+                    "range": {"from": 0,  "to": 0 }
+                  },
+                  {
+                    "name": "Dark Reverb",
+                    "range": {"from": 0,  "to": 0 }
+                  }    
+                ]
+              }
+            }
+          },
           {
             "name": "Track Level",
             "type": "continous",
@@ -330,9 +586,9 @@
             }
           },
           {
-            "name": "Param #1_1",
+            "name": "Base",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -343,9 +599,9 @@
             }
           },
           {
-            "name": "Param #2_1",
+            "name": "Width",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -356,9 +612,9 @@
             }
           },
           {
-            "name": "Param #3_1",
+            "name": "Resonance",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -369,9 +625,9 @@
             }
           },
           {
-            "name": "Param #4_1",
+            "name": "Env Amount",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -382,9 +638,9 @@
             }
           },
           {
-            "name": "Param #5_1",
+            "name": "Attack",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -395,9 +651,9 @@
             }
           },
           {
-            "name": "Param #6_1",
+            "name": "Decay",
             "type": "continous",
-            "component": "Effect 1",
+            "component": "Filter1",
             "source": {
               "midi": {
                 "id": {
@@ -410,7 +666,7 @@
           {
             "name": "Param #1_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
@@ -423,7 +679,7 @@
           {
             "name": "Param #2_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
@@ -436,7 +692,7 @@
           {
             "name": "Param #3_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
@@ -449,7 +705,7 @@
           {
             "name": "Param #4_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
@@ -462,7 +718,7 @@
           {
             "name": "Param #5_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
@@ -475,7 +731,7 @@
           {
             "name": "Param #6_2",
             "type": "continous",
-            "component": "Effect 2",
+            "component": "Filter2",
             "source": {
               "midi": {
                 "id": {
