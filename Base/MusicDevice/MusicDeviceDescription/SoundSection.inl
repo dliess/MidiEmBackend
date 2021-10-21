@@ -976,7 +976,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::OSCWaveform: return 1;
       case Parameter::Role::OSCShape: return 1;
       case Parameter::Role::OSCGlide: return 0.0;
-      case Parameter::Role::OSCGlideOnOff: return ParameterSourceRangeBase::Role::Off;
+      case Parameter::Role::OSCGlideOnOff:
+         return ParameterSourceRangeBase::Role::Off;
       case Parameter::Role::OSCGlideType: return 1;
       case Parameter::Role::OSCKeyboardTracking:
          return ParameterSourceRangeBase::Role::On;
@@ -984,7 +985,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::OSCSlop: return 0.0;
       case Parameter::Role::OSCMix: return 0.0;
       case Parameter::Role::OSCNoise: return 0.0;
-      case Parameter::Role::OSCNoteSyncOnOff: return ParameterSourceRangeBase::Role::On;
+      case Parameter::Role::OSCNoteSyncOnOff:
+         return ParameterSourceRangeBase::Role::On;
       case Parameter::Role::SubOSCLevel: return 0.0;
       case Parameter::Role::NoiseLevel: return 0.0;
       case Parameter::Role::NoiseDecay: return 0.5;
@@ -1028,8 +1030,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::EnvDelay: return 0.0;
       case Parameter::Role::EnvDestination: return 1;
       case Parameter::Role::Attack: return 0.0;
-      case Parameter::Role::Decay: return 0.0;
-      case Parameter::Role::Sustain: return 0.5;
+      case Parameter::Role::Decay: return 0.3;
+      case Parameter::Role::Sustain: return 0.99;
       case Parameter::Role::Release: return 0.0;
       case Parameter::Role::Hold: return 0.5;
       case Parameter::Role::SweepTime: return 0.5;
@@ -1143,6 +1145,31 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    return 0;
 }
 
+inline void base::musicDevice::description::sound::Section::
+    autoFillSourceRangesForLists() noexcept
+{
+   forEachParameterDescr([this](const ParameterId& paramId,
+                                Parameter& parameter) {
+      if (parameter.type == Parameter::Type::List && parameter.source.midi &&
+          parameter.source.midi->sourceValueRange &&
+          !parameter.source.midi->sourceRanges &&
+          !parameter.source.midi->sourceRangesFrom)
+      {
+         parameter.source.midi->sourceRanges.emplace();
+         for (int i = parameter.source.midi->sourceValueRange->from;
+              i <= parameter.source.midi->sourceValueRange->to; ++i)
+         {
+            ParameterSourceRangeMidi e;
+            e.name       = std::to_string(i);
+            e.range.from = i;
+            e.range.to   = i;
+            parameter.source.midi->sourceRanges->push_back(e);
+         }
+         parameter.source.midi->sourceValueRange = std::nullopt;
+      }
+   });
+}
+
 inline base::musicDevice::description::sound::Engine*
 base::musicDevice::description::sound::Section::findParentEngineByName(
     const std::string& name) noexcept
@@ -1232,7 +1259,8 @@ base::musicDevice::description::sound::Section::inherit(
    {
       auto it = std::find_if(ret.parameters.begin(), ret.parameters.end(),
                              [&parentParameter](const Parameter& p) {
-                                return p.name == parentParameter.name;
+                                return p.name == parentParameter.name && 
+                                       p.component == parentParameter.component;
                              });
       if (it != std::end(ret.parameters))
       {
@@ -1294,10 +1322,14 @@ base::musicDevice::description::sound::paramInherit(
       if (parent.type == Parameter::Type::List &&
           ret.type == Parameter::Type::List)
       {
-         assert(ret.source.midi->sourceRanges || ret.source.midi->sourceRangesFrom);
-         assert(parent.source.midi->sourceRanges || parent.source.midi->sourceRangesFrom);
-         if(parent.source.midi->sourceRangesFrom && !ret.source.midi->sourceRangesFrom)
-            ret.source.midi->sourceRangesFrom = parent.source.midi->sourceRangesFrom;
+         assert(ret.source.midi->sourceRanges ||
+                ret.source.midi->sourceRangesFrom);
+         assert(parent.source.midi->sourceRanges ||
+                parent.source.midi->sourceRangesFrom);
+         if (parent.source.midi->sourceRangesFrom &&
+             !ret.source.midi->sourceRangesFrom)
+            ret.source.midi->sourceRangesFrom =
+                parent.source.midi->sourceRangesFrom;
          const auto tmp                = *ret.source.midi->sourceRanges;
          ret.source.midi->sourceRanges = parent.source.midi->sourceRanges;
          ret.source.midi->sourceRanges->insert(

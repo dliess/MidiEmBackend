@@ -4121,6 +4121,7 @@
             "name": "Osc1 Tune",
             "type": "continous-bipolar",
             "component": "Dual-VCO",
+            "role": "Pitch",
             "source": {
               "midi": {
                 "id": {
@@ -4134,6 +4135,7 @@
             "name": "Osc2 Detune",
             "type": "continous-bipolar",
             "component": "Dual-VCO",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4147,7 +4149,7 @@
             "name": "Osc1 Decay",
             "type": "continous",
             "component": "Dual-VCO",
-            "role": "Decay",
+            "role": "OSC1Decay",
             "source": {
               "midi": {
                 "id": {
@@ -4161,6 +4163,7 @@
             "name": "Osc2 Decay",
             "type": "continous",
             "component": "Dual-VCO",
+            "role": "OSC2Decay",
             "source": {
               "midi": {
                 "id": {
@@ -4185,13 +4188,17 @@
           },
           {
             "name": "Osc Config",
-            "type": "continous",
+            "type": "list",
             "component": "Dual-VCO",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 21
+                },
+                "sourceValueRange": {
+                  "from": 0,
+                  "to": 79
                 }
               }
             }
@@ -4209,15 +4216,6 @@
               }
             }
           }
-
-
-
-
-
-
-
-
-
         ]
       },
       {

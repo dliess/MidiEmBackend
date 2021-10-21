@@ -197,6 +197,8 @@ struct Parameter
       OSCMix,
       OSCNoise,
       OSCNoteSyncOnOff,
+      OSC1Decay, // NEW
+      OSC2Decay,  // NEW
       SubOSCLevel,
       NoiseLevel,
       NoiseDecay,
@@ -373,6 +375,7 @@ struct Section
    inline float getInitialValueFor(int voiceId, int parameterId) const noexcept;
 
    inline void handleEngineInheritance() noexcept;
+   inline void autoFillSourceRangesForLists() noexcept;
 
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>

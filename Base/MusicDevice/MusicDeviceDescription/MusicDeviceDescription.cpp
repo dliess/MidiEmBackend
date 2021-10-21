@@ -127,5 +127,6 @@ void Description::initCaches() noexcept
                 it->second.begin(), it->second.end());
          }
       });
+      soundSection->autoFillSourceRangesForLists();
    }
 }
