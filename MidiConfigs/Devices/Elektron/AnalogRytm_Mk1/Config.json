@@ -4281,6 +4281,362 @@
                 ]
               }
             }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Rimshot-Hard",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Depth",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "role": "SweepDepth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Tick Level",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "role": "NoiseLevel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Symmetry",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "Rimshot-Hard",
+            "role": "SweepTime",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Rimshot-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune OSC1",
+            "type": "continous-bipolar",
+            "component": "Rimshot-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Rimshot-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC Balance",
+            "type": "continous-bipolar",
+            "component": "Rimshot-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune Osc2",
+            "type": "continous-bipolar",
+            "component": "Rimshot-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Symmetry",
+            "type": "continous-bipolar",
+            "component": "Rimshot-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "Rimshot-Classic",
+            "role": "NoiseLevel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Tick Level",
+            "type": "continous",
+            "component": "Rimshot-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "HandClap",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Tone",
+            "type": "continous",
+            "component": "HandClap",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Decay",
+            "type": "continous",
+            "component": "HandClap",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Number",
+            "type": "continous",
+            "component": "HandClap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Rate",
+            "type": "continous",
+            "component": "HandClap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "HandClap",
+            "role": "NoiseLevel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Random Claps",
+            "type": "continous",
+            "component": "HandClap",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Decay",
+            "type": "continous",
+            "component": "HandClap",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
           }
         ]
       },
@@ -4327,6 +4683,85 @@
                 ]
               }
             }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "BassTom-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "BassTom-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "BassTom-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "BassTom-Classic",
+            "role": "NoiseLevel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Snap Trans Len",
+            "type": "list",
+            "component": "BassTom-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                },
+                "sourceValueRange":{
+                  "from": 0,
+                  "to": 3
+                }
+              }
+            }
           }
         ]
       },
@@ -4371,6 +4806,126 @@
                     }
                   }
                 ]
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Tom-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Tom-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Tom-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Depth",
+            "type": "continous-bipolar",
+            "component": "Tom-Classic",
+            "role": "SweepDepth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Sweep Time",
+            "type": "continous",
+            "component": "Tom-Classic",
+            "role": "SweepTime",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Decay",
+            "type": "continous",
+            "component": "Tom-Classic",
+            "role": "NoiseDecay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Level",
+            "type": "continous",
+            "component": "Tom-Classic",
+            "role": "NoiseLevel",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise Tone",
+            "type": "continous-bipolar",
+            "component": "Tom-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
               }
             }
           }
@@ -4459,6 +5014,305 @@
                 ]
               }
             }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "HiHat-Basic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "HiHat-Basic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "HiHat-Basic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Tone",
+            "type": "continous-bipolar",
+            "component": "HiHat-Basic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Transient Decay",
+            "type": "continous-bipolar",
+            "component": "HiHat-Basic",
+            "role": "TransientDecay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "OSC Reset",
+            "type": "list",
+            "component": "HiHat-Basic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                },
+                "sourceRangesFrom": "onOff"
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "ClosedHiHat-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "ClosedHiHat-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "ClosedHiHat-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Color",
+            "type": "continous-bipolar",
+            "component": "ClosedHiHat-Classic",
+            "role": "NoiseColor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "ClosedHiHat-Metallic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "ClosedHiHat-Metallic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "ClosedHiHat-Metallic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "OpenHiHat-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "OpenHiHat-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "OpenHiHat-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Color",
+            "type": "continous-bipolar",
+            "component": "OpenHiHat-Classic",
+            "role": "NoiseColor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "OpenHiHat-Metallic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "OpenHiHat-Metallic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "OpenHiHat-Metallic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
           }
         ]
       },
@@ -4543,6 +5397,423 @@
                     }
                   }
                 ]
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Cymbal-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Cymbal-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Color",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Classic",
+            "role": "NoiseColor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Tone",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Classic",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Cymbal-Metallic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Metallic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Cymbal-Metallic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Tone",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Metallic",
+            "role": "NoiseColor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Transient Decay",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Metallic",
+            "role": "TransientDecay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Cymbal-Ride",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Tail Decay",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Hit Decay",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "role": "HitDecay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Type",
+            "type": "list",
+            "component": "Cymbal-Ride",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 4
+                },
+                "sourceRanges": [
+                  {
+                    "name": "A",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "B",
+                    "range": {
+                      "from": 128,
+                      "to": 128
+                    }
+                  },
+                  {
+                    "name": "C",
+                    "range": {
+                      "from": 256,
+                      "to": 256
+                    }
+                  },
+                  {
+                    "name": "D",
+                    "range": {
+                      "from": 384,
+                      "to": 384
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Component 1",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Component 1",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 6
+                }
+              }
+            }
+          },
+          {
+            "name": "Component 1",
+            "type": "continous",
+            "component": "Cymbal-Ride",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 7
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Cowbell-Classic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Cowbell-Classic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Cowbell-Classic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Detune OSC2",
+            "type": "continous",
+            "component": "Cowbell-Classic",
+            "role": "Detune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
+              }
+            }
+          },
+          {
+            "name": "Level",
+            "type": "continous",
+            "component": "Cowbell-Metallic",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 0
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Cowbell-Metallic",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Cowbell-Metallic",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 2
+                }
+              }
+            }
+          },
+          {
+            "name": "Detune OSC2",
+            "type": "continous",
+            "component": "Cowbell-Metallic",
+            "role": "Detune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiNRPN",
+                  "idMsb": 1,
+                  "idLsb": 3
+                }
               }
             }
           }

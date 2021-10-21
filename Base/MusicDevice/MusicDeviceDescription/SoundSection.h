@@ -199,9 +199,12 @@ struct Parameter
       OSCNoteSyncOnOff,
       OSC1Decay, // NEW
       OSC2Decay,  // NEW
+      TransientDecay, // NEW
+      HitDecay, // NEW
       SubOSCLevel,
       NoiseLevel,
       NoiseDecay,
+      NoiseColor, // NEW
       UnisonMode,
       UnisonOnOff,
       FMAmount,
