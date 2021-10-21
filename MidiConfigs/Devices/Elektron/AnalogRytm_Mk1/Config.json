@@ -2756,8 +2756,8 @@
                   {
                     "name": "SnareDrum-Hard",
                     "range": {
-                      "from": 0,
-                      "to": 0
+                      "from": 256,
+                      "to": 256
                     }
                   },
                   {
@@ -2792,8 +2792,6 @@
               }
             }
           },
-
-
           {
             "name": "Level",
             "type": "continous",
@@ -3085,9 +3083,6 @@
               }
             }
           },
-
-
-
           {
             "name": "Level",
             "type": "continous",
@@ -3488,7 +3483,7 @@
                   },
                   {
                     "name": "SineTooth",
-                    "role": "WaveFormSineTooth",
+                    "role": "WaveFormSinetooth",
                     "range":{
                       "from": 384,
                       "to": 384
@@ -3496,7 +3491,7 @@
                   },
                   {
                     "name": "SawTooth",
-                    "role": "WaveFormSawTooth",
+                    "role": "WaveFormSawtooth",
                     "range":{
                       "from": 512,
                       "to": 512
