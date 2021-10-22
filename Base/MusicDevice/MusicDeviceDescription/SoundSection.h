@@ -59,6 +59,7 @@ struct Voice
 
 DECLARE_ENUM(ComponentRole, uint,    \
       Unknown,                       \
+      Track,                         \
       NoteTrigger,                   \
       Oscillator,                    \
       Amp,                           \
@@ -245,7 +246,7 @@ DECLARE_ENUM(ParameterRole, uint,    \
       SweepTime,                      \
       SweepDepth,                      \
       LFOAmount,                      \
-      LFOSpeed,                      \
+      LFOFrequency,                      \
       LFOMultiplier,                      \
       LFOWaveform,                      \
       LFODestination,                      \
@@ -262,13 +263,35 @@ DECLARE_ENUM(ParameterRole, uint,    \
       SampleReverse,                      \
       SampleRate,                      \
       SampleBitReduction,                      \
+      SampleRateReduction,             \
       SampleSlot,                      \
       ModSource,                      \
       ModDestination,                      \
       ModAmount,                      \
       PitchBendRange,                      \
-      BPM,                      \
-      ClockDivide                      \
+      BPM,                       \
+      ClockDivide,               \
+      FrequencyBandCenter,       \
+      FrequencyBandAmp,          \
+      FrequencyBandWidth,        \
+      LowShelfFrequency,         \
+      HighShelfFrequency,        \
+      LowBandAmp,                \
+      MidBandAmp,                \
+      HighBandAmp,               \
+      RetrigNum,                 \
+      RetrigTime,                \
+      StereoWidth,               \
+      DryWetMix,                 \
+      DelayAmnt,                 \
+      MakeupGain,                \
+      Threshold,                 \
+      Distortion,                \
+      DelayTime,                 \
+      DampingFactor,             \
+      GateTime,                  \
+      ShelvingGain,              \
+      ShelvingFrequency          \
 );
 
 struct Parameter

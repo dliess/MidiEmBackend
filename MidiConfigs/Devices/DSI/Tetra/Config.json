@@ -794,7 +794,7 @@
             "name": "LFO 1 Freq",
             "type": "continous",
             "component": "LFO",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "defaultValue": 0,
             "source": {
               "midi": {
@@ -918,7 +918,7 @@
             "name": "LFO 2 Freq",
             "type": "continous",
             "component": "LFO",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "defaultValue": 0,
             "source": {
               "midi": {
@@ -1042,7 +1042,7 @@
             "name": "LFO 3 Freq",
             "type": "continous",
             "component": "LFO",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "defaultValue": 0,
             "source": {
               "midi": {
@@ -1166,7 +1166,7 @@
             "name": "LFO 4 Freq",
             "type": "continous",
             "component": "LFO",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "defaultValue": 0,
             "source": {
               "midi": {

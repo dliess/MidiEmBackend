@@ -409,7 +409,7 @@
             "name": "LFO Speed",
             "type": "continous",
             "component": "LFO",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "source": {
               "midi": {
                 "id": {

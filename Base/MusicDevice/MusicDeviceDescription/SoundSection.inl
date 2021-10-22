@@ -638,7 +638,7 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::SweepTime: return 0.5;
       case Parameter::Role::SweepDepth: return 0.0;
       case Parameter::Role::LFOAmount: return 0.0;
-      case Parameter::Role::LFOSpeed: return 0.0;
+      case Parameter::Role::LFOFrequency: return 0.0;
       case Parameter::Role::LFOMultiplier: return 0.0;
       case Parameter::Role::LFOWaveform: return 1;
       case Parameter::Role::LFODestination: return 1;

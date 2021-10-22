@@ -81,7 +81,7 @@ roleMap = {
       ],
       "LFO" : [
          "LFOAmount", 
-         "LFOSpeed",
+         "LFOFrequency",
          "LFOMultiplier",
          "LFOWaveform",
          "LFODestination",

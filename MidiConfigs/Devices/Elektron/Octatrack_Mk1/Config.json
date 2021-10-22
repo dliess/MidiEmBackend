@@ -66,11 +66,20 @@
         },
         "components": [
           {
-            "name": "Track/Playback"
+            "name": "Track",
+            "role": "Track"
+          },
+          {
+            "name": "Sample",
+            "role": "Sample"
           },
           {
             "name": "Amp",
             "role": "Amp"
+          },
+          {
+            "name": "Amp Env",
+            "role": "Envelope"
           },
           {
             "name": "LFO",
@@ -223,48 +232,81 @@
                 "sourceRanges": [
                   {
                     "name": "None",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Filter1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Equalizer1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "DJ Equalizer1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Phaser1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Flanger1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Chorus1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Spatializer1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Comb Filter1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Compressor1",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Lo-Fi1",
-                    "range": {"from": 0,  "to": 0 }
-                  }    
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  }
                 ]
               }
             }
@@ -283,64 +325,109 @@
                 "sourceRanges": [
                   {
                     "name": "None",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Filter2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Equalizer2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "DJ Equalizer2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Phaser2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Flanger2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Chorus2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Spatializer2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Comb Filter2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Compressor2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Lo-Fi2",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Freeze Delay",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Plate Reverb",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Spring Reverb",
-                    "range": {"from": 0,  "to": 0 }
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
                   },
                   {
                     "name": "Dark Reverb",
-                    "range": {"from": 0,  "to": 0 }
-                  }    
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  }
                 ]
               }
             }
@@ -348,7 +435,7 @@
           {
             "name": "Track Level",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Track",
             "source": {
               "midi": {
                 "id": {
@@ -361,7 +448,7 @@
           {
             "name": "Cue Level",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Track",
             "source": {
               "midi": {
                 "id": {
@@ -372,9 +459,10 @@
             }
           },
           {
-            "name": "Pitch/Param #1",
+            "name": "Pitch",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Sample",
+            "role": "Pitch",
             "source": {
               "midi": {
                 "id": {
@@ -385,9 +473,10 @@
             }
           },
           {
-            "name": "Start/Param #2",
+            "name": "Start",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Sample",
+            "role": "SampleStart",
             "source": {
               "midi": {
                 "id": {
@@ -398,9 +487,10 @@
             }
           },
           {
-            "name": "Len/Param #3",
+            "name": "Length",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Sample",
+            "role": "SampleLength",
             "source": {
               "midi": {
                 "id": {
@@ -411,9 +501,10 @@
             }
           },
           {
-            "name": "Rate/Param #4",
+            "name": "Rate",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Sample",
+            "role": "SampleRate",
             "source": {
               "midi": {
                 "id": {
@@ -424,9 +515,10 @@
             }
           },
           {
-            "name": "Retrig/Param #5",
+            "name": "Retrig Num",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Track",
+            "role": "RetrigNum",
             "source": {
               "midi": {
                 "id": {
@@ -437,9 +529,10 @@
             }
           },
           {
-            "name": "RetrigTime/Param #6",
+            "name": "Retrig Time",
             "type": "continous",
-            "component": "Track/Playback",
+            "component": "Track",
+            "role": "RetrigTime",
             "source": {
               "midi": {
                 "id": {
@@ -452,7 +545,8 @@
           {
             "name": "Attack",
             "type": "continous",
-            "component": "Amp",
+            "component": "Amp Env",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -465,7 +559,8 @@
           {
             "name": "Hold",
             "type": "continous",
-            "component": "Amp",
+            "component": "Amp Env",
+            "role": "Hold",
             "source": {
               "midi": {
                 "id": {
@@ -478,7 +573,8 @@
           {
             "name": "Release",
             "type": "continous",
-            "component": "Amp",
+            "component": "Amp Env",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -492,6 +588,7 @@
             "name": "Volume",
             "type": "continous",
             "component": "Amp",
+            "role": "Volume",
             "source": {
               "midi": {
                 "id": {
@@ -503,8 +600,9 @@
           },
           {
             "name": "Balance",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Amp",
+            "role": "Pan",
             "source": {
               "midi": {
                 "id": {
@@ -749,6 +847,1767 @@
             "type": "continous",
             "component": "Filter2",
             "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+
+
+          {
+            "name": "1. Band Freq",
+            "type": "continous",
+            "component": "Equalizer1",
+            "role": "FrequencyBandCenter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "1. Band Amp",
+            "type": "continous-bipolar",
+            "component": "Equalizer1",
+            "role": "FrequencyBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "1. Band Width",
+            "type": "continous",
+            "component": "Equalizer1",
+            "role": "FrequencyBandWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Freq",
+            "type": "continous",
+            "component": "Equalizer1",
+            "role": "FrequencyBandCenter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Amp",
+            "type": "continous-bipolar",
+            "component": "Equalizer1",
+            "role": "FrequencyBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Width",
+            "type": "continous",
+            "component": "Equalizer1",
+            "role": "FrequencyBandWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "1. Band Freq",
+            "type": "continous",
+            "component": "Equalizer2",
+            "role": "FrequencyBandCenter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "1. Band Amp",
+            "type": "continous-bipolar",
+            "component": "Equalizer2",
+            "role": "FrequencyBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "1. Band Width",
+            "type": "continous",
+            "component": "Equalizer2",
+            "role": "FrequencyBandWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Freq",
+            "type": "continous",
+            "component": "Equalizer2",
+            "role": "FrequencyBandCenter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Amp",
+            "type": "continous-bipolar",
+            "component": "Equalizer2",
+            "role": "FrequencyBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "2. Band Width",
+            "type": "continous",
+            "component": "Equalizer2",
+            "role": "FrequencyBandWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Low Shelf Freq",
+            "type": "continous",
+            "component": "DJ Equalizer1",
+            "role": "LowShelfFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "High Shelf Freq",
+            "type": "continous",
+            "component": "DJ Equalizer1",
+            "role": "HighShelfFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "LowBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer1",
+            "role": "LowBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "MidBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer1",
+            "role": "MidBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "HighBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer1",
+            "role": "HighBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Low Shelf Freq",
+            "type": "continous",
+            "component": "DJ Equalizer2",
+            "role": "LowShelfFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "High Shelf Freq",
+            "type": "continous",
+            "component": "DJ Equalizer2",
+            "role": "HighShelfFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "LowBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer2",
+            "role": "LowBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "MidBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer2",
+            "role": "MidBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "HighBand Gain",
+            "type": "continous-bipolar",
+            "component": "DJ Equalizer2",
+            "role": "HighBandAmp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+
+          {
+            "name": "Center Phase",
+            "type": "continous-bipolar",
+            "component": "Phaser1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Phaser1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Phaser1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous-bipolar",
+            "component": "Phaser1",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Phaser1",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Phaser1",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Center Phase",
+            "type": "continous-bipolar",
+            "component": "Phaser2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Phaser2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Phaser2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous-bipolar",
+            "component": "Phaser2",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Phaser2",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Phaser2",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Delay",
+            "type": "continous",
+            "component": "Flanger1",
+            "role": "DelayAmnt",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Flanger1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Flanger1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous-bipolar",
+            "component": "Flanger1",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Flanger1",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Flanger1",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Delay",
+            "type": "continous",
+            "component": "Flanger2",
+            "role": "DelayAmnt",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Flanger2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Flanger2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous-bipolar",
+            "component": "Flanger2",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Flanger2",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Flanger2",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Delay",
+            "type": "continous",
+            "component": "Chorus1",
+            "role": "DelayAmnt",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Chorus1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Chorus1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "Chorus1",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Chorus1",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Chorus1",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Delay",
+            "type": "continous",
+            "component": "Chorus2",
+            "role": "DelayAmnt",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Chorus2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Speed",
+            "type": "continous",
+            "component": "Chorus2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "Chorus2",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Chorus2",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Chorus2",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+
+          {
+            "name": "Dry Gain",
+            "type": "continous",
+            "component": "Spatializer1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Spatializer1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Spatializer1",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "HP Freq",
+            "type": "continous",
+            "component": "Spatializer1",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "LP Freq",
+            "type": "continous",
+            "component": "Spatializer1",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Widened Sig Lev",
+            "type": "continous",
+            "component": "Spatializer1",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry Gain",
+            "type": "continous",
+            "component": "Spatializer2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "Spatializer2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Stereo Width",
+            "type": "continous",
+            "component": "Spatializer2",
+            "role": "StereoWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "HP Freq",
+            "type": "continous",
+            "component": "Spatializer2",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "LP Freq",
+            "type": "continous",
+            "component": "Spatializer2",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Widened Sig Lev",
+            "type": "continous",
+            "component": "Spatializer2",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Pitch",
+            "type": "continous",
+            "component": "Comb Filter1",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Comb Filter1",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "FB LP Freq",
+            "type": "continous",
+            "component": "Comb Filter1",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback Gain",
+            "type": "continous-bipolar",
+            "component": "Comb Filter1",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Comb Filter1",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch",
+            "type": "continous",
+            "component": "Comb Filter2",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Tune",
+            "type": "continous-bipolar",
+            "component": "Comb Filter2",
+            "role": "Tune",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "FB LP Freq",
+            "type": "continous",
+            "component": "Comb Filter2",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback Gain",
+            "type": "continous-bipolar",
+            "component": "Comb Filter2",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Comb Filter2",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Compressor1",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Compressor1",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Knee Threshold",
+            "type": "continous",
+            "component": "Compressor1",
+            "role": "Threshold",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio",
+            "type": "continous",
+            "component": "Compressor1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Makeup Gain",
+            "type": "continous",
+            "component": "Compressor1",
+            "role": "MakeupGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Compressor1",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Compressor2",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Compressor2",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Knee Threshold",
+            "type": "continous",
+            "component": "Compressor2",
+            "role": "Threshold",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Ratio",
+            "type": "continous",
+            "component": "Compressor2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Makeup Gain",
+            "type": "continous",
+            "component": "Compressor2",
+            "role": "MakeupGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Compressor2",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+
+
+
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Lo-Fi1",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Mod Depth",
+            "type": "continous",
+            "component": "Lo-Fi1",
+            "role": "LFOAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Mod Freq",
+            "type": "continous",
+            "component": "Lo-Fi1",
+            "role": "LFOFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Rate Reduct",
+            "type": "continous",
+            "component": "Lo-Fi1",
+            "role": "SampleRateReduction",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Bit Reduct",
+            "type": "continous",
+            "component": "Lo-Fi1",
+            "role": "SampleBitReduction",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Lo-Fi2",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "AMP Mod Depth",
+            "type": "continous",
+            "component": "Lo-Fi2",
+            "role": "LFOAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Amp Mod Freq",
+            "type": "continous",
+            "component": "Lo-Fi2",
+            "role": "LFOFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Rate Reduct",
+            "type": "continous",
+            "component": "Lo-Fi2",
+            "role": "SampleRateReduction",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Sample Bit Reduct",
+            "type": "continous",
+            "component": "Lo-Fi2",
+            "role": "SampleBitReduction",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Delay Time",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "DelayTime",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "FeedbackGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "HPLP Base",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "FilterBase",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "HPLP Width",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "FilterWidth",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Send",
+            "type": "continous",
+            "component": "Freeze Delay",
+            "role": "DelaySend",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Damping Factor",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "DampingFactor",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Gate Time",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "GateTime",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "HP Cutoff",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "LP Cutoff",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Plate Reverb",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Spring Reverb",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "HP Cutoff",
+            "type": "continous",
+            "component": "Spring Reverb",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "LP Cutoff",
+            "type": "continous",
+            "component": "Spring Reverb",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Spring Reverb",
+            "role": "DryWetMix",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Decay Time",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Shelving Gain",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "ShelvingGain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Shelving Freq",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "ShelvingFrequency",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "HP Cutoff",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "LP Cutoff",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Dry/Wet Mix",
+            "type": "continous",
+            "component": "Dark Reverb",
+            "role": "DryWetMix",
             "source": {
               "midi": {
                 "id": {

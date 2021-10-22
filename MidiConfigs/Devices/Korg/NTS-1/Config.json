@@ -116,7 +116,7 @@
             "description": "",
             "type": "continous",
             "component": "Tremolo",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "source": {
               "midi": {
                 "id": {
@@ -131,7 +131,7 @@
             "description": "",
             "type": "continous",
             "component": "Oscillator",
-            "role": "LFOSpeed",
+            "role": "LFOFrequency",
             "source": {
               "midi": {
                 "id": {
