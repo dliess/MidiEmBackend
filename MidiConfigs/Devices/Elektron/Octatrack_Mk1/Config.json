@@ -81,8 +81,8 @@
             "name": "Effect 1",
             "role": "Effect",
             "selectorParam": {
-              "component": "Effect 1",
-              "name": "Effect Type"
+              "component": "Effect-Select",
+              "name": "Effect1 Type"
             },
             "oneOfComponents": [
               {
@@ -91,7 +91,8 @@
               },
               {
                 "name": "Filter1",
-                "role": "LPHPFilter"
+                "role": "LPHPFilter2",
+                "constParams": "{ \"Sustain\": 0.0 }"
               },
               {
                 "name": "Equalizer1",
@@ -136,8 +137,8 @@
             "name": "Effect 2",
             "role": "Effect",
             "selectorParam": {
-              "component": "Effect 2",
-              "name": "Effect Type"
+              "component": "Effect-Select",
+              "name": "Effect2 Type"
             },
             "oneOfComponents": [
               {
@@ -146,7 +147,8 @@
               },
               {
                 "name": "Filter2",
-                "role": "LPHPFilter"
+                "role": "LPHPFilter2",
+                "constParams": "{ \"Sustain\": 0.0 }"
               },
               {
                 "name": "Equalizer2",
@@ -201,13 +203,17 @@
                 "role": "Reverb"
               }
             ]
+          },
+          {
+            "name": "Effect-Select"
           }
         ],
         "parameters": [
           {
-            "name": "Effect Type",
+            "name": "Effect1 Type",
             "type": "list",
-            "component": "Effect 1",
+            "component": "Effect-Select",
+            "role": "ComponentSelector",
             "source": {
               "midi": {
                 "id": {
@@ -264,9 +270,10 @@
             }
           },
           {
-            "name": "Effect Type",
+            "name": "Effect2 Type",
             "type": "list",
-            "component": "Effect 2",
+            "component": "Effect-Select",
+            "role": "ComponentSelector",
             "source": {
               "midi": {
                 "id": {
@@ -589,6 +596,7 @@
             "name": "Base",
             "type": "continous",
             "component": "Filter1",
+            "role": "FilterBase",
             "source": {
               "midi": {
                 "id": {
@@ -602,6 +610,7 @@
             "name": "Width",
             "type": "continous",
             "component": "Filter1",
+            "role": "FilterWidth",
             "source": {
               "midi": {
                 "id": {
@@ -615,6 +624,7 @@
             "name": "Resonance",
             "type": "continous",
             "component": "Filter1",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -626,7 +636,7 @@
           },
           {
             "name": "Env Amount",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Filter1",
             "source": {
               "midi": {
@@ -641,6 +651,7 @@
             "name": "Attack",
             "type": "continous",
             "component": "Filter1",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -654,6 +665,7 @@
             "name": "Decay",
             "type": "continous",
             "component": "Filter1",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -664,9 +676,10 @@
             }
           },
           {
-            "name": "Param #1_2",
+            "name": "Base",
             "type": "continous",
             "component": "Filter2",
+            "role": "FilterBase",
             "source": {
               "midi": {
                 "id": {
@@ -677,9 +690,10 @@
             }
           },
           {
-            "name": "Param #2_2",
+            "name": "Width",
             "type": "continous",
             "component": "Filter2",
+            "role": "FilterWidth",
             "source": {
               "midi": {
                 "id": {
@@ -690,9 +704,10 @@
             }
           },
           {
-            "name": "Param #3_2",
+            "name": "Resonance",
             "type": "continous",
             "component": "Filter2",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -703,8 +718,8 @@
             }
           },
           {
-            "name": "Param #4_2",
-            "type": "continous",
+            "name": "Env Amount",
+            "type": "continous-bipolar",
             "component": "Filter2",
             "source": {
               "midi": {
@@ -716,9 +731,10 @@
             }
           },
           {
-            "name": "Param #5_2",
+            "name": "Attack",
             "type": "continous",
             "component": "Filter2",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -729,9 +745,10 @@
             }
           },
           {
-            "name": "Param #6_2",
+            "name": "Decay",
             "type": "continous",
             "component": "Filter2",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
