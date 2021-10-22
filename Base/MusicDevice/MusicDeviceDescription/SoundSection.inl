@@ -69,77 +69,14 @@ inline void from_json<
 inline std::string
 base::musicDevice::description::sound::Component::role2String(Role role)
 {
-   switch (role)
-   {
-      case Role::NoteTrigger: return "NoteTrigger";
-      case Role::Oscillator: return "Oscillator";
-      case Role::Amp: return "Amp";
-      case Role::Filter: return "Filter";
-      case Role::LPFilter: return "LPFilter";
-      case Role::HPFilter: return "HPFilter";
-      case Role::LPHPFilter: return "LPHPFilter";
-      case Role::Envelope: return "Envelope";
-      case Role::LFO: return "LFO";
-      case Role::Arpeggiator: return "Arpeggiator";
-      case Role::Sequencer: return "Sequencer";
-      case Role::Sample: return "Sample";
-      case Role::Effects: return "Effects";
-      case Role::Delay: return "Delay";
-      case Role::Reverb: return "Reverb";
-      case Role::Chorus: return "Chorus";
-      case Role::Distortion: return "Distortion";
-      case Role::Compressor: return "Compressor";
-      case Role::ModMatrix: return "ModMatrix";
-      case Role::Tempo: return "Tempo";
-   }
-   return "Unknown";
+   return ~role;
 }
 
 inline base::musicDevice::description::sound::Component::Role
 base::musicDevice::description::sound::Component::roleFromString(
     const std::string& roleStr)
 {
-   if (roleStr == "NoteTrigger")
-      return Role::NoteTrigger;
-   else if (roleStr == "Oscillator")
-      return Role::Oscillator;
-   else if (roleStr == "Amp")
-      return Role::Amp;
-   else if (roleStr == "Filter")
-      return Role::Filter;
-   else if (roleStr == "LPFilter")
-      return Role::LPFilter;
-   else if (roleStr == "HPFilter")
-      return Role::HPFilter;
-   else if (roleStr == "LPHPFilter")
-      return Role::LPHPFilter;
-   else if (roleStr == "Envelope")
-      return Role::Envelope;
-   else if (roleStr == "LFO")
-      return Role::LFO;
-   else if (roleStr == "Arpeggiator")
-      return Role::Arpeggiator;
-   else if (roleStr == "Sequencer")
-      return Role::Sequencer;
-   else if (roleStr == "Sample")
-      return Role::Sample;
-   else if (roleStr == "Effects")
-      return Role::Effects;
-   else if (roleStr == "Delay")
-      return Role::Delay;
-   else if (roleStr == "Reverb")
-      return Role::Reverb;
-   else if (roleStr == "Chorus")
-      return Role::Chorus;
-   else if (roleStr == "Distortion")
-      return Role::Distortion;
-   else if (roleStr == "Compressor")
-      return Role::Compressor;
-   else if (roleStr == "ModMatrix")
-      return Role::ModMatrix;
-   else if (roleStr == "Tempo")
-      return Role::Tempo;
-   return Role::Unknown;
+   return create_ComponentRole(roleStr);
 }
 
 template <>
@@ -238,75 +175,14 @@ inline std::string
 base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
     Role role)
 {
-   switch (role)
-   {
-      case Role::Unknown: return "Unknown";
-      case Role::Off: return "Off";
-      case Role::On: return "On";
-      case Role::FilterLowpass2db: return "FilterLowpass2db";
-      case Role::FilterLowpass4db: return "FilterLowpass4db";
-      case Role::FilterHighpass2db: return "FilterHighpass2db";
-      case Role::FilterHighpass4db: return "FilterHighpass4db";
-      case Role::FilterBandpass2db: return "FilterBandpass2db";
-      case Role::FilterBandpass4db: return "FilterBandpass4db";
-      case Role::FilterPeak: return "FilterPeak";
-      case Role::FilterBandReject: return "FilterBandReject";
-      case Role::FilterTwoPole: return "FilterTwoPole";
-      case Role::FilterFourPole: return "FilterFourPole";
-      case Role::WaveFormSine: return "WaveFormSine";
-      case Role::WaveFormAsymSine: return "WaveFormAsymSine";
-      case Role::WaveFormSawtooth: return "WaveFormSawtooth";
-      case Role::WaveFormSinetooth: return "WaveFormSinetooth";
-      case Role::WaveFormTriangle: return "WaveFormTriangle";
-      case Role::WaveFormSquare: return "WaveFormSquare";
-      case Role::WaveFormPulsewidth: return "WaveFormPulsewidth";
-   }
-   return "Unknown";
+   return ~role;
 }
 
 inline base::musicDevice::description::sound::ParameterSourceRangeBase::Role
 base::musicDevice::description::sound::ParameterSourceRangeBase::roleFromString(
     const std::string& roleStr)
 {
-   if (roleStr == "Off")
-      return Role::Off;
-   else if (roleStr == "On")
-      return Role::On;
-   else if (roleStr == "FilterLowpass2db")
-      return Role::FilterLowpass2db;
-   else if (roleStr == "FilterLowpass4db")
-      return Role::FilterLowpass4db;
-   else if (roleStr == "FilterHighpass2db")
-      return Role::FilterHighpass2db;
-   else if (roleStr == "FilterHighpass4db")
-      return Role::FilterHighpass4db;
-   else if (roleStr == "FilterBandpass2db")
-      return Role::FilterBandpass2db;
-   else if (roleStr == "FilterBandpass4db")
-      return Role::FilterBandpass4db;
-   else if (roleStr == "FilterPeak")
-      return Role::FilterPeak;
-   else if (roleStr == "FilterBandReject")
-      return Role::FilterBandReject;
-   else if (roleStr == "FilterTwoPole")
-      return Role::FilterTwoPole;
-   else if (roleStr == "FilterFourPole")
-      return Role::FilterFourPole;
-   else if (roleStr == "WaveFormSine")
-      return Role::WaveFormSine;
-   else if (roleStr == "WaveFormAsymSine")
-      return Role::WaveFormAsymSine;
-   else if (roleStr == "WaveFormSawtooth")
-      return Role::WaveFormSawtooth;
-   else if (roleStr == "WaveFormSinetooth")
-      return Role::WaveFormSinetooth;
-   else if (roleStr == "WaveFormTriangle")
-      return Role::WaveFormTriangle;
-   else if (roleStr == "WaveFormSquare")
-      return Role::WaveFormSquare;
-   else if (roleStr == "WaveFormPulsewidth")
-      return Role::WaveFormPulsewidth;
-   return Role::Unknown;
+   return create_ParameterSourceRangeBaseRoles(roleStr);
 }
 
 // --------------------------------------------------------
@@ -332,291 +208,14 @@ inline void from_json<base::musicDevice::description::sound::Parameter::Role>(
 inline std::string
 base::musicDevice::description::sound::Parameter::role2String(Role role)
 {
-   switch (role)
-   {
-      case Role::Unknown: return "Unknown";
-      case Role::TrackVolume: return "TrackVolume";
-      case Role::TrigChance: return "TrigChance";
-      case Role::Swing: return "Swing";
-      case Role::Mute: return "Mute";
-      case Role::Solo: return "Solo";
-      case Role::KeyPrioMode: return "KeyPrioMode";
-      case Role::Pitch: return "Pitch";
-      case Role::PitchFinetune: return "PitchFinetune";
-      case Role::Detune: return "Detune";
-      case Role::OSCWaveform: return "OSCWaveform";
-      case Role::OSCShape: return "OSCShape";
-      case Role::OSCGlide: return "OSCGlide";
-      case Role::OSCKeyboardTracking: return "OSCKeyboardTracking";
-      case Role::OSCSync: return "OSCSync";
-      case Role::OSCSlop: return "OSCSlop";
-      case Role::OSCMix: return "OSCMix";
-      case Role::OSCNoise: return "OSCNoise";
-      case Role::SubOSCLevel: return "SubOSCLevel";
-      case Role::NoiseLevel: return "NoiseLevel";
-      case Role::NoiseDecay: return "NoiseDecay";
-      case Role::UnisonMode: return "UnisonMode";
-      case Role::UnisonOnOff: return "UnisonOnOff";
-      case Role::FMAmount: return "FMAmount";
-      case Role::InitialVolume: return "InitialVolume";
-      case Role::Volume: return "Volume";
-      case Role::Pan: return "Pan";
-      case Role::DelaySend: return "DelaySend";
-      case Role::ReverbSend: return "ReverbSend";
-      case Role::FeedbackVolume: return "FeedbackVolume";
-      case Role::FeedbackGain: return "FeedbackGain";
-      case Role::FilterCutoff: return "FilterCutoff";
-      case Role::FilterType: return "FilterType";
-      case Role::FilterResonance: return "FilterResonance";
-      case Role::FilterSlope: return "FilterSlope";
-      case Role::FilterKeyAmount: return "FilterKeyAmount";
-      case Role::FilterAudioModuation: return "FilterAudioModuation";
-      case Role::LPFilterCutoff: return "LPFilterCutoff";
-      case Role::LPFilterResonance: return "LPFilterResonance";
-      case Role::LPFilterSlope: return "LPFilterSlope";
-      case Role::LPFilterKeyAmount: return "LPFilterKeyAmount";
-      case Role::LPFilterAudioModuation: return "LPFilterAudioModuation";
-      case Role::LPFilterSweep: return "LPFilterSweep";
-      case Role::ComponentSelector: return "ComponentSelector";
-      case Role::HPFilterCutoff: return "HPFilterCutoff";
-      case Role::HPFilterResonance: return "HPFilterResonance";
-      case Role::HPFilterSlope: return "HPFilterSlope";
-      case Role::HPFilterKeyAmount: return "HPFilterKeyAmount";
-      case Role::HPFilterAudioModuation: return "HPFilterAudioModuation";
-      case Role::LPHPFilterCutoff: return "LPHPFilterCutoff";
-      case Role::LPHPFilterResonance: return "LPHPFilterResonance";
-      case Role::LPHPFilterSlope: return "LPHPFilterSlope";
-      case Role::LPHPFilterKeyAmount: return "LPHPFilterKeyAmount";
-      case Role::LPHPFilterAudioModuation: return "LPHPFilterAudioModuation";
-      case Role::AmpEnvAmount: return "AmpEnvAmount";
-      case Role::EnvAmount: return "EnvAmount";
-      case Role::EnvVelAmount: return "EnvVelAmount";
-      case Role::EnvRepeat: return "EnvRepeat";
-      case Role::EnvDelay: return "EnvDelay";
-      case Role::EnvDestination: return "EnvDestination";
-      case Role::Attack: return "Attack";
-      case Role::Decay: return "Decay";
-      case Role::Sustain: return "Sustain";
-      case Role::Release: return "Release";
-      case Role::Hold: return "Hold";
-      case Role::SweepTime: return "SweepTime";
-      case Role::SweepDepth: return "SweepDepth";
-      case Role::LFOAmount: return "LFOAmount";
-      case Role::LFOSpeed: return "LFOSpeed";
-      case Role::LFOMultiplier: return "LFOMultiplier";
-      case Role::LFOWaveform: return "LFOWaveform";
-      case Role::LFODestination: return "LFODestination";
-      case Role::LFODepth: return "LFODepth";
-      case Role::LFOKeySync: return "LFOKeySync";
-      case Role::ArpOnOff: return "ArpOnOff";
-      case Role::ArpMode: return "ArpMode";
-      case Role::SequencerOnOff: return "SequencerOnOff";
-      case Role::SequenceTrig: return "SequenceTrig";
-      case Role::SampleStart: return "SampleStart";
-      case Role::SampleEnd: return "SampleEnd";
-      case Role::SampleLength: return "SampleLength";
-      case Role::SampleLoop: return "SampleLoop";
-      case Role::SampleReverse: return "SampleReverse";
-      case Role::SampleRate: return "SampleRate";
-      case Role::SampleBitReduction: return "SampleBitReduction";
-      case Role::SampleSlot: return "SampleSlot";
-      case Role::ModSource: return "ModSource";
-      case Role::ModDestination: return "ModDestination";
-      case Role::ModAmount: return "ModAmount";
-      case Role::PitchBendRange: return "PitchBendRange";
-      case Role::BPM: return "BPM";
-      case Role::ClockDivide: return "ClockDivide";
-      default: return "Unknown";
-   }
+   return ~role;
 }
 
 inline base::musicDevice::description::sound::Parameter::Role
 base::musicDevice::description::sound::Parameter::roleFromString(
     const std::string& roleStr)
 {
-   if (roleStr == "TrackVolume")
-      return Role::TrackVolume;
-   else if (roleStr == "TrigChance")
-      return Role::TrigChance;
-   else if (roleStr == "Swing")
-      return Role::Swing;
-   else if (roleStr == "Mute")
-      return Role::Mute;
-   else if (roleStr == "Solo")
-      return Role::Solo;
-   else if (roleStr == "KeyPrioMode")
-      return Role::KeyPrioMode;
-   else if (roleStr == "Pitch")
-      return Role::Pitch;
-   else if (roleStr == "PitchFinetune")
-      return Role::PitchFinetune;
-   else if (roleStr == "Detune")
-      return Role::Detune;
-   else if (roleStr == "OSCWaveform")
-      return Role::OSCWaveform;
-   else if (roleStr == "OSCShape")
-      return Role::OSCShape;
-   else if (roleStr == "OSCGlide")
-      return Role::OSCGlide;
-   else if (roleStr == "OSCKeyboardTracking")
-      return Role::OSCKeyboardTracking;
-   else if (roleStr == "OSCSync")
-      return Role::OSCSync;
-   else if (roleStr == "OSCSlop")
-      return Role::OSCSlop;
-   else if (roleStr == "OSCMix")
-      return Role::OSCMix;
-   else if (roleStr == "OSCNoise")
-      return Role::OSCNoise;
-   else if (roleStr == "SubOSCLevel")
-      return Role::SubOSCLevel;
-   else if (roleStr == "NoiseLevel")
-      return Role::NoiseLevel;
-   else if (roleStr == "NoiseDecay")
-      return Role::NoiseDecay;
-   else if (roleStr == "UnisonMode")
-      return Role::UnisonMode;
-   else if (roleStr == "UnisonOnOff")
-      return Role::UnisonOnOff;
-   else if (roleStr == "FMAmount")
-      return Role::FMAmount;
-   else if (roleStr == "InitialVolume")
-      return Role::InitialVolume;
-   else if (roleStr == "Volume")
-      return Role::Volume;
-   else if (roleStr == "Pan")
-      return Role::Pan;
-   else if (roleStr == "DelaySend")
-      return Role::DelaySend;
-   else if (roleStr == "ReverbSend")
-      return Role::ReverbSend;
-   else if (roleStr == "FeedbackVolume")
-      return Role::FeedbackVolume;
-   else if (roleStr == "FeedbackGain")
-      return Role::FeedbackGain;
-   else if (roleStr == "FilterCutoff")
-      return Role::FilterCutoff;
-   else if (roleStr == "FilterType")
-      return Role::FilterType;
-   else if (roleStr == "FilterResonance")
-      return Role::FilterResonance;
-   else if (roleStr == "FilterSlope")
-      return Role::FilterSlope;
-   else if (roleStr == "FilterKeyAmount")
-      return Role::FilterKeyAmount;
-   else if (roleStr == "FilterAudioModuation")
-      return Role::FilterAudioModuation;
-   else if (roleStr == "LPFilterCutoff")
-      return Role::LPFilterCutoff;
-   else if (roleStr == "LPFilterResonance")
-      return Role::LPFilterResonance;
-   else if (roleStr == "LPFilterSlope")
-      return Role::LPFilterSlope;
-   else if (roleStr == "LPFilterKeyAmount")
-      return Role::LPFilterKeyAmount;
-   else if (roleStr == "LPFilterAudioModuation")
-      return Role::LPFilterAudioModuation;
-   else if (roleStr == "LPFilterSweep")
-      return Role::LPFilterSweep;
-   else if (roleStr == "ComponentSelector")
-      return Role::ComponentSelector;
-   else if (roleStr == "HPFilterCutoff")
-      return Role::HPFilterCutoff;
-   else if (roleStr == "HPFilterResonance")
-      return Role::HPFilterResonance;
-   else if (roleStr == "HPFilterSlope")
-      return Role::HPFilterSlope;
-   else if (roleStr == "HPFilterKeyAmount")
-      return Role::HPFilterKeyAmount;
-   else if (roleStr == "HPFilterAudioModuation")
-      return Role::HPFilterAudioModuation;
-   else if (roleStr == "LPHPFilterCutoff")
-      return Role::LPHPFilterCutoff;
-   else if (roleStr == "LPHPFilterResonance")
-      return Role::LPHPFilterResonance;
-   else if (roleStr == "LPHPFilterSlope")
-      return Role::LPHPFilterSlope;
-   else if (roleStr == "LPHPFilterKeyAmount")
-      return Role::LPHPFilterKeyAmount;
-   else if (roleStr == "LPHPFilterAudioModuation")
-      return Role::LPHPFilterAudioModuation;
-   else if (roleStr == "AmpEnvAmount")
-      return Role::AmpEnvAmount;
-   else if (roleStr == "EnvAmount")
-      return Role::EnvAmount;
-   else if (roleStr == "EnvVelAmount")
-      return Role::EnvVelAmount;
-   else if (roleStr == "EnvRepeat")
-      return Role::EnvRepeat;
-   else if (roleStr == "EnvDelay")
-      return Role::EnvDelay;
-   else if (roleStr == "EnvDestination")
-      return Role::EnvDestination;
-   else if (roleStr == "Attack")
-      return Role::Attack;
-   else if (roleStr == "Decay")
-      return Role::Decay;
-   else if (roleStr == "Sustain")
-      return Role::Sustain;
-   else if (roleStr == "Release")
-      return Role::Release;
-   else if (roleStr == "Hold")
-      return Role::Hold;
-   else if (roleStr == "SweepTime")
-      return Role::SweepTime;
-   else if (roleStr == "SweepDepth")
-      return Role::SweepDepth;
-   else if (roleStr == "LFOAmount")
-      return Role::LFOAmount;
-   else if (roleStr == "LFOSpeed")
-      return Role::LFOSpeed;
-   else if (roleStr == "LFOMultiplier")
-      return Role::LFOMultiplier;
-   else if (roleStr == "LFOWaveform")
-      return Role::LFOWaveform;
-   else if (roleStr == "LFODestination")
-      return Role::LFODestination;
-   else if (roleStr == "LFODepth")
-      return Role::LFODepth;
-   else if (roleStr == "LFOKeySync")
-      return Role::LFOKeySync;
-   else if (roleStr == "ArpOnOff")
-      return Role::ArpOnOff;
-   else if (roleStr == "ArpMode")
-      return Role::ArpMode;
-   else if (roleStr == "SequencerOnOff")
-      return Role::SequencerOnOff;
-   else if (roleStr == "SequenceTrig")
-      return Role::SequenceTrig;
-   else if (roleStr == "SampleStart")
-      return Role::SampleStart;
-   else if (roleStr == "SampleEnd")
-      return Role::SampleEnd;
-   else if (roleStr == "SampleLength")
-      return Role::SampleLength;
-   else if (roleStr == "SampleLoop")
-      return Role::SampleLoop;
-   else if (roleStr == "SampleReverse")
-      return Role::SampleReverse;
-   else if (roleStr == "SampleRate")
-      return Role::SampleRate;
-   else if (roleStr == "SampleBitReduction")
-      return Role::SampleBitReduction;
-   else if (roleStr == "SampleSlot")
-      return Role::SampleSlot;
-   else if (roleStr == "ModSource")
-      return Role::ModSource;
-   else if (roleStr == "ModDestination")
-      return Role::ModDestination;
-   else if (roleStr == "ModAmount")
-      return Role::ModAmount;
-   else if (roleStr == "PitchBendRange")
-      return Role::PitchBendRange;
-   else if (roleStr == "BPM")
-      return Role::BPM;
-   else if (roleStr == "ClockDivide")
-      return Role::ClockDivide;
-   return Role::Unknown;
+   return create_ParameterRole(roleStr);
 }
 
 // --------------------------------------------------------
@@ -1001,6 +600,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::FeedbackVolume: return 0.0;
       case Parameter::Role::FeedbackGain: return 0.0;
       case Parameter::Role::FilterCutoff: return 0.99;
+      case Parameter::Role::FilterBase: return 0.0;
+      case Parameter::Role::FilterWidth: return 0.99;
       case Parameter::Role::FilterType: return 1;
       case Parameter::Role::FilterResonance: return 0.0;
       case Parameter::Role::FilterSlope: return 0.0;

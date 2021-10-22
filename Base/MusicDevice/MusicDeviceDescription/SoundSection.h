@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "MidiMessageIds.h"
+#include "EnumReflect.h"
 namespace base::musicDevice::description::sound
 {
 constexpr int GlobalSectionId = -1;
@@ -56,33 +57,35 @@ struct Voice
    std::optional<int> midiTriggerNoteNumber;
 };
 
+DECLARE_ENUM(ComponentRole, uint,    \
+      Unknown,                       \
+      NoteTrigger,                   \
+      Oscillator,                    \
+      Amp,                           \
+      Filter,                        \
+      LPFilter,                      \
+      HPFilter,                      \
+      LPHPFilter,                    \
+      LPHPFilter2,                   \
+      Envelope,                      \
+      LFO,                           \
+      Arpeggiator,                   \
+      Sequencer,                     \
+      Sample,                        \
+      Effects,                       \
+      Delay,                         \
+      Reverb,                        \
+      Chorus,                        \
+      Distortion,                    \
+      Compressor,                    \
+      ModMatrix,                     \
+      Tempo                          \
+);
+
 struct Component
 {
    std::string name;
-   enum class Role
-   {
-      Unknown,
-      NoteTrigger,
-      Oscillator,
-      Amp,
-      Filter,
-      LPFilter,
-      HPFilter,
-      LPHPFilter,
-      Envelope,
-      LFO,
-      Arpeggiator,
-      Sequencer,
-      Sample,
-      Effects,
-      Delay,
-      Reverb,
-      Chorus,
-      Distortion,
-      Compressor,
-      ModMatrix,
-      Tempo
-   };
+   using Role = ComponentRole;
    std::optional<Role> role;
    std::optional<std::string> constParams;
    static inline std::string role2String(Role role);
@@ -114,32 +117,31 @@ template <typename T> struct ValueRange
 using ValueRangeFloat = ValueRange<float>;
 using ValueRangeInt   = ValueRange<int>;
 
+DECLARE_ENUM(ParameterSourceRangeBaseRoles, uint, 
+      Unknown,                  \
+      Off,                      \
+      On,                       \
+      FilterLowpass2db,         \
+      FilterLowpass4db,         \
+      FilterHighpass2db,        \
+      FilterHighpass4db,        \
+      FilterBandpass2db,        \
+      FilterBandpass4db,        \
+      FilterPeak,               \
+      FilterBandReject,         \
+      FilterTwoPole,            \
+      FilterFourPole,           \
+      WaveFormSine,             \
+      WaveFormAsymSine,         \
+      WaveFormSawtooth,         \
+      WaveFormSinetooth,        \
+      WaveFormTriangle,         \
+      WaveFormSquare,           \
+      WaveFormPulsewidth);
 struct ParameterSourceRangeBase
 {
+   using Role = ParameterSourceRangeBaseRoles;
    std::string name;
-   enum class Role
-   {
-      Unknown,
-      Off,
-      On,
-      FilterLowpass2db,
-      FilterLowpass4db,
-      FilterHighpass2db,
-      FilterHighpass4db,
-      FilterBandpass2db,
-      FilterBandpass4db,
-      FilterPeak,
-      FilterBandReject,
-      FilterTwoPole,
-      FilterFourPole,
-      WaveFormSine,
-      WaveFormAsymSine,
-      WaveFormSawtooth,
-      WaveFormSinetooth,
-      WaveFormTriangle,
-      WaveFormSquare,
-      WaveFormPulsewidth
-   };
    std::optional<Role> role;
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
@@ -163,6 +165,112 @@ struct ParameterSource
    std::optional<ParameterSourceMidi> midi;
 };
 
+
+DECLARE_ENUM(ParameterRole, uint,    \
+      Unknown,                       \
+      TrackVolume,                      \
+      TrigChance,                      \
+      Swing,                      \
+      Mute,                      \
+      Solo,                      \
+      KeyPrioMode,                      \
+      Pitch,                      \
+      PitchFinetune,                      \
+      Detune,                      \
+      OSCWaveform,                      \
+      OSCShape,                      \
+      OSCGlide,                      \
+      OSCGlideOnOff,                      \
+      OSCGlideType,                      \
+      OSCKeyboardTracking,                      \
+      OSCSync,                      \
+      OSCSlop,                      \
+      OSCMix,                      \
+      OSCNoise,                      \
+      OSCNoteSyncOnOff,                      \
+      OSC1Decay,                      \
+      OSC2Decay,                      \
+      TransientDecay,                      \
+      HitDecay,                      \
+      SubOSCLevel,                      \
+      NoiseLevel,                      \
+      NoiseDecay,                      \
+      NoiseColor,                      \
+      UnisonMode,                      \
+      UnisonOnOff,                      \
+      FMAmount,                      \
+      InitialVolume,                      \
+      Volume,                      \
+      Pan,                      \
+      DelaySend,                      \
+      ReverbSend,                      \
+      FeedbackVolume,                      \
+      FeedbackGain,                      \
+      FilterCutoff,                      \
+      FilterBase,                      \
+      FilterWidth,                      \
+      FilterType,                      \
+      FilterResonance,                      \
+      FilterSlope,                      \
+      FilterKeyAmount,                      \
+      FilterAudioModuation,                      \
+      LPFilterCutoff,                      \
+      LPFilterResonance,                      \
+      LPFilterSlope,                      \
+      LPFilterKeyAmount,                      \
+      LPFilterAudioModuation,                      \
+      LPFilterSweep,                      \
+      ComponentSelector,                      \
+      HPFilterCutoff,                      \
+      HPFilterResonance,                      \
+      HPFilterSlope,                      \
+      HPFilterKeyAmount,                      \
+      HPFilterAudioModuation,                      \
+      LPHPFilterCutoff,                      \
+      LPHPFilterResonance,                      \
+      LPHPFilterSlope,                      \
+      LPHPFilterKeyAmount,                      \
+      LPHPFilterAudioModuation,                      \
+      AmpEnvAmount,                      \
+      EnvAmount,                      \
+      EnvVelAmount,                      \
+      EnvRepeat,                      \
+      EnvDelay,                      \
+      EnvDestination,                      \
+      Attack,                      \
+      Decay,                      \
+      Sustain,                      \
+      Release,                      \
+      Hold,                      \
+      SweepTime,                      \
+      SweepDepth,                      \
+      LFOAmount,                      \
+      LFOSpeed,                      \
+      LFOMultiplier,                      \
+      LFOWaveform,                      \
+      LFODestination,                      \
+      LFODepth,                      \
+      LFOKeySync,                      \
+      ArpOnOff,                      \
+      ArpMode,                      \
+      SequencerOnOff,                      \
+      SequenceTrig,                      \
+      SampleStart,                      \
+      SampleEnd,                      \
+      SampleLength,                      \
+      SampleLoop,                      \
+      SampleReverse,                      \
+      SampleRate,                      \
+      SampleBitReduction,                      \
+      SampleSlot,                      \
+      ModSource,                      \
+      ModDestination,                      \
+      ModAmount,                      \
+      PitchBendRange,                      \
+      BPM,                      \
+      ClockDivide                      \
+);
+
 struct Parameter
 {
    std::string name;
@@ -174,109 +282,7 @@ struct Parameter
    };
    Type type;
    std::optional<std::string> component;
-   enum class Role
-   {
-      Unknown,
-      TrackVolume,
-      TrigChance,
-      Swing,
-      Mute,
-      Solo,
-      KeyPrioMode,
-      Pitch,
-      PitchFinetune,
-      Detune,
-      OSCWaveform,
-      OSCShape,
-      OSCGlide,
-      OSCGlideOnOff,
-      OSCGlideType,
-      OSCKeyboardTracking,
-      OSCSync,
-      OSCSlop,
-      OSCMix,
-      OSCNoise,
-      OSCNoteSyncOnOff,
-      OSC1Decay, // NEW
-      OSC2Decay,  // NEW
-      TransientDecay, // NEW
-      HitDecay, // NEW
-      SubOSCLevel,
-      NoiseLevel,
-      NoiseDecay,
-      NoiseColor, // NEW
-      UnisonMode,
-      UnisonOnOff,
-      FMAmount,
-      InitialVolume,
-      Volume,
-      Pan,
-      DelaySend,
-      ReverbSend,
-      FeedbackVolume,
-      FeedbackGain,
-      FilterCutoff,
-      FilterType,
-      FilterResonance,
-      FilterSlope,
-      FilterKeyAmount,
-      FilterAudioModuation,
-      LPFilterCutoff,
-      LPFilterResonance,
-      LPFilterSlope,
-      LPFilterKeyAmount,
-      LPFilterAudioModuation,
-      LPFilterSweep,
-      ComponentSelector,
-      HPFilterCutoff,
-      HPFilterResonance,
-      HPFilterSlope,
-      HPFilterKeyAmount,
-      HPFilterAudioModuation,
-      LPHPFilterCutoff,
-      LPHPFilterResonance,
-      LPHPFilterSlope,
-      LPHPFilterKeyAmount,
-      LPHPFilterAudioModuation,
-      AmpEnvAmount,
-      EnvAmount,
-      EnvVelAmount,
-      EnvRepeat,
-      EnvDelay,
-      EnvDestination,
-      Attack,
-      Decay,
-      Sustain,
-      Release,
-      Hold,
-      SweepTime,
-      SweepDepth,
-      LFOAmount,
-      LFOSpeed,
-      LFOMultiplier,
-      LFOWaveform,
-      LFODestination,
-      LFODepth,
-      LFOKeySync,
-      ArpOnOff,
-      ArpMode,
-      SequencerOnOff,
-      SequenceTrig,
-      SampleStart,
-      SampleEnd,
-      SampleLength,
-      SampleLoop,
-      SampleReverse,
-      SampleRate,
-      SampleBitReduction,
-      SampleSlot,
-      ModSource,
-      ModDestination,
-      ModAmount,
-      PitchBendRange,
-      BPM,
-      ClockDivide
-   };
+   using Role = ParameterRole;
    std::optional<Role> role;
    std::optional<float> defaultValue;
    std::optional<std::string> description;
