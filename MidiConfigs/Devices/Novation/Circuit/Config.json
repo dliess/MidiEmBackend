@@ -17,28 +17,60 @@
         "name": "MainEngine",
         "components": [
           {
-            "name": "Voice"
+            "name": "Voice",
+            "role": "Track"
           },
           {
-            "name": "Oscillator"
+            "name": "Oscillator1",
+            "role": "Oscillator"
           },
           {
-            "name": "Mixer"
+            "name": "Oscillator2",
+            "role": "Oscillator"
           },
           {
-            "name": "Filter"
+            "name": "Mixer",
+            "role": "Mixer"
           },
           {
-            "name": "Envelope"
+            "name": "Filter",
+            "role": "Filter"
           },
           {
-            "name": "LFO"
+            "name": "Envelope1",
+            "role": "Envelope"
           },
           {
-            "name": "Effects and EQ"
+            "name": "Envelope2",
+            "role": "Envelope"
           },
           {
-            "name": "Mod Matrix"
+            "name": "Envelope3",
+            "role": "Envelope"
+          },
+          {
+            "name": "LFO1",
+            "role": "LFO"
+          },
+          {
+            "name": "LFO2",
+            "role": "LFO"
+          },
+          {
+            "name": "Chorus",
+            "role": "Chorus"
+          },
+          {
+            "name": "Distortion",
+            "role": "Distortion"
+          },
+          {
+            "name": "Equalizer",
+            "role": "Equalizer"
+          },
+          {
+            "name": "Mod Matrix",
+            "role": "ModMatrix"
           },
           {
             "name": "Macro Knob"
@@ -50,16 +82,36 @@
             "description": "sysex patch address: 32",
             "type": "continous",
             "component": "Voice",
+            "defaultValue": 2,
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 3
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 2
-                }
+                "sourceRanges": [
+                  {
+                    "name": "Mono",
+                    "range":{
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "Mono AG",
+                    "range":{
+                      "from": 1,
+                      "to": 1
+                    }
+                  },
+                  {
+                    "name": "Poly",
+                    "range":{
+                      "from": 2,
+                      "to": 2
+                    }
+                  }
+                ]
               }
             }
           },
@@ -80,8 +132,9 @@
           {
             "name": "Pre-Glide",
             "description": "sysex patch address: 34",
-            "type": "continous",
+            "type": "list",
             "component": "Voice",
+            "defaultValue": 12,
             "source": {
               "midi": {
                 "id": {
@@ -98,8 +151,9 @@
           {
             "name": "Keyboard Octave",
             "description": "sysex patch address: 35",
-            "type": "continous",
+            "type": "list",
             "component": "Voice",
+            "defaultValue": 5,
             "source": {
               "midi": {
                 "id": {
@@ -114,28 +168,26 @@
             }
           },
           {
-            "name": "osc 1 wave",
+            "name": "Wave",
             "description": "sysex patch address: 36",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "list",
+            "component": "Oscillator1",
+            "role": "OSCWaveform",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 19
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 29
-                }
+                "sourceRangeFrom": "OscWaveform"
               }
             }
           },
           {
-            "name": "osc 1 wave interpolate",
+            "name": "Wave Interpolate",
             "description": "sysex patch address: 37",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -146,10 +198,10 @@
             }
           },
           {
-            "name": "osc 1 pulse width index",
+            "name": "PulseWidth Index",
             "description": "sysex patch address: 38",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "continous-bipolar",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -160,10 +212,10 @@
             }
           },
           {
-            "name": "osc 1 virtual sync depth",
+            "name": "Virt Sync Depth",
             "description": "sysex patch address: 39",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -174,10 +226,10 @@
             }
           },
           {
-            "name": "osc 1 density",
+            "name": "Density",
             "description": "sysex patch address: 40",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -188,10 +240,10 @@
             }
           },
           {
-            "name": "osc 1 density detune",
+            "name": "Density Detune",
             "description": "sysex patch address: 41",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -202,10 +254,10 @@
             }
           },
           {
-            "name": "osc 1 semitones",
+            "name": "Semitones",
             "description": "sysex patch address: 42",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "continous-bipolar",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -216,10 +268,10 @@
             }
           },
           {
-            "name": "osc 1 cents",
+            "name": "Cents",
             "description": "sysex patch address: 43",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "continous-bipolar",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
@@ -230,10 +282,11 @@
             }
           },
           {
-            "name": "osc 1 pitchbend",
+            "name": "Pitchbend",
             "description": "sysex patch address: 44",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "list",
+            "component": "Oscillator1",
+            "defaultValue": 12,
             "source": {
               "midi": {
                 "id": {
@@ -248,28 +301,26 @@
             }
           },
           {
-            "name": "osc 2 wave",
+            "name": "Wave",
             "description": "sysex patch address: 45",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "list",
+            "component": "Oscillator2",
+            "role": "OSCWaveform",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 29
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 29
-                }
+                "sourceRangeFrom": "OscWaveform"
               }
             }
           },
           {
-            "name": "osc 2 wave interpolate",
+            "name": "Wave Interpolate",
             "description": "sysex patch address: 46",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -280,10 +331,10 @@
             }
           },
           {
-            "name": "osc 2 pulse width index",
+            "name": "PulseWidth Index",
             "description": "sysex patch address: 47",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -294,10 +345,10 @@
             }
           },
           {
-            "name": "osc 2 virtual sync depth",
+            "name": "Virt Sync Depth",
             "description": "sysex patch address: 48",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -308,10 +359,10 @@
             }
           },
           {
-            "name": "osc 2 density",
+            "name": "Density",
             "description": "sysex patch address: 49",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -322,10 +373,10 @@
             }
           },
           {
-            "name": "osc 2 density detune",
+            "name": "Density Detune",
             "description": "sysex patch address: 50",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -336,10 +387,10 @@
             }
           },
           {
-            "name": "osc 2 semitones",
+            "name": "Semitones",
             "description": "sysex patch address: 51",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "continous-bipolar",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -350,10 +401,10 @@
             }
           },
           {
-            "name": "osc 2 cents",
+            "name": "Cents",
             "description": "sysex patch address: 52",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "continous-bipolar",
+            "component": "Oscillator2",
             "source": {
               "midi": {
                 "id": {
@@ -364,10 +415,11 @@
             }
           },
           {
-            "name": "osc 2 pitchbend",
+            "name": "Pitchbend",
             "description": "sysex patch address: 53",
-            "type": "continous",
-            "component": "Oscillator",
+            "type": "list",
+            "component": "Oscillator2",
+            "defaultValue": 12,
             "source": {
               "midi": {
                 "id": {
@@ -382,10 +434,11 @@
             }
           },
           {
-            "name": "osc 1 level",
+            "name": "Osc 1 Level",
             "description": "sysex patch address: 54",
             "type": "continous",
             "component": "Mixer",
+            "role": "OSC1Volume",
             "source": {
               "midi": {
                 "id": {
@@ -396,10 +449,11 @@
             }
           },
           {
-            "name": "osc 2 level",
+            "name": "Osc 2 Level",
             "description": "sysex patch address: 55",
             "type": "continous",
             "component": "Mixer",
+            "role": "OSC2Volume",
             "source": {
               "midi": {
                 "id": {
@@ -410,10 +464,11 @@
             }
           },
           {
-            "name": "ring mod level",
+            "name": "RingMod Level",
             "description": "sysex patch address: 56",
             "type": "continous",
             "component": "Mixer",
+            "role": "RingModVolume",
             "source": {
               "midi": {
                 "id": {
@@ -424,10 +479,11 @@
             }
           },
           {
-            "name": "noise level",
+            "name": "Noise Level",
             "description": "sysex patch address: 57",
             "type": "continous",
             "component": "Mixer",
+            "role": "NoiseLevel",
             "source": {
               "midi": {
                 "id": {
@@ -442,6 +498,8 @@
             "description": "sysex patch address: 58",
             "type": "continous",
             "component": "Mixer",
+            "role": "PreFxLevel",
+            "defaultValue": 0.4,
             "source": {
               "midi": {
                 "id": {
@@ -460,6 +518,8 @@
             "description": "sysex patch address: 59",
             "type": "continous",
             "component": "Mixer",
+            "role": "PostFxLevel",
+            "defaultValue": 0.4,
             "source": {
               "midi": {
                 "id": {
@@ -474,9 +534,9 @@
             }
           },
           {
-            "name": "routing",
+            "name": "Routing",
             "description": "sysex patch address: 60",
-            "type": "continous",
+            "type": "list",
             "component": "Filter",
             "source": {
               "midi": {
@@ -484,10 +544,29 @@
                   ".type": "MidiControlChange",
                   "id": 60
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 2
-                }
+                "sourceRanges": [
+                  {
+                    "name": "Normal",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "OSC1 Bypass",
+                    "range": {
+                      "from": 1,
+                      "to": 1
+                    }
+                  },
+                  {
+                    "name": "OSC1+2 Bypass",
+                    "range": {
+                      "from": 2,
+                      "to": 2
+                    }
+                  }
+                ]
               }
             }
           },
@@ -508,7 +587,7 @@
           {
             "name": "drive type",
             "description": "sysex patch address: 62",
-            "type": "continous",
+            "type": "list",
             "component": "Filter",
             "source": {
               "midi": {
@@ -516,36 +595,32 @@
                   ".type": "MidiControlChange",
                   "id": 65
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 6
-                }
+                "sourceRangeFrom": "filterDriveType"
               }
             }
           },
           {
             "name": "type",
             "description": "sysex patch address: 63",
-            "type": "continous",
+            "type": "list",
             "component": "Filter",
+            "role": "FilterType",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 68
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 5
-                }
+                "sourceRangeFrom": "filterType"
               }
             }
           },
           {
-            "name": "frequency",
+            "name": "Cutoff",
             "description": "sysex patch address: 64",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -556,10 +631,11 @@
             }
           },
           {
-            "name": "tracking",
+            "name": "Keyb Tracking",
             "description": "sysex patch address: 65",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterKeyAmount",
             "source": {
               "midi": {
                 "id": {
@@ -570,10 +646,11 @@
             }
           },
           {
-            "name": "resonance",
+            "name": "Resonance",
             "description": "sysex patch address: 66",
             "type": "continous",
             "component": "Filter",
+            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -586,7 +663,7 @@
           {
             "name": "Q normalise",
             "description": "sysex patch address: 67",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Filter",
             "source": {
               "midi": {
@@ -598,10 +675,11 @@
             }
           },
           {
-            "name": "env 2 to frequency",
+            "name": "Env2 Amount",
             "description": "sysex patch address: 68",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Filter",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -612,10 +690,11 @@
             }
           },
           {
-            "name": "env 1 velocity",
+            "name": "Velocity",
             "description": "sysex patch address: 69",
-            "type": "continous",
-            "component": "Envelope",
+            "type": "continous-bipolar",
+            "component": "Envelope1",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -626,10 +705,11 @@
             }
           },
           {
-            "name": "env 1 attack",
+            "name": "Attack",
             "description": "sysex patch address: 70",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope1",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -640,10 +720,11 @@
             }
           },
           {
-            "name": "env 1 decay",
+            "name": "Decay",
             "description": "sysex patch address: 71",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope1",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -654,10 +735,11 @@
             }
           },
           {
-            "name": "env 1 sustain",
+            "name": "Sustain",
             "description": "sysex patch address: 72",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope1",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -668,10 +750,11 @@
             }
           },
           {
-            "name": "env 1 release",
+            "name": "Release",
             "description": "sysex patch address: 73",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope1",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -682,10 +765,11 @@
             }
           },
           {
-            "name": "env 2 velocity",
+            "name": "Velocity",
             "description": "sysex patch address: 74",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope2",
+            "role": "EnvAmount",
             "source": {
               "midi": {
                 "id": {
@@ -697,10 +781,11 @@
             }
           },
           {
-            "name": "env 2 attack",
+            "name": "Attack",
             "description": "sysex patch address: 75",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope2",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -712,10 +797,11 @@
             }
           },
           {
-            "name": "env 2 decay",
+            "name": "Decay",
             "description": "sysex patch address: 76",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope2",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -727,10 +813,11 @@
             }
           },
           {
-            "name": "env 2 sustain",
+            "name": "Sustain",
             "description": "sysex patch address: 77",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope2",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -742,10 +829,11 @@
             }
           },
           {
-            "name": "env 2 release",
+            "name": "Release",
             "description": "sysex patch address: 78",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope2",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -757,10 +845,11 @@
             }
           },
           {
-            "name": "env 3 delay",
+            "name": "Delay",
             "description": "sysex patch address: 79",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope3",
+            "role": "EnvDelay",
             "source": {
               "midi": {
                 "id": {
@@ -772,10 +861,11 @@
             }
           },
           {
-            "name": "env 3 attack",
+            "name": "Attack",
             "description": "sysex patch address: 80",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope3",
+            "role": "Attack",
             "source": {
               "midi": {
                 "id": {
@@ -787,10 +877,11 @@
             }
           },
           {
-            "name": "env 3 decay",
+            "name": "Decay",
             "description": "sysex patch address: 81",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope3",
+            "role": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -802,10 +893,11 @@
             }
           },
           {
-            "name": "env 3 sustain",
+            "name": "Sustain",
             "description": "sysex patch address: 82",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope3",
+            "role": "Sustain",
             "source": {
               "midi": {
                 "id": {
@@ -817,10 +909,11 @@
             }
           },
           {
-            "name": "env 3 release",
+            "name": "Release",
             "description": "sysex patch address: 83",
             "type": "continous",
-            "component": "Envelope",
+            "component": "Envelope3",
+            "role": "Release",
             "source": {
               "midi": {
                 "id": {
@@ -832,10 +925,11 @@
             }
           },
           {
-            "name": "lfo 1 waveform",
+            "name": "Waveform",
             "description": "sysex patch address: 84",
             "type": "continous",
             "component": "LFO",
+            "role": "LFOWaveform",
             "source": {
               "midi": {
                 "id": {
@@ -843,18 +937,15 @@
                   "idMsb": 0,
                   "idLsb": 70
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 37
-                }
+                "sourceRangeFrom": "lfoWaveform"
               }
             }
           },
           {
-            "name": "lfo 1 phase offset",
+            "name": "Phase Offset",
             "description": "sysex patch address: 85",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -870,10 +961,10 @@
             }
           },
           {
-            "name": "lfo 1 slew rate",
+            "name": "Slew Rate",
             "description": "sysex patch address: 86",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -885,10 +976,10 @@
             }
           },
           {
-            "name": "lfo 1 delay",
+            "name": "Delay",
             "description": "sysex patch address: 87",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -900,10 +991,10 @@
             }
           },
           {
-            "name": "lfo 1 delay sync",
+            "name": "Delay Sync",
             "description": "sysex patch address: 88",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -919,10 +1010,11 @@
             }
           },
           {
-            "name": "lfo 1 rate",
+            "name": "Rate",
             "description": "sysex patch address: 89",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
+            "role": "LFOFrequency",
             "source": {
               "midi": {
                 "id": {
@@ -934,10 +1026,10 @@
             }
           },
           {
-            "name": "lfo 1 rate sync",
+            "name": "Rate Sync",
             "description": "sysex patch address: 90",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -953,10 +1045,10 @@
             }
           },
           {
-            "name": "lfo 1 one shot",
+            "name": "OneShot",
             "description": "sysex patch address: 91",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -964,18 +1056,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 12,
-                  "to": 13
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 12,
+                      "to": 12
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 13,
+                      "to": 13
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 1 key sync",
+            "name": "Key Sync",
             "description": "sysex patch address: 91",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -983,18 +1087,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 14,
-                  "to": 15
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 14,
+                      "to": 14
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 15,
+                      "to": 15
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 1 common sync",
+            "name": "Common Sync",
             "description": "sysex patch address: 91",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -1002,18 +1118,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 16,
-                  "to": 17
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 16,
+                      "to": 16
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 17,
+                      "to": 17
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 1 delay trigger",
+            "name": "Delay Trigger",
             "description": "sysex patch address: 91",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -1021,18 +1149,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 18,
-                  "to": 19
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 18,
+                      "to": 18
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 19,
+                      "to": 19
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 1 fade mode",
+            "name": "Fade Mode",
             "description": "sysex patch address: 91",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO1",
             "source": {
               "midi": {
                 "id": {
@@ -1040,18 +1180,45 @@
                   "idMsb": 0,
                   "idLsb": 123
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 3
-                }
+                "sourceRanges":[
+                  {
+                    "name": "Fade In",
+                    "range": {
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "Fade Out",
+                    "range": {
+                      "from": 1,
+                      "to": 1
+                    }
+                  },
+                  {
+                    "name": "Gate In",
+                    "range": {
+                      "from": 2,
+                      "to": 2
+                    }
+                  },
+                  {
+                    "name": "Gate Out",
+                    "range": {
+                      "from": 3,
+                      "to": 3
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 2 waveform",
+            "name": "Waveform",
             "description": "sysex patch address: 92",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
+            "role": "LFOWaveform",
             "source": {
               "midi": {
                 "id": {
@@ -1059,18 +1226,15 @@
                   "idMsb": 0,
                   "idLsb": 79
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 37
-                }
+                "sourceRangeFrom": "lfoWaveform"
               }
             }
           },
           {
-            "name": "lfo 2 phase offset",
+            "name": "Phase offset",
             "description": "sysex patch address: 93",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1086,10 +1250,10 @@
             }
           },
           {
-            "name": "lfo 2 slew rate",
+            "name": "Slew Rate",
             "description": "sysex patch address: 94",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1101,10 +1265,10 @@
             }
           },
           {
-            "name": "lfo 2 delay",
+            "name": "Delay",
             "description": "sysex patch address: 95",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1116,10 +1280,10 @@
             }
           },
           {
-            "name": "lfo 2 delay sync",
+            "name": "Delay Sync",
             "description": "sysex patch address: 96",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1135,10 +1299,11 @@
             }
           },
           {
-            "name": "lfo 2 rate",
+            "name": "Rate",
             "description": "sysex patch address: 97",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
+            "role": "LFOFrequency",
             "source": {
               "midi": {
                 "id": {
@@ -1150,10 +1315,10 @@
             }
           },
           {
-            "name": "lfo 2 rate sync",
+            "name": "Rate Sync",
             "description": "sysex patch address: 98",
             "type": "continous",
-            "component": "LFO",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1169,10 +1334,10 @@
             }
           },
           {
-            "name": "lfo 2 one shot",
+            "name": "OneShot",
             "description": "sysex patch address: 99",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1180,18 +1345,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 22,
-                  "to": 23
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 22,
+                      "to": 22
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 23,
+                      "to": 23
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 2 key sync",
+            "name": "Key Sync",
             "description": "sysex patch address: 99",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1199,18 +1376,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 24,
-                  "to": 25
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 24,
+                      "to": 24
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 25,
+                      "to": 25
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 2 common sync",
+            "name": "Common sync",
             "description": "sysex patch address: 99",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1218,18 +1407,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 26,
-                  "to": 27
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 26,
+                      "to": 26
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 27,
+                      "to": 27
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 2 delay trigger",
+            "name": "Delay trigger",
             "description": "sysex patch address: 99",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1237,18 +1438,30 @@
                   "idMsb": 0,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 28,
-                  "to": 29
-                }
+                "sourceRanges":[
+                  {
+                    "name": "OFF",
+                    "range": {
+                      "from": 28,
+                      "to": 28
+                    }
+                  },
+                  {
+                    "name": "ON",
+                    "range": {
+                      "from": 29,
+                      "to": 29
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "lfo 2 fade mode",
+            "name": "Fade mode",
             "description": "sysex patch address: 99",
-            "type": "continous",
-            "component": "LFO",
+            "type": "list",
+            "component": "LFO2",
             "source": {
               "midi": {
                 "id": {
@@ -1256,18 +1469,44 @@
                   "idMsb": 0,
                   "idLsb": 123
                 },
-                "sourceValueRange": {
-                  "from": 4,
-                  "to": 7
-                }
+                "sourceRanges":[
+                  {
+                    "name": "Fade In",
+                    "range": {
+                      "from": 4,
+                      "to": 4
+                    }
+                  },
+                  {
+                    "name": "Fade Out",
+                    "range": {
+                      "from": 5,
+                      "to": 5
+                    }
+                  },
+                  {
+                    "name": "Gate In",
+                    "range": {
+                      "from": 6,
+                      "to": 6
+                    }
+                  },
+                  {
+                    "name": "Gate Out",
+                    "range": {
+                      "from": 7,
+                      "to": 7
+                    }
+                  }
+                ]
               }
             }
           },
           {
-            "name": "distortion level",
+            "name": "level",
             "description": "sysex patch address: 100",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Distortion",
             "source": {
               "midi": {
                 "id": {
@@ -1278,10 +1517,10 @@
             }
           },
           {
-            "name": "chorus level",
+            "name": "Level",
             "description": "sysex patch address: 102",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1292,10 +1531,10 @@
             }
           },
           {
-            "name": "EQ bass frequency",
+            "name": "Bass Frequency",
             "description": "sysex patch address: 105",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1307,10 +1546,10 @@
             }
           },
           {
-            "name": "EQ bass level",
+            "name": "Bass Level",
             "description": "sysex patch address: 106",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1322,10 +1561,10 @@
             }
           },
           {
-            "name": "EQ mid frequency",
+            "name": "Mid Frequency",
             "description": "sysex patch address: 107",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1337,10 +1576,10 @@
             }
           },
           {
-            "name": "EQ mid level",
+            "name": "Mid Level",
             "description": "sysex patch address: 108",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1352,10 +1591,10 @@
             }
           },
           {
-            "name": "EQ treble frequency",
+            "name": "Treble Frequency",
             "description": "sysex patch address: 109",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1367,10 +1606,10 @@
             }
           },
           {
-            "name": "EQ treble level",
+            "name": "Treble Level",
             "description": "sysex patch address: 110",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Equalizer",
             "source": {
               "midi": {
                 "id": {
@@ -1382,10 +1621,10 @@
             }
           },
           {
-            "name": "distortion type",
+            "name": "Type",
             "description": "sysex patch address: 116",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Distortion",
             "source": {
               "midi": {
                 "id": {
@@ -1401,10 +1640,10 @@
             }
           },
           {
-            "name": "distortion compensation",
+            "name": "Compensation",
             "description": "sysex patch address: 117",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Distortion",
             "source": {
               "midi": {
                 "id": {
@@ -1416,10 +1655,10 @@
             }
           },
           {
-            "name": "chorus type",
+            "name": "Type",
             "description": "sysex patch address: 118",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1435,10 +1674,10 @@
             }
           },
           {
-            "name": "chorus rate",
+            "name": "Rate",
             "description": "sysex patch address: 119",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1450,10 +1689,10 @@
             }
           },
           {
-            "name": "chorus rate sync",
+            "name": "Rate Sync",
             "description": "sysex patch address: 120",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1469,10 +1708,10 @@
             }
           },
           {
-            "name": "chorus feedback",
+            "name": "Feedback",
             "description": "sysex patch address: 121",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1484,10 +1723,10 @@
             }
           },
           {
-            "name": "chorus mod depth",
+            "name": "Mod Depth",
             "description": "sysex patch address: 122",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {
@@ -1499,10 +1738,10 @@
             }
           },
           {
-            "name": "chorus delay",
+            "name": "Delay",
             "description": "sysex patch address: 123",
             "type": "continous",
-            "component": "Effects and EQ",
+            "component": "Chorus",
             "source": {
               "midi": {
                 "id": {

@@ -74,13 +74,15 @@ DECLARE_ENUM(ComponentRole, uint,    \
       Sequencer,                     \
       Sample,                        \
       Effects,                       \
+      Equalizer,                     \
       Delay,                         \
       Reverb,                        \
       Chorus,                        \
       Distortion,                    \
       Compressor,                    \
       ModMatrix,                     \
-      Tempo                          \
+      Tempo,                         \
+      Mixer                          \
 );
 
 struct Component
@@ -189,6 +191,9 @@ DECLARE_ENUM(ParameterRole, uint,    \
       OSCMix,                      \
       OSCNoise,                      \
       OSCNoteSyncOnOff,                      \
+      OSC1Volume,                      \
+      OSC2Volume,                      \
+      RingModVolume,                  \
       OSC1Decay,                      \
       OSC2Decay,                      \
       TransientDecay,                      \
@@ -291,7 +296,9 @@ DECLARE_ENUM(ParameterRole, uint,    \
       DampingFactor,             \
       GateTime,                  \
       ShelvingGain,              \
-      ShelvingFrequency          \
+      ShelvingFrequency,         \
+      PreFxLevel,                \
+      PostFxLevel                \
 );
 
 struct Parameter
