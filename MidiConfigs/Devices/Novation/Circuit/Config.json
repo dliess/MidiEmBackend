@@ -179,7 +179,7 @@
                   ".type": "MidiControlChange",
                   "id": 19
                 },
-                "sourceRangeFrom": "OscWaveform"
+                "sourceRangeFrom": "oscWaveform"
               }
             }
           },
@@ -312,7 +312,7 @@
                   ".type": "MidiControlChange",
                   "id": 29
                 },
-                "sourceRangeFrom": "OscWaveform"
+                "sourceRangeFrom": "oscWaveform"
               }
             }
           },
@@ -1503,7 +1503,7 @@
             }
           },
           {
-            "name": "level",
+            "name": "Level",
             "description": "sysex patch address: 100",
             "type": "continous",
             "component": "Distortion",
@@ -1548,7 +1548,8 @@
           {
             "name": "Bass Level",
             "description": "sysex patch address: 106",
-            "type": "continous",
+            "type": "continous-bipolar",
+            "role": "LowBandAmp",
             "component": "Equalizer",
             "source": {
               "midi": {
@@ -1578,8 +1579,9 @@
           {
             "name": "Mid Level",
             "description": "sysex patch address: 108",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Equalizer",
+            "role": "MidBandAmp",
             "source": {
               "midi": {
                 "id": {
@@ -1608,8 +1610,9 @@
           {
             "name": "Treble Level",
             "description": "sysex patch address: 110",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Equalizer",
+            "role": "HighBandAmp",
             "source": {
               "midi": {
                 "id": {
@@ -1623,7 +1626,7 @@
           {
             "name": "Type",
             "description": "sysex patch address: 116",
-            "type": "continous",
+            "type": "list",
             "component": "Distortion",
             "source": {
               "midi": {
@@ -1632,10 +1635,7 @@
                   "idMsb": 1,
                   "idLsb": 0
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 6
-                }
+                "sourceRangeFrom": "distortionType"
               }
             }
           },
@@ -1644,6 +1644,8 @@
             "description": "sysex patch address: 117",
             "type": "continous",
             "component": "Distortion",
+            "defaultValue": 0.8,
+            "role": "MakeupGain",
             "source": {
               "midi": {
                 "id": {
@@ -1666,10 +1668,7 @@
                   "idMsb": 1,
                   "idLsb": 24
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 1
-                }
+                "sourceRangeFrom": "chorusType"
               }
             }
           },
@@ -1678,6 +1677,7 @@
             "description": "sysex patch address: 119",
             "type": "continous",
             "component": "Chorus",
+            "defaultValue": 0.6,
             "source": {
               "midi": {
                 "id": {
@@ -1710,7 +1710,7 @@
           {
             "name": "Feedback",
             "description": "sysex patch address: 121",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Chorus",
             "source": {
               "midi": {
@@ -1753,10 +1753,11 @@
             }
           },
           {
-            "name": "mod matrix 1 source 1",
+            "name": "ModMatrix 1 src 1",
             "description": "sysex patch address: 124",
-            "type": "continous",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1764,18 +1765,16 @@
                   "idMsb": 1,
                   "idLsb": 83
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 1 source 2",
+            "name": "ModMatrix 1 src 2",
             "description": "sysex patch address: 125",
-            "type": "continous",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1783,18 +1782,16 @@
                   "idMsb": 1,
                   "idLsb": 84
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 1 depth",
+            "name": "ModMatrix 1 Depth",
             "description": "sysex patch address: 126",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1806,10 +1803,11 @@
             }
           },
           {
-            "name": "mod matrix 1 destination",
+            "name": "ModMatrix 1 dest",
             "description": "sysex patch address: 127",
-            "type": "continous",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -1817,18 +1815,18 @@
                   "idMsb": 1,
                   "idLsb": 87
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 2 source 1",
-            "description": "sysex patch address: 128",
-            "type": "continous",
+            "name": "ModMatrix 2 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1836,18 +1834,16 @@
                   "idMsb": 1,
                   "idLsb": 88
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 2 source 2",
-            "description": "sysex patch address: 129",
-            "type": "continous",
+            "name": "ModMatrix 2 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1855,18 +1851,16 @@
                   "idMsb": 1,
                   "idLsb": 89
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 2 depth",
-            "description": "sysex patch address: 130",
-            "type": "continous",
+            "name": "ModMatrix 2 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1878,10 +1872,11 @@
             }
           },
           {
-            "name": "mod matrix 2 destination",
-            "description": "sysex patch address: 131",
-            "type": "continous",
+            "name": "ModMatrix 2 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -1889,18 +1884,18 @@
                   "idMsb": 1,
                   "idLsb": 92
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 3 source 1",
-            "description": "sysex patch address: 132",
-            "type": "continous",
+            "name": "ModMatrix 3 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1908,18 +1903,16 @@
                   "idMsb": 1,
                   "idLsb": 93
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 3 source 2",
-            "description": "sysex patch address: 133",
-            "type": "continous",
+            "name": "ModMatrix 3 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1927,18 +1920,16 @@
                   "idMsb": 1,
                   "idLsb": 94
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 3 depth",
-            "description": "sysex patch address: 134",
-            "type": "continous",
+            "name": "ModMatrix 3 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -1950,10 +1941,11 @@
             }
           },
           {
-            "name": "mod matrix 3 destination",
-            "description": "sysex patch address: 135",
-            "type": "continous",
+            "name": "ModMatrix 3 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -1961,18 +1953,18 @@
                   "idMsb": 1,
                   "idLsb": 97
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 4 source 1",
-            "description": "sysex patch address: 136",
-            "type": "continous",
+            "name": "ModMatrix 4 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1980,18 +1972,16 @@
                   "idMsb": 1,
                   "idLsb": 98
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 4 source 2",
-            "description": "sysex patch address: 137",
-            "type": "continous",
+            "name": "ModMatrix 4 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -1999,18 +1989,16 @@
                   "idMsb": 1,
                   "idLsb": 99
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 4 depth",
-            "description": "sysex patch address: 138",
-            "type": "continous",
+            "name": "ModMatrix 4 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2022,10 +2010,11 @@
             }
           },
           {
-            "name": "mod matrix 4 destination",
-            "description": "sysex patch address: 139",
-            "type": "continous",
+            "name": "ModMatrix 4 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2033,18 +2022,18 @@
                   "idMsb": 1,
                   "idLsb": 102
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 5 source 1",
-            "description": "sysex patch address: 140",
-            "type": "continous",
+            "name": "ModMatrix 5 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2052,18 +2041,16 @@
                   "idMsb": 1,
                   "idLsb": 103
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 5 source 2",
-            "description": "sysex patch address: 141",
-            "type": "continous",
+            "name": "ModMatrix 5 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2071,18 +2058,16 @@
                   "idMsb": 1,
                   "idLsb": 104
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 5 depth",
-            "description": "sysex patch address: 142",
-            "type": "continous",
+            "name": "ModMatrix 5 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2094,10 +2079,11 @@
             }
           },
           {
-            "name": "mod matrix 5 destination",
-            "description": "sysex patch address: 143",
-            "type": "continous",
+            "name": "ModMatrix 5 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2105,18 +2091,18 @@
                   "idMsb": 1,
                   "idLsb": 107
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 6 source 1",
-            "description": "sysex patch address: 144",
-            "type": "continous",
+            "name": "ModMatrix 6 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2124,18 +2110,16 @@
                   "idMsb": 1,
                   "idLsb": 108
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 6 source 2",
-            "description": "sysex patch address: 145",
-            "type": "continous",
+            "name": "ModMatrix 6 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2143,18 +2127,16 @@
                   "idMsb": 1,
                   "idLsb": 109
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 6 depth",
-            "description": "sysex patch address: 146",
-            "type": "continous",
+            "name": "ModMatrix 6 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2166,10 +2148,11 @@
             }
           },
           {
-            "name": "mod matrix 6 destination",
-            "description": "sysex patch address: 147",
-            "type": "continous",
+            "name": "ModMatrix 6 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2177,18 +2160,18 @@
                   "idMsb": 1,
                   "idLsb": 112
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 7 source 1",
-            "description": "sysex patch address: 148",
-            "type": "continous",
+            "name": "ModMatrix 7 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2196,18 +2179,16 @@
                   "idMsb": 1,
                   "idLsb": 113
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 7 source 2",
-            "description": "sysex patch address: 149",
-            "type": "continous",
+            "name": "ModMatrix 7 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2215,18 +2196,16 @@
                   "idMsb": 1,
                   "idLsb": 114
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 7 depth",
-            "description": "sysex patch address: 150",
-            "type": "continous",
+            "name": "ModMatrix 7 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2238,10 +2217,11 @@
             }
           },
           {
-            "name": "mod matrix 7 destination",
-            "description": "sysex patch address: 151",
-            "type": "continous",
+            "name": "ModMatrix 7 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2249,18 +2229,18 @@
                   "idMsb": 1,
                   "idLsb": 117
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 8 source 1",
-            "description": "sysex patch address: 152",
-            "type": "continous",
+            "name": "ModMatrix 8 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2268,18 +2248,16 @@
                   "idMsb": 1,
                   "idLsb": 118
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 8 source 2",
-            "description": "sysex patch address: 153",
-            "type": "continous",
+            "name": "ModMatrix 8 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2287,18 +2265,16 @@
                   "idMsb": 1,
                   "idLsb": 119
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 8 depth",
-            "description": "sysex patch address: 154",
-            "type": "continous",
+            "name": "ModMatrix 8 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2310,10 +2286,11 @@
             }
           },
           {
-            "name": "mod matrix 8 destination",
-            "description": "sysex patch address: 155",
-            "type": "continous",
+            "name": "ModMatrix 8 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2321,18 +2298,17 @@
                   "idMsb": 1,
                   "idLsb": 122
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
           {
-            "name": "mod matrix 9 source 1",
-            "description": "sysex patch address: 156",
-            "type": "continous",
+            "name": "ModMatrix 9 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2340,18 +2316,16 @@
                   "idMsb": 1,
                   "idLsb": 123
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 9 source 2",
-            "description": "sysex patch address: 157",
-            "type": "continous",
+            "name": "ModMatrix 9 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2359,18 +2333,16 @@
                   "idMsb": 1,
                   "idLsb": 124
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 9 depth",
-            "description": "sysex patch address: 158",
-            "type": "continous",
+            "name": "ModMatrix 9 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2382,10 +2354,11 @@
             }
           },
           {
-            "name": "mod matrix 9 destination",
-            "description": "sysex patch address: 159",
-            "type": "continous",
+            "name": "ModMatrix 9 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2393,18 +2366,18 @@
                   "idMsb": 1,
                   "idLsb": 127
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 10 source 1",
-            "description": "sysex patch address: 160",
-            "type": "continous",
+            "name": "ModMatrix 10 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2412,18 +2385,16 @@
                   "idMsb": 2,
                   "idLsb": 0
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 10 source 2",
-            "description": "sysex patch address: 161",
-            "type": "continous",
+            "name": "ModMatrix 10 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2431,18 +2402,16 @@
                   "idMsb": 2,
                   "idLsb": 1
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 10 depth",
-            "description": "sysex patch address: 162",
-            "type": "continous",
+            "name": "ModMatrix 10 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2454,10 +2423,11 @@
             }
           },
           {
-            "name": "mod matrix 10 destination",
-            "description": "sysex patch address: 163",
-            "type": "continous",
+            "name": "ModMatrix 10 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2465,18 +2435,19 @@
                   "idMsb": 2,
                   "idLsb": 4
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
+
           {
-            "name": "mod matrix 11 source 1",
-            "description": "sysex patch address: 164",
-            "type": "continous",
+            "name": "ModMatrix 11 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2484,18 +2455,16 @@
                   "idMsb": 2,
                   "idLsb": 5
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 11 source 2",
-            "description": "sysex patch address: 165",
-            "type": "continous",
+            "name": "ModMatrix 11 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2503,18 +2472,16 @@
                   "idMsb": 2,
                   "idLsb": 6
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 11 depth",
-            "description": "sysex patch address: 166",
-            "type": "continous",
+            "name": "ModMatrix 11 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2526,10 +2493,11 @@
             }
           },
           {
-            "name": "mod matrix 11 destination",
-            "description": "sysex patch address: 167",
-            "type": "continous",
+            "name": "ModMatrix 11 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2537,18 +2505,19 @@
                   "idMsb": 2,
                   "idLsb": 9
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
+
           {
-            "name": "mod matrix 12 source 1",
-            "description": "sysex patch address: 168",
-            "type": "continous",
+            "name": "ModMatrix 12 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2556,18 +2525,16 @@
                   "idMsb": 2,
                   "idLsb": 10
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 12 source 2",
-            "description": "sysex patch address: 169",
-            "type": "continous",
+            "name": "ModMatrix 12 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2575,18 +2542,16 @@
                   "idMsb": 2,
                   "idLsb": 11
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 12 depth",
-            "description": "sysex patch address: 170",
-            "type": "continous",
+            "name": "ModMatrix 12 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2598,10 +2563,11 @@
             }
           },
           {
-            "name": "mod matrix 12 destination",
-            "description": "sysex patch address: 171",
-            "type": "continous",
+            "name": "ModMatrix 12 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2609,18 +2575,18 @@
                   "idMsb": 2,
                   "idLsb": 14
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 13 source 1",
-            "description": "sysex patch address: 172",
-            "type": "continous",
+            "name": "ModMatrix 13 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2628,18 +2594,16 @@
                   "idMsb": 2,
                   "idLsb": 15
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 13 source 2",
-            "description": "sysex patch address: 173",
-            "type": "continous",
+            "name": "ModMatrix 13 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2647,18 +2611,16 @@
                   "idMsb": 2,
                   "idLsb": 16
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 13 depth",
-            "description": "sysex patch address: 174",
-            "type": "continous",
+            "name": "ModMatrix 13 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2670,10 +2632,11 @@
             }
           },
           {
-            "name": "mod matrix 13 destination",
-            "description": "sysex patch address: 175",
-            "type": "continous",
+            "name": "ModMatrix 13 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2681,18 +2644,20 @@
                   "idMsb": 2,
                   "idLsb": 19
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
+
+
           {
-            "name": "mod matrix 14 source 1",
-            "description": "sysex patch address: 176",
-            "type": "continous",
+            "name": "ModMatrix 14 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2700,18 +2665,16 @@
                   "idMsb": 2,
                   "idLsb": 20
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 14 source 2",
-            "description": "sysex patch address: 177",
-            "type": "continous",
+            "name": "ModMatrix 14 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2719,18 +2682,16 @@
                   "idMsb": 2,
                   "idLsb": 21
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 14 depth",
-            "description": "sysex patch address: 178",
-            "type": "continous",
+            "name": "ModMatrix 14 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2742,10 +2703,11 @@
             }
           },
           {
-            "name": "mod matrix 14 destination",
-            "description": "sysex patch address: 179",
-            "type": "continous",
+            "name": "ModMatrix 14 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2753,18 +2715,19 @@
                   "idMsb": 2,
                   "idLsb": 24
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
+
           {
-            "name": "mod matrix 15 source 1",
-            "description": "sysex patch address: 180",
-            "type": "continous",
+            "name": "ModMatrix 15 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2772,18 +2735,16 @@
                   "idMsb": 2,
                   "idLsb": 25
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 15 source 2",
-            "description": "sysex patch address: 181",
-            "type": "continous",
+            "name": "ModMatrix 15 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2791,18 +2752,16 @@
                   "idMsb": 2,
                   "idLsb": 27
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 15 depth",
-            "description": "sysex patch address: 182",
-            "type": "continous",
+            "name": "ModMatrix 15 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2814,10 +2773,11 @@
             }
           },
           {
-            "name": "mod matrix 15 destination",
-            "description": "sysex patch address: 183",
-            "type": "continous",
+            "name": "ModMatrix 15 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2825,18 +2785,18 @@
                   "idMsb": 2,
                   "idLsb": 29
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 16 source 1",
-            "description": "sysex patch address: 184",
-            "type": "continous",
+            "name": "ModMatrix 16 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2844,18 +2804,16 @@
                   "idMsb": 2,
                   "idLsb": 30
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 16 source 2",
-            "description": "sysex patch address: 185",
-            "type": "continous",
+            "name": "ModMatrix 16 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2863,18 +2821,16 @@
                   "idMsb": 2,
                   "idLsb": 32
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 16 depth",
-            "description": "sysex patch address: 186",
-            "type": "continous",
+            "name": "ModMatrix 16 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2886,10 +2842,11 @@
             }
           },
           {
-            "name": "mod matrix 16 destination",
-            "description": "sysex patch address: 187",
-            "type": "continous",
+            "name": "ModMatrix 16 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2897,18 +2854,20 @@
                   "idMsb": 2,
                   "idLsb": 34
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
+
+
           {
-            "name": "mod matrix 17 source 1",
-            "description": "sysex patch address: 188",
-            "type": "continous",
+            "name": "ModMatrix 17 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2916,18 +2875,16 @@
                   "idMsb": 2,
                   "idLsb": 35
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 17 source 2",
-            "description": "sysex patch address: 189",
-            "type": "continous",
+            "name": "ModMatrix 17 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2935,18 +2892,16 @@
                   "idMsb": 2,
                   "idLsb": 37
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 17 depth",
-            "description": "sysex patch address: 190",
-            "type": "continous",
+            "name": "ModMatrix 17 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -2958,10 +2913,11 @@
             }
           },
           {
-            "name": "mod matrix 17 destination",
-            "description": "sysex patch address: 191",
-            "type": "continous",
+            "name": "ModMatrix 17 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -2969,18 +2925,18 @@
                   "idMsb": 2,
                   "idLsb": 39
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 18 source 1",
-            "description": "sysex patch address: 192",
-            "type": "continous",
+            "name": "ModMatrix 18 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -2988,18 +2944,16 @@
                   "idMsb": 2,
                   "idLsb": 40
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 18 source 2",
-            "description": "sysex patch address: 193",
-            "type": "continous",
+            "name": "ModMatrix 18 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -3007,18 +2961,16 @@
                   "idMsb": 2,
                   "idLsb": 42
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 18 depth",
-            "description": "sysex patch address: 194",
-            "type": "continous",
+            "name": "ModMatrix 18 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -3030,10 +2982,11 @@
             }
           },
           {
-            "name": "mod matrix 18 destination",
-            "description": "sysex patch address: 195",
-            "type": "continous",
+            "name": "ModMatrix 18 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -3041,18 +2994,18 @@
                   "idMsb": 2,
                   "idLsb": 44
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 19 source 1",
-            "description": "sysex patch address: 196",
-            "type": "continous",
+            "name": "ModMatrix 19 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -3060,18 +3013,16 @@
                   "idMsb": 2,
                   "idLsb": 45
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 19 source 2",
-            "description": "sysex patch address: 197",
-            "type": "continous",
+            "name": "ModMatrix 19 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -3079,18 +3030,16 @@
                   "idMsb": 2,
                   "idLsb": 47
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 19 depth",
-            "description": "sysex patch address: 198",
-            "type": "continous",
+            "name": "ModMatrix 19 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -3102,10 +3051,11 @@
             }
           },
           {
-            "name": "mod matrix 19 destination",
-            "description": "sysex patch address: 199",
-            "type": "continous",
+            "name": "ModMatrix 19 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -3113,18 +3063,18 @@
                   "idMsb": 2,
                   "idLsb": 49
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
+
           {
-            "name": "mod matrix 20 source 1",
-            "description": "sysex patch address: 200",
-            "type": "continous",
+            "name": "ModMatrix 20 src 1",
+            "description": "sysex patch address: 124",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -3132,18 +3082,16 @@
                   "idMsb": 2,
                   "idLsb": 50
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 20 source 2",
-            "description": "sysex patch address: 201",
-            "type": "continous",
+            "name": "ModMatrix 20 src 2",
+            "description": "sysex patch address: 125",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModSource",
             "source": {
               "midi": {
                 "id": {
@@ -3151,18 +3099,16 @@
                   "idMsb": 2,
                   "idLsb": 52
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 12
-                }
+                "sourceRangeFrom": "modMatrixSources"
               }
             }
           },
           {
-            "name": "mod matrix 20 depth",
-            "description": "sysex patch address: 202",
-            "type": "continous",
+            "name": "ModMatrix 20 Depth",
+            "description": "sysex patch address: 126",
+            "type": "continous-bipolar",
             "component": "Mod Matrix",
+            "role": "ModAmount",
             "source": {
               "midi": {
                 "id": {
@@ -3174,10 +3120,11 @@
             }
           },
           {
-            "name": "mod matrix 20 destination",
-            "description": "sysex patch address: 203",
-            "type": "continous",
+            "name": "ModMatrix 20 dest",
+            "description": "sysex patch address: 127",
+            "type": "list",
             "component": "Mod Matrix",
+            "role": "ModDestination",
             "source": {
               "midi": {
                 "id": {
@@ -3185,13 +3132,11 @@
                   "idMsb": 2,
                   "idLsb": 54
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 17
-                }
+                "sourceRangeFrom": "modMatrixDestinations"
               }
             }
           },
+
           {
             "name": "macro knob 1 position",
             "description": "sysex patch address: 204",
@@ -3209,7 +3154,7 @@
           {
             "name": "macro knob 1 destination A",
             "description": "sysex patch address: 205",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3218,10 +3163,7 @@
                   "idMsb": 3,
                   "idLsb": 0
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3258,7 +3200,7 @@
           {
             "name": "macro knob 1 depth A",
             "description": "sysex patch address: 208",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3273,7 +3215,7 @@
           {
             "name": "macro knob 1 destination B",
             "description": "sysex patch address: 209",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3282,10 +3224,7 @@
                   "idMsb": 3,
                   "idLsb": 4
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3322,7 +3261,7 @@
           {
             "name": "macro knob 1 depth B",
             "description": "sysex patch address: 212",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3479,7 +3418,7 @@
           {
             "name": "macro knob 2 destination A",
             "description": "sysex patch address: 222",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3488,10 +3427,7 @@
                   "idMsb": 3,
                   "idLsb": 16
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3528,7 +3464,7 @@
           {
             "name": "macro knob 2 depth A",
             "description": "sysex patch address: 225",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3543,7 +3479,7 @@
           {
             "name": "macro knob 2 destination B",
             "description": "sysex patch address: 226",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3552,10 +3488,7 @@
                   "idMsb": 3,
                   "idLsb": 20
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3592,7 +3525,7 @@
           {
             "name": "macro knob 2 depth B",
             "description": "sysex patch address: 229",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3749,7 +3682,7 @@
           {
             "name": "macro knob 3 destination A",
             "description": "sysex patch address: 239",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3758,10 +3691,7 @@
                   "idMsb": 3,
                   "idLsb": 32
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3798,7 +3728,7 @@
           {
             "name": "macro knob 3 depth A",
             "description": "sysex patch address: 242",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3813,7 +3743,7 @@
           {
             "name": "macro knob 3 destination B",
             "description": "sysex patch address: 243",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -3822,10 +3752,7 @@
                   "idMsb": 3,
                   "idLsb": 36
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -3862,7 +3789,7 @@
           {
             "name": "macro knob 3 depth B",
             "description": "sysex patch address: 246",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4019,7 +3946,7 @@
           {
             "name": "macro knob 4 destination A",
             "description": "sysex patch address: 256",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4028,10 +3955,7 @@
                   "idMsb": 3,
                   "idLsb": 48
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4068,7 +3992,7 @@
           {
             "name": "macro knob 4 depth A",
             "description": "sysex patch address: 259",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4083,7 +4007,7 @@
           {
             "name": "macro knob 4 destination B",
             "description": "sysex patch address: 260",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4092,10 +4016,7 @@
                   "idMsb": 3,
                   "idLsb": 52
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4132,7 +4053,7 @@
           {
             "name": "macro knob 4 depth B",
             "description": "sysex patch address: 263",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4289,7 +4210,7 @@
           {
             "name": "macro knob 5 destination A",
             "description": "sysex patch address: 273",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4298,10 +4219,7 @@
                   "idMsb": 3,
                   "idLsb": 64
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4338,7 +4256,7 @@
           {
             "name": "macro knob 5 depth A",
             "description": "sysex patch address: 276",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4353,7 +4271,7 @@
           {
             "name": "macro knob 5 destination B",
             "description": "sysex patch address: 277",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4362,10 +4280,7 @@
                   "idMsb": 3,
                   "idLsb": 68
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4402,7 +4317,7 @@
           {
             "name": "macro knob 5 depth B",
             "description": "sysex patch address: 280",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4559,7 +4474,7 @@
           {
             "name": "macro knob 6 destination A",
             "description": "sysex patch address: 290",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4568,10 +4483,7 @@
                   "idMsb": 3,
                   "idLsb": 80
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4608,7 +4520,7 @@
           {
             "name": "macro knob 6 depth A",
             "description": "sysex patch address: 293",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4623,7 +4535,7 @@
           {
             "name": "macro knob 6 destination B",
             "description": "sysex patch address: 294",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4632,10 +4544,7 @@
                   "idMsb": 3,
                   "idLsb": 84
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4672,7 +4581,7 @@
           {
             "name": "macro knob 6 depth B",
             "description": "sysex patch address: 297",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4829,7 +4738,7 @@
           {
             "name": "macro knob 7 destination A",
             "description": "sysex patch address: 307",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4838,10 +4747,7 @@
                   "idMsb": 3,
                   "idLsb": 96
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4878,7 +4784,7 @@
           {
             "name": "macro knob 7 depth A",
             "description": "sysex patch address: 310",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4893,7 +4799,7 @@
           {
             "name": "macro knob 7 destination B",
             "description": "sysex patch address: 311",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -4902,10 +4808,7 @@
                   "idMsb": 3,
                   "idLsb": 100
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -4942,7 +4845,7 @@
           {
             "name": "macro knob 7 depth B",
             "description": "sysex patch address: 314",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -5099,7 +5002,7 @@
           {
             "name": "macro knob 8 destination A",
             "description": "sysex patch address: 324",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -5108,10 +5011,7 @@
                   "idMsb": 3,
                   "idLsb": 112
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -5148,7 +5048,7 @@
           {
             "name": "macro knob 8 depth A",
             "description": "sysex patch address: 327",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -5163,7 +5063,7 @@
           {
             "name": "macro knob 8 destination B",
             "description": "sysex patch address: 328",
-            "type": "continous",
+            "type": "list",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -5172,10 +5072,7 @@
                   "idMsb": 3,
                   "idLsb": 116
                 },
-                "sourceValueRange": {
-                  "from": 0,
-                  "to": 70
-                }
+                "sourceRangeFrom": "macroKnobDestinations"
               }
             }
           },
@@ -5212,7 +5109,7 @@
           {
             "name": "macro knob 8 depth B",
             "description": "sysex patch address: 331",
-            "type": "continous",
+            "type": "continous-bipolar",
             "component": "Macro Knob",
             "source": {
               "midi": {
@@ -5354,6 +5251,369 @@
           }
         ]
       }
-    ]
+    ],
+    "sourceRanges": {
+      "filterDriveType": [
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        }
+      ],
+      "filterType": [
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        }
+      ],
+      "distortionType": [
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        }
+      ],
+      "oscWaveform": [
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        },
+        {
+          "name": "",
+          "range":{
+            "from": ,
+            "to": 
+          }
+        }
+      ],
+      "lfoWaveform": [
+        
+      ]
+    }
   }
 }
