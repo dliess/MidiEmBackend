@@ -253,7 +253,7 @@
           {
             "name": "Tune",
             "type": "continous",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -373,7 +373,7 @@
           {
             "name": "Tune",
             "type": "continous",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {

@@ -2811,7 +2811,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-Hard",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -2957,7 +2957,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3102,7 +3102,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-FM",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3224,7 +3224,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-Plastic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3359,7 +3359,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-Sharp",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3521,7 +3521,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassDrum-Silky",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3641,7 +3641,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "SnareDrum-Hard",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3760,7 +3760,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "SnareDrum-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3879,7 +3879,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "SnareDrum-FM",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -3909,7 +3909,7 @@
             "name": "FM Tune",
             "type": "continous-bipolar",
             "component": "SnareDrum-FM",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4001,7 +4001,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "SnareDrum-Natural",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4301,7 +4301,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Rimshot-Hard",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4421,7 +4421,7 @@
             "name": "Tune OSC1",
             "type": "continous-bipolar",
             "component": "Rimshot-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4465,7 +4465,7 @@
             "name": "Tune Osc2",
             "type": "continous-bipolar",
             "component": "Rimshot-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4703,7 +4703,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "BassTom-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4828,7 +4828,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Tom-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -4918,7 +4918,7 @@
             "name": "Noise Tone",
             "type": "continous-bipolar",
             "component": "Tom-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5034,7 +5034,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "HiHat-Basic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5123,7 +5123,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "ClosedHiHat-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5183,7 +5183,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "ClosedHiHat-Metallic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5228,7 +5228,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "OpenHiHat-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5288,7 +5288,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "OpenHiHat-Metallic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5419,7 +5419,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Cymbal-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5493,7 +5493,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Cymbal-Metallic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5568,7 +5568,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Cymbal-Ride",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5716,7 +5716,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Cowbell-Classic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -5776,7 +5776,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Cowbell-Metallic",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {

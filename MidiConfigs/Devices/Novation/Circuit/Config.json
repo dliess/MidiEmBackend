@@ -7,10 +7,40 @@
     "defaultInstrumentType": "InstrumentPerVoice",
     "voices": [
       {
-        "name": "1",
+        "name": "drum 1",
+        "engineId": 1,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 60
+      },
+      {
+        "name": "drum 2",
+        "engineId": 2,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 62
+      },
+      {
+        "name": "drum 3",
+        "engineId": 3,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 64
+      },
+      {
+        "name": "drum 4",
+        "engineId": 4,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 65
+      },
+      {
+        "name": "Synth 1",
         "engineId": 0,
         "midiChannel": 1
+      },
+      {
+        "name": "Synth 2",
+        "engineId": 0,
+        "midiChannel": 2
       }
+
     ],
     "engines": [
       {
@@ -571,7 +601,7 @@
             }
           },
           {
-            "name": "drive",
+            "name": "Drive",
             "description": "sysex patch address: 61",
             "type": "continous",
             "component": "Filter",
@@ -585,7 +615,7 @@
             }
           },
           {
-            "name": "drive type",
+            "name": "Drive type",
             "description": "sysex patch address: 62",
             "type": "list",
             "component": "Filter",
@@ -600,7 +630,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "Type",
             "description": "sysex patch address: 63",
             "type": "list",
             "component": "Filter",
@@ -616,7 +646,7 @@
             }
           },
           {
-            "name": "Cutoff",
+            "name": "Cutoff Freq",
             "description": "sysex patch address: 64",
             "type": "continous",
             "component": "Filter",
@@ -5250,369 +5280,1375 @@
             }
           }
         ]
+      },
+      {
+        "name": "Drum1Engine",
+        "noteSettings": {
+          "midi": {
+            "pitchRouting": {
+              "destinationParameter": "Pitch"
+            }
+          }
+        },
+        "components": [
+          {
+            "name": "Main"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Patch Select",
+            "type": "list",
+            "component": "Main",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                },
+                "sourceValueRange":{
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Main",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Main",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Main",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Equalizer",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "defaultValue": 0.5,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Drum2Engine",
+        "noteSettings": {
+          "midi": {
+            "pitchRouting": {
+              "destinationParameter": "Pitch"
+            }
+          }
+        },
+        "components": [
+          {
+            "name": "Main"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Patch Select",
+            "type": "list",
+            "component": "Main",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                },
+                "sourceValueRange":{
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Main",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Main",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Main",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Equalizer",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "defaultValue": 0.5,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Drum3Engine",
+        "noteSettings": {
+          "midi": {
+            "pitchRouting": {
+              "destinationParameter": "Pitch"
+            }
+          }
+        },
+        "components": [
+          {
+            "name": "Main"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Patch Select",
+            "type": "list",
+            "component": "Main",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                },
+                "sourceValueRange":{
+                  "from": 0,
+                  "to": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Main",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Main",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Main",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Equalizer",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "defaultValue": 0.5,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 79
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Drum4Engine",
+        "noteSettings": {
+          "midi": {
+            "pitchRouting": {
+              "destinationParameter": "Pitch"
+            }
+          }
+        },
+        "components": [
+          {
+            "name": "Main"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Patch Select",
+            "type": "list",
+            "component": "Main",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 8
+                },
+                "sourceValueRange":{
+                  "from": 0,
+                  "to": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Main",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "Pitch",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pitch",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Main",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Distortion",
+            "type": "continous",
+            "component": "Main",
+            "role": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Equalizer",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "defaultValue": 0.5,
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Main",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          }
+        ]
       }
     ],
     "sourceRanges": {
       "filterDriveType": [
         {
-          "name": "",
+          "name": "Diode",
           "range":{
-            "from": ,
-            "to": 
+            "from": 0,
+            "to": 0
           }
         },
         {
-          "name": "",
+          "name": "Valve",
           "range":{
-            "from": ,
-            "to": 
+            "from": 1,
+            "to": 1
           }
         },
         {
-          "name": "",
+          "name": "Clipper",
           "range":{
-            "from": ,
-            "to": 
+            "from": 2,
+            "to": 2
           }
         },
         {
-          "name": "",
+          "name": "Cross-Over",
           "range":{
-            "from": ,
-            "to": 
+            "from": 3,
+            "to": 3
           }
         },
         {
-          "name": "",
+          "name": "Rectifier",
           "range":{
-            "from": ,
-            "to": 
+            "from": 4,
+            "to": 4
           }
         },
         {
-          "name": "",
+          "name": "Bit Reducer",
           "range":{
-            "from": ,
-            "to": 
+            "from": 5,
+            "to": 5
           }
         },
         {
-          "name": "",
+          "name": "Rate Reducer",
           "range":{
-            "from": ,
-            "to": 
+            "from": 6,
+            "to": 6
           }
         }
       ],
       "filterType": [
         {
-          "name": "",
+          "name": "Low pass 12dB",
+          "role": "FilterLowpass2db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 0,
+            "to": 0
           }
         },
         {
-          "name": "",
+          "name": "Low pass 24dB",
+          "role": "FilterLowpass4db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 1,
+            "to": 1
           }
         },
         {
-          "name": "",
+          "name": "Band pass 6dB",
+          "role": "FilterBandpass2db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 2,
+            "to": 2
           }
         },
         {
-          "name": "",
+          "name": "Band pass 12dB",
+          "role": "FilterBandpass4db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 3,
+            "to": 3
           }
         },
         {
-          "name": "",
+          "name": "High pass 12dB",
+          "role": "FilterHighpass2db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 4,
+            "to": 4
           }
         },
         {
-          "name": "",
+          "name": "High pass 24dB",
+          "role": "FilterHighpass4db",
           "range":{
-            "from": ,
-            "to": 
+            "from": 5,
+            "to": 5
           }
         }
       ],
       "distortionType": [
         {
-          "name": "",
+          "name": "Diode",
           "range":{
-            "from": ,
-            "to": 
+            "from": 0,
+            "to": 0
           }
         },
         {
-          "name": "",
+          "name": "Valve",
           "range":{
-            "from": ,
-            "to": 
+            "from": 1,
+            "to": 1
           }
         },
         {
-          "name": "",
+          "name": "Clipper",
           "range":{
-            "from": ,
-            "to": 
+            "from": 2,
+            "to": 2
           }
         },
         {
-          "name": "",
+          "name": "Cross-Over",
           "range":{
-            "from": ,
-            "to": 
+            "from": 3,
+            "to": 3
           }
         },
         {
-          "name": "",
+          "name": "Rectifier",
           "range":{
-            "from": ,
-            "to": 
+            "from": 4,
+            "to": 4
           }
         },
         {
-          "name": "",
+          "name": "Bit Reducer",
           "range":{
-            "from": ,
-            "to": 
+            "from": 5,
+            "to": 5
           }
         },
         {
-          "name": "",
+          "name": "Rate Reducer",
           "range":{
-            "from": ,
-            "to": 
+            "from": 6,
+            "to": 6
           }
         }
       ],
       "oscWaveform": [
         {
-          "name": "",
+          "name": "Sine",
+          "role": "WaveFormSine",
           "range":{
-            "from": ,
-            "to": 
+            "from": 0,
+            "to": 0
           }
         },
         {
-          "name": "",
+          "name": "Triangle",
+          "role": "WaveFormTriangle",
           "range":{
-            "from": ,
-            "to": 
+            "from": 1,
+            "to": 1
           }
         },
         {
-          "name": "",
+          "name": "Sawtooth",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 2,
+            "to": 2
           }
         },
         {
-          "name": "",
+          "name": "Saw 9:1 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 3,
+            "to": 3
           }
         },
         {
-          "name": "",
+          "name": "Saw 8:2 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 4,
+            "to": 4
           }
         },
         {
-          "name": "",
+          "name": "Saw 7:3 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 5,
+            "to": 5
           }
         },
         {
-          "name": "",
+          "name": "Saw 6:4 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 6,
+            "to": 6
           }
         },
         {
-          "name": "",
+          "name": "Saw 5:5 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 7,
+            "to": 7
           }
         },
         {
-          "name": "",
+          "name": "Saw 4:6 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 8,
+            "to": 8
           }
         },
         {
-          "name": "",
+          "name": "Saw 3:7 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 9,
+            "to": 9
           }
         },
         {
-          "name": "",
+          "name": "Saw 2:8 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 10,
+            "to": 10
           }
         },
         {
-          "name": "",
+          "name": "Saw 1:9 PW",
+          "role": "WaveFormSawtooth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 11,
+            "to": 11
           }
         },
         {
-          "name": "",
+          "name": "Pulse Width",
+          "role": "WaveFormPulsewidth",
           "range":{
-            "from": ,
-            "to": 
+            "from": 12,
+            "to": 12
           }
         },
         {
-          "name": "",
+          "name": "Square",
+          "role": "WaveFormSquare",
           "range":{
-            "from": ,
-            "to": 
+            "from": 13,
+            "to": 13
           }
         },
         {
-          "name": "",
+          "name": "Sine Table",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 14,
+            "to": 14
           }
         },
         {
-          "name": "",
+          "name": "Analogue Pulse",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 15,
+            "to": 15
           }
         },
         {
-          "name": "",
+          "name": "Analogue Sync",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 16,
+            "to": 16
           }
         },
         {
-          "name": "",
+          "name": "Triangle-Saw-Blend",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 17,
+            "to": 17
           }
         },
         {
-          "name": "",
+          "name": "Digital Nasty 1",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 18,
+            "to": 18
           }
         },
         {
-          "name": "",
+          "name": "Digital Nasty 2",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 19,
+            "to": 19
           }
         },
         {
-          "name": "",
+          "name": "Digital Saw Square",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 20,
+            "to": 20
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 1",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 21,
+            "to": 21
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 2",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 22,
+            "to": 22
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 3",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 23,
+            "to": 23
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 4",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 24,
+            "to": 24
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 5",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 25,
+            "to": 25
           }
         },
         {
-          "name": "",
+          "name": "Digital Vocal 6",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 26,
+            "to": 26
           }
         },
         {
-          "name": "",
+          "name": "Random Coll 1",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 27,
+            "to": 27
           }
         },
         {
-          "name": "",
+          "name": "Random Coll 2",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 28,
+            "to": 28
           }
         },
         {
-          "name": "",
+          "name": "Random Coll 3",
+          "role": "WaveTable",
           "range":{
-            "from": ,
-            "to": 
+            "from": 29,
+            "to": 29
           }
         }
       ],
       "lfoWaveform": [
-        
+        {
+          "name": "Sine",
+          "role": "WaveFormSine",
+          "range":{
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "Triangle",
+          "role": "WaveFormTriangle",
+          "range":{
+            "from": 1,
+            "to": 1
+          }
+        },
+        {
+          "name": "Sawtooth",
+          "role": "WaveFormSawtooth",
+          "range":{
+            "from": 2,
+            "to": 2
+          }
+        },
+        {
+          "name": "Square",
+          "role": "WaveFormSquare",
+          "range":{
+            "from": 3,
+            "to": 3
+          }
+        },
+        {
+          "name": "Random S/H",
+          "role": "WaveFormRandom",
+          "range":{
+            "from": 4,
+            "to": 4
+          }
+        },
+        {
+          "name": "Time S/H",
+          "range":{
+            "from": 5,
+            "to": 5
+          }
+        },
+        {
+          "name": "Piano Envelope",
+          "range":{
+            "from": 6,
+            "to": 6
+          }
+        },
+        {
+          "name": "Sequence 1",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 7,
+            "to": 7
+          }
+        },
+        {
+          "name": "Sequence 2",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 8,
+            "to": 8
+          }
+        },
+        {
+          "name": "Sequence 3",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 9,
+            "to": 9
+          }
+        },
+        {
+          "name": "Sequence 4",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 10,
+            "to": 10
+          }
+        },
+        {
+          "name": "Sequence 5",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 11,
+            "to": 11
+          }
+        },
+        {
+          "name": "Sequence 6",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 12,
+            "to": 12
+          }
+        },
+        {
+          "name": "Sequence 7",
+          "role": "WaveFormSequence",
+          "range":{
+            "from": 13,
+            "to": 13
+          }
+        },
+        {
+          "name": "Alternative 1",
+          "range":{
+            "from": 14,
+            "to": 14
+          }
+        },
+        {
+          "name": "Alternative 2",
+          "range":{
+            "from": 15,
+            "to": 15
+          }
+        },
+        {
+          "name": "Alternative 3",
+          "range":{
+            "from": 16,
+            "to": 16
+          }
+        },
+        {
+          "name": "Alternative 4",
+          "range":{
+            "from": 17,
+            "to": 17
+          }
+        },
+        {
+          "name": "Alternative 5",
+          "range":{
+            "from": 18,
+            "to": 18
+          }
+        },
+        {
+          "name": "Alternative 6",
+          "range":{
+            "from": 19,
+            "to": 19
+          }
+        },
+        {
+          "name": "Alternative 7",
+          "range":{
+            "from": 20,
+            "to": 20
+          }
+        },
+        {
+          "name": "Alternative 8",
+          "range":{
+            "from": 21,
+            "to": 21
+          }
+        },
+        {
+          "name": "Chromatic",
+          "range":{
+            "from": 22,
+            "to": 22
+          }
+        },
+        {
+          "name": "Chromatic 16",
+          "range":{
+            "from": 23,
+            "to": 23
+          }
+        },
+        {
+          "name": "Major",
+          "range":{
+            "from": 24,
+            "to": 24
+          }
+        },
+        {
+          "name": "Major 7",
+          "range":{
+            "from": 25,
+            "to": 25
+          }
+        },
+        {
+          "name": "Minor 7",
+          "range":{
+            "from": 26,
+            "to": 26
+          }
+        },
+        {
+          "name": "Min Arp 1",
+          "range":{
+            "from": 27,
+            "to": 27
+          }
+        },
+        {
+          "name": "Min Arp 2",
+          "range":{
+            "from": 28,
+            "to": 28
+          }
+        },
+        {
+          "name": "Diminished",
+          "range":{
+            "from": 29,
+            "to": 29
+          }
+        },
+        {
+          "name": "Dec Minor",
+          "range":{
+            "from": 30,
+            "to": 30
+          }
+        },
+        {
+          "name": "Minor 3rd",
+          "range":{
+            "from": 31,
+            "to": 31
+          }
+        },
+        {
+          "name": "Pedal",
+          "range":{
+            "from": 32,
+            "to": 32
+          }
+        },
+        {
+          "name": "4ths",
+          "range":{
+            "from": 33,
+            "to": 33
+          }
+        },
+        {
+          "name": "4ths x 12",
+          "range":{
+            "from": 34,
+            "to": 34
+          }
+        },
+        {
+          "name": "1625 Maj",
+          "range":{
+            "from": 35,
+            "to": 35
+          }
+        },
+        {
+          "name": "1625 Min",
+          "range":{
+            "from": 36,
+            "to": 36
+          }
+        },
+        {
+          "name": "2511",
+          "range":{
+            "from": 37,
+            "to": 37
+          }
+        }
+      ],
+      "modMatrixSources":[
+        {
+          "name": "Direct",
+          "range":{
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "ModWheel",
+          "range":{
+            "from": 1,
+            "to": 1
+          }
+        },
+        {
+          "name": "AfterTouch",
+          "range":{
+            "from": 2,
+            "to": 2
+          }
+        },
+        {
+          "name": "Expression",
+          "range":{
+            "from": 3,
+            "to": 3
+          }
+        },
+        {
+          "name": "Velocity",
+          "range":{
+            "from": 4,
+            "to": 4
+          }
+        },
+        {
+          "name": "Keyboard",
+          "range":{
+            "from": 5,
+            "to": 5
+          }
+        },
+        {
+          "name": "LFO 1 +",
+          "range":{
+            "from": 6,
+            "to": 6
+          }
+        },
+        {
+          "name": "LFO 1 +/-",
+          "range":{
+            "from": 7,
+            "to": 7
+          }
+        },
+        {
+          "name": "LFO 2 +",
+          "range":{
+            "from": 8,
+            "to": 8
+          }
+        },
+        {
+          "name": "LFO 2 +/-",
+          "range":{
+            "from": 9,
+            "to": 9
+          }
+        },
+        {
+          "name": "Amp Env",
+          "range":{
+            "from": 10,
+            "to": 10
+          }
+        },
+        {
+          "name": "Filter Env",
+          "range":{
+            "from": 11,
+            "to": 11
+          }
+        },
+        {
+          "name": "Env 3",
+          "range":{
+            "from": 12,
+            "to": 12
+          }
+        }
+      ],
+      "modMatrixDestinations":[
+        {
+          "name": "Osc 1 & 2 Pitch",
+          "range":{
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "Osc 1 Pitch",
+          "range":{
+            "from": 1,
+            "to": 1
+          }
+        },
+        {
+          "name": "Osc 2 Pitch",
+          "range":{
+            "from": 2,
+            "to": 2
+          }
+        },
+        {
+          "name": "Osc 1 V-Sync",
+          "range":{
+            "from": 3,
+            "to": 3
+          }
+        },
+        {
+          "name": "Osc 2 V-Sync",
+          "range":{
+            "from": 4,
+            "to": 4
+          }
+        },
+        {
+          "name": "Osc 1 PW/Index",
+          "range":{
+            "from": 5,
+            "to": 5
+          }
+        },
+        {
+          "name": "Osc 2 PW/Index",
+          "range":{
+            "from": 6,
+            "to": 6
+          }
+        },
+        {
+          "name": "Osc 1 Level",
+          "range":{
+            "from": 7,
+            "to": 7
+          }
+        },
+        {
+          "name": "Osc 2 Level",
+          "range":{
+            "from": 8,
+            "to": 8
+          }
+        },
+        {
+          "name": "Noise Level",
+          "range":{
+            "from": 9,
+            "to": 9
+          }
+        },
+        {
+          "name": "RingMod Level",
+          "range":{
+            "from": 10,
+            "to": 10
+          }
+        },
+        {
+          "name": "Filter Drive Amt",
+          "range":{
+            "from": 11,
+            "to": 11
+          }
+        },
+        {
+          "name": "Filter Cutoff",
+          "range":{
+            "from": 12,
+            "to": 12
+          }
+        },
+        {
+          "name": "Filter Resonance",
+          "range":{
+            "from": 13,
+            "to": 13
+          }
+        },
+        {
+          "name": "LFO 1 Rate",
+          "range":{
+            "from": 14,
+            "to": 14
+          }
+        },
+        {
+          "name": "LFO 2 Rate",
+          "range":{
+            "from": 15,
+            "to": 15
+          }
+        },
+        {
+          "name": "Amp Env Decay",
+          "range":{
+            "from": 16,
+            "to": 16
+          }
+        },
+        {
+          "name": "Filter Env Decay",
+          "range":{
+            "from": 17,
+            "to": 17
+          }
+        }
       ]
     }
   }

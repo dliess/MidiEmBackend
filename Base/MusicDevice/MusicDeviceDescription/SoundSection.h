@@ -140,7 +140,11 @@ DECLARE_ENUM(ParameterSourceRangeBaseRoles, uint,
       WaveFormSinetooth,        \
       WaveFormTriangle,         \
       WaveFormSquare,           \
-      WaveFormPulsewidth);
+      WaveFormPulsewidth,       \
+      WaveFormRandom,           \
+      WaveFormSequence,         \
+      WaveTable                 \          
+);
 struct ParameterSourceRangeBase
 {
    using Role = ParameterSourceRangeBaseRoles;

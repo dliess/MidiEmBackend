@@ -1862,7 +1862,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Comb Filter1",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
@@ -1932,7 +1932,7 @@
             "name": "Tune",
             "type": "continous-bipolar",
             "component": "Comb Filter2",
-            "role": "Tune",
+            "role": "Detune",
             "source": {
               "midi": {
                 "id": {
