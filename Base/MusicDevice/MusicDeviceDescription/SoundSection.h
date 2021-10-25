@@ -143,7 +143,7 @@ DECLARE_ENUM(ParameterSourceRangeBaseRoles, uint,
       WaveFormPulsewidth,       \
       WaveFormRandom,           \
       WaveFormSequence,         \
-      WaveTable                 \          
+      WaveTable                 \
 );
 struct ParameterSourceRangeBase
 {
@@ -419,6 +419,8 @@ struct Section
 
    inline void handleEngineInheritance() noexcept;
    inline void autoFillSourceRangesForLists() noexcept;
+
+   inline bool isValidVoiceIdx(int VoiceIdx) const noexcept;
 
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>

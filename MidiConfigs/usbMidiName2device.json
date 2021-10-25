@@ -20,5 +20,6 @@
     "Rocket:Rocket MIDI 1" : "Waldorf/rocket",
     "Streichfett:Streichfett MIDI 1": "Waldorf/streichfett",
     "NTS-1 digital kit:NTS-1 digital kit MIDI 1": "Korg/NTS-1",
-    "ZOOM MS Series:ZOOM MS Series MIDI 1": "Zoom/MS-70CDR"
+    "ZOOM MS Series:ZOOM MS Series MIDI 1": "Zoom/MS-70CDR",
+    "Circuit:Circuit MIDI 1" : "Novation/Circuit"
 }

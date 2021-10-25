@@ -4,7 +4,7 @@
   "productName": "Circuit",
   "reactsToTransportCommands": true,
   "soundSection": {
-    "defaultInstrumentType": "InstrumentPerVoice",
+    "defaultInstrumentType": "DrumKit",
     "voices": [
       {
         "name": "drum 1",
@@ -40,7 +40,6 @@
         "engineId": 0,
         "midiChannel": 2
       }
-
     ],
     "engines": [
       {
@@ -110,7 +109,7 @@
           {
             "name": "Polyphony Mode",
             "description": "sysex patch address: 32",
-            "type": "continous",
+            "type": "list",
             "component": "Voice",
             "defaultValue": 2,
             "source": {
@@ -209,7 +208,7 @@
                   ".type": "MidiControlChange",
                   "id": 19
                 },
-                "sourceRangeFrom": "oscWaveform"
+                "sourceRangesFrom": "oscWaveform"
               }
             }
           },
@@ -342,7 +341,7 @@
                   ".type": "MidiControlChange",
                   "id": 29
                 },
-                "sourceRangeFrom": "oscWaveform"
+                "sourceRangesFrom": "oscWaveform"
               }
             }
           },
@@ -625,7 +624,7 @@
                   ".type": "MidiControlChange",
                   "id": 65
                 },
-                "sourceRangeFrom": "filterDriveType"
+                "sourceRangesFrom": "filterDriveType"
               }
             }
           },
@@ -641,7 +640,7 @@
                   ".type": "MidiControlChange",
                   "id": 68
                 },
-                "sourceRangeFrom": "filterType"
+                "sourceRangesFrom": "filterType"
               }
             }
           },
@@ -967,7 +966,7 @@
                   "idMsb": 0,
                   "idLsb": 70
                 },
-                "sourceRangeFrom": "lfoWaveform"
+                "sourceRangesFrom": "lfoWaveform"
               }
             }
           },
@@ -1256,7 +1255,7 @@
                   "idMsb": 0,
                   "idLsb": 79
                 },
-                "sourceRangeFrom": "lfoWaveform"
+                "sourceRangesFrom": "lfoWaveform"
               }
             }
           },
@@ -1665,7 +1664,7 @@
                   "idMsb": 1,
                   "idLsb": 0
                 },
-                "sourceRangeFrom": "distortionType"
+                "sourceRangesFrom": "distortionType"
               }
             }
           },
@@ -1810,7 +1809,7 @@
                   "idMsb": 1,
                   "idLsb": 83
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1827,7 +1826,7 @@
                   "idMsb": 1,
                   "idLsb": 84
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1860,7 +1859,7 @@
                   "idMsb": 1,
                   "idLsb": 87
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -1879,7 +1878,7 @@
                   "idMsb": 1,
                   "idLsb": 88
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1896,7 +1895,7 @@
                   "idMsb": 1,
                   "idLsb": 89
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1929,7 +1928,7 @@
                   "idMsb": 1,
                   "idLsb": 92
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -1948,7 +1947,7 @@
                   "idMsb": 1,
                   "idLsb": 93
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1965,7 +1964,7 @@
                   "idMsb": 1,
                   "idLsb": 94
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -1998,7 +1997,7 @@
                   "idMsb": 1,
                   "idLsb": 97
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2017,7 +2016,7 @@
                   "idMsb": 1,
                   "idLsb": 98
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2034,7 +2033,7 @@
                   "idMsb": 1,
                   "idLsb": 99
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2067,7 +2066,7 @@
                   "idMsb": 1,
                   "idLsb": 102
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2086,7 +2085,7 @@
                   "idMsb": 1,
                   "idLsb": 103
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2103,7 +2102,7 @@
                   "idMsb": 1,
                   "idLsb": 104
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2136,7 +2135,7 @@
                   "idMsb": 1,
                   "idLsb": 107
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2155,7 +2154,7 @@
                   "idMsb": 1,
                   "idLsb": 108
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2172,7 +2171,7 @@
                   "idMsb": 1,
                   "idLsb": 109
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2205,7 +2204,7 @@
                   "idMsb": 1,
                   "idLsb": 112
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2224,7 +2223,7 @@
                   "idMsb": 1,
                   "idLsb": 113
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2241,7 +2240,7 @@
                   "idMsb": 1,
                   "idLsb": 114
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2274,7 +2273,7 @@
                   "idMsb": 1,
                   "idLsb": 117
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2293,7 +2292,7 @@
                   "idMsb": 1,
                   "idLsb": 118
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2310,7 +2309,7 @@
                   "idMsb": 1,
                   "idLsb": 119
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2343,7 +2342,7 @@
                   "idMsb": 1,
                   "idLsb": 122
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2361,7 +2360,7 @@
                   "idMsb": 1,
                   "idLsb": 123
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2378,7 +2377,7 @@
                   "idMsb": 1,
                   "idLsb": 124
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2411,7 +2410,7 @@
                   "idMsb": 1,
                   "idLsb": 127
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2430,7 +2429,7 @@
                   "idMsb": 2,
                   "idLsb": 0
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2447,7 +2446,7 @@
                   "idMsb": 2,
                   "idLsb": 1
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2480,7 +2479,7 @@
                   "idMsb": 2,
                   "idLsb": 4
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2500,7 +2499,7 @@
                   "idMsb": 2,
                   "idLsb": 5
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2517,7 +2516,7 @@
                   "idMsb": 2,
                   "idLsb": 6
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2550,7 +2549,7 @@
                   "idMsb": 2,
                   "idLsb": 9
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2570,7 +2569,7 @@
                   "idMsb": 2,
                   "idLsb": 10
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2587,7 +2586,7 @@
                   "idMsb": 2,
                   "idLsb": 11
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2620,7 +2619,7 @@
                   "idMsb": 2,
                   "idLsb": 14
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2639,7 +2638,7 @@
                   "idMsb": 2,
                   "idLsb": 15
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2656,7 +2655,7 @@
                   "idMsb": 2,
                   "idLsb": 16
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2689,7 +2688,7 @@
                   "idMsb": 2,
                   "idLsb": 19
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2710,7 +2709,7 @@
                   "idMsb": 2,
                   "idLsb": 20
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2727,7 +2726,7 @@
                   "idMsb": 2,
                   "idLsb": 21
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2760,7 +2759,7 @@
                   "idMsb": 2,
                   "idLsb": 24
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2780,7 +2779,7 @@
                   "idMsb": 2,
                   "idLsb": 25
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2797,7 +2796,7 @@
                   "idMsb": 2,
                   "idLsb": 27
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2830,7 +2829,7 @@
                   "idMsb": 2,
                   "idLsb": 29
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2849,7 +2848,7 @@
                   "idMsb": 2,
                   "idLsb": 30
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2866,7 +2865,7 @@
                   "idMsb": 2,
                   "idLsb": 32
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2899,7 +2898,7 @@
                   "idMsb": 2,
                   "idLsb": 34
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2920,7 +2919,7 @@
                   "idMsb": 2,
                   "idLsb": 35
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2937,7 +2936,7 @@
                   "idMsb": 2,
                   "idLsb": 37
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -2970,7 +2969,7 @@
                   "idMsb": 2,
                   "idLsb": 39
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -2989,7 +2988,7 @@
                   "idMsb": 2,
                   "idLsb": 40
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3006,7 +3005,7 @@
                   "idMsb": 2,
                   "idLsb": 42
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3039,7 +3038,7 @@
                   "idMsb": 2,
                   "idLsb": 44
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3058,7 +3057,7 @@
                   "idMsb": 2,
                   "idLsb": 45
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3075,7 +3074,7 @@
                   "idMsb": 2,
                   "idLsb": 47
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3108,7 +3107,7 @@
                   "idMsb": 2,
                   "idLsb": 49
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3127,7 +3126,7 @@
                   "idMsb": 2,
                   "idLsb": 50
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3144,7 +3143,7 @@
                   "idMsb": 2,
                   "idLsb": 52
                 },
-                "sourceRangeFrom": "modMatrixSources"
+                "sourceRangesFrom": "modMatrixSources"
               }
             }
           },
@@ -3177,7 +3176,7 @@
                   "idMsb": 2,
                   "idLsb": 54
                 },
-                "sourceRangeFrom": "modMatrixDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3208,7 +3207,7 @@
                   "idMsb": 3,
                   "idLsb": 0
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3269,7 +3268,7 @@
                   "idMsb": 3,
                   "idLsb": 4
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3472,7 +3471,7 @@
                   "idMsb": 3,
                   "idLsb": 16
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3533,7 +3532,7 @@
                   "idMsb": 3,
                   "idLsb": 20
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3736,7 +3735,7 @@
                   "idMsb": 3,
                   "idLsb": 32
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -3797,7 +3796,7 @@
                   "idMsb": 3,
                   "idLsb": 36
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4000,7 +3999,7 @@
                   "idMsb": 3,
                   "idLsb": 48
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4061,7 +4060,7 @@
                   "idMsb": 3,
                   "idLsb": 52
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4264,7 +4263,7 @@
                   "idMsb": 3,
                   "idLsb": 64
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4325,7 +4324,7 @@
                   "idMsb": 3,
                   "idLsb": 68
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4528,7 +4527,7 @@
                   "idMsb": 3,
                   "idLsb": 80
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4589,7 +4588,7 @@
                   "idMsb": 3,
                   "idLsb": 84
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4792,7 +4791,7 @@
                   "idMsb": 3,
                   "idLsb": 96
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -4853,7 +4852,7 @@
                   "idMsb": 3,
                   "idLsb": 100
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -5056,7 +5055,7 @@
                   "idMsb": 3,
                   "idLsb": 112
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -5117,7 +5116,7 @@
                   "idMsb": 3,
                   "idLsb": 116
                 },
-                "sourceRangeFrom": "macroKnobDestinations"
+                "sourceRangesFrom": "modMatrixDestinations"
               }
             }
           },
@@ -5299,6 +5298,10 @@
       {
         "name": "Drum1Engine",
         "noteSettings": {
+          "noteRange": {
+            "from": 0,
+            "to": 127
+          },
           "midi": {
             "pitchRouting": {
               "destinationParameter": "Pitch"
@@ -5417,6 +5420,10 @@
       {
         "name": "Drum2Engine",
         "noteSettings": {
+          "noteRange": {
+            "from": 0,
+            "to": 127
+          },
           "midi": {
             "pitchRouting": {
               "destinationParameter": "Pitch"
@@ -5535,6 +5542,10 @@
       {
         "name": "Drum3Engine",
         "noteSettings": {
+          "noteRange": {
+            "from": 0,
+            "to": 127
+          },
           "midi": {
             "pitchRouting": {
               "destinationParameter": "Pitch"
@@ -5653,6 +5664,10 @@
       {
         "name": "Drum4Engine",
         "noteSettings": {
+          "noteRange": {
+            "from": 0,
+            "to": 127
+          },
           "midi": {
             "pitchRouting": {
               "destinationParameter": "Pitch"
@@ -5673,11 +5688,11 @@
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 8
+                  "id": 50
                 },
                 "sourceValueRange":{
                   "from": 0,
-                  "to": 50
+                  "to": 63
                 }
               }
             }

@@ -771,6 +771,12 @@ inline void base::musicDevice::description::sound::Section::
    });
 }
 
+inline bool base::musicDevice::description::sound::Section::isValidVoiceIdx(int voiceIdx) const noexcept
+{
+   return (GlobalSectionId == voiceIdx || util::vector_index_in_range(voiceIdx, voices));
+}
+
+
 inline base::musicDevice::description::sound::Engine*
 base::musicDevice::description::sound::Section::findParentEngineByName(
     const std::string& name) noexcept
