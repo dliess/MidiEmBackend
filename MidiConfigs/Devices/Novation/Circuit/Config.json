@@ -1689,7 +1689,7 @@
           {
             "name": "Type",
             "description": "sysex patch address: 118",
-            "type": "continous",
+            "type": "list",
             "component": "Chorus",
             "source": {
               "midi": {
@@ -1698,7 +1698,22 @@
                   "idMsb": 1,
                   "idLsb": 24
                 },
-                "sourceRangeFrom": "chorusType"
+                "sourceRanges": [
+                  {
+                    "name": "Phaser",
+                    "range":{
+                      "from": 0,
+                      "to": 0
+                    }
+                  },
+                  {
+                    "name": "Chorus",
+                    "range":{
+                      "from": 1,
+                      "to": 1
+                    }
+                  }
+                ]
               }
             }
           },
