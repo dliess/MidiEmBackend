@@ -753,7 +753,7 @@
           "name": "Synth 1 Pan",
           "type": "continous-bipolar",
           "component": "Mixer",
-          "role": "Volume",
+          "role": "Pan",
           "source": {
             "midi": {
               "id": {
@@ -767,7 +767,7 @@
           "name": "Synth 2 Pan",
           "type": "continous-bipolar",
           "component": "Mixer",
-          "role": "Volume",
+          "role": "Pan",
           "source": {
             "midi": {
               "id": {

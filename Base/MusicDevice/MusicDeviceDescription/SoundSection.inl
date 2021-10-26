@@ -586,6 +586,8 @@ base::musicDevice::description::sound::Section::_getInitialValueFor(
       case Parameter::Role::OSCNoise: return 0.0;
       case Parameter::Role::OSCNoteSyncOnOff:
          return ParameterSourceRangeBase::Role::On;
+      case Parameter::Role::OSC1Volume: return 0.8;
+      case Parameter::Role::OSC2Volume: return 0.0;
       case Parameter::Role::SubOSCLevel: return 0.0;
       case Parameter::Role::NoiseLevel: return 0.0;
       case Parameter::Role::NoiseDecay: return 0.5;
