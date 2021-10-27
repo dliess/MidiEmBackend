@@ -72,10 +72,11 @@ public:
    void setLFOWaveform(int voiceId, int paramIdx, LFO::Waveform waveform) noexcept;
    void setLFOAmplitude(int voiceIndex, int paramIdx, float amplitude) noexcept;
    void setLFOFrequency(int voiceIndex, int paramIdx, float frequency) noexcept;
+   void setLFOMultiplierExp(int voiceIndex, int paramIdx, int multiplExp) noexcept;
    void incLFOWaveform(int voiceId, int paramIdx, int increment) noexcept;
    void incLFOAmplitude(int voiceIndex, int paramIdx, float increment) noexcept;
    void incLFOFrequency(int voiceIndex, int paramIdx, float increment) noexcept;
-   void incLFOMultiplierExp(int voiceIndex, int paramIdx, uint32_t increment) noexcept;
+   void incLFOMultiplierExp(int voiceIndex, int paramIdx, int increment) noexcept;
 
    // TODO: do we need this?
    // float getParameterValue(int voiceId, int parameterId) const noexcept;

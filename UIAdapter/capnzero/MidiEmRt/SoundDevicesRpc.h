@@ -17,11 +17,9 @@ public:
        base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer);
    void noteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
                ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
-   void noteOff(const ::capnzero::SpanCL<16>& uuid,
-                ::capnzero::Int8 voiceIdx, ::capnzero::UInt8 note,
-                ::capnzero::Float32 velocity) override;
-   void pitchBend(const ::capnzero::SpanCL<16>& uuid,
-                  ::capnzero::Int8 voiceIdx,
+   void noteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+                ::capnzero::UInt8 note, ::capnzero::Float32 velocity) override;
+   void pitchBend(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
                   ::capnzero::Float32 value) override;
    void afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
                        ::capnzero::Int8 voiceIdx, ::capnzero::UInt8 note,
@@ -56,25 +54,34 @@ public:
                        ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
                        ::capnzero::Int8 increment) override;
    void setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                        ::capnzero::Int8 voiceIdx,
-                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
                         ::capnzero::Float32 amplitude) override;
    void incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                        ::capnzero::Int8 voiceIdx,
-                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
                         ::capnzero::Float32 increment) override;
    void setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                        ::capnzero::Int8 voiceIdx,
-                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
                         ::capnzero::Float32 frequency) override;
    void incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                        ::capnzero::Int8 voiceIdx,
-                        ::capnzero::Int16 paramIdx,
+                        ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
                         ::capnzero::Float32 increment) override;
+   void setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
+                            ::capnzero::Int8 voiceIdx,
+                            ::capnzero::Int16 paramIdx,
+                            ::capnzero::UInt32 exponent) override;
    void incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
                             ::capnzero::Int8 voiceIdx,
                             ::capnzero::Int16 paramIdx,
-                            ::capnzero::UInt32 increment) override;
+                            ::capnzero::Int32 increment) override;
+   void stageParameterValues(const ::capnzero::SpanCL<16>& uuid,
+                             ::capnzero::Int8 voiceIdx) override;
+   void restoreToStagedParameterValues(const ::capnzero::SpanCL<16>& uuid,
+                                       ::capnzero::Int8 voiceIdx) override;
+   void restoreToLastActualPreset(const ::capnzero::SpanCL<16>& uuid,
+                                  ::capnzero::Int8 voiceIdx) override;
+   void saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
+                     ::capnzero::Int8 voiceIdx,
+                     const ::capnzero::TextView& presetName) override;
    void setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                         ::capnzero::Int8 voiceIdx,
                         const ::capnzero::TextView& presetName) override;

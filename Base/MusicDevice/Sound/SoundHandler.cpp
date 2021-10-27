@@ -333,6 +333,17 @@ void SoundHandler::setLFOFrequency(int voiceIndex, int paramIdx,
    }
 }
 
+void SoundHandler::setLFOMultiplierExp(int voiceIndex, int paramIdx,
+                                   int multiplExp) noexcept
+{
+   auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
+   if (lfo.setMultiplierExp(multiplExp))
+   {
+      for (auto& cb : m_lFOMultiplierExpChangeCB)
+         cb(voiceIndex, paramIdx, lfo.multiplierExp());
+   }
+}
+
 void SoundHandler::incLFOWaveform(int voiceId, int paramIdx,
                                   int increment) noexcept
 {
@@ -372,7 +383,7 @@ void SoundHandler::incLFOFrequency(int voiceIndex, int paramIdx,
 }
 
 void SoundHandler::incLFOMultiplierExp(int voiceIndex, int paramIdx,
-                                       uint32_t increment) noexcept
+                                       int increment) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceIndex, paramIdx);
    if (lfo.setMultiplierExp(lfo.multiplierExp() + increment))
