@@ -1404,35 +1404,6 @@
             }
           },
           {
-            "name": "Drive",
-            "description": "sysex patch address: 61",
-            "type": "continous",
-            "component": "Filter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 63
-                }
-              }
-            }
-          },
-          {
-            "name": "Drive type",
-            "description": "sysex patch address: 62",
-            "type": "list",
-            "component": "Filter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 65
-                },
-                "sourceRangesFrom": "filterDriveType"
-              }
-            }
-          },
-          {
             "name": "Type",
             "description": "sysex patch address: 63",
             "type": "list",
@@ -1464,21 +1435,6 @@
             }
           },
           {
-            "name": "Keyb Tracking",
-            "description": "sysex patch address: 65",
-            "type": "continous",
-            "component": "Filter",
-            "role": "FilterKeyAmount",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 69
-                }
-              }
-            }
-          },
-          {
             "name": "Resonance",
             "description": "sysex patch address: 66",
             "type": "continous",
@@ -1494,20 +1450,6 @@
             }
           },
           {
-            "name": "Q normalise",
-            "description": "sysex patch address: 67",
-            "type": "continous-bipolar",
-            "component": "Filter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 78
-                }
-              }
-            }
-          },
-          {
             "name": "Env2 Amount",
             "description": "sysex patch address: 68",
             "type": "continous-bipolar",
@@ -1518,6 +1460,64 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 79
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive",
+            "description": "sysex patch address: 61",
+            "type": "continous",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive type",
+            "description": "sysex patch address: 62",
+            "type": "list",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                },
+                "sourceRangesFrom": "filterDriveType"
+              }
+            }
+          },
+          {
+            "name": "Keyb Tracking",
+            "description": "sysex patch address: 65",
+            "type": "continous",
+            "component": "Filter",
+            "role": "FilterKeyAmount",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Q normalise",
+            "description": "sysex patch address: 67",
+            "type": "continous-bipolar",
+            "component": "Filter",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 78
                 }
               }
             }

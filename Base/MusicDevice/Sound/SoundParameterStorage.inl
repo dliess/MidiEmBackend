@@ -448,7 +448,7 @@ inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
    }
    if (value >= range)
    {
-      value = range - FUZZ;
+      value = m_isListIndex ? range - 1 : range - FUZZ;
    }
    commanded   = value;
    dirtyFlagRt = true;

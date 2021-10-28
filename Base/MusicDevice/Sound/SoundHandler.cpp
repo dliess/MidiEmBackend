@@ -70,6 +70,13 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
+   if(voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
+   {
+      LOG_F(ERROR,
+            "noteOn() called for global section for device '{}'",
+            m_deviceName);
+      return;
+   }
    m_midiOutHandler->noteOn(voiceIndex, note, velocity);
 }
 
@@ -79,6 +86,13 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
    {
       LOG_F(ERROR,
             "noteOff() called but there is no m_midiOutHandler in device '{}'",
+            m_deviceName);
+      return;
+   }
+   if(voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
+   {
+      LOG_F(ERROR,
+            "noteOff() called for global section for device '{}'",
             m_deviceName);
       return;
    }
