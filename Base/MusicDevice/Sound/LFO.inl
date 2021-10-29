@@ -106,7 +106,7 @@ inline uint32_t LFO::multiplierExp() const noexcept
 inline void LFO::reset() noexcept
 {
    setAmplitude(0);
-   setFrequency(0);
+   setFrequency(0.5);
    setMultiplierExp(0);
    m_waveform.emplace<Sine>();
 }
