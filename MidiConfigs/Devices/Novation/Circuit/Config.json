@@ -2354,6 +2354,7 @@
             "description": "sysex patch address: 102",
             "type": "continous",
             "component": "Chorus",
+            "defaultValue": 0.01,
             "source": {
               "midi": {
                 "id": {
