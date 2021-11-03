@@ -27,6 +27,23 @@ struct MidiSysexMsg {
 
 using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
 
+
+namespace sysex
+{
+
+struct Bytes
+{
+   std::vector<uint8_t> values;
+};
+
+struct VoiceIdx
+{
+
+};
+
+
+
+} // namespace sysex
 struct ParameterId
 {
    static constexpr int UNSET = -2;
