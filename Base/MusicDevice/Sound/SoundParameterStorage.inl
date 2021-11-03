@@ -379,8 +379,9 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
 inline std::optional<float>
 ParameterStorage::Element::updateActualValue() noexcept
 {
+   if(lfo.getAndResetJustGotDisabled()) dirtyFlagRt = true;
    if (!enabled ||
-       (!dirtyFlagRt && !lfo.enabled()))   // performance improving shortcut
+       (!dirtyFlagRt && !lfo.enabled()))
    {
       return std::nullopt;
    }

@@ -26,6 +26,7 @@ public:
    [[nodiscard]] inline float frequency() const noexcept;
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
    inline void reset() noexcept;
+   inline bool getAndResetJustGotDisabled() noexcept;
    struct Sine
    {
       [[nodiscard]] inline float operator()(float t) const noexcept;
@@ -50,6 +51,7 @@ public:
    };
 
 private:
+   bool m_justGotDisabled {false};
    float m_amplitude{0.0};
    float m_frequency{1.0};
    uint32_t m_multiplierExp{0};

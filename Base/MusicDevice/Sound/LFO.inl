@@ -45,6 +45,7 @@ inline bool LFO::setWaveform(Waveform waveform) noexcept
 
 inline bool LFO::setAmplitude(float amplitude) noexcept
 {
+   if(amplitude == 0.0) m_justGotDisabled = true;
    if(m_amplitude != amplitude && amplitude >= -1.0 && amplitude <= 1.0)
    {
       m_amplitude = amplitude;
@@ -55,6 +56,8 @@ inline bool LFO::setAmplitude(float amplitude) noexcept
 
 inline bool LFO::setFrequency(float frequency) noexcept
 {
+   if(frequency < 0.0) frequency = 0.0;
+   if(frequency == 0.0) m_justGotDisabled = true;
    if(m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
    {
       m_frequency = frequency;
@@ -109,6 +112,13 @@ inline void LFO::reset() noexcept
    setFrequency(0.5);
    setMultiplierExp(0);
    m_waveform.emplace<Sine>();
+}
+
+inline bool LFO::getAndResetJustGotDisabled() noexcept
+{
+   bool ret = m_justGotDisabled;
+   m_justGotDisabled = false;
+   return ret;
 }
 
 inline float LFO::Sine::operator()(float t) const noexcept
