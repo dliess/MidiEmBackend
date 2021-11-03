@@ -345,3 +345,15 @@ void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
    // TODO
    return;
 }
+
+void SoundDevicesRpc::sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->doParameterDumpRequest();
+   }
+}

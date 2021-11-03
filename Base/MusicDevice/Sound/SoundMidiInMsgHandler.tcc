@@ -32,6 +32,12 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
    // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
+      
+      if(mpark::holds_alternative<midi::Message<midi::SystemExclusive>>(midiMsg))
+      {
+         LOG_F(INFO, "SOUND --- {} Received Sysex\n {}",
+            m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+      }
       /*
       LOG_F(INFO, "SOUND --- {} Received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));

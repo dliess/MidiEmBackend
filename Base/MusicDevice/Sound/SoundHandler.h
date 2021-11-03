@@ -92,6 +92,8 @@ public:
    void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
    void registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb);
 
+   void doParameterDumpRequest() noexcept;
+
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;
@@ -102,8 +104,6 @@ private:
    std::unique_ptr<MidiOutMsgHandlerT> m_midiOutHandler;
    ParameterStorage m_paramStorage;
    PresetHandler m_presetHandler;
-
-   void doParameterDumpRequest() noexcept;
 
    std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;

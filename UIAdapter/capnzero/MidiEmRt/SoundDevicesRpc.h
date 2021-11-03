@@ -85,6 +85,8 @@ public:
    void setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                         ::capnzero::Int8 voiceIdx,
                         const ::capnzero::TextView& presetName) override;
+	void sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx) override;
+
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
