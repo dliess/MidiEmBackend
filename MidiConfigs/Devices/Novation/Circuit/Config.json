@@ -7484,7 +7484,8 @@
           ]
         },
         {
-          ".type": "VoiceIdx"
+          ".type": "VoiceIdx",
+          "size": 1
         },
         {
           ".type": "Bytes",
@@ -7494,1255 +7495,1885 @@
         },
         {
           ".type": "PatchNameStr",
-          "length": 16
+          "size": 16
         },
         {
-          ".type": "PatchCategory"
+          ".type": "PatchCategory",
+          "size": 1
         },
         {
-          ".type": "PatchGenre"
+          ".type": "PatchGenre",
+          "size": 1
         },
         {
-          ".type": "NotImportant",
-          "length": 14
-        },
-        {
-          ".type": "Parameter",
-          "id": "Voice::Polyphony Mode"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Voice::Portamento Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Voice::Pre-Glide"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Voice::Keyboard Octave"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Wave"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Wave Interpolate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::PulseWidth Index"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Virt Sync Depth"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Density"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Density Detune"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Semitones"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Cents"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator1::Pitchbend"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Wave"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Wave Interpolate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::PulseWidth Index"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Virt Sync Depth"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Density"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Density Detune"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Semitones"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Cents"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Oscillator2::Pitchbend"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::Osc 1 Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::Osc 2 Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::RingMod Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::Noise Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::pre FX level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mixer::post FX level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Routing"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Drive"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Drive type"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Type"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Cutoff Freq"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Keyb Tracking"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Resonance"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Q normalise"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Filter::Env2 Amount"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope1::Velocity"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope1::Attack"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope1::Decay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope1::Sustain"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope1::Release"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope2::Velocity"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope2::Attack"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope2::Decay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope2::Sustain"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope2::Release"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope3::Delay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope3::Attack"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope3::Decay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope3::Sustain"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Envelope3::Release"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO::Waveform"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Phase Offset"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Slew Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Delay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Delay Sync"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Rate Sync"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO1::Fade Mode"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Waveform"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Phase offset"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Slew Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Delay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Delay Sync"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Rate Sync"
-        },
-        {
-          ".type": "Parameter",
-          "id": "LFO2::Fade mode"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Distortion::Level"
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Level"
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Bass Frequency"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Bass Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Mid Frequency"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Mid Level"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Treble Frequency"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Equalizer::Treble Level"
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "Parameter",
-          "id": "Distortion::Type"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Distortion::Compensation"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Type"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Rate"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Rate Sync"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Feedback"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Mod Depth"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Chorus::Delay"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mod Matrix::ModMatrix 20 src 1"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mod Matrix::ModMatrix 20 src 2"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mod Matrix::ModMatrix 20 Depth"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Mod Matrix::ModMatrix 20 dest"
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "NotImportant",
-          "length": 1
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 1 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 2 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 3 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 4 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 5 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 6 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 7 depth D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 position"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 destination A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 start position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 end position A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 depth A"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 destination B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 start position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 end position B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 depth B"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 destination C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 start position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 end position C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 depth C"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 destination D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 start position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 end position D"
-        },
-        {
-          ".type": "Parameter",
-          "id": "Macro Knob::macro knob 8 depth D"
+          ".type": "Reserved",
+          "size": 14
         },
         {
           ".type": "Bytes",
           "values": [
             247
           ]
+        },
+        {
+          ".type": "Parameter",
+          "offset": 32,
+          "component": "Voice",
+          "parameter": "Polyphony Mode"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 33,
+          "component": "Voice",
+          "parameter": "Portamento Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 34,
+          "component": "Voice",
+          "parameter": "Pre-Glide"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 35,
+          "component": "Voice",
+          "parameter": "Keyboard Octave"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 36,
+          "component": "Oscillator1",
+          "parameter": "Wave"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 37,
+          "component": "Oscillator1",
+          "parameter": "Wave Interpolate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 38,
+          "component": "Oscillator1",
+          "parameter": "PulseWidth Index"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 39,
+          "component": "Oscillator1",
+          "parameter": "Virt Sync Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 40,
+          "component": "Oscillator1",
+          "parameter": "Density"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 41,
+          "component": "Oscillator1",
+          "parameter": "Density Detune"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 42,
+          "component": "Oscillator1",
+          "parameter": "Semitones"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 43,
+          "component": "Oscillator1",
+          "parameter": "Cents"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 44,
+          "component": "Oscillator1",
+          "parameter": "Pitchbend"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 45,
+          "component": "Oscillator2",
+          "parameter": "Wave"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 46,
+          "component": "Oscillator2",
+          "parameter": "Wave Interpolate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 47,
+          "component": "Oscillator2",
+          "parameter": "PulseWidth Index"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 48,
+          "component": "Oscillator2",
+          "parameter": "Virt Sync Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 49,
+          "component": "Oscillator2",
+          "parameter": "Density"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 50,
+          "component": "Oscillator2",
+          "parameter": "Density Detune"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 51,
+          "component": "Oscillator2",
+          "parameter": "Semitones"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 52,
+          "component": "Oscillator2",
+          "parameter": "Cents"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 53,
+          "component": "Oscillator2",
+          "parameter": "Pitchbend"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 54,
+          "component": "Mixer",
+          "parameter": "Osc 1 Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 55,
+          "component": "Mixer",
+          "parameter": "Osc 2 Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 56,
+          "component": "Mixer",
+          "parameter": "RingMod Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 57,
+          "component": "Mixer",
+          "parameter": "Noise Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 58,
+          "component": "Mixer",
+          "parameter": "pre FX level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 59,
+          "component": "Mixer",
+          "parameter": "post FX level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 60,
+          "component": "Filter",
+          "parameter": "Routing"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 61,
+          "component": "Filter",
+          "parameter": "Drive"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 62,
+          "component": "Filter",
+          "parameter": "Drive type"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 63,
+          "component": "Filter",
+          "parameter": "Type"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 64,
+          "component": "Filter",
+          "parameter": "Cutoff Freq"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 65,
+          "component": "Filter",
+          "parameter": "Keyb Tracking"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 66,
+          "component": "Filter",
+          "parameter": "Resonance"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 67,
+          "component": "Filter",
+          "parameter": "Q normalise"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 68,
+          "component": "Filter",
+          "parameter": "Env2 Amount"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 69,
+          "component": "Envelope1",
+          "parameter": "Velocity"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 70,
+          "component": "Envelope1",
+          "parameter": "Attack"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 71,
+          "component": "Envelope1",
+          "parameter": "Decay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 72,
+          "component": "Envelope1",
+          "parameter": "Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 73,
+          "component": "Envelope1",
+          "parameter": "Release"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 74,
+          "component": "Envelope2",
+          "parameter": "Velocity"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 75,
+          "component": "Envelope2",
+          "parameter": "Attack"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 76,
+          "component": "Envelope2",
+          "parameter": "Decay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 77,
+          "component": "Envelope2",
+          "parameter": "Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 78,
+          "component": "Envelope2",
+          "parameter": "Release"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 79,
+          "component": "Envelope3",
+          "parameter": "Delay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 80,
+          "component": "Envelope3",
+          "parameter": "Attack"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 81,
+          "component": "Envelope3",
+          "parameter": "Decay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 82,
+          "component": "Envelope3",
+          "parameter": "Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 83,
+          "component": "Envelope3",
+          "parameter": "Release"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 84,
+          "component": "LFO",
+          "parameter": "Waveform"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 85,
+          "component": "LFO1",
+          "parameter": "Phase Offset"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 86,
+          "component": "LFO1",
+          "parameter": "Slew Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 87,
+          "component": "LFO1",
+          "parameter": "Delay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 88,
+          "component": "LFO1",
+          "parameter": "Delay Sync"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 89,
+          "component": "LFO1",
+          "parameter": "Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 90,
+          "component": "LFO1",
+          "parameter": "Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 91,
+          "component": "LFO1",
+          "parameter": "Fade Mode"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 92,
+          "component": "LFO2",
+          "parameter": "Waveform"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 93,
+          "component": "LFO2",
+          "parameter": "Phase offset"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 94,
+          "component": "LFO2",
+          "parameter": "Slew Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 95,
+          "component": "LFO2",
+          "parameter": "Delay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 96,
+          "component": "LFO2",
+          "parameter": "Delay Sync"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 97,
+          "component": "LFO2",
+          "parameter": "Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 98,
+          "component": "LFO2",
+          "parameter": "Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 99,
+          "component": "LFO2",
+          "parameter": "Fade mode"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 100,
+          "component": "Distortion",
+          "parameter": "Level"
+        },
+        {
+          ".type": "Reserved",
+          "offset": 101,
+          "size": 1
+        },
+        {
+          ".type": "Parameter",
+          "offset": 102,
+          "component": "Chorus",
+          "parameter": "Level"
+        },
+        {
+          ".type": "Reserved",
+          "offset": 103,
+          "size": 1
+        },
+        {
+          ".type": "Reserved",
+          "offset": 104,
+          "size": 1
+        },
+        {
+          ".type": "Parameter",
+          "offset": 105,
+          "component": "Equalizer",
+          "parameter": "Bass Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 106,
+          "component": "Equalizer",
+          "parameter": "Bass Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 107,
+          "component": "Equalizer",
+          "parameter": "Mid Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 108,
+          "component": "Equalizer",
+          "parameter": "Mid Level"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 109,
+          "component": "Equalizer",
+          "parameter": "Treble Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 110,
+          "component": "Equalizer",
+          "parameter": "Treble Level"
+        },
+        {
+          ".type": "Reserved",
+          "offset": 111,
+          "size": 1
+        },
+        {
+          ".type": "Reserved",
+          "offset": 112,
+          "size": 1
+        },
+        {
+          ".type": "Reserved",
+          "offset": 113,
+          "size": 1
+        },
+        {
+          ".type": "Reserved",
+          "offset": 114,
+          "size": 1
+        },
+        {
+          ".type": "Reserved",
+          "offset": 115,
+          "size": 1
+        },
+        {
+          ".type": "Parameter",
+          "offset": 116,
+          "component": "Distortion",
+          "parameter": "Type"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 117,
+          "component": "Distortion",
+          "parameter": "Compensation"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 118,
+          "component": "Chorus",
+          "parameter": "Type"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 119,
+          "component": "Chorus",
+          "parameter": "Rate"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 120,
+          "component": "Chorus",
+          "parameter": "Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 121,
+          "component": "Chorus",
+          "parameter": "Feedback"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 122,
+          "component": "Chorus",
+          "parameter": "Mod Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 123,
+          "component": "Chorus",
+          "parameter": "Delay"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 124,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 1 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 125,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 1 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 126,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 1 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 127,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 1 dest"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 128,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 129,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 130,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 131,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 132,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 133,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 134,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 135,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 2 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 136,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 3 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 137,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 3 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 138,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 3 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 139,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 3 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 140,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 4 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 141,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 4 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 142,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 4 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 143,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 4 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 144,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 5 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 145,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 5 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 146,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 5 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 147,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 5 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 148,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 6 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 149,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 6 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 150,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 6 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 151,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 6 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 152,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 7 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 153,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 7 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 154,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 7 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 155,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 7 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 156,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 8 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 157,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 8 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 158,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 8 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 159,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 8 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 160,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 9 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 161,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 9 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 162,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 9 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 163,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 9 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 164,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 10 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 165,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 10 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 166,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 10 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 167,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 10 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 168,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 11 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 169,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 11 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 170,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 11 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 171,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 11 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 172,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 12 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 173,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 12 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 174,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 12 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 175,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 12 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 176,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 13 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 177,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 13 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 178,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 13 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 179,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 13 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 180,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 14 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 181,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 14 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 182,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 14 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 183,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 14 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 184,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 15 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 185,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 15 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 186,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 15 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 187,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 15 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 188,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 16 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 189,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 16 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 190,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 16 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 191,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 16 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 192,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 17 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 193,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 17 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 194,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 17 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 195,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 17 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 196,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 18 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 197,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 18 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 198,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 18 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 199,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 18 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 200,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 19 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 201,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 19 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 202,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 19 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 203,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 19 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 204,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 20 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 205,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 20 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 206,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 20 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 207,
+          "component": "Mod Matrix",
+          "parameter": "ModMatrix 20 dest"
+        },
+
+        {
+          ".type": "Parameter",
+          "offset": 208,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 209,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 210,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 211,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 212,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 213,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 214,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 215,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 216,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 217,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 218,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 219,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 220,
+          "component": "Macro Knob",
+          "parameter": "macro knob 1 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 221,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 222,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 223,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 224,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 225,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 226,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 227,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 228,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 229,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 230,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 231,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 232,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 233,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 234,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 235,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 236,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 237,
+          "component": "Macro Knob",
+          "parameter": "macro knob 2 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 238,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 239,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 240,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 241,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 242,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 243,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 244,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 245,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 246,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 247,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 248,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 249,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 250,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 251,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 252,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 253,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 254,
+          "component": "Macro Knob",
+          "parameter": "macro knob 3 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 255,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 256,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 257,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 258,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 259,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 260,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 261,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 262,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 263,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 264,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 265,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 266,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 267,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 268,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 269,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 270,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 271,
+          "component": "Macro Knob",
+          "parameter": "macro knob 4 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 272,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 273,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 274,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 275,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 276,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 277,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 278,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 279,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 280,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 281,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 282,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 283,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 284,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 285,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 286,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 287,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 288,
+          "component": "Macro Knob",
+          "parameter": "macro knob 5 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 289,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 290,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 291,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 292,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 293,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 294,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 295,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 296,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 297,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 298,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 299,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 300,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 301,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 302,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 303,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 304,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 305,
+          "component": "Macro Knob",
+          "parameter": "macro knob 6 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 306,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 307,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 308,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 309,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 310,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 311,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 312,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 313,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 314,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 315,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 316,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 317,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 318,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 319,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 320,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 321,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 322,
+          "component": "Macro Knob",
+          "parameter": "macro knob 7 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 323,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 position"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 324,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 325,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 326,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 327,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 328,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 329,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 330,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 331,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 332,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 333,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 334,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 335,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 336,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 337,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 338,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "offset": 339,
+          "component": "Macro Knob",
+          "parameter": "macro knob 8 depth D"
         }
       ]
     }

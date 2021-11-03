@@ -31,17 +31,21 @@ using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
 namespace sysex
 {
 
+struct Field 
+{
+   int size;
+};
+
 struct Bytes
 {
    std::vector<uint8_t> values;
 };
 
-struct VoiceIdx
-{
-
-};
-
-
+struct VoiceIdx : public Field {};
+struct PatchNameStr : public Field {};
+struct PatchCategory : public Field {};
+struct PatchGenre : public Field {};
+struct Reserved : public Field {};
 
 } // namespace sysex
 struct ParameterId
