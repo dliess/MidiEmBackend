@@ -851,7 +851,7 @@
             0,
             247
           ]
-        }    
+        }
       },
       {
         "name": "Synth 2",
@@ -870,7 +870,7 @@
             1,
             247
           ]
-        }    
+        }
       }
     ],
     "engines": [
@@ -7466,6 +7466,1283 @@
             "from": 17,
             "to": 17
           }
+        }
+      ]
+    },
+    "parameterDump": {
+      "sysexMsg": [
+        {
+          ".type": "Bytes",
+          "values": [
+            240,
+            0,
+            32,
+            41,
+            1,
+            96,
+            0
+          ]
+        },
+        {
+          ".type": "VoiceIdx"
+        },
+        {
+          ".type": "Bytes",
+          "values": [
+            0
+          ]
+        },
+        {
+          ".type": "PatchNameStr",
+          "length": 16
+        },
+        {
+          ".type": "PatchCategory"
+        },
+        {
+          ".type": "PatchGenre"
+        },
+        {
+          ".type": "NotImportant",
+          "length": 14
+        },
+        {
+          ".type": "Parameter",
+          "id": "Voice::Polyphony Mode"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Voice::Portamento Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Voice::Pre-Glide"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Voice::Keyboard Octave"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Wave"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Wave Interpolate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::PulseWidth Index"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Virt Sync Depth"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Density"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Density Detune"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Semitones"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Cents"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator1::Pitchbend"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Wave"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Wave Interpolate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::PulseWidth Index"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Virt Sync Depth"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Density"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Density Detune"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Semitones"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Cents"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Oscillator2::Pitchbend"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::Osc 1 Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::Osc 2 Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::RingMod Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::Noise Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::pre FX level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mixer::post FX level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Routing"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Drive"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Drive type"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Type"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Cutoff Freq"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Keyb Tracking"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Resonance"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Q normalise"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Filter::Env2 Amount"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope1::Velocity"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope1::Attack"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope1::Decay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope1::Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope1::Release"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope2::Velocity"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope2::Attack"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope2::Decay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope2::Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope2::Release"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope3::Delay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope3::Attack"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope3::Decay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope3::Sustain"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Envelope3::Release"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO::Waveform"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Phase Offset"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Slew Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Delay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Delay Sync"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO1::Fade Mode"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Waveform"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Phase offset"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Slew Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Delay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Delay Sync"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "id": "LFO2::Fade mode"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Distortion::Level"
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Level"
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Bass Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Bass Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Mid Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Mid Level"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Treble Frequency"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Equalizer::Treble Level"
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "Parameter",
+          "id": "Distortion::Type"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Distortion::Compensation"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Type"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Rate"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Rate Sync"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Feedback"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Mod Depth"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Chorus::Delay"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mod Matrix::ModMatrix 20 src 1"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mod Matrix::ModMatrix 20 src 2"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mod Matrix::ModMatrix 20 Depth"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Mod Matrix::ModMatrix 20 dest"
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "NotImportant",
+          "length": 1
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 1 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 2 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 3 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 4 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 5 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 6 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 7 depth D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 position"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 destination A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 start position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 end position A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 depth A"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 destination B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 start position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 end position B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 depth B"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 destination C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 start position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 end position C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 depth C"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 destination D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 start position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 end position D"
+        },
+        {
+          ".type": "Parameter",
+          "id": "Macro Knob::macro knob 8 depth D"
+        },
+        {
+          ".type": "Bytes",
+          "values": [
+            247
+          ]
         }
       ]
     }
