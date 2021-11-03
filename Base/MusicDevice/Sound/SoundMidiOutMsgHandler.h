@@ -7,8 +7,7 @@ namespace base::musicDevice
 {
 namespace sound
 {
-template <typename MidiOutIfPtr>
-class MidiOutMsgHandler
+template <typename MidiOutIfPtr> class MidiOutMsgHandler
 {
 public:
    MidiOutMsgHandler(MidiOutIfPtr rMidiOutIf,
@@ -16,7 +15,7 @@ public:
                      uint8_t midiChannelOffset) noexcept;
    void sendSoundParameter(uint32_t voiceId, uint32_t parameterId,
                            float value) noexcept;
-   bool sendParameterDumpRequest() noexcept;
+   void sendParameterDumpRequest() noexcept;
 
    void noteOn(int voiceIndex, int note, float velocity) noexcept;
    void noteOff(int voiceIndex, int note, float velocity) noexcept;
@@ -31,10 +30,13 @@ private:
    const description::sound::Section& m_rSoundSection;
    float m_pitchBendFactor{1.0};
    uint8_t m_midiChannelOffset{0};
+   void _sendParameterDumpRequest(
+       const description::sound::ParameterDumpRequest&
+           parameterDumpRequest) noexcept;
 };
 
-} // namespace sound
-} // namespace base::musicDevice::sound
+}   // namespace sound
+}   // namespace base::musicDevice
 
 #include "SoundMidiOutMsgHandler.tcc"
 

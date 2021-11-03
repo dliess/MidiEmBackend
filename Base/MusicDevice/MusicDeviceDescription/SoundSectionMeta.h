@@ -70,7 +70,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Voice>()
       member("name", &base::musicDevice::description::sound::Voice::name),
       member("engineId", &base::musicDevice::description::sound::Voice::engineId),
       member("midiChannel", &base::musicDevice::description::sound::Voice::midiChannel),
-      member("midiTriggerNoteNumber", &base::musicDevice::description::sound::Voice::midiTriggerNoteNumber)
+      member("midiTriggerNoteNumber", &base::musicDevice::description::sound::Voice::midiTriggerNoteNumber),
+      member("parameterDumpRequest", &base::musicDevice::description::sound::Voice::parameterDumpRequest)
    );
 }
 
@@ -114,6 +115,18 @@ template <>
 inline auto getClassNameOrIndex<base::musicDevice::description::sound::OneOfComponents>(int i) noexcept
 {
    return "OneOfComponents";
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::sound::MidiCCAndValue>(int i) noexcept
+{
+   return "MidiCCAndValue";
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::sound::MidiSysexMsg>(int i) noexcept
+{
+   return "MidiSysexMsg";
 }
 
 template <>
@@ -173,6 +186,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Global>()
 {
    return members(
       member("midiChannel", &base::musicDevice::description::sound::Global::midiChannel),
+      member("parameterDumpRequest", &base::musicDevice::description::sound::Global::parameterDumpRequest),
       member("components", &base::musicDevice::description::sound::Global::components),
       member("parameters", &base::musicDevice::description::sound::Global::parameters)
    );
@@ -200,11 +214,10 @@ inline auto registerMembers<base::musicDevice::description::sound::MidiCCAndValu
 }
 
 template <>
-inline auto registerMembers<base::musicDevice::description::sound::ParameterDumpRequest>()
+inline auto registerMembers<base::musicDevice::description::sound::MidiSysexMsg>()
 {
    return members(
-      member("midiSysex", &base::musicDevice::description::sound::ParameterDumpRequest::midiSysex),
-      member("midiMsg", &base::musicDevice::description::sound::ParameterDumpRequest::midiMsg)
+      member("value", &base::musicDevice::description::sound::MidiSysexMsg::value)
    );
 }
 

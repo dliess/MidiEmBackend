@@ -47,12 +47,9 @@
       }
     ],
     "parameterDumpRequest": {
-      "midiMsg": {
-        "cc": [
-          61
-        ],
-        "value": 0
-      }
+      ".type": "MidiCCAndValue",
+      "cc": [61],
+      "value": 0
     },
     "engines": [
       {

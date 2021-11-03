@@ -837,12 +837,40 @@
       {
         "name": "Synth 1",
         "engineId": 0,
-        "midiChannel": 1
+        "midiChannel": 1,
+        "parameterDumpRequest": {
+          ".type": "MidiSysexMsg",
+          "value": [
+            240,
+            0,
+            32,
+            41,
+            1,
+            96,
+            64,
+            0,
+            247
+          ]
+        }    
       },
       {
         "name": "Synth 2",
         "engineId": 0,
-        "midiChannel": 2
+        "midiChannel": 2,
+        "parameterDumpRequest": {
+          ".type": "MidiSysexMsg",
+          "value": [
+            240,
+            0,
+            32,
+            41,
+            1,
+            96,
+            64,
+            1,
+            247
+          ]
+        }    
       }
     ],
     "engines": [

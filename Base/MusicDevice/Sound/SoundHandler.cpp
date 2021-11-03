@@ -434,9 +434,5 @@ std::shared_ptr<SoundPresets> SoundHandler::presets() const noexcept
 
 void SoundHandler::doParameterDumpRequest() noexcept
 {
-   if (!m_midiOutHandler->sendParameterDumpRequest())
-   {
-      // TODO: do something else here
-      // m_paramStorage.markAllDirty();
-   }
+   m_midiOutHandler->sendParameterDumpRequest();
 }

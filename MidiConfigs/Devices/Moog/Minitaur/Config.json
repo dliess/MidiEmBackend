@@ -12,7 +12,8 @@
       }
     ],
     "parameterDumpRequest": {
-      "midiSysex": [
+      ".type": "MidiSysexMsg",
+      "value": [
         240,
         4,
         8,

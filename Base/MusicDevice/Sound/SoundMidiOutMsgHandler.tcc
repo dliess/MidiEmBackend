@@ -4,8 +4,8 @@
 #include "MidiMessageIds.h"
 #include "SoundMidiOutMsgHandler.h"
 
-using namespace base::musicDevice;
-
+namespace base::musicDevice
+{
 template <typename MidiOutIfPtr>
 sound::MidiOutMsgHandler<MidiOutIfPtr>::MidiOutMsgHandler(
     MidiOutIfPtr pMidiOutIf, const description::sound::Section& rSoundSection,
@@ -143,24 +143,39 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
 }
 
 template <typename MidiOutIfPtr>
-bool sound::MidiOutMsgHandler<MidiOutIfPtr>::sendParameterDumpRequest() noexcept
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendParameterDumpRequest() noexcept
 {
    if (m_rSoundSection.parameterDumpRequest)
    {
-      if (m_rSoundSection.parameterDumpRequest->midiSysex)
-      {
-         m_pMidiOutIf->sysEx(*m_rSoundSection.parameterDumpRequest->midiSysex);
-      }
-      if (m_rSoundSection.parameterDumpRequest->midiMsg)
-      {
-         m_pMidiOutIf->controlParameter(
-             1 + m_midiChannelOffset,
-             m_rSoundSection.parameterDumpRequest->midiMsg->cc[0],
-             m_rSoundSection.parameterDumpRequest->midiMsg->value);
-      }
-      return true;
+      _sendParameterDumpRequest(*m_rSoundSection.parameterDumpRequest);
    }
-   return false;
+   if(m_rSoundSection.global && m_rSoundSection.global->parameterDumpRequest)
+   {
+       _sendParameterDumpRequest(*m_rSoundSection.global->parameterDumpRequest);
+   }
+   for (int i = 0; i < m_rSoundSection.voices.size(); ++i)
+   {
+      if (m_rSoundSection.voices[i].parameterDumpRequest)
+      {
+         _sendParameterDumpRequest(*m_rSoundSection.voices[i].parameterDumpRequest);
+      }
+   }
+}
+
+template <typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::_sendParameterDumpRequest(
+    const description::sound::ParameterDumpRequest&
+        parameterDumpRequest) noexcept
+{
+   mpark::visit(
+       util::overload{[this](const description::sound::MidiCCAndValue& ccMsg) {
+                         m_pMidiOutIf->controlParameter(
+                             1 + m_midiChannelOffset, ccMsg.cc[0], ccMsg.value);
+                      },
+                      [this](const description::sound::MidiSysexMsg& sysExMsg) {
+                         m_pMidiOutIf->sysEx(sysExMsg.value);
+                      }},
+       parameterDumpRequest);
 }
 
 template <typename MidiOutIfPtr>
@@ -254,3 +269,5 @@ uint8_t sound::MidiOutMsgHandler<MidiOutIfPtr>::getMidiChannelOffset()
 {
    return m_midiChannelOffset;
 }
+
+}   // namespace base::musicDevice
