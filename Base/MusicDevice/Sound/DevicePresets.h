@@ -27,14 +27,12 @@ public:
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const std::vector<float>& preset(
        int engineIdx, const std::string& presetName) const noexcept;
-   bool hasSoundPreset(int engineIdx,
-                       const std::string& presetName) const noexcept;
-   void saveSoundPreset(int engineIdx, const std::string& presetName,
-                        const std::vector<float>& voiceParams) noexcept;
+   bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
+   void savePreset(int engineIdx, const std::string& presetName,
+                   const std::vector<float>& voiceParams) noexcept;
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
-   void deleteSoundPreset(int engineIdx,
-                          const std::string& presetName) noexcept;
+   void deletePreset(int engineIdx, const std::string& presetName) noexcept;
 
    void registerPresetListChangeCb(std::function<void()> cb) noexcept;
    void clearPresetListChangeCb() noexcept;

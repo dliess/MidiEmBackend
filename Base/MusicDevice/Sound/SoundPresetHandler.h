@@ -33,7 +33,7 @@ public:
    void storeAsSoundPreset(int voiceIdx,
                            const std::string& presetName) noexcept;
    void resetParametersToZeroState(int voiceIdx) noexcept;
-   void deleteSoundPreset(int voiceIdx,
+   void deletePreset(int voiceIdx,
                           const std::string& newSelectedPreset) noexcept;
 
    std::shared_ptr<DevicePresets> getSoundPresets() const noexcept

@@ -42,14 +42,14 @@ const std::vector<float>& DevicePresets::preset(
    return it->second;
 }
 
-bool DevicePresets::hasSoundPreset(int engineIdx, const std::string& presetName) const noexcept
+bool DevicePresets::hasPreset(int engineIdx, const std::string& presetName) const noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    return enginePresets.find(presetName) != enginePresets.end();
 }
 
-void DevicePresets::saveSoundPreset(
+void DevicePresets::savePreset(
    int engineIdx, 
    const std::string& presetName,
    const std::vector<float>& voiceParams) noexcept
@@ -101,7 +101,7 @@ std::string DevicePresets::incrementNameIdx(
    }
 }
 
-void DevicePresets::deleteSoundPreset(int engineIdx, const std::string& presetName) noexcept
+void DevicePresets::deletePreset(int engineIdx, const std::string& presetName) noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];

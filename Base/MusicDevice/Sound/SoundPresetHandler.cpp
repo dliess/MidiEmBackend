@@ -58,7 +58,7 @@ void PresetHandler::selectSoundPreset(
 {
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
 
-   if (!m_pSoundPresets->hasSoundPreset(engineIdx, presetName))
+   if (!m_pSoundPresets->hasPreset(engineIdx, presetName))
       return;
    m_rParameterStorage.setActualPresetOfVoice(voiceIdx, presetName);
    resetToActualSoundPreset(voiceIdx);
@@ -82,7 +82,7 @@ void PresetHandler::storeAsSoundPreset(
       }
       actPreset = m_pSoundPresets->incrementNameIdx(engineIdx, actPreset);
    }
-   m_pSoundPresets->saveSoundPreset(
+   m_pSoundPresets->savePreset(
       engineIdx, actPreset,
       m_rParameterStorage.getCommandedValuesOfVoice(voiceIdx));
 }
@@ -92,7 +92,7 @@ void PresetHandler::resetParametersToZeroState(int voiceIdx) noexcept
    m_rParameterStorage.resetToInitialValues(voiceIdx);
 }
 
-void PresetHandler::deleteSoundPreset(
+void PresetHandler::deletePreset(
    int voiceIdx, const std::string& newSelectedPreset) noexcept
 {
    const auto actualPreset =
@@ -102,7 +102,7 @@ void PresetHandler::deleteSoundPreset(
       return;
    }
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
-   m_pSoundPresets->deleteSoundPreset(
+   m_pSoundPresets->deletePreset(
       engineIdx, *m_rParameterStorage.getActualPresetOfVoice(voiceIdx));
    selectSoundPreset(voiceIdx, newSelectedPreset);
 }
