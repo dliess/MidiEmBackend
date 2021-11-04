@@ -13,8 +13,10 @@ namespace description::sound { struct Section; }
 namespace sound
 {
 class ParameterStorage;
-class SoundPresets;
 
+namespace preset
+{
+class SoundPresets;
 class PresetHandler
 {
 public:
@@ -45,6 +47,7 @@ private:
    std::shared_ptr<SoundPresets>                         m_pSoundPresets;
 };
 
+} // namespace preset
 } // namespace sound
 } // namespace base::musicDevice
 #endif

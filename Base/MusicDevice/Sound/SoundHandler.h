@@ -28,14 +28,16 @@ template<typename T>
 class MidiInMsgHandler;
 template<typename T>
 class MidiOutMsgHandler;
+namespace preset
+{
 class SoundPresets;
-
+} // namespace preset
 class SoundHandler
 {
 public:
    SoundHandler(std::string deviceName,
                 const description::sound::Section& rSoundSection,
-                std::shared_ptr<SoundPresets> soundPresets) noexcept;
+                std::shared_ptr<preset::SoundPresets> soundPresets) noexcept;
    ~SoundHandler();
    SoundHandler(const SoundHandler& other) = delete;
    SoundHandler& operator=(const SoundHandler& other) = delete;
@@ -54,7 +56,7 @@ public:
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
    void incrementParameterValue(int voiceId, int parameterId, float increment) noexcept;
    void updateActualSoundStorageValues() noexcept;
-   std::shared_ptr<SoundPresets> presets() const noexcept;
+   std::shared_ptr<preset::SoundPresets> presets() const noexcept;
    constexpr static int ALL = ParameterStorage::ALL;
    void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
    void uiLoosesInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
@@ -103,7 +105,7 @@ private:
    std::unique_ptr<MidiInMsgHandlerT> m_midiInMsgHandler;
    std::unique_ptr<MidiOutMsgHandlerT> m_midiOutHandler;
    ParameterStorage m_paramStorage;
-   PresetHandler m_presetHandler;
+   preset::PresetHandler m_presetHandler;
 
    std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;

@@ -6,23 +6,29 @@
 #include <unordered_map>
 #include <vector>
 
+#include "EnumReflect.h"
 #include "Meta.h"
 #include "Settings.h"
 #include "SoundSection.h"
 
 namespace base::musicDevice::sound
 {
+namespace preset
+{
+DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
+             RBHHop, RockPop, Techno, Dubstep);
+DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
+             Lead, Movement, Pad, Poly, SFX, String, User, Voc);
 class SoundPresets : public utils::Settings<SoundPresets>
 {
 public:
    SoundPresets(std::string manufacturer, std::string product) noexcept;
    ~SoundPresets();
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
-   const std::vector<float>& preset(int engineIdx,
-                                    const std::string& presetName) const
-      noexcept;
-   bool hasSoundPreset(int engineIdx, const std::string& presetName) const
-      noexcept;
+   const std::vector<float>& preset(
+       int engineIdx, const std::string& presetName) const noexcept;
+   bool hasSoundPreset(int engineIdx,
+                       const std::string& presetName) const noexcept;
    void saveSoundPreset(int engineIdx, const std::string& presetName,
                         const std::vector<float>& voiceParams) noexcept;
    std::string incrementNameIdx(int engineIdx,
@@ -34,7 +40,7 @@ public:
    void clearPresetListChangeCb() noexcept;
 
    using Presets =
-      std::vector<std::unordered_map<std::string, std::vector<float>>>;
+       std::vector<std::unordered_map<std::string, std::vector<float>>>;
    // ============== Settings ===============
    using Settings = Presets;
    Settings getSettings() const noexcept { return m_presets; };
@@ -65,5 +71,6 @@ inline int SoundPresets::engine2VectorIdx(int engineIdx) noexcept
    return engineIdx + 1;
 }
 
-} // namespace base::musicDevice::sound
+}   // namespace preset
+}   // namespace base::musicDevice::sound
 #endif

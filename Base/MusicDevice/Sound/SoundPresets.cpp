@@ -1,7 +1,7 @@
 #include "SoundPresets.h"
 #include "VectorIndexInRange.h"
 
-using namespace base::musicDevice::sound;
+using namespace base::musicDevice::sound::preset;
 
 SoundPresets::SoundPresets(std::string manufacturer,
                            std::string product) noexcept :

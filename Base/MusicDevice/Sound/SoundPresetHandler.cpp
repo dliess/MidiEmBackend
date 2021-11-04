@@ -4,7 +4,7 @@
 #include "SoundPresets.h"
 #include "SoundSection.h"
 
-using namespace base::musicDevice::sound;
+using namespace base::musicDevice::sound::preset;
 
 PresetHandler::PresetHandler(
    const description::sound::Section& rSoundSection,

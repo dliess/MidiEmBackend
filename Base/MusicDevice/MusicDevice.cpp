@@ -15,7 +15,7 @@ using namespace base::musicDevice;
 MusicDevice::MusicDevice(
     MusicDeviceId deviceId, const std::string& resourceRootDir,
     std::shared_ptr<description::Description> descr,
-    std::shared_ptr<sound::SoundPresets> soundPresets) noexcept :
+    std::shared_ptr<sound::preset::SoundPresets> soundPresets) noexcept :
     m_deviceId(std::move(deviceId)),
     m_pDescr(std::move(descr)),
     m_pluginHandler(resourceRootDir)
