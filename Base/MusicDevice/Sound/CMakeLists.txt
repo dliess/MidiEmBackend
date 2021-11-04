@@ -9,6 +9,7 @@ set(SOURCES
    "SoundHandler.cpp"
    "SoundPresets.cpp"
    "SoundPresetHandler.cpp"
+   "SoundMidiInSysExDumpHandler.cpp"
 )
 
 add_library(MusicDeviceSound STATIC ${SOURCES})

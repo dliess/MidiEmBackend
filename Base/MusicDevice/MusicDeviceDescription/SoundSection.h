@@ -9,8 +9,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "MidiMessageIds.h"
 #include "EnumReflect.h"
+#include "MidiMessageIds.h"
 namespace base::musicDevice::description::sound
 {
 constexpr int GlobalSectionId = -1;
@@ -21,33 +21,65 @@ struct MidiCCAndValue
    uint8_t value;
 };
 
-struct MidiSysexMsg {
+struct MidiSysexMsg
+{
    std::vector<uint8_t> value;
 };
 
 using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
 
-
-namespace sysex
+namespace midisysex
 {
-
-struct Field 
-{
-   int size;
-};
-
 struct Bytes
 {
    std::vector<uint8_t> values;
+   int sizeInSysex() const noexcept { return values.size(); }
 };
 
-struct VoiceIdx : public Field {};
-struct PatchNameStr : public Field {};
-struct PatchCategory : public Field {};
-struct PatchGenre : public Field {};
-struct Reserved : public Field {};
+struct Field
+{
+   static constexpr int UNSET = -1;
+   int offset{UNSET}; // For caching, do NOT REFLECT !!!!
+   int size;
+   constexpr int sizeInSysex() const noexcept { return size; }
+};
 
-} // namespace sysex
+struct VoiceIdx : public Field
+{
+};
+struct PatchNameStr : public Field
+{
+};
+struct PatchCategory : public Field
+{
+};
+struct PatchGenre : public Field
+{
+};
+struct Reserved : public Field
+{
+};
+
+struct ParameterLowRes
+{
+   static constexpr int UNSET = -1;
+   int idx{UNSET}; // For caching, do NOT REFLECT !!!!
+   int offset{UNSET}; // For caching, do NOT REFLECT !!!!
+   std::string component;
+   std::string parameter;
+   constexpr int sizeInSysex() const noexcept { return 1; }
+};
+
+using FieldDescr = mpark::variant<Bytes, VoiceIdx, PatchNameStr, PatchCategory,
+                                  PatchGenre, Reserved, ParameterLowRes>;
+
+
+}   // namespace midisysex
+
+struct ParameterDump
+{
+   std::vector<midisysex::FieldDescr> sysexDescriptors;
+};
 struct ParameterId
 {
    static constexpr int UNSET = -2;
@@ -91,33 +123,10 @@ struct Voice
    std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
-DECLARE_ENUM(ComponentRole, uint,    \
-      Unknown,                       \
-      Track,                         \
-      NoteTrigger,                   \
-      Oscillator,                    \
-      Amp,                           \
-      Filter,                        \
-      LPFilter,                      \
-      HPFilter,                      \
-      LPHPFilter,                    \
-      LPHPFilter2,                   \
-      Envelope,                      \
-      LFO,                           \
-      Arpeggiator,                   \
-      Sequencer,                     \
-      Sample,                        \
-      Effects,                       \
-      Equalizer,                     \
-      Delay,                         \
-      Reverb,                        \
-      Chorus,                        \
-      Distortion,                    \
-      Compressor,                    \
-      ModMatrix,                     \
-      Tempo,                         \
-      Mixer                          \
-);
+DECLARE_ENUM(ComponentRole, uint, Unknown, Track, NoteTrigger, Oscillator, Amp,
+             Filter, LPFilter, HPFilter, LPHPFilter, LPHPFilter2, Envelope, LFO,
+             Arpeggiator, Sequencer, Sample, Effects, Equalizer, Delay, Reverb,
+             Chorus, Distortion, Compressor, ModMatrix, Tempo, Mixer);
 
 struct Component
 {
@@ -154,31 +163,13 @@ template <typename T> struct ValueRange
 using ValueRangeFloat = ValueRange<float>;
 using ValueRangeInt   = ValueRange<int>;
 
-DECLARE_ENUM(ParameterSourceRangeBaseRoles, uint, 
-      Unknown,                  \
-      Off,                      \
-      On,                       \
-      FilterLowpass2db,         \
-      FilterLowpass4db,         \
-      FilterHighpass2db,        \
-      FilterHighpass4db,        \
-      FilterBandpass2db,        \
-      FilterBandpass4db,        \
-      FilterPeak,               \
-      FilterBandReject,         \
-      FilterTwoPole,            \
-      FilterFourPole,           \
-      WaveFormSine,             \
-      WaveFormAsymSine,         \
-      WaveFormSawtooth,         \
-      WaveFormSinetooth,        \
-      WaveFormTriangle,         \
-      WaveFormSquare,           \
-      WaveFormPulsewidth,       \
-      WaveFormRandom,           \
-      WaveFormSequence,         \
-      WaveTable                 \
-);
+DECLARE_ENUM(ParameterSourceRangeBaseRoles, uint, Unknown, Off, On,
+             FilterLowpass2db, FilterLowpass4db, FilterHighpass2db,
+             FilterHighpass4db, FilterBandpass2db, FilterBandpass4db,
+             FilterPeak, FilterBandReject, FilterTwoPole, FilterFourPole,
+             WaveFormSine, WaveFormAsymSine, WaveFormSawtooth,
+             WaveFormSinetooth, WaveFormTriangle, WaveFormSquare,
+             WaveFormPulsewidth, WaveFormRandom, WaveFormSequence, WaveTable);
 struct ParameterSourceRangeBase
 {
    using Role = ParameterSourceRangeBaseRoles;
@@ -206,138 +197,32 @@ struct ParameterSource
    std::optional<ParameterSourceMidi> midi;
 };
 
-
-DECLARE_ENUM(ParameterRole, uint,    \
-      Unknown,                       \
-      TrackVolume,                      \
-      TrigChance,                      \
-      Swing,                      \
-      Mute,                      \
-      Solo,                      \
-      KeyPrioMode,                      \
-      Pitch,                      \
-      PitchFinetune,                      \
-      Detune,                      \
-      OSCWaveform,                      \
-      OSCShape,                      \
-      OSCGlide,                      \
-      OSCGlideOnOff,                      \
-      OSCGlideType,                      \
-      OSCKeyboardTracking,                      \
-      OSCSync,                      \
-      OSCSlop,                      \
-      OSCMix,                      \
-      OSCNoise,                      \
-      OSCNoteSyncOnOff,                      \
-      OSC1Volume,                      \
-      OSC2Volume,                      \
-      RingModVolume,                  \
-      OSC1Decay,                      \
-      OSC2Decay,                      \
-      TransientDecay,                      \
-      HitDecay,                      \
-      SubOSCLevel,                      \
-      NoiseLevel,                      \
-      NoiseDecay,                      \
-      NoiseColor,                      \
-      UnisonMode,                      \
-      UnisonOnOff,                      \
-      FMAmount,                      \
-      InitialVolume,                      \
-      Volume,                      \
-      Pan,                      \
-      DelaySend,                      \
-      ReverbSend,                      \
-      FeedbackVolume,                      \
-      FeedbackGain,                      \
-      FilterCutoff,                      \
-      FilterBase,                      \
-      FilterWidth,                      \
-      FilterType,                      \
-      FilterResonance,                      \
-      FilterSlope,                      \
-      FilterKeyAmount,                      \
-      FilterAudioModuation,                      \
-      LPFilterCutoff,                      \
-      LPFilterResonance,                      \
-      LPFilterSlope,                      \
-      LPFilterKeyAmount,                      \
-      LPFilterAudioModuation,                      \
-      LPFilterSweep,                      \
-      ComponentSelector,                      \
-      HPFilterCutoff,                      \
-      HPFilterResonance,                      \
-      HPFilterSlope,                      \
-      HPFilterKeyAmount,                      \
-      HPFilterAudioModuation,                      \
-      LPHPFilterCutoff,                      \
-      LPHPFilterResonance,                      \
-      LPHPFilterSlope,                      \
-      LPHPFilterKeyAmount,                      \
-      LPHPFilterAudioModuation,                      \
-      AmpEnvAmount,                      \
-      EnvAmount,                      \
-      EnvVelAmount,                      \
-      EnvRepeat,                      \
-      EnvDelay,                      \
-      EnvDestination,                      \
-      Attack,                      \
-      Decay,                      \
-      Sustain,                      \
-      Release,                      \
-      Hold,                      \
-      SweepTime,                      \
-      SweepDepth,                      \
-      LFOAmount,                      \
-      LFOFrequency,                      \
-      LFOMultiplier,                      \
-      LFOWaveform,                      \
-      LFODestination,                      \
-      LFODepth,                      \
-      LFOKeySync,                      \
-      ArpOnOff,                      \
-      ArpMode,                      \
-      SequencerOnOff,                      \
-      SequenceTrig,                      \
-      SampleStart,                      \
-      SampleEnd,                      \
-      SampleLength,                      \
-      SampleLoop,                      \
-      SampleReverse,                      \
-      SampleRate,                      \
-      SampleBitReduction,                      \
-      SampleRateReduction,             \
-      SampleSlot,                      \
-      ModSource,                      \
-      ModDestination,                      \
-      ModAmount,                      \
-      PitchBendRange,                      \
-      BPM,                       \
-      ClockDivide,               \
-      FrequencyBandCenter,       \
-      FrequencyBandAmp,          \
-      FrequencyBandWidth,        \
-      LowShelfFrequency,         \
-      HighShelfFrequency,        \
-      LowBandAmp,                \
-      MidBandAmp,                \
-      HighBandAmp,               \
-      RetrigNum,                 \
-      RetrigTime,                \
-      StereoWidth,               \
-      DryWetMix,                 \
-      DelayAmnt,                 \
-      MakeupGain,                \
-      Threshold,                 \
-      Distortion,                \
-      DelayTime,                 \
-      DampingFactor,             \
-      GateTime,                  \
-      ShelvingGain,              \
-      ShelvingFrequency,         \
-      PreFxLevel,                \
-      PostFxLevel                \
-);
+DECLARE_ENUM(
+    ParameterRole, uint, Unknown, TrackVolume, TrigChance, Swing, Mute, Solo,
+    KeyPrioMode, Pitch, PitchFinetune, Detune, OSCWaveform, OSCShape, OSCGlide,
+    OSCGlideOnOff, OSCGlideType, OSCKeyboardTracking, OSCSync, OSCSlop, OSCMix,
+    OSCNoise, OSCNoteSyncOnOff, OSC1Volume, OSC2Volume, RingModVolume,
+    OSC1Decay, OSC2Decay, TransientDecay, HitDecay, SubOSCLevel, NoiseLevel,
+    NoiseDecay, NoiseColor, UnisonMode, UnisonOnOff, FMAmount, InitialVolume,
+    Volume, Pan, DelaySend, ReverbSend, FeedbackVolume, FeedbackGain,
+    FilterCutoff, FilterBase, FilterWidth, FilterType, FilterResonance,
+    FilterSlope, FilterKeyAmount, FilterAudioModuation, LPFilterCutoff,
+    LPFilterResonance, LPFilterSlope, LPFilterKeyAmount, LPFilterAudioModuation,
+    LPFilterSweep, ComponentSelector, HPFilterCutoff, HPFilterResonance,
+    HPFilterSlope, HPFilterKeyAmount, HPFilterAudioModuation, LPHPFilterCutoff,
+    LPHPFilterResonance, LPHPFilterSlope, LPHPFilterKeyAmount,
+    LPHPFilterAudioModuation, AmpEnvAmount, EnvAmount, EnvVelAmount, EnvRepeat,
+    EnvDelay, EnvDestination, Attack, Decay, Sustain, Release, Hold, SweepTime,
+    SweepDepth, LFOAmount, LFOFrequency, LFOMultiplier, LFOWaveform,
+    LFODestination, LFODepth, LFOKeySync, ArpOnOff, ArpMode, SequencerOnOff,
+    SequenceTrig, SampleStart, SampleEnd, SampleLength, SampleLoop,
+    SampleReverse, SampleRate, SampleBitReduction, SampleRateReduction,
+    SampleSlot, ModSource, ModDestination, ModAmount, PitchBendRange, BPM,
+    ClockDivide, FrequencyBandCenter, FrequencyBandAmp, FrequencyBandWidth,
+    LowShelfFrequency, HighShelfFrequency, LowBandAmp, MidBandAmp, HighBandAmp,
+    RetrigNum, RetrigTime, StereoWidth, DryWetMix, DelayAmnt, MakeupGain,
+    Threshold, Distortion, DelayTime, DampingFactor, GateTime, ShelvingGain,
+    ShelvingFrequency, PreFxLevel, PostFxLevel);
 
 struct Parameter
 {
@@ -403,6 +288,7 @@ struct Section
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
+   std::optional<ParameterDump> parameterDump;
    std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(
@@ -448,14 +334,13 @@ struct Section
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
-   inline Engine inherit(const Engine& parent,
-                        const Engine& child) noexcept;
+   inline Engine inherit(const Engine& parent, const Engine& child) noexcept;
 };
 
 inline ComponentVar compInherit(const ComponentVar& parent,
-                            const ComponentVar& child) noexcept;
+                                const ComponentVar& child) noexcept;
 inline Parameter paramInherit(const Parameter& parent,
-                         const Parameter& child) noexcept;
+                              const Parameter& child) noexcept;
 
 }   // namespace base::musicDevice::description::sound
 

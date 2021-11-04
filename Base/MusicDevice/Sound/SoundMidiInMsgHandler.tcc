@@ -23,6 +23,7 @@ template <typename MidiInIfPtr>
 sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
     MidiInIfPtr pMidiInIf, const description::sound::Section& rSoundSection,
     uint8_t midiVoiceOffset, Cb cb) noexcept :
+    m_sysExHandler(rSoundSection, midiVoiceOffset, cb),
     m_pMidiInIf(pMidiInIf),
     m_rSoundSection(rSoundSection),
     m_midiVoiceOffset(midiVoiceOffset),
@@ -33,10 +34,13 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
       
-      if(mpark::holds_alternative<midi::Message<midi::SystemExclusive>>(midiMsg))
+      const auto pSysEX = mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMsg);
+      if(pSysEX)
       {
          LOG_F(INFO, "SOUND --- {} Received Sysex\n {}",
             m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         m_sysExHandler.handle(*pSysEX);
+         return;
       }
       /*
       LOG_F(INFO, "SOUND --- {} Received {}",

@@ -8,6 +8,7 @@
 #include "MidiMessageIds.h"
 #include "MidiMessageIdsExtension.h"
 #include "SoundSection.h"
+#include "SoundMidiInSysExDumpHandler.h"
 
 namespace base::musicDevice
 {
@@ -25,6 +26,7 @@ public:
       const std::string& compNamePrev, const std::string& compNameNew) noexcept;
 
 private:
+   MidiInSysExDumpHandler m_sysExHandler;
    MidiInIfPtr m_pMidiInIf;
    const description::sound::Section& m_rSoundSection;
    using Map =
