@@ -30,7 +30,8 @@ template<>
 inline auto registerMembers<base::musicDevice::description::sound::midisysex::VoiceIdx>()
 {
    return members(
-      member("size", &base::musicDevice::description::sound::midisysex::VoiceIdx::size)
+      member("size", &base::musicDevice::description::sound::midisysex::VoiceIdx::size),
+      member("mapping", &base::musicDevice::description::sound::midisysex::VoiceIdx::mapping)
    );
 }
 

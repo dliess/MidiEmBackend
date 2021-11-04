@@ -57,6 +57,7 @@ struct Bytes : public Field
 
 struct VoiceIdx : public FieldWithSize
 {
+   std::vector<int> mapping;
 };
 struct PatchNameStr : public FieldWithSize
 {

@@ -37,8 +37,10 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       const auto pSysEX = mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMsg);
       if(pSysEX)
       {
+         /*
          LOG_F(INFO, "SOUND --- {} Received Sysex\n {}",
             m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
+         */
          m_sysExHandler.handle(*pSysEX);
          return;
       }

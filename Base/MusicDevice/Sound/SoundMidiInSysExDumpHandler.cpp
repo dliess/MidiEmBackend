@@ -37,11 +37,14 @@ void MidiInSysExDumpHandler::handle(
           util::overload{
               [this, &voiceIdx, &sysexMsg](
                   const description::sound::midisysex::ParameterLowRes& param) {
-                 const auto paramIdx = m_rSoundSection.getParameterIdx(*voiceIdx, param.component, param.parameter);
-                 if(!paramIdx)
+                 const auto paramIdx = m_rSoundSection.getParameterIdx(
+                     *voiceIdx, param.component, param.parameter);
+                 if (!paramIdx)
                  {
-                     LOG_F(ERROR, "There is no parameter in voice {} named {}::{}", *voiceIdx, param.component, param.parameter);
-                     return;
+                    LOG_F(ERROR,
+                          "There is no parameter in voice {} named {}::{}",
+                          *voiceIdx, param.component, param.parameter);
+                    return;
                  }
                  const auto& descr =
                      m_rSoundSection.parameterDescr(*voiceIdx, *paramIdx);
@@ -93,7 +96,14 @@ std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
           util::overload{
               [this, &sysexMsg](
                   const description::sound::midisysex::VoiceIdx& voiceIdx)
-                  -> std::optional<int> { return sysexMsg[voiceIdx.offset]; },
+                  -> std::optional<int> {
+                 const int idx = sysexMsg[voiceIdx.offset];
+                 if (!util::vector_index_in_range(idx, voiceIdx.mapping))
+                 {
+                    return std::nullopt;
+                 }
+                 return voiceIdx.mapping[idx];
+              },
               [](auto&& other) -> std::optional<int> { return std::nullopt; }},
           fieldDescr);
       if (ret)

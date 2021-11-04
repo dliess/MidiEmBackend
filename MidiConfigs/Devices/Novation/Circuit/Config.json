@@ -7485,7 +7485,8 @@
         },
         {
           ".type": "VoiceIdx",
-          "size": 1
+          "size": 1,
+          "mapping": [4, 5]
         },
         {
           ".type": "Bytes",
