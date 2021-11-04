@@ -30,49 +30,55 @@ using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
 
 namespace midisysex
 {
-struct Bytes
+struct OffsetCache
+{
+   static constexpr int UNSET = -1;
+   int offset{UNSET};   // For caching, do NOT REFLECT !!!!
+};
+
+struct Field : public OffsetCache
+{
+   constexpr int sizeInSysex() const noexcept { return 1; }
+};
+
+// We need this as a workaround because every struct has
+// to contain an element to work with json-stuff
+struct FieldWithSize : public OffsetCache
+{
+   int size;
+   constexpr int sizeInSysex() const noexcept { return size; }
+};
+
+struct Bytes : public Field
 {
    std::vector<uint8_t> values;
    int sizeInSysex() const noexcept { return values.size(); }
 };
 
-struct Field
-{
-   static constexpr int UNSET = -1;
-   int offset{UNSET}; // For caching, do NOT REFLECT !!!!
-   int size;
-   constexpr int sizeInSysex() const noexcept { return size; }
-};
-
-struct VoiceIdx : public Field
+struct VoiceIdx : public FieldWithSize
 {
 };
-struct PatchNameStr : public Field
+struct PatchNameStr : public FieldWithSize
 {
 };
-struct PatchCategory : public Field
+struct PatchCategory : public FieldWithSize
 {
 };
-struct PatchGenre : public Field
+struct PatchGenre : public FieldWithSize
 {
 };
-struct Reserved : public Field
+struct Reserved : public FieldWithSize
 {
 };
 
-struct ParameterLowRes
+struct ParameterLowRes : public Field
 {
-   static constexpr int UNSET = -1;
-   int idx{UNSET}; // For caching, do NOT REFLECT !!!!
-   int offset{UNSET}; // For caching, do NOT REFLECT !!!!
    std::string component;
    std::string parameter;
-   constexpr int sizeInSysex() const noexcept { return 1; }
 };
 
 using FieldDescr = mpark::variant<Bytes, VoiceIdx, PatchNameStr, PatchCategory,
                                   PatchGenre, Reserved, ParameterLowRes>;
-
 
 }   // namespace midisysex
 
@@ -328,13 +334,18 @@ struct Section
 
    inline void handleEngineInheritance() noexcept;
    inline void autoFillSourceRangesForLists() noexcept;
+   inline void fillParameterDumpOffsetCaches() noexcept;
 
    inline bool isValidVoiceIdx(int VoiceIdx) const noexcept;
 
+   inline std::optional<int> getParameterIdx(
+       int voiceIdx, const std::string& component,
+       const std::string& parameter) const noexcept;
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
    inline Engine inherit(const Engine& parent, const Engine& child) noexcept;
+
 };
 
 inline ComponentVar compInherit(const ComponentVar& parent,

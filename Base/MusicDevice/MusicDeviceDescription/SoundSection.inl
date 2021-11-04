@@ -5,6 +5,7 @@
 #include "Overload.h"
 #include "SoundSection.h"
 #include "VectorIndexInRange.h"
+#include <loguru.hpp>
 
 // --------------------------------------------------------
 // base::musicDevice::description::sound::Section::DefaultInstrumentType
@@ -773,11 +774,28 @@ inline void base::musicDevice::description::sound::Section::
    });
 }
 
-inline bool base::musicDevice::description::sound::Section::isValidVoiceIdx(int voiceIdx) const noexcept
+inline void base::musicDevice::description::sound::Section::
+    fillParameterDumpOffsetCaches() noexcept
 {
-   return (GlobalSectionId == voiceIdx || util::vector_index_in_range(voiceIdx, voices));
+   if (!parameterDump)
+      return;
+   int accumSize = 0;
+   for (auto& fieldDescr : parameterDump->sysexDescriptors)
+   {
+      accumSize += mpark::visit(util::overload{[accumSize](auto&& val) -> int {
+                                   val.offset = accumSize;
+                                   return val.sizeInSysex();
+                                }},
+                                fieldDescr);
+   }
 }
 
+inline bool base::musicDevice::description::sound::Section::isValidVoiceIdx(
+    int voiceIdx) const noexcept
+{
+   return (GlobalSectionId == voiceIdx ||
+           util::vector_index_in_range(voiceIdx, voices));
+}
 
 inline base::musicDevice::description::sound::Engine*
 base::musicDevice::description::sound::Section::findParentEngineByName(
@@ -868,7 +886,7 @@ base::musicDevice::description::sound::Section::inherit(
    {
       auto it = std::find_if(ret.parameters.begin(), ret.parameters.end(),
                              [&parentParameter](const Parameter& p) {
-                                return p.name == parentParameter.name && 
+                                return p.name == parentParameter.name &&
                                        p.component == parentParameter.component;
                              });
       if (it != std::end(ret.parameters))
@@ -947,6 +965,24 @@ base::musicDevice::description::sound::paramInherit(
    }
 
    return ret;
+}
+
+inline std::optional<int>
+base::musicDevice::description::sound::Section::getParameterIdx(
+    int voiceIdx, const std::string& component,
+    const std::string& parameter) const noexcept
+{
+   const auto& parameters = engines[voice2EngineIdx(voiceIdx)].parameters;
+   for(int i = 0; i < parameters.size(); ++i)
+   {
+      if(parameters[i].component &&
+         parameters[i].component.value() == component &&
+         parameters[i].name == parameter)
+      {
+         return i;
+      }
+   }
+   return std::nullopt;
 }
 
 #endif

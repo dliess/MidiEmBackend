@@ -128,5 +128,6 @@ void Description::initCaches() noexcept
          }
       });
       soundSection->autoFillSourceRangesForLists();
+      soundSection->fillParameterDumpOffsetCaches();
    }
 }

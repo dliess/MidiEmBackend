@@ -37,13 +37,19 @@ void MidiInSysExDumpHandler::handle(
           util::overload{
               [this, &voiceIdx, &sysexMsg](
                   const description::sound::midisysex::ParameterLowRes& param) {
+                 const auto paramIdx = m_rSoundSection.getParameterIdx(*voiceIdx, param.component, param.parameter);
+                 if(!paramIdx)
+                 {
+                     LOG_F(ERROR, "There is no parameter in voice {} named {}::{}", *voiceIdx, param.component, param.parameter);
+                     return;
+                 }
                  const auto& descr =
-                     m_rSoundSection.parameterDescr(*voiceIdx, param.idx);
+                     m_rSoundSection.parameterDescr(*voiceIdx, *paramIdx);
                  assert(descr.source.midi.has_value());
                  const int value = sysexMsg[param.offset];
                  if (descr.type == description::sound::Parameter::Type::List)
                  {
-                    m_drainCb(*voiceIdx, param.idx,
+                    m_drainCb(*voiceIdx, *paramIdx,
                               descr.getListIndexByValue(value));
                  }
                  else
@@ -52,7 +58,7 @@ void MidiInSysExDumpHandler::handle(
                         descr.source.midi->sourceValueRange
                             ? *descr.source.midi->sourceValueRange
                             : description::sound::ValueRangeInt({0, 127});
-                    m_drainCb(*voiceIdx, param.idx,
+                    m_drainCb(*voiceIdx, *paramIdx,
                               (value - valueRange.from) /
                                   float(valueRange.to - valueRange.from + 1));
                  }
