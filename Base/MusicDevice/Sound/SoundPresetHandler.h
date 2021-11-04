@@ -40,13 +40,13 @@ public:
 
    std::shared_ptr<DevicePresets> getSoundPresets() const noexcept
    {
-      return m_pSoundPresets;
+      return m_pDevicePresets;
    }
 
 private:
    const base::musicDevice::description::sound::Section& m_rSoundSection;
    ParameterStorage&                                     m_rParameterStorage;
-   std::shared_ptr<DevicePresets>                         m_pSoundPresets;
+   std::shared_ptr<DevicePresets>                         m_pDevicePresets;
 };
 
 } // namespace preset
