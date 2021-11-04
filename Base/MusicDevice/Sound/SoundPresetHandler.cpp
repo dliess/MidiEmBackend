@@ -92,6 +92,16 @@ void PresetHandler::resetParametersToZeroState(int voiceIdx) noexcept
    m_rParameterStorage.resetToInitialValues(voiceIdx);
 }
 
+void PresetHandler::stageCurrentState(int voiceIdx) noexcept
+{
+   // TODO
+}
+
+void PresetHandler::resetToStaged(int voiceIdx) noexcept
+{
+   // TODO
+}
+
 void PresetHandler::deletePreset(
    int voiceIdx, const std::string& newSelectedPreset) noexcept
 {

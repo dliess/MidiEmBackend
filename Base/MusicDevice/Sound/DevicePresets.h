@@ -11,6 +11,11 @@
 #include "Settings.h"
 #include "SoundSection.h"
 
+/*
+   Identifier of a preset:
+      manufacturer+product + engineIdx + presetName
+*/
+
 namespace base::musicDevice::sound
 {
 namespace preset

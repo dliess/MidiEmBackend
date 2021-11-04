@@ -312,41 +312,75 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
 void SoundDevicesRpc::stageParameterValues(const ::capnzero::SpanCL<16>& uuid,
                                            ::capnzero::Int8 voiceIdx)
 {
-   // TODO
-   return;
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->presetHandler().stageCurrentState(voiceIdx);
+   }
 }
 
 void SoundDevicesRpc::restoreToStagedParameterValues(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
 {
-   // TODO
-   return;
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->presetHandler().resetToStaged(voiceIdx);
+   }
 }
 
 void SoundDevicesRpc::restoreToLastActualPreset(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
 {
-   // TODO
-   return;
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->presetHandler().resetToActualSoundPreset(
+          voiceIdx);
+   }
 }
 
 void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
                                    ::capnzero::Int8 voiceIdx,
                                    const ::capnzero::TextView& presetName)
 {
-   // TODO
-   return;
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->presetHandler().storeAsSoundPreset(
+          voiceIdx, std::string(presetName));
+   }
 }
 
 void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int8 voiceIdx,
                                       const ::capnzero::TextView& presetName)
 {
-   // TODO
-   return;
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      iter->second->soundHandler->presetHandler().selectSoundPreset(
+          voiceIdx, std::string(presetName));
+   }
 }
 
-void SoundDevicesRpc::sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+void SoundDevicesRpc::sendParameterDumpRequest(
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());

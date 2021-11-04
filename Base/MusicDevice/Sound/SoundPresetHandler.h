@@ -33,6 +33,8 @@ public:
    void storeAsSoundPreset(int voiceIdx,
                            const std::string& presetName) noexcept;
    void resetParametersToZeroState(int voiceIdx) noexcept;
+   void stageCurrentState(int voiceIdx) noexcept;
+   void resetToStaged(int voiceIdx) noexcept;
    void deletePreset(int voiceIdx,
                           const std::string& newSelectedPreset) noexcept;
 

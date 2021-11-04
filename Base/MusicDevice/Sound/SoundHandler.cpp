@@ -436,3 +436,13 @@ void SoundHandler::doParameterDumpRequest() noexcept
 {
    m_midiOutHandler->sendParameterDumpRequest();
 }
+
+const preset::PresetHandler& SoundHandler::presetHandler() const noexcept
+{
+   return m_presetHandler;
+}
+
+preset::PresetHandler& SoundHandler::presetHandler() noexcept
+{
+   return m_presetHandler;
+}
