@@ -1,24 +1,24 @@
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 #include "VectorIndexInRange.h"
 
 using namespace base::musicDevice::sound::preset;
 
-SoundPresets::SoundPresets(std::string manufacturer,
+DevicePresets::DevicePresets(std::string manufacturer,
                            std::string product) noexcept :
    m_manufacturer(std::move(manufacturer)),
    m_product(std::move(product))
 {
-   utils::Settings<SoundPresets>::load(outDirName(), outFileName(),
+   utils::Settings<DevicePresets>::load(outDirName(), outFileName(),
                                        SETTING_FILE_SECTION);
 }
 
-SoundPresets::~SoundPresets()
+DevicePresets::~DevicePresets()
 {
-   utils::Settings<SoundPresets>::save(outDirName(), outFileName(),
+   utils::Settings<DevicePresets>::save(outDirName(), outFileName(),
                                        SETTING_FILE_SECTION);
 }
 
-std::vector<std::vector<std::string>> SoundPresets::getSoundPresetList()
+std::vector<std::vector<std::string>> DevicePresets::getSoundPresetList()
    const noexcept
 {
    std::vector<std::vector<std::string>> ret(m_presets.size());
@@ -32,7 +32,7 @@ std::vector<std::vector<std::string>> SoundPresets::getSoundPresetList()
    return ret;
 }
 
-const std::vector<float>& SoundPresets::preset(
+const std::vector<float>& DevicePresets::preset(
    int engineIdx, const std::string& presetName) const noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
@@ -42,14 +42,14 @@ const std::vector<float>& SoundPresets::preset(
    return it->second;
 }
 
-bool SoundPresets::hasSoundPreset(int engineIdx, const std::string& presetName) const noexcept
+bool DevicePresets::hasSoundPreset(int engineIdx, const std::string& presetName) const noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    return enginePresets.find(presetName) != enginePresets.end();
 }
 
-void SoundPresets::saveSoundPreset(
+void DevicePresets::saveSoundPreset(
    int engineIdx, 
    const std::string& presetName,
    const std::vector<float>& voiceParams) noexcept
@@ -67,7 +67,7 @@ void SoundPresets::saveSoundPreset(
    }
 }
 
-std::string SoundPresets::incrementNameIdx(
+std::string DevicePresets::incrementNameIdx(
    int engineIdx,
    const std::string& presetName) const noexcept
 {
@@ -101,7 +101,7 @@ std::string SoundPresets::incrementNameIdx(
    }
 }
 
-void SoundPresets::deleteSoundPreset(int engineIdx, const std::string& presetName) noexcept
+void DevicePresets::deleteSoundPreset(int engineIdx, const std::string& presetName) noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
@@ -112,27 +112,27 @@ void SoundPresets::deleteSoundPreset(int engineIdx, const std::string& presetNam
       m_changeCb();
 }
 
-std::string SoundPresets::outDirName() const noexcept
+std::string DevicePresets::outDirName() const noexcept
 {
    std::string str = "Presets/Devices/" + m_manufacturer;
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
 }
 
-std::string SoundPresets::outFileName() const noexcept
+std::string DevicePresets::outFileName() const noexcept
 {
    std::string str = m_product + ".json";
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
 }
 
-void SoundPresets::registerPresetListChangeCb(std::function<void()> cb) noexcept
+void DevicePresets::registerPresetListChangeCb(std::function<void()> cb) noexcept
 {
    std::lock_guard<std::mutex> lock(m_changedCbMutex);
    m_changeCb = cb;
 }
 
-void SoundPresets::clearPresetListChangeCb() noexcept
+void DevicePresets::clearPresetListChangeCb() noexcept
 {
    std::lock_guard<std::mutex> lock(m_changedCbMutex);
    m_changeCb = nullptr;

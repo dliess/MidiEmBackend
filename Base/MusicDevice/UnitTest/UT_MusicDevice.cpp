@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 
 using namespace base::musicDevice;
 
@@ -11,7 +11,7 @@ TEST(MusicDeviceTest, test)
    MusicDevice musicDevice(id,
                            "resource/root/dir", 
                            std::make_shared<description::Description>(),
-                           std::make_shared<sound::SoundPresets>("manufacturer", "product"));
+                           std::make_shared<sound::DevicePresets>("manufacturer", "product"));
 
    MusicDevice other(std::move(musicDevice));
 }

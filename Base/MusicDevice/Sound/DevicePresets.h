@@ -19,11 +19,11 @@ DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
              RBHHop, RockPop, Techno, Dubstep);
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
              Lead, Movement, Pad, Poly, SFX, String, User, Voc);
-class SoundPresets : public utils::Settings<SoundPresets>
+class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
-   SoundPresets(std::string manufacturer, std::string product) noexcept;
-   ~SoundPresets();
+   DevicePresets(std::string manufacturer, std::string product) noexcept;
+   ~DevicePresets();
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const std::vector<float>& preset(
        int engineIdx, const std::string& presetName) const noexcept;
@@ -62,7 +62,7 @@ private:
    inline static int engine2VectorIdx(int engineIdx) noexcept;
 };
 
-inline int SoundPresets::engine2VectorIdx(int engineIdx) noexcept
+inline int DevicePresets::engine2VectorIdx(int engineIdx) noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == engineIdx)
    {

@@ -4,7 +4,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceHolder.h"
 #include "MusicDeviceId.h"
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 #include "UsbMidiIn.h"
 #include "UsbMidiOut.h"
 #include "UsbMidiPortNotifier.h"
@@ -259,7 +259,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
     const MusicDeviceId& deviceId,
     std::shared_ptr<description::Description> pDescr)
 {
-   std::shared_ptr<sound::preset::SoundPresets> pSoundPresets;
+   std::shared_ptr<sound::preset::DevicePresets> pSoundPresets;
 
    const auto itSimilarDev = m_rHolder.musicDevices.findByDeviceId(
        {deviceId.deviceName, MusicDeviceId::ANY_PORT});
@@ -276,7 +276,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
    {
       if (pDescr->soundSection && pDescr->soundSection->hasParameters())
       {
-         pSoundPresets = std::make_shared<sound::preset::SoundPresets>(
+         pSoundPresets = std::make_shared<sound::preset::DevicePresets>(
              pDescr->manufacturer, pDescr->productName);
       }
    }

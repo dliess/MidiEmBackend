@@ -5,14 +5,14 @@
 #include "Midi1Output.h"
 #include "SoundMidiInMsgHandler.h"
 #include "SoundMidiOutMsgHandler.h"
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 #include "SoundSection.h"
 
 using namespace base::musicDevice::sound;
 
 SoundHandler::SoundHandler(std::string deviceName,
                            const description::sound::Section& rSoundSection,
-                           std::shared_ptr<preset::SoundPresets> soundPresets) noexcept
+                           std::shared_ptr<preset::DevicePresets> soundPresets) noexcept
     :
     m_deviceName(std::move(deviceName)),
     m_rSoundSection(rSoundSection),
@@ -427,7 +427,7 @@ void SoundHandler::registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb)
    m_lFOMultiplierExpChangeCB.push_back(cb);
 }
 
-std::shared_ptr<preset::SoundPresets> SoundHandler::presets() const noexcept
+std::shared_ptr<preset::DevicePresets> SoundHandler::presets() const noexcept
 {
    return m_presetHandler.getSoundPresets();
 }

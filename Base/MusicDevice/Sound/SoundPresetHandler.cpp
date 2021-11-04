@@ -1,7 +1,7 @@
 #include "SoundPresetHandler.h"
 
 #include "SoundParameterStorage.h"
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 #include "SoundSection.h"
 
 using namespace base::musicDevice::sound::preset;
@@ -9,7 +9,7 @@ using namespace base::musicDevice::sound::preset;
 PresetHandler::PresetHandler(
    const description::sound::Section& rSoundSection,
    ParameterStorage& rParameterStorage,
-   std::shared_ptr<SoundPresets> pSoundPresets) noexcept :
+   std::shared_ptr<DevicePresets> pSoundPresets) noexcept :
    m_rSoundSection(rSoundSection),
    m_rParameterStorage(rParameterStorage),
    m_pSoundPresets(std::move(pSoundPresets))

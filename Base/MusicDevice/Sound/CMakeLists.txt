@@ -7,7 +7,7 @@ add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 #TODO: add further source files
 set(SOURCES
    "SoundHandler.cpp"
-   "SoundPresets.cpp"
+   "DevicePresets.cpp"
    "SoundPresetHandler.cpp"
    "SoundMidiInSysExDumpHandler.cpp"
 )

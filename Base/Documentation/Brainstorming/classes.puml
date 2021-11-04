@@ -2,7 +2,7 @@
 
 package GLOBAL
 {
-   class SoundPresets
+   class DevicePresets
    class Description
    class description::sound::Section
    class description::controller::Section
@@ -88,7 +88,7 @@ MusicDevice o-- Description
 
 sound::MidiInMsgHandler --> sound::ParameterStorage #0000ff
 sound::PresetHandler o-- sound::ParameterStorage
-sound::PresetHandler o-- SoundPresets
+sound::PresetHandler o-- DevicePresets
 sound::PresetHandler o-- description::sound::Section
 sound::MidiOutMsgHandler o-- description::sound::Section
 sound::MidiInMsgHandler o-- description::sound::Section

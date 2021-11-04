@@ -16,13 +16,13 @@ class ParameterStorage;
 
 namespace preset
 {
-class SoundPresets;
+class DevicePresets;
 class PresetHandler
 {
 public:
    PresetHandler(const description::sound::Section& rSoundSection,
                  ParameterStorage& rParameterStorage,
-                 std::shared_ptr<SoundPresets> pSoundPresets) noexcept;
+                 std::shared_ptr<DevicePresets> pSoundPresets) noexcept;
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    std::optional<std::string> getActualSoundPresetName(int voiceIdx) const
       noexcept;
@@ -36,7 +36,7 @@ public:
    void deleteSoundPreset(int voiceIdx,
                           const std::string& newSelectedPreset) noexcept;
 
-   std::shared_ptr<SoundPresets> getSoundPresets() const noexcept
+   std::shared_ptr<DevicePresets> getSoundPresets() const noexcept
    {
       return m_pSoundPresets;
    }
@@ -44,7 +44,7 @@ public:
 private:
    const base::musicDevice::description::sound::Section& m_rSoundSection;
    ParameterStorage&                                     m_rParameterStorage;
-   std::shared_ptr<SoundPresets>                         m_pSoundPresets;
+   std::shared_ptr<DevicePresets>                         m_pSoundPresets;
 };
 
 } // namespace preset

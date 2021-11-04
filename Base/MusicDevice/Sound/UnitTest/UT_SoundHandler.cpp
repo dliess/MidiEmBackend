@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "SoundHandler.h"
 #include "SoundSection.h"
-#include "SoundPresets.h"
+#include "DevicePresets.h"
 
 using namespace base::musicDevice;
 

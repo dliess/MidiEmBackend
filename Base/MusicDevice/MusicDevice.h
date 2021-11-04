@@ -22,12 +22,12 @@ namespace base::musicDevice
 {
 
 namespace description { struct Description; }
-namespace sound::preset { class SoundPresets; }
+namespace sound::preset { class DevicePresets; }
 struct MusicDevice : public util::Identifiable
 {
    MusicDevice(MusicDeviceId deviceId, const std::string& resourceRootDir,
                std::shared_ptr<description::Description> descr,
-               std::shared_ptr<sound::preset::SoundPresets> soundPresets) noexcept;
+               std::shared_ptr<sound::preset::DevicePresets> soundPresets) noexcept;
    ~MusicDevice() noexcept;
    MusicDevice(const MusicDevice& other) = delete;
    MusicDevice& operator=(const MusicDevice& other) = delete;
