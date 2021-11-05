@@ -44,9 +44,9 @@ public:
    }
 
 private:
-   const base::musicDevice::description::sound::Section& m_rSoundSection;
-   ParameterStorage&                                     m_rParameterStorage;
-   std::shared_ptr<DevicePresets>                         m_pDevicePresets;
+   const description::sound::Section& m_rSoundSection;
+   ParameterStorage&                  m_rParameterStorage;
+   std::shared_ptr<DevicePresets>     m_pDevicePresets;
 };
 
 } // namespace preset

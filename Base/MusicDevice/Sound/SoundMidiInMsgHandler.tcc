@@ -59,8 +59,8 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       }
       if(!m_rSoundSection.isValidVoiceIdx(*voiceIdx))
       {
-         LOG_F(ERROR, "Midi Msg Received from {} has invalid voice nmbr {}",
-         m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
+         //LOG_F(ERROR, "Midi Msg Received from {} has invalid voice nmbr {}",
+         //m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          return;
       }
       const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(*voiceIdx) + 1];
