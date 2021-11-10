@@ -107,7 +107,7 @@ RtServer::RtServer(
 
    rMusicDeviceContainer.registerLFOWaveformChangeCB(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
-              base::musicDevice::sound::LFO::Waveform waveform) {
+              base::musicDevice::sound::lfo::Waveform waveform) {
           signals().SoundDevices__lFOWaveformChanged(
               uuid, voiceId, paramIdx,
               static_cast<::capnzero::MidiEmRt::LFOWaveform>(waveform));

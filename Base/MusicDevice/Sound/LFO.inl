@@ -5,7 +5,7 @@
 #include "BeatTick.h"
 #include "Overload.h"
 
-namespace base::musicDevice::sound
+namespace base::musicDevice::sound::lfo
 {
 
 inline bool LFO::enabled() const noexcept
@@ -76,7 +76,7 @@ inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
    return false;
 }
 
-inline LFO::Waveform LFO::waveform() const noexcept
+inline Waveform LFO::waveform() const noexcept
 {
    if(mpark::holds_alternative<Sine>(m_waveform))
       return Waveform::Sine;
@@ -160,4 +160,4 @@ inline float LFO::Random::operator()(float t) noexcept
    return lastValue;
 }
 
-} // namespace base::musicDevice::sound
+} // namespace base::musicDevice::sound::lfo

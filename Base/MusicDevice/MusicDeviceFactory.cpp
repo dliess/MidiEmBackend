@@ -30,7 +30,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "------------------> input added: {}",
+          LOG_F(INFO, "--> input added: {}",
                 devOnUsbPort.getDeviceName());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
@@ -65,7 +65,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "------------------> output added: {}",
+          LOG_F(INFO, "--> output added: {}",
                 devOnUsbPort.getDeviceName());
           auto pMidiOut =
               createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
@@ -99,7 +99,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "------------------> input removed: {}",
+          LOG_F(INFO, "<-- input removed: {}",
                 devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
@@ -125,7 +125,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "------------------> output removed: {}",
+          LOG_F(INFO, "<-- output removed: {}",
                 devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());

@@ -71,7 +71,7 @@ public:
    void blankVoiceParameters(int voiceId) noexcept;
    void blankAllVoiceParameters() noexcept;
 
-   void setLFOWaveform(int voiceId, int paramIdx, LFO::Waveform waveform) noexcept;
+   void setLFOWaveform(int voiceId, int paramIdx, lfo::Waveform waveform) noexcept;
    void setLFOAmplitude(int voiceIndex, int paramIdx, float amplitude) noexcept;
    void setLFOFrequency(int voiceIndex, int paramIdx, float frequency) noexcept;
    void setLFOMultiplierExp(int voiceIndex, int paramIdx, int multiplExp) noexcept;
@@ -85,7 +85,7 @@ public:
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
    // inline const SoundPresetHandler* soundPresetHandler() const noexcept;
 
-   using LFOWaveformChangeCB = std::function<void(int, int, LFO::Waveform)>;
+   using LFOWaveformChangeCB = std::function<void(int, int, lfo::Waveform)>;
    using LFOAmplitudeChangeCB = std::function<void(int, int, float)>;
    using LFOFrequencyChangeCB = std::function<void(int, int, float)>;
    using LFOMultiplierExpChangeCB = std::function<void(int, int, uint32_t)>;

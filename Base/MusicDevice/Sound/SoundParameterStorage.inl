@@ -348,12 +348,12 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
        voiceId_);
 }
 
-inline LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
+inline lfo::LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
 {
    return elementContainer(voiceId).parameters[parameterId].lfo;
 }
 
-inline const LFO& ParameterStorage::lfoOf(int voiceId,
+inline const lfo::LFO& ParameterStorage::lfoOf(int voiceId,
                                           int parameterId) const noexcept
 {
    return elementContainer(voiceId).parameters[parameterId].lfo;

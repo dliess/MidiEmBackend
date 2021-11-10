@@ -2,19 +2,15 @@
 #define BASE_MODULATION_LFO
 
 #include <mpark/variant.hpp>
-
-namespace base::musicDevice::sound
+#include "EnumReflect.h"
+namespace base::musicDevice::sound::lfo
 {
+
+DECLARE_ENUM(Waveform, uint, Sine, Square, Triangle, Saw, Random);
+
 class LFO
 {
 public:
-   enum class Waveform{
-      Sine = 0,
-      Square,
-      Triangle,
-      Saw,
-      Random
-   };
    [[nodiscard]] inline bool enabled() const noexcept;
    [[nodiscard]] inline float calculateValue() noexcept;
    inline bool setWaveform(Waveform waveform) noexcept;
@@ -60,7 +56,7 @@ private:
    static constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 };
 
-} // namespace base::musicDevice::sound
+} // namespace base::musicDevice::sound::lfo
 
 #include "LFO.inl"
 

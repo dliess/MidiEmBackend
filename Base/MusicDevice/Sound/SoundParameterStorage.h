@@ -51,8 +51,8 @@ public:
    inline void uiLoosesInterestInParameter(int voiceId,
                                            int parameterId = ALL) noexcept;
 
-   inline LFO& lfoOf(int voiceId, int parameterId) noexcept;
-   inline const LFO& lfoOf(int voiceId, int parameterId) const noexcept;
+   inline lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
+   inline const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
 
    struct Element
    {
@@ -68,7 +68,7 @@ public:
       bool enabled{true};
       float commanded{0};
       std::array<std::optional<Modifier>, NUM_MODIFIERS> modifiers;
-      LFO lfo;
+      lfo::LFO lfo;
       float actual{-1};
       bool dirtyFlagRt{false};
       bool dirtyFlagUi{true};

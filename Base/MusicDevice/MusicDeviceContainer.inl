@@ -15,7 +15,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       if(ptr->soundHandler)
       {
          const auto uuid = ptr->id();
-         ptr->soundHandler->registerLFOWaveformChangeCB([this, uuid](int voiceId, int paramId, sound::LFO::Waveform waveform){
+         ptr->soundHandler->registerLFOWaveformChangeCB([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
             for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
          });
          ptr->soundHandler->registerLFOAmplitudeChangeCB([this, uuid](int voiceId, int paramId, float amplitude){

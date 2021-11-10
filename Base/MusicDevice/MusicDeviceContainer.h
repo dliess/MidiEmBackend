@@ -49,7 +49,7 @@ public:
    inline size_t size() const noexcept;
    
 
-   using LFOWaveformChangeCB = std::function<void(util::Identifiable::UUID, int, int, sound::LFO::Waveform)>;
+   using LFOWaveformChangeCB = std::function<void(util::Identifiable::UUID, int, int, sound::lfo::Waveform)>;
    using LFOAmplitudeChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
    using LFOFrequencyChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;
    using LFOMultiplierExpChangeCB = std::function<void(util::Identifiable::UUID, int, int, uint32_t)>;

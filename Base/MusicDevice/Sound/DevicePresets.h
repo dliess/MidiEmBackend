@@ -1,5 +1,5 @@
-#ifndef SOUND_PRESETS_H
-#define SOUND_PRESETS_H
+#ifndef DEVICE_PRESETS_H
+#define DEVICE_PRESETS_H
 
 #include <mutex>
 #include <string>
@@ -10,6 +10,7 @@
 #include "Meta.h"
 #include "Settings.h"
 #include "SoundSection.h"
+#include "LFO.h"
 
 /*
    Identifier of a preset:
@@ -24,6 +25,21 @@ DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
              RBHHop, RockPop, Techno, Dubstep);
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
              Lead, Movement, Pad, Poly, SFX, String, User, Voc);
+
+struct LFOData
+{
+   float amplitude{0.0};
+   float frequency{0.0};
+   lfo::Waveform waveform{lfo::Waveform::Sine};
+   int multiplierExp{0};
+};
+
+struct ParameterData 
+{
+   float commanded{0.0};
+   LFOData lfoData;
+};
+
 class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
@@ -76,4 +92,6 @@ inline int DevicePresets::engine2VectorIdx(int engineIdx) noexcept
 
 }   // namespace preset
 }   // namespace base::musicDevice::sound
+
+#include "DevicePresetsMeta.h"
 #endif

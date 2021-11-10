@@ -194,7 +194,7 @@ void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
       assert(iter->second->soundHandler);
       iter->second->soundHandler->setLFOWaveform(
           voiceIdx, paramIdx,
-          static_cast<base::musicDevice::sound::LFO::Waveform>(waveform));
+          static_cast<base::musicDevice::sound::lfo::Waveform>(waveform));
    }
 }
 

@@ -315,7 +315,7 @@ void SoundHandler::blankAllVoiceParameters() noexcept
 }
 
 void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
-                                  LFO::Waveform waveform) noexcept
+                                  lfo::Waveform waveform) noexcept
 {
    auto& lfo = m_paramStorage.lfoOf(voiceId, paramIdx);
    if (lfo.setWaveform(waveform))
@@ -363,10 +363,10 @@ void SoundHandler::incLFOWaveform(int voiceId, int paramIdx,
 {
    auto& lfo     = m_paramStorage.lfoOf(voiceId, paramIdx);
    const int idx = static_cast<int>(lfo.waveform()) + increment;
-   if (idx >= static_cast<int>(LFO::Waveform::Sine) &&
-       idx <= static_cast<int>(LFO::Waveform::Random))
+   if (idx >= static_cast<int>(lfo::Waveform::Sine) &&
+       idx <= static_cast<int>(lfo::Waveform::Random))
    {
-      if (lfo.setWaveform(static_cast<LFO::Waveform>(idx)))
+      if (lfo.setWaveform(static_cast<lfo::Waveform>(idx)))
       {
          for (auto& cb : m_lFOWaveformChangeCBs)
             cb(voiceId, paramIdx, lfo.waveform());
