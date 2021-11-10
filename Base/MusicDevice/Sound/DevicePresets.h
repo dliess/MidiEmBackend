@@ -11,6 +11,7 @@
 #include "Meta.h"
 #include "Settings.h"
 #include "SoundSection.h"
+#include "MusicDeviceId.h"
 
 /*
    Identifier of a preset:
@@ -49,7 +50,7 @@ struct Preset
 class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
-   DevicePresets(std::string manufacturer, std::string product) noexcept;
+   DevicePresets(MusicDeviceName musicDeviceName) noexcept;
    ~DevicePresets();
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const Preset& preset(int engineIdx,
@@ -61,6 +62,7 @@ public:
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
+   MusicDeviceName getMusicDeviceName() const noexcept;
 
    using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
@@ -74,8 +76,7 @@ public:
 
 private:
    Presets m_presets;
-   std::string m_manufacturer;
-   std::string m_product;
+   const MusicDeviceName m_musicDeviceName;
    std::mutex m_mutex;
    std::string outDirName() const noexcept;
    std::string outFileName() const noexcept;

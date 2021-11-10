@@ -4,9 +4,8 @@
 
 using namespace base::musicDevice::sound::preset;
 
-DevicePresets::DevicePresets(std::string manufacturer,
-                             std::string product) noexcept :
-    m_manufacturer(std::move(manufacturer)), m_product(std::move(product))
+DevicePresets::DevicePresets(MusicDeviceName musicDeviceName) noexcept :
+    m_musicDeviceName(std::move(musicDeviceName))
 {
    utils::Settings<DevicePresets>::load(outDirName(), outFileName(),
                                         SETTING_FILE_SECTION);
@@ -109,14 +108,21 @@ void DevicePresets::deletePreset(int engineIdx,
 
 std::string DevicePresets::outDirName() const noexcept
 {
-   std::string str = "Presets/Devices/" + m_manufacturer;
+   auto [manufacturer, product] = splitDeviceName(m_musicDeviceName);
+   std::string str = "Presets/Devices/" + manufacturer;
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
 }
 
 std::string DevicePresets::outFileName() const noexcept
 {
-   std::string str = m_product + ".json";
+   auto [manufacturer, product] = splitDeviceName(m_musicDeviceName);
+   std::string str = product + ".json";
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
+}
+
+base::musicDevice::MusicDeviceName DevicePresets::getMusicDeviceName() const noexcept
+{
+   return m_musicDeviceName;
 }

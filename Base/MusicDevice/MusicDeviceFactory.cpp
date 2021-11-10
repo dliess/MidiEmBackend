@@ -220,9 +220,8 @@ std::shared_ptr<sound::preset::DevicePresets> Factory::getDevicePresets(
    {// TODO: only if it has sound section and sound parameters
    //if (pDescr->soundSection && pDescr->soundSection->hasParameters()) {
       // pPresets = m_descriptionLoader.load(deviceName);   // can throw
-      const auto [manufacturer, product] = splitDeviceName(deviceName);
       pPresets =
-          std::make_shared<sound::preset::DevicePresets>(manufacturer, product);
+          std::make_shared<sound::preset::DevicePresets>(deviceName);
       m_presetCache[deviceName] = pPresets;
     //}
    }

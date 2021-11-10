@@ -21,4 +21,5 @@ target_link_libraries(MusicDeviceSound
    PRIVATE Loguru
    PUBLIC Util
    PUBLIC Tempo
+   PUBLIC MusicDeviceCommon
 )

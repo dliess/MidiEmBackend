@@ -15,6 +15,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       if(ptr->soundHandler)
       {
          const auto uuid = ptr->id();
+         const std::string musicDeviceName = ptr->deviceId().deviceName;
          ptr->soundHandler->registerLFOWaveformChangeCB([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
             for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
          });
@@ -26,6 +27,9 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
          });
          ptr->soundHandler->registerLFOMultiplierExpChangeCB([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
             for(auto& cb : m_lFOMultiplierExpChangeCB) cb(uuid, voiceId, paramId, multiplierExp);
+         });
+         ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){
+            for(auto& cb : m_enginePresetChangeCB) cb(musicDeviceName, engineIdx, presetName);
          });
       }
    });
@@ -210,7 +214,11 @@ void MusicDeviceContainer::registerLFOMultiplierExpChangeCB(LFOMultiplierExpChan
    m_lFOMultiplierExpChangeCB.push_back(cb);
 }
 
-
+inline
+void MusicDeviceContainer::registerEnginePresetChangeCB(EnginePresetChangeCB cb)
+{
+   m_enginePresetChangeCB.push_back(cb);
+}
 
 } // namespace base::musicDevice
 

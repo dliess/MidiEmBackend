@@ -58,6 +58,8 @@ public:
    inline void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
    inline void registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb);
 
+   using EnginePresetChangeCB = std::function<void(const std::string&, int, const std::string&)>;
+   inline void registerEnginePresetChangeCB(EnginePresetChangeCB cb);
 private:
    std::vector<Cb> m_addedCb;
    std::vector<Cb> m_aboutToRemoveCbs;
@@ -68,6 +70,7 @@ private:
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
    std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
    std::vector<LFOMultiplierExpChangeCB> m_lFOMultiplierExpChangeCB;
+   std::vector<EnginePresetChangeCB> m_enginePresetChangeCB;
 };
 
 } // namespace base::musicDevice

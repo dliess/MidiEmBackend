@@ -45,7 +45,7 @@ public:
       return m_pDevicePresets;
    }
 
-   using ChangedCb = std::function<void(int voiceIdx, const std::string& presetName)>;
+   using ChangedCb = std::function<void(int engineIdx, const std::string& presetName)>;
    void registerChangedCb(ChangedCb cb) noexcept;
 private:
    const description::sound::Section& m_rSoundSection;

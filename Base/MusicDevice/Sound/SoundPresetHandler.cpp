@@ -95,7 +95,7 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
 
    m_pDevicePresets->savePreset(engineIdx, actPreset, category, genre,
                                 std::move(presetData));
-   for(auto& cb : m_changedCbs) cb(voiceIdx, presetName);
+   for(auto& cb : m_changedCbs) cb(engineIdx, presetName);
 }
 
 void PresetHandler::stageCurrentState(int voiceIdx) noexcept
@@ -121,7 +121,7 @@ void PresetHandler::deletePreset(int voiceIdx,
    m_pDevicePresets->deletePreset(
        engineIdx, *actualPreset);
    selectSoundPreset(voiceIdx, newSelectedPreset);
-   for(auto& cb : m_changedCbs) cb(voiceIdx, *actualPreset);
+   for(auto& cb : m_changedCbs) cb(engineIdx, *actualPreset);
 }
 
 void PresetHandler::registerChangedCb(ChangedCb cb) noexcept
