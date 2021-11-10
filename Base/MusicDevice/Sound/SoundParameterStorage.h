@@ -22,7 +22,7 @@ class ParameterStorage
 public:
    inline ParameterStorage(const description::sound::Section& rSoundSection);
    template <typename T>
-   void setParameterOfVoice(int voiceId, const T& container) noexcept;
+   void setCommandedValuesOfVoice(int voiceId, const T& container) noexcept;
    inline void setSoundParameterValue(int voiceId, int parameterId,
                                       float value) noexcept;
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
@@ -87,6 +87,9 @@ public:
       inline float calcModified() const noexcept;
    };
 
+   inline const Element& parameter(int voiceIdx, int paramIdx) const;
+   inline Element& parameter(int voiceIdx, int paramIdx);
+
    template <typename Cb> void forEachParameter(Cb&& cb) const noexcept;
    template <typename Cb> void forEachParameter(Cb&& cb) noexcept;
    static constexpr int GLOBAL =
@@ -96,6 +99,8 @@ public:
    template <typename Cb> void forEachParameter(Cb&& cb, int voiceId) noexcept;
 
    template <typename Cb> void forEachElementContainer(Cb&& cb);
+
+   inline int paramCount(int voiceIdx) const noexcept;
 
 private:
    const description::sound::Section& m_rSoundSection;

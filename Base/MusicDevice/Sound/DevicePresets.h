@@ -7,20 +7,19 @@
 #include <vector>
 
 #include "EnumReflect.h"
+#include "LFO.h"
 #include "Meta.h"
 #include "Settings.h"
 #include "SoundSection.h"
-#include "LFO.h"
 
 /*
    Identifier of a preset:
       manufacturer+product + engineIdx + presetName
 */
 
-namespace base::musicDevice::sound
+namespace base::musicDevice::sound::preset
 {
-namespace preset
-{
+
 DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
              RBHHop, RockPop, Techno, Dubstep);
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
@@ -34,7 +33,7 @@ struct LFOData
    int multiplierExp{0};
 };
 
-struct ParameterData 
+struct ParameterData
 {
    float commanded{0.0};
    LFOData lfoData;
@@ -43,7 +42,7 @@ struct ParameterData
 struct Preset
 {
    Category category;
-   Genre    genre;
+   Genre genre;
    std::vector<ParameterData> parameters;
 };
 
@@ -53,11 +52,12 @@ public:
    DevicePresets(std::string manufacturer, std::string product) noexcept;
    ~DevicePresets();
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
-   const std::vector<float>& preset(
-       int engineIdx, const std::string& presetName) const noexcept;
+   const Preset& preset(int engineIdx,
+                        const std::string& presetName) const noexcept;
    bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
    void savePreset(int engineIdx, const std::string& presetName,
-                   const std::vector<float>& voiceParams) noexcept;
+                   Category category, Genre genre,
+                   Preset&& preset) noexcept;
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
@@ -65,8 +65,7 @@ public:
    void registerPresetListChangeCb(std::function<void()> cb) noexcept;
    void clearPresetListChangeCb() noexcept;
 
-   using Presets =
-       std::vector<std::unordered_map<std::string, std::vector<float>>>;
+   using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
    using Settings = Presets;
    Settings getSettings() const noexcept { return m_presets; };
@@ -97,8 +96,7 @@ inline int DevicePresets::engine2VectorIdx(int engineIdx) noexcept
    return engineIdx + 1;
 }
 
-}   // namespace preset
-}   // namespace base::musicDevice::sound
+}   // namespace base::musicDevice::sound::preset
 
 #include "DevicePresetsMeta.h"
 #endif

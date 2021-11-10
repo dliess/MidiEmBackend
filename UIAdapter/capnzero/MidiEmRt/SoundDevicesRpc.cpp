@@ -351,7 +351,9 @@ void SoundDevicesRpc::restoreToLastActualPreset(
 
 void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
                                    ::capnzero::Int8 voiceIdx,
-                                   const ::capnzero::TextView& presetName)
+                                   const ::capnzero::TextView& presetName,
+                                   const ::capnzero::TextView& category,
+                                   const ::capnzero::TextView& genre)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -360,7 +362,9 @@ void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
    {
       assert(iter->second->soundHandler);
       iter->second->soundHandler->presetHandler().storeAsSoundPreset(
-          voiceIdx, std::string(presetName));
+          voiceIdx, std::string(presetName),
+          base::musicDevice::sound::preset::create_Category(std::string(category)),
+          base::musicDevice::sound::preset::create_Genre(std::string(genre)));
    }
 }
 

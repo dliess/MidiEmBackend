@@ -65,8 +65,8 @@ inline void ParameterStorage::resize() noexcept
 }
 
 template <typename T>
-void ParameterStorage::setParameterOfVoice(int voiceIdx,
-                                           const T& container) noexcept
+void ParameterStorage::setCommandedValuesOfVoice(int voiceIdx,
+                                                 const T& container) noexcept
 {
    assert(elementContainer(voiceIdx).parameters.size() == container.size());
    for (int i = 0; i < container.size(); ++i)
@@ -348,15 +348,32 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
        voiceId_);
 }
 
+inline const ParameterStorage::Element& ParameterStorage::parameter(
+    int voiceIdx, int paramIdx) const
+{
+   return elementContainer(voiceIdx).parameters[paramIdx];
+}
+
+inline ParameterStorage::Element& ParameterStorage::parameter(int voiceIdx,
+                                                              int paramIdx)
+{
+   return elementContainer(voiceIdx).parameters[paramIdx];
+}
+
 inline lfo::LFO& ParameterStorage::lfoOf(int voiceId, int parameterId) noexcept
 {
-   return elementContainer(voiceId).parameters[parameterId].lfo;
+   return parameter(voiceId, parameterId).lfo;
 }
 
 inline const lfo::LFO& ParameterStorage::lfoOf(int voiceId,
-                                          int parameterId) const noexcept
+                                               int parameterId) const noexcept
 {
-   return elementContainer(voiceId).parameters[parameterId].lfo;
+   return parameter(voiceId, parameterId).lfo;
+}
+
+inline int ParameterStorage::paramCount(int voiceIdx) const noexcept
+{
+   return elementContainer(voiceIdx).parameters.size();
 }
 
 inline ParameterStorage::Element::Element(bool isListIndex,
@@ -379,9 +396,9 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
 inline std::optional<float>
 ParameterStorage::Element::updateActualValue() noexcept
 {
-   if(lfo.getAndResetJustGotDisabled()) dirtyFlagRt = true;
-   if (!enabled ||
-       (!dirtyFlagRt && !lfo.enabled()))
+   if (lfo.getAndResetJustGotDisabled())
+      dirtyFlagRt = true;
+   if (!enabled || (!dirtyFlagRt && !lfo.enabled()))
    {
       return std::nullopt;
    }

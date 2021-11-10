@@ -1,35 +1,34 @@
 #include "SoundPresetHandler.h"
 
 #include "SoundParameterStorage.h"
-#include "DevicePresets.h"
 #include "SoundSection.h"
 
 using namespace base::musicDevice::sound::preset;
 
 PresetHandler::PresetHandler(
-   const description::sound::Section& rSoundSection,
-   ParameterStorage& rParameterStorage,
-   std::shared_ptr<DevicePresets> pSoundPresets) noexcept :
-   m_rSoundSection(rSoundSection),
-   m_rParameterStorage(rParameterStorage),
-   m_pDevicePresets(std::move(pSoundPresets))
+    const description::sound::Section& rSoundSection,
+    ParameterStorage& rParameterStorage,
+    std::shared_ptr<DevicePresets> pSoundPresets) noexcept :
+    m_rSoundSection(rSoundSection),
+    m_rParameterStorage(rParameterStorage),
+    m_pDevicePresets(std::move(pSoundPresets))
 {
 }
 
-std::vector<std::vector<std::string>>
-PresetHandler::getSoundPresetList() const noexcept
+std::vector<std::vector<std::string>> PresetHandler::getSoundPresetList()
+    const noexcept
 {
    return m_pDevicePresets->getSoundPresetList();
 }
 
 std::optional<std::string> PresetHandler::getActualSoundPresetName(
-   int voiceIdx) const noexcept
+    int voiceIdx) const noexcept
 {
    return m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
 }
 
 void PresetHandler::registerPresetListChangeCb(
-   std::function<void()> cb) noexcept
+    std::function<void()> cb) noexcept
 {
    m_pDevicePresets->registerPresetListChangeCb(cb);
 }
@@ -42,19 +41,28 @@ void PresetHandler::clearPresetListChangeCb() noexcept
 void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
 {
    const auto& actualPresetName =
-      m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
+       m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
    if (!actualPresetName)
    {
       return;
    }
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
    const auto& presetData =
-      m_pDevicePresets->preset(engineIdx, *actualPresetName);
-   m_rParameterStorage.setParameterOfVoice(voiceIdx, presetData);
+       m_pDevicePresets->preset(engineIdx, *actualPresetName);
+   m_rParameterStorage.forEachParameter(
+       [&presetData](int paramIdx, ParameterStorage::Element& param) {
+          const auto& from = presetData.parameters[paramIdx];
+          param.setCommandedValue(from.commanded);
+          param.lfo.setAmplitude(from.lfoData.amplitude);
+          param.lfo.setFrequency(from.lfoData.frequency);
+          param.lfo.setWaveform(from.lfoData.waveform);
+          param.lfo.setMultiplierExp(from.lfoData.multiplierExp);
+       },
+       voiceIdx);
 }
 
-void PresetHandler::selectSoundPreset(
-   int voiceIdx, const std::string& presetName) noexcept
+void PresetHandler::selectSoundPreset(int voiceIdx,
+                                      const std::string& presetName) noexcept
 {
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
 
@@ -64,27 +72,40 @@ void PresetHandler::selectSoundPreset(
    resetToActualSoundPreset(voiceIdx);
 }
 
-void PresetHandler::storeAsSoundPreset(
-   int voiceIdx, const std::string& presetName) noexcept
+void PresetHandler::storeAsSoundPreset(int voiceIdx,
+                                       const std::string& presetName,
+                                       Category category, Genre genre) noexcept
 {
    std::string actPreset;
-   const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
-
    if (!presetName.empty())
    {
       actPreset = presetName;
    }
-   else
+   if (actPreset.empty())
    {
-      if (actPreset.empty())
-      {
-         actPreset = "preset";
-      }
-      actPreset = m_pDevicePresets->incrementNameIdx(engineIdx, actPreset);
+      actPreset = "preset";
    }
-   m_pDevicePresets->savePreset(
-      engineIdx, actPreset,
-      m_rParameterStorage.getCommandedValuesOfVoice(voiceIdx));
+
+   const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
+   actPreset = m_pDevicePresets->incrementNameIdx(engineIdx, actPreset);
+
+   Preset presetData;
+   presetData.category = category;
+   presetData.genre = genre;
+   presetData.parameters.resize(m_rParameterStorage.paramCount(voiceIdx));
+   m_rParameterStorage.forEachParameter(
+       [&presetData](int paramIdx, const ParameterStorage::Element& param) {
+          auto& dest                 = presetData.parameters[paramIdx];
+          dest.commanded             = param.commanded;
+          dest.lfoData.amplitude     = param.lfo.amplitude();
+          dest.lfoData.frequency     = param.lfo.frequency();
+          dest.lfoData.waveform      = param.lfo.waveform();
+          dest.lfoData.multiplierExp = param.lfo.multiplierExp();
+       },
+       voiceIdx);
+
+   m_pDevicePresets->savePreset(engineIdx, actPreset, category, genre,
+                                std::move(presetData));
 }
 
 void PresetHandler::resetParametersToZeroState(int voiceIdx) noexcept
@@ -102,17 +123,17 @@ void PresetHandler::resetToStaged(int voiceIdx) noexcept
    // TODO
 }
 
-void PresetHandler::deletePreset(
-   int voiceIdx, const std::string& newSelectedPreset) noexcept
+void PresetHandler::deletePreset(int voiceIdx,
+                                 const std::string& newSelectedPreset) noexcept
 {
    const auto actualPreset =
-      m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
+       m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
    if (!actualPreset)
    {
       return;
    }
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
    m_pDevicePresets->deletePreset(
-      engineIdx, *m_rParameterStorage.getActualPresetOfVoice(voiceIdx));
+       engineIdx, *m_rParameterStorage.getActualPresetOfVoice(voiceIdx));
    selectSoundPreset(voiceIdx, newSelectedPreset);
 }

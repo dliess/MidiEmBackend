@@ -81,12 +81,14 @@ public:
                                   ::capnzero::Int8 voiceIdx) override;
    void saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
                      ::capnzero::Int8 voiceIdx,
-                     const ::capnzero::TextView& presetName) override;
+                     const ::capnzero::TextView& presetName,
+                     const ::capnzero::TextView& category,
+                     const ::capnzero::TextView& genre) override;
    void setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                         ::capnzero::Int8 voiceIdx,
                         const ::capnzero::TextView& presetName) override;
-	void sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx) override;
-
+   void sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid,
+                                 ::capnzero::Int8 voiceIdx) override;
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
