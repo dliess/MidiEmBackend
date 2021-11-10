@@ -31,7 +31,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
          {
             m_rServerSignals.Presets__presetRemoved(musicDeviceName, engineIdx, presetName);
          }
-         // it->second->save();
+         it->second->save();
       }
    });
 }

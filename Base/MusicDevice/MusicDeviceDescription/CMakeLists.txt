@@ -9,6 +9,11 @@ set(SOURCES
    "DeviceDescriptionLoader.cpp"
 )
 
+set(HEADERS
+   "MusicDeviceDescription.h"
+   "DeviceDescriptionLoader.h"
+)
+
 add_library(MusicDeviceDescription STATIC ${SOURCES})
 target_include_directories(MusicDeviceDescription PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(MusicDeviceDescription

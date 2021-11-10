@@ -49,6 +49,7 @@ struct Preset
 class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
+   using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName) noexcept;
    ~DevicePresets();
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
@@ -73,6 +74,8 @@ public:
       m_presets = settings;
    };
    // =======================================
+   void save() const noexcept { Super::save("EnginePresets", m_musicDeviceName, "EnginePresets"); }
+   void load() noexcept { Super::load("EnginePresets", m_musicDeviceName, "EnginePresets"); }
 
 private:
    Presets m_presets;

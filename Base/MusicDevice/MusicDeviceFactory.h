@@ -39,11 +39,17 @@ public:
 
    struct DataHolder
    {
-       /*
-      void onSoundDevicesPresetChanged(const MusicDeviceName& musicDeviceName,
-                                       int engineIdx,
-                                       const std::string& parameterIndex);
-       */
+      /*
+     void onSoundDevicesPresetChanged(const MusicDeviceName& musicDeviceName,
+                                      int engineIdx,
+                                      const std::string& parameterIndex);
+      */
+      std::shared_ptr<description::Description> getDescription(
+          const MusicDeviceName& deviceName) noexcept;
+
+      std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
+          const MusicDeviceName& deviceName) noexcept;
+
       std::unordered_map<MusicDeviceName,
                          std::shared_ptr<description::Description>>
           descriptionCache;
@@ -152,12 +158,6 @@ private:
    template <typename MidiType, typename MidiMediumType>
    static std::shared_ptr<MidiType> createMidi(
        rtmidiadapt::PortIndex index) noexcept;
-
-   std::shared_ptr<description::Description> getDescription(
-       const MusicDeviceName& deviceName) noexcept;
-
-   std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
-       const MusicDeviceName& deviceName) noexcept;
 
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__
    void addDummy(const std::string& deviceName) noexcept;

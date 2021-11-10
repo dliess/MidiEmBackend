@@ -11,6 +11,7 @@ add_subdirectory(Sound)
 
 set(SOURCES
    "MusicDevice.cpp"
+   "MusicDeviceLoader.cpp"
    "MusicDeviceFactory.cpp"
    "MusicDeviceSequencer.cpp"
 )
