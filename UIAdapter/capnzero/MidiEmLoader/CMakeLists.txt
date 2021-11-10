@@ -1,10 +1,12 @@
 set(SOURCES
     "LoaderServer.cpp"
     "LoaderRpc.cpp"
+    "RtClient.cpp"
 )
 
 set(HEADERS
     "Interface/LoaderServer.h"
+    "Interface/RtClient.h"
     "LoaderRpc.h"
 )
 
@@ -22,5 +24,6 @@ target_include_directories(${TARGET_NAME}
 
 target_link_libraries(${TARGET_NAME} 
     PUBLIC midiem-capnzero-loader
+    PUBLIC midiem-capnzero-rt
     PRIVATE MusicDevice
 )

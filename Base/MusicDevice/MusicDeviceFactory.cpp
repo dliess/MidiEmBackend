@@ -30,8 +30,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "--> input added: {}",
-                devOnUsbPort.getDeviceName());
+          LOG_F(INFO, "--> input added: {}", devOnUsbPort.getDeviceName());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
           if (!pMidiIn)
@@ -65,8 +64,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "--> output added: {}",
-                devOnUsbPort.getDeviceName());
+          LOG_F(INFO, "--> output added: {}", devOnUsbPort.getDeviceName());
           auto pMidiOut =
               createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
           if (!pMidiOut)
@@ -99,8 +97,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "<-- input removed: {}",
-                devOnUsbPort.getDeviceName());
+          LOG_F(INFO, "<-- input removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
@@ -125,8 +122,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "<-- output removed: {}",
-                devOnUsbPort.getDeviceName());
+          LOG_F(INFO, "<-- output removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
@@ -192,8 +188,8 @@ std::shared_ptr<description::Description> Factory::getDescription(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<description::Description> pDescr;
-   auto itDescr = m_descriptionCache.find(deviceName);
-   if (itDescr != m_descriptionCache.end())
+   auto itDescr = dataHolder.descriptionCache.find(deviceName);
+   if (itDescr != dataHolder.descriptionCache.end())
    {
       pDescr = itDescr->second;
    }
@@ -202,7 +198,7 @@ std::shared_ptr<description::Description> Factory::getDescription(
       pDescr = m_descriptionLoader.load(deviceName);   // can throw
       pDescr->checkValidity();                         // can throw
       pDescr->initCaches();
-      m_descriptionCache[deviceName] = pDescr;
+      dataHolder.descriptionCache[deviceName] = pDescr;
    }
    return std::move(pDescr);
 }
@@ -211,19 +207,18 @@ std::shared_ptr<sound::preset::DevicePresets> Factory::getDevicePresets(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<sound::preset::DevicePresets> pPresets;
-   auto it = m_presetCache.find(deviceName);
-   if (it != m_presetCache.end())
+   auto it = dataHolder.presetCache.find(deviceName);
+   if (it != dataHolder.presetCache.end())
    {
       pPresets = it->second;
    }
    else
-   {// TODO: only if it has sound section and sound parameters
-   //if (pDescr->soundSection && pDescr->soundSection->hasParameters()) {
+   {   // TODO: only if it has sound section and sound parameters
+       // if (pDescr->soundSection && pDescr->soundSection->hasParameters()) {
       // pPresets = m_descriptionLoader.load(deviceName);   // can throw
-      pPresets =
-          std::make_shared<sound::preset::DevicePresets>(deviceName);
-      m_presetCache[deviceName] = pPresets;
-    //}
+      pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
+      dataHolder.presetCache[deviceName] = pPresets;
+      //}
    }
    return std::move(pPresets);
 }
@@ -260,7 +255,8 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
    {
       try
       {
-         pMusicDevice = createMusicDevice(deviceId, std::move(pDescr), std::move(pPresets));
+         pMusicDevice = createMusicDevice(deviceId, std::move(pDescr),
+                                          std::move(pPresets));
          if (pMidiIn)
          {
             pMusicDevice->initMidiIn(std::move(pMidiIn));
@@ -289,8 +285,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
 {
    LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
-       deviceId, m_resourceRootDir, std::move(pDescr),
-       std::move(pPresets));
+       deviceId, m_resourceRootDir, std::move(pDescr), std::move(pPresets));
    return std::move(pMusicDevice);
 }
 
@@ -300,8 +295,8 @@ void Factory::MusicDeviceInserter::action(
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets)
 {
-   auto pDevice =
-       findOrCreateDevice(deviceId, std::move(pDescr), std::move(pPresets), pMidiIn, nullptr);
+   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr),
+                                     std::move(pPresets), pMidiIn, nullptr);
    if (!pDevice)
    {
       return;
@@ -315,8 +310,8 @@ void Factory::MusicDeviceInserter::action(
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets)
 {
-   auto pDevice =
-       findOrCreateDevice(deviceId, std::move(pDescr), std::move(pPresets), nullptr, pMidiOut);
+   auto pDevice = findOrCreateDevice(deviceId, std::move(pDescr),
+                                     std::move(pPresets), nullptr, pMidiOut);
    if (!pDevice)
    {
       return;
@@ -330,7 +325,8 @@ void Factory::MusicDeviceInserter::action(
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets)
 {
-   findOrCreateDevice(deviceId, std::move(pDescr), std::move(pPresets), std::move(pMidiIn), nullptr);
+   findOrCreateDevice(deviceId, std::move(pDescr), std::move(pPresets),
+                      std::move(pMidiIn), nullptr);
 }
 
 void Factory::MusicDeviceInserter::action(
@@ -369,12 +365,35 @@ void Factory::MusicDeviceInserter::action(
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
     uint8_t midiVoiceOffset)
 {
-   auto pMusicDevice = createMusicDevice(deviceId, std::move(pDescr), std::move(pPresets));
+   auto pMusicDevice =
+       createMusicDevice(deviceId, std::move(pDescr), std::move(pPresets));
    pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
    pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
    m_rHolder.musicDevices.insert(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
 }
+
+/*
+void Factory::DataHolder::onSoundDevicesPresetChanged(
+    const MusicDeviceName& musicDeviceName, int engineIdx,
+    const std::string& parameterName)
+{
+    auto it = presetCache.find(musicDeviceName);
+    if(it != presetCache.end())
+    {
+        const auto attrs = it->second->getPresetAttributes(engineIdx, parameterName);
+        if(attrs)
+        {
+            for(auto& cb : updatedCbs) cb(musicDeviceName, engineIdx, parameterName, attrs->first, attrs->second );
+        }
+        else
+        {
+            for(auto& cb : removedCbs) cb(musicDeviceName, engineIdx, parameterName);
+        }
+        //it->second->save();
+    }
+}
+*/
 
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__
 void Factory::addDummy(const std::string& usbDeviceName) noexcept

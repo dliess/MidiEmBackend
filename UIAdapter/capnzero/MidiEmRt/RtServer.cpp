@@ -134,6 +134,12 @@ RtServer::RtServer(
               uuid, voiceId, paramIdx, multiplierExp);
        });
 
+   rMusicDeviceContainer.registerEnginePresetChangeCB(
+       [this](const std::string &musicDeviceName, int engineIdx,
+              const std::string &presetName) {
+          signals().SoundDevices__presetChanged(musicDeviceName, engineIdx, presetName);
+       });
+
    rTransportControl.registerTransportMaskChangedCb(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);

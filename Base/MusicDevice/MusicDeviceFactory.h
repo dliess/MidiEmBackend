@@ -22,7 +22,7 @@ struct Description;
 }
 namespace sound::preset
 {
-    class DevicePresets;
+class DevicePresets;
 }
 class Factory
 {
@@ -37,16 +37,39 @@ public:
                                uint8_t midiVoiceOffset);
    void removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot);
 
+   struct DataHolder
+   {
+       /*
+      void onSoundDevicesPresetChanged(const MusicDeviceName& musicDeviceName,
+                                       int engineIdx,
+                                       const std::string& parameterIndex);
+       */
+      std::unordered_map<MusicDeviceName,
+                         std::shared_ptr<description::Description>>
+          descriptionCache;
+      std::unordered_map<MusicDeviceName,
+                         std::shared_ptr<sound::preset::DevicePresets>>
+          presetCache;
+
+      using PresetUpdatedCb =
+          std::function<void(const MusicDeviceName& musicDeviceName,
+                             int engineIdx, const std::string& parameterName,
+                             sound::preset::Category, sound::preset::Genre)>;
+      using PresetRemovedCb =
+          std::function<void(const MusicDeviceName& musicDeviceName,
+                             int engineIdx, const std::string& parameterName)>;
+
+      std::vector<PresetUpdatedCb> updatedCbs;
+      std::vector<PresetRemovedCb> removedCbs;
+   };
+   DataHolder dataHolder;
+
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__
    void insertMusicDeviceDummies();
 #endif
 private:
    Holder& m_rHolder;
    description::Loader m_descriptionLoader;
-   std::unordered_map<MusicDeviceName, std::shared_ptr<description::Description>>
-       m_descriptionCache;
-   std::unordered_map<MusicDeviceName, std::shared_ptr<sound::preset::DevicePresets>>
-       m_presetCache;
    util::itc::Queue m_actionQueue;
 
    struct HandleMidiInInsert

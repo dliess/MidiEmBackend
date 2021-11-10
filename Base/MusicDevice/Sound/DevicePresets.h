@@ -9,9 +9,9 @@
 #include "EnumReflect.h"
 #include "LFO.h"
 #include "Meta.h"
+#include "MusicDeviceId.h"
 #include "Settings.h"
 #include "SoundSection.h"
-#include "MusicDeviceId.h"
 
 /*
    Identifier of a preset:
@@ -20,7 +20,6 @@
 
 namespace base::musicDevice::sound::preset
 {
-
 DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
              RBHHop, RockPop, Techno, Dubstep);
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
@@ -56,9 +55,10 @@ public:
    const Preset& preset(int engineIdx,
                         const std::string& presetName) const noexcept;
    bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
+   std::optional<std::pair<Category, Genre>> getPresetAttributes(
+       int engineIdx, const std::string& presetName) const noexcept;
    void savePreset(int engineIdx, const std::string& presetName,
-                   Category category, Genre genre,
-                   Preset&& preset) noexcept;
+                   Category category, Genre genre, Preset&& preset) noexcept;
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;

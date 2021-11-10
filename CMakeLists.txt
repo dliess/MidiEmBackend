@@ -84,7 +84,7 @@ CPMFindPackage(
   NAME midiem-capnzero
   #GITHUB_REPOSITORY dliess/MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG ca3592642c34df7aebe5b91dccb56f8bd3fee803
+  GIT_TAG a89a869c6beb657747baddde0b39f766a37eae43
 )
 
 add_subdirectory(3rdparty)

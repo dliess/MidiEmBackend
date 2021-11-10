@@ -47,7 +47,6 @@ public:
    inline size_type eraseByDeviceId(const MusicDeviceId& mdId);
    
    inline size_t size() const noexcept;
-   
 
    using LFOWaveformChangeCB = std::function<void(util::Identifiable::UUID, int, int, sound::lfo::Waveform)>;
    using LFOAmplitudeChangeCB = std::function<void(util::Identifiable::UUID, int, int, float)>;

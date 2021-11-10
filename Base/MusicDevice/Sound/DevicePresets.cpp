@@ -28,6 +28,16 @@ std::vector<std::vector<std::string>> DevicePresets::getSoundPresetList()
    return ret;
 }
 
+std::optional<std::pair<Category, Genre>> DevicePresets::getPresetAttributes(
+    int engineIdx, const std::string& presetName) const noexcept
+{
+   if(!util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets)) return std::nullopt;
+   const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
+   auto it = enginePresets.find(presetName);
+   if(it == enginePresets.end()) return std::nullopt;
+   return std::make_pair(it->second.category, it->second.genre);
+}
+
 const Preset& DevicePresets::preset(
     int engineIdx, const std::string& presetName) const noexcept
 {
@@ -54,7 +64,7 @@ void DevicePresets::savePreset(int engineIdx, const std::string& presetName,
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
 
    auto it = enginePresets.find(presetName);
-   if(it != enginePresets.end())
+   if (it != enginePresets.end())
    {
       it->second = std::move(preset);
    }
@@ -109,7 +119,7 @@ void DevicePresets::deletePreset(int engineIdx,
 std::string DevicePresets::outDirName() const noexcept
 {
    auto [manufacturer, product] = splitDeviceName(m_musicDeviceName);
-   std::string str = "Presets/Devices/" + manufacturer;
+   std::string str              = "Presets/Devices/" + manufacturer;
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
 }
@@ -117,12 +127,13 @@ std::string DevicePresets::outDirName() const noexcept
 std::string DevicePresets::outFileName() const noexcept
 {
    auto [manufacturer, product] = splitDeviceName(m_musicDeviceName);
-   std::string str = product + ".json";
+   std::string str              = product + ".json";
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
 }
 
-base::musicDevice::MusicDeviceName DevicePresets::getMusicDeviceName() const noexcept
+base::musicDevice::MusicDeviceName DevicePresets::getMusicDeviceName()
+    const noexcept
 {
    return m_musicDeviceName;
 }

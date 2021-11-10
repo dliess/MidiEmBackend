@@ -9,6 +9,7 @@
 #include "BeatTick.h"
 #include "FdSet.h"
 #include "LoaderServer.h"
+#include "RtClient.h"
 #include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
@@ -129,6 +130,8 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
                                                   musicDeviceFactory);
+   uiadapter::capnzero::RtClient rtClient(m_zmqContext, loaderServer.signals(),
+                                          musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
@@ -145,6 +148,9 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
    });
    fdSet.AddFd(loaderServer.signals().getFd(), [&loaderServer](int fd) {
       loaderServer.signals().handleAllSubscriptions();
+   });
+   fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd) {
+      rtClient.handleIncomingSignalAllNonBlock();
    });
    while (!terminateRequest) { fdSet.Select(); }
 }
