@@ -27,17 +27,6 @@ std::optional<std::string> PresetHandler::getActualSoundPresetName(
    return m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
 }
 
-void PresetHandler::registerPresetListChangeCb(
-    std::function<void()> cb) noexcept
-{
-   m_pDevicePresets->registerPresetListChangeCb(cb);
-}
-
-void PresetHandler::clearPresetListChangeCb() noexcept
-{
-   m_pDevicePresets->clearPresetListChangeCb();
-}
-
 void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
 {
    const auto& actualPresetName =
@@ -106,11 +95,7 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
 
    m_pDevicePresets->savePreset(engineIdx, actPreset, category, genre,
                                 std::move(presetData));
-}
-
-void PresetHandler::resetParametersToZeroState(int voiceIdx) noexcept
-{
-   m_rParameterStorage.resetToInitialValues(voiceIdx);
+   for(auto& cb : m_changedCbs) cb(voiceIdx, presetName);
 }
 
 void PresetHandler::stageCurrentState(int voiceIdx) noexcept
@@ -134,6 +119,13 @@ void PresetHandler::deletePreset(int voiceIdx,
    }
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
    m_pDevicePresets->deletePreset(
-       engineIdx, *m_rParameterStorage.getActualPresetOfVoice(voiceIdx));
+       engineIdx, *actualPreset);
    selectSoundPreset(voiceIdx, newSelectedPreset);
+   for(auto& cb : m_changedCbs) cb(voiceIdx, *actualPreset);
 }
+
+void PresetHandler::registerChangedCb(ChangedCb cb) noexcept
+{
+   m_changedCbs.emplace_back(cb);
+}
+

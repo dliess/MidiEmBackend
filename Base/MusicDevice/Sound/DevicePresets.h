@@ -62,9 +62,6 @@ public:
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
 
-   void registerPresetListChangeCb(std::function<void()> cb) noexcept;
-   void clearPresetListChangeCb() noexcept;
-
    using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
    using Settings = Presets;
@@ -79,8 +76,7 @@ private:
    Presets m_presets;
    std::string m_manufacturer;
    std::string m_product;
-   std::function<void()> m_changeCb;
-   std::mutex m_changedCbMutex;
+   std::mutex m_mutex;
    std::string outDirName() const noexcept;
    std::string outFileName() const noexcept;
    inline static const std::string SETTING_FILE_SECTION = "sound-preset-data";

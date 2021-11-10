@@ -105,9 +105,6 @@ void DevicePresets::deletePreset(int engineIdx,
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
 
    enginePresets.erase(presetName);
-   std::lock_guard<std::mutex> lock(m_changedCbMutex);
-   if (m_changeCb)
-      m_changeCb();
 }
 
 std::string DevicePresets::outDirName() const noexcept
@@ -122,17 +119,4 @@ std::string DevicePresets::outFileName() const noexcept
    std::string str = m_product + ".json";
    std::replace(str.begin(), str.end(), ' ', '_');
    return str;
-}
-
-void DevicePresets::registerPresetListChangeCb(
-    std::function<void()> cb) noexcept
-{
-   std::lock_guard<std::mutex> lock(m_changedCbMutex);
-   m_changeCb = cb;
-}
-
-void DevicePresets::clearPresetListChangeCb() noexcept
-{
-   std::lock_guard<std::mutex> lock(m_changedCbMutex);
-   m_changeCb = nullptr;
 }
