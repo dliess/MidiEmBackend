@@ -40,6 +40,13 @@ struct ParameterData
    LFOData lfoData;
 };
 
+struct Preset
+{
+   Category category;
+   Genre    genre;
+   std::vector<ParameterData> parameters;
+};
+
 class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:

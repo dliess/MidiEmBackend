@@ -62,6 +62,18 @@ inline auto registerMembers<base::musicDevice::sound::preset::ParameterData>()
               &base::musicDevice::sound::preset::ParameterData::lfoData));
 }
 
+template <>
+inline auto registerMembers<base::musicDevice::sound::preset::Preset>()
+{
+   return members(
+       member("category",
+              &base::musicDevice::sound::preset::Preset::category),
+       member("genre",
+              &base::musicDevice::sound::preset::Preset::genre),
+       member("parameters",
+              &base::musicDevice::sound::preset::Preset::parameters));
+}
+
 }   // namespace meta
 
 #endif
