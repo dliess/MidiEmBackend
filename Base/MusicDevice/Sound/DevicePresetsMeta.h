@@ -2,6 +2,7 @@
 #define DEVICE_PRESETS_META_H
 
 #include "Meta.h"
+#include "JsonCast.h"
 
 namespace base::musicDevice::sound::preset
 {
@@ -9,17 +10,31 @@ namespace base::musicDevice::sound::preset
 }
 
 template <>
-inline void to_json<base::musicDevice::sound::lfo::Waveform>(
-    nlohmann::json& j, const base::musicDevice::sound::lfo::Waveform& obj)
+inline void to_json<base::musicDevice::sound::preset::Genre>(
+    nlohmann::json& j, const base::musicDevice::sound::preset::Genre& obj)
 {
-   //j = ~obj;
+   j = ~obj;
 }
 
 template <>
-inline void from_json<base::musicDevice::sound::lfo::Waveform>(
-    const nlohmann::json& j, base::musicDevice::sound::lfo::Waveform& obj)
+inline void from_json<base::musicDevice::sound::preset::Genre>(
+    const nlohmann::json& j, base::musicDevice::sound::preset::Genre& obj)
 {
-   //obj = create_Waveform(j.get<std::string>());
+   obj = base::musicDevice::sound::preset::create_Genre(j.get<std::string>());
+}
+
+template <>
+inline void to_json<base::musicDevice::sound::preset::Category>(
+    nlohmann::json& j, const base::musicDevice::sound::preset::Category& obj)
+{
+   j = ~obj;
+}
+
+template <>
+inline void from_json<base::musicDevice::sound::preset::Category>(
+    const nlohmann::json& j, base::musicDevice::sound::preset::Category& obj)
+{
+   obj = base::musicDevice::sound::preset::create_Category(j.get<std::string>());
 }
 
 namespace meta

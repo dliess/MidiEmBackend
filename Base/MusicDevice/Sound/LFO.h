@@ -59,5 +59,6 @@ private:
 } // namespace base::musicDevice::sound::lfo
 
 #include "LFO.inl"
+#include "LFOMeta.h"
 
 #endif
