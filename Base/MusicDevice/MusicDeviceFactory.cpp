@@ -20,6 +20,7 @@
 #define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
 
 using namespace base::musicDevice;
+using namespace base::musicDevice::factory;
 
 Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
     dataHolder(resourceRootDir),

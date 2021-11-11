@@ -25,6 +25,11 @@ namespace sound::preset
 {
 class DevicePresets;
 }
+
+namespace factory
+{
+
+
 class Factory
 {
 public:
@@ -168,6 +173,7 @@ private:
 #endif
 };
 
+}   // namespace factory
 }   // namespace base::musicDevice
 
 #include "MusicDeviceFactory.tcc"

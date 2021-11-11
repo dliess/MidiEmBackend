@@ -7,7 +7,7 @@
 using namespace uiadapter::capnzero;
 
 LoaderServer::LoaderServer(zmq::context_t& rZmqContext,
-                           base::musicDevice::Factory& rMDFactory) :
+                           base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmLoader::MidiEmLoaderServer(
         rZmqContext, "tcp://*:5557", "tcp://*:5558",
         std::make_unique<LoaderRpc>(rMDFactory)),

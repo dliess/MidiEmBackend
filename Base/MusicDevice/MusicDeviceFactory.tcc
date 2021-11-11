@@ -3,7 +3,7 @@
 #include "MusicDeviceFactory.h"
 #include "MusicDevice.h"
 
-namespace base::musicDevice
+namespace base::musicDevice::factory
 {
 template<typename MidiType, typename MidiMediumType>
 std::shared_ptr<MidiType> Factory::createMidi(
@@ -20,4 +20,4 @@ std::shared_ptr<MidiType> Factory::createMidi(
    return std::make_shared<MidiType>(std::move(pMedium));
 }
 
-} // namespace base::musicDevice
+} // namespace base::musicDevice::factory

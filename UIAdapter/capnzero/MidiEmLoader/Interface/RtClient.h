@@ -4,7 +4,7 @@
 #include "LoaderServer.h"
 #include "MidiEmRt_Client.h"
 
-namespace base::musicDevice
+namespace base::musicDevice::factory
 {
 class Factory;
 }
@@ -15,12 +15,12 @@ class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientSignals
 {
 public:
    RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rServerSignals,
-            base::musicDevice::Factory& rMDFactory);
+            base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
 
 private:
    LoaderServer::Signals& m_rServerSignals;
-   base::musicDevice::Factory& m_rMDFactory;
+   base::musicDevice::factory::Factory& m_rMDFactory;
 };
 
 }   // namespace uiadapter::capnzero

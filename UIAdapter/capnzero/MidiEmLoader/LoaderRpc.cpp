@@ -3,7 +3,7 @@
 
 using namespace uiadapter::capnzero;
 
-LoaderRpc::LoaderRpc(base::musicDevice::Factory& rMusicDevicFactory) noexcept :
+LoaderRpc::LoaderRpc(base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept :
     m_rMusicDevicFactory(rMusicDevicFactory)
 {
 }

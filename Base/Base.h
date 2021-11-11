@@ -22,7 +22,7 @@ struct Base
 public:
    Base(const std::string& configDir);
    musicDevice::Holder musicDeviceHolder;
-   musicDevice::Factory musicDeviceFactory;
+   musicDevice::factory::Factory musicDeviceFactory;
    musicDevice::TransportControl transportControl;
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;

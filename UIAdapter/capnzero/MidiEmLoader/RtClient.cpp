@@ -6,7 +6,7 @@ using namespace uiadapter::capnzero;
 
 RtClient::RtClient(zmq::context_t& rZmqContext,
                    LoaderServer::Signals& rServerSignals,
-                   base::musicDevice::Factory& rMDFactory) :
+                   base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext, "tcp://*:5556"),
     m_rServerSignals(rServerSignals),
     m_rMDFactory(rMDFactory)

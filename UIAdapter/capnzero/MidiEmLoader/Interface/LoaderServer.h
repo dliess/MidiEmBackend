@@ -3,7 +3,7 @@
 
 #include "MidiEmLoader_Server.h"
 
-namespace base::musicDevice { class Factory; }
+namespace base::musicDevice::factory { class Factory; }
 
 namespace uiadapter::capnzero
 {
@@ -11,11 +11,11 @@ namespace uiadapter::capnzero
 class LoaderServer : public ::capnzero::MidiEmLoader::MidiEmLoaderServer
 {
 public:
-    LoaderServer(zmq::context_t& rZmqContext, base::musicDevice::Factory& rMDFactory);
+    LoaderServer(zmq::context_t& rZmqContext, base::musicDevice::factory::Factory& rMDFactory);
     using Super = ::capnzero::MidiEmLoader::MidiEmLoaderServer;
     using WaitMode = Super::WaitMode;
 private:
-    base::musicDevice::Factory& m_rMDFactory;
+    base::musicDevice::factory::Factory& m_rMDFactory;
 };
 
 } // namespace uiadapter::capnzero
