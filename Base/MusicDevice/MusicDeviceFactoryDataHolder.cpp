@@ -63,21 +63,38 @@ factory::DataHolder::getDevicePresets(
    else
    {
       const auto descrIter = m_descriptionCache.find(deviceName);
-      if(descrIter == m_descriptionCache.end() || !descrIter->second->soundSection)
+      if (descrIter == m_descriptionCache.end() ||
+          !descrIter->second->soundSection)
       {
          return nullptr;
       }
       pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
       pPresets->load();
-      pPresets->forEachPreset([this, &deviceName](
-                                  int engineIdx, const std::string& presetName,
-                                  const sound::preset::Preset& preset) {
-         emitPresetUpdated(
-             sound::preset::Id({deviceName, engineIdx, presetName}),
-             preset.category, preset.genre);
-      });
+      pPresets->forEachPreset(
+          [this, &deviceName](int engineIdx, const std::string& presetName,
+                              const sound::preset::Preset& preset) {
+             emitPresetUpdated(
+                 sound::preset::Id({deviceName, engineIdx, presetName}),
+                 preset.category, preset.genre);
+          });
       m_presetCache[deviceName] = pPresets;
-      //}
    }
    return std::move(pPresets);
+}
+
+void factory::DataHolder::reEmitSignals()
+{
+   for (const auto& e : m_descriptionCache)
+   {
+      emitDescriptionAdded(e.first, *e.second);
+   }
+   for (const auto& e : m_presetCache)
+   {
+      const std::string deviceName = e.first;
+      e.second->forEachPreset(
+          [this, &deviceName](int engineIdx, const std::string& presetName,
+                        const sound::preset::Preset& preset) {
+         emitPresetUpdated(sound::preset::Id({deviceName, engineIdx, presetName}), preset.category, preset.genre);
+          });
+   }
 }

@@ -11,6 +11,7 @@
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
+#include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;
 
@@ -18,7 +19,8 @@ RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
     base::musicDevice::TransportControl &rTransportControl,
-    base::midifriends::Router &rMidiRouter) :
+    base::midifriends::Router &rMidiRouter,
+    base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:5555", "tcp://*:5556",
         std::make_unique<InstrumentsRpc>(rInstruments),
@@ -39,7 +41,8 @@ RtServer::RtServer(
    // the call order otherwise
    Super::signals().registerMusicDevicesDeviceAddedSubscrCb(
        [&rMusicDeviceContainer, &rInstruments, &rTransportControl,
-        &rMidiRouter](Signals &rSignals) {
+        &rMidiRouter, &rMDFactory](Signals &rSignals) {
+          rMDFactory.dataHolder().reEmitSignals();
           for (auto &it : rMusicDeviceContainer)
           {
              const auto uuid        = it.second.get()->id();

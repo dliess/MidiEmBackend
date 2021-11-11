@@ -24,10 +24,13 @@ struct DataHolder
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
        const MusicDeviceName& deviceName) noexcept;
 
-   CB_SIGNAL(DescriptionAdded, const std::string&, const description::Description&);
+   CB_SIGNAL(DescriptionAdded, const std::string&,
+             const description::Description&);
    CB_SIGNAL(PresetUpdated, const sound::preset::Id&, sound::preset::Category,
              sound::preset::Genre);
    CB_SIGNAL(PresetRemoved, const sound::preset::Id&);
+
+   void reEmitSignals();
 
 private:
    const std::string m_configDir;
