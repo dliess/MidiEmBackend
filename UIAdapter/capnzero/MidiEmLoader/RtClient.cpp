@@ -15,19 +15,28 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
    onSoundDevicesPresetChanged([this](const ::capnzero::TextView& deviceName,
                                       ::capnzero::Int8 engineIdx,
                                       const ::capnzero::TextView& presetName) {
-      const sound::preset::Id presetId({std::string(deviceName), engineIdx, std::string(presetName)});
+      const sound::preset::Id presetId(
+          {std::string(deviceName), engineIdx, std::string(presetName)});
       m_rMDFactory.dataHolder().soundDevicesPresetChanged(presetId);
-      m_rMDFactory.dataHolder().onPresetUpdated(
-          [this](const sound::preset::Id& id,
-                 sound::preset::Category category, sound::preset::Genre genre) {
-             m_rServerSignals.Presets__presetAdded(id.musicDeviceName,
-                                                   id.engineIdx, id.presetName,
-                                                   ~category, ~genre);
-          });
-      m_rMDFactory.dataHolder().onPresetRemoved(
-          [this](const sound::preset::Id& id) {
-             m_rServerSignals.Presets__presetRemoved(
-                 id.musicDeviceName, id.engineIdx, id.presetName);
-          });
    });
+
+   m_rMDFactory.dataHolder().onDescriptionAdded(
+       [this](const std::string& deviceName,
+              const description::Description& description) {
+          m_rServerSignals.MusicDevices__musicDeviceDescriptionAdded(
+              deviceName, meta::serialize(description).dump().c_str());
+       });
+
+   m_rMDFactory.dataHolder().onPresetUpdated(
+       [this](const sound::preset::Id& id, sound::preset::Category category,
+              sound::preset::Genre genre) {
+          m_rServerSignals.Presets__presetAdded(id.musicDeviceName,
+                                                id.engineIdx, id.presetName,
+                                                ~category, ~genre);
+       });
+   m_rMDFactory.dataHolder().onPresetRemoved(
+       [this](const sound::preset::Id& id) {
+          m_rServerSignals.Presets__presetRemoved(id.musicDeviceName,
+                                                  id.engineIdx, id.presetName);
+       });
 }

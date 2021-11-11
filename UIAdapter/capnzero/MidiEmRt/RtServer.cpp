@@ -53,8 +53,6 @@ RtServer::RtServer(
                      : 0;
              const base::musicDevice::description::Description &description =
                  *it.second.get()->description();
-             rSignals.MusicDevices__musicDeviceDescriptionAdded(
-                 deviceName, meta::serialize(description).dump().c_str());
              rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
                                                 mediumId->toStr(),
                                                 midiVoiceOffset);
@@ -83,9 +81,6 @@ RtServer::RtServer(
               ptr.get()->soundHandler
                   ? ptr.get()->soundHandler->getMidiVoiceOffset()
                   : 0;
-
-          signals().MusicDevices__musicDeviceDescriptionAdded(
-              deviceName, meta::serialize(description).dump().c_str());
 
           signals().MusicDevices__deviceAdded(
               ptr.get()->id(), ptr.get()->deviceId().deviceName,

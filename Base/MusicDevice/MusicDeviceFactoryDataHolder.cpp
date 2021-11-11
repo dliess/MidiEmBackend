@@ -12,8 +12,8 @@ factory::DataHolder::DataHolder(std::string configDir) noexcept :
 void factory::DataHolder::soundDevicesPresetChanged(
     const sound::preset::Id& enginePresetId)
 {
-   auto it = presetCache.find(enginePresetId.musicDeviceName);
-   if (it != presetCache.end())
+   auto it = m_presetCache.find(enginePresetId.musicDeviceName);
+   if (it != m_presetCache.end())
    {
       const auto attrs = it->second->getPresetAttributes(
           enginePresetId.engineIdx, enginePresetId.presetName);
@@ -33,8 +33,8 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<description::Description> pDescr;
-   auto itDescr = descriptionCache.find(deviceName);
-   if (itDescr != descriptionCache.end())
+   auto itDescr = m_descriptionCache.find(deviceName);
+   if (itDescr != m_descriptionCache.end())
    {
       pDescr = itDescr->second;
    }
@@ -44,7 +44,8 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
           description::loadDescription(m_configDir, deviceName);   // can throw
       pDescr->checkValidity();                                     // can throw
       pDescr->initCaches();
-      descriptionCache[deviceName] = pDescr;
+      m_descriptionCache[deviceName] = pDescr;
+      emitDescriptionAdded(deviceName, *pDescr);
    }
    return std::move(pDescr);
 }
@@ -54,8 +55,8 @@ factory::DataHolder::getDevicePresets(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<sound::preset::DevicePresets> pPresets;
-   auto it = presetCache.find(deviceName);
-   if (it != presetCache.end())
+   auto it = m_presetCache.find(deviceName);
+   if (it != m_presetCache.end())
    {
       pPresets = it->second;
    }
@@ -72,7 +73,7 @@ factory::DataHolder::getDevicePresets(
              sound::preset::Id({deviceName, engineIdx, presetName}),
              preset.category, preset.genre);
       });
-      presetCache[deviceName] = pPresets;
+      m_presetCache[deviceName] = pPresets;
       //}
    }
    return std::move(pPresets);
