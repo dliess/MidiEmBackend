@@ -8,7 +8,7 @@ using namespace base::musicDevice;
 RtClient::RtClient(zmq::context_t& rZmqContext,
                    LoaderServer::Signals& rServerSignals,
                    base::musicDevice::factory::Factory& rMDFactory) :
-    ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext, "tcp://*:5556"),
+    ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext, "tcp://localhost:5556"),
     m_rServerSignals(rServerSignals),
     m_rMDFactory(rMDFactory)
 {
