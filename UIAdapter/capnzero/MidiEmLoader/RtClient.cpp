@@ -17,7 +17,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
 
       const std::string musicDeviceName(deviceName);
       const std::string presetName(presetName_);
-      auto& presetCache = m_rMDFactory.dataHolder.presetCache;
+      auto& presetCache = m_rMDFactory.dataHolder().presetCache;
       auto it           = presetCache.find(musicDeviceName);
       if (it != presetCache.end())
       {

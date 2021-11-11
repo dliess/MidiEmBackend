@@ -5,6 +5,19 @@
 
 namespace base::musicDevice::factory
 {
+
+inline
+const DataHolder& Factory::dataHolder() const noexcept
+{
+   return m_dataHolder;
+}
+
+inline
+DataHolder& Factory::dataHolder() noexcept
+{
+   return m_dataHolder;
+}
+
 template<typename MidiType, typename MidiMediumType>
 std::shared_ptr<MidiType> Factory::createMidi(
    rtmidiadapt::PortIndex index) noexcept

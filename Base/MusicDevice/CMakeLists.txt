@@ -14,6 +14,7 @@ set(SOURCES
    "MusicDeviceLoader.cpp"
    "MusicDeviceFactory.cpp"
    "MusicDeviceSequencer.cpp"
+   "MusicDeviceFactoryDataHolder.cpp"
 )
 
 add_library(MusicDevice STATIC ${SOURCES})
