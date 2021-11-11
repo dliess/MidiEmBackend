@@ -10,11 +10,23 @@ set(SOURCES
 )
 
 set(HEADERS
-   "MusicDeviceDescription.h"
+   "ControllerSection.h"
+   "ControllerSectionMeta.h"
    "DeviceDescriptionLoader.h"
+   "HubSection.h"
+   "HubSectionMeta.h"
+   "MidiMessageIdsMeta.h"
+   "MidiSysexDumpDescrHelper.h"
+   "MusicDeviceChains.h"
+   "MusicDeviceChainsMeta.h"
+   "MusicDeviceDescription.h"
+   "MusicDeviceDescriptionMeta.h"
+   "SoundSection.h"
+   "SoundSection.inl"
+   "SoundSectionMeta.h"
 )
 
-add_library(MusicDeviceDescription STATIC ${SOURCES})
+add_library(MusicDeviceDescription STATIC ${SOURCES} ${HEADERS})
 target_include_directories(MusicDeviceDescription PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(MusicDeviceDescription
    PUBLIC Util

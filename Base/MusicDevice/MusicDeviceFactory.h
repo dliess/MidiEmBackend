@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "DeviceDescriptionLoader.h"
+#include "MusicDeviceLoader.h"
 #include "MidiHolder.h"
 #include "MusicDevice.h"
 #include "MusicDeviceId.h"
@@ -39,6 +40,7 @@ public:
 
    struct DataHolder
    {
+      DataHolder(std::string configDir) noexcept;
       /*
      void onSoundDevicesPresetChanged(const MusicDeviceName& musicDeviceName,
                                       int engineIdx,
@@ -67,6 +69,8 @@ public:
 
       std::vector<PresetUpdatedCb> updatedCbs;
       std::vector<PresetRemovedCb> removedCbs;
+      private:
+        const std::string m_configDir;
    };
    DataHolder dataHolder;
 
@@ -75,7 +79,7 @@ public:
 #endif
 private:
    Holder& m_rHolder;
-   description::Loader m_descriptionLoader;
+   Loader m_loader;
    util::itc::Queue m_actionQueue;
 
    struct HandleMidiInInsert

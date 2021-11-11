@@ -1,12 +1,13 @@
 #include "DeviceDescriptionLoader.h"
-#include "MusicDeviceId.h"
-#include "json.hpp"
 
 #include <fstream>
 
-using namespace base::musicDevice::description;
+#include "MusicDeviceId.h"
+#include "json.hpp"
 
-std::shared_ptr<Description> loadDescription(const std::string& configDir, const std::string& deviceName)
+std::shared_ptr<base::musicDevice::description::Description>
+base::musicDevice::description::loadDescription(const std::string& configDir,
+                                                const std::string& deviceName)
 {
    const std::string devFilePath = fmt::format(
        "{}/MidiConfigs/Devices/{}/Config.json", configDir, deviceName);
@@ -24,7 +25,7 @@ std::shared_ptr<Description> loadDescription(const std::string& configDir, const
    {
       devFile >> jDev;
    }
-   catch (std::exception &e)
+   catch (std::exception& e)
    {
       throw std::runtime_error(
           fmt::format("Parsing ill-formed json file '{}' failed, reason: {}",

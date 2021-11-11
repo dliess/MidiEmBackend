@@ -22,8 +22,9 @@
 using namespace base::musicDevice;
 
 Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
+    dataHolder(resourceRootDir),
     m_rHolder(rHolder),
-    m_descriptionLoader(resourceRootDir),
+    m_loader(resourceRootDir),
     m_musicDeviceInserter(rHolder, resourceRootDir)
 {
 #ifndef __INSERT_DUMMY_MIDI_DEVICES__
@@ -39,8 +40,8 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              return;
           }
           const auto [resType, deviceName] =
-              m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
-          if (resType == description::Loader::ResultType::MarkedUnused)
+              m_loader.getMatchType(devOnUsbPort.getDeviceName());
+          if (resType == Loader::ResultType::MarkedUnused)
           {
              return;
           }
@@ -50,7 +51,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(HandleMidiInInsert(), deviceId, pMidiIn,
                     dataHolder.getDescription(deviceId.deviceName),
                     dataHolder.getDevicePresets(deviceId.deviceName));
-          m_descriptionLoader.forFirstDeviceInChain(
+          m_loader.forFirstDeviceInChain(
               deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
                                         uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
@@ -73,8 +74,8 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              return;
           }
           const auto [resType, deviceName] =
-              m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
-          if (resType == description::Loader::ResultType::MarkedUnused)
+              m_loader.getMatchType(devOnUsbPort.getDeviceName());
+          if (resType == Loader::ResultType::MarkedUnused)
           {
              return;
           }
@@ -84,7 +85,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(HandleMidiOutInsert(), deviceId, pMidiOut,
                     dataHolder.getDescription(deviceId.deviceName),
                     dataHolder.getDevicePresets(deviceId.deviceName));
-          m_descriptionLoader.forEachDeviceInChain(
+          m_loader.forEachDeviceInChain(
               deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
                                          uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
@@ -99,14 +100,14 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           LOG_F(INFO, "<-- input removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
-              m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
+              m_loader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), deviceId);
 
-          m_descriptionLoader.forEachDeviceInChain(
+          m_loader.forEachDeviceInChain(
               deviceId, [this](const MusicDeviceId& nextDeviceId,
                                uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
@@ -124,14 +125,14 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           LOG_F(INFO, "<-- output removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
-              m_descriptionLoader.getMatchType(devOnUsbPort.getDeviceName());
+              m_loader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), deviceId);
 
-          m_descriptionLoader.forEachDeviceInChain(
+          m_loader.forEachDeviceInChain(
               deviceId, [this](const MusicDeviceId& nextDeviceId,
                                uint8_t midiVoiceOffset) {
                  util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
@@ -152,16 +153,16 @@ void Factory::invokeInserterQueueActions() { m_actionQueue.popCallAll(); }
 
 std::string Factory::getAllDevicesAsJson() const
 {
-   return m_descriptionLoader.getAllDevicesAsJson();
+   return m_loader.getAllDevicesAsJson();
 }
 
 void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
                                      const MusicDeviceName& device,
                                      uint8_t midiVoiceOffset)
 {
-   m_descriptionLoader.appendDeviceToChain(chainRoot, device, midiVoiceOffset);
+   m_loader.appendDeviceToChain(chainRoot, device, midiVoiceOffset);
 
-   m_descriptionLoader.forLastDeviceInChain(
+   m_loader.forLastDeviceInChain(
        chainRoot, [this, &chainRoot](const MusicDeviceId& lastDeviceId,
                                      uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
@@ -175,14 +176,20 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
 
 void Factory::removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot)
 {
-   m_descriptionLoader.forLastDeviceInChain(
+   m_loader.forLastDeviceInChain(
        chainRoot,
        [this](const MusicDeviceId& lastDeviceId, uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), lastDeviceId);
        });
-   m_descriptionLoader.removeDeviceFromEndOf(chainRoot);
+   m_loader.removeDeviceFromEndOf(chainRoot);
 }
+
+Factory::DataHolder::DataHolder(std::string configDir) noexcept:
+    m_configDir(std::move(configDir.empty() ? "." : configDir))
+{
+}
+
 
 std::shared_ptr<description::Description> Factory::DataHolder::getDescription(
     const MusicDeviceName& deviceName) noexcept
@@ -195,7 +202,7 @@ std::shared_ptr<description::Description> Factory::DataHolder::getDescription(
    }
    else
    {
-      pDescr = m_descriptionLoader.load(deviceName);   // can throw
+      pDescr = description::loadDescription(m_configDir, deviceName);   // can throw
       pDescr->checkValidity();                         // can throw
       pDescr->initCaches();
       descriptionCache[deviceName] = pDescr;
@@ -215,7 +222,7 @@ std::shared_ptr<sound::preset::DevicePresets> Factory::DataHolder::getDevicePres
    else
    {   // TODO: only if it has sound section and sound parameters
        // if (pDescr->soundSection && pDescr->soundSection->hasParameters()) {
-      // pPresets = m_descriptionLoader.load(deviceName);   // can throw
+      // pPresets = m_loader.load(deviceName);   // can throw
       pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
       presetCache[deviceName] = pPresets;
       //}
@@ -401,7 +408,7 @@ void Factory::addDummy(const std::string& usbDeviceName) noexcept
    midi::MidiMediumDummy dummy(usbDeviceName, midi::IMidiMedium::Type::USB);
 
    const auto [resType, deviceName] =
-       m_descriptionLoader.getMatchType(usbDeviceName);
+       m_loader.getMatchType(usbDeviceName);
    if (resType == description::Loader::ResultType::MarkedUnused)
    {
       return;

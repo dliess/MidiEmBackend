@@ -24,7 +24,7 @@ public:
    Loader(const std::string& configDir);
    std::pair<ResultType, std::string> getMatchType(
        const std::string& deviceName) const noexcept;
-   std::shared_ptr<Description> load(const std::string& deviceName) const;
+   std::shared_ptr<description::Description> load(const std::string& deviceName) const;
 
    void forEachDeviceInChain(
        const MusicDeviceId& rootDeviceId,
