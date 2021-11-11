@@ -7,14 +7,6 @@ using namespace base::musicDevice::sound::preset;
 DevicePresets::DevicePresets(MusicDeviceName musicDeviceName) noexcept :
     m_musicDeviceName(std::move(musicDeviceName))
 {
-   utils::Settings<DevicePresets>::load(outDirName(), outFileName(),
-                                        SETTING_FILE_SECTION);
-}
-
-DevicePresets::~DevicePresets()
-{
-   utils::Settings<DevicePresets>::save(outDirName(), outFileName(),
-                                        SETTING_FILE_SECTION);
 }
 
 std::vector<std::vector<std::string>> DevicePresets::getSoundPresetList()

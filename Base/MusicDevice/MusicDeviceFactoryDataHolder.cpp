@@ -61,9 +61,12 @@ factory::DataHolder::getDevicePresets(
       pPresets = it->second;
    }
    else
-   {   // TODO: only if it has sound section and sound parameters
-       // if (pDescr->soundSection && pDescr->soundSection->hasParameters()) {
-      // pPresets = m_loader.load(deviceName);   // can throw
+   {
+      const auto descrIter = m_descriptionCache.find(deviceName);
+      if(descrIter == m_descriptionCache.end() || !descrIter->second->soundSection)
+      {
+         return nullptr;
+      }
       pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
       pPresets->load();
       pPresets->forEachPreset([this, &deviceName](

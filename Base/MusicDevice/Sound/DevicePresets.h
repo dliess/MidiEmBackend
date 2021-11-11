@@ -58,7 +58,6 @@ class DevicePresets : public utils::Settings<DevicePresets>
 public:
    using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName) noexcept;
-   ~DevicePresets();
    template<class Cb>
    void forEachPreset(Cb cb) const;
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
@@ -83,8 +82,8 @@ public:
       m_presets = settings;
    };
    // =======================================
-   void save() const noexcept { Super::save("EnginePresets", m_musicDeviceName, "EnginePresets"); }
-   void load() noexcept { Super::load("EnginePresets", m_musicDeviceName, "EnginePresets"); }
+   void save() const noexcept { Super::save("EnginePresets", fmt::format("{}.json", m_musicDeviceName), "EnginePresets"); }
+   void load() noexcept { Super::load("EnginePresets", fmt::format("{}.json", m_musicDeviceName), "EnginePresets"); }
 
 private:
    Presets m_presets;
