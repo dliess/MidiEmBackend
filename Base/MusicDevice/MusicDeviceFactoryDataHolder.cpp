@@ -12,25 +12,21 @@ factory::DataHolder::DataHolder(std::string configDir) noexcept :
 void factory::DataHolder::onSoundDevicesPresetChanged(
     const sound::preset::EnginePresetId& enginePresetId)
 {
-   /*
-   const std::string musicDeviceName(deviceName);
-   const std::string presetName(presetName_);
-   auto& presetCache = m_rMDFactory.dataHolder().presetCache;
-   auto it           = presetCache.find(enginePresetId.musicDeviceName);
+   auto it = presetCache.find(enginePresetId.musicDeviceName);
    if (it != presetCache.end())
    {
-      const auto attrs = it->second->getPresetAttributes(engineIdx, presetName);
+      const auto attrs = it->second->getPresetAttributes(
+          enginePresetId.engineIdx, enginePresetId.presetName);
       if (attrs)
       {
-         emitPresetUpdated();
+         emitPresetUpdated(enginePresetId, attrs->first, attrs->second);
       }
       else
       {
-         emitPresetRemoved();
+         emitPresetRemoved(enginePresetId);
       }
       it->second->save();
    }
-   */
 }
 
 std::shared_ptr<description::Description> factory::DataHolder::getDescription(
@@ -69,12 +65,13 @@ factory::DataHolder::getDevicePresets(
       // pPresets = m_loader.load(deviceName);   // can throw
       pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
       pPresets->load();
-      pPresets->forEachPreset(
-          [this, &deviceName](int engineIdx, const std::string& presetName,
-                              const sound::preset::Preset& preset) {
-             emitPresetUpdated(deviceName, engineIdx, presetName,
-                               preset.category, preset.genre);
-          });
+      pPresets->forEachPreset([this, &deviceName](
+                                  int engineIdx, const std::string& presetName,
+                                  const sound::preset::Preset& preset) {
+         emitPresetUpdated(
+             sound::preset::EnginePresetId({deviceName, engineIdx, presetName}),
+             preset.category, preset.genre);
+      });
       presetCache[deviceName] = pPresets;
       //}
    }

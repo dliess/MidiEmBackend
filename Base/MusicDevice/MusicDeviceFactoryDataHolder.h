@@ -30,9 +30,9 @@ struct DataHolder
    std::unordered_map<MusicDeviceName,
                       std::shared_ptr<sound::preset::DevicePresets>>
        presetCache;
-   CB_SIGNAL(PresetUpdated, const std::string&, int, const std::string&,
+   CB_SIGNAL(PresetUpdated, const sound::preset::EnginePresetId&,
              sound::preset::Category, sound::preset::Genre);
-   CB_SIGNAL(PresetRemoved, const std::string&, int, const std::string&);
+   CB_SIGNAL(PresetRemoved, const sound::preset::EnginePresetId&);
 
 private:
    const std::string m_configDir;
