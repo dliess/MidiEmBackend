@@ -20,6 +20,14 @@
 
 namespace base::musicDevice::sound::preset
 {
+
+struct EnginePresetId
+{
+   MusicDeviceName musicDeviceName;
+   int engineIdx;
+   std::string presetName;
+};
+
 DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
              RBHHop, RockPop, Techno, Dubstep);
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
@@ -52,6 +60,8 @@ public:
    using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName) noexcept;
    ~DevicePresets();
+   template<class Cb>
+   void forEachPreset(Cb cb) const;
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const Preset& preset(int engineIdx,
                         const std::string& presetName) const noexcept;
@@ -87,16 +97,8 @@ private:
    inline static int engine2VectorIdx(int engineIdx) noexcept;
 };
 
-inline int DevicePresets::engine2VectorIdx(int engineIdx) noexcept
-{
-   if (base::musicDevice::description::sound::GlobalSectionId == engineIdx)
-   {
-      return 0;
-   }
-   return engineIdx + 1;
-}
-
 }   // namespace base::musicDevice::sound::preset
 
+#include "DevicePresets.inl"
 #include "DevicePresetsMeta.h"
 #endif

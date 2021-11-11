@@ -1,23 +1,23 @@
 #ifndef MUSIC_DEVICE_FACTORY_DATA_HOLDER_H
 #define MUSIC_DEVICE_FACTORY_DATA_HOLDER_H
 
+#include <functional>
 #include <memory>
 #include <unordered_map>
-#include <functional>
-#include "MusicDeviceId.h"
-#include "MusicDeviceDescription.h"
+
+#include "CallbackSignal.h"
 #include "DevicePresets.h"
+#include "MusicDeviceDescription.h"
+#include "MusicDeviceId.h"
 
 namespace base::musicDevice::factory
 {
 struct DataHolder
 {
    DataHolder(std::string configDir) noexcept;
-   /*
-  void onSoundDevicesPresetChanged(const MusicDeviceName& musicDeviceName,
-                                   int engineIdx,
-                                   const std::string& parameterIndex);
-   */
+   
+   void onSoundDevicesPresetChanged(const sound::preset::EnginePresetId& enginePresetId);
+   
    std::shared_ptr<description::Description> getDescription(
        const MusicDeviceName& deviceName) noexcept;
 
@@ -30,17 +30,9 @@ struct DataHolder
    std::unordered_map<MusicDeviceName,
                       std::shared_ptr<sound::preset::DevicePresets>>
        presetCache;
-
-   using PresetUpdatedCb =
-       std::function<void(const MusicDeviceName& musicDeviceName, int engineIdx,
-                          const std::string& parameterName,
-                          sound::preset::Category, sound::preset::Genre)>;
-   using PresetRemovedCb =
-       std::function<void(const MusicDeviceName& musicDeviceName, int engineIdx,
-                          const std::string& parameterName)>;
-
-   std::vector<PresetUpdatedCb> updatedCbs;
-   std::vector<PresetRemovedCb> removedCbs;
+   CB_SIGNAL(PresetUpdated, const std::string&, int, const std::string&,
+             sound::preset::Category, sound::preset::Genre);
+   CB_SIGNAL(PresetRemoved, const std::string&, int, const std::string&);
 
 private:
    const std::string m_configDir;
