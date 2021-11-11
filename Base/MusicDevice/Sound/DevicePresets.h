@@ -13,14 +13,13 @@
 #include "Settings.h"
 #include "SoundSection.h"
 
+namespace base::musicDevice::sound::preset
+{
+
 /*
    Identifier of a preset:
       manufacturer+product + engineIdx + presetName
 */
-
-namespace base::musicDevice::sound::preset
-{
-
 struct Id
 {
    MusicDeviceName musicDeviceName;

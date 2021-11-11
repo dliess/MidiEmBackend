@@ -11,7 +11,8 @@ public:                    \
 protected: \
     template<class ... Types> void emit##cbName(Types ... args) { for(auto& cb : m_##cbName##s) cb(args...); } \
 private: \
-    std::vector<cbName##Cb> m_##cbName##s;
+    std::vector<cbName##Cb> m_##cbName##s; \
+public:
 
 
 #endif
