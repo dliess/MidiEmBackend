@@ -21,7 +21,7 @@
 namespace base::musicDevice::sound::preset
 {
 
-struct EnginePresetId
+struct Id
 {
    MusicDeviceName musicDeviceName;
    int engineIdx;

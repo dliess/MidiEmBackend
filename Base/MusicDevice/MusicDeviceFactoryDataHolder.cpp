@@ -9,8 +9,8 @@ factory::DataHolder::DataHolder(std::string configDir) noexcept :
 {
 }
 
-void factory::DataHolder::onSoundDevicesPresetChanged(
-    const sound::preset::EnginePresetId& enginePresetId)
+void factory::DataHolder::soundDevicesPresetChanged(
+    const sound::preset::Id& enginePresetId)
 {
    auto it = presetCache.find(enginePresetId.musicDeviceName);
    if (it != presetCache.end())
@@ -69,7 +69,7 @@ factory::DataHolder::getDevicePresets(
                                   int engineIdx, const std::string& presetName,
                                   const sound::preset::Preset& preset) {
          emitPresetUpdated(
-             sound::preset::EnginePresetId({deviceName, engineIdx, presetName}),
+             sound::preset::Id({deviceName, engineIdx, presetName}),
              preset.category, preset.genre);
       });
       presetCache[deviceName] = pPresets;

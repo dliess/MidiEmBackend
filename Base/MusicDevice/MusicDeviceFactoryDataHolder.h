@@ -15,9 +15,10 @@ namespace base::musicDevice::factory
 struct DataHolder
 {
    DataHolder(std::string configDir) noexcept;
-   
-   void onSoundDevicesPresetChanged(const sound::preset::EnginePresetId& enginePresetId);
-   
+
+   void soundDevicesPresetChanged(
+       const sound::preset::Id& enginePresetId);
+
    std::shared_ptr<description::Description> getDescription(
        const MusicDeviceName& deviceName) noexcept;
 
@@ -30,9 +31,9 @@ struct DataHolder
    std::unordered_map<MusicDeviceName,
                       std::shared_ptr<sound::preset::DevicePresets>>
        presetCache;
-   CB_SIGNAL(PresetUpdated, const sound::preset::EnginePresetId&,
+   CB_SIGNAL(PresetUpdated, const sound::preset::Id&,
              sound::preset::Category, sound::preset::Genre);
-   CB_SIGNAL(PresetRemoved, const sound::preset::EnginePresetId&);
+   CB_SIGNAL(PresetRemoved, const sound::preset::Id&);
 
 private:
    const std::string m_configDir;
