@@ -3,6 +3,7 @@
 
 #include "LoaderServer.h"
 #include "MidiEmRt_Client.h"
+#include "LoaderServer.h"
 
 namespace base::musicDevice::factory
 {
@@ -16,6 +17,7 @@ class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientRpc,
 {
 public:
    RtClient(zmq::context_t& rZmqContext,
+            LoaderServer::Signals& rSignals,
             base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
 };

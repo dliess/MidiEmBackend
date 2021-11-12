@@ -60,14 +60,12 @@ void base::Base::start()
    }
 
    m_mainRtThread = std::make_unique<util::Thread>(
-       [this](const std::atomic<bool> &terminateRequest) {
-          mainRtThreadFunction(terminateRequest);
-       });
+       [this](const std::atomic<bool> &terminateRequest)
+       { mainRtThreadFunction(terminateRequest); });
 
    m_portNotifierThread = std::make_unique<util::Thread>(
-       [this](const std::atomic<bool> &terminateRequest) {
-          loaderThreadFunction(terminateRequest);
-       });
+       [this](const std::atomic<bool> &terminateRequest)
+       { loaderThreadFunction(terminateRequest); });
 }
 
 void base::Base::waitForEnd()
@@ -110,17 +108,17 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd, [this](int fd) {
-      std::array<uint8_t, 8> buf;
-      read(fd, buf.data(), buf.size());
-      loopFn();
-   });
-   fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
-      rtServer.processNextRequestAllNonBlock();
-   });
-   fdSet.AddFd(rtServer.signals().getFd(), [&rtServer](int fd) {
-      rtServer.signals().handleAllSubscriptions();
-   });
+   fdSet.AddFd(timerFd,
+               [this](int fd)
+               {
+                  std::array<uint8_t, 8> buf;
+                  read(fd, buf.data(), buf.size());
+                  loopFn();
+               });
+   fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd)
+               { rtServer.processNextRequestAllNonBlock(); });
+   fdSet.AddFd(rtServer.signals().getFd(), [&rtServer](int fd)
+               { rtServer.signals().handleAllSubscriptions(); });
 
    tempo::BeatTick::instance().start();
    while (!terminateRequest) { fdSet.Select(); }
@@ -128,29 +126,29 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
-   uiadapter::capnzero::RtClient rtClient(m_zmqContext, musicDeviceFactory);
    uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
                                                   musicDeviceFactory);
+   uiadapter::capnzero::RtClient rtClient(m_zmqContext, loaderServer.signals(),
+                                          musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd, [this](int fd) {
-      std::array<uint8_t, 8> buf;
-      read(fd, buf.data(), buf.size());
-      midi::PortNotifiers::instance().update();
-   });
-   fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd) {
-      loaderServer.processNextRequestAllNonBlock();
-   });
-   fdSet.AddFd(loaderServer.signals().getFd(), [&loaderServer](int fd) {
-      loaderServer.signals().handleAllSubscriptions();
-   });
-   fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd) {
-      rtClient.handleIncomingSignalAllNonBlock();
-   });
+   fdSet.AddFd(timerFd,
+               [this](int fd)
+               {
+                  std::array<uint8_t, 8> buf;
+                  read(fd, buf.data(), buf.size());
+                  midi::PortNotifiers::instance().update();
+               });
+   fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd)
+               { loaderServer.processNextRequestAllNonBlock(); });
+   fdSet.AddFd(loaderServer.signals().getFd(), [&loaderServer](int fd)
+               { loaderServer.signals().handleAllSubscriptions(); });
+   fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd)
+               { rtClient.handleIncomingSignalAllNonBlock(); });
    while (!terminateRequest) { fdSet.Select(); }
 }
 
