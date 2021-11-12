@@ -97,9 +97,9 @@ void base::Base::setRtScheduling()
 void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    setRtScheduling();
-   uiadapter::capnzero::RtServer rtServer(
-       m_zmqContext, instruments, musicDeviceHolder.musicDevices,
-       transportControl, midiRouter);
+   uiadapter::capnzero::RtServer rtServer(m_zmqContext, instruments,
+                                          musicDeviceHolder.musicDevices,
+                                          transportControl, midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
@@ -128,10 +128,9 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
+   uiadapter::capnzero::RtClient rtClient(m_zmqContext, musicDeviceFactory);
    uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
                                                   musicDeviceFactory);
-   uiadapter::capnzero::RtClient rtClient(m_zmqContext, loaderServer.signals(),
-                                          musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});

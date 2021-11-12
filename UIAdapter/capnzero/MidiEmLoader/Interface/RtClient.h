@@ -11,16 +11,13 @@ class Factory;
 
 namespace uiadapter::capnzero
 {
-class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientSignals
+class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientRpc,
+                 public ::capnzero::MidiEmRt::MidiEmRtClientSignals
 {
 public:
-   RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rServerSignals,
+   RtClient(zmq::context_t& rZmqContext,
             base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
-
-private:
-   LoaderServer::Signals& m_rServerSignals;
-   base::musicDevice::factory::Factory& m_rMDFactory;
 };
 
 }   // namespace uiadapter::capnzero
