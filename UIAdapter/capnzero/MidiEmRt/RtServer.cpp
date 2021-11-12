@@ -3,6 +3,7 @@
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "JsonCast.h"   // meta::serialize
+#include "MainRpc.h"
 #include "MidiRouter.h"
 #include "MidiRoutingRpc.h"
 #include "MusicDeviceContainer.h"
@@ -11,7 +12,6 @@
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
-#include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;
 
@@ -19,10 +19,12 @@ RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
     base::musicDevice::TransportControl &rTransportControl,
-    base::midifriends::Router &rMidiRouter,
-    base::musicDevice::factory::Factory& rMDFactory) :
+    base::midifriends::Router &rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:5555", "tcp://*:5556",
+        std::make_unique<MainRpc>(signals(), rInstruments,
+                                  rMusicDeviceContainer, rTransportControl,
+                                  rMidiRouter),
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
         std::make_unique<TempoRpc>(Super::signals()),
@@ -35,44 +37,6 @@ RtServer::RtServer(
       Super::signals().Instruments__melodicInstrumentsChanged(
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
-
-   // ATTENTION: to send all initial subscription data in ordered manner,
-   // we use only one of the Subscription callbacks, since we dont know
-   // the call order otherwise
-   Super::signals().registerMusicDevicesDeviceAddedSubscrCb(
-       [&rMusicDeviceContainer, &rInstruments, &rTransportControl,
-        &rMidiRouter, &rMDFactory](Signals &rSignals) {
-          rMDFactory.dataHolder().reEmitSignals();
-          for (auto &it : rMusicDeviceContainer)
-          {
-             const auto uuid        = it.second.get()->id();
-             const auto &deviceName = it.second.get()->deviceId().deviceName;
-             const auto &portName   = it.second.get()->deviceId().portName;
-             const auto mediumId    = it.second.get()->mediumId();
-             assert(mediumId.has_value());
-             const auto midiVoiceOffset =
-                 it.second.get()->soundHandler
-                     ? it.second.get()->soundHandler->getMidiVoiceOffset()
-                     : 0;
-             const base::musicDevice::description::Description &description =
-                 *it.second.get()->description();
-             rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
-                                                mediumId->toStr(),
-                                                midiVoiceOffset);
-          }
-          rSignals.Tempo__beatTickStartedChanged(
-              base::tempo::BeatTick::instance().running());
-          rSignals.Tempo__bpmCentsChanged(
-              base::tempo::BeatTick::instance().getBpmCents());
-          rSignals.Instruments__kitInstrumentsChanged(
-              meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
-          rSignals.Instruments__melodicInstrumentsChanged(
-              meta::serialize(rInstruments.data.melodicInstruments)
-                  .dump()
-                  .c_str());
-          rTransportControl.retriggerCallbacks();
-          rMidiRouter.retriggerCallbacks();
-       });
 
    rMusicDeviceContainer.registerForAdd(
        [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
@@ -135,7 +99,8 @@ RtServer::RtServer(
    rMusicDeviceContainer.registerEnginePresetChangeCB(
        [this](const std::string &musicDeviceName, int engineIdx,
               const std::string &presetName) {
-          signals().SoundDevices__presetChanged(musicDeviceName, engineIdx, presetName);
+          signals().SoundDevices__presetChanged(musicDeviceName, engineIdx,
+                                                presetName);
        });
 
    rTransportControl.registerTransportMaskChangedCb(

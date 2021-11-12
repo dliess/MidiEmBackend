@@ -2,6 +2,7 @@
 #define MIDIEM_LOADER_RPC_H
 
 #include "MidiEmLoaderRpcIf.h"
+#include "LoaderServer.h"
 
 namespace base::musicDevice::factory
 {
@@ -13,7 +14,9 @@ namespace uiadapter::capnzero
 class LoaderRpc : public ::capnzero::MidiEmLoader::RpcIf
 {
 public:
-   LoaderRpc(base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept;
+   LoaderRpc(LoaderServer::Signals& rSignals,
+             base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept;
+   void reEmitSignals() override;
    void loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,
                                const ::capnzero::TextView& manufacturer,
                                const ::capnzero::TextView& device,
@@ -22,6 +25,7 @@ public:
        const ::capnzero::TextView& chainRoot) override;
 
 private:
+   LoaderServer::Signals& m_rSignals;
    base::musicDevice::factory::Factory& m_rMusicDevicFactory;
 };
 

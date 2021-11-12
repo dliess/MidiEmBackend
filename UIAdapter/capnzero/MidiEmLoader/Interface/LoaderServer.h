@@ -14,8 +14,6 @@ public:
     LoaderServer(zmq::context_t& rZmqContext, base::musicDevice::factory::Factory& rMDFactory);
     using Super = ::capnzero::MidiEmLoader::MidiEmLoaderServer;
     using WaitMode = Super::WaitMode;
-private:
-    base::musicDevice::factory::Factory& m_rMDFactory;
 };
 
 } // namespace uiadapter::capnzero

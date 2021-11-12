@@ -6,7 +6,6 @@
 namespace base::instruments { struct Instruments; }
 namespace base::musicDevice { class MusicDeviceContainer; }
 namespace base::musicDevice { class TransportControl; }
-namespace base::musicDevice::factory { class Factory; }
 namespace base::midifriends { class Router; }
 
 namespace uiadapter::capnzero
@@ -19,8 +18,7 @@ public:
            base::instruments::Instruments& rInstruments,
            base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer,
            base::musicDevice::TransportControl& rTransportControl,
-           base::midifriends::Router& rMidiRouter,
-           base::musicDevice::factory::Factory& rMDFactory);
+           base::midifriends::Router& rMidiRouter);
     using Super = ::capnzero::MidiEmRt::MidiEmRtServer;
     using WaitMode = Super::WaitMode;
 };

@@ -10,11 +10,6 @@ LoaderServer::LoaderServer(zmq::context_t& rZmqContext,
                            base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmLoader::MidiEmLoaderServer(
         rZmqContext, "tcp://*:5557", "tcp://*:5558",
-        std::make_unique<LoaderRpc>(rMDFactory)),
-    m_rMDFactory(rMDFactory)
+        std::make_unique<LoaderRpc>(signals(), rMDFactory))
 {
-   signals().registerAllMusicDevicesChangedSubscrCb(
-       [&rMDFactory](Signals& rSignals) {
-          rSignals.allMusicDevicesChanged(rMDFactory.getAllDevicesAsJson());
-       });
 }
