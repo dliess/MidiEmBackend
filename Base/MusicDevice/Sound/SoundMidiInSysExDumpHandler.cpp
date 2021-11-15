@@ -16,6 +16,9 @@ MidiInSysExDumpHandler::MidiInSysExDumpHandler(
 void MidiInSysExDumpHandler::handle(
     const midi::Message<midi::SystemExclusive>& sysexMsg) noexcept
 {
+   m_presetName     = std::nullopt;
+   m_presetCategory = std::nullopt;
+   m_presetGenre    = std::nullopt;
    if (!m_rSoundSection.parameterDumpAnswer)
    {
       return;
@@ -66,6 +69,15 @@ void MidiInSysExDumpHandler::handle(
                                   float(valueRange.to - valueRange.from + 1));
                  }
               },
+              [this, &sysexMsg](const description::sound::midisysex::PatchNameStr& patchName){
+                  m_presetName = std::string(sysexMsg[patchName.offset], patchName.size);
+              },
+              [this, &sysexMsg](const description::sound::midisysex::PatchCategory& patchCategory){
+                  m_presetCategory = static_cast<preset::Category>(sysexMsg[patchCategory.offset]);
+              },
+              [this, &sysexMsg](const description::sound::midisysex::PatchGenre& patchGenre){
+                   m_presetGenre = static_cast<preset::Genre>(sysexMsg[patchGenre.offset]);
+              },
               [](auto&& other) {}},
           fieldDescr);
    }
@@ -110,4 +122,21 @@ std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
          return ret;
    }
    return std::nullopt;
+}
+
+std::optional<std::string> MidiInSysExDumpHandler::presetName() const noexcept
+{
+   return m_presetName;
+}
+
+std::optional<preset::Category> MidiInSysExDumpHandler::presetCategory()
+    const noexcept
+{
+   return m_presetCategory;
+}
+
+std::optional<preset::Genre> MidiInSysExDumpHandler::presetGenre()
+    const noexcept
+{
+   return m_presetGenre;
 }

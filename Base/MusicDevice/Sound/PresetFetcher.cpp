@@ -1,4 +1,5 @@
 #include "PresetFetcher.h"
+#include <thread>
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
@@ -19,19 +20,11 @@ const MusicDeviceId& PresetFetcher::musicDeviceId() const noexcept
 void PresetFetcher::addMidiIn(std::shared_ptr<MidiInput> pMidiIn) noexcept
 {
     m_pMidiIn = std::move(pMidiIn);
-    if(m_pMidiOut)
-    {
-        fetchPresets();
-    }
 }
 
 void PresetFetcher::addMidiOut(std::shared_ptr<MidiOutput> pMidiOut) noexcept
 {
     m_pMidiOut = std::move(pMidiOut);
-    if(m_pMidiIn)
-    {
-        fetchPresets();
-    }
 }
 
 std::shared_ptr<PresetFetcher::MidiInput> PresetFetcher::hijackMidiIn() noexcept
@@ -47,25 +40,23 @@ PresetFetcher::hijackMidiOut() noexcept
 
 void PresetFetcher::fetchPresets()
 {
-    /*
-    if(m_pDescription->.presets && m_rSoundSection.parameterDump)
+    if(m_pDescription->soundSection->parameterDumpAnswer)
     {
-        m_pMidiIn->registerMidiInCb([](){
-            if(m_rSoundSection.parameterDump)
+        m_pMidiIn->registerMidiInCb([this](const midi::MidiMessage& midiMessage){
+            if(m_pDescription->soundSection->parameterDumpAnswer)
             {
-                MidiInSysExDumpHandler sysexDumpHandler(...);
+                //MidiInSysExDumpHandler sysexDumpHandler(...);
             }
         });
-        for(int i = 0; i < m_rSoundSection.presets->numberOfPresets; ++i)
+        for(int i = 0; i < m_pDescription->soundSection->presets->numberOfPresets; ++i)
         {
-            m_pMidiOut->send(midi::MidiMessage<midi::ProgramChange>(i));
-            usleep(10000);
+            m_pMidiOut->send(midi::Message<midi::ProgramChange>(0, i));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             m_pMidiIn->update();
         }
 
         m_pMidiIn->clearCbs();
     }
-    */
 }
 
 bool PresetFetcher::hasMidiInAndOut() const noexcept
