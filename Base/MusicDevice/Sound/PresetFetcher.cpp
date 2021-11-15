@@ -67,6 +67,7 @@ void PresetFetcher::fetchPresets()
         ++i)
    {
       m_pMidiOut->send(midi::Message<midi::ProgramChange>(0, i));
+      // TODO: also send parameter dump request !!!!!!!!!!!!!!!!!!!!!
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       m_pMidiIn->update();
    }
