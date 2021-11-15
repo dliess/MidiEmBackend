@@ -777,10 +777,10 @@ inline void base::musicDevice::description::sound::Section::
 inline void base::musicDevice::description::sound::Section::
     fillParameterDumpOffsetCaches() noexcept
 {
-   if (!parameterDump)
+   if (!parameterDumpAnswer)
       return;
    int accumSize = 0;
-   for (auto& fieldDescr : parameterDump->sysexDescriptors)
+   for (auto& fieldDescr : parameterDumpAnswer->sysexDescriptors)
    {
       accumSize += mpark::visit(util::overload{[accumSize](auto&& val) -> int {
                                    val.offset = accumSize;

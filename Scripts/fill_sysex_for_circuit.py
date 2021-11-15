@@ -19,7 +19,7 @@ def morph_sound_section(sound_section):
             paramArray[digits[0] - 32] = {".type": "Parameter", "offset": digits[0], "component": parameter["component"], "parameter": parameter["name"] }
             #print(parameter["component"] + "::" + parameter["name"] + "DIGIT: " + str(digits[0] - 32))
    for element in paramArray:
-      sound_section["parameterDump"]["sysexMsg"].append(element)
+      sound_section["parameterDumpAnswer"]["sysexMsg"].append(element)
 
 with open(sys.argv[1]) as json_file:
    data = json.load(json_file)

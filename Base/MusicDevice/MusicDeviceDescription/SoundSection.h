@@ -83,10 +83,11 @@ using FieldDescr = mpark::variant<Bytes, VoiceIdx, PatchNameStr, PatchCategory,
 
 }   // namespace midisysex
 
-struct ParameterDump
+struct ParameterDumpAnswer
 {
    std::vector<midisysex::FieldDescr> sysexDescriptors;
 };
+
 struct ParameterId
 {
    static constexpr int UNSET = -2;
@@ -272,6 +273,11 @@ struct Global : public EngineBase
    std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
+struct Presets
+{
+   int numberOfPresets;
+};
+
 struct Engine : public EngineBase
 {
    std::string name;
@@ -295,7 +301,8 @@ struct Section
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
-   std::optional<ParameterDump> parameterDump;
+   std::optional<ParameterDumpAnswer> parameterDumpAnswer;
+   std::optional<Presets> presets;
    std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(

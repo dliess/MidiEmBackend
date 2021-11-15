@@ -115,13 +115,12 @@ inline auto getClassNameOrIndex<base::musicDevice::description::sound::midisysex
 //----------
 
 template<>
-inline auto registerMembers<base::musicDevice::description::sound::ParameterDump>()
+inline auto registerMembers<base::musicDevice::description::sound::ParameterDumpAnswer>()
 {
    return members(
-      member("sysexDescriptors", &base::musicDevice::description::sound::ParameterDump::sysexDescriptors)
+      member("sysexDescriptors", &base::musicDevice::description::sound::ParameterDumpAnswer::sysexDescriptors)
    );
 }
-
 
 template<>
 inline auto registerMembers<base::musicDevice::description::sound::ParameterId>()
@@ -333,6 +332,14 @@ inline auto registerMembers<base::musicDevice::description::sound::MidiSysexMsg>
 }
 
 template <>
+inline auto registerMembers<base::musicDevice::description::sound::Presets>()
+{
+   return members(
+      member("numberOfPresets", &base::musicDevice::description::sound::Presets::numberOfPresets)
+   );
+}
+
+template <>
 inline auto registerMembers<base::musicDevice::description::sound::Section>()
 {
    return members(
@@ -343,7 +350,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("engineTemplates", &base::musicDevice::description::sound::Section::engineTemplates),
       member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Section::parameterDumpRequest),
-      member("parameterDump", &base::musicDevice::description::sound::Section::parameterDump),
+      member("parameterDumpAnswer", &base::musicDevice::description::sound::Section::parameterDumpAnswer),
+      member("presets", &base::musicDevice::description::sound::Section::presets),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
    );
 }

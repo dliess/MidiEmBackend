@@ -16,7 +16,7 @@ MidiInSysExDumpHandler::MidiInSysExDumpHandler(
 void MidiInSysExDumpHandler::handle(
     const midi::Message<midi::SystemExclusive>& sysexMsg) noexcept
 {
-   if (!m_rSoundSection.parameterDump)
+   if (!m_rSoundSection.parameterDumpAnswer)
    {
       return;
    }
@@ -31,7 +31,7 @@ void MidiInSysExDumpHandler::handle(
       return;
    }
    for (const auto& fieldDescr :
-        m_rSoundSection.parameterDump->sysexDescriptors)
+        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
    {
       mpark::visit(
           util::overload{
@@ -76,7 +76,7 @@ bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
 {
    int accumSize = 0;
    for (const auto& fieldDescr :
-        m_rSoundSection.parameterDump->sysexDescriptors)
+        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
    {
       accumSize += mpark::visit(
           util::overload{[](auto&& val) -> int { return val.sizeInSysex(); }},
@@ -90,7 +90,7 @@ std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
     const midi::Message<midi::SystemExclusive>& sysexMsg) const noexcept
 {
    for (const auto& fieldDescr :
-        m_rSoundSection.parameterDump->sysexDescriptors)
+        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
    {
       std::optional<int> ret = mpark::visit(
           util::overload{

@@ -13,6 +13,7 @@
 #include "MusicDeviceId.h"
 #include "RtMidiAdaptTypes.h"
 #include "itcQueue.h"
+#include "PresetFetcher.h"
 
 namespace base::musicDevice
 {
@@ -53,7 +54,12 @@ private:
    Holder& m_rHolder;
    DataHolder m_dataHolder;
    Loader m_loader;
+   std::vector<sound::PresetFetcher> m_soundPresetFetchers;
    util::itc::Queue m_actionQueue;
+   void fillActionQueueForMidiIn(const MusicDeviceId& deviceId,
+    std::shared_ptr<MusicDevice::MidiInput> pMidiIn);
+   void fillActionQueueForMidiOut(const MusicDeviceId& deviceId,
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut);
 
    struct HandleMidiInInsert
    {

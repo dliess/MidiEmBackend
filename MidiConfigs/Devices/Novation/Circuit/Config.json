@@ -7161,7 +7161,7 @@
         }
       ]
     },
-    "parameterDump": {
+    "parameterDumpAnswer": {
       "sysexDescriptors": [
         {
           ".type": "Bytes",

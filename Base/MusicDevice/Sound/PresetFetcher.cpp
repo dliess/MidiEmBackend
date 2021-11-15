@@ -1,11 +1,19 @@
 #include "PresetFetcher.h"
 
+using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
 
 PresetFetcher::PresetFetcher(
-    const description::sound::Section& rSoundSection) noexcept :
-    m_rSoundSection(rSoundSection)
+    MusicDeviceId musicDeviceId,
+    std::shared_ptr<description::Description> pDescription) noexcept :
+    m_pDescription(std::move(pDescription))
 {
+    assert(m_pDescription);
+}
+
+const MusicDeviceId& PresetFetcher::musicDeviceId() const noexcept
+{
+    return m_musicDeviceId;
 }
 
 void PresetFetcher::addMidiIn(std::shared_ptr<MidiInput> pMidiIn) noexcept
@@ -39,7 +47,8 @@ PresetFetcher::hijackMidiOut() noexcept
 
 void PresetFetcher::fetchPresets()
 {
-    if(m_rSoundSection.presets->numberOfPresets && m_rSoundSection.parameterDump)
+    /*
+    if(m_pDescription->.presets && m_rSoundSection.parameterDump)
     {
         m_pMidiIn->registerMidiInCb([](){
             if(m_rSoundSection.parameterDump)
@@ -56,4 +65,10 @@ void PresetFetcher::fetchPresets()
 
         m_pMidiIn->clearCbs();
     }
+    */
+}
+
+bool PresetFetcher::hasMidiInAndOut() const noexcept
+{
+    return m_pMidiIn && m_pMidiOut;
 }

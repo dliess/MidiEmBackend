@@ -48,19 +48,36 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(HandleMidiInInsert(), deviceId, pMidiIn,
-                    m_dataHolder.getDescription(deviceId.deviceName),
-                    m_dataHolder.getDevicePresets(deviceId.deviceName));
-          m_loader.forFirstDeviceInChain(
-              deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
-                                        uint8_t midiVoiceOffset) {
-                 util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-                     .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
-                           m_dataHolder.getDescription(nextDeviceId.deviceName),
-                           m_dataHolder.getDevicePresets(
-                               nextDeviceId.deviceName));
-              });
+
+          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+          if (pDescr->soundSection && pDescr->soundSection->presets,
+              pDescr->soundSection->parameterDumpAnswer)
+          {
+             auto it = std::find_if(
+                 m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),
+                 [&deviceId](
+                     const sound::PresetFetcher& presetFetcher) -> bool {
+                    return presetFetcher.musicDeviceId() == deviceId;
+                 });
+             if (it != m_soundPresetFetchers.end())
+             {
+                it->addMidiIn(std::move(pMidiIn));
+                if (it->hasMidiInAndOut())
+                {
+                   it->fetchPresets();
+                }
+                fillActionQueueForMidiIn(deviceId, it->hijackMidiIn());
+                fillActionQueueForMidiOut(deviceId, it->hijackMidiOut());
+             }
+             else
+             {
+                m_soundPresetFetchers.emplace_back<sound::PresetFetcher>({deviceId, std::move(pDescr)});
+             }
+          }
+          else
+          {
+             fillActionQueueForMidiIn(deviceId, std::move(pMidiIn));
+          }
        },
        {{}, {IGNORED_DEVICES}, false});
 
@@ -83,19 +100,35 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(HandleMidiOutInsert(), deviceId, pMidiOut,
-                    m_dataHolder.getDescription(deviceId.deviceName),
-                    m_dataHolder.getDevicePresets(deviceId.deviceName));
-          m_loader.forEachDeviceInChain(
-              deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
-                                         uint8_t midiVoiceOffset) {
-                 util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-                     .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
-                           m_dataHolder.getDescription(nextDeviceId.deviceName),
-                           m_dataHolder.getDevicePresets(
-                               nextDeviceId.deviceName));
-              });
+          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+          if (pDescr->soundSection && pDescr->soundSection->presets,
+              pDescr->soundSection->parameterDumpAnswer)
+          {
+             auto it = std::find_if(
+                 m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),
+                 [&deviceId](
+                     const sound::PresetFetcher& presetFetcher) -> bool {
+                    return presetFetcher.musicDeviceId() == deviceId;
+                 });
+             if (it != m_soundPresetFetchers.end())
+             {
+                it->addMidiOut(std::move(pMidiOut));
+                if (it->hasMidiInAndOut())
+                {
+                   it->fetchPresets();
+                }
+                fillActionQueueForMidiIn(deviceId, it->hijackMidiIn());
+                fillActionQueueForMidiOut(deviceId, it->hijackMidiOut());
+             }
+             else
+             {
+                m_soundPresetFetchers.emplace_back<sound::PresetFetcher>({deviceId, std::move(pDescr)});
+             }
+          }
+          else
+          {
+             fillActionQueueForMidiOut(deviceId, std::move(pMidiOut));
+          }
        },
        {{}, {IGNORED_DEVICES}, false});
 
@@ -252,6 +285,42 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, m_resourceRootDir, std::move(pDescr), std::move(pPresets));
    return std::move(pMusicDevice);
+}
+
+void Factory::fillActionQueueForMidiIn(
+    const MusicDeviceId& deviceId,
+    std::shared_ptr<MusicDevice::MidiInput> pMidiIn)
+{
+   util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
+       .push(HandleMidiInInsert(), deviceId, pMidiIn,
+             m_dataHolder.getDescription(deviceId.deviceName),
+             m_dataHolder.getDevicePresets(deviceId.deviceName));
+   m_loader.forFirstDeviceInChain(
+       deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
+                                 uint8_t midiVoiceOffset) {
+          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
+              .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
+                    m_dataHolder.getDescription(nextDeviceId.deviceName),
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName));
+       });
+}
+
+void Factory::fillActionQueueForMidiOut(
+    const MusicDeviceId& deviceId,
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
+{
+   util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
+       .push(HandleMidiOutInsert(), deviceId, pMidiOut,
+             m_dataHolder.getDescription(deviceId.deviceName),
+             m_dataHolder.getDevicePresets(deviceId.deviceName));
+   m_loader.forEachDeviceInChain(
+       deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
+                                  uint8_t midiVoiceOffset) {
+          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
+              .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
+                    m_dataHolder.getDescription(nextDeviceId.deviceName),
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName));
+       });
 }
 
 void Factory::MusicDeviceInserter::action(
