@@ -875,7 +875,10 @@
     ],
     "engines": [
       {
-        "name": "MainEngine",
+        "name": "SynthEngine",
+        "presets": {
+          "numberOfPresets": 64
+        },
         "components": [
           {
             "name": "Voice",
