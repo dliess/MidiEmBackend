@@ -15,19 +15,6 @@ namespace base::musicDevice::description::sound
 {
 constexpr int GlobalSectionId = -1;
 
-struct MidiCCAndValue
-{
-   std::vector<uint8_t> cc;
-   uint8_t value;
-};
-
-struct MidiSysexMsg
-{
-   std::vector<uint8_t> value;
-};
-
-using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
-
 namespace midisysex
 {
 struct OffsetCache
@@ -88,6 +75,21 @@ struct ParameterDumpAnswer
    std::vector<midisysex::FieldDescr> sysexDescriptors;
 };
 
+struct MidiCCAndValue
+{
+   std::vector<uint8_t> cc;
+   uint8_t value;
+};
+
+struct MidiSysexMsg
+{
+   std::vector<midisysex::FieldDescr> sysexDescriptors;
+};
+
+using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
+
+
+
 struct ParameterId
 {
    static constexpr int UNSET = -2;
@@ -128,7 +130,6 @@ struct Voice
    int engineId;
    int midiChannel;
    std::optional<int> midiTriggerNoteNumber;
-   std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
 DECLARE_ENUM(ComponentRole, uint, Unknown, Track, NoteTrigger, Oscillator, Amp,
@@ -271,12 +272,12 @@ struct EngineBase
    std::optional<std::vector<ComponentVar>> components;
    std::vector<Parameter> parameters;
    std::optional<Presets> presets;
+   std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
 struct Global : public EngineBase
 {
    int midiChannel;
-   std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
 
@@ -302,7 +303,6 @@ struct Section
    std::optional<
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
-   std::optional<ParameterDumpRequest> parameterDumpRequest;
    std::optional<ParameterDumpAnswer> parameterDumpAnswer;
    std::optional<float> pitchBendFactor;
 

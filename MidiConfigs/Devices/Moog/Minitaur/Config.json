@@ -11,18 +11,6 @@
         "midiChannel": 1
       }
     ],
-    "parameterDumpRequest": {
-      ".type": "MidiSysexMsg",
-      "value": [
-        240,
-        4,
-        8,
-        27,
-        0,
-        0,
-        247
-      ]
-    },
     "engines": [
       {
         "name": "MainEngine",
@@ -31,6 +19,23 @@
             "from": 0,
             "to": 72
           }
+        },
+        "parameterDumpRequest": {
+          ".type": "MidiSysexMsg",
+          "sysexDescriptors": [
+            {
+              ".type": "Bytes",
+              "values": [
+                240,
+                4,
+                8,
+                27,
+                0,
+                0,
+                247
+              ]
+            }
+          ]
         },
         "components": [
           {

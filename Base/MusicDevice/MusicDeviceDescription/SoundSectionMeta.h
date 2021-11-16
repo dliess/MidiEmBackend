@@ -180,8 +180,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Voice>()
       member("name", &base::musicDevice::description::sound::Voice::name),
       member("engineId", &base::musicDevice::description::sound::Voice::engineId),
       member("midiChannel", &base::musicDevice::description::sound::Voice::midiChannel),
-      member("midiTriggerNoteNumber", &base::musicDevice::description::sound::Voice::midiTriggerNoteNumber),
-      member("parameterDumpRequest", &base::musicDevice::description::sound::Voice::parameterDumpRequest)
+      member("midiTriggerNoteNumber", &base::musicDevice::description::sound::Voice::midiTriggerNoteNumber)
    );
 }
 
@@ -312,7 +311,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Engine>()
       member("noteSettings", &base::musicDevice::description::sound::Engine::noteSettings),
       member("components", &base::musicDevice::description::sound::Engine::components),
       member("parameters", &base::musicDevice::description::sound::Engine::parameters),
-      member("presets", &base::musicDevice::description::sound::Engine::presets)
+      member("presets", &base::musicDevice::description::sound::Engine::presets),
+      member("parameterDumpRequest", &base::musicDevice::description::sound::Engine::parameterDumpRequest)
    );
 }
 
@@ -329,7 +329,7 @@ template <>
 inline auto registerMembers<base::musicDevice::description::sound::MidiSysexMsg>()
 {
    return members(
-      member("value", &base::musicDevice::description::sound::MidiSysexMsg::value)
+      member("sysexDescriptors", &base::musicDevice::description::sound::MidiSysexMsg::sysexDescriptors)
    );
 }
 
@@ -351,7 +351,6 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("engines", &base::musicDevice::description::sound::Section::engines),
       member("engineTemplates", &base::musicDevice::description::sound::Section::engineTemplates),
       member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
-      member("parameterDumpRequest", &base::musicDevice::description::sound::Section::parameterDumpRequest),
       member("parameterDumpAnswer", &base::musicDevice::description::sound::Section::parameterDumpAnswer),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
    );

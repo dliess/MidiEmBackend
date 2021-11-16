@@ -46,11 +46,6 @@
         "midiChannel": 8
       }
     ],
-    "parameterDumpRequest": {
-      ".type": "MidiCCAndValue",
-      "cc": [61],
-      "value": 0
-    },
     "engines": [
       {
         "name": "MainEngine",
@@ -61,6 +56,11 @@
           },
           "defaultTriggerNote": 84
         },
+        "parameterDumpRequest": {
+          ".type": "MidiCCAndValue",
+          "cc": [61],
+          "value": 0
+        },    
         "components": [
           {
             "name": "Track",
