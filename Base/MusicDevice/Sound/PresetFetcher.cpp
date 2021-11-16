@@ -71,10 +71,14 @@ void PresetFetcher::fetchPresets()
          sysexDumpHandler.handle(*pSysEX);
       }
    });
-   for (int i = 0; i < m_pDescription->soundSection->presets->numberOfPresets;
-        ++i)
+   for(int engineIdx = 0; engineIdx < m_pDescription->soundSection->engines.size(); ++engineIdx)
    {
-      m_pMidiOut->send(midi::Message<midi::ProgramChange>(0, i));
+
+   }
+   //for (int i = 0; i < m_pDescription->soundSection->presets->numberOfPresets;
+   //     ++i)
+   {
+   //   m_pMidiOut->send(midi::Message<midi::ProgramChange>(0, i));
       // TODO: also send parameter dump request !!!!!!!!!!!!!!!!!!!!!
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       m_pMidiIn->update();

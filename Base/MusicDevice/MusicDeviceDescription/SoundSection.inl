@@ -985,4 +985,24 @@ base::musicDevice::description::sound::Section::getParameterIdx(
    return std::nullopt;
 }
 
+inline bool base::musicDevice::description::sound::Section::canDumpPresets() const noexcept
+{
+   if(global)
+   {
+      if(global->presets && parameterDumpRequest)
+      {
+         return true;
+      }
+   }
+   for(const auto& engine : engines)
+   {
+      if(engine.presets && parameterDumpRequest)
+      {
+         return true;
+      }
+   }
+   return false;
+}
+
+
 #endif

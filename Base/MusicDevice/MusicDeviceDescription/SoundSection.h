@@ -260,11 +260,17 @@ struct Parameter
    inline int getSourceResolution() const noexcept;
 };
 
+struct Presets
+{
+   int numberOfPresets;
+};
+
 struct EngineBase
 {
    std::optional<std::string> from;
    std::optional<std::vector<ComponentVar>> components;
    std::vector<Parameter> parameters;
+   std::optional<Presets> presets;
 };
 
 struct Global : public EngineBase
@@ -273,10 +279,6 @@ struct Global : public EngineBase
    std::optional<ParameterDumpRequest> parameterDumpRequest;
 };
 
-struct Presets
-{
-   int numberOfPresets;
-};
 
 struct Engine : public EngineBase
 {
@@ -302,7 +304,6 @@ struct Section
        sourceRanges;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
    std::optional<ParameterDumpAnswer> parameterDumpAnswer;
-   std::optional<Presets> presets;
    std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(
@@ -349,6 +350,8 @@ struct Section
    inline std::optional<int> getParameterIdx(
        int voiceIdx, const std::string& component,
        const std::string& parameter) const noexcept;
+
+   inline bool canDumpPresets() const noexcept;
 private:
    inline mpark::variant<float, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;

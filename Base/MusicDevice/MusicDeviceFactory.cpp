@@ -50,8 +50,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                                        devOnUsbPort.getUsbPortName());
 
           auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
-          if (pDescr->soundSection && pDescr->soundSection->presets,
-              pDescr->soundSection->parameterDumpAnswer)
+          if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = std::find_if(
                  m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),
@@ -101,8 +100,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
-          if (pDescr->soundSection && pDescr->soundSection->presets,
-              pDescr->soundSection->parameterDumpAnswer)
+          if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = std::find_if(
                  m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),

@@ -298,7 +298,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Global>()
       member("midiChannel", &base::musicDevice::description::sound::Global::midiChannel),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Global::parameterDumpRequest),
       member("components", &base::musicDevice::description::sound::Global::components),
-      member("parameters", &base::musicDevice::description::sound::Global::parameters)
+      member("parameters", &base::musicDevice::description::sound::Global::parameters),
+      member("presets", &base::musicDevice::description::sound::Global::presets)
    );
 }
 
@@ -310,7 +311,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Engine>()
       member("from", &base::musicDevice::description::sound::Engine::from),
       member("noteSettings", &base::musicDevice::description::sound::Engine::noteSettings),
       member("components", &base::musicDevice::description::sound::Engine::components),
-      member("parameters", &base::musicDevice::description::sound::Engine::parameters)
+      member("parameters", &base::musicDevice::description::sound::Engine::parameters),
+      member("presets", &base::musicDevice::description::sound::Engine::presets)
    );
 }
 
@@ -351,7 +353,6 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Section::parameterDumpRequest),
       member("parameterDumpAnswer", &base::musicDevice::description::sound::Section::parameterDumpAnswer),
-      member("presets", &base::musicDevice::description::sound::Section::presets),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
    );
 }
