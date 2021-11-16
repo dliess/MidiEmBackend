@@ -273,6 +273,7 @@ struct EngineBase
    std::vector<Parameter> parameters;
    std::optional<Presets> presets;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
+   std::optional<ParameterDumpAnswer> parameterDumpAnswer;
 };
 
 struct Global : public EngineBase
@@ -303,7 +304,6 @@ struct Section
    std::optional<
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
-   std::optional<ParameterDumpAnswer> parameterDumpAnswer;
    std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(

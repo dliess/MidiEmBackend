@@ -296,6 +296,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Global>()
    return members(
       member("midiChannel", &base::musicDevice::description::sound::Global::midiChannel),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Global::parameterDumpRequest),
+      member("parameterDumpAnswer", &base::musicDevice::description::sound::Global::parameterDumpAnswer),
       member("components", &base::musicDevice::description::sound::Global::components),
       member("parameters", &base::musicDevice::description::sound::Global::parameters),
       member("presets", &base::musicDevice::description::sound::Global::presets)
@@ -312,7 +313,8 @@ inline auto registerMembers<base::musicDevice::description::sound::Engine>()
       member("components", &base::musicDevice::description::sound::Engine::components),
       member("parameters", &base::musicDevice::description::sound::Engine::parameters),
       member("presets", &base::musicDevice::description::sound::Engine::presets),
-      member("parameterDumpRequest", &base::musicDevice::description::sound::Engine::parameterDumpRequest)
+      member("parameterDumpRequest", &base::musicDevice::description::sound::Engine::parameterDumpRequest),
+      member("parameterDumpAnswer", &base::musicDevice::description::sound::Engine::parameterDumpAnswer),
    );
 }
 
@@ -351,7 +353,6 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
       member("engines", &base::musicDevice::description::sound::Section::engines),
       member("engineTemplates", &base::musicDevice::description::sound::Section::engineTemplates),
       member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
-      member("parameterDumpAnswer", &base::musicDevice::description::sound::Section::parameterDumpAnswer),
       member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
    );
 }
