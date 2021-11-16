@@ -30,14 +30,11 @@ private:
    const description::sound::Section& m_rSoundSection;
    float m_pitchBendFactor{1.0};
    uint8_t m_midiChannelOffset{0};
-   void _sendParameterDumpRequest(
-       const description::sound::ParameterDumpRequest&
-           parameterDumpRequest) noexcept;
 };
 
 }   // namespace sound
 }   // namespace base::musicDevice
 
-#include "SoundMidiOutMsgHandler.tcc"
+#include "SoundMidiOutMsgHandler.inl"
 
 #endif
