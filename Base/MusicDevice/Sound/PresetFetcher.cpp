@@ -43,10 +43,18 @@ PresetFetcher::hijackMidiOut() noexcept
 
 void PresetFetcher::fetchPresets()
 {
+    // 2 Possible ways: 
+    // a.) Manual method (this one is impolemented here like the Novation Circuit does it)
+    // ** capability to set a preset: comes from preset::numPresets TODO: per engine
+    // ** capability to dump parameters
+    // b.) Dedicated Preset-Dump Method (If device has something) 
+    //    I DONT IMPLEMENT IT UNTIL I FIND A DEVICE THAT CAN DO IT
+    /* TDOD
    if (!m_pDescription->soundSection->parameterDumpAnswer)
    {
       return;
    }
+   */
    m_pMidiIn->registerMidiInCb([this](const midi::MidiMessage& midiMessage) {
       const auto pSysEX =
           mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMessage);
