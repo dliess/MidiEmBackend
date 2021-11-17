@@ -314,7 +314,7 @@ inline auto registerMembers<base::musicDevice::description::sound::Engine>()
       member("parameters", &base::musicDevice::description::sound::Engine::parameters),
       member("presets", &base::musicDevice::description::sound::Engine::presets),
       member("parameterDumpRequest", &base::musicDevice::description::sound::Engine::parameterDumpRequest),
-      member("parameterDumpAnswer", &base::musicDevice::description::sound::Engine::parameterDumpAnswer),
+      member("parameterDumpAnswer", &base::musicDevice::description::sound::Engine::parameterDumpAnswer)
    );
 }
 

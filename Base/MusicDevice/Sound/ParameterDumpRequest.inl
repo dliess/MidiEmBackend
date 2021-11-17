@@ -16,10 +16,6 @@ ParameterDumpRequest<MidiOutIf>::ParameterDumpRequest(
 template <typename MidiOutIf>
 void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest() noexcept
 {
-   if (m_rSoundSection.parameterDumpRequest)
-   {
-      _sendParameterDumpRequest(*m_rSoundSection.parameterDumpRequest);
-   }
    if (m_rSoundSection.global && m_rSoundSection.global->parameterDumpRequest)
    {
       _sendParameterDumpRequest(*m_rSoundSection.global->parameterDumpRequest);
@@ -45,7 +41,19 @@ void ParameterDumpRequest<MidiOutIf>::_sendParameterDumpRequest(
                              1 + m_midiChannelOffset, ccMsg.cc[0], ccMsg.value);
                       },
                       [this](const description::sound::MidiSysexMsg& sysExMsg) {
-                         m_rMidiOutIf.sysEx(sysExMsg.value);
+                         std::vector<uint8_t> sysexMsgToSend;
+                         for(const auto& sysExDescr : sysExMsg.sysexDescriptors)
+                         {
+                            /*
+                            mpark::visit(util::overload {
+                               [&sysexMsgToSend](const description::sound::midisysex::Bytes& bytes){
+                                  sysexMsgToSend.insert(sysexMsgToSend.begin(), bytes.values.begin(), bytes.values.end());
+                               },
+                               [](const description::sound::midisysex::VoiceIdx& voiceIdx){}
+                            }, sysExDescr);
+                            */
+                         }
+                         m_rMidiOutIf.sysEx(sysexMsgToSend);
                       }},
        parameterDumpRequest);
 }

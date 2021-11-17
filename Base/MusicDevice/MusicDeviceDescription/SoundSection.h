@@ -320,6 +320,10 @@ struct Section
    inline const Parameter& parameterDescr(int voiceId,
                                           int parameterId) const noexcept;
    inline const EngineBase* engineBase(int voiceId) const noexcept;
+   template<typename Cb>
+   void forEachEngineBase(Cb&& cb);
+   template<typename Cb>
+   void forEachEngineBase(Cb&& cb) const;
    inline Engine* findParentEngineByName(const std::string& name) noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
