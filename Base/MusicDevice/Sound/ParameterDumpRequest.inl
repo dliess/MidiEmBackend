@@ -15,19 +15,32 @@ ParameterDumpRequest<MidiOutIf>::ParameterDumpRequest(
 
 template <typename MidiOutIf>
 void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest() noexcept
-{   
-   if (m_rSoundSection.global && m_rSoundSection.global->parameterDumpRequest)
-   {
-      _sendParameterDumpRequest(*m_rSoundSection.global->parameterDumpRequest);
-   }
-   for (int i = 0; i < m_rSoundSection.voices.size(); ++i)
-   {
-      if (m_rSoundSection.voices[i].parameterDumpRequest)
+{
+   m_rSoundSection.forEachEngineBase([this](int engineIdx, description::sound::EngineBase& rEngineBase){
+      if(!rEngineBase.parameterDumpRequest) return;
+      switch(rEngineBase.parameterDumpRequest->effect)
       {
-         _sendParameterDumpRequest(
-             *m_rSoundSection.voices[i].parameterDumpRequest);
+         case description::sound::ParameterDumpRequest::Effect::PerVoice:
+         {
+            m_rSoundSection.forEachVoiceOfEngine(engineIdx, [this](int voiceIdx, int engineIdx){
+               _sendParameterDumpRequest(voiceIdx);
+            });
+            break;
+         }
+         case description::sound::ParameterDumpRequest::Effect::AllVoicesOfEngine:
+         {
+            bool sent = false;
+            m_rSoundSection.forEachVoiceOfEngine(engineIdx, [this, &sent](int voiceIdx, int engineIdx){
+               if(!sent)
+               {
+                  sent = true;
+                  _sendParameterDumpRequest(voiceIdx);
+               }
+            });
+            break;
+         }
       }
-   }
+   });
 }
 
 template <typename MidiOutIf>

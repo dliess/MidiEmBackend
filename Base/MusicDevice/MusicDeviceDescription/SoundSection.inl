@@ -1,11 +1,12 @@
 #ifndef SOUND_SECTION_INL_H
 #define SOUND_SECTION_INL_H
 
+#include <loguru.hpp>
+
 #include "JsonCast.h"
 #include "Overload.h"
 #include "SoundSection.h"
 #include "VectorIndexInRange.h"
-#include <loguru.hpp>
 
 // --------------------------------------------------------
 // base::musicDevice::description::sound::Section::DefaultInstrumentType
@@ -223,19 +224,24 @@ base::musicDevice::description::sound::Parameter::roleFromString(
 // ParameterDumpRequest::Effect
 // --------------------------------------------------------
 template <>
-inline void to_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
+inline void
+to_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
     nlohmann::json& j,
-    const base::musicDevice::description::sound::ParameterDumpRequest::Effect& obj)
+    const base::musicDevice::description::sound::ParameterDumpRequest::Effect&
+        obj)
 {
    j = ~obj;
 }
 
 template <>
-inline void from_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
+inline void
+from_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
     const nlohmann::json& j,
     base::musicDevice::description::sound::ParameterDumpRequest::Effect& obj)
 {
-   obj = create_ParameterDumpRequestEffect(j.get<std::string>());
+   obj =
+       base::musicDevice::description::sound::create_ParameterDumpRequestEffect(
+           j.get<std::string>());
 }
 
 // --------------------------------------------------------
@@ -291,44 +297,40 @@ base::musicDevice::description::sound::Section::engineBase(
    }
 }
 
-template<typename Cb>
+template <typename Cb>
 void base::musicDevice::description::sound::Section::forEachEngineBase(Cb&& cb)
 {
-   if(global)
+   if (global)
    {
       cb(GlobalSectionId, *global);
    }
-   for(int i = 0; i < engines.size(); ++i)
-   {
-      cb(i, engines[i]);
-   }
+   for (int i = 0; i < engines.size(); ++i) { cb(i, engines[i]); }
 }
 
-template<typename Cb>
-void base::musicDevice::description::sound::Section::forEachEngineBase(Cb&& cb) const
+template <typename Cb>
+void base::musicDevice::description::sound::Section::forEachEngineBase(
+    Cb&& cb) const
 {
-   if(global)
+   if (global)
    {
       cb(GlobalSectionId, *global);
    }
-   for(int i = 0; i < engines.size(); ++i)
-   {
-      cb(i, engines[i]);
-   }
+   for (int i = 0; i < engines.size(); ++i) { cb(i, engines[i]); }
 }
 
-template<typename Cb>
-void base::musicDevice::description::sound::Section::forEachVoiceOfEngine(int engineIdx, Cb&& cb) const
+template <typename Cb>
+void base::musicDevice::description::sound::Section::forEachVoiceOfEngine(
+    int engineIdx, Cb&& cb) const
 {
-   if(engineIdx == GlobalSectionId)
+   if (engineIdx == GlobalSectionId)
    {
       cb(GlobalSectionId, GlobalSectionId);
    }
    else
    {
-      for(int i = 0; i < voices.size(); ++i)
+      for (int i = 0; i < voices.size(); ++i)
       {
-         if(voices[i].engineId == engineIdx)
+         if (voices[i].engineId == engineIdx)
          {
             cb(i, engineIdx);
          }
@@ -841,16 +843,38 @@ inline void base::musicDevice::description::sound::Section::
 inline void base::musicDevice::description::sound::Section::
     fillParameterDumpOffsetCaches() noexcept
 {
-   forEachEngineBase([](int engineIdx, EngineBase& rEngineBase){
-      if(!rEngineBase.parameterDumpAnswer) return;
-      int accumSize = 0;
-      for (auto& fieldDescr : rEngineBase.parameterDumpAnswer->sysexDescriptors)
+   forEachEngineBase([](int engineIdx, EngineBase& rEngineBase) {
+      if (rEngineBase.parameterDumpRequest)
       {
-         accumSize += mpark::visit(util::overload{[accumSize](auto&& val) -> int {
-                                    val.offset = accumSize;
-                                    return val.sizeInSysex();
-                                 }},
-                                 fieldDescr);
+         auto* pMsg = mpark::get_if<MidiSysexMsg>(
+             &rEngineBase.parameterDumpRequest->message);
+         if (pMsg)
+         {
+            int accumSize = 0;
+            for (auto& fieldDescr : pMsg->sysexDescriptors)
+            {
+               accumSize +=
+                   mpark::visit(util::overload{[accumSize](auto&& val) -> int {
+                                   val.offset = accumSize;
+                                   return val.sizeInSysex();
+                                }},
+                                fieldDescr);
+            }
+         }
+      }
+      if (rEngineBase.parameterDumpAnswer)
+      {
+         int accumSize = 0;
+         for (auto& fieldDescr :
+              rEngineBase.parameterDumpAnswer->sysexDescriptors)
+         {
+            accumSize +=
+                mpark::visit(util::overload{[accumSize](auto&& val) -> int {
+                                val.offset = accumSize;
+                                return val.sizeInSysex();
+                             }},
+                             fieldDescr);
+         }
       }
    });
 }
@@ -1038,11 +1062,11 @@ base::musicDevice::description::sound::Section::getParameterIdx(
     const std::string& parameter) const noexcept
 {
    const auto& parameters = engines[voice2EngineIdx(voiceIdx)].parameters;
-   for(int i = 0; i < parameters.size(); ++i)
+   for (int i = 0; i < parameters.size(); ++i)
    {
-      if(parameters[i].component &&
-         parameters[i].component.value() == component &&
-         parameters[i].name == parameter)
+      if (parameters[i].component &&
+          parameters[i].component.value() == component &&
+          parameters[i].name == parameter)
       {
          return i;
       }
@@ -1050,22 +1074,24 @@ base::musicDevice::description::sound::Section::getParameterIdx(
    return std::nullopt;
 }
 
-inline bool base::musicDevice::description::sound::EngineBase::canDumpPresets() const noexcept
+inline bool base::musicDevice::description::sound::EngineBase::canDumpPresets()
+    const noexcept
 {
    return presets && parameterDumpRequest;
 }
 
-inline bool base::musicDevice::description::sound::Section::canDumpPresets() const noexcept
+inline bool base::musicDevice::description::sound::Section::canDumpPresets()
+    const noexcept
 {
    bool canDumpPresets = false;
-   forEachEngineBase([&canDumpPresets](int engineIdx, const EngineBase& rEngineBase){
-      if(rEngineBase.canDumpPresets())
-      {
-         canDumpPresets = true;
-      }
-   });
+   forEachEngineBase(
+       [&canDumpPresets](int engineIdx, const EngineBase& rEngineBase) {
+          if (rEngineBase.canDumpPresets())
+          {
+             canDumpPresets = true;
+          }
+       });
    return canDumpPresets;
 }
-
 
 #endif
