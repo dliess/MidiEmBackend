@@ -15,7 +15,7 @@ ParameterDumpRequest<MidiOutIf>::ParameterDumpRequest(
 
 template <typename MidiOutIf>
 void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest() noexcept
-{
+{   
    if (m_rSoundSection.global && m_rSoundSection.global->parameterDumpRequest)
    {
       _sendParameterDumpRequest(*m_rSoundSection.global->parameterDumpRequest);
@@ -31,9 +31,21 @@ void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest() noexcept
 }
 
 template <typename MidiOutIf>
+void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest(int voiceIdx) noexcept
+{
+   const auto* engineBase = m_rSoundSection.engineBase(voiceIdx);
+   if(!engineBase)
+   {
+      LOG_F(ERROR, "engineBase is NULL");
+      return;
+   }
+   _sendParameterDumpRequest(engineBase->parameterDumpRequest, voiceIdx);
+}
+
+template <typename MidiOutIf>
 void ParameterDumpRequest<MidiOutIf>::_sendParameterDumpRequest(
     const description::sound::ParameterDumpRequest&
-        parameterDumpRequest) noexcept
+        parameterDumpRequest, int voiceIdx) noexcept
 {
    mpark::visit(
        util::overload{[this](const description::sound::MidiCCAndValue& ccMsg) {
@@ -49,7 +61,8 @@ void ParameterDumpRequest<MidiOutIf>::_sendParameterDumpRequest(
                                [&sysexMsgToSend](const description::sound::midisysex::Bytes& bytes){
                                   sysexMsgToSend.insert(sysexMsgToSend.begin(), bytes.values.begin(), bytes.values.end());
                                },
-                               [](const description::sound::midisysex::VoiceIdx& voiceIdx){}
+                               [](const description::sound::midisysex::VoiceIdx& voiceIdx){},
+                               [](auto&& default){}
                             }, sysExDescr);
                             */
                          }

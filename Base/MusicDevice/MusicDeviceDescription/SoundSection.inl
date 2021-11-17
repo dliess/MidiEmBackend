@@ -220,6 +220,25 @@ base::musicDevice::description::sound::Parameter::roleFromString(
 }
 
 // --------------------------------------------------------
+// ParameterDumpRequest::Effect
+// --------------------------------------------------------
+template <>
+inline void to_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
+    nlohmann::json& j,
+    const base::musicDevice::description::sound::ParameterDumpRequest::Effect& obj)
+{
+   j = ~obj;
+}
+
+template <>
+inline void from_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
+    const nlohmann::json& j,
+    base::musicDevice::description::sound::ParameterDumpRequest::Effect& obj)
+{
+   obj = create_ParameterDumpRequestEffect(j.get<std::string>());
+}
+
+// --------------------------------------------------------
 // base::musicDevice::description::sound::Section
 // --------------------------------------------------------
 
@@ -295,6 +314,25 @@ void base::musicDevice::description::sound::Section::forEachEngineBase(Cb&& cb) 
    for(int i = 0; i < engines.size(); ++i)
    {
       cb(i, engines[i]);
+   }
+}
+
+template<typename Cb>
+void base::musicDevice::description::sound::Section::forEachVoiceOfEngine(int engineIdx, Cb&& cb) const
+{
+   if(engineIdx == GlobalSectionId)
+   {
+      cb(GlobalSectionId, GlobalSectionId);
+   }
+   else
+   {
+      for(int i = 0; i < voices.size(); ++i)
+      {
+         if(voices[i].engineId == engineIdx)
+         {
+            cb(i, engineIdx);
+         }
+      }
    }
 }
 
@@ -1012,11 +1050,16 @@ base::musicDevice::description::sound::Section::getParameterIdx(
    return std::nullopt;
 }
 
+inline bool base::musicDevice::description::sound::EngineBase::canDumpPresets() const noexcept
+{
+   return presets && parameterDumpRequest;
+}
+
 inline bool base::musicDevice::description::sound::Section::canDumpPresets() const noexcept
 {
    bool canDumpPresets = false;
    forEachEngineBase([&canDumpPresets](int engineIdx, const EngineBase& rEngineBase){
-      if(rEngineBase.presets && rEngineBase.parameterDumpRequest)
+      if(rEngineBase.canDumpPresets())
       {
          canDumpPresets = true;
       }

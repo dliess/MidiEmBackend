@@ -336,6 +336,16 @@ inline auto registerMembers<base::musicDevice::description::sound::MidiSysexMsg>
 }
 
 template <>
+inline auto registerMembers<base::musicDevice::description::sound::ParameterDumpRequest>()
+{
+   return members(
+      member("effect", &base::musicDevice::description::sound::ParameterDumpRequest::effect),
+      member("message", &base::musicDevice::description::sound::ParameterDumpRequest::message)
+   );
+}
+
+
+template <>
 inline auto registerMembers<base::musicDevice::description::sound::Presets>()
 {
    return members(

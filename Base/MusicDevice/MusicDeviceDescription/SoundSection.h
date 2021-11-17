@@ -86,9 +86,16 @@ struct MidiSysexMsg
    std::vector<midisysex::FieldDescr> sysexDescriptors;
 };
 
-using ParameterDumpRequest = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
+using ParameterDumpRequestMsg = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
 
+DECLARE_ENUM(ParameterDumpRequestEffect, uint, PerVoice, AllVoicesOfEngine);
 
+struct ParameterDumpRequest
+{
+   using Effect = ParameterDumpRequestEffect;
+   Effect effect;
+   ParameterDumpRequestMsg message;
+};
 
 struct ParameterId
 {
@@ -274,6 +281,7 @@ struct EngineBase
    std::optional<Presets> presets;
    std::optional<ParameterDumpRequest> parameterDumpRequest;
    std::optional<ParameterDumpAnswer> parameterDumpAnswer;
+   [[nodiscard]] inline bool canDumpPresets() const noexcept;
 };
 
 struct Global : public EngineBase
@@ -324,6 +332,8 @@ struct Section
    void forEachEngineBase(Cb&& cb);
    template<typename Cb>
    void forEachEngineBase(Cb&& cb) const;
+   template<typename Cb>
+   void forEachVoiceOfEngine(int engineIdx, Cb&& cb) const;
    inline Engine* findParentEngineByName(const std::string& name) noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;

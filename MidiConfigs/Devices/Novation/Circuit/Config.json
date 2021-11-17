@@ -847,35 +847,38 @@
           "numberOfPresets": 64
         },
         "parameterDumpRequest": {
-          ".type": "MidiSysexMsg",
-          "sysexDescriptors": [
-            {
-              ".type": "Bytes",
-              "values": [
-                240,
-                0,
-                32,
-                41,
-                1,
-                96,
-                64
-              ]
-            },
-            {
-              ".type": "VoiceIdx",
-              "size": 1,
-              "mapping": [
-                4,
-                5
-              ]
-            },
-            {
-              ".type": "Bytes",
-              "values": [
-                247
-              ]
-            }
-          ]
+          "effect": "PerVoice",
+          "message": {
+            ".type": "MidiSysexMsg",
+            "sysexDescriptors": [
+              {
+                ".type": "Bytes",
+                "values": [
+                  240,
+                  0,
+                  32,
+                  41,
+                  1,
+                  96,
+                  64
+                ]
+              },
+              {
+                ".type": "VoiceIdx",
+                "size": 1,
+                "mapping": [
+                  4,
+                  5
+                ]
+              },
+              {
+                ".type": "Bytes",
+                "values": [
+                  247
+                ]
+              }
+            ]
+          }
         },
         "parameterDumpAnswer": {
           "sysexDescriptors": [

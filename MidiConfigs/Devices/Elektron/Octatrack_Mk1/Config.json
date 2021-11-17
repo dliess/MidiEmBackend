@@ -57,9 +57,12 @@
           "defaultTriggerNote": 84
         },
         "parameterDumpRequest": {
-          ".type": "MidiCCAndValue",
-          "cc": [61],
-          "value": 0
+          "effect": "AllVoicesOfEngine",
+          "message": {
+            ".type": "MidiCCAndValue",
+            "cc": [61],
+            "value": 0
+          }
         },    
         "components": [
           {

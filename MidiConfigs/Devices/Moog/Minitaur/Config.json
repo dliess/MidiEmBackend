@@ -21,21 +21,24 @@
           }
         },
         "parameterDumpRequest": {
-          ".type": "MidiSysexMsg",
-          "sysexDescriptors": [
-            {
-              ".type": "Bytes",
-              "values": [
-                240,
-                4,
-                8,
-                27,
-                0,
-                0,
-                247
-              ]
-            }
-          ]
+          "effect": "AllVoicesOfEngine",
+          "message": {
+            ".type": "MidiSysexMsg",
+            "sysexDescriptors": [
+              {
+                ".type": "Bytes",
+                "values": [
+                  240,
+                  4,
+                  8,
+                  27,
+                  0,
+                  0,
+                  247
+                ]
+              }
+            ]
+          }
         },
         "components": [
           {
