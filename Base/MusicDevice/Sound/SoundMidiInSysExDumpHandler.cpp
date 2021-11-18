@@ -2,6 +2,7 @@
 
 #include <loguru.hpp>
 
+using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
 
 MidiInSysExDumpHandler::MidiInSysExDumpHandler(
@@ -13,28 +14,70 @@ MidiInSysExDumpHandler::MidiInSysExDumpHandler(
 {
 }
 
+const description::sound::SysExDescriptors*
+MidiInSysExDumpHandler::determineSysexDescriptor(
+    const midi::Message<midi::SystemExclusive>& sysexMsg,
+    const std::optional<int>& engineIdx) const noexcept
+{
+   const description::sound::SysExDescriptors* pSysexMsgDescr = nullptr;
+   if (engineIdx)
+   {
+      if (!m_rSoundSection.engines[*engineIdx].parameterDumpAnswer)
+      {
+         LOG_F(ERROR, "Engine of index {} has no parameterDumpAnswer field",
+               *engineIdx);
+         return nullptr;
+      }
+      pSysexMsgDescr = &(m_rSoundSection.engines[*engineIdx]
+                             .parameterDumpAnswer->sysexDescriptors);
+      if (!checkIfIsParameterDumpMsg(sysexMsg, *pSysexMsgDescr))
+      {
+         LOG_F(ERROR,
+               "Incoming Sysex does not correspond to descriptor in Engine of "
+               "index {}",
+               *engineIdx);
+         return nullptr;
+      }
+      return pSysexMsgDescr;
+   }
+   else
+   {
+      m_rSoundSection.forEachEngineBase(
+          [&sysexMsg, &pSysexMsgDescr](
+              int engineIdx, const description::sound::EngineBase& rEngineBase) {
+             if (rEngineBase.parameterDumpAnswer &&
+                 checkIfIsParameterDumpMsg(
+                     sysexMsg,
+                     rEngineBase.parameterDumpAnswer->sysexDescriptors))
+             {
+                if (nullptr == pSysexMsgDescr)
+                {
+                   pSysexMsgDescr =
+                       &(rEngineBase.parameterDumpAnswer->sysexDescriptors);
+                }
+             }
+          });
+      return pSysexMsgDescr;
+   }
+   return nullptr;
+}
+
 void MidiInSysExDumpHandler::handle(
-    const midi::Message<midi::SystemExclusive>& sysexMsg) noexcept
+    const midi::Message<midi::SystemExclusive>& sysexMsg,
+    std::optional<int> engineIdx) noexcept
 {
    m_presetName     = std::nullopt;
    m_presetCategory = std::nullopt;
    m_presetGenre    = std::nullopt;
-   if (!m_rSoundSection.parameterDumpAnswer)
-   {
-      return;
-   }
-   if (!checkIfIsParameterDumpMsg(sysexMsg))
-   {
-      return;
-   }
-   const auto voiceIdx = getVoiceIdFromSysex(sysexMsg);
+   const description::sound::SysExDescriptors* pSysexMsgDescr =
+       determineSysexDescriptor(sysexMsg, engineIdx);
+   const auto voiceIdx = getVoiceIdFromSysex(sysexMsg, *pSysexMsgDescr);
    if (!voiceIdx)
    {
       LOG_F(ERROR, "Could not extract voiceId from sysex msg");
       return;
    }
-   for (const auto& fieldDescr :
-        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
+   for (const auto& fieldDescr : *pSysexMsgDescr)
    {
       mpark::visit(
           util::overload{
@@ -69,14 +112,22 @@ void MidiInSysExDumpHandler::handle(
                                   float(valueRange.to - valueRange.from + 1));
                  }
               },
-              [this, &sysexMsg](const description::sound::midisysex::PatchNameStr& patchName){
-                  m_presetName = std::string(sysexMsg[patchName.offset], patchName.size);
+              [this,
+               &sysexMsg](const description::sound::midisysex::PatchNameStr&
+                              patchName) {
+                 m_presetName =
+                     std::string(sysexMsg[patchName.offset], patchName.size);
               },
-              [this, &sysexMsg](const description::sound::midisysex::PatchCategory& patchCategory){
-                  m_presetCategory = static_cast<preset::Category>(sysexMsg[patchCategory.offset]);
+              [this,
+               &sysexMsg](const description::sound::midisysex::PatchCategory&
+                              patchCategory) {
+                 m_presetCategory = static_cast<preset::Category>(
+                     sysexMsg[patchCategory.offset]);
               },
-              [this, &sysexMsg](const description::sound::midisysex::PatchGenre& patchGenre){
-                   m_presetGenre = static_cast<preset::Genre>(sysexMsg[patchGenre.offset]);
+              [this, &sysexMsg](
+                  const description::sound::midisysex::PatchGenre& patchGenre) {
+                 m_presetGenre =
+                     static_cast<preset::Genre>(sysexMsg[patchGenre.offset]);
               },
               [](auto&& other) {}},
           fieldDescr);
@@ -84,11 +135,12 @@ void MidiInSysExDumpHandler::handle(
 }
 
 bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
-    const midi::Message<midi::SystemExclusive>& sysexMsg) const noexcept
+    const midi::Message<midi::SystemExclusive>& sysexMsg,
+    const description::sound::SysExDescriptors& sysexMsgDescriptor)
+    noexcept
 {
    int accumSize = 0;
-   for (const auto& fieldDescr :
-        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
+   for (const auto& fieldDescr : sysexMsgDescriptor)
    {
       accumSize += mpark::visit(
           util::overload{[](auto&& val) -> int { return val.sizeInSysex(); }},
@@ -99,10 +151,10 @@ bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
 }
 
 std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
-    const midi::Message<midi::SystemExclusive>& sysexMsg) const noexcept
+    const midi::Message<midi::SystemExclusive>& sysexMsg,
+    const description::sound::SysExDescriptors& sysexMsgDescriptors) const noexcept
 {
-   for (const auto& fieldDescr :
-        m_rSoundSection.parameterDumpAnswer->sysexDescriptors)
+   for (const auto& fieldDescr : sysexMsgDescriptors)
    {
       std::optional<int> ret = mpark::visit(
           util::overload{

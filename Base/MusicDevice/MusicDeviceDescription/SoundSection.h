@@ -70,9 +70,10 @@ using FieldDescr = mpark::variant<Bytes, VoiceIdx, PatchNameStr, PatchCategory,
 
 }   // namespace midisysex
 
+using SysExDescriptors = std::vector<midisysex::FieldDescr>;
 struct ParameterDumpAnswer
 {
-   std::vector<midisysex::FieldDescr> sysexDescriptors;
+   SysExDescriptors sysexDescriptors;
 };
 
 struct MidiCCAndValue
@@ -83,7 +84,7 @@ struct MidiCCAndValue
 
 struct MidiSysexMsg
 {
-   std::vector<midisysex::FieldDescr> sysexDescriptors;
+   SysExDescriptors sysexDescriptors;
 };
 
 using ParameterDumpRequestMsg = mpark::variant<MidiCCAndValue, MidiSysexMsg>;

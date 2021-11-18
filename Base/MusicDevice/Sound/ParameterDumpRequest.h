@@ -20,10 +20,7 @@ private:
    const description::sound::Section& m_rSoundSection;
    int m_midiChannelOffset{0};
 
-   static constexpr int ALL_VOICES = -2;
-   void _sendParameterDumpRequest(
-       const description::sound::ParameterDumpRequest&
-           parameterDumpRequest, int voiceIdx = ALL_VOICES) noexcept;
+   void _sendParameterDumpRequest(int voiceIdx) noexcept;
 };
 
 }   // namespace base::musicDevice::sound
