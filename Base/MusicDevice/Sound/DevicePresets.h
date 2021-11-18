@@ -15,7 +15,6 @@
 
 namespace base::musicDevice::sound::preset
 {
-
 /*
    Identifier of a preset:
       manufacturer+product + engineIdx + presetName
@@ -53,20 +52,53 @@ struct Preset
    std::vector<ParameterData> parameters;
 };
 
+namespace settings
+{
+struct LFOData
+{
+   void from(
+       const ::base::musicDevice::sound::preset::LFOData& lfoData) noexcept;
+   ::base::musicDevice::sound::preset::LFOData to() const noexcept;
+   std::optional<float> amplitude;
+   std::optional<float> frequency;
+   std::optional<lfo::Waveform> waveform;
+   std::optional<int> multiplierExp;
+};
+
+struct ParameterData
+{
+   void from(const ::base::musicDevice::sound::preset::ParameterData&
+                 parameterData) noexcept;
+   ::base::musicDevice::sound::preset::ParameterData to() const noexcept;
+   float commanded{0.0};
+   std::optional<LFOData> lfoData;
+};
+
+struct Preset
+{
+   void from(const ::base::musicDevice::sound::preset::Preset& preset) noexcept;
+   ::base::musicDevice::sound::preset::Preset to() const noexcept;
+   Category category;
+   Genre genre;
+   std::vector<ParameterData> parameters;
+};
+
+}   // namespace settings
+
 class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
    using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName) noexcept;
-   template<class Cb>
-   void forEachPreset(Cb cb) const;
+   template <class Cb> void forEachPreset(Cb cb) const;
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const Preset& preset(int engineIdx,
                         const std::string& presetName) const noexcept;
    bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
    std::optional<std::pair<Category, Genre>> getPresetAttributes(
        int engineIdx, const std::string& presetName) const noexcept;
-   void savePreset(int engineIdx, const std::string& presetName, Preset&& preset) noexcept;
+   void savePreset(int engineIdx, const std::string& presetName,
+                   Preset&& preset) noexcept;
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
@@ -74,15 +106,35 @@ public:
 
    using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
-   using Settings = Presets;
-   Settings getSettings() const noexcept { return m_presets; };
+   using Settings =
+       std::vector<std::unordered_map<std::string, settings::Preset>>;
+   Settings getSettings() const noexcept
+   {
+      Settings settings;
+      for (const auto& enginePresets : m_presets)
+      {
+         settings.push_back(settings::value_type());
+         for (const auto& preset : enginePresets)
+         {
+
+         }
+      }
+   };
    void setSettings(const Settings& settings) noexcept
    {
       m_presets = settings;
    };
    // =======================================
-   void save() const noexcept { Super::save("EnginePresets", fmt::format("{}.json", m_musicDeviceName), "EnginePresets"); }
-   void load() noexcept { Super::load("EnginePresets", fmt::format("{}.json", m_musicDeviceName), "EnginePresets"); }
+   void save() const noexcept
+   {
+      Super::save("EnginePresets", fmt::format("{}.json", m_musicDeviceName),
+                  "EnginePresets");
+   }
+   void load() noexcept
+   {
+      Super::load("EnginePresets", fmt::format("{}.json", m_musicDeviceName),
+                  "EnginePresets");
+   }
 
 private:
    Presets m_presets;

@@ -75,7 +75,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                                       const std::string& presetName,
                                       sound::preset::Preset&& preset) {
                        m_dataHolder.getDevicePresets(deviceId.deviceName)
-                           ->savePreset(engineIdx, presetName, std::move(preset));
+                           ->savePreset(engineIdx, presetName,
+                                        std::move(preset));
+                       m_dataHolder.soundDevicesPresetChanged(
+                           sound::preset::Id({deviceId.deviceName, engineIdx, presetName}));
                     });
              }
           }
@@ -131,7 +134,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                                       const std::string& presetName,
                                       sound::preset::Preset&& preset) {
                        m_dataHolder.getDevicePresets(deviceId.deviceName)
-                           ->savePreset(engineIdx, presetName, std::move(preset));
+                           ->savePreset(engineIdx, presetName,
+                                        std::move(preset));
+                        m_dataHolder.soundDevicesPresetChanged(
+                           sound::preset::Id({deviceId.deviceName, engineIdx, presetName}));
                     });
              }
           }
