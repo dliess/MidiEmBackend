@@ -13,14 +13,14 @@ public:
                         int midiChannelOffset = 0) noexcept;
    void sendParameterDumpRequest() noexcept;
    // Attention: it can happen that the dump comes back for all voices (like octatrack)
-   void sendParameterDumpRequest(int voiceIdx) noexcept;
+   //void sendParameterDumpRequest(int voiceIdx) noexcept;
 
+   void sendParameterDumpRequest(int voiceIdx) noexcept;
 private:
    MidiOutIf& m_rMidiOutIf;
    const description::sound::Section& m_rSoundSection;
    int m_midiChannelOffset{0};
 
-   void _sendParameterDumpRequest(int voiceIdx) noexcept;
 };
 
 }   // namespace base::musicDevice::sound

@@ -132,11 +132,15 @@ struct NoteSettings
    std::optional<int> defaultTriggerNote;
 };
 
-struct Voice
+struct MidiChannelHolder
+{
+   int midiChannel;
+};
+
+struct Voice : public MidiChannelHolder
 {
    std::string name;
    int engineId;
-   int midiChannel;
    std::optional<int> midiTriggerNoteNumber;
 };
 
@@ -285,9 +289,8 @@ struct EngineBase
    [[nodiscard]] inline bool canDumpPresets() const noexcept;
 };
 
-struct Global : public EngineBase
+struct Global : public EngineBase, public MidiChannelHolder
 {
-   int midiChannel;
 };
 
 
@@ -329,6 +332,7 @@ struct Section
    inline const Parameter& parameterDescr(int voiceId,
                                           int parameterId) const noexcept;
    inline const EngineBase* engineBase(int voiceId) const noexcept;
+   inline const MidiChannelHolder* midiChannel(int voiceId) const noexcept;
    template<typename Cb>
    void forEachEngineBase(Cb&& cb);
    template<typename Cb>

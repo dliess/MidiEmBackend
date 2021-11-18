@@ -297,6 +297,22 @@ base::musicDevice::description::sound::Section::engineBase(
    }
 }
 
+inline const base::musicDevice::description::sound::MidiChannelHolder* 
+base::musicDevice::description::sound::Section::midiChannel(int voiceId) const noexcept
+{
+   if (base::musicDevice::description::sound::GlobalSectionId == voiceId)
+   {
+      assert(global);
+      return &global.value();
+   }
+   else
+   {
+      assert(voiceId >= 0 && voiceId < voices.size());
+      return &voices[voiceId];
+   }
+}
+
+
 template <typename Cb>
 void base::musicDevice::description::sound::Section::forEachEngineBase(Cb&& cb)
 {
