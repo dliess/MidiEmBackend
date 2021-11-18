@@ -23,10 +23,12 @@ std::vector<std::vector<std::string>> DevicePresets::getSoundPresetList()
 std::optional<std::pair<Category, Genre>> DevicePresets::getPresetAttributes(
     int engineIdx, const std::string& presetName) const noexcept
 {
-   if(!util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets)) return std::nullopt;
+   if (!util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets))
+      return std::nullopt;
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
-   auto it = enginePresets.find(presetName);
-   if(it == enginePresets.end()) return std::nullopt;
+   auto it                   = enginePresets.find(presetName);
+   if (it == enginePresets.end())
+      return std::nullopt;
    return std::make_pair(it->second.category, it->second.genre);
 }
 
@@ -49,7 +51,6 @@ bool DevicePresets::hasPreset(int engineIdx,
 }
 
 void DevicePresets::savePreset(int engineIdx, const std::string& presetName,
-                               Category category, Genre genre,
                                Preset&& preset) noexcept
 {
    assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
@@ -62,7 +63,9 @@ void DevicePresets::savePreset(int engineIdx, const std::string& presetName,
    }
    else
    {
-      enginePresets.insert({presetName, std::move(preset)});
+      enginePresets.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(presetName),
+                            std::forward_as_tuple(std::move(preset)));
    }
 }
 

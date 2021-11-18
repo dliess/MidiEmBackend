@@ -66,11 +66,17 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              }
              else
              {
-                 auto [it, inserted] = 
-                m_soundPresetFetchers.emplace(std::piecewise_construct,
-                                              std::forward_as_tuple(deviceId),
-                                              std::forward_as_tuple(std::move(pDescr)));
+                auto [it, inserted] = m_soundPresetFetchers.emplace(
+                    std::piecewise_construct, std::forward_as_tuple(deviceId),
+                    std::forward_as_tuple(std::move(pDescr)));
                 it->second.addMidiIn(std::move(pMidiIn));
+                it->second.onPresetReceived(
+                    [this, &deviceId](int engineIdx,
+                                      const std::string& presetName,
+                                      sound::preset::Preset&& preset) {
+                       m_dataHolder.getDevicePresets(deviceId.deviceName)
+                           ->savePreset(engineIdx, presetName, std::move(preset));
+                    });
              }
           }
           else
@@ -116,10 +122,17 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              }
              else
              {
-                m_soundPresetFetchers.emplace(std::piecewise_construct,
-                                              std::forward_as_tuple(deviceId),
-                                              std::forward_as_tuple(std::move(pDescr)));
+                m_soundPresetFetchers.emplace(
+                    std::piecewise_construct, std::forward_as_tuple(deviceId),
+                    std::forward_as_tuple(std::move(pDescr)));
                 it->second.addMidiOut(std::move(pMidiOut));
+                it->second.onPresetReceived(
+                    [this, &deviceId](int engineIdx,
+                                      const std::string& presetName,
+                                      sound::preset::Preset&& preset) {
+                       m_dataHolder.getDevicePresets(deviceId.deviceName)
+                           ->savePreset(engineIdx, presetName, std::move(preset));
+                    });
              }
           }
           else

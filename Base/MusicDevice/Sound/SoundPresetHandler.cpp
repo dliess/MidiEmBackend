@@ -93,8 +93,7 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
        },
        voiceIdx);
 
-   m_pDevicePresets->savePreset(engineIdx, actPreset, category, genre,
-                                std::move(presetData));
+   m_pDevicePresets->savePreset(engineIdx, actPreset, std::move(presetData));
    for(auto& cb : m_changedCbs) cb(engineIdx, presetName);
 }
 

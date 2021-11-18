@@ -66,8 +66,7 @@ public:
    bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
    std::optional<std::pair<Category, Genre>> getPresetAttributes(
        int engineIdx, const std::string& presetName) const noexcept;
-   void savePreset(int engineIdx, const std::string& presetName,
-                   Category category, Genre genre, Preset&& preset) noexcept;
+   void savePreset(int engineIdx, const std::string& presetName, Preset&& preset) noexcept;
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;

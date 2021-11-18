@@ -150,6 +150,6 @@ private:
 }   // namespace factory
 }   // namespace base::musicDevice
 
-#include "MusicDeviceFactory.tcc"
+#include "MusicDeviceFactory.inl"
 
 #endif

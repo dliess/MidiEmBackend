@@ -8,6 +8,8 @@
 #include "Midi1Output.h"
 #include "MusicDeviceId.h"
 #include "MusicDeviceDescription.h"
+#include "CallbackSignal.h"
+#include "DevicePresets.h"
 
 namespace base::musicDevice::sound
 {
@@ -25,10 +27,12 @@ public:
    [[nodiscard]] bool hasMidiInAndOut() const noexcept;
    void fetchPresets();
 
+   CB_SIGNAL(PresetReceived, int, const std::string&, preset::Preset&&);
 private:
    std::shared_ptr<description::Description> m_pDescription;
    std::shared_ptr<MidiInput> m_pMidiIn;
    std::shared_ptr<MidiOutput> m_pMidiOut;
+
 };
 
 }   // namespace base::musicDevice::sound
