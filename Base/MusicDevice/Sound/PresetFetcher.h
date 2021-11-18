@@ -14,8 +14,7 @@ namespace base::musicDevice::sound
 class PresetFetcher
 {
 public:
-   PresetFetcher(MusicDeviceId musicDeviceId,
-                 std::shared_ptr<description::Description> pDescription) noexcept;
+   PresetFetcher(std::shared_ptr<description::Description> pDescription) noexcept;
    using MidiInput  = midi::Midi1Input<midi::DoubleBufferedMessageDrain>;
    using MidiOutput = midi::Midi1Output;
    const MusicDeviceId& musicDeviceId() const noexcept;
@@ -27,7 +26,6 @@ public:
    void fetchPresets();
 
 private:
-   const MusicDeviceId m_musicDeviceId;
    std::shared_ptr<description::Description> m_pDescription;
    std::shared_ptr<MidiInput> m_pMidiIn;
    std::shared_ptr<MidiOutput> m_pMidiOut;

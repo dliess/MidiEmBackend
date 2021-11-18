@@ -4,21 +4,16 @@
 
 #include "ParameterDumpRequest.h"
 #include "SoundMidiInSysExDumpHandler.h"
+#include "loguru.hpp"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
 
 PresetFetcher::PresetFetcher(
-    MusicDeviceId musicDeviceId,
     std::shared_ptr<description::Description> pDescription) noexcept :
     m_pDescription(std::move(pDescription))
 {
    assert(m_pDescription);
-}
-
-const MusicDeviceId& PresetFetcher::musicDeviceId() const noexcept
-{
-   return m_musicDeviceId;
 }
 
 void PresetFetcher::addMidiIn(std::shared_ptr<MidiInput> pMidiIn) noexcept
@@ -54,6 +49,7 @@ void PresetFetcher::fetchPresets()
    //    I DONT IMPLEMENT IT UNTIL I FIND A DEVICE THAT CAN DO IT
    int voiceIdxInFocus = -2;
    m_pMidiIn->registerMidiInCb([this, &voiceIdxInFocus](const midi::MidiMessage& midiMessage) {
+      LOG_F(INFO, "Received {}", midi::toString(midiMessage));
       const auto pSysEX =
           mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMessage);
       if (pSysEX)
@@ -77,6 +73,7 @@ void PresetFetcher::fetchPresets()
             preset.category = sysexDumpHandler.presetCategory().value();
          if(sysexDumpHandler.presetGenre())
             preset.genre = sysexDumpHandler.presetGenre().value();
+         LOG_F(INFO, "Preset '{}' '{}' '{}' received", presetName, ~preset.category, ~preset.genre);
       }
    });
    m_pDescription->soundSection->forEachEngineBase(

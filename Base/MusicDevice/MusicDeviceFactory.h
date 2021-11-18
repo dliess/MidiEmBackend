@@ -54,7 +54,7 @@ private:
    Holder& m_rHolder;
    DataHolder m_dataHolder;
    Loader m_loader;
-   std::vector<sound::PresetFetcher> m_soundPresetFetchers;
+   std::unordered_map<MusicDeviceId, sound::PresetFetcher> m_soundPresetFetchers;
    util::itc::Queue m_actionQueue;
    void fillActionQueueForMidiIn(const MusicDeviceId& deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn);

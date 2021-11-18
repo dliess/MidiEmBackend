@@ -52,25 +52,25 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
-             auto it = std::find_if(
-                 m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),
-                 [&deviceId](
-                     const sound::PresetFetcher& presetFetcher) -> bool {
-                    return presetFetcher.musicDeviceId() == deviceId;
-                 });
+             auto it = m_soundPresetFetchers.find(deviceId);
              if (it != m_soundPresetFetchers.end())
              {
-                it->addMidiIn(std::move(pMidiIn));
-                if (it->hasMidiInAndOut())
+                it->second.addMidiIn(std::move(pMidiIn));
+                if (it->second.hasMidiInAndOut())
                 {
-                   it->fetchPresets();
+                   it->second.fetchPresets();
                 }
-                fillActionQueueForMidiIn(deviceId, it->hijackMidiIn());
-                fillActionQueueForMidiOut(deviceId, it->hijackMidiOut());
+                fillActionQueueForMidiIn(deviceId, it->second.hijackMidiIn());
+                fillActionQueueForMidiOut(deviceId, it->second.hijackMidiOut());
+                m_soundPresetFetchers.erase(deviceId);
              }
              else
              {
-                m_soundPresetFetchers.emplace_back<sound::PresetFetcher>({deviceId, std::move(pDescr)});
+                 auto [it, inserted] = 
+                m_soundPresetFetchers.emplace(std::piecewise_construct,
+                                              std::forward_as_tuple(deviceId),
+                                              std::forward_as_tuple(std::move(pDescr)));
+                it->second.addMidiIn(std::move(pMidiIn));
              }
           }
           else
@@ -102,25 +102,24 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
-             auto it = std::find_if(
-                 m_soundPresetFetchers.begin(), m_soundPresetFetchers.end(),
-                 [&deviceId](
-                     const sound::PresetFetcher& presetFetcher) -> bool {
-                    return presetFetcher.musicDeviceId() == deviceId;
-                 });
+             auto it = m_soundPresetFetchers.find(deviceId);
              if (it != m_soundPresetFetchers.end())
              {
-                it->addMidiOut(std::move(pMidiOut));
-                if (it->hasMidiInAndOut())
+                it->second.addMidiOut(std::move(pMidiOut));
+                if (it->second.hasMidiInAndOut())
                 {
-                   it->fetchPresets();
+                   it->second.fetchPresets();
                 }
-                fillActionQueueForMidiIn(deviceId, it->hijackMidiIn());
-                fillActionQueueForMidiOut(deviceId, it->hijackMidiOut());
+                fillActionQueueForMidiIn(deviceId, it->second.hijackMidiIn());
+                fillActionQueueForMidiOut(deviceId, it->second.hijackMidiOut());
+                m_soundPresetFetchers.erase(deviceId);
              }
              else
              {
-                m_soundPresetFetchers.emplace_back<sound::PresetFetcher>({deviceId, std::move(pDescr)});
+                m_soundPresetFetchers.emplace(std::piecewise_construct,
+                                              std::forward_as_tuple(deviceId),
+                                              std::forward_as_tuple(std::move(pDescr)));
+                it->second.addMidiOut(std::move(pMidiOut));
              }
           }
           else
@@ -138,6 +137,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
+          m_soundPresetFetchers.erase(deviceId);
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), deviceId);
 
@@ -162,7 +162,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               m_loader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
-
+          m_soundPresetFetchers.erase(deviceId);
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromDevices(), deviceId);
 

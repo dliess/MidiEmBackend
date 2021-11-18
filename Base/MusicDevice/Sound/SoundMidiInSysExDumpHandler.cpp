@@ -116,7 +116,7 @@ void MidiInSysExDumpHandler::handle(
                &sysexMsg](const description::sound::midisysex::PatchNameStr&
                               patchName) {
                  m_presetName =
-                     std::string(sysexMsg[patchName.offset], patchName.size);
+                     std::string(static_cast<const unsigned char*>(&sysexMsg[patchName.offset]), patchName.size);
               },
               [this,
                &sysexMsg](const description::sound::midisysex::PatchCategory&

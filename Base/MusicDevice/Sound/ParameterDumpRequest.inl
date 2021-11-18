@@ -70,7 +70,7 @@ void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest(
                          [&sysexMsgToSend](
                              const description::sound::midisysex::Bytes&
                                  bytes) {
-                            sysexMsgToSend.insert(sysexMsgToSend.begin(),
+                            sysexMsgToSend.insert(sysexMsgToSend.end(),
                                                   bytes.values.begin(),
                                                   bytes.values.end());
                          },
