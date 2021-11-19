@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>PerformanceMeasure</title>
+      <link href="performance.css" rel="stylesheet">
+      <!--link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"-->
+      <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+      <script type="text/javascript" src="./qwebchannel.js"></script>
+      <script type="text/javascript" src="performance.js"></script>
+    </head>
+
+    <body>
+        <h1>Performance Measuring</h1>
+        <div>
+          <button type="button" id = "startMeasureButton" onclick="javascript:click();">StartMeasure</button>
+          <label for="progressBar">Progress:</label>
+          <progress id="progressBar" value="0" min="1" max="100000"></progress>
+          <input type="number" id="numCycles" name="tentacles" min="1" max="100000">
+        </div>
+        <div>
+          <textarea id="output"></textarea><br />
+        </div>
+    </body>
+</html> 

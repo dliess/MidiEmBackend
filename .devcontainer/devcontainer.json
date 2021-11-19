@@ -6,7 +6,7 @@
    "runArgs" : ["--rm", "--privileged",
      "--group-add", "audio"
    ],
-   "forwardPorts": [5555, 5556],
+   "forwardPorts": [5555, 5556, 80],
    "mounts" : [
       "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
       "type=bind,source=/dev,target=/dev"
