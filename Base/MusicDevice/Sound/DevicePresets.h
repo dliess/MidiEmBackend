@@ -47,6 +47,7 @@ struct ParameterData
 
 struct Preset
 {
+   std::optional<int> slotOnDeviceIndex;
    Category category;
    Genre genre;
    std::vector<ParameterData> parameters;
