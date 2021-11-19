@@ -108,9 +108,11 @@ public:
    using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
    using Settings =
-       std::vector<std::unordered_map<std::string, settings::Preset>>;
+       std::vector<std::unordered_map<std::string, Preset>>;
    Settings getSettings() const noexcept
    {
+      return m_presets;
+      /* TODO for later
       Settings settings;
       for (const auto& enginePresets : m_presets)
       {
@@ -120,6 +122,7 @@ public:
 
          }
       }
+      */
    };
    void setSettings(const Settings& settings) noexcept
    {
