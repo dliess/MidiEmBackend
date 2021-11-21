@@ -40,9 +40,21 @@ CB_SIGNAL_IMPL(Arpeggiator, AlgorithmChanged);
 ArpeggiatorPrivate::ArpeggiatorPrivate() :
     m_arpSequenceFactory(m_incomingNoteBuffer)
 {
+    m_arpSequenceFactory.onAlgorithmChanged([this](const Algorithm& algorithm){
+        emitAlgorithmChanged(algorithm);
+    });
+    m_arpSequenceFactory.onRangeChanged([this](int range){
+        emitRangeChanged(range);
+    });
+    m_arpSequenceFactory.onRangeTypeChanged([this](const RangeType& rangeType){
+        emitRangeTypeChanged(rangeType);
+    });
 }
 
-Arpeggiator::Arpeggiator() : m_pImpl(std::make_unique<ArpeggiatorPrivate>()) {}
+Arpeggiator::Arpeggiator() : 
+    m_pImpl(std::make_unique<ArpeggiatorPrivate>())
+{
+}
 
 Arpeggiator::~Arpeggiator() = default;
 
