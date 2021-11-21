@@ -28,6 +28,7 @@ private:
    Algorithm m_algorithm{Algorithm::Up};
    RangeType m_rangeType{RangeType::Octave};
    int m_range{1};
+   size_t rangeLen() const noexcept;
 };
 
 }   // namespace base::arp
