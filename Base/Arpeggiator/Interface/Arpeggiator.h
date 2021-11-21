@@ -4,13 +4,10 @@
 #include <memory>
 
 #include "CallbackSignal.h"
-#include "EnumReflect.h"
+#include "ArpTypes.h"
 
 namespace base::arp
 {
-DECLARE_ENUM(Algorithm, uint, Up, Down, UpDown, Random, RecvOrder,
-             CustomSequence);
-DECLARE_ENUM(RangeType, uint, Octave, Notes);
 
 struct ArpeggiatorPrivate;
 class Arpeggiator
@@ -29,14 +26,16 @@ public:
    void noteOff(int note, float velocity) noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
    void setGateFill(float gateFill) noexcept;
+   void setStepLength(int beatTicks) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
 
    CB_SIGNAL_IF(BypassChanged, bool);
    CB_SIGNAL_IF(NoteOn, int, float);
    CB_SIGNAL_IF(NoteOff, int, float);
-   CB_SIGNAL_IF(RangeTypeChanged, int);
+   CB_SIGNAL_IF(RangeTypeChanged, RangeType);
    CB_SIGNAL_IF(RangeChanged, int);
    CB_SIGNAL_IF(GateFillChanged, float);
+   CB_SIGNAL_IF(StepLengthChanged, float);
    CB_SIGNAL_IF(AlgorithmChanged, Algorithm);
 
 private:

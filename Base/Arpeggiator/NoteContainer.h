@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <memory_resource>
 #include "print_alloc.h"
+#include "CallbackSignal.h"
 
 namespace base::arp
 {
@@ -15,6 +16,7 @@ public:
     NoteContainer();
     void addNote(int note, float velocity) noexcept;
     void removeNote(int note) noexcept;
+    CB_SIGNAL(Changed);
 private:
     struct NotePress
     {

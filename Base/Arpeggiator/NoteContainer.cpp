@@ -24,6 +24,7 @@ void NoteContainer::addNote(int note, float velocity) noexcept
    {
       m_noteList.emplace_back(NotePress{note, velocity});
    }
+   emitChanged();
 }
 
 void NoteContainer::removeNote(int note) noexcept
@@ -36,4 +37,5 @@ void NoteContainer::removeNote(int note) noexcept
     {
         m_noteList.erase(it);
     }
+    emitChanged();
 }
