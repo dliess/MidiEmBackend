@@ -12,7 +12,9 @@ namespace base::arp
 class NoteContainer
 {
 public:
-    NoteContainer() noexcept;
+    NoteContainer();
+    void addNote(int note, float velocity) noexcept;
+    void removeNote(int note) noexcept;
 private:
     struct NotePress
     {

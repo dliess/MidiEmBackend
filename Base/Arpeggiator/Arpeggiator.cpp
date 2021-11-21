@@ -53,13 +53,28 @@ void Arpeggiator::bypass(bool onOff) noexcept
     }
 }
 
-void Arpeggiator::noteOn(float velocity) noexcept
+void Arpeggiator::noteOn(int note, float velocity) noexcept
 {
-
+    if(m_pImpl->m_bypass)
+    {
+        m_pImpl->emitNoteOn(note, velocity);
+    }
+    else
+    {
+        m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
+    }
 }
 
-void Arpeggiator::noteOff(float velocity) noexcept
+void Arpeggiator::noteOff(int note, float velocity) noexcept
 {
+    if(m_pImpl->m_bypass)
+    {
+        m_pImpl->emitNoteOff(note, velocity);
+    }
+    else
+    {
+        m_pImpl->m_incomingNoteBuffer.removeNote(note);
+    }
 
 }
 

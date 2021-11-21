@@ -25,15 +25,15 @@ public:
 
    void update() noexcept;
    void bypass(bool onOff) noexcept;
-   void noteOn(float velocity) noexcept;
-   void noteOff(float velocity) noexcept;
+   void noteOn(int note, float velocity) noexcept;
+   void noteOff(int note, float velocity) noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
    void setGateFill(float gateFill) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
 
    CB_SIGNAL_IF(BypassChanged, bool);
-   CB_SIGNAL_IF(NoteOn, float);
-   CB_SIGNAL_IF(NoteOff, float);
+   CB_SIGNAL_IF(NoteOn, int, float);
+   CB_SIGNAL_IF(NoteOff, int, float);
    CB_SIGNAL_IF(RangeTypeChanged, int);
    CB_SIGNAL_IF(RangeChanged, int);
    CB_SIGNAL_IF(GateFillChanged, float);
