@@ -14,5 +14,18 @@ private: \
     std::vector<cbName##Cb> m_##cbName##s; \
 public:
 
+#define CB_SIGNAL_IF(cbName, ...) \
+public:                    \
+    using cbName##Cb = std::function<void(__VA_ARGS__)>; \
+    void on##cbName(cbName##Cb cb);
+
+#define CB_SIGNAL_IMPL(className, cbName) \
+    void className##::on##cbName(cbName##Cb cb) { m_pImpl->cbName##s.push_back(std::move(cb)); }
+
+#define CB_SIGNAL_PRIVATE(cbName, ...) \
+public: \
+    template<class ...Types> void emit##cbName(Types&&... args) { for(auto& cb : cbName##s) cb(std::forward<Types>(args)...); } \
+    std::vector<cbName##Cb> cbName##s;
+
 
 #endif

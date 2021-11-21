@@ -1,24 +1,21 @@
 #include "Arpeggiator.h"
 
-namespace base::arp
-{
-struct ArpeggiatorPrivate
-{
- int i;
-};
-} // namespace base::arp
-
 using namespace base::arp;
 
-Arpeggiator::Arpeggiator() :
-    m_pImpl(std::make_unique<ArpeggiatorPrivate>())
-{}
-
-Arpeggiator::~Arpeggiator() = default;
+Arpeggiator::Arpeggiator() = default;
 
 void Arpeggiator::update() noexcept
 {
 
+}
+
+void Arpeggiator::bypass(bool onOff) noexcept
+{
+    if(m_bypass != onOff)
+    {
+        m_bypass = onOff;
+        emitBypassChanged(m_bypass);
+    }
 }
 
 void Arpeggiator::noteOn(float velocity) noexcept
@@ -31,12 +28,7 @@ void Arpeggiator::noteOff(float velocity) noexcept
 
 }
 
-void Arpeggiator::setOctave(int octave) noexcept
-{
-
-}
-
-void Arpeggiator::setRange(int range) noexcept
+void Arpeggiator::setRange(RangeType rangeType, int value) noexcept
 {
 
 }
