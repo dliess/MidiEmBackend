@@ -3,6 +3,7 @@
 #include "ArpSequence.h"
 #include "ArpSequenceFactory.h"
 #include "NoteContainer.h"
+#include "BeatTick.h"
 
 namespace base::arp
 {
@@ -56,7 +57,14 @@ Arpeggiator::~Arpeggiator() = default;
 
 void Arpeggiator::update() noexcept
 {
-   m_pImpl->m_arpSequenceFactory.createIfDirty();
+   uint64_t beatJiffies = base::tempo::BeatTick::instance().getBeatJiffies();
+   if(beatJiffies > m_bjSeqEnd)
+   {
+      m_pImpl->m_arpSequenceFactory.createIfDirty();
+      m_bjSeqEnd += m_arpSequence.size() * 
+   }
+
+
 }
 
 void Arpeggiator::bypass(bool onOff) noexcept
