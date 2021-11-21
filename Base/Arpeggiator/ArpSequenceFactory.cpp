@@ -1,6 +1,7 @@
 #include "ArpSequenceFactory.h"
 
 #include <map>
+#include <random>
 
 using namespace base::arp;
 
@@ -31,23 +32,83 @@ void ArpSequenceFactory::createIfDirty() noexcept
          {
             map.emplace(e.note, e.velocity);
          }
-         int i = 0;
-         for (auto it = map.begin(); it != map.end(); ++it)
+         auto it = map.begin();
+         for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first, it->second);
+            m_rArpSequence.push_back(it->first + ((i / map.size()) * 12),
+                                     it->second);
+            if (++it == map.end())
+            {
+               it = map.begin();
+            }
          }
          break;
       }
       case Algorithm::Down:
       {
+         for (const auto& e : m_rIncomingNoteBuffer)
+         {
+            map.emplace(e.note, e.velocity);
+         }
+         auto it = map.rbegin();
+         for (int i = 0; i < rangeLen(); ++i)
+         {
+            m_rArpSequence.push_back(it->first + ((i / map.size()) * 12),
+                                     it->second);
+            if (++it == map.rend())
+            {
+               it = map.rbegin();
+            }
+         }
          break;
       }
       case Algorithm::UpDown:
       {
+         for (const auto& e : m_rIncomingNoteBuffer)
+         {
+            map.emplace(e.note, e.velocity);
+         }
+         bool up = true;
+         auto it = map.begin();
+         for (int i = 0; i < rangeLen(); ++i)
+         {
+            m_rArpSequence.push_back(it->first + ((i / (2 * map.size() - 1)) * 12),
+                                     it->second);
+            if(up)
+            {
+               ++it;
+               if (it == map.end())
+               {
+                  up = false;
+                  --it;
+               }
+            }
+            else
+            {
+               if (it == map.begin())
+               {
+                  up = true;
+               }
+               else
+               {
+                  --it;
+               }
+            }
+         }
          break;
       }
       case Algorithm::Random:
       {
+         std::random_device r;
+         std::default_random_engine e1(r());
+         std::uniform_real_distribution<float> uniform_dist(0.0, m_rIncomingNoteBuffer.size() - 0.1);
+         for (int i = 0; i < rangeLen(); ++i)
+         {
+            auto it = m_rIncomingNoteBuffer.begin();
+            std::advance(it, int(uniform_dist(e1)));
+            m_rArpSequence.push_back(it->note + ((i / m_rIncomingNoteBuffer.size()) * 12),
+                                     it->velocity);
+         }
          break;
       }
       case Algorithm::RecvOrder:
