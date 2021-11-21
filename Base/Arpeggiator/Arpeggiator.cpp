@@ -2,6 +2,7 @@
 
 #include "ArpSequenceFactory.h"
 #include "NoteContainer.h"
+#include "ArpSequence.h"
 
 namespace base::arp
 {
@@ -13,6 +14,7 @@ struct ArpeggiatorPrivate
    int m_stepLength{240};
    NoteContainer m_incomingNoteBuffer;
    ArpSequenceFactory m_arpSequenceFactory;
+   ArpSequence m_arpSequence;
 
    CB_SIGNAL_PRIVATE(Arpeggiator, BypassChanged);
    CB_SIGNAL_PRIVATE(Arpeggiator, NoteOn);

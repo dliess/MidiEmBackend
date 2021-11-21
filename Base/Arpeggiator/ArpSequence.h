@@ -1,22 +1,21 @@
-#ifndef BASE_ARP_NOTECONTAINER_H
-#define BASE_ARP_NOTECONTAINER_H
+#ifndef BASE_ARP_SEQUENCE_H
+#define BASE_ARP_SEQUENCE_H
 
 #include <cstddef>
-#include <list>
 #include <memory_resource>
+#include <vector>
 
 #include "CallbackSignal.h"
 #include "print_alloc.h"
 
 namespace base::arp
 {
-class NoteContainer
+class ArpSequence
 {
 public:
-   NoteContainer();
-   void addNote(int note, float velocity) noexcept;
-   void removeNote(int note) noexcept;
-   CB_SIGNAL(Changed);
+   ArpSequence();
+
+   //CB_SIGNAL(AlgorithmChanged, Algorithm);
 
 private:
    struct NotePress
@@ -28,7 +27,7 @@ private:
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
    std::pmr::unsynchronized_pool_resource m_pool;
-   std::pmr::list<NotePress> m_noteList;
+   std::pmr::vector<NotePress> m_noteVector;
 };
 
 }   // namespace base::arp
