@@ -1,7 +1,13 @@
 set(TARGET_NAME "base-arpeggiator")
 
-set(SOURCES "Arpeggiator.cpp")
-set(HEADERS "Interface/Arpeggiator.h")
+set(SOURCES
+    "Arpeggiator.cpp"
+    "NoteContainer.cpp"
+)
+set(HEADERS
+    "Interface/Arpeggiator.h"
+    "NoteContainer.h"
+)
 
 add_library(${TARGET_NAME} ${SOURCES} ${HEADERS})
 target_include_directories(${TARGET_NAME}

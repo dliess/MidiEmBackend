@@ -1,4 +1,5 @@
 #include "Arpeggiator.h"
+#include "NoteContainer.h"
 
 namespace base::arp
 {
@@ -9,7 +10,7 @@ struct ArpeggiatorPrivate
    int m_range{1};
    float m_gateFill{0.5};
    Algorithm m_algorithm{Algorithm::Up};
-   //NoteContainer m_incomingNoteBuffer;
+   NoteContainer m_incomingNoteBuffer;
 
    CB_SIGNAL_PRIVATE(Arpeggiator, BypassChanged);
    CB_SIGNAL_PRIVATE(Arpeggiator, NoteOn);
