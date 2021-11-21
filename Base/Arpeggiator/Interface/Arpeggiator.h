@@ -5,7 +5,6 @@
 
 #include "CallbackSignal.h"
 #include "EnumReflect.h"
-#include "NoteContainer"
 
 namespace base::arp
 {
@@ -13,10 +12,12 @@ DECLARE_ENUM(Algorithm, uint, Up, Down, UpDown, Random, RecvOrder,
              CustomSequence);
 DECLARE_ENUM(RangeType, uint, Octave, Notes);
 
+struct ArpeggiatorPrivate;
 class Arpeggiator
 {
 public:
    Arpeggiator();
+   ~Arpeggiator();
    Arpeggiator(const Arpeggiator&) = delete;
    Arpeggiator(Arpeggiator&&)      = default;
    Arpeggiator& operator=(const Arpeggiator&) = delete;
@@ -30,21 +31,16 @@ public:
    void setGateFill(float gateFill) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
 
-   CB_SIGNAL(BypassChanged, bool);
-   CB_SIGNAL(NoteOn, float);
-   CB_SIGNAL(NoteOff, float);
-   CB_SIGNAL(RangeTypeChanged, int);
-   CB_SIGNAL(RangeChanged, int);
-   CB_SIGNAL(GateFillChanged, float);
-   CB_SIGNAL(AlgorithmChanged, Algorithm);
+   CB_SIGNAL_IF(BypassChanged, bool);
+   CB_SIGNAL_IF(NoteOn, float);
+   CB_SIGNAL_IF(NoteOff, float);
+   CB_SIGNAL_IF(RangeTypeChanged, int);
+   CB_SIGNAL_IF(RangeChanged, int);
+   CB_SIGNAL_IF(GateFillChanged, float);
+   CB_SIGNAL_IF(AlgorithmChanged, Algorithm);
 
 private:
-   bool m_bypass{true};
-   RangeType m_rangeType{RangeType::Octave};
-   int m_range{1};
-   float m_gateFill{0.5};
-   Algorithm m_algorithm{Algorithm::Up};
-   NoteContainer m_incomingNoteBuffer;
+    std::unique_ptr<ArpeggiatorPrivate> m_pImpl;
 };
 
 }   // namespace base::arp

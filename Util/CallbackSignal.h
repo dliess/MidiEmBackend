@@ -20,12 +20,12 @@ public:                    \
     void on##cbName(cbName##Cb cb);
 
 #define CB_SIGNAL_IMPL(className, cbName) \
-    void className##::on##cbName(cbName##Cb cb) { m_pImpl->cbName##s.push_back(std::move(cb)); }
+    void className::on##cbName(cbName##Cb cb) { m_pImpl->cbName##Cbs.push_back(std::move(cb)); }
 
-#define CB_SIGNAL_PRIVATE(cbName, ...) \
+#define CB_SIGNAL_PRIVATE(className, cbName) \
 public: \
-    template<class ...Types> void emit##cbName(Types&&... args) { for(auto& cb : cbName##s) cb(std::forward<Types>(args)...); } \
-    std::vector<cbName##Cb> cbName##s;
+    template<class ...Types> void emit##cbName(Types&&... args) { for(auto& cb : cbName##Cbs) cb(std::forward<Types>(args)...); } \
+    std::vector<className::cbName##Cb> cbName##Cbs;
 
 
 #endif
