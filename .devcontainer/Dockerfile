@@ -60,11 +60,14 @@ RUN apt-get update && apt-get install -y \
         vim \
         feedgnuplot \
         netcat \
+        net-tools \
         curl \
         zsh \
         wget \
+        nginx-core \
         && rm -rf /var/lib/apt/lists/*
 
+COPY site/default /etc/nginx/sites-enabled
 
 RUN apt-get update && apt-get install -y \
         pkg-config \

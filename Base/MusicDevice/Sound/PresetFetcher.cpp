@@ -49,10 +49,12 @@ void PresetFetcher::fetchPresets()
    //    I DONT IMPLEMENT IT UNTIL I FIND A DEVICE THAT CAN DO IT
    constexpr int INVALID_VOICE_IDX = -2;
    int voiceIdxInFocus             = INVALID_VOICE_IDX;
-   bool presetFteched = false;
-   m_pMidiIn->registerMidiInCb([this, &voiceIdxInFocus, &presetFteched](
+   bool presetFteched              = false;
+   int presetSlotIndex                 = 0;
+   m_pMidiIn->registerMidiInCb([this, &voiceIdxInFocus, &presetFteched,
+                                &presetSlotIndex](
                                    const midi::MidiMessage& midiMessage) {
-      //LOG_F(INFO, "Received {}", midi::toString(midiMessage));
+      // LOG_F(INFO, "Received {}", midi::toString(midiMessage));
       if (INVALID_VOICE_IDX == voiceIdxInFocus)
       {
          return;
@@ -93,18 +95,17 @@ void PresetFetcher::fetchPresets()
             preset.category = sysexDumpHandler.presetCategory().value();
          if (sysexDumpHandler.presetGenre())
             preset.genre = sysexDumpHandler.presetGenre().value();
+         preset.slotOnDeviceIndex = presetSlotIndex;
          LOG_F(INFO, "Preset '{}' '{}' '{}' received", presetName,
                ~preset.category, ~preset.genre);
          presetFteched = true;
-         /*
          emitPresetReceived(
              m_pDescription->soundSection->voices[voiceIdxInFocus].engineId,
              presetName, std::move(preset));
-         */
       }
    });
    m_pDescription->soundSection->forEachEngineBase(
-       [this, &voiceIdxInFocus, &presetFteched](
+       [this, &voiceIdxInFocus, &presetFteched, &presetSlotIndex](
            int engineIdx, description::sound::EngineBase& rEngineBase) {
           if (!rEngineBase.canDumpPresets())
              return;
@@ -120,13 +121,16 @@ void PresetFetcher::fetchPresets()
                  engineIdx)
              {
                 voiceIdxInFocus = voiceIdx;
-                for (int i = 0; i < rEngineBase.presets->numberOfPresets; ++i)
+                for (int presetSlotIndex = 0;
+                     presetSlotIndex < rEngineBase.presets->numberOfPresets;
+                     ++presetSlotIndex)
                 {
-                  presetFteched = false;
+                   presetFteched = false;
                    // TODO: wrap this
                    const midi::Message<midi::ProgramChange> prChMsg(
                        m_pDescription->soundSection->voices[voiceIdx]
-                               .midiChannel, i);
+                           .midiChannel,
+                       presetSlotIndex);
                    m_pMidiOut->send(prChMsg);
                    LOG_F(INFO, "Sent Program change: {}", prChMsg.toString());
                    std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -135,11 +139,11 @@ void PresetFetcher::fetchPresets()
                                         *m_pDescription->soundSection,
                                         TODO_midiVoiceOffset)
                        .sendParameterDumpRequest(voiceIdx);
-                  int tryCnt = 10;
-                  do{
-                     std::this_thread::sleep_for(std::chrono::milliseconds(5));
-                     m_pMidiIn->update();
-                  }while(!presetFteched && (--tryCnt > 0));
+                   int tryCnt = 10;
+                   do {
+                      std::this_thread::sleep_for(std::chrono::milliseconds(5));
+                      m_pMidiIn->update();
+                   } while (!presetFteched && (--tryCnt > 0));
                 }
                 engineFetched = true;
              }
