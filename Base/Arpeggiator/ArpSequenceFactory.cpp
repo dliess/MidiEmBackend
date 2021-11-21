@@ -18,6 +18,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
    {
       return;
    }
+   static constexpr int NOTES_IN_OCTAVE = 12;
    m_rArpSequence.clear();
    std::byte stackBuf[1024];
    util::PrintAlloc oom("Out of Memory", std::pmr::null_memory_resource());
@@ -35,7 +36,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / map.size()) * 12),
+            m_rArpSequence.push_back(it->first + ((i / map.size()) * NOTES_IN_OCTAVE),
                                      it->second);
             if (++it == map.end())
             {
@@ -53,7 +54,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.rbegin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / map.size()) * 12),
+            m_rArpSequence.push_back(it->first + ((i / map.size()) * NOTES_IN_OCTAVE),
                                      it->second);
             if (++it == map.rend())
             {
@@ -72,7 +73,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / (2 * map.size() - 1)) * 12),
+            m_rArpSequence.push_back(it->first + ((i / (2 * map.size() - 1)) * NOTES_IN_OCTAVE),
                                      it->second);
             if(up)
             {
@@ -106,13 +107,22 @@ void ArpSequenceFactory::createIfDirty() noexcept
          {
             auto it = m_rIncomingNoteBuffer.begin();
             std::advance(it, int(uniform_dist(e1)));
-            m_rArpSequence.push_back(it->note + ((i / m_rIncomingNoteBuffer.size()) * 12),
+            m_rArpSequence.push_back(it->note + ((i / m_rIncomingNoteBuffer.size()) * NOTES_IN_OCTAVE),
                                      it->velocity);
          }
          break;
       }
       case Algorithm::RecvOrder:
       {
+         auto it = m_rIncomingNoteBuffer.begin();
+         for (int i = 0; i < rangeLen(); ++i)
+         {
+            m_rArpSequence.push_back(it->note + ((i / map.size()) * NOTES_IN_OCTAVE), it->velocity);
+            if (++it == m_rIncomingNoteBuffer.end())
+            {
+               it = m_rIncomingNoteBuffer.begin();
+            }
+         }
          break;
       }
       case Algorithm::CustomSequence:
