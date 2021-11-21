@@ -16,19 +16,29 @@ public:
    NoteContainer();
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
-   CB_SIGNAL(Changed);
-
-private:
+   
    struct NotePress
    {
       int note;
       float velocity;
    };
+   using ContainerT = std::pmr::list<NotePress>;
+   using iterator       = ContainerT::iterator;
+   using const_iterator = ContainerT::const_iterator;
+   using value_type     = ContainerT::value_type;
+   using size_type      = ContainerT::size_type;
+   inline const_iterator begin() const noexcept { return m_noteList.begin(); }
+   inline const_iterator end() const noexcept { return m_noteList.end(); }
+   inline size_t size() const noexcept { return m_noteList.size(); }
+
+   CB_SIGNAL(Changed);
+
+private:
    std::byte m_stackBuf[1024];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
    std::pmr::unsynchronized_pool_resource m_pool;
-   std::pmr::list<NotePress> m_noteList;
+   ContainerT m_noteList;
 };
 
 }   // namespace base::arp
