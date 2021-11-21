@@ -1,16 +1,18 @@
 #ifndef BASE_ARP_SEQUENCE_FACTORY_H
 #define BASE_ARP_SEQUENCE_FACTORY_H
 
+#include "ArpTypes.h"
 #include "CallbackSignal.h"
 #include "NoteContainer.h"
-#include "ArpTypes.h"
+#include "ArpSequence.h"
 
 namespace base::arp
 {
 class ArpSequenceFactory
 {
 public:
-   ArpSequenceFactory(NoteContainer& rIncomingNoteBuffer) noexcept;
+   ArpSequenceFactory(NoteContainer& rIncomingNoteBuffer,
+                      ArpSequence& rArpSequence) noexcept;
    void createIfDirty() noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
@@ -21,6 +23,7 @@ public:
 
 private:
    NoteContainer& m_rIncomingNoteBuffer;
+   ArpSequence& m_rArpSequence;
    bool m_dirty{true};
    Algorithm m_algorithm{Algorithm::Up};
    RangeType m_rangeType{RangeType::Octave};

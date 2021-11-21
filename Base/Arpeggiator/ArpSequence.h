@@ -3,9 +3,8 @@
 
 #include <cstddef>
 #include <memory_resource>
-#include <vector>
+#include <list>
 
-#include "CallbackSignal.h"
 #include "print_alloc.h"
 
 namespace base::arp
@@ -14,20 +13,19 @@ class ArpSequence
 {
 public:
    ArpSequence();
-
-   //CB_SIGNAL(AlgorithmChanged, Algorithm);
+   void push_back(int note, float velocity);
+   void clear() noexcept;
 
 private:
-   struct NotePress
+   struct NoteData
    {
       int note;
       float velocity;
    };
-   std::byte m_stackBuf[1024];
+   std::byte m_stackBuf[2048];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
-   std::pmr::unsynchronized_pool_resource m_pool;
-   std::pmr::vector<NotePress> m_noteVector;
+   std::pmr::list<NoteData> m_noteList;
 };
 
 }   // namespace base::arp
