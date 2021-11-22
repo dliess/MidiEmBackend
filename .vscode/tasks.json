@@ -4,8 +4,8 @@
     "version": "2.0.0",
     "options": {
         "env": {
-            "buildType": "Release",
-            "buildDirectory": "${workspaceRoot}/build"
+            "buildType": "Debug",
+            "buildDirectory": "${workspaceRoot}/build-manually"
         }
     },
     "tasks": [
