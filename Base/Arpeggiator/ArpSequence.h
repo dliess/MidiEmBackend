@@ -15,13 +15,15 @@ public:
    ArpSequence();
    void push_back(int note, float velocity);
    void clear() noexcept;
-
-private:
    struct NoteData
    {
       int note;
       float velocity;
    };
+   NoteData get(int idx) const noexcept;
+   size_t size() const noexcept;
+
+private:
    std::byte m_stackBuf[2048];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;

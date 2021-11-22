@@ -3,6 +3,7 @@ set(TARGET_NAME "base-arpeggiator")
 set(SOURCES
     "Arpeggiator.cpp"
     "ArpSequence.cpp"
+    "ArpSequencePlayer.cpp"
     "ArpSequenceFactory.cpp"
     "NoteContainer.cpp"
 )
@@ -10,6 +11,7 @@ set(HEADERS
     "Interface/Arpeggiator.h"
     "Interface/ArpTypes.h"
     "ArpSequence.h"
+    "ArpSequencePlayer.h"
     "ArpSequenceFactory.h"
     "NoteContainer.h"
 )

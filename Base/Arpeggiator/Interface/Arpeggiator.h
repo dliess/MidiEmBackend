@@ -35,7 +35,7 @@ public:
    CB_SIGNAL_IF(RangeTypeChanged, RangeType);
    CB_SIGNAL_IF(RangeChanged, int);
    CB_SIGNAL_IF(GateFillChanged, float);
-   CB_SIGNAL_IF(StepLengthChanged, float);
+   CB_SIGNAL_IF(StepLengthChanged, int);
    CB_SIGNAL_IF(AlgorithmChanged, Algorithm);
 
 private:

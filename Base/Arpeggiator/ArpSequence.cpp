@@ -18,3 +18,15 @@ void ArpSequence::clear() noexcept
 {
    m_noteList.clear();
 }
+
+ArpSequence::NoteData ArpSequence::get(int idx) const noexcept
+{
+   auto it = m_noteList.begin();
+   std::advance(it, idx % m_noteList.size());
+   return *it;
+}
+
+size_t ArpSequence::size() const noexcept
+{
+   return m_noteList.size();
+}

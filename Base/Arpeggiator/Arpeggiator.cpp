@@ -1,9 +1,9 @@
 #include "Arpeggiator.h"
 
 #include "ArpSequence.h"
+#include "ArpSequencePlayer.h"
 #include "ArpSequenceFactory.h"
 #include "NoteContainer.h"
-#include "BeatTick.h"
 
 namespace base::arp
 {
@@ -11,11 +11,10 @@ struct ArpeggiatorPrivate
 {
    ArpeggiatorPrivate();
    bool m_bypass{true};
-   float m_gateFill{0.5};
-   int m_stepLength{240};
    NoteContainer m_incomingNoteBuffer;
    ArpSequenceFactory m_arpSequenceFactory;
    ArpSequence m_arpSequence;
+   ArpSequencePlayer m_arpSequencePlayer;
 
    CB_SIGNAL_PRIVATE(Arpeggiator, BypassChanged);
    CB_SIGNAL_PRIVATE(Arpeggiator, NoteOn);
@@ -41,7 +40,8 @@ CB_SIGNAL_IMPL(Arpeggiator, StepLengthChanged);
 CB_SIGNAL_IMPL(Arpeggiator, AlgorithmChanged);
 
 ArpeggiatorPrivate::ArpeggiatorPrivate() :
-    m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence)
+    m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence),
+    m_arpSequencePlayer(m_arpSequence)
 {
    m_arpSequenceFactory.onAlgorithmChanged(
        [this](const Algorithm& algorithm) { emitAlgorithmChanged(algorithm); });
@@ -49,6 +49,18 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
        [this](int range) { emitRangeChanged(range); });
    m_arpSequenceFactory.onRangeTypeChanged(
        [this](const RangeType& rangeType) { emitRangeTypeChanged(rangeType); });
+
+   m_arpSequencePlayer.onNoteOn(
+       [this](int note, float velocity) { emitNoteOn(note, velocity); });
+   m_arpSequencePlayer.onNoteOff(
+       [this](int note, float velocity) { emitNoteOff(note, velocity); });
+   m_arpSequencePlayer.onGateFillChanged(
+       [this](float gateFill) { emitGateFillChanged(gateFill); });
+   m_arpSequencePlayer.onStepLengthChanged(
+       [this](int stepLength) { emitStepLengthChanged(stepLength); });
+   m_arpSequencePlayer.onTurnOver([this](){
+      m_arpSequenceFactory.createIfDirty();
+   });
 }
 
 Arpeggiator::Arpeggiator() : m_pImpl(std::make_unique<ArpeggiatorPrivate>()) {}
@@ -57,14 +69,10 @@ Arpeggiator::~Arpeggiator() = default;
 
 void Arpeggiator::update() noexcept
 {
-   uint64_t beatJiffies = base::tempo::BeatTick::instance().getBeatJiffies();
-   if(beatJiffies > m_bjSeqEnd)
+   if(!m_pImpl->m_bypass)
    {
-      m_pImpl->m_arpSequenceFactory.createIfDirty();
-      m_bjSeqEnd += m_arpSequence.size() * 
+      m_pImpl->m_arpSequencePlayer.update();
    }
-
-
 }
 
 void Arpeggiator::bypass(bool onOff) noexcept
@@ -72,6 +80,14 @@ void Arpeggiator::bypass(bool onOff) noexcept
    if (m_pImpl->m_bypass != onOff)
    {
       m_pImpl->m_bypass = onOff;
+      if(m_pImpl->m_bypass)
+      {
+         m_pImpl->m_arpSequencePlayer.stop();
+      }
+      else
+      {
+         m_pImpl->m_arpSequencePlayer.start();
+      }
       m_pImpl->emitBypassChanged(m_pImpl->m_bypass);
    }
 }
@@ -107,20 +123,12 @@ void Arpeggiator::setRange(RangeType rangeType, int value) noexcept
 
 void Arpeggiator::setGateFill(float gateFill) noexcept
 {
-   if (m_pImpl->m_gateFill != gateFill)
-   {
-      m_pImpl->m_gateFill = gateFill;
-      m_pImpl->emitGateFillChanged(m_pImpl->m_gateFill);
-   }
+   m_pImpl->m_arpSequencePlayer.setGateFill(gateFill);
 }
 
 void Arpeggiator::setStepLength(int stepLength) noexcept
 {
-   if (m_pImpl->m_stepLength != stepLength)
-   {
-      m_pImpl->m_stepLength = stepLength;
-      m_pImpl->emitStepLengthChanged(m_pImpl->m_stepLength);
-   }
+   m_pImpl->m_arpSequencePlayer.setStepLength(stepLength);
 }
 
 void Arpeggiator::setAlgorithm(Algorithm algorithm) noexcept

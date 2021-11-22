@@ -141,6 +141,7 @@ void ArpSequenceFactory::setRange(RangeType rangeType, int value) noexcept
       m_dirty     = true;
       emitRangeTypeChanged(m_rangeType);
    }
+   value = std::max(value, m_rangeType == RangeType::Octave ? 0 : 1);
    if (m_range != value)
    {
       m_range = value;
