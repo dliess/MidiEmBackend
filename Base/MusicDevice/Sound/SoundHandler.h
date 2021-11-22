@@ -9,6 +9,7 @@
 #include "SoundParameterStorage.h"
 #include "SoundPresetHandler.h"
 #include "SoundSection.h"
+#include "Arpeggiator.h"
 
 // namespace midi { template<typename MessageDrain> class Midi1Input; }
 namespace midi
@@ -108,6 +109,7 @@ private:
    std::unique_ptr<MidiOutMsgHandlerT> m_midiOutHandler;
    ParameterStorage m_paramStorage;
    preset::PresetHandler m_presetHandler;
+   std::vector<arp::Arpeggiator> m_arpeggiators;
 
    std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
    std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;

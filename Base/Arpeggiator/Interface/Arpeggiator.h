@@ -16,9 +16,9 @@ public:
    Arpeggiator();
    ~Arpeggiator();
    Arpeggiator(const Arpeggiator&) = delete;
-   Arpeggiator(Arpeggiator&&)      = default;
+   Arpeggiator(Arpeggiator&&);
    Arpeggiator& operator=(const Arpeggiator&) = delete;
-   Arpeggiator& operator=(Arpeggiator&&) = default;
+   Arpeggiator& operator=(Arpeggiator&&);
 
    void update() noexcept;
    void bypass(bool onOff) noexcept;

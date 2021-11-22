@@ -23,4 +23,5 @@ target_link_libraries(MusicDeviceSound
    PUBLIC Util
    PUBLIC Tempo
    PUBLIC MusicDeviceCommon
+   PUBLIC base-arpeggiator
 )

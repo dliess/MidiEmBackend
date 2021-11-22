@@ -27,7 +27,7 @@
         {
             "label": "Build release",
             "type": "shell",
-            "command": "cd ${buildDirectory}; cmake --build . --config {buildType}",
+            "command": "cd ${buildDirectory}; cmake --build . --parallel 8 --config {buildType}",
             "problemMatcher": [],
             "dependsOn": [
                 "Generate UNIX makefiles"

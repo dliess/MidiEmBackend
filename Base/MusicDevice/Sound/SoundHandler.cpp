@@ -54,6 +54,19 @@ void SoundHandler::initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
    {
       doParameterDumpRequest();
    }
+   m_arpeggiators.resize(m_rSoundSection.voices.size());
+   for(int voiceIdx = 0; voiceIdx < m_arpeggiators.size(); ++voiceIdx)
+   {
+      m_arpeggiators[voiceIdx].onNoteOn([this, voiceIdx](int note, float velocity){
+         m_midiOutHandler->noteOn(voiceIdx, note, velocity);
+      });
+      m_arpeggiators[voiceIdx].onNoteOff([this, voiceIdx](int note, float velocity){
+         m_midiOutHandler->noteOff(voiceIdx, note, velocity);
+      });
+      m_arpeggiators[voiceIdx].bypass(false);
+      m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
+      m_arpeggiators[voiceIdx].setStepLength(240/2);
+   }
 }
 
 void SoundHandler::initEvdevHandler()
@@ -77,7 +90,7 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOn(voiceIndex, note, velocity);
+   m_arpeggiators[voiceIndex].noteOn(note, velocity);
 }
 
 void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
@@ -96,7 +109,7 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_midiOutHandler->noteOff(voiceIndex, note, velocity);
+   m_arpeggiators[voiceIndex].noteOn(note, velocity);
 }
 
 void SoundHandler::pitchBend(int voiceIndex, float value) noexcept

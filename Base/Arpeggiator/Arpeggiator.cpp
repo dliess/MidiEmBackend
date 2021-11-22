@@ -66,6 +66,8 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
 Arpeggiator::Arpeggiator() : m_pImpl(std::make_unique<ArpeggiatorPrivate>()) {}
 
 Arpeggiator::~Arpeggiator() = default;
+Arpeggiator::Arpeggiator(Arpeggiator&&) = default;
+Arpeggiator& Arpeggiator::operator=(Arpeggiator&&) = default;
 
 void Arpeggiator::update() noexcept
 {
