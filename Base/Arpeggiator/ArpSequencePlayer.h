@@ -21,6 +21,9 @@ public:
    void setStepLength(int beatTicks) noexcept;
    void update();
 
+   [[nodiscard]] float getGateFill() const noexcept { return m_gateFill; }
+   [[nodiscard]] int getStepLength() const noexcept { return m_stepLength; }
+
    CB_SIGNAL(NoteOn, int, float);
    CB_SIGNAL(NoteOff, int, float);
    CB_SIGNAL(GateFillChanged, float);

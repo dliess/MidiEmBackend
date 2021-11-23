@@ -30,6 +30,14 @@ public:
    void setAlgorithm(Algorithm algorithm) noexcept;
    void setHoldNotes(bool on) noexcept;
 
+   [[nodiscard]] bool getBypass() const noexcept;
+   [[nodiscard]] RangeType getRangeType() const noexcept;
+   [[nodiscard]] int getRange() const noexcept;
+   [[nodiscard]] float getGateFill() const noexcept;
+   [[nodiscard]] int getStepLength() const noexcept;
+   [[nodiscard]] Algorithm getAlgorithm() const noexcept;
+   [[nodiscard]] bool getHoldNotes() const noexcept;
+
    CB_SIGNAL_IF(BypassChanged, bool);
    CB_SIGNAL_IF(NoteOn, int, float);
    CB_SIGNAL_IF(NoteOff, int, float);
@@ -38,6 +46,7 @@ public:
    CB_SIGNAL_IF(GateFillChanged, float);
    CB_SIGNAL_IF(StepLengthChanged, int);
    CB_SIGNAL_IF(AlgorithmChanged, Algorithm);
+   CB_SIGNAL_IF(HoldNotesChanged, bool);
 
 private:
     std::unique_ptr<ArpeggiatorPrivate> m_pImpl;

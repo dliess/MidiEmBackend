@@ -407,7 +407,7 @@ void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).bypass(static_cast<bool>(on));
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).bypass(static_cast<bool>(on));
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorBypass {}", e.what());
       }
@@ -425,7 +425,7 @@ void SoundDevicesRpc::setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uui
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).setStepLength(stepLength);
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).setStepLength(stepLength);
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorStepLength {}", e.what());
       }
@@ -443,7 +443,7 @@ void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).setGateFill(gateFill);
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).setGateFill(gateFill);
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorGateFill {}", e.what());
       }
@@ -461,7 +461,7 @@ void SoundDevicesRpc::setArpeggiatorAlgorithm(
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).setAlgorithm(static_cast<base::arp::Algorithm>(algorithm));
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).setAlgorithm(static_cast<base::arp::Algorithm>(algorithm));
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorAlgorithm {}", e.what());
       }
@@ -480,7 +480,7 @@ void SoundDevicesRpc::setArpeggiatorRange(
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).setRange(static_cast<base::arp::RangeType>(rangeType), range);
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).setRange(static_cast<base::arp::RangeType>(rangeType), range);
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorRange {}", e.what());
       }
@@ -498,7 +498,7 @@ void SoundDevicesRpc::setArpeggiatorHoldNotes(const ::capnzero::SpanCL<16>& uuid
    {
       assert(iter->second->soundHandler);
       try{
-         iter->second->soundHandler->arpeggiator(voiceIdx).setHoldNotes(on);
+         iter->second->soundHandler->arpeggiators().at(voiceIdx).setHoldNotes(on);
       }catch(std::exception& e){
          LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorHoldNotes {}", e.what());
       }

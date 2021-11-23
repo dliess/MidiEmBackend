@@ -16,11 +16,15 @@ public:
    NoteContainer();
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
+   void setHoldNotes(bool on) noexcept;
+
+   [[nodiscard]] bool getHoldNotes() const noexcept { return m_holdNotes; }
    
    struct NotePress
    {
       int note;
       float velocity;
+      bool released{false};
    };
    using ContainerT = std::pmr::list<NotePress>;
    using iterator       = ContainerT::iterator;
@@ -32,12 +36,15 @@ public:
    inline size_t size() const noexcept { return m_noteList.size(); }
 
    CB_SIGNAL(Changed, size_t, size_t);
+   CB_SIGNAL(HoldNotesChanged, bool);
 private:
    std::byte m_stackBuf[2048];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
    std::pmr::unsynchronized_pool_resource m_pool;
    ContainerT m_noteList;
+   bool m_holdNotes{false};
+   bool allReleased() const noexcept;
 };
 
 }   // namespace base::arp

@@ -31,6 +31,30 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
          ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){
             for(auto& cb : m_enginePresetChangeCB) cb(musicDeviceName, engineIdx, presetName);
          });
+         for(int voiceIdx = 0; voiceIdx < ptr->soundHandler->arpeggiators().size(); ++voiceIdx)
+         {
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onBypassChanged([this, uuid, voiceIdx](bool on){
+               emitArpBypassChanged(uuid, voiceIdx, on);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeTypeChanged([this, uuid, voiceIdx](base::arp::RangeType type){
+               emitArpRangeTypeChanged(uuid, voiceIdx, type);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeChanged([this, uuid, voiceIdx](int range){
+               emitArpRangeChanged(uuid, voiceIdx, range);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onGateFillChanged([this, uuid, voiceIdx](float value){
+               emitArpGateFillChanged(uuid, voiceIdx, value);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onStepLengthChanged([this, uuid, voiceIdx](int value){
+               emitArpStepLengthChanged(uuid, voiceIdx, value);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onAlgorithmChanged([this, uuid, voiceIdx](base::arp::Algorithm algorithm){
+               emitArpAlgorithmChanged(uuid, voiceIdx, algorithm);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onHoldNotesChanged([this, uuid, voiceIdx](bool on){
+               emitArpHoldNotesChanged(uuid, voiceIdx, on);
+            });
+         }
       }
    });
 }

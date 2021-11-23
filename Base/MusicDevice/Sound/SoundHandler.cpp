@@ -464,8 +464,8 @@ preset::PresetHandler& SoundHandler::presetHandler() noexcept
    return m_presetHandler;
 }
 
-base::arp::Arpeggiator& SoundHandler::arpeggiator(int voiceIdx)
+std::vector<base::arp::Arpeggiator>& SoundHandler::arpeggiators() noexcept
 {
-   return m_arpeggiators.at(voiceIdx);
+   return m_arpeggiators;
 }
 

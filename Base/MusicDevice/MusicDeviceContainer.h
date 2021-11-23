@@ -8,6 +8,7 @@
 #include "MusicDevice.h"
 #include "MusicDeviceId.h"
 #include "Identifiable.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -59,6 +60,15 @@ public:
 
    using EnginePresetChangeCB = std::function<void(const std::string&, int, const std::string&)>;
    inline void registerEnginePresetChangeCB(EnginePresetChangeCB cb);
+
+   CB_SIGNAL(ArpBypassChanged, util::Identifiable::UUID, int, bool);
+   CB_SIGNAL(ArpRangeTypeChanged, util::Identifiable::UUID, int, base::arp::RangeType);
+   CB_SIGNAL(ArpRangeChanged, util::Identifiable::UUID, int, int);
+   CB_SIGNAL(ArpGateFillChanged, util::Identifiable::UUID, int, float);
+   CB_SIGNAL(ArpStepLengthChanged, util::Identifiable::UUID, int, int);
+   CB_SIGNAL(ArpAlgorithmChanged, util::Identifiable::UUID, int, base::arp::Algorithm);
+   CB_SIGNAL(ArpHoldNotesChanged, util::Identifiable::UUID, int, bool);
+
 private:
    std::vector<Cb> m_addedCb;
    std::vector<Cb> m_aboutToRemoveCbs;

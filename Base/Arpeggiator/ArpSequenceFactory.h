@@ -17,6 +17,10 @@ public:
    void setRange(RangeType rangeType, int value) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
 
+   [[nodiscard]] Algorithm getAlgorithm() const noexcept { return m_algorithm; };
+   [[nodiscard]] RangeType getRangeType() const noexcept { return m_rangeType; }
+   [[nodiscard]] int getRange() const noexcept { return m_range; }
+
    CB_SIGNAL(AlgorithmChanged, Algorithm);
    CB_SIGNAL(RangeTypeChanged, RangeType);
    CB_SIGNAL(RangeChanged, int);

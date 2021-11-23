@@ -100,7 +100,7 @@ public:
    const preset::PresetHandler& presetHandler() const noexcept;
    preset::PresetHandler& presetHandler() noexcept;
 
-   arp::Arpeggiator& arpeggiator(int voiceIdx);
+   std::vector<arp::Arpeggiator>& arpeggiators() noexcept;
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;

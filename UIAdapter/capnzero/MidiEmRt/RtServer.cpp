@@ -103,6 +103,48 @@ RtServer::RtServer(
                                                 presetName);
        });
 
+   // ARP -------------
+   rMusicDeviceContainer.onArpBypassChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, bool on) {
+          signals().SoundDevices__arpeggiatorBypassChanged(uuid, voiceIdx, on);
+       });
+   rMusicDeviceContainer.onArpRangeTypeChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx,
+              base::arp::RangeType rangeType) {
+          signals().SoundDevices__arpeggiatorRangeTypeChanged(
+              uuid, voiceIdx,
+              static_cast<::capnzero::MidiEmRt::ArpeggiatorRangeType>(
+                  rangeType));
+       });
+   rMusicDeviceContainer.onArpRangeChanged([this](util::Identifiable::UUID uuid,
+                                                  int voiceIdx, int range) {
+      signals().SoundDevices__arpeggiatorRangeChanged(uuid, voiceIdx, range);
+   });
+   rMusicDeviceContainer.onArpGateFillChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, float gateFill) {
+          signals().SoundDevices__arpeggiatorGateFillChanged(uuid, voiceIdx,
+                                                             gateFill);
+       });
+   rMusicDeviceContainer.onArpStepLengthChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, int stepLength) {
+          signals().SoundDevices__arpeggiatorStepLengthChanged(uuid, voiceIdx,
+                                                               stepLength);
+       });
+   rMusicDeviceContainer.onArpAlgorithmChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx,
+              base::arp::Algorithm algorithm) {
+          signals().SoundDevices__arpeggiatorAlgorithmChanged(
+              uuid, voiceIdx,
+              static_cast<::capnzero::MidiEmRt::ArpeggiatorAlgorithm>(
+                  algorithm));
+       });
+   rMusicDeviceContainer.onArpHoldNotesChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, bool holdNotes) {
+          signals().SoundDevices__arpeggiatorHoldNotesChanged(uuid, voiceIdx,
+                                                              holdNotes);
+       });
+   // -----------------
+
    rTransportControl.registerTransportMaskChangedCb(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);
