@@ -23,6 +23,7 @@ void NoteContainer::addNote(int note, float velocity) noexcept
    else
    {
       m_noteList.emplace_back(NotePress{note, velocity});
+      if(size() == 1) emitGotFirstNote();
    }
    emitChanged();
 }
@@ -36,6 +37,20 @@ void NoteContainer::removeNote(int note) noexcept
     if(it != m_noteList.end())
     {
         m_noteList.erase(it);
+        if(size() == 0) emitGotEmpty();
     }
     emitChanged();
 }
+
+void NoteContainer::reEmitSignals() noexcept
+{
+   if(size())
+   {
+
+   }
+   else
+   {
+      
+   }
+}
+

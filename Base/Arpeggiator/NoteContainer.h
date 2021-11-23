@@ -16,6 +16,7 @@ public:
    NoteContainer();
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
+   void reEmitSignals() noexcept;
    
    struct NotePress
    {
@@ -32,6 +33,8 @@ public:
    inline size_t size() const noexcept { return m_noteList.size(); }
 
    CB_SIGNAL(Changed);
+   CB_SIGNAL(GotEmpty);
+   CB_SIGNAL(GotFirstNote);
 
 private:
    std::byte m_stackBuf[1024];

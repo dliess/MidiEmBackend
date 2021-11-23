@@ -43,6 +43,19 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
     m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence),
     m_arpSequencePlayer(m_arpSequence)
 {
+   m_incomingNoteBuffer.onGotEmpty([this](){
+      if(!m_bypass)
+      {
+         m_arpSequencePlayer.stop();
+      }
+   });
+   m_incomingNoteBuffer.onGotFirstNote([this](){
+      if(!m_bypass)
+      {
+         m_arpSequencePlayer.start();
+      }
+   });
+
    m_arpSequenceFactory.onAlgorithmChanged(
        [this](const Algorithm& algorithm) { emitAlgorithmChanged(algorithm); });
    m_arpSequenceFactory.onRangeChanged(
@@ -86,7 +99,7 @@ void Arpeggiator::bypass(bool onOff) noexcept
       {
          m_pImpl->m_arpSequencePlayer.stop();
       }
-      else
+      else if(m_pImpl->m_incomingNoteBuffer.size())
       {
          m_pImpl->m_arpSequencePlayer.start();
       }
