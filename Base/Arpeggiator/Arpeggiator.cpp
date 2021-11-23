@@ -43,16 +43,18 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
     m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence),
     m_arpSequencePlayer(m_arpSequence)
 {
-   m_incomingNoteBuffer.onGotEmpty([this](){
+   m_incomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize){
       if(!m_bypass)
       {
-         m_arpSequencePlayer.stop();
-      }
-   });
-   m_incomingNoteBuffer.onGotFirstNote([this](){
-      if(!m_bypass)
-      {
-         m_arpSequencePlayer.start();
+         if(prevSize == 0 && actSize > 0)
+         {
+            m_arpSequencePlayer.start();
+         }
+         else if(prevSize > 0 && actSize == 0)
+         {
+            m_arpSequencePlayer.stop();
+            m_arpSequence.clear();
+         }
       }
    });
 
@@ -98,6 +100,7 @@ void Arpeggiator::bypass(bool onOff) noexcept
       if(m_pImpl->m_bypass)
       {
          m_pImpl->m_arpSequencePlayer.stop();
+         m_pImpl->m_arpSequence.clear();
       }
       else if(m_pImpl->m_incomingNoteBuffer.size())
       {

@@ -109,7 +109,7 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
             m_deviceName);
       return;
    }
-   m_arpeggiators[voiceIndex].noteOn(note, velocity);
+   m_arpeggiators[voiceIndex].noteOff(note, velocity);
 }
 
 void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
@@ -188,6 +188,10 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)
    {
+      for(auto& arp : m_arpeggiators)
+      {
+         arp.update();
+      }
       m_paramStorage.updateActualValues(
           [this](int voiceIdx, int paramIdx, float value, float prevValue) {
              const auto& paramDescr =

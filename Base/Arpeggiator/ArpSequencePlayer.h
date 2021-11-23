@@ -28,6 +28,7 @@ public:
    CB_SIGNAL(TurnOver);
 private:
    const ArpSequence& m_rArpSequence;
+   bool m_started{false};
    float m_gateFill{0.5};
    int m_stepLength{240};
    int m_actualIdx{0};

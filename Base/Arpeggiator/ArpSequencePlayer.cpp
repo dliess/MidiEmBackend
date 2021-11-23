@@ -1,6 +1,7 @@
 #include "ArpSequencePlayer.h"
 
 #include "BeatTick.h"
+#include "loguru.hpp"
 
 using namespace base::arp;
 
@@ -14,14 +15,17 @@ void ArpSequencePlayer::start() noexcept
    m_tStepEnd = base::tempo::BeatTick::instance().getBeatJiffies();
    m_tNoteOff = m_tStepEnd;
    m_actualIdx       = 0;
-   emitTurnOver();
+   m_started = true;
 }
 
 void ArpSequencePlayer::stop() noexcept
 {
    const ArpSequence::NoteData noteToRelease = m_rArpSequence.get(m_actualIdx);
+   //LOG_F(INFO, "ArpSequencePlayer::stop() NoteOff({})", noteToRelease.note);
    emitNoteOff(noteToRelease.note, 1.0);
    m_released = true;
+   m_actualIdx       = 0;
+   m_started = false;
 }
 
 void ArpSequencePlayer::setGateFill(float gateFill) noexcept
@@ -47,6 +51,10 @@ void ArpSequencePlayer::setStepLength(int stepLength) noexcept
 
 void ArpSequencePlayer::update()
 {
+   if(false == m_started || m_rArpSequence.size() == 0)
+   {
+      return;
+   }
    const uint64_t now = base::tempo::BeatTick::instance().getBeatJiffies();
    if (now < m_tNoteOff)
    {
@@ -68,7 +76,7 @@ void ArpSequencePlayer::update()
          } while (m_tStepEnd < now);
          const int noteOffTicks = std::min(int(m_stepLength * (1.0 - m_gateFill)), m_stepLength - 1);
          m_tNoteOff = m_tStepEnd - noteOffTicks;
-         if (++m_actualIdx == m_rArpSequence.size())
+         if (++m_actualIdx >= m_rArpSequence.size())
          {
             m_actualIdx = 0;
             emitTurnOver();

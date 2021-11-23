@@ -27,6 +27,7 @@ private:
    std::byte m_stackBuf[2048];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
+   std::pmr::unsynchronized_pool_resource m_pool;
    std::pmr::list<NoteData> m_noteList;
 };
 

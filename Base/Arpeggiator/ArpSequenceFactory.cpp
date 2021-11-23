@@ -9,7 +9,14 @@ ArpSequenceFactory::ArpSequenceFactory(NoteContainer& rIncomingNoteBuffer,
                                        ArpSequence& rArpSequence) noexcept :
     m_rIncomingNoteBuffer(rIncomingNoteBuffer), m_rArpSequence(rArpSequence)
 {
-   m_rIncomingNoteBuffer.onChanged([this]() { m_dirty = true; });
+   m_rIncomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize)
+   {
+      m_dirty = true;
+      if(prevSize == 0 && actSize > 0)
+      {
+         createIfDirty();
+      }
+   });
 }
 
 void ArpSequenceFactory::createIfDirty() noexcept
@@ -20,9 +27,9 @@ void ArpSequenceFactory::createIfDirty() noexcept
    }
    static constexpr int NOTES_IN_OCTAVE = 12;
    m_rArpSequence.clear();
-   std::byte stackBuf[1024];
-   util::PrintAlloc oom("Out of Memory", std::pmr::null_memory_resource());
-   std::pmr::monotonic_buffer_resource mbr(&oom);
+   std::byte stackBuf[2048];
+   util::PrintAlloc oom("ArpSequenceFactory:: Out of Memory", std::pmr::null_memory_resource());
+   std::pmr::monotonic_buffer_resource mbr(stackBuf, sizeof(stackBuf), &oom);
    std::pmr::unsynchronized_pool_resource pool(&mbr);
    std::pmr::map<int, float> map(&pool);
    switch (m_algorithm)

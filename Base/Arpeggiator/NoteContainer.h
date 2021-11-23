@@ -16,7 +16,6 @@ public:
    NoteContainer();
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
-   void reEmitSignals() noexcept;
    
    struct NotePress
    {
@@ -32,12 +31,9 @@ public:
    inline const_iterator end() const noexcept { return m_noteList.end(); }
    inline size_t size() const noexcept { return m_noteList.size(); }
 
-   CB_SIGNAL(Changed);
-   CB_SIGNAL(GotEmpty);
-   CB_SIGNAL(GotFirstNote);
-
+   CB_SIGNAL(Changed, size_t, size_t);
 private:
-   std::byte m_stackBuf[1024];
+   std::byte m_stackBuf[2048];
    util::PrintAlloc m_oom;
    std::pmr::monotonic_buffer_resource m_mbr;
    std::pmr::unsynchronized_pool_resource m_pool;
