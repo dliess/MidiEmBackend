@@ -90,6 +90,26 @@ public:
    void sendParameterDumpRequest(const ::capnzero::SpanCL<16>& uuid,
                                  ::capnzero::Int8 voiceIdx) override;
 
+   void setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
+                             ::capnzero::Int8 voiceIdx,
+                             ::capnzero::Int8 on) override;
+   void setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uuid,
+                                 ::capnzero::Int8 voiceIdx,
+                                 ::capnzero::Int8 stepLength) override;
+   void setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
+                               ::capnzero::Int8 voiceIdx,
+                               ::capnzero::Float32 gateFill) override;
+   void setArpeggiatorAlgorithm(
+       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+       ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm) override;
+   void setArpeggiatorRange(
+       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+       ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
+       ::capnzero::Int8 range) override;
+   void setArpeggiatorHoldNotes(const ::capnzero::SpanCL<16>& uuid,
+                                ::capnzero::Int8 voiceIdx,
+                                ::capnzero::Int8 on) override;
+
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
 };

@@ -463,3 +463,9 @@ preset::PresetHandler& SoundHandler::presetHandler() noexcept
 {
    return m_presetHandler;
 }
+
+base::arp::Arpeggiator& SoundHandler::arpeggiator(int voiceIdx)
+{
+   return m_arpeggiators.at(voiceIdx);
+}
+

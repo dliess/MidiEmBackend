@@ -28,6 +28,7 @@ public:
    void setGateFill(float gateFill) noexcept;
    void setStepLength(int beatTicks) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
+   void setHoldNotes(bool on) noexcept;
 
    CB_SIGNAL_IF(BypassChanged, bool);
    CB_SIGNAL_IF(NoteOn, int, float);

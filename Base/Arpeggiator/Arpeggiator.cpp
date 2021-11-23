@@ -153,3 +153,8 @@ void Arpeggiator::setAlgorithm(Algorithm algorithm) noexcept
 {
    m_pImpl->m_arpSequenceFactory.setAlgorithm(algorithm);
 }
+
+void Arpeggiator::setHoldNotes(bool on) noexcept
+{
+   // TODO
+}

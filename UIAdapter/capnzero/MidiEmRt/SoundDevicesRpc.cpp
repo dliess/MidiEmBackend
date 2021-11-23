@@ -395,3 +395,113 @@ void SoundDevicesRpc::sendParameterDumpRequest(
       iter->second->soundHandler->doParameterDumpRequest();
    }
 }
+
+void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
+                           ::capnzero::Int8 voiceIdx,
+                           ::capnzero::Int8 on)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).bypass(static_cast<bool>(on));
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorBypass {}", e.what());
+      }
+   }  
+}
+
+void SoundDevicesRpc::setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uuid,
+                              ::capnzero::Int8 voiceIdx,
+                              ::capnzero::Int8 stepLength)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).setStepLength(stepLength);
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorStepLength {}", e.what());
+      }
+   }
+}
+
+void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
+                              ::capnzero::Int8 voiceIdx,
+                              ::capnzero::Float32 gateFill)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).setGateFill(gateFill);
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorGateFill {}", e.what());
+      }
+   }
+}
+
+void SoundDevicesRpc::setArpeggiatorAlgorithm(
+      const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+      ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).setAlgorithm(static_cast<base::arp::Algorithm>(algorithm));
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorAlgorithm {}", e.what());
+      }
+   }
+}
+
+void SoundDevicesRpc::setArpeggiatorRange(
+      const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+      ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
+      ::capnzero::Int8 range)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).setRange(static_cast<base::arp::RangeType>(rangeType), range);
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorRange {}", e.what());
+      }
+   }
+}
+
+void SoundDevicesRpc::setArpeggiatorHoldNotes(const ::capnzero::SpanCL<16>& uuid,
+                              ::capnzero::Int8 voiceIdx,
+                              ::capnzero::Int8 on)
+{
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMusicDeviceContainer.find(uuid_);
+   if (iter != m_rMusicDeviceContainer.end())
+   {
+      assert(iter->second->soundHandler);
+      try{
+         iter->second->soundHandler->arpeggiator(voiceIdx).setHoldNotes(on);
+      }catch(std::exception& e){
+         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorHoldNotes {}", e.what());
+      }
+   }
+}
+
