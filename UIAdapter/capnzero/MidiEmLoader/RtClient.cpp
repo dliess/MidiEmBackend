@@ -48,6 +48,70 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                                                      std::string(presetName));
        });
 
+   onSoundDevicesArpeggiatorAlgorithmChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorAlgorithmChanged(
+              uuidData, voiceIdx,
+              static_cast<::capnzero::MidiEmLoader::ArpeggiatorAlgorithm>(
+                  algorithm));
+       });
+   onSoundDevicesArpeggiatorBypassChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Int8 on) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorBypassChanged(uuidData, voiceIdx,
+                                                          on);
+       });
+
+   onSoundDevicesArpeggiatorGateFillChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Float32 gateFill) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorGateFillChanged(uuidData, voiceIdx,
+                                                            gateFill);
+       });
+   onSoundDevicesArpeggiatorHoldNotesChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Int8 on) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorHoldNotesChanged(uuidData, voiceIdx,
+                                                             on);
+       });
+   onSoundDevicesArpeggiatorRangeChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 range) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorRangeChanged(uuidData, voiceIdx,
+                                                         range);
+       });
+   onSoundDevicesArpeggiatorRangeTypeChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorRangeTypeChanged(
+              uuidData, voiceIdx,
+              static_cast<::capnzero::MidiEmLoader::ArpeggiatorRangeType>(
+                  rangeType));
+       });
+   onSoundDevicesArpeggiatorStepLengthChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 stepLength) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorStepLengthChanged(uuidData, voiceIdx,
+                                                          stepLength);
+       });
+
    onTransportControlEnabledChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
                    ::capnzero::UInt8 enabled) {

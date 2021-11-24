@@ -17,8 +17,23 @@ SoundHandler::SoundHandler(std::string deviceName,
     m_deviceName(std::move(deviceName)),
     m_rSoundSection(rSoundSection),
     m_paramStorage(rSoundSection),
-    m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets))
+    m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets)),
+    m_arpeggiators(m_rSoundSection.voices.size())
 {
+   for(int voiceIdx = 0; voiceIdx < m_arpeggiators.size(); ++voiceIdx)
+   {
+      m_arpeggiators[voiceIdx].onNoteOn([this, voiceIdx](int note, float velocity){
+         assert(m_midiOutHandler);
+         m_midiOutHandler->noteOn(voiceIdx, note, velocity);
+      });
+      m_arpeggiators[voiceIdx].onNoteOff([this, voiceIdx](int note, float velocity){
+         assert(m_midiOutHandler);
+         m_midiOutHandler->noteOff(voiceIdx, note, velocity);
+      });
+      m_arpeggiators[voiceIdx].bypass(false);
+      m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
+      m_arpeggiators[voiceIdx].setStepLength(240/2);
+   }
 }
 
 SoundHandler::~SoundHandler() =
@@ -53,19 +68,6 @@ void SoundHandler::initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
    if (m_midiInMsgHandler)
    {
       doParameterDumpRequest();
-   }
-   m_arpeggiators.resize(m_rSoundSection.voices.size());
-   for(int voiceIdx = 0; voiceIdx < m_arpeggiators.size(); ++voiceIdx)
-   {
-      m_arpeggiators[voiceIdx].onNoteOn([this, voiceIdx](int note, float velocity){
-         m_midiOutHandler->noteOn(voiceIdx, note, velocity);
-      });
-      m_arpeggiators[voiceIdx].onNoteOff([this, voiceIdx](int note, float velocity){
-         m_midiOutHandler->noteOff(voiceIdx, note, velocity);
-      });
-      m_arpeggiators[voiceIdx].bypass(false);
-      m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
-      m_arpeggiators[voiceIdx].setStepLength(240/2);
    }
 }
 

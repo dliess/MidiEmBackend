@@ -416,7 +416,7 @@ void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
 
 void SoundDevicesRpc::setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uuid,
                               ::capnzero::Int8 voiceIdx,
-                              ::capnzero::Int8 stepLength)
+                              ::capnzero::Int32 stepLength)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -471,7 +471,7 @@ void SoundDevicesRpc::setArpeggiatorAlgorithm(
 void SoundDevicesRpc::setArpeggiatorRange(
       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
       ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
-      ::capnzero::Int8 range)
+      ::capnzero::Int32 range)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());

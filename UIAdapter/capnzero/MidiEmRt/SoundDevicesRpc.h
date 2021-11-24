@@ -95,7 +95,7 @@ public:
                              ::capnzero::Int8 on) override;
    void setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uuid,
                                  ::capnzero::Int8 voiceIdx,
-                                 ::capnzero::Int8 stepLength) override;
+                                 ::capnzero::Int32 stepLength) override;
    void setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
                                ::capnzero::Int8 voiceIdx,
                                ::capnzero::Float32 gateFill) override;
@@ -105,7 +105,7 @@ public:
    void setArpeggiatorRange(
        const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
        ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
-       ::capnzero::Int8 range) override;
+       ::capnzero::Int32 range) override;
    void setArpeggiatorHoldNotes(const ::capnzero::SpanCL<16>& uuid,
                                 ::capnzero::Int8 voiceIdx,
                                 ::capnzero::Int8 on) override;
