@@ -30,9 +30,7 @@ SoundHandler::SoundHandler(std::string deviceName,
          assert(m_midiOutHandler);
          m_midiOutHandler->noteOff(voiceIdx, note, velocity);
       });
-      m_arpeggiators[voiceIdx].bypass(false);
       m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
-      m_arpeggiators[voiceIdx].setStepLength(240/2);
    }
 }
 
