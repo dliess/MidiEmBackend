@@ -5,6 +5,7 @@
 
 namespace base::arp
 {
+DECLARE_ENUM(FeedMode, uint, Control, Sequence);
 DECLARE_ENUM(Algorithm, uint, Up, Down, UpDown, Random, RecvOrder,
              CustomSequence);
 DECLARE_ENUM(RangeType, uint, Octave, Notes);

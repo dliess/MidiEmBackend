@@ -109,6 +109,13 @@ public:
    void setArpeggiatorHoldNotes(const ::capnzero::SpanCL<16>& uuid,
                                 ::capnzero::Int8 voiceIdx,
                                 ::capnzero::Int8 on) override;
+   void setArpeggiatorFeedMode(
+       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+       ::capnzero::MidiEmRt::ArpeggiatorFeedMode feedMode) override;
+   void arpeggiatorSeqInsertPause(const ::capnzero::SpanCL<16>& uuid,
+                                  ::capnzero::Int8 voiceIdx) override;
+   void arpeggiatorSeqRemoveLastNote(const ::capnzero::SpanCL<16>& uuid,
+                                     ::capnzero::Int8 voiceIdx) override;
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;

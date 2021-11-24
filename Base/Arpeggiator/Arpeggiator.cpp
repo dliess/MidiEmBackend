@@ -25,6 +25,8 @@ struct ArpeggiatorPrivate
    CB_SIGNAL_PRIVATE(Arpeggiator, StepLengthChanged);
    CB_SIGNAL_PRIVATE(Arpeggiator, AlgorithmChanged);
    CB_SIGNAL_PRIVATE(Arpeggiator, HoldNotesChanged);
+   CB_SIGNAL_PRIVATE(Arpeggiator, FeedModeChanged);
+   CB_SIGNAL_PRIVATE(Arpeggiator, SeqSizeChanged);
 };
 
 }   // namespace base::arp
@@ -40,6 +42,8 @@ CB_SIGNAL_IMPL(Arpeggiator, GateFillChanged);
 CB_SIGNAL_IMPL(Arpeggiator, StepLengthChanged);
 CB_SIGNAL_IMPL(Arpeggiator, AlgorithmChanged);
 CB_SIGNAL_IMPL(Arpeggiator, HoldNotesChanged);
+CB_SIGNAL_IMPL(Arpeggiator, FeedModeChanged);
+CB_SIGNAL_IMPL(Arpeggiator, SeqSizeChanged);
 
 ArpeggiatorPrivate::ArpeggiatorPrivate() :
     m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence),
@@ -162,6 +166,22 @@ void Arpeggiator::setHoldNotes(bool on) noexcept
    m_pImpl->m_incomingNoteBuffer.setHoldNotes(on);
 }
 
+void Arpeggiator::setFeedMode(FeedMode feedMode) noexcept
+{
+   // TODO
+}
+
+void Arpeggiator::seqInsertPause() noexcept
+{
+   // TODO
+}
+
+void Arpeggiator::seqRemoveLastNote() noexcept
+{
+   // TODO
+}
+
+
 bool Arpeggiator::getBypass() const noexcept { return m_pImpl->m_bypass; }
 RangeType Arpeggiator::getRangeType() const noexcept
 {
@@ -186,4 +206,12 @@ Algorithm Arpeggiator::getAlgorithm() const noexcept
 bool Arpeggiator::getHoldNotes() const noexcept
 {
    return m_pImpl->m_incomingNoteBuffer.getHoldNotes();
+}
+FeedMode Arpeggiator::getFeedMode() const noexcept
+{
+   // TODO
+}
+int Arpeggiator::getSeqSize() const noexcept
+{
+   // TODO
 }
