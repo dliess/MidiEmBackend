@@ -131,20 +131,31 @@ void Arpeggiator::bypass(bool onOff) noexcept
 
 void Arpeggiator::noteOn(int note, float velocity) noexcept
 {
-   if (m_pImpl->m_bypass)
-   {
-      m_pImpl->emitNoteOn(note, velocity);
-   }
    switch (m_pImpl->m_feedMode)
    {
       case FeedMode::Control:
       {
+         if (m_pImpl->m_bypass)
+         {
+            m_pImpl->emitNoteOn(note, velocity);
+         }
          m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
          break;
       }
       case FeedMode::Sequence:
       {
-         m_pImpl->m_incomingSequenceBuffer.addNote(note, velocity);
+         if (m_pImpl->m_bypass)
+         {
+            m_pImpl->emitNoteOn(note, velocity);
+         }
+         else
+         {
+            if(m_pImpl->m_incomingNoteBuffer.size() == 0)
+            {
+               m_pImpl->emitNoteOn(note, velocity);
+            }
+            m_pImpl->m_incomingSequenceBuffer.addNote(note, velocity);
+         }
          break;
       }
    }
@@ -152,19 +163,23 @@ void Arpeggiator::noteOn(int note, float velocity) noexcept
 
 void Arpeggiator::noteOff(int note, float velocity) noexcept
 {
-   if (m_pImpl->m_bypass)
-   {
-      m_pImpl->emitNoteOff(note, velocity);
-   }
    switch (m_pImpl->m_feedMode)
    {
       case FeedMode::Control:
       {
+         if (m_pImpl->m_bypass)
+         {
+            m_pImpl->emitNoteOff(note, velocity);
+         }
          m_pImpl->m_incomingNoteBuffer.removeNote(note);
          break;
       }
       case FeedMode::Sequence:
-      { /* we dont remove anything*/
+      {
+         if(m_pImpl->m_incomingNoteBuffer.size() == 0)
+         {
+            m_pImpl->emitNoteOff(note, velocity);
+         }
          break;
       }
    }

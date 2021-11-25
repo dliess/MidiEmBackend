@@ -1,11 +1,11 @@
 #ifndef BASE_ARP_SEQUENCE_FACTORY_H
 #define BASE_ARP_SEQUENCE_FACTORY_H
 
+#include "ArpSequence.h"
 #include "ArpTypes.h"
+#include "BaseSequence.h"
 #include "CallbackSignal.h"
 #include "NoteContainer.h"
-#include "ArpSequence.h"
-#include "BaseSequence.h"
 
 namespace base::arp
 {
@@ -21,7 +21,10 @@ public:
    void setAlgorithm(Algorithm algorithm) noexcept;
    void updateSequence() noexcept;
 
-   [[nodiscard]] Algorithm getAlgorithm() const noexcept { return m_algorithm; };
+   [[nodiscard]] Algorithm getAlgorithm() const noexcept
+   {
+      return m_algorithm;
+   };
    [[nodiscard]] RangeType getRangeType() const noexcept { return m_rangeType; }
    [[nodiscard]] int getRange() const noexcept { return m_range; }
 
@@ -41,6 +44,8 @@ private:
    using NoteData = ArpSequence::NoteData;
    std::pmr::list<NoteData> m_actualBaseSequence;
    size_t rangeLen() const noexcept;
+   static int keepInNoteRange(int note) noexcept;
+   void expandToArpSequence(int offsetNote, float velocity) noexcept;
 };
 
 }   // namespace base::arp

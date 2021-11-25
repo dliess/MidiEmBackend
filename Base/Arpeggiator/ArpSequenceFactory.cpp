@@ -45,7 +45,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(
+            expandToArpSequence(
                 it->first + ((i / map.size()) * NOTES_IN_OCTAVE), it->second);
             if (++it == map.end())
             {
@@ -63,7 +63,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.rbegin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(
+            expandToArpSequence(
                 it->first + ((i / map.size()) * NOTES_IN_OCTAVE), it->second);
             if (++it == map.rend())
             {
@@ -82,7 +82,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(
+            expandToArpSequence(
                 it->first + ((i / (2 * map.size() - 1)) * NOTES_IN_OCTAVE),
                 it->second);
             if (up)
@@ -118,10 +118,9 @@ void ArpSequenceFactory::createIfDirty() noexcept
          {
             auto it = m_rIncomingNoteBuffer.begin();
             std::advance(it, int(uniform_dist(e1)));
-            m_rArpSequence.push_back(
-                it->note +
-                    ((i / m_rIncomingNoteBuffer.size()) * NOTES_IN_OCTAVE),
-                it->velocity);
+            expandToArpSequence(it->note + ((i / m_rIncomingNoteBuffer.size()) *
+                                            NOTES_IN_OCTAVE),
+                                it->velocity);
          }
          break;
       }
@@ -130,8 +129,8 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = m_rIncomingNoteBuffer.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(
-                it->note + ((i / map.size()) * NOTES_IN_OCTAVE), it->velocity);
+            expandToArpSequence(it->note + ((i / map.size()) * NOTES_IN_OCTAVE),
+                                it->velocity);
             if (++it == m_rIncomingNoteBuffer.end())
             {
                it = m_rIncomingNoteBuffer.begin();
@@ -172,13 +171,14 @@ void ArpSequenceFactory::setAlgorithm(Algorithm algorithm) noexcept
 
 void ArpSequenceFactory::updateSequence() noexcept
 {
-   if(m_rSequenceSource.size())
+   if (m_rSequenceSource.size())
    {
       m_actualBaseSequence.clear();
-      for(const auto& e : m_rSequenceSource)
+      for (const auto& e : m_rSequenceSource)
       {
          m_actualBaseSequence.emplace_back(NoteData{e.note, e.velocity});
-      } 
+      }
+      m_dirty = true;
    }
 }
 
@@ -187,4 +187,27 @@ size_t ArpSequenceFactory::rangeLen() const noexcept
    return m_rangeType == RangeType::Octave
               ? m_rIncomingNoteBuffer.size() * m_range
               : m_range;
+}
+
+int ArpSequenceFactory::keepInNoteRange(int note) noexcept
+{
+   return std::max(std::min(127, note), 0);
+}
+
+void ArpSequenceFactory::expandToArpSequence(int offsetNote,
+                                             float velocity) noexcept
+{
+   const int seqOffset = m_actualBaseSequence.front().note;
+   for (const auto& seqNote : m_actualBaseSequence)
+   {
+      if (seqNote.note == -1)
+      {
+         m_rArpSequence.push_back(-1, 0.0);   // Pause
+      }
+      else
+      {
+         m_rArpSequence.push_back(
+             keepInNoteRange(offsetNote + seqNote.note - seqOffset), velocity);
+      }
+   }
 }
