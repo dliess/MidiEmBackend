@@ -14,17 +14,20 @@ void ArpSequencePlayer::start() noexcept
 {
    m_tStepEnd = base::tempo::BeatTick::instance().getBeatJiffies();
    m_tNoteOff = m_tStepEnd;
-   m_actualIdx       = 0;
+   m_actualIdx       = -1;
    m_started = true;
 }
 
 void ArpSequencePlayer::stop() noexcept
 {
-   const ArpSequence::NoteData noteToRelease = m_rArpSequence.get(m_actualIdx);
-   //LOG_F(INFO, "ArpSequencePlayer::stop() NoteOff({})", noteToRelease.note);
-   emitNoteOff(noteToRelease.note, 1.0);
+   if(m_actualIdx > -1)
+   {
+      const ArpSequence::NoteData noteToRelease = m_rArpSequence.get(m_actualIdx);
+      //LOG_F(INFO, "ArpSequencePlayer::stop() NoteOff({})", noteToRelease.note);
+      emitNoteOff(noteToRelease.note, 1.0);
+   }
    m_released = true;
-   m_actualIdx       = 0;
+   m_actualIdx       = -1;
    m_started = false;
 }
 
@@ -62,7 +65,7 @@ void ArpSequencePlayer::update()
    }
    else
    {
-      if (!m_released)
+      if (!m_released && m_actualIdx > -1)
       {
          const ArpSequence::NoteData noteToRelease =
              m_rArpSequence.get(m_actualIdx);

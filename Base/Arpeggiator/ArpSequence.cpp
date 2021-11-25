@@ -16,7 +16,7 @@ void ArpSequence::push_back(int note, float velocity)
 
 void ArpSequence::clear() noexcept
 {
-   //LOG_F(INFO, "Clear ArpSequence");
+   //LOG_F(INFO, "----------------Clear ArpSequence----------------");
    m_noteList.clear();
 }
 

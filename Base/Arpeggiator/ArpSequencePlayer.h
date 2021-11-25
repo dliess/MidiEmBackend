@@ -34,7 +34,7 @@ private:
    bool m_started{false};
    float m_gateFill{0.5};
    int m_stepLength{240};
-   int m_actualIdx{0};
+   int m_actualIdx{-1};
    uint64_t m_tStepEnd{0};
    uint64_t m_tNoteOff{0};
    bool m_released{true};
