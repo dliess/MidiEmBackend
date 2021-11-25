@@ -12,8 +12,10 @@ ArpSequenceFactory::ArpSequenceFactory(
     m_rPool(pool),
     m_rIncomingNoteBuffer(rIncomingNoteBuffer),
     m_rSequenceSource(rSequenceSource),
-    m_rArpSequence(rArpSequence)
+    m_rArpSequence(rArpSequence),
+    m_actualBaseSequence(&pool)
 {
+   m_actualBaseSequence.emplace_back(NoteData{64, 1.0});
    m_rIncomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize) {
       m_dirty = true;
       if (prevSize == 0 && actSize > 0)
@@ -137,10 +139,6 @@ void ArpSequenceFactory::createIfDirty() noexcept
          }
          break;
       }
-      case Algorithm::CustomSequence:
-      {
-         break;
-      }
    }
    m_dirty = false;
 }
@@ -169,6 +167,18 @@ void ArpSequenceFactory::setAlgorithm(Algorithm algorithm) noexcept
       m_algorithm = algorithm;
       m_dirty     = true;
       emitAlgorithmChanged(m_algorithm);
+   }
+}
+
+void ArpSequenceFactory::updateSequence() noexcept
+{
+   if(m_rSequenceSource.size())
+   {
+      m_actualBaseSequence.clear();
+      for(const auto& e : m_rSequenceSource)
+      {
+         m_actualBaseSequence.emplace_back(NoteData{e.note, e.velocity});
+      } 
    }
 }
 

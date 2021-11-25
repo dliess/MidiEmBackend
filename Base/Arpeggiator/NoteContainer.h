@@ -17,6 +17,7 @@ public:
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
    void setHoldNotes(bool on) noexcept;
+   void noteOffAll() noexcept;
 
    [[nodiscard]] bool getHoldNotes() const noexcept { return m_holdNotes; }
    

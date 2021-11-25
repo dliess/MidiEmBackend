@@ -91,3 +91,21 @@ bool NoteContainer::allReleased() const noexcept
    }
    return allReleased;
 }
+
+void NoteContainer::noteOffAll() noexcept
+{
+   for(auto it = m_noteList.begin(); it != m_noteList.end();)
+   {
+      if(m_holdNotes)
+      {
+         it->released = true;
+         ++it;
+      }
+      else
+      {
+         it = m_noteList.erase(it);
+      }
+   }
+
+}
+

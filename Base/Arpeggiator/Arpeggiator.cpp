@@ -75,6 +75,10 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
    m_incomingNoteBuffer.onHoldNotesChanged(
        [this](bool on) { emitHoldNotesChanged(on); });
 
+   m_incomingSequenceBuffer.onSizeChanged([this](int size){
+      emitSeqSizeChanged(size);
+   });
+
    m_arpSequenceFactory.onAlgorithmChanged(
        [this](const Algorithm& algorithm) { emitAlgorithmChanged(algorithm); });
    m_arpSequenceFactory.onRangeChanged(
@@ -140,7 +144,7 @@ void Arpeggiator::noteOn(int note, float velocity) noexcept
       }
       case FeedMode::Sequence:
       {
-         // m_pImpl->m_incomingSequenceBuffer.addNote(note, velocity);
+         m_pImpl->m_incomingSequenceBuffer.addNote(note, velocity);
          break;
       }
    }
@@ -160,8 +164,7 @@ void Arpeggiator::noteOff(int note, float velocity) noexcept
          break;
       }
       case FeedMode::Sequence:
-      {
-         // m_pImpl->m_incomingSequenceBuffer.removeNote(note);
+      { /* we dont remove anything*/
          break;
       }
    }
@@ -201,31 +204,28 @@ void Arpeggiator::setFeedMode(FeedMode feedMode) noexcept
       {
          case FeedMode::Control:
          {
-            // m_pImpl->m_arpSequenceFactory.changeSequence(); //from
-            // m_incomingSequenceBuffer
+            m_pImpl->m_arpSequenceFactory.updateSequence();
             break;
          }
          case FeedMode::Sequence:
          {
-            // TODO
-            // m_pImpl->m_incomingNoteBuffer.removeAll();
+            m_pImpl->m_incomingNoteBuffer.noteOffAll();
             break;
          }
       }
+      m_pImpl->m_incomingSequenceBuffer.clear();
       m_pImpl->emitFeedModeChanged(m_pImpl->m_feedMode);
    }
 }
 
 void Arpeggiator::seqInsertPause() noexcept
 {
-   // m_pImpl->m_incomingSequenceBuffer.insertPause();
-   // TODO
+   m_pImpl->m_incomingSequenceBuffer.addPause();
 }
 
 void Arpeggiator::seqRemoveLastNote() noexcept
 {
-   // m_pImpl->m_incomingSequenceBuffer.removeLastNote();
-   // TODO
+   m_pImpl->m_incomingSequenceBuffer.removeLastNote();
 }
 
 bool Arpeggiator::getBypass() const noexcept { return m_pImpl->m_bypass; }
@@ -259,6 +259,5 @@ FeedMode Arpeggiator::getFeedMode() const noexcept
 }
 int Arpeggiator::getSeqSize() const noexcept
 {
-   // return m_incomingSequenceBuffer.getSeqSize();
-   // TODO
+   return m_pImpl->m_incomingSequenceBuffer.size();
 }

@@ -19,6 +19,7 @@ public:
    void createIfDirty() noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
+   void updateSequence() noexcept;
 
    [[nodiscard]] Algorithm getAlgorithm() const noexcept { return m_algorithm; };
    [[nodiscard]] RangeType getRangeType() const noexcept { return m_rangeType; }
@@ -37,6 +38,8 @@ private:
    Algorithm m_algorithm{Algorithm::Up};
    RangeType m_rangeType{RangeType::Octave};
    int m_range{1};
+   using NoteData = ArpSequence::NoteData;
+   std::pmr::list<NoteData> m_actualBaseSequence;
    size_t rangeLen() const noexcept;
 };
 

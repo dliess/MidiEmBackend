@@ -1,4 +1,6 @@
 #include "BaseSequence.h"
+
+#include "BeatTick.h"
 #include "loguru.hpp"
 
 using namespace base::arp;
@@ -8,19 +10,41 @@ BaseSequence::BaseSequence(std::pmr::unsynchronized_pool_resource& pool) :
 {
 }
 
-void BaseSequence::push_back(int note, float velocity)
+void BaseSequence::addNote(int note, float velocity)
 {
-   //LOG_F(INFO, "ArpSequence push_back({}, {})", note, velocity);
-   m_noteList.push_back({note, velocity});
+   uint64_t ts_now = base::tempo::BeatTick::instance().getBeatJiffies();
+   if (m_noteList.size() && m_noteList.back().note == NoteData::PauseNote &&
+       ((ts_now - m_noteList.back().bpmTimestamp) < Threshold))
+   {
+      m_noteList.back() = NoteData{note, velocity, ts_now};
+   }
+   else
+   {
+      m_noteList.emplace_back(NoteData{note, velocity, ts_now});
+      emitSizeChanged(size());
+   }
 }
 
 void BaseSequence::clear() noexcept
 {
-   //LOG_F(INFO, "Clear ArpSequence");
    m_noteList.clear();
+   emitSizeChanged(size());
 }
 
-size_t BaseSequence::size() const noexcept
+void BaseSequence::addPause() noexcept
 {
-   return m_noteList.size();
+   uint64_t ts_now = base::tempo::BeatTick::instance().getBeatJiffies();
+   if (m_noteList.size() && m_noteList.back().note != NoteData::PauseNote &&
+       ((ts_now - m_noteList.back().bpmTimestamp) < Threshold))
+   {
+      return;
+   }
+   m_noteList.emplace_back(NoteData{NoteData::PauseNote, 0.0, ts_now});
+   emitSizeChanged(size());
+}
+
+void BaseSequence::removeLastNote() noexcept
+{
+   m_noteList.pop_back();
+   emitSizeChanged(size());
 }
