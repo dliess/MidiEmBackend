@@ -55,6 +55,12 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
             ptr->soundHandler->arpeggiators().at(voiceIdx).onHoldNotesChanged([this, uuid, voiceIdx](bool on){
                emitArpHoldNotesChanged(uuid, voiceIdx, on);
             });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onFeedModeChanged([this, uuid, voiceIdx](base::arp::FeedMode feedMode){
+               emitArpFeedModeChanged(uuid, voiceIdx, feedMode);
+            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onSeqSizeChanged([this, uuid, voiceIdx](int seqSize){
+               emitArpSeqSizeChanged(uuid, voiceIdx, seqSize);
+            });
          }
       }
    });

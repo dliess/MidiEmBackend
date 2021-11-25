@@ -111,7 +111,25 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
           rSignals.SoundDevices__arpeggiatorStepLengthChanged(uuidData, voiceIdx,
                                                           stepLength);
        });
-
+   onSoundDevicesArpeggiatorFeedModeChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::MidiEmRt::ArpeggiatorFeedMode feedMode) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorFeedModeChanged(
+              uuidData, voiceIdx,
+              static_cast<::capnzero::MidiEmLoader::ArpeggiatorFeedMode>(
+                  feedMode));
+       });
+   onSoundDevicesArpeggiatorSeqSizeChanged(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 seqSize) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.SoundDevices__arpeggiatorSeqSizeChanged(uuidData, voiceIdx,
+                                                          seqSize);
+       });
    onTransportControlEnabledChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
                    ::capnzero::UInt8 enabled) {

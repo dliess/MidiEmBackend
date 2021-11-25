@@ -68,6 +68,8 @@ public:
    CB_SIGNAL(ArpStepLengthChanged, util::Identifiable::UUID, int, int);
    CB_SIGNAL(ArpAlgorithmChanged, util::Identifiable::UUID, int, base::arp::Algorithm);
    CB_SIGNAL(ArpHoldNotesChanged, util::Identifiable::UUID, int, bool);
+   CB_SIGNAL(ArpFeedModeChanged, util::Identifiable::UUID, int, base::arp::FeedMode);
+   CB_SIGNAL(ArpSeqSizeChanged, util::Identifiable::UUID, int, int);
 
 private:
    std::vector<Cb> m_addedCb;

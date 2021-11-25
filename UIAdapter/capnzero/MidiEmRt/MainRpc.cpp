@@ -56,10 +56,12 @@ void MainRpc::reEmitSignals()
                     arpeggiators.at(voiceIdx).getAlgorithm()));
             m_rSignals.SoundDevices__arpeggiatorHoldNotesChanged(
                 uuid, voiceIdx, arpeggiators.at(voiceIdx).getHoldNotes());
-            m_rSignals.SoundDevices__ (
-                uuid, voiceIdx, arpeggiators.at(voiceIdx).getHoldNotes());
-            m_rSignals.SoundDevices__arpeggiatorHoldNotesChanged(
-                uuid, voiceIdx, arpeggiators.at(voiceIdx).getHoldNotes());
+            m_rSignals.SoundDevices__arpeggiatorFeedModeChanged(
+                uuid, voiceIdx,
+                static_cast<::capnzero::MidiEmRt::ArpeggiatorFeedMode>(
+                    arpeggiators.at(voiceIdx).getFeedMode()));
+            m_rSignals.SoundDevices__arpeggiatorSeqSizeChanged(
+                uuid, voiceIdx, arpeggiators.at(voiceIdx).getSeqSize());
          }
       }
    }

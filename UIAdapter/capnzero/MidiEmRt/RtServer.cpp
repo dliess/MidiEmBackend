@@ -143,6 +143,16 @@ RtServer::RtServer(
           signals().SoundDevices__arpeggiatorHoldNotesChanged(uuid, voiceIdx,
                                                               holdNotes);
        });
+   rMusicDeviceContainer.onArpFeedModeChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, base::arp::FeedMode feedMode) {
+          signals().SoundDevices__arpeggiatorFeedModeChanged(uuid, voiceIdx,
+                                                              static_cast<::capnzero::MidiEmRt::ArpeggiatorFeedMode>(feedMode));
+       });
+   rMusicDeviceContainer.onArpSeqSizeChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, int seqSize) {
+          signals().SoundDevices__arpeggiatorSeqSizeChanged(uuid, voiceIdx,
+                                                              seqSize);
+       });
    // -----------------
 
    rTransportControl.registerTransportMaskChangedCb(
