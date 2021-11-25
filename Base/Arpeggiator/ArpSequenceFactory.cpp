@@ -5,14 +5,18 @@
 
 using namespace base::arp;
 
-ArpSequenceFactory::ArpSequenceFactory(NoteContainer& rIncomingNoteBuffer,
-                                       ArpSequence& rArpSequence) noexcept :
-    m_rIncomingNoteBuffer(rIncomingNoteBuffer), m_rArpSequence(rArpSequence)
+ArpSequenceFactory::ArpSequenceFactory(
+    std::pmr::unsynchronized_pool_resource& pool,
+    NoteContainer& rIncomingNoteBuffer, BaseSequence& rSequenceSource,
+    ArpSequence& rArpSequence) noexcept :
+    m_rPool(pool),
+    m_rIncomingNoteBuffer(rIncomingNoteBuffer),
+    m_rSequenceSource(rSequenceSource),
+    m_rArpSequence(rArpSequence)
 {
-   m_rIncomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize)
-   {
+   m_rIncomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize) {
       m_dirty = true;
-      if(prevSize == 0 && actSize > 0)
+      if (prevSize == 0 && actSize > 0)
       {
          createIfDirty();
       }
@@ -27,11 +31,7 @@ void ArpSequenceFactory::createIfDirty() noexcept
    }
    static constexpr int NOTES_IN_OCTAVE = 12;
    m_rArpSequence.clear();
-   std::byte stackBuf[2048];
-   util::PrintAlloc oom("ArpSequenceFactory:: Out of Memory", std::pmr::null_memory_resource());
-   std::pmr::monotonic_buffer_resource mbr(stackBuf, sizeof(stackBuf), &oom);
-   std::pmr::unsynchronized_pool_resource pool(&mbr);
-   std::pmr::map<int, float> map(&pool);
+   std::pmr::map<int, float> map(&m_rPool);
    switch (m_algorithm)
    {
       case Algorithm::Up:
@@ -43,8 +43,8 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / map.size()) * NOTES_IN_OCTAVE),
-                                     it->second);
+            m_rArpSequence.push_back(
+                it->first + ((i / map.size()) * NOTES_IN_OCTAVE), it->second);
             if (++it == map.end())
             {
                it = map.begin();
@@ -61,8 +61,8 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.rbegin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / map.size()) * NOTES_IN_OCTAVE),
-                                     it->second);
+            m_rArpSequence.push_back(
+                it->first + ((i / map.size()) * NOTES_IN_OCTAVE), it->second);
             if (++it == map.rend())
             {
                it = map.rbegin();
@@ -80,9 +80,10 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = map.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->first + ((i / (2 * map.size() - 1)) * NOTES_IN_OCTAVE),
-                                     it->second);
-            if(up)
+            m_rArpSequence.push_back(
+                it->first + ((i / (2 * map.size() - 1)) * NOTES_IN_OCTAVE),
+                it->second);
+            if (up)
             {
                ++it;
                if (it == map.end())
@@ -109,13 +110,16 @@ void ArpSequenceFactory::createIfDirty() noexcept
       {
          std::random_device r;
          std::default_random_engine e1(r());
-         std::uniform_real_distribution<float> uniform_dist(0.0, m_rIncomingNoteBuffer.size() - 0.1);
+         std::uniform_real_distribution<float> uniform_dist(
+             0.0, m_rIncomingNoteBuffer.size() - 0.1);
          for (int i = 0; i < rangeLen(); ++i)
          {
             auto it = m_rIncomingNoteBuffer.begin();
             std::advance(it, int(uniform_dist(e1)));
-            m_rArpSequence.push_back(it->note + ((i / m_rIncomingNoteBuffer.size()) * NOTES_IN_OCTAVE),
-                                     it->velocity);
+            m_rArpSequence.push_back(
+                it->note +
+                    ((i / m_rIncomingNoteBuffer.size()) * NOTES_IN_OCTAVE),
+                it->velocity);
          }
          break;
       }
@@ -124,7 +128,8 @@ void ArpSequenceFactory::createIfDirty() noexcept
          auto it = m_rIncomingNoteBuffer.begin();
          for (int i = 0; i < rangeLen(); ++i)
          {
-            m_rArpSequence.push_back(it->note + ((i / map.size()) * NOTES_IN_OCTAVE), it->velocity);
+            m_rArpSequence.push_back(
+                it->note + ((i / map.size()) * NOTES_IN_OCTAVE), it->velocity);
             if (++it == m_rIncomingNoteBuffer.end())
             {
                it = m_rIncomingNoteBuffer.begin();

@@ -5,6 +5,7 @@ set(SOURCES
     "ArpSequence.cpp"
     "ArpSequencePlayer.cpp"
     "ArpSequenceFactory.cpp"
+    "BaseSequence.cpp"
     "NoteContainer.cpp"
 )
 set(HEADERS
@@ -13,6 +14,7 @@ set(HEADERS
     "ArpSequence.h"
     "ArpSequencePlayer.h"
     "ArpSequenceFactory.h"
+    "BaseSequence.h"
     "NoteContainer.h"
 )
 

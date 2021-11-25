@@ -3,17 +3,22 @@
 #include "ArpSequence.h"
 #include "ArpSequenceFactory.h"
 #include "ArpSequencePlayer.h"
+#include "BaseSequence.h"
 #include "NoteContainer.h"
+#include "stack_mempool.h"
 
 namespace base::arp
 {
 struct ArpeggiatorPrivate
 {
    ArpeggiatorPrivate();
+   util::StackMempool<8192> m_memoryPool;
    bool m_bypass{true};
+   FeedMode m_feedMode{FeedMode::Control};
    NoteContainer m_incomingNoteBuffer;
-   ArpSequenceFactory m_arpSequenceFactory;
+   BaseSequence m_incomingSequenceBuffer;
    ArpSequence m_arpSequence;
+   ArpSequenceFactory m_arpSequenceFactory;
    ArpSequencePlayer m_arpSequencePlayer;
 
    CB_SIGNAL_PRIVATE(Arpeggiator, BypassChanged);
@@ -46,7 +51,12 @@ CB_SIGNAL_IMPL(Arpeggiator, FeedModeChanged);
 CB_SIGNAL_IMPL(Arpeggiator, SeqSizeChanged);
 
 ArpeggiatorPrivate::ArpeggiatorPrivate() :
-    m_arpSequenceFactory(m_incomingNoteBuffer, m_arpSequence),
+    m_memoryPool("ArpeggiatorPrivate"),
+    m_incomingNoteBuffer(m_memoryPool.pool()),
+    m_incomingSequenceBuffer(m_memoryPool.pool()),
+    m_arpSequence(m_memoryPool.pool()),
+    m_arpSequenceFactory(m_memoryPool.pool(), m_incomingNoteBuffer,
+                         m_incomingSequenceBuffer, m_arpSequence),
     m_arpSequencePlayer(m_arpSequence)
 {
    m_incomingNoteBuffer.onChanged([this](size_t prevSize, size_t actSize) {
@@ -121,7 +131,19 @@ void Arpeggiator::noteOn(int note, float velocity) noexcept
    {
       m_pImpl->emitNoteOn(note, velocity);
    }
-   m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
+   switch (m_pImpl->m_feedMode)
+   {
+      case FeedMode::Control:
+      {
+         m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
+         break;
+      }
+      case FeedMode::Sequence:
+      {
+         // m_pImpl->m_incomingSequenceBuffer.addNote(note, velocity);
+         break;
+      }
+   }
 }
 
 void Arpeggiator::noteOff(int note, float velocity) noexcept
@@ -130,7 +152,19 @@ void Arpeggiator::noteOff(int note, float velocity) noexcept
    {
       m_pImpl->emitNoteOff(note, velocity);
    }
-   m_pImpl->m_incomingNoteBuffer.removeNote(note);
+   switch (m_pImpl->m_feedMode)
+   {
+      case FeedMode::Control:
+      {
+         m_pImpl->m_incomingNoteBuffer.removeNote(note);
+         break;
+      }
+      case FeedMode::Sequence:
+      {
+         // m_pImpl->m_incomingSequenceBuffer.removeNote(note);
+         break;
+      }
+   }
 }
 
 void Arpeggiator::setRange(RangeType rangeType, int value) noexcept
@@ -160,19 +194,39 @@ void Arpeggiator::setHoldNotes(bool on) noexcept
 
 void Arpeggiator::setFeedMode(FeedMode feedMode) noexcept
 {
-   // TODO
+   if (m_pImpl->m_feedMode != feedMode)
+   {
+      m_pImpl->m_feedMode = feedMode;
+      switch (m_pImpl->m_feedMode)
+      {
+         case FeedMode::Control:
+         {
+            // m_pImpl->m_arpSequenceFactory.changeSequence(); //from
+            // m_incomingSequenceBuffer
+            break;
+         }
+         case FeedMode::Sequence:
+         {
+            // TODO
+            // m_pImpl->m_incomingNoteBuffer.removeAll();
+            break;
+         }
+      }
+      m_pImpl->emitFeedModeChanged(m_pImpl->m_feedMode);
+   }
 }
 
 void Arpeggiator::seqInsertPause() noexcept
 {
+   // m_pImpl->m_incomingSequenceBuffer.insertPause();
    // TODO
 }
 
 void Arpeggiator::seqRemoveLastNote() noexcept
 {
+   // m_pImpl->m_incomingSequenceBuffer.removeLastNote();
    // TODO
 }
-
 
 bool Arpeggiator::getBypass() const noexcept { return m_pImpl->m_bypass; }
 RangeType Arpeggiator::getRangeType() const noexcept
@@ -201,11 +255,10 @@ bool Arpeggiator::getHoldNotes() const noexcept
 }
 FeedMode Arpeggiator::getFeedMode() const noexcept
 {
-   // TODO
-   return FeedMode::Sequence;
+   return m_pImpl->m_feedMode;
 }
 int Arpeggiator::getSeqSize() const noexcept
 {
-   return 1;
+   // return m_incomingSequenceBuffer.getSeqSize();
    // TODO
 }

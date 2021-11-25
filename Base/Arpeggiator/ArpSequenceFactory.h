@@ -5,13 +5,16 @@
 #include "CallbackSignal.h"
 #include "NoteContainer.h"
 #include "ArpSequence.h"
+#include "BaseSequence.h"
 
 namespace base::arp
 {
 class ArpSequenceFactory
 {
 public:
-   ArpSequenceFactory(NoteContainer& rIncomingNoteBuffer,
+   ArpSequenceFactory(std::pmr::unsynchronized_pool_resource& pool,
+                      NoteContainer& rIncomingNoteBuffer,
+                      BaseSequence& rSequenceSource,
                       ArpSequence& rArpSequence) noexcept;
    void createIfDirty() noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
@@ -26,7 +29,9 @@ public:
    CB_SIGNAL(RangeChanged, int);
 
 private:
+   std::pmr::unsynchronized_pool_resource& m_rPool;
    NoteContainer& m_rIncomingNoteBuffer;
+   BaseSequence& m_rSequenceSource;
    ArpSequence& m_rArpSequence;
    bool m_dirty{true};
    Algorithm m_algorithm{Algorithm::Up};

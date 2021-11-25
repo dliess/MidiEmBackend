@@ -13,7 +13,7 @@ namespace base::arp
 class NoteContainer
 {
 public:
-   NoteContainer();
+   NoteContainer(std::pmr::unsynchronized_pool_resource& pool);
    void addNote(int note, float velocity) noexcept;
    void removeNote(int note) noexcept;
    void setHoldNotes(bool on) noexcept;
@@ -38,10 +38,6 @@ public:
    CB_SIGNAL(Changed, size_t, size_t);
    CB_SIGNAL(HoldNotesChanged, bool);
 private:
-   std::byte m_stackBuf[2048];
-   util::PrintAlloc m_oom;
-   std::pmr::monotonic_buffer_resource m_mbr;
-   std::pmr::unsynchronized_pool_resource m_pool;
    ContainerT m_noteList;
    bool m_holdNotes{false};
    bool allReleased() const noexcept;
