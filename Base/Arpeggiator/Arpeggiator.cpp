@@ -59,7 +59,6 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
          else if (prevSize > 0 && actSize == 0)
          {
             m_arpSequencePlayer.stop();
-            m_arpSequence.clear();
          }
       }
    });
@@ -107,7 +106,6 @@ void Arpeggiator::bypass(bool onOff) noexcept
       if (m_pImpl->m_bypass)
       {
          m_pImpl->m_arpSequencePlayer.stop();
-         m_pImpl->m_arpSequence.clear();
       }
       else if (m_pImpl->m_incomingNoteBuffer.size())
       {
@@ -123,10 +121,7 @@ void Arpeggiator::noteOn(int note, float velocity) noexcept
    {
       m_pImpl->emitNoteOn(note, velocity);
    }
-   else
-   {
-      m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
-   }
+   m_pImpl->m_incomingNoteBuffer.addNote(note, velocity);
 }
 
 void Arpeggiator::noteOff(int note, float velocity) noexcept
@@ -135,10 +130,7 @@ void Arpeggiator::noteOff(int note, float velocity) noexcept
    {
       m_pImpl->emitNoteOff(note, velocity);
    }
-   else
-   {
-      m_pImpl->m_incomingNoteBuffer.removeNote(note);
-   }
+   m_pImpl->m_incomingNoteBuffer.removeNote(note);
 }
 
 void Arpeggiator::setRange(RangeType rangeType, int value) noexcept
@@ -210,8 +202,10 @@ bool Arpeggiator::getHoldNotes() const noexcept
 FeedMode Arpeggiator::getFeedMode() const noexcept
 {
    // TODO
+   return FeedMode::Sequence;
 }
 int Arpeggiator::getSeqSize() const noexcept
 {
+   return 1;
    // TODO
 }

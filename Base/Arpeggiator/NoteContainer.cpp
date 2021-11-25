@@ -65,11 +65,15 @@ void NoteContainer::setHoldNotes(bool on) noexcept
       if(false == m_holdNotes)
       {
          const size_t sizeBef = m_noteList.size();
-         for(auto it = m_noteList.begin(); it != m_noteList.end(); ++it)
+         for(auto it = m_noteList.begin(); it != m_noteList.end();)
          {
             if(it->released)
             {
                it = m_noteList.erase(it);
+            }
+            else
+            {
+               ++it;
             }
          }
          if(sizeBef != m_noteList.size())
