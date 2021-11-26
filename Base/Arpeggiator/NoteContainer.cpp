@@ -29,7 +29,15 @@ void NoteContainer::addNote(int note, float velocity) noexcept
    else
    {
       m_noteList.emplace_back(NotePress{note, velocity});
-      emitChanged(m_noteList.size() - 1, m_noteList.size());
+      const size_t sizeBef = m_noteList.size() - 1;
+      if(sizeBef == 0 || m_chordCollectorDelayCntDwn > 0)
+      {
+         m_chordCollectorDelayCntDwn = NoteCollectDelayUpdateCycles;
+      }
+      if(0 == m_chordCollectorDelayCntDwn)
+      {
+         emitChanged(sizeBef, m_noteList.size());
+      }
    }
 }
 
@@ -106,6 +114,13 @@ void NoteContainer::noteOffAll() noexcept
          it = m_noteList.erase(it);
       }
    }
-
 }
 
+void NoteContainer::update() noexcept
+{
+   if(0 == m_chordCollectorDelayCntDwn) return;
+   if(--m_chordCollectorDelayCntDwn == 0 && size() > 0)
+   {
+      emitChanged(0, m_noteList.size());
+   }
+}

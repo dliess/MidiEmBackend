@@ -18,6 +18,7 @@ public:
    void removeNote(int note) noexcept;
    void setHoldNotes(bool on) noexcept;
    void noteOffAll() noexcept;
+   void update() noexcept;
 
    [[nodiscard]] bool getHoldNotes() const noexcept { return m_holdNotes; }
    
@@ -41,6 +42,8 @@ public:
 private:
    ContainerT m_noteList;
    bool m_holdNotes{false};
+   int m_chordCollectorDelayCntDwn{0};
+   static constexpr int NoteCollectDelayUpdateCycles = 20;
    bool allReleased() const noexcept;
 };
 

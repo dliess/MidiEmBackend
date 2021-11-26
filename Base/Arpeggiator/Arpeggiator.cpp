@@ -108,6 +108,7 @@ void Arpeggiator::update() noexcept
 {
    if (!m_pImpl->m_bypass)
    {
+      m_pImpl->m_incomingNoteBuffer.update();
       m_pImpl->m_arpSequencePlayer.update();
    }
 }
