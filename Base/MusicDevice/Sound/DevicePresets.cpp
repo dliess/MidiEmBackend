@@ -4,8 +4,9 @@
 
 using namespace base::musicDevice::sound::preset;
 
-DevicePresets::DevicePresets(MusicDeviceName musicDeviceName) noexcept :
-    m_musicDeviceName(std::move(musicDeviceName))
+DevicePresets::DevicePresets(MusicDeviceName musicDeviceName, int numEngines) noexcept :
+    m_musicDeviceName(std::move(musicDeviceName)),
+    m_presets(numEngines + 1)
 {
 }
 

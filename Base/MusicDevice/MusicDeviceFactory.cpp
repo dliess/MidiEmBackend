@@ -71,7 +71,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     std::forward_as_tuple(std::move(pDescr)));
                 it->second.addMidiIn(std::move(pMidiIn));
                 it->second.onPresetReceived(
-                    [this, &deviceId](int engineIdx,
+                    [this, deviceId](int engineIdx,
                                       const std::string& presetName,
                                       sound::preset::Preset&& preset) {
                        m_dataHolder.getDevicePresets(deviceId.deviceName)
@@ -130,7 +130,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     std::forward_as_tuple(std::move(pDescr)));
                 it->second.addMidiOut(std::move(pMidiOut));
                 it->second.onPresetReceived(
-                    [this, &deviceId](int engineIdx,
+                    [this, deviceId](int engineIdx,
                                       const std::string& presetName,
                                       sound::preset::Preset&& preset) {
                        m_dataHolder.getDevicePresets(deviceId.deviceName)

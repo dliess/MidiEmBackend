@@ -90,7 +90,7 @@ class DevicePresets : public utils::Settings<DevicePresets>
 {
 public:
    using Super = utils::Settings<DevicePresets>;
-   DevicePresets(MusicDeviceName musicDeviceName) noexcept;
+   DevicePresets(MusicDeviceName musicDeviceName, int numEngines) noexcept;
    template <class Cb> void forEachPreset(Cb cb) const;
    std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const Preset& preset(int engineIdx,
@@ -104,7 +104,7 @@ public:
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
    MusicDeviceName getMusicDeviceName() const noexcept;
-
+   //              engines                        preset-name  preset-data
    using Presets = std::vector<std::unordered_map<std::string, Preset>>;
    // ============== Settings ===============
    using Settings =

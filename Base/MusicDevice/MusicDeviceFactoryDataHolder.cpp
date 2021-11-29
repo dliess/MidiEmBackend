@@ -25,7 +25,7 @@ void factory::DataHolder::soundDevicesPresetChanged(
       {
          emitPresetRemoved(enginePresetId);
       }
-      it->second->save();
+      //it->second->save();
    }
 }
 
@@ -68,7 +68,8 @@ factory::DataHolder::getDevicePresets(
       {
          return nullptr;
       }
-      pPresets = std::make_shared<sound::preset::DevicePresets>(deviceName);
+      pPresets = std::make_shared<sound::preset::DevicePresets>(
+          deviceName, descrIter->second->soundSection->engines.size());
       pPresets->load();
       pPresets->forEachPreset(
           [this, &deviceName](int engineIdx, const std::string& presetName,
@@ -93,8 +94,10 @@ void factory::DataHolder::reEmitSignals()
       const std::string deviceName = e.first;
       e.second->forEachPreset(
           [this, &deviceName](int engineIdx, const std::string& presetName,
-                        const sound::preset::Preset& preset) {
-         emitPresetUpdated(sound::preset::Id({deviceName, engineIdx, presetName}), preset.category, preset.genre);
+                              const sound::preset::Preset& preset) {
+             emitPresetUpdated(
+                 sound::preset::Id({deviceName, engineIdx, presetName}),
+                 preset.category, preset.genre);
           });
    }
 }
