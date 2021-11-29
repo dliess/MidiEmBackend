@@ -254,7 +254,11 @@ inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
 inline void ParameterStorage::setActualPresetOfVoice(
     int voiceIdx, const std::string& presetName) noexcept
 {
-   elementContainer(voiceIdx).actualPreset = presetName;
+   if(elementContainer(voiceIdx).actualPreset != presetName)
+   {
+      elementContainer(voiceIdx).actualPreset = presetName;
+      emitActualPresetChanged(voiceIdx, presetName);
+   }
 }
 
 template <typename Cb>

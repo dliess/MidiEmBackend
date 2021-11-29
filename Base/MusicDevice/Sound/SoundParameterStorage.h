@@ -8,6 +8,7 @@
 
 #include "LFO.h"
 #include "SoundSection.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -53,6 +54,8 @@ public:
 
    inline lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
    inline const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
+
+   CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
    struct Element
    {

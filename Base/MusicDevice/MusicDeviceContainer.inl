@@ -31,6 +31,9 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
          ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){
             for(auto& cb : m_enginePresetChangeCB) cb(musicDeviceName, engineIdx, presetName);
          });
+         ptr->soundHandler->onActualPresetChanged([this, uuid](int voiceIdx, const std::string& presetName){
+            emitActualPresetChanged(uuid, voiceIdx, presetName);
+         });
          assert(ptr->soundHandler->arpeggiators().size());
          for(int voiceIdx = 0; voiceIdx < ptr->soundHandler->arpeggiators().size(); ++voiceIdx)
          {

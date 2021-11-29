@@ -32,6 +32,9 @@ SoundHandler::SoundHandler(std::string deviceName,
       });
       m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
    }
+   m_paramStorage.onActualPresetChanged([this](int voiceIdx, const std::string& presetName){
+      emitActualPresetChanged(voiceIdx, presetName);
+   });
 }
 
 SoundHandler::~SoundHandler() =

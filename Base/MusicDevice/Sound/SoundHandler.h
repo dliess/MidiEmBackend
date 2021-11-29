@@ -10,6 +10,7 @@
 #include "SoundPresetHandler.h"
 #include "SoundSection.h"
 #include "Arpeggiator.h"
+#include "CallbackSignal.h"
 
 // namespace midi { template<typename MessageDrain> class Midi1Input; }
 namespace midi
@@ -101,6 +102,8 @@ public:
    preset::PresetHandler& presetHandler() noexcept;
 
    std::vector<arp::Arpeggiator>& arpeggiators() noexcept;
+
+   CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;

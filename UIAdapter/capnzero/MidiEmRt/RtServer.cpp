@@ -102,6 +102,13 @@ RtServer::RtServer(
           signals().SoundDevices__presetChanged(musicDeviceName, engineIdx,
                                                 presetName);
        });
+   // Actual Preset -----------------
+   rMusicDeviceContainer.onActualPresetChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx,
+              const std::string &presetName) {
+          signals().SoundDevices__actualPresetChanged(uuid, voiceIdx,
+                                                      presetName);
+       });
 
    // ARP -------------
    rMusicDeviceContainer.onArpBypassChanged(
@@ -144,14 +151,16 @@ RtServer::RtServer(
                                                               holdNotes);
        });
    rMusicDeviceContainer.onArpFeedModeChanged(
-       [this](util::Identifiable::UUID uuid, int voiceIdx, base::arp::FeedMode feedMode) {
-          signals().SoundDevices__arpeggiatorFeedModeChanged(uuid, voiceIdx,
-                                                              static_cast<::capnzero::MidiEmRt::ArpeggiatorFeedMode>(feedMode));
+       [this](util::Identifiable::UUID uuid, int voiceIdx,
+              base::arp::FeedMode feedMode) {
+          signals().SoundDevices__arpeggiatorFeedModeChanged(
+              uuid, voiceIdx,
+              static_cast<::capnzero::MidiEmRt::ArpeggiatorFeedMode>(feedMode));
        });
    rMusicDeviceContainer.onArpSeqSizeChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, int seqSize) {
           signals().SoundDevices__arpeggiatorSeqSizeChanged(uuid, voiceIdx,
-                                                              seqSize);
+                                                            seqSize);
        });
    // -----------------
 

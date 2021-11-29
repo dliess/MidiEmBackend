@@ -1,4 +1,5 @@
 #include "SoundMidiInSysExDumpHandler.h"
+#include "Trim.h"
 
 #include <loguru.hpp>
 
@@ -115,8 +116,9 @@ void MidiInSysExDumpHandler::handle(
               [this,
                &sysexMsg](const description::sound::midisysex::PatchNameStr&
                               patchName) {
-                 m_presetName =
-                     std::string(&sysexMsg[patchName.offset], &sysexMsg[patchName.offset + patchName.size]);
+                 std::string presetName = std::string(&sysexMsg[patchName.offset], &sysexMsg[patchName.offset + patchName.size]);
+                 util::trim(presetName);
+                 m_presetName = presetName;
               },
               [this,
                &sysexMsg](const description::sound::midisysex::PatchCategory&
