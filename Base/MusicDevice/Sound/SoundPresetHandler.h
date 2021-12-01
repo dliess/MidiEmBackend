@@ -2,6 +2,7 @@
 #define SOUND_PRESET_HANDLER_H
 
 #include "DevicePresets.h"
+#include "SoundHandlerTypes.h"
 
 #include <functional>
 #include <memory>
@@ -28,7 +29,8 @@ public:
    PresetHandler(const description::sound::Section& rSoundSection,
                  ParameterStorage& rParameterStorage,
                  std::shared_ptr<DevicePresets> pSoundPresets) noexcept;
-   std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
+   void initMidiInHandler(sound::MidiInMsgHandlerT* pMidiInMsgHandler);
+   void initMidiOutHandler(sound::MidiOutMsgHandlerT* pMidiOutMsgHandler);
    std::optional<std::string> getActualSoundPresetName(
        int voiceIdx) const noexcept;
    void resetToActualSoundPreset(int voiceIdx) noexcept;
@@ -51,6 +53,8 @@ private:
    const description::sound::Section& m_rSoundSection;
    ParameterStorage& m_rParameterStorage;
    std::shared_ptr<DevicePresets> m_pDevicePresets;
+   sound::MidiInMsgHandlerT* m_pMidiInMsgHandler{nullptr};
+   sound::MidiOutMsgHandlerT* m_pMidiOutMsgHandler{nullptr};
    std::vector<ChangedCb> m_changedCbs;
 };
 

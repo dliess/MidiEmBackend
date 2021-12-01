@@ -92,9 +92,9 @@ public:
    using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName, int numEngines) noexcept;
    template <class Cb> void forEachPreset(Cb cb) const;
-   std::vector<std::vector<std::string>> getSoundPresetList() const noexcept;
    const Preset& preset(int engineIdx,
                         const std::string& presetName) const noexcept;
+   std::optional<std::string> getPresetNameByPresetSlot(int engineIdx, int slotIndex) const noexcept;
    bool hasPreset(int engineIdx, const std::string& presetName) const noexcept;
    std::optional<std::pair<Category, Genre>> getPresetAttributes(
        int engineIdx, const std::string& presetName) const noexcept;

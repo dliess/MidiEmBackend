@@ -80,8 +80,9 @@ public:
       inline std::optional<std::pair<float, float>>
       uiAsksForChangedValues() noexcept;
       inline std::optional<float> updateActualValue() noexcept;
+      inline void setActualValueUnsynced(float value) noexcept;
       inline void setActualValue(float value) noexcept;
-      inline void setCommandedValue(float value) noexcept;
+      inline void setCommandedValue(float value, bool markDirtyRt = true) noexcept;
 
    private:
       const bool m_isListIndex;

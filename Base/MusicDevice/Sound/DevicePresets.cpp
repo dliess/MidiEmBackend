@@ -4,21 +4,10 @@
 
 using namespace base::musicDevice::sound::preset;
 
-DevicePresets::DevicePresets(MusicDeviceName musicDeviceName, int numEngines) noexcept :
-    m_musicDeviceName(std::move(musicDeviceName)),
-    m_presets(numEngines + 1)
+DevicePresets::DevicePresets(MusicDeviceName musicDeviceName,
+                             int numEngines) noexcept :
+    m_musicDeviceName(std::move(musicDeviceName)), m_presets(numEngines + 1)
 {
-}
-
-std::vector<std::vector<std::string>> DevicePresets::getSoundPresetList()
-    const noexcept
-{
-   std::vector<std::vector<std::string>> ret(m_presets.size());
-   for (int idx = 0; idx < m_presets.size(); ++idx)
-   {
-      for (const auto& e : m_presets[idx]) { ret[idx].push_back(e.first); }
-   }
-   return ret;
 }
 
 std::optional<std::pair<Category, Genre>> DevicePresets::getPresetAttributes(
@@ -41,6 +30,25 @@ const Preset& DevicePresets::preset(
    const auto it             = enginePresets.find(presetName);
    assert(it != enginePresets.end());
    return it->second;
+}
+
+std::optional<std::string> DevicePresets::getPresetNameByPresetSlot(
+    int engineIdx, int slotIndex) const noexcept
+{
+   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
+   const auto it =
+       std::find_if(enginePresets.begin(), enginePresets.end(),
+                    [slotIndex](const std::pair<std::string, Preset>& preset) {
+                       LOG_F(INFO, "checking {} <-> {}", *preset.second.slotOnDeviceIndex, slotIndex);
+                       return preset.second.slotOnDeviceIndex &&
+                              (*preset.second.slotOnDeviceIndex == slotIndex);
+                    });
+   if (it != enginePresets.end())
+   {
+      return it->first;
+   }
+   return std::nullopt;
 }
 
 bool DevicePresets::hasPreset(int engineIdx,

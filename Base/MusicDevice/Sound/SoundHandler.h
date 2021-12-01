@@ -4,8 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "DoubleBufferedMessageDrain.h"
-#include "Midi1Input.h"
+#include "SoundHandlerTypes.h"
 #include "SoundParameterStorage.h"
 #include "SoundPresetHandler.h"
 #include "SoundSection.h"
@@ -13,11 +12,6 @@
 #include "CallbackSignal.h"
 
 // namespace midi { template<typename MessageDrain> class Midi1Input; }
-namespace midi
-{
-class Midi1Output;
-}
-
 namespace base::musicDevice
 {
 namespace description::sound
@@ -45,8 +39,6 @@ public:
    SoundHandler& operator=(const SoundHandler& other) = delete;
    SoundHandler(SoundHandler&& other) noexcept;
 
-   using MidiInput  = midi::Midi1Input<midi::DoubleBufferedMessageDrain>;
-   using MidiOutput = midi::Midi1Output;
    void initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn, uint8_t midiVoiceOffset) noexcept;
    void initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut, uint8_t midiVoiceOffset) noexcept;
    void initEvdevHandler();
@@ -107,8 +99,6 @@ public:
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;
-   using MidiInMsgHandlerT  = MidiInMsgHandler<std::shared_ptr<MidiInput>>;
-   using MidiOutMsgHandlerT = MidiOutMsgHandler<std::shared_ptr<MidiOutput>>;
    int m_midiVoiceOffset{0};
    std::unique_ptr<MidiInMsgHandlerT> m_midiInMsgHandler;
    std::unique_ptr<MidiOutMsgHandlerT> m_midiOutHandler;
@@ -121,7 +111,6 @@ private:
    std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
    std::vector<LFOMultiplierExpChangeCB> m_lFOMultiplierExpChangeCB;
 };
-
 
 
 template<typename Cb>

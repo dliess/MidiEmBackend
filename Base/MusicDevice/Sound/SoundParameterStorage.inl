@@ -444,6 +444,12 @@ ParameterStorage::Element::updateActualValue() noexcept
    return std::nullopt;
 }
 
+inline void ParameterStorage::Element::setActualValueUnsynced(float value) noexcept
+{
+   actual      = value;
+   dirtyFlagUi = true;
+}
+
 inline void ParameterStorage::Element::setActualValue(float value) noexcept
 {
    float A = 0;
@@ -461,7 +467,7 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
    dirtyFlagUi = true;
 }
 
-inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
+inline void ParameterStorage::Element::setCommandedValue(float value, bool markDirtyRt) noexcept
 {
    const float range = m_isListIndex ? m_resolution : 1.0;
    if (value < 0.0)
@@ -473,7 +479,7 @@ inline void ParameterStorage::Element::setCommandedValue(float value) noexcept
       value = m_isListIndex ? range - 1 : range - FUZZ;
    }
    commanded   = value;
-   dirtyFlagRt = true;
+   dirtyFlagRt = markDirtyRt;
    dirtyFlagUi = true;
 }
 

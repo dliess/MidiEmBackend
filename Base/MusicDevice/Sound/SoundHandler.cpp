@@ -54,6 +54,7 @@ void SoundHandler::initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn,
           m_paramStorage.setSoundParameterActualValue(voiceId, parameterId,
                                                       value);
        });
+   m_presetHandler.initMidiInHandler(m_midiInMsgHandler.get());
    if (m_midiOutHandler)
    {
       doParameterDumpRequest();
@@ -66,6 +67,7 @@ void SoundHandler::initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
    assert(!m_midiOutHandler);
    m_midiOutHandler = std::make_unique<MidiOutMsgHandlerT>(
        pMidiOut, m_rSoundSection, midiVoiceOffset);
+   m_presetHandler.initMidiOutHandler(m_midiOutHandler.get());
    if (m_midiInMsgHandler)
    {
       doParameterDumpRequest();

@@ -216,7 +216,9 @@ template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIndex,
                                                        float value) noexcept
 {
-   m_pMidiOutIf->pitchBend(voiceIndex + 1 + m_midiChannelOffset,
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   m_pMidiOutIf->pitchBend(voiceDescr.midiChannel + m_midiChannelOffset,
                            value * m_pitchBendFactor * 16383);
 }
 
@@ -224,15 +226,31 @@ template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouchPoly(
     int voiceIndex, int note, float value) noexcept
 {
-   m_pMidiOutIf->afterTouchPoly(voiceIndex + 1 + m_midiChannelOffset, note,
-                                value * 127);
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   m_pMidiOutIf->afterTouchPoly(
+       voiceDescr.midiChannel + m_midiChannelOffset + m_midiChannelOffset, note,
+       value * 127);
 }
 
 template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouch(int voiceIndex,
                                                         float value) noexcept
 {
-   m_pMidiOutIf->afterTouch(voiceIndex + 1 + m_midiChannelOffset, value * 127);
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   m_pMidiOutIf->afterTouch(voiceDescr.midiChannel + m_midiChannelOffset,
+                            value * 127);
+}
+
+template <typename MidiOutIfPtr>
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::programChange(
+    int voiceIndex, int programIdx) noexcept
+{
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   m_pMidiOutIf->send(midi::Message<midi::ProgramChange>(
+       voiceDescr.midiChannel + m_midiChannelOffset, programIdx));
 }
 
 template <typename MidiOutIfPtr>

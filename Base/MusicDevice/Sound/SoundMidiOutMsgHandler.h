@@ -22,6 +22,7 @@ public:
    void pitchBend(int voiceIndex, float value) noexcept;
    void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
    void afterTouch(int voiceIndex, float value) noexcept;
+   void programChange(int voiceIndex, int programIdx) noexcept;
 
    uint8_t getMidiChannelOffset() const noexcept;
 

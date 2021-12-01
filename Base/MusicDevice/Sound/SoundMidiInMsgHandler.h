@@ -9,6 +9,7 @@
 #include "MidiMessageIdsExtension.h"
 #include "SoundSection.h"
 #include "SoundMidiInSysExDumpHandler.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -18,6 +19,7 @@ template <typename MidiInIfPtr> class MidiInMsgHandler
 {
 public:
    using Cb = std::function<void(int voiceId, int parameterId, float value)>;
+
    MidiInMsgHandler(MidiInIfPtr pMidiInIf,
                     const description::sound::Section& rSoundSection,
                     uint8_t midiVoiceOffset, Cb cb) noexcept;
@@ -25,6 +27,7 @@ public:
    void changeMapping(int voiceIdx,
       const std::string& compNamePrev, const std::string& compNameNew) noexcept;
 
+    CB_SIGNAL(ProgramChange, int, int);
 private:
    MidiInSysExDumpHandler m_sysExHandler;
    MidiInIfPtr m_pMidiInIf;
@@ -46,6 +49,6 @@ private:
 
 }   // namespace sound
 }   // namespace base::musicDevice
-#include "SoundMidiInMsgHandler.tcc"
+#include "SoundMidiInMsgHandler.inl"
 
 #endif

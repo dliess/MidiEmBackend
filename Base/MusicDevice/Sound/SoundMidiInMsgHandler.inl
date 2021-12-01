@@ -63,6 +63,12 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
          //m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          return;
       }
+      const auto pProgChange = mpark::get_if<midi::Message<midi::ProgramChange>>(&midiMsg);
+      if(pProgChange)
+      {
+         emitProgramChange(*voiceIdx, pProgChange->programNumber());
+         return;
+      }
       const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(*voiceIdx) + 1];
       const auto midiId = midiMessageToId(midiMsg);
       if (mpark::holds_alternative<mpark::monostate>(midiId))
@@ -108,21 +114,18 @@ std::optional<int> sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
            [](const midi::Message<midi::NRPN>& msg) -> int {
               return msg.channel();
            },
+           [](const midi::Message<midi::ProgramChange>& msg) -> int {
+              return msg.channel();
+           },
            [](auto&& msg) -> int {
               return 0;
            }},
        midiMsg);
-   if(0 == midiChannelNumber)
+   if(1 > midiChannelNumber || midiChannelNumber > 16)
    { 
       return std::nullopt;
    }
-   int voiceIdx = midiChannelNumber -1 -m_midiVoiceOffset;
-   if (m_rSoundSection.global &&
-       m_rSoundSection.global->midiChannel == voiceIdx)
-   {
-      voiceIdx = description::sound::GlobalSectionId;
-   }
-   return voiceIdx;
+  return m_rSoundSection.getVoiceIdx(midiChannelNumber - m_midiVoiceOffset);
 }
 
 template <typename MidiInIfPtr>

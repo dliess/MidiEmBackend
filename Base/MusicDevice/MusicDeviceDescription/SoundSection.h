@@ -341,6 +341,7 @@ struct Section
    void forEachVoiceOfEngine(int engineIdx, Cb&& cb) const;
    inline Engine* findParentEngineByName(const std::string& name) noexcept;
    inline int getMidiChannel(int voiceId) const noexcept;
+   inline std::optional<int> getVoiceIdx(int midiChannelNr) const noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) noexcept;
    template <typename T> void forEachParameterDescr(T&& cb) const noexcept;
    template <typename T>

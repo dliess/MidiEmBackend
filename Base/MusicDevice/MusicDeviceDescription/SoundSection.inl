@@ -297,8 +297,9 @@ base::musicDevice::description::sound::Section::engineBase(
    }
 }
 
-inline const base::musicDevice::description::sound::MidiChannelHolder* 
-base::musicDevice::description::sound::Section::midiChannel(int voiceId) const noexcept
+inline const base::musicDevice::description::sound::MidiChannelHolder*
+base::musicDevice::description::sound::Section::midiChannel(
+    int voiceId) const noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == voiceId)
    {
@@ -311,7 +312,6 @@ base::musicDevice::description::sound::Section::midiChannel(int voiceId) const n
       return &voices[voiceId];
    }
 }
-
 
 template <typename Cb>
 void base::musicDevice::description::sound::Section::forEachEngineBase(Cb&& cb)
@@ -367,6 +367,27 @@ inline int base::musicDevice::description::sound::Section::getMidiChannel(
       assert(voiceId >= 0 && voiceId < voices.size());
       return voices[voiceId].midiChannel;
    }
+}
+
+inline std::optional<int>
+base::musicDevice::description::sound::Section::getVoiceIdx(
+    int midiChannelNr) const noexcept
+{
+   if(global)
+   {
+      if(global->midiChannel == midiChannelNr)
+      {
+         return base::musicDevice::description::sound::GlobalSectionId;
+      }
+   }
+   for(int i = 0; i < voices.size(); ++i)
+   {
+      if(voices[i].midiChannel == midiChannelNr)
+      {
+         return i;
+      }
+   }
+   return std::nullopt;
 }
 
 template <typename T>
