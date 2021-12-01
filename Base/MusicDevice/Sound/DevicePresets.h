@@ -34,7 +34,7 @@ DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
 struct LFOData
 {
    float amplitude{0.0};
-   float frequency{0.0};
+   float frequency{1.0};
    lfo::Waveform waveform{lfo::Waveform::Sine};
    int multiplierExp{0};
 };
