@@ -496,4 +496,57 @@ inline float ParameterStorage::Element::calcModified() const noexcept
    return ret;
 }
 
+inline void ParameterStorage::setWaveform(int voiceId, int parameterId, lfo::Waveform waveform) noexcept
+{
+   if(lfoOf(voiceId, parameterId).setWaveform(waveform))
+   {
+      emitLFOWaveformChanged(voiceId, parameterId, waveform);
+   }
+}
+
+inline void ParameterStorage::setAmplitude(int voiceId, int parameterId, float amplitude) noexcept
+{
+   if(lfoOf(voiceId, parameterId).setAmplitude(amplitude))
+   {
+      emitLFOAmplitudeChanged(voiceId, parameterId, amplitude);
+   }
+}
+
+inline void ParameterStorage::setFrequency(int voiceId, int parameterId, float frequency) noexcept
+{
+   if(lfoOf(voiceId, parameterId).setFrequency(frequency))
+   {
+      emitLFOFrequencyChanged(voiceId, parameterId, frequency);
+   }
+}
+
+inline void ParameterStorage::setMultiplierExp(int voiceId, int parameterId, uint32_t multiplierExp) noexcept
+{
+   if(lfoOf(voiceId, parameterId).setMultiplierExp(multiplierExp))
+   {
+      emitLFOMultiplierExpChanged(voiceId, parameterId, multiplierExp);
+   }
+}
+
+inline lfo::Waveform ParameterStorage::waveform(int voiceId, int parameterId) const noexcept
+{
+   return lfoOf(voiceId, parameterId).waveform();
+}
+
+inline float ParameterStorage::amplitude(int voiceId, int parameterId) const noexcept
+{
+   return lfoOf(voiceId, parameterId).amplitude();
+}
+
+inline float ParameterStorage::frequency(int voiceId, int parameterId) const noexcept
+{
+   return lfoOf(voiceId, parameterId).frequency();
+}
+
+inline uint32_t ParameterStorage::multiplierExp(int voiceId, int parameterId) const noexcept
+{
+   return lfoOf(voiceId, parameterId).multiplierExp();
+}
+
+
 }   // namespace base::musicDevice::sound

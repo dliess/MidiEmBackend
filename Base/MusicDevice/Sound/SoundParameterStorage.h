@@ -51,10 +51,20 @@ public:
                                           int parameterId = ALL) noexcept;
    inline void uiLoosesInterestInParameter(int voiceId,
                                            int parameterId = ALL) noexcept;
+   inline void setWaveform(int voiceId, int parameterId, lfo::Waveform waveform) noexcept;
+   inline void setAmplitude(int voiceId, int parameterId, float amplitude) noexcept;
+   inline void setFrequency(int voiceId, int parameterId, float frequency) noexcept;
+   inline void setMultiplierExp(int voiceId, int parameterId, uint32_t multiplierExp) noexcept;
 
-   inline lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
-   inline const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
+   [[nodiscard]] inline lfo::Waveform waveform(int voiceId, int parameterId) const noexcept;
+   [[nodiscard]] inline float amplitude(int voiceId, int parameterId) const noexcept;
+   [[nodiscard]] inline float frequency(int voiceId, int parameterId) const noexcept;
+   [[nodiscard]] inline uint32_t multiplierExp(int voiceId, int parameterId) const noexcept;
 
+   CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
+   CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
+   CB_SIGNAL(LFOFrequencyChanged, int, int, float);
+   CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
    struct Element
@@ -108,6 +118,8 @@ public:
 
 private:
    const description::sound::Section& m_rSoundSection;
+   inline lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
+   inline const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
    struct EngineData
    {
       std::vector<Element> parameters;

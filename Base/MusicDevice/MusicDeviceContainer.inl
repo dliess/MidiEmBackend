@@ -16,16 +16,16 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       {
          const auto uuid = ptr->id();
          const std::string musicDeviceName = ptr->deviceId().deviceName;
-         ptr->soundHandler->registerLFOWaveformChangeCB([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
+         ptr->soundHandler->onLFOWaveformChanged([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
             for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
          });
-         ptr->soundHandler->registerLFOAmplitudeChangeCB([this, uuid](int voiceId, int paramId, float amplitude){
+         ptr->soundHandler->onLFOAmplitudeChanged([this, uuid](int voiceId, int paramId, float amplitude){
             for(auto& cb : m_lFOAmplitudeChangeCB) cb(uuid, voiceId, paramId, amplitude);
          });
-         ptr->soundHandler->registerLFOFrequencyChangeCB([this, uuid](int voiceId, int paramId, float frequency){
+         ptr->soundHandler->onLFOFrequencyChanged([this, uuid](int voiceId, int paramId, float frequency){
             for(auto& cb : m_lFOFrequencyChangeCB) cb(uuid, voiceId, paramId, frequency);
          });
-         ptr->soundHandler->registerLFOMultiplierExpChangeCB([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
+         ptr->soundHandler->onLFOMultiplierExpChanged([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
             for(auto& cb : m_lFOMultiplierExpChangeCB) cb(uuid, voiceId, paramId, multiplierExp);
          });
          ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){

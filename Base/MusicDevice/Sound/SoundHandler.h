@@ -79,15 +79,6 @@ public:
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
    // inline const SoundPresetHandler* soundPresetHandler() const noexcept;
 
-   using LFOWaveformChangeCB = std::function<void(int, int, lfo::Waveform)>;
-   using LFOAmplitudeChangeCB = std::function<void(int, int, float)>;
-   using LFOFrequencyChangeCB = std::function<void(int, int, float)>;
-   using LFOMultiplierExpChangeCB = std::function<void(int, int, uint32_t)>;
-   void registerLFOWaveformChangeCB(LFOWaveformChangeCB cb);
-   void registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb);
-   void registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb);
-   void registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb);
-
    void doParameterDumpRequest() noexcept;
 
    const preset::PresetHandler& presetHandler() const noexcept;
@@ -95,6 +86,10 @@ public:
 
    std::vector<arp::Arpeggiator>& arpeggiators() noexcept;
 
+   CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
+   CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
+   CB_SIGNAL(LFOFrequencyChanged, int, int, float);
+   CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 private:
    std::string m_deviceName;
@@ -105,11 +100,6 @@ private:
    ParameterStorage m_paramStorage;
    preset::PresetHandler m_presetHandler;
    std::vector<arp::Arpeggiator> m_arpeggiators;
-
-   std::vector<LFOWaveformChangeCB> m_lFOWaveformChangeCBs;
-   std::vector<LFOAmplitudeChangeCB> m_lFOAmplitudeChangeCB;
-   std::vector<LFOFrequencyChangeCB> m_lFOFrequencyChangeCB;
-   std::vector<LFOMultiplierExpChangeCB> m_lFOMultiplierExpChangeCB;
 };
 
 
