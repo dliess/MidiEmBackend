@@ -12,7 +12,7 @@ ArpSequencePlayer::ArpSequencePlayer(const ArpSequence& rArpSequence) noexcept :
 
 void ArpSequencePlayer::start() noexcept
 {
-   LOG_F(INFO, "ArpSequencePlayer::start()");
+   //LOG_F(INFO, "ArpSequencePlayer::start()");
    m_tStepEnd = base::tempo::BeatTick::instance().getBeatJiffies();
    m_tNoteOff = m_tStepEnd;
    m_actualIdx       = -1;
@@ -21,7 +21,7 @@ void ArpSequencePlayer::start() noexcept
 
 void ArpSequencePlayer::stop() noexcept
 {
-   LOG_F(INFO, "ArpSequencePlayer::stop()");
+   //LOG_F(INFO, "ArpSequencePlayer::stop()");
    if(m_actualIdx > -1)
    {
       const ArpSequence::NoteData noteToRelease = m_rArpSequence.get(m_actualIdx);
