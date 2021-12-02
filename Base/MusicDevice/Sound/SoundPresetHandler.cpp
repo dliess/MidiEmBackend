@@ -56,15 +56,16 @@ void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
    const auto& presetData =
        m_pDevicePresets->preset(engineIdx, *actualPresetName);
    m_rParameterStorage.forEachParameter(
-       [&presetData](int paramIdx, ParameterStorage::Element& param) {
+       [this, &presetData, voiceIdx](int paramIdx, ParameterStorage::Element& param) {
           const auto& from = presetData.parameters[paramIdx];
           param.setCommandedValue(from.commanded,
                                   !presetData.slotOnDeviceIndex.has_value());
           param.setActualValueUnsynced(from.commanded);
-          param.lfo.setAmplitude(from.lfoData.amplitude);
-          param.lfo.setFrequency(from.lfoData.frequency);
-          param.lfo.setWaveform(from.lfoData.waveform);
-          param.lfo.setMultiplierExp(from.lfoData.multiplierExp);
+          // we have to call them by ParameterStorage so cb_signals get emitted on change 
+          m_rParameterStorage.setAmplitude(voiceIdx, paramIdx, from.lfoData.amplitude);
+          m_rParameterStorage.setFrequency(voiceIdx, paramIdx, from.lfoData.frequency);
+          m_rParameterStorage.setWaveform(voiceIdx, paramIdx, from.lfoData.waveform);
+          m_rParameterStorage.setMultiplierExp(voiceIdx, paramIdx, from.lfoData.multiplierExp);
        },
        voiceIdx);
    if (m_pMidiOutMsgHandler && presetData.slotOnDeviceIndex.has_value())
