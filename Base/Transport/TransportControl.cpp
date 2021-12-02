@@ -8,7 +8,7 @@ TransportControl::TransportControl(
   musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
    m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
-   m_rMusicDeviceContainer.registerForAdd([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){
+   m_rMusicDeviceContainer.onAdded([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){
       if(ptr->sequencer)
       {
          auto uuid = ptr->id();

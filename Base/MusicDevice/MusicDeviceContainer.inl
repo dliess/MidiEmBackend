@@ -11,25 +11,25 @@ namespace base::musicDevice
 
 inline MusicDeviceContainer::MusicDeviceContainer() : Super()
 {
-   registerForAdd([this](const std::shared_ptr<MusicDevice>& ptr){
+   onAdded([this](const std::shared_ptr<MusicDevice>& ptr){
       if(ptr->soundHandler)
       {
          const auto uuid = ptr->id();
          const std::string musicDeviceName = ptr->deviceId().deviceName;
          ptr->soundHandler->onLFOWaveformChanged([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
-            for(auto& cb : m_lFOWaveformChangeCBs) cb(uuid, voiceId, paramId, waveform);
+            emitLFOWaveformChanged(uuid, voiceId, paramId, waveform);
          });
          ptr->soundHandler->onLFOAmplitudeChanged([this, uuid](int voiceId, int paramId, float amplitude){
-            for(auto& cb : m_lFOAmplitudeChangeCB) cb(uuid, voiceId, paramId, amplitude);
+            emitLFOAmplitudeChanged(uuid, voiceId, paramId, amplitude);
          });
          ptr->soundHandler->onLFOFrequencyChanged([this, uuid](int voiceId, int paramId, float frequency){
-            for(auto& cb : m_lFOFrequencyChangeCB) cb(uuid, voiceId, paramId, frequency);
+            emitLFOFrequencyChanged(uuid, voiceId, paramId, frequency);
          });
          ptr->soundHandler->onLFOMultiplierExpChanged([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
-            for(auto& cb : m_lFOMultiplierExpChangeCB) cb(uuid, voiceId, paramId, multiplierExp);
+            emitLFOMultiplierExpChanged(uuid, voiceId, paramId, multiplierExp);
          });
          ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){
-            for(auto& cb : m_enginePresetChangeCB) cb(musicDeviceName, engineIdx, presetName);
+            emitEnginePresetChanged(musicDeviceName, engineIdx, presetName);
          });
          ptr->soundHandler->onActualPresetChanged([this, uuid](int voiceIdx, const std::string& presetName){
             emitActualPresetChanged(uuid, voiceIdx, presetName);
@@ -92,43 +92,11 @@ inline void MusicDeviceContainer::updateSoundParameterUI()
             const auto changedValues = element.uiAsksForChangedValues();
             if(changedValues)
             {
-               for(auto &cb : m_paramChangeCbsUI)
-               {
-                  cb(e.second->id(), voiceIdx, paramIdx, changedValues->first, changedValues->second);
-               }
+               emitSoundDevParamChanged(e.second->id(), voiceIdx, paramIdx, changedValues->first, changedValues->second);
             }
          });
       }
    }
-}
-
-inline void MusicDeviceContainer::registerForAdd(Cb cb) noexcept
-{
-   m_addedCb.push_back(cb);
-   for(auto &val : *this)
-   {
-      cb(val.second);
-   }
-}
-
-inline void MusicDeviceContainer::registerForAboutToRemove(Cb cb) noexcept
-{
-   m_aboutToRemoveCbs.push_back(cb);
-}
-
-inline void MusicDeviceContainer::registerSoundDevParamChangeCbUI(SoundDevParamChangeCb cb)
-{
-   m_paramChangeCbsUI.push_back(cb);
-}
-
-inline void MusicDeviceContainer::invokeAddCbs(const std::shared_ptr<MusicDevice>& ptr)
-{
-   for (auto& cb : m_addedCb) cb(ptr);
-}
-
-inline void MusicDeviceContainer::invokeAboutToRemoveCbs(const std::shared_ptr<MusicDevice>& ptr)
-{
-   for (auto& cb : m_aboutToRemoveCbs) cb(ptr);
 }
 
 inline MusicDeviceContainer::iterator MusicDeviceContainer::begin() noexcept
@@ -193,7 +161,7 @@ inline std::pair<MusicDeviceContainer::iterator, bool>
 MusicDeviceContainer::insert(const value_type& val)
 {
    const auto ret = Super::insert(val);
-   invokeAddCbs(val.second);
+   emitAdded(val.second);
    return ret;
 }
 
@@ -203,7 +171,7 @@ inline MusicDeviceContainer::size_type MusicDeviceContainer::erase(
    auto it = find(k);
    if(it != end())
    {
-      invokeAboutToRemoveCbs(it->second);
+      emitAboutToRemove(it->second);
    }
    return Super::erase(k);
 }
@@ -213,7 +181,7 @@ inline MusicDeviceContainer::size_type MusicDeviceContainer::eraseByDeviceId(con
    auto it = findByDeviceId(mdId);
    if(it != end())
    {
-      invokeAboutToRemoveCbs(it->second);
+      emitAboutToRemove(it->second);
       return Super::erase(it->first);
    }
    return 0; // Number of elements removed
@@ -222,36 +190,6 @@ inline MusicDeviceContainer::size_type MusicDeviceContainer::eraseByDeviceId(con
 inline size_t MusicDeviceContainer::size() const noexcept
 {
    return Super::size();
-}
-
-inline
-void MusicDeviceContainer::registerLFOWaveformChangeCB(LFOWaveformChangeCB cb)
-{
-   m_lFOWaveformChangeCBs.push_back(cb);
-}
-
-inline
-void MusicDeviceContainer::registerLFOAmplitudeChangeCB(LFOAmplitudeChangeCB cb)
-{
-   m_lFOAmplitudeChangeCB.push_back(cb);
-}
-
-inline
-void MusicDeviceContainer::registerLFOFrequencyChangeCB(LFOFrequencyChangeCB cb)
-{
-   m_lFOFrequencyChangeCB.push_back(cb);
-}
-
-inline 
-void MusicDeviceContainer::registerLFOMultiplierExpChangeCB(LFOMultiplierExpChangeCB cb)
-{
-   m_lFOMultiplierExpChangeCB.push_back(cb);
-}
-
-inline
-void MusicDeviceContainer::registerEnginePresetChangeCB(EnginePresetChangeCB cb)
-{
-   m_enginePresetChangeCB.push_back(cb);
 }
 
 } // namespace base::musicDevice

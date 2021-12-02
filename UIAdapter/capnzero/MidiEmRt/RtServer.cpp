@@ -38,7 +38,7 @@ RtServer::RtServer(
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
 
-   rMusicDeviceContainer.registerForAdd(
+   rMusicDeviceContainer.onAdded(
        [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           const auto &deviceName  = ptr.get()->deviceId().deviceName;
           const auto &description = *ptr.get()->description();
@@ -55,19 +55,19 @@ RtServer::RtServer(
               midiVoiceOffset);
        });
 
-   rMusicDeviceContainer.registerForAboutToRemove(
+   rMusicDeviceContainer.onAboutToRemove(
        [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           signals().MusicDevices__deviceRemoved(ptr.get()->id());
        });
 
-   rMusicDeviceContainer.registerSoundDevParamChangeCbUI(
+   rMusicDeviceContainer.onSoundDevParamChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float commanded, float actual) {
           signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx,
                                                    commanded, actual);
        });
 
-   rMusicDeviceContainer.registerLFOWaveformChangeCB(
+   rMusicDeviceContainer.onLFOWaveformChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               base::musicDevice::sound::lfo::Waveform waveform) {
           signals().SoundDevices__lFOWaveformChanged(
@@ -75,28 +75,28 @@ RtServer::RtServer(
               static_cast<::capnzero::MidiEmRt::LFOWaveform>(waveform));
        });
 
-   rMusicDeviceContainer.registerLFOAmplitudeChangeCB(
+   rMusicDeviceContainer.onLFOAmplitudeChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float amplitude) {
           signals().SoundDevices__lFOAmplitudeChanged(uuid, voiceId, paramIdx,
                                                       amplitude);
        });
 
-   rMusicDeviceContainer.registerLFOFrequencyChangeCB(
+   rMusicDeviceContainer.onLFOFrequencyChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float frequency) {
           signals().SoundDevices__lFOFrequencyChanged(uuid, voiceId, paramIdx,
                                                       frequency);
        });
 
-   rMusicDeviceContainer.registerLFOMultiplierExpChangeCB(
+   rMusicDeviceContainer.onLFOMultiplierExpChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               uint32_t multiplierExp) {
           signals().SoundDevices__lFOMultiplierExpChanged(
               uuid, voiceId, paramIdx, multiplierExp);
        });
 
-   rMusicDeviceContainer.registerEnginePresetChangeCB(
+   rMusicDeviceContainer.onEnginePresetChanged(
        [this](const std::string &musicDeviceName, int engineIdx,
               const std::string &presetName) {
           signals().SoundDevices__presetChanged(musicDeviceName, engineIdx,
