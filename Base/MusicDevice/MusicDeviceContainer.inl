@@ -28,7 +28,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
          ptr->soundHandler->onLFOMultiplierExpChanged([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
             emitLFOMultiplierExpChanged(uuid, voiceId, paramId, multiplierExp);
          });
-         ptr->soundHandler->presetHandler().registerChangedCb([this, musicDeviceName](int engineIdx, const std::string& presetName){
+         ptr->soundHandler->presetHandler().onPresetChanged([this, musicDeviceName](int engineIdx, const std::string& presetName){
             emitEnginePresetChanged(musicDeviceName, engineIdx, presetName);
          });
          ptr->soundHandler->onActualPresetChanged([this, uuid](int voiceIdx, const std::string& presetName){

@@ -87,21 +87,12 @@ void PresetHandler::selectSoundPreset(int voiceIdx,
 }
 
 void PresetHandler::storeAsSoundPreset(int voiceIdx,
-                                       const std::string& presetName,
+                                       const std::string& _presetName,
                                        Category category, Genre genre) noexcept
 {
-   std::string actPreset;
-   if (!presetName.empty())
-   {
-      actPreset = presetName;
-   }
-   if (actPreset.empty())
-   {
-      actPreset = "preset";
-   }
-
+   const std::string presetName = _presetName.empty() ? "preset" : _presetName;
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
-   actPreset = m_pDevicePresets->incrementNameIdx(engineIdx, actPreset);
+   //presetName = m_pDevicePresets->incrementNameIdx(engineIdx, presetName);
 
    Preset presetData;
    presetData.category = category;
@@ -118,8 +109,8 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
        },
        voiceIdx);
 
-   m_pDevicePresets->savePreset(engineIdx, actPreset, std::move(presetData));
-   for (auto& cb : m_changedCbs) cb(engineIdx, presetName);
+   m_pDevicePresets->savePreset(engineIdx, presetName, std::move(presetData));
+   emitPresetChanged(engineIdx, presetName);
 }
 
 void PresetHandler::stageCurrentState(int voiceIdx) noexcept
@@ -144,10 +135,5 @@ void PresetHandler::deletePreset(int voiceIdx,
    const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
    m_pDevicePresets->deletePreset(engineIdx, *actualPreset);
    selectSoundPreset(voiceIdx, newSelectedPreset);
-   for (auto& cb : m_changedCbs) cb(engineIdx, *actualPreset);
-}
-
-void PresetHandler::registerChangedCb(ChangedCb cb) noexcept
-{
-   m_changedCbs.emplace_back(cb);
+   emitPresetChanged(engineIdx, *actualPreset);
 }

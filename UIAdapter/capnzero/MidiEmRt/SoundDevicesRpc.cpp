@@ -366,6 +366,8 @@ void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
           base::musicDevice::sound::preset::create_Category(
               std::string(category)),
           base::musicDevice::sound::preset::create_Genre(std::string(genre)));
+      iter->second->soundHandler->presetHandler().selectSoundPreset(
+          voiceIdx, std::string(presetName));
    }
 }
 

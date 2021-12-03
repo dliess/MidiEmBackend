@@ -3,6 +3,7 @@
 
 #include "DevicePresets.h"
 #include "SoundHandlerTypes.h"
+#include "CallbackSignal.h"
 
 #include <functional>
 #include <memory>
@@ -47,15 +48,13 @@ public:
       return m_pDevicePresets;
    }
 
-   using ChangedCb = std::function<void(int engineIdx, const std::string& presetName)>;
-   void registerChangedCb(ChangedCb cb) noexcept;
+   CB_SIGNAL(PresetChanged, int, const std::string&);
 private:
    const description::sound::Section& m_rSoundSection;
    ParameterStorage& m_rParameterStorage;
    std::shared_ptr<DevicePresets> m_pDevicePresets;
    sound::MidiInMsgHandlerT* m_pMidiInMsgHandler{nullptr};
    sound::MidiOutMsgHandlerT* m_pMidiOutMsgHandler{nullptr};
-   std::vector<ChangedCb> m_changedCbs;
 };
 
 }   // namespace preset
