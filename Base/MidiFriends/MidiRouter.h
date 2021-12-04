@@ -14,7 +14,7 @@
 #include "MidiMessage.h"
 #include "MusicDevice.h"
 #include "MusicDeviceId.h"
-#include "Settings.h"
+#include "Settings_old.h"
 
 namespace base
 {

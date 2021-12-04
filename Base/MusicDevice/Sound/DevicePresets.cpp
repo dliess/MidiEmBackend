@@ -6,7 +6,9 @@ using namespace base::musicDevice::sound::preset;
 
 DevicePresets::DevicePresets(MusicDeviceName musicDeviceName,
                              int numEngines) noexcept :
-    m_musicDeviceName(std::move(musicDeviceName)), m_presets(numEngines + 1)
+    m_musicDeviceName(std::move(musicDeviceName)),
+    m_presets(numEngines + 1),
+    m_settings("EnginePresets", fmt::format("{}.json", m_musicDeviceName))
 {
 }
 
@@ -40,7 +42,8 @@ std::optional<std::string> DevicePresets::getPresetNameByPresetSlot(
    const auto it =
        std::find_if(enginePresets.begin(), enginePresets.end(),
                     [slotIndex](const std::pair<std::string, Preset>& preset) {
-                       LOG_F(INFO, "checking {} <-> {}", *preset.second.slotOnDeviceIndex, slotIndex);
+                       LOG_F(INFO, "checking {} <-> {}",
+                             *preset.second.slotOnDeviceIndex, slotIndex);
                        return preset.second.slotOnDeviceIndex &&
                               (*preset.second.slotOnDeviceIndex == slotIndex);
                     });
@@ -136,8 +139,12 @@ std::string DevicePresets::outFileName() const noexcept
    return str;
 }
 
-base::musicDevice::MusicDeviceName DevicePresets::getMusicDeviceName()
-    const noexcept
+void DevicePresets::save() const noexcept
 {
-   return m_musicDeviceName;
+   m_settings.save("EnginePresets", m_presets);
+}
+
+void DevicePresets::load() noexcept
+{
+   auto m_presets = m_settings.load<Presets>("EnginePresets");
 }

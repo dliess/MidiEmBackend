@@ -25,7 +25,7 @@ void factory::DataHolder::soundDevicesPresetChanged(
       {
          emitPresetRemoved(enginePresetId);
       }
-      //it->second->save();
+      it->second->save();
    }
 }
 

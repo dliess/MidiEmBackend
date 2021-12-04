@@ -8,7 +8,7 @@
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 #include "Meta.h"
-#include "Settings.h"
+#include "Settings_old.h"
 
 namespace base
 {

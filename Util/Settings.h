@@ -1,146 +1,75 @@
-#ifndef UTILS_SETTINGS_H
-#define UTILS_SETTINGS_H
+#ifndef UTIL_SETTINGS_H
+#define UTIL_SETTINGS_H
 
+#include <fmt/format.h>
 #include <Meta.h>
 #include <JsonCast.h>
-#include <loguru.hpp>
+#include <filesystem>
 #include <fstream>
-#include <functional>
-#include <experimental/filesystem>
-#include <vector>
 #include <iomanip>
-#include "HomeDir.h"
+#include <string>
+#include <string_view>
 
-namespace utils
+namespace util
 {
+constexpr std::string_view localSettingsDir = ".config";
 
-template<typename Derived>
 class Settings
 {
 public:
-   void save(const std::string& relDirName, const std::string& fileName, const std::string& section) const noexcept;
-   bool load(const std::string& relDirName, const std::string& fileName, const std::string& section) noexcept;
-};
-
-template<typename Derived>
-void utils::Settings<Derived>::save(const std::string& relDirName,
-                                    const std::string& fileName,
-                                    const std::string& section) const noexcept
-{
-   const auto derived = reinterpret_cast<const Derived*>(this);
-   nlohmann::json j;
-   const std::string path = util::getLocalSettingsDir() + "/" + relDirName + "/" + fileName;
+   inline Settings(const std::string& relDirName,
+                   const std::string& fileName) noexcept :
+       m_settingsDir(fmt::format("{}/{}/{}", getenv("HOME"), localSettingsDir,
+                                 relDirName)),
+       m_fileName(fileName)
    {
-      std::ifstream settingsFile(path);
-      if(settingsFile.is_open())
+   }
+
+   template <typename T> void save(const std::string& section, T&& data) const
+   {
+      std::filesystem::create_directories(m_settingsDir);
+      const std::string filePath =
+          fmt::format("{}/{}", m_settingsDir, m_fileName);
+      nlohmann::json j;
       {
-         try{
+         std::ifstream settingsFile(filePath);
+         if (settingsFile.is_open())
+         {
             settingsFile >> j;
-         }catch(...){}
+         }
       }
-   }
-   try{
       // use tmpfilename to create settings to avoid corruption
-      std::string fileNameTmp(path);
-      fileNameTmp.append("_tmp_");
+      const std::string fileNameTmp = fmt::format("{}_tmp_", filePath);
       std::ofstream settingsFile;
-      settingsFile.exceptions ( std::ifstream::failbit );
-      settingsFile.open(fileNameTmp);           
-      j[section] = nlohmann::json(derived->getSettings());
+      settingsFile.exceptions(std::ifstream::failbit);
+      settingsFile.open(fileNameTmp);
+      j[section] = nlohmann::json(std::forward<T>(data));
       settingsFile << std::setw(4) << j;
-      std::experimental::filesystem::rename(fileNameTmp, path);
+      std::filesystem::rename(fileNameTmp, filePath);
    }
-   catch(nlohmann::json::exception& e)
-   {
-      LOG_F(ERROR, "{} id: {}", e.what(), e.id);
-   }
-   catch(std::experimental::filesystem::filesystem_error& e)
-   {
-      LOG_F(ERROR, "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
-   }
-   catch(std::exception& e)
-   {
-      LOG_F(ERROR, "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
-   }
-}
 
-template<typename Derived>
-bool utils::Settings<Derived>::load(const std::string& relDirName,
-                                    const std::string& fileName,
-                                    const std::string& section) noexcept
-{
-   auto derived = reinterpret_cast<Derived*>(this);
-   nlohmann::json j;
-   try{
+   template <typename T> 
+   [[nodiscard]] auto load(const std::string& section) const
+   {
+      nlohmann::json j;
       std::ifstream settingsFile;
-      const auto finalDir = util::getLocalSettingsDir() + "/" + relDirName;
-      util::createDirsRecursive(finalDir);
-      const std::string path = finalDir + "/" + fileName;
-      settingsFile.open(path);
-      if(settingsFile.fail())
+      const std::string filePath =
+          fmt::format("{}/{}", m_settingsDir, m_fileName);
+      settingsFile.open(filePath);
+      if (settingsFile.fail())
       {
-         LOG_F(INFO, "No settings file '{}' NOT found, its possibly the first run", path);
-         return false;
+         throw std::runtime_error(
+             fmt::format("Settings file '{}' not found", filePath));
       }
       settingsFile >> j;
-      derived->setSettings(j[section].get<typename Derived::Settings>());
+      return j[section].get<T>();
    }
-   catch(nlohmann::json::exception& e){
-      LOG_F(INFO, "{} id: {}", e.what(), e.id);
-      return false;
-   }
-   catch(std::exception& e)
-   {
-      LOG_F(ERROR, "{}", e.what());
-      return false;  
-   }
-   return true;
-}
 
-class SettingsFnCollection
-{
-public:
-   inline void invokeLoaders();
-   inline void invokeSavers();
-   inline void addLoaderFn(std::function<void(void)> fn) noexcept;
-   inline void addSaverFn(std::function<void(void)> fn) noexcept;
 private:
-   std::vector<std::function<void(void)>> m_loaders;
-   std::vector<std::function<void(void)>> m_savers;
+   const std::string m_settingsDir;
+   const std::string m_fileName;
 };
 
-inline 
-void SettingsFnCollection::invokeLoaders()
-{
-   for(auto& fn : m_loaders)
-   {
-      fn();
-   }
-}
-
-inline 
-void SettingsFnCollection::invokeSavers()
-{
-   for(auto& fn : m_savers)
-   {
-      fn();
-   }
-}
-
-inline 
-void SettingsFnCollection::addLoaderFn(std::function<void(void)> fn) noexcept
-{
-   m_loaders.push_back(fn);
-}
-
-inline 
-void SettingsFnCollection::addSaverFn(std::function<void(void)> fn) noexcept
-{
-   m_savers.push_back(fn);
-}
-
-
-} // namespace utils
-
+}   // namespace util
 
 #endif

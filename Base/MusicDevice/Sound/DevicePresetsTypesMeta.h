@@ -1,5 +1,5 @@
-#ifndef DEVICE_PRESETS_META_H
-#define DEVICE_PRESETS_META_H
+#ifndef DEVICE_PRESETS_TYPES_META_H
+#define DEVICE_PRESETS_TYPES_META_H
 
 #include "Meta.h"
 #include "JsonCast.h"

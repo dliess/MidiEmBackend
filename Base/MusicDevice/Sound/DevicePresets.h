@@ -6,91 +6,19 @@
 #include <unordered_map>
 #include <vector>
 
-#include "EnumReflect.h"
-#include "LFO.h"
-#include "Meta.h"
-#include "MusicDeviceId.h"
+#include "DevicePresetsTypes.h"
+#include "DevicePresetsSettings.h"
 #include "Settings.h"
 #include "SoundSection.h"
 
 namespace base::musicDevice::sound::preset
 {
-/*
-   Identifier of a preset:
-      manufacturer+product + engineIdx + presetName
-*/
-struct Id
-{
-   MusicDeviceName musicDeviceName;
-   int engineIdx;
-   std::string presetName;
-};
 
-DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
-             RBHHop, RockPop, Techno, Dubstep);
-DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
-             Lead, Movement, Pad, Poly, SFX, String, User, Voc);
-
-struct LFOData
-{
-   float amplitude{0.0};
-   float frequency{1.0};
-   lfo::Waveform waveform{lfo::Waveform::Sine};
-   int multiplierExp{0};
-};
-
-struct ParameterData
-{
-   float commanded{0.0};
-   LFOData lfoData;
-};
-
-struct Preset
-{
-   std::optional<int> slotOnDeviceIndex;
-   Category category;
-   Genre genre;
-   std::vector<ParameterData> parameters;
-};
-
-namespace settings
-{
-struct LFOData
-{
-   void from(
-       const ::base::musicDevice::sound::preset::LFOData& lfoData) noexcept;
-   ::base::musicDevice::sound::preset::LFOData to() const noexcept;
-   std::optional<float> amplitude;
-   std::optional<float> frequency;
-   std::optional<lfo::Waveform> waveform;
-   std::optional<int> multiplierExp;
-};
-
-struct ParameterData
-{
-   void from(const ::base::musicDevice::sound::preset::ParameterData&
-                 parameterData) noexcept;
-   ::base::musicDevice::sound::preset::ParameterData to() const noexcept;
-   float commanded{0.0};
-   std::optional<LFOData> lfoData;
-};
-
-struct Preset
-{
-   void from(const ::base::musicDevice::sound::preset::Preset& preset) noexcept;
-   ::base::musicDevice::sound::preset::Preset to() const noexcept;
-   Category category;
-   Genre genre;
-   std::vector<ParameterData> parameters;
-};
-
-}   // namespace settings
-
-class DevicePresets : public utils::Settings<DevicePresets>
+class DevicePresets
 {
 public:
-   using Super = utils::Settings<DevicePresets>;
    DevicePresets(MusicDeviceName musicDeviceName, int numEngines) noexcept;
+
    template <class Cb> void forEachPreset(Cb cb) const;
    const Preset& preset(int engineIdx,
                         const std::string& presetName) const noexcept;
@@ -103,47 +31,16 @@ public:
    std::string incrementNameIdx(int engineIdx,
                                 const std::string& presetName) const noexcept;
    void deletePreset(int engineIdx, const std::string& presetName) noexcept;
-   MusicDeviceName getMusicDeviceName() const noexcept;
-   //              engines                        preset-name  preset-data
-   using Presets = std::vector<std::unordered_map<std::string, Preset>>;
-   // ============== Settings ===============
-   using Settings =
-       std::vector<std::unordered_map<std::string, Preset>>;
-   Settings getSettings() const noexcept
-   {
-      return m_presets;
-      /* TODO for later
-      Settings settings;
-      for (const auto& enginePresets : m_presets)
-      {
-         settings.push_back(settings::value_type());
-         for (const auto& preset : enginePresets)
-         {
-
-         }
-      }
-      */
-   };
-   void setSettings(const Settings& settings) noexcept
-   {
-      m_presets = settings;
-   };
-   // =======================================
-   void save() const noexcept
-   {
-      Super::save("EnginePresets", fmt::format("{}.json", m_musicDeviceName),
-                  "EnginePresets");
-   }
-   void load() noexcept
-   {
-      Super::load("EnginePresets", fmt::format("{}.json", m_musicDeviceName),
-                  "EnginePresets");
-   }
+   using PresetsPerEngine = std::unordered_map<std::string, Preset>;
+   using Presets = std::vector<PresetsPerEngine>;
+   void save() const noexcept;
+   void load() noexcept;
 
 private:
    Presets m_presets;
    const MusicDeviceName m_musicDeviceName;
    std::mutex m_mutex;
+   util::Settings m_settings;
    std::string outDirName() const noexcept;
    std::string outFileName() const noexcept;
    inline static const std::string SETTING_FILE_SECTION = "sound-preset-data";
@@ -153,5 +50,6 @@ private:
 }   // namespace base::musicDevice::sound::preset
 
 #include "DevicePresets.inl"
-#include "DevicePresetsMeta.h"
+#include "DevicePresetsTypesMeta.h"
+#include "DevicePresetsSettingsMeta.h"
 #endif
