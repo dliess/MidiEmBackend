@@ -1,14 +1,15 @@
 #ifndef UTIL_SETTINGS_H
 #define UTIL_SETTINGS_H
 
-#include <fmt/format.h>
-#include <Meta.h>
 #include <JsonCast.h>
+#include <Meta.h>
+#include <fmt/format.h>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <string>
 #include <string_view>
+#include "HomeDir.h"
 
 namespace util
 {
@@ -19,8 +20,8 @@ class Settings
 public:
    inline Settings(const std::string& relDirName,
                    const std::string& fileName) noexcept :
-       m_settingsDir(fmt::format("{}/{}/{}", getenv("HOME"), localSettingsDir,
-                                 relDirName)),
+       m_settingsDir(
+           fmt::format("{}/{}", util::getLocalSettingsDir(), relDirName)),
        m_fileName(fileName)
    {
    }
@@ -48,7 +49,7 @@ public:
       std::filesystem::rename(fileNameTmp, filePath);
    }
 
-   template <typename T> 
+   template <typename T>
    [[nodiscard]] auto load(const std::string& section) const
    {
       nlohmann::json j;

@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "DevicePresetsTypes.h"
-#include "DevicePresetsSettings.h"
 #include "Settings.h"
 #include "SoundSection.h"
 
@@ -51,5 +50,4 @@ private:
 
 #include "DevicePresets.inl"
 #include "DevicePresetsTypesMeta.h"
-#include "DevicePresetsSettingsMeta.h"
 #endif

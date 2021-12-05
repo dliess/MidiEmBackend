@@ -37,20 +37,56 @@ inline void from_json<base::musicDevice::sound::preset::Category>(
    obj = base::musicDevice::sound::preset::create_Category(j.get<std::string>());
 }
 
+template <>
+inline void to_json<base::musicDevice::sound::preset::LFOData>(
+    nlohmann::json& j, const base::musicDevice::sound::preset::LFOData& obj)
+{
+   if(obj.amplitude != base::musicDevice::sound::preset::LFOData::DefaultAmplitude)
+       j["amplitude"] = obj.amplitude;
+   if(obj.frequency != base::musicDevice::sound::preset::LFOData::DefaultFrequency)
+       j["frequency"] = obj.frequency;
+   if(obj.waveform != base::musicDevice::sound::preset::LFOData::DefaultWaveform)
+       j["waveform"] = obj.waveform;
+   if(obj.multiplierExp != base::musicDevice::sound::preset::LFOData::DefaultMultiplierExp)
+       j["multiplierExp"] = obj.multiplierExp;   
+}
+
+template <>
+inline void from_json<base::musicDevice::sound::preset::LFOData>(
+    const nlohmann::json& j, base::musicDevice::sound::preset::LFOData& obj)
+{
+   {
+       const auto it = j.find("amplitude");
+       if(it != j.end())
+       {
+           obj.amplitude = it->get<float>();
+       }
+   }
+   {
+       const auto it = j.find("frequency");
+       if(it != j.end())
+       {
+           obj.frequency = it->get<float>();
+       }
+   }
+   {
+       const auto it = j.find("waveform");
+       if(it != j.end())
+       {
+           obj.waveform = it->get<base::musicDevice::sound::lfo::Waveform>();
+       }
+   }
+   {
+       const auto it = j.find("multiplierExp");
+       if(it != j.end())
+       {
+           obj.multiplierExp = it->get<int>();
+       }
+   }
+}
+
 namespace meta
 {
-template <>
-inline auto registerMembers<base::musicDevice::sound::preset::LFOData>()
-{
-   return members(
-       member("amplitude",
-              &base::musicDevice::sound::preset::LFOData::amplitude),
-       member("frequency",
-              &base::musicDevice::sound::preset::LFOData::frequency),
-       member("waveform", &base::musicDevice::sound::preset::LFOData::waveform),
-       member("multiplierExp",
-              &base::musicDevice::sound::preset::LFOData::multiplierExp));
-}
 
 template <>
 inline auto registerMembers<base::musicDevice::sound::preset::ParameterData>()
