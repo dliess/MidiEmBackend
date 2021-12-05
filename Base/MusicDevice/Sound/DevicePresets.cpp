@@ -8,7 +8,9 @@ DevicePresets::DevicePresets(MusicDeviceName musicDeviceName,
                              int numEngines) noexcept :
     m_musicDeviceName(std::move(musicDeviceName)),
     m_presets(numEngines + 1),
-    m_settings("EnginePresets", fmt::format("{}.json", m_musicDeviceName))
+    m_settings(
+        fmt::format("EnginePresets/{}", splitDeviceName(m_musicDeviceName).first),
+        fmt::format("{}.json", splitDeviceName(m_musicDeviceName).second))
 {
 }
 
@@ -141,10 +143,26 @@ std::string DevicePresets::outFileName() const noexcept
 
 void DevicePresets::save() const noexcept
 {
-   m_settings.save("EnginePresets", m_presets);
+   try
+   {
+      m_settings.save("EnginePresets", m_presets);
+   }
+   catch (const std::exception& e)
+   {
+      LOG_F(INFO, "Could not save preset for {}, e: {}", m_musicDeviceName,
+            e.what());
+   }
 }
 
 void DevicePresets::load() noexcept
 {
-   auto m_presets = m_settings.load<Presets>("EnginePresets");
+   try
+   {
+      auto m_presets = m_settings.load<Presets>("EnginePresets");
+   }
+   catch (const std::exception& e)
+   {
+      LOG_F(INFO, "Could not load preset for {}, e: {}", m_musicDeviceName,
+            e.what());
+   }
 }

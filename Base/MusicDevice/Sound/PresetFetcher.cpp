@@ -90,7 +90,7 @@ void PresetFetcher::fetchPresets()
              });
          sysexDumpHandler.handle(*pSysEX);
          if (sysexDumpHandler.presetName())
-            presetName = sysexDumpHandler.presetName().value();
+            presetName = fmt::format("#_{}", sysexDumpHandler.presetName().value());
          if (sysexDumpHandler.presetCategory())
             preset.category = sysexDumpHandler.presetCategory().value();
          if (sysexDumpHandler.presetGenre())

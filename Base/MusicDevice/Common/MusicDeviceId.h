@@ -10,7 +10,7 @@ namespace base::musicDevice
 using MusicDeviceName = std::string; // TODO: struct with manufacturer/product
 inline std::pair<std::string, std::string> splitDeviceName(const MusicDeviceName& deviceName)
 {
-    auto n = deviceName.find(":");
+    auto n = deviceName.find("/");
     if(n == std::string::npos)
     {
         return std::make_pair(deviceName,"");

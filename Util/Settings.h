@@ -13,7 +13,6 @@
 
 namespace util
 {
-constexpr std::string_view localSettingsDir = ".config";
 
 class Settings
 {
