@@ -7,6 +7,5 @@ using namespace base::musicDevice;
 TEST(SoundParameterStorageTest, test)
 {
    description::sound::Section soundSection;
-   sound::ParameterStorage soundParameterStotrage;
-   soundParameterStotrage.resizeBy(soundSection);
+   sound::ParameterStorage soundParameterStotrage(soundSection);
 }

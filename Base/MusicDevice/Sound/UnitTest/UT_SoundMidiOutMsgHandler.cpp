@@ -2,6 +2,8 @@
 #include "SoundMidiOutMsgHandler.h"
 #include "MidiMessage.h"
 
+using namespace base::musicDevice;
+
 class MidiOutIfMock
 {
 public:
@@ -19,7 +21,7 @@ TEST(SoundMidiOutMsgHandlerTest, test)
 {
    MidiOutIfMock midiOutIfMock;
    description::sound::Section soundSection;
-   OutMsgHandler outMsgHandler(&midiOutIfMock, soundSection);
+   OutMsgHandler outMsgHandler(&midiOutIfMock, soundSection, 0);
    outMsgHandler.sendParameterDumpRequest();
    outMsgHandler.sendSoundParameter(1, 2, 12.0);
    outMsgHandler.noteOn(1, 3, 4.0);

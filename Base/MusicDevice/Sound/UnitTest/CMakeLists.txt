@@ -4,6 +4,7 @@ set (CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
    "UT_main.cpp"
+   "UT_DevicePresets.cpp"
    "UT_SoundHandler.cpp"
    "UT_SoundMidiInMsgHandler.cpp"
    "UT_SoundMidiOutMsgHandler.cpp"

@@ -24,7 +24,7 @@ TEST(SoundMidiInMsgHandlerTest, test)
    MidiInIfMock midiInIfMock;
    description::sound::Section soundSection;
    MidiInMsgHandlerSpec msgHandler(
-      &midiInIfMock, soundSection,
+      &midiInIfMock, soundSection, 0,
       [](int voiceId, int parameterId, float value) {
 
       });
