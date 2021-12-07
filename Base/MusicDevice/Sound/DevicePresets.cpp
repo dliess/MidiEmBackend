@@ -158,7 +158,7 @@ void DevicePresets::load() noexcept
 {
    try
    {
-      auto m_presets = m_settings.load<Presets>("EnginePresets");
+      m_presets = m_settings.load<Presets>("EnginePresets");
    }
    catch (const std::exception& e)
    {
