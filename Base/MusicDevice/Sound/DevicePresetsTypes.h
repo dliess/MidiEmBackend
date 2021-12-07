@@ -29,8 +29,9 @@ DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
 
 struct LFOData
 {
+   constexpr bool active() const noexcept { return amplitude > 0.0 && frequency > 0.0; }
    static constexpr float DefaultAmplitude = 0.0;
-   static constexpr float DefaultFrequency = 1.0;
+   static constexpr float DefaultFrequency = 0.0;
    static constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
    static constexpr int DefaultMultiplierExp = 0;
    float amplitude{DefaultAmplitude};
