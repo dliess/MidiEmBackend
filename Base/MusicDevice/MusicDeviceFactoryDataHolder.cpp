@@ -29,6 +29,25 @@ void factory::DataHolder::soundDevicesPresetChanged(
    }
 }
 
+void factory::DataHolder::soundDeviceActualPresetNameChanged(
+    const util::Identifiable::UUID& uuid, int voiceIdx,
+    const std::string& newPresetName) noexcept
+{
+   const auto uuidIt = m_uuidToDevIdMap.find(uuid);
+   if(uuidIt == m_uuidToDevIdMap.end())
+   {
+      return;
+   }
+   const auto it = m_actualPresetNames.find(uuidIt->second);
+   if(it == m_actualPresetNames.end())
+   {
+      return;
+   }
+   it->second->at(voiceIdx) = newPresetName;
+   util::Settings settings("EnginePresets", "ActualPresets.json");
+   settings.save(uuidIt->second.toStr(), *it->second.get());
+}
+
 std::shared_ptr<description::Description> factory::DataHolder::getDescription(
     const MusicDeviceName& deviceName) noexcept
 {
@@ -83,6 +102,33 @@ factory::DataHolder::getDevicePresets(
    return std::move(pPresets);
 }
 
+std::shared_ptr<factory::DataHolder::ActualPresetNames>
+factory::DataHolder::getActualDevicePresetNames(
+    const MusicDeviceId& id) const noexcept
+{
+   auto it = m_actualPresetNames.find(id);
+   if (it == m_actualPresetNames.end())
+   {
+      // TODO search without port
+      util::Settings settings("EnginePresets", "ActualPresets.json");
+      try
+      {
+         it =
+             m_actualPresetNames
+                 .emplace(id, std::make_shared<ActualPresetNames>(
+                                  settings.load<ActualPresetNames>(id.toStr())))
+                 .first;
+      }
+      catch (const std::exception& e)
+      {
+         LOG_F(INFO, "No actual preset for {}, exception: {}", id.toStr(),
+               e.what());
+         return nullptr;
+      }
+   }
+   return it->second;
+}
+
 void factory::DataHolder::reEmitSignals()
 {
    for (const auto& e : m_descriptionCache)
@@ -108,13 +154,8 @@ void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
    m_uuidToDevIdMap.emplace(uuid, mdId);
 }
 
-std::optional<MusicDeviceId> factory::DataHolder::getMdId(
-    const util::Identifiable::UUID& uuid) const noexcept
+void factory::DataHolder::removeEntryForUuid(
+    const util::Identifiable::UUID& uuid) noexcept
 {
-   const auto it = m_uuidToDevIdMap.find(uuid);
-   if(it != m_uuidToDevIdMap.end())
-   {
-      return it->second;
-   }
-   return std::nullopt;
+   m_uuidToDevIdMap.erase(uuid);
 }

@@ -7,9 +7,9 @@
 
 #include "CallbackSignal.h"
 #include "DevicePresets.h"
+#include "Identifiable.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
-#include "Identifiable.h"
 #include "VectorPlusOne.h"
 
 namespace base::musicDevice::factory
@@ -19,6 +19,9 @@ struct DataHolder
    DataHolder(std::string configDir) noexcept;
 
    void soundDevicesPresetChanged(const sound::preset::Id& enginePresetId);
+   void soundDeviceActualPresetNameChanged(
+       const util::Identifiable::UUID& uuid, int voiceIdx,
+       const std::string& newPresetName) noexcept;
 
    std::shared_ptr<description::Description> getDescription(
        const MusicDeviceName& deviceName) noexcept;
@@ -28,8 +31,11 @@ struct DataHolder
 
    void addUuid2MdId(const util::Identifiable::UUID& uuid,
                      const MusicDeviceId& mdId) noexcept;
-   std::optional<MusicDeviceId> getMdId(
-       const util::Identifiable::UUID& uuid) const noexcept;
+   void removeEntryForUuid(const util::Identifiable::UUID& uuid) noexcept;
+
+   using ActualPresetNames = util::VectorPlusOne<std::string>;
+   std::shared_ptr<ActualPresetNames> getActualDevicePresetNames(
+       const MusicDeviceId& id) const noexcept;
 
    CB_SIGNAL(DescriptionAdded, const std::string&,
              const description::Description&);
@@ -48,7 +54,8 @@ private:
                       std::shared_ptr<sound::preset::DevicePresets>>
        m_presetCache;
    std::unordered_map<util::Identifiable::UUID, MusicDeviceId> m_uuidToDevIdMap;
-   std::unordered_map<MusicDeviceId, util::VectorPlusOne<std::string>> m_actualPresets;
+   std::unordered_map<MusicDeviceId, std::shared_ptr<ActualPresetNames>>
+       m_actualPresetNames;
 };
 }   // namespace base::musicDevice::factory
 

@@ -224,6 +224,7 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
                     m_rHolder.midiHolder.getMidiOut(chainRoot),
                     m_dataHolder.getDescription(lastDeviceId.deviceName),
                     m_dataHolder.getDevicePresets(lastDeviceId.deviceName),
+                    m_dataHolder.getActualDevicePresetNames(lastDeviceId),
                     midiVoiceOffset);
        });
 }
@@ -311,14 +312,16 @@ void Factory::fillActionQueueForMidiIn(
    util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
        .push(HandleMidiInInsert(), deviceId, pMidiIn,
              m_dataHolder.getDescription(deviceId.deviceName),
-             m_dataHolder.getDevicePresets(deviceId.deviceName));
+             m_dataHolder.getDevicePresets(deviceId.deviceName),
+             m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forFirstDeviceInChain(
        deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
                                  uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
                     m_dataHolder.getDescription(nextDeviceId.deviceName),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName));
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName),
+                    m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }
 
@@ -329,14 +332,16 @@ void Factory::fillActionQueueForMidiOut(
    util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
        .push(HandleMidiOutInsert(), deviceId, pMidiOut,
              m_dataHolder.getDescription(deviceId.deviceName),
-             m_dataHolder.getDevicePresets(deviceId.deviceName));
+             m_dataHolder.getDevicePresets(deviceId.deviceName),
+             m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forEachDeviceInChain(
        deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
                                   uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
                     m_dataHolder.getDescription(nextDeviceId.deviceName),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName));
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName),
+                    m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }
 

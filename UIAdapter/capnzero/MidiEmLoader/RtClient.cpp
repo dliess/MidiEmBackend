@@ -10,8 +10,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
     ::capnzero::MidiEmRt::MidiEmRtClientRpc(rZmqContext,
                                             "tcp://localhost:5555"),
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext,
-                                                "tcp://localhost:5556"),
-    m_settings("EnginePresets", "ActualPresets.json")
+                                                "tcp://localhost:5556")
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,
@@ -22,35 +21,38 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
           rMDFactory.dataHolder().soundDevicesPresetChanged(presetId);
        });
 
-   onMusicDevicesDeviceAdded([&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                                         const ::capnzero::TextView& type,
-                                         const ::capnzero::TextView& port,
-                                         const ::capnzero::TextView& mediumId,
-                                         ::capnzero::UInt8 midiVoiceOffset) {
-      ::capnzero::Data<16> uuidData;
-      std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-      rSignals.MusicDevices__deviceAdded(
-          uuidData, std::string(type), std::string(port), std::string(mediumId),
-          midiVoiceOffset);
-   });
-   onMusicDevicesDeviceRemoved([&rSignals](const ::capnzero::SpanCL<16>& uuid) {
-      ::capnzero::Data<16> uuidData;
-      std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-      rSignals.MusicDevices__deviceRemoved(uuidData);
-   });
+   onMusicDevicesDeviceAdded(
+       [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
+                                const ::capnzero::TextView& type,
+                                const ::capnzero::TextView& port,
+                                const ::capnzero::TextView& mediumId,
+                                ::capnzero::UInt8 midiVoiceOffset) {
+          rMDFactory.dataHolder().addUuid2MdId(uuid, MusicDeviceId{type, port});
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.MusicDevices__deviceAdded(
+              uuidData, std::string(type), std::string(port),
+              std::string(mediumId), midiVoiceOffset);
+       });
+   onMusicDevicesDeviceRemoved(
+       [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid) {
+          rMDFactory.dataHolder().removeEntryForUuid(uuid);
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.MusicDevices__deviceRemoved(uuidData);
+       });
 
    onSoundDevicesActualPresetChanged(
        [this, &rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx,
-                   const ::capnzero::TextView& presetName) {
+                                      ::capnzero::Int8 voiceIdx,
+                                      const ::capnzero::TextView& presetName) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__actualPresetChanged(uuidData, voiceIdx,
                                                      std::string(presetName));
-        
-          const auto mdId = rMDFactory.dataHolder().getMdId(uuidData);
-          assert(mdId);
-          m_settings.save(mdId->toStr(), std::string(presetName));
+
+          rMDFactory.dataHolder().soundDeviceActualPresetNameChanged(
+              uuidData, voiceIdx, std::string(presetName));
        });
 
    onSoundDevicesArpeggiatorAlgorithmChanged(
@@ -113,8 +115,8 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                    ::capnzero::Int8 voiceIdx, ::capnzero::Int32 stepLength) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-          rSignals.SoundDevices__arpeggiatorStepLengthChanged(uuidData, voiceIdx,
-                                                          stepLength);
+          rSignals.SoundDevices__arpeggiatorStepLengthChanged(
+              uuidData, voiceIdx, stepLength);
        });
    onSoundDevicesArpeggiatorFeedModeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
@@ -133,7 +135,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorSeqSizeChanged(uuidData, voiceIdx,
-                                                          seqSize);
+                                                           seqSize);
        });
    onTransportControlEnabledChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,

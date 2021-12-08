@@ -4,7 +4,6 @@
 #include "LoaderServer.h"
 #include "MidiEmRt_Client.h"
 #include "LoaderServer.h"
-#include "Settings.h"
 
 namespace base::musicDevice::factory
 {
@@ -21,8 +20,6 @@ public:
             LoaderServer::Signals& rSignals,
             base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
-private:
-   util::Settings m_settings;
 };
 
 }   // namespace uiadapter::capnzero
