@@ -9,6 +9,8 @@
 #include "DevicePresets.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
+#include "Identifiable.h"
+#include "VectorPlusOne.h"
 
 namespace base::musicDevice::factory
 {
@@ -23,6 +25,11 @@ struct DataHolder
 
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
        const MusicDeviceName& deviceName) noexcept;
+
+   void addUuid2MdId(const util::Identifiable::UUID& uuid,
+                     const MusicDeviceId& mdId) noexcept;
+   std::optional<MusicDeviceId> getMdId(
+       const util::Identifiable::UUID& uuid) const noexcept;
 
    CB_SIGNAL(DescriptionAdded, const std::string&,
              const description::Description&);
@@ -40,6 +47,8 @@ private:
    std::unordered_map<MusicDeviceName,
                       std::shared_ptr<sound::preset::DevicePresets>>
        m_presetCache;
+   std::unordered_map<util::Identifiable::UUID, MusicDeviceId> m_uuidToDevIdMap;
+   std::unordered_map<MusicDeviceId, util::VectorPlusOne<std::string>> m_actualPresets;
 };
 }   // namespace base::musicDevice::factory
 

@@ -101,3 +101,20 @@ void factory::DataHolder::reEmitSignals()
           });
    }
 }
+
+void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
+                                       const MusicDeviceId& mdId) noexcept
+{
+   m_uuidToDevIdMap.emplace(uuid, mdId);
+}
+
+std::optional<MusicDeviceId> factory::DataHolder::getMdId(
+    const util::Identifiable::UUID& uuid) const noexcept
+{
+   const auto it = m_uuidToDevIdMap.find(uuid);
+   if(it != m_uuidToDevIdMap.end())
+   {
+      return it->second;
+   }
+   return std::nullopt;
+}

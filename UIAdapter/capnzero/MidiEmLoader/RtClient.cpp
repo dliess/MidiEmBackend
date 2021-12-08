@@ -10,7 +10,8 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
     ::capnzero::MidiEmRt::MidiEmRtClientRpc(rZmqContext,
                                             "tcp://localhost:5555"),
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext,
-                                                "tcp://localhost:5556")
+                                                "tcp://localhost:5556"),
+    m_settings("EnginePresets", "ActualPresets.json")
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,
@@ -39,13 +40,17 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
    });
 
    onSoundDevicesActualPresetChanged(
-       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+       [this, &rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
                    ::capnzero::Int8 voiceIdx,
                    const ::capnzero::TextView& presetName) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__actualPresetChanged(uuidData, voiceIdx,
                                                      std::string(presetName));
+        
+          const auto mdId = rMDFactory.dataHolder().getMdId(uuidData);
+          assert(mdId);
+          m_settings.save(mdId->toStr(), std::string(presetName));
        });
 
    onSoundDevicesArpeggiatorAlgorithmChanged(
