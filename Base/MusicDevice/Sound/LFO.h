@@ -8,6 +8,11 @@ namespace base::musicDevice::sound::lfo
 
 DECLARE_ENUM(Waveform, uint, Sine, Square, Triangle, Saw, Random);
 
+constexpr float DefaultAmplitude = 0.0;
+constexpr float DefaultFrequency = 1.0;
+constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
+constexpr int DefaultMultiplierExp = 0;
+
 class LFO
 {
 public:
@@ -45,12 +50,11 @@ public:
       [[nodiscard]] inline float operator()(float t) noexcept;
       float lastValue{0.0};
    };
-
 private:
    bool m_justGotDisabled {false};
-   float m_amplitude{0.0};
-   float m_frequency{1.0};
-   uint32_t m_multiplierExp{0};
+   float m_amplitude{DefaultAmplitude};
+   float m_frequency{DefaultFrequency};
+   uint32_t m_multiplierExp{DefaultMultiplierExp};
    uint64_t m_lastWaveStartJiffies{0};
    mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
    static constexpr uint32_t MAX_MULTIPLIER_EXP = 7;

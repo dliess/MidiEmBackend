@@ -48,16 +48,16 @@ inline void to_json<base::musicDevice::sound::preset::LFOData>(
     nlohmann::json& j, const base::musicDevice::sound::preset::LFOData& obj)
 {
    if (obj.amplitude !=
-       base::musicDevice::sound::preset::LFOData::DefaultAmplitude)
+       base::musicDevice::sound::lfo::DefaultAmplitude)
       j["amplitude"] = round1000(obj.amplitude);
    if (obj.frequency !=
-       base::musicDevice::sound::preset::LFOData::DefaultFrequency)
+       base::musicDevice::sound::lfo::DefaultFrequency)
       j["frequency"] = round1000(obj.frequency);
    if (obj.waveform !=
-       base::musicDevice::sound::preset::LFOData::DefaultWaveform)
+       base::musicDevice::sound::lfo::DefaultWaveform)
       j["waveform"] = obj.waveform;
    if (obj.multiplierExp !=
-       base::musicDevice::sound::preset::LFOData::DefaultMultiplierExp)
+       base::musicDevice::sound::lfo::DefaultMultiplierExp)
       j["multiplierExp"] = obj.multiplierExp;
 }
 
@@ -102,13 +102,13 @@ inline void to_json<base::musicDevice::sound::preset::ParameterData>(
 {
    j["commanded"] = round1000(obj.commanded);
    if (obj.lfoData.amplitude !=
-           base::musicDevice::sound::preset::LFOData::DefaultAmplitude ||
+           base::musicDevice::sound::lfo::DefaultAmplitude ||
        obj.lfoData.frequency !=
-           base::musicDevice::sound::preset::LFOData::DefaultFrequency ||
+           base::musicDevice::sound::lfo::DefaultFrequency ||
        obj.lfoData.waveform !=
-           base::musicDevice::sound::preset::LFOData::DefaultWaveform ||
+           base::musicDevice::sound::lfo::DefaultWaveform ||
        obj.lfoData.multiplierExp !=
-           base::musicDevice::sound::preset::LFOData::DefaultMultiplierExp)
+           base::musicDevice::sound::lfo::DefaultMultiplierExp)
    {
       j["lfo"] = obj.lfoData;
    }

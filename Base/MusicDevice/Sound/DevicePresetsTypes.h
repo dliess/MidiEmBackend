@@ -29,14 +29,10 @@ DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
 
 struct LFOData
 {
-   static constexpr float DefaultAmplitude = 0.0;
-   static constexpr float DefaultFrequency = 1.0;
-   static constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
-   static constexpr int DefaultMultiplierExp = 0;
-   float amplitude{DefaultAmplitude};
-   float frequency{DefaultFrequency};
-   lfo::Waveform waveform{DefaultWaveform};
-   int multiplierExp{DefaultMultiplierExp};
+   float amplitude{lfo::DefaultAmplitude};
+   float frequency{lfo::DefaultFrequency};
+   lfo::Waveform waveform{lfo::DefaultWaveform};
+   int multiplierExp{lfo::DefaultMultiplierExp};
 };
 
 struct ParameterData

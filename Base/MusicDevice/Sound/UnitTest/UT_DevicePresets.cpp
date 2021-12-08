@@ -45,8 +45,8 @@ TEST(DevicePresetSerializationTest, deserialize)
    ASSERT_EQ(preset.genre, Genre::None);
    ASSERT_EQ(preset.parameters.size(), 4);
    EXPECT_NEAR(preset.parameters[0].commanded, 0.163, 0.0001);
-   EXPECT_NEAR(preset.parameters[0].lfoData.amplitude, LFOData::DefaultAmplitude, 0.0001);
-   EXPECT_NEAR(preset.parameters[0].lfoData.frequency, LFOData::DefaultFrequency, 0.0001);
-   ASSERT_EQ(preset.parameters[0].lfoData.waveform, LFOData::DefaultWaveform);
-   ASSERT_EQ(preset.parameters[0].lfoData.multiplierExp, LFOData::DefaultMultiplierExp);
+   EXPECT_NEAR(preset.parameters[0].lfoData.amplitude, lfo::DefaultAmplitude, 0.0001);
+   EXPECT_NEAR(preset.parameters[0].lfoData.frequency, lfo::DefaultFrequency, 0.0001);
+   ASSERT_EQ(preset.parameters[0].lfoData.waveform, lfo::DefaultWaveform);
+   ASSERT_EQ(preset.parameters[0].lfoData.multiplierExp, lfo::DefaultMultiplierExp);
 }
