@@ -95,22 +95,26 @@ private:
           HandleMidiInInsert, MusicDeviceId deviceId,
           std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
           std::shared_ptr<description::Description> pDescr,
-          std::shared_ptr<sound::preset::DevicePresets> pPresets);
+          std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames);
       void action(
           HandleMidiOutInsert, MusicDeviceId deviceId,
           std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
           std::shared_ptr<description::Description> pDescr,
-          std::shared_ptr<sound::preset::DevicePresets> pPresets);
+          std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames);
       void action(
           HandleMidiInInsertChained, MusicDeviceId deviceId,
           std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
           std::shared_ptr<description::Description> pDescr,
-          std::shared_ptr<sound::preset::DevicePresets> pPresets);
+          std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames);
       void action(
           HandleMidiOutInsertChained, MusicDeviceId deviceId,
           std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
           std::shared_ptr<description::Description> pDescr,
-          std::shared_ptr<sound::preset::DevicePresets> pPresets);
+          std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames);
       void action(EraseFromDevices, const MusicDeviceId& deviceId);
       void action(EraseFromMidiInHolder, const MidiHolder::Id& holderId);
       void action(EraseFromMidiOutHolder, const MidiHolder::Id& holderId);
@@ -120,6 +124,7 @@ private:
           std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
           std::shared_ptr<description::Description> pDescr,
           std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames,
           uint8_t midiVoiceOffset);
 
       Holder& m_rHolder;
@@ -128,13 +133,15 @@ private:
           const MusicDeviceId& deviceId,
           std::shared_ptr<description::Description> pDescr,
           std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames,
           std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
           std::shared_ptr<MusicDevice::MidiOutput>
               pMidiOut) noexcept;
       std::shared_ptr<MusicDevice> createMusicDevice(
           const MusicDeviceId& deviceId,
           std::shared_ptr<description::Description> pDescr,
-          std::shared_ptr<sound::preset::DevicePresets> pPresets);
+          std::shared_ptr<sound::preset::DevicePresets> pPresets,
+          std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames);
    };
    MusicDeviceInserter m_musicDeviceInserter;
 

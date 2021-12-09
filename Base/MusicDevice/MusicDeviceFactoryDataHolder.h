@@ -33,9 +33,10 @@ struct DataHolder
                      const MusicDeviceId& mdId) noexcept;
    void removeEntryForUuid(const util::Identifiable::UUID& uuid) noexcept;
 
-   using ActualPresetNames = util::VectorPlusOne<std::string>;
+   //using ActualPresetNames = util::VectorPlusOne<std::string>;
+   using ActualPresetNames = std::vector<std::string>;
    std::shared_ptr<ActualPresetNames> getActualDevicePresetNames(
-       const MusicDeviceId& id) const noexcept;
+       const MusicDeviceId& id) noexcept;
 
    CB_SIGNAL(DescriptionAdded, const std::string&,
              const description::Description&);
