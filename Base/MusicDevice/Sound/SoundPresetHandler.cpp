@@ -9,10 +9,12 @@ using namespace base::musicDevice::sound::preset;
 PresetHandler::PresetHandler(
     const description::sound::Section& rSoundSection,
     ParameterStorage& rParameterStorage,
-    std::shared_ptr<DevicePresets> pSoundPresets) noexcept :
+    std::shared_ptr<DevicePresets> pSoundPresets,
+    std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept :
     m_rSoundSection(rSoundSection),
     m_rParameterStorage(rParameterStorage),
-    m_pDevicePresets(std::move(pSoundPresets))
+    m_pDevicePresets(std::move(pSoundPresets)),
+    m_pInitialActualPresetNames(std::move(pActualPresetNames))
 {
 }
 
@@ -44,11 +46,24 @@ std::optional<std::string> PresetHandler::getActualSoundPresetName(
    return m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
 }
 
+void PresetHandler::resetToInitialActualSoundPresetsIfSet() noexcept
+{
+   if(!m_pInitialActualPresetNames) return;
+   for(int i = 0; i < m_pInitialActualPresetNames->size(); ++i)
+   {
+      if(!m_pInitialActualPresetNames->at(i).empty())
+      {
+         resetToActualSoundPreset(i-1);
+      }
+   }
+   m_pInitialActualPresetNames.reset();
+}
+
 void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
 {
    const auto& actualPresetName =
        m_rParameterStorage.getActualPresetOfVoice(voiceIdx);
-   if (!actualPresetName)
+   if (!actualPresetName || actualPresetName->size() == 0)
    {
       return;
    }

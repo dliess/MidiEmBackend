@@ -12,11 +12,13 @@ using namespace base::musicDevice::sound;
 
 SoundHandler::SoundHandler(
     std::string deviceName, const description::sound::Section& rSoundSection,
-    std::shared_ptr<preset::DevicePresets> soundPresets) noexcept :
+    std::shared_ptr<preset::DevicePresets> soundPresets,
+    std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept :
     m_deviceName(std::move(deviceName)),
     m_rSoundSection(rSoundSection),
     m_paramStorage(rSoundSection),
-    m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets)),
+    m_presetHandler(rSoundSection, m_paramStorage, std::move(soundPresets),
+                    std::move(pActualPresetNames)),
     m_arpeggiators(m_rSoundSection.voices.size())
 {
    for (int voiceIdx = 0; voiceIdx < m_arpeggiators.size(); ++voiceIdx)
@@ -75,6 +77,7 @@ void SoundHandler::initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn,
    m_presetHandler.initMidiInHandler(m_midiInMsgHandler.get());
    if (m_midiOutHandler)
    {
+      m_presetHandler.resetToInitialActualSoundPresetsIfSet();
       doParameterDumpRequest();
    }
 }
@@ -88,6 +91,7 @@ void SoundHandler::initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
    m_presetHandler.initMidiOutHandler(m_midiOutHandler.get());
    if (m_midiInMsgHandler)
    {
+      m_presetHandler.resetToInitialActualSoundPresetsIfSet();
       doParameterDumpRequest();
    }
 }
@@ -267,8 +271,10 @@ void SoundHandler::uiShowsInterestInParameter(int voiceId,
           if (parameterId == ALL || parameterId == paramIdx)
           {
              emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
-             emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
-             emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
+             emitLFOAmplitudeChanged(voiceId, paramIdx,
+                                     element.lfo.amplitude());
+             emitLFOFrequencyChanged(voiceId, paramIdx,
+                                     element.lfo.frequency());
              emitLFOMultiplierExpChanged(voiceId, paramIdx,
                                          element.lfo.multiplierExp());
           }
@@ -299,8 +305,10 @@ void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
           if (paramIdx == ALL || paramIdx == _paramIdx)
           {
              emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
-             emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
-             emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
+             emitLFOAmplitudeChanged(voiceId, paramIdx,
+                                     element.lfo.amplitude());
+             emitLFOFrequencyChanged(voiceId, paramIdx,
+                                     element.lfo.frequency());
              emitLFOMultiplierExpChanged(voiceId, paramIdx,
                                          element.lfo.multiplierExp());
           }
@@ -327,13 +335,14 @@ void SoundHandler::blankAllVoiceParameters() noexcept
 {
    m_paramStorage.resetToInitialValues();
    // TODO
-   m_paramStorage.forEachParameter([this](int voiceId, int paramIdx,
-                                          ParameterStorage::Element& element) {
-      emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
-      emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
-      emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
-      emitLFOMultiplierExpChanged(voiceId, paramIdx, element.lfo.multiplierExp());
-   });
+   m_paramStorage.forEachParameter(
+       [this](int voiceId, int paramIdx, ParameterStorage::Element& element) {
+          emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
+          emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
+          emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
+          emitLFOMultiplierExpChanged(voiceId, paramIdx,
+                                      element.lfo.multiplierExp());
+       });
 }
 
 void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
@@ -364,11 +373,13 @@ void SoundHandler::incLFOWaveform(int voiceIndex, int paramIdx,
                                   int increment) noexcept
 {
    const int idx =
-       static_cast<int>(m_paramStorage.waveform(voiceIndex, paramIdx)) + increment;
+       static_cast<int>(m_paramStorage.waveform(voiceIndex, paramIdx)) +
+       increment;
    if (idx >= static_cast<int>(lfo::Waveform::Sine) &&
        idx <= static_cast<int>(lfo::Waveform::Random))
    {
-      m_paramStorage.setWaveform(voiceIndex, paramIdx, static_cast<lfo::Waveform>(idx));
+      m_paramStorage.setWaveform(voiceIndex, paramIdx,
+                                 static_cast<lfo::Waveform>(idx));
    }
 }
 

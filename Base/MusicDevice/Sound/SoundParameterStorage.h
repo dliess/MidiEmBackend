@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "LFO.h"
 #include "SoundSection.h"
-#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -21,7 +21,8 @@ namespace sound
 class ParameterStorage
 {
 public:
-   inline ParameterStorage(const description::sound::Section& rSoundSection);
+   inline ParameterStorage(
+       const description::sound::Section& rSoundSection);
    template <typename T>
    void setCommandedValuesOfVoice(int voiceId, const T& container) noexcept;
    inline void setSoundParameterValue(int voiceId, int parameterId,
@@ -51,15 +52,23 @@ public:
                                           int parameterId = ALL) noexcept;
    inline void uiLoosesInterestInParameter(int voiceId,
                                            int parameterId = ALL) noexcept;
-   inline void setWaveform(int voiceId, int parameterId, lfo::Waveform waveform) noexcept;
-   inline void setAmplitude(int voiceId, int parameterId, float amplitude) noexcept;
-   inline void setFrequency(int voiceId, int parameterId, float frequency) noexcept;
-   inline void setMultiplierExp(int voiceId, int parameterId, uint32_t multiplierExp) noexcept;
+   inline void setWaveform(int voiceId, int parameterId,
+                           lfo::Waveform waveform) noexcept;
+   inline void setAmplitude(int voiceId, int parameterId,
+                            float amplitude) noexcept;
+   inline void setFrequency(int voiceId, int parameterId,
+                            float frequency) noexcept;
+   inline void setMultiplierExp(int voiceId, int parameterId,
+                                uint32_t multiplierExp) noexcept;
 
-   [[nodiscard]] inline lfo::Waveform waveform(int voiceId, int parameterId) const noexcept;
-   [[nodiscard]] inline float amplitude(int voiceId, int parameterId) const noexcept;
-   [[nodiscard]] inline float frequency(int voiceId, int parameterId) const noexcept;
-   [[nodiscard]] inline uint32_t multiplierExp(int voiceId, int parameterId) const noexcept;
+   [[nodiscard]] inline lfo::Waveform waveform(int voiceId,
+                                               int parameterId) const noexcept;
+   [[nodiscard]] inline float amplitude(int voiceId,
+                                        int parameterId) const noexcept;
+   [[nodiscard]] inline float frequency(int voiceId,
+                                        int parameterId) const noexcept;
+   [[nodiscard]] inline uint32_t multiplierExp(int voiceId,
+                                               int parameterId) const noexcept;
 
    CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
    CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
@@ -71,7 +80,7 @@ public:
    {
       inline Element(bool isListIndex, int resolution) noexcept;
       static constexpr int NUM_MODIFIERS = 10;
-      static constexpr float FUZZ = 0.00001f;
+      static constexpr float FUZZ        = 0.00001f;
       struct Modifier
       {
          float destinationValue{0};
@@ -92,7 +101,8 @@ public:
       inline std::optional<float> updateActualValue() noexcept;
       inline void setActualValueUnsynced(float value) noexcept;
       inline void setActualValue(float value) noexcept;
-      inline void setCommandedValue(float value, bool markDirtyRt = true) noexcept;
+      inline void setCommandedValue(float value,
+                                    bool markDirtyRt = true) noexcept;
 
    private:
       const bool m_isListIndex;

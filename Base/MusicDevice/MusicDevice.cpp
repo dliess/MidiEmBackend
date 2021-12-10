@@ -16,7 +16,7 @@ MusicDevice::MusicDevice(
     MusicDeviceId deviceId, const std::string& resourceRootDir,
     std::shared_ptr<description::Description> descr,
     std::shared_ptr<sound::preset::DevicePresets> soundPresets,
-    const std::optional<std::string>& actualPresetName) noexcept :
+    std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept :
     m_deviceId(std::move(deviceId)),
     m_pDescr(std::move(descr)),
     m_pluginHandler(resourceRootDir)
@@ -24,7 +24,7 @@ MusicDevice::MusicDevice(
    if (m_pDescr->soundSection)
    {
       soundHandler.emplace(deviceId.deviceName, *m_pDescr->soundSection,
-                           std::move(soundPresets));
+                           std::move(soundPresets), std::move(pActualPresetNames));
    }
 
    if (m_pDescr->controllerSection)

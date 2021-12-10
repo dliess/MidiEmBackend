@@ -433,7 +433,7 @@ void Factory::MusicDeviceInserter::action(
     uint8_t midiVoiceOffset)
 {
    auto pMusicDevice =
-       createMusicDevice(deviceId, std::move(pDescr), std::move(pPresets));
+       createMusicDevice(deviceId, std::move(pDescr), std::move(pPresets), std::move(pActualPresetNames));
    pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
    pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
    m_rHolder.musicDevices.insert(

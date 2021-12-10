@@ -174,11 +174,11 @@ template <typename Cb> void ParameterStorage::forEachElementContainer(Cb&& cb)
 {
    for (int paramIdx = 0; paramIdx < m_globalData.parameters.size(); ++paramIdx)
    {
-      cb(m_globalData);
+      cb(m_globalData, GLOBAL);
    }
    for (int voiceIdx = 0; voiceIdx < m_voicesData.size(); ++voiceIdx)
    {
-      cb(m_voicesData[voiceIdx]);
+      cb(m_voicesData[voiceIdx], voiceIdx);
    }
 }
 
@@ -242,7 +242,7 @@ inline void ParameterStorage::resetToInitialValues() noexcept
       element.setCommandedValue(initVal);
    });
    forEachElementContainer(
-       [](EngineData& engineData) { engineData.actualPreset.reset(); });
+       [](EngineData& engineData, int voiceIdx) { engineData.actualPreset.reset(); });
 }
 
 inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
@@ -254,7 +254,7 @@ inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
 inline void ParameterStorage::setActualPresetOfVoice(
     int voiceIdx, const std::string& presetName) noexcept
 {
-   if(elementContainer(voiceIdx).actualPreset != presetName)
+   if (elementContainer(voiceIdx).actualPreset != presetName)
    {
       elementContainer(voiceIdx).actualPreset = presetName;
       emitActualPresetChanged(voiceIdx, presetName);
@@ -444,7 +444,8 @@ ParameterStorage::Element::updateActualValue() noexcept
    return std::nullopt;
 }
 
-inline void ParameterStorage::Element::setActualValueUnsynced(float value) noexcept
+inline void ParameterStorage::Element::setActualValueUnsynced(
+    float value) noexcept
 {
    actual      = value;
    dirtyFlagUi = true;
@@ -467,7 +468,8 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
    dirtyFlagUi = true;
 }
 
-inline void ParameterStorage::Element::setCommandedValue(float value, bool markDirtyRt) noexcept
+inline void ParameterStorage::Element::setCommandedValue(
+    float value, bool markDirtyRt) noexcept
 {
    const float range = m_isListIndex ? m_resolution : 1.0;
    if (value < 0.0)
@@ -496,57 +498,64 @@ inline float ParameterStorage::Element::calcModified() const noexcept
    return ret;
 }
 
-inline void ParameterStorage::setWaveform(int voiceId, int parameterId, lfo::Waveform waveform) noexcept
+inline void ParameterStorage::setWaveform(int voiceId, int parameterId,
+                                          lfo::Waveform waveform) noexcept
 {
-   if(lfoOf(voiceId, parameterId).setWaveform(waveform))
+   if (lfoOf(voiceId, parameterId).setWaveform(waveform))
    {
       emitLFOWaveformChanged(voiceId, parameterId, waveform);
    }
 }
 
-inline void ParameterStorage::setAmplitude(int voiceId, int parameterId, float amplitude) noexcept
+inline void ParameterStorage::setAmplitude(int voiceId, int parameterId,
+                                           float amplitude) noexcept
 {
-   if(lfoOf(voiceId, parameterId).setAmplitude(amplitude))
+   if (lfoOf(voiceId, parameterId).setAmplitude(amplitude))
    {
       emitLFOAmplitudeChanged(voiceId, parameterId, amplitude);
    }
 }
 
-inline void ParameterStorage::setFrequency(int voiceId, int parameterId, float frequency) noexcept
+inline void ParameterStorage::setFrequency(int voiceId, int parameterId,
+                                           float frequency) noexcept
 {
-   if(lfoOf(voiceId, parameterId).setFrequency(frequency))
+   if (lfoOf(voiceId, parameterId).setFrequency(frequency))
    {
       emitLFOFrequencyChanged(voiceId, parameterId, frequency);
    }
 }
 
-inline void ParameterStorage::setMultiplierExp(int voiceId, int parameterId, uint32_t multiplierExp) noexcept
+inline void ParameterStorage::setMultiplierExp(int voiceId, int parameterId,
+                                               uint32_t multiplierExp) noexcept
 {
-   if(lfoOf(voiceId, parameterId).setMultiplierExp(multiplierExp))
+   if (lfoOf(voiceId, parameterId).setMultiplierExp(multiplierExp))
    {
       emitLFOMultiplierExpChanged(voiceId, parameterId, multiplierExp);
    }
 }
 
-inline lfo::Waveform ParameterStorage::waveform(int voiceId, int parameterId) const noexcept
+inline lfo::Waveform ParameterStorage::waveform(int voiceId,
+                                                int parameterId) const noexcept
 {
    return lfoOf(voiceId, parameterId).waveform();
 }
 
-inline float ParameterStorage::amplitude(int voiceId, int parameterId) const noexcept
+inline float ParameterStorage::amplitude(int voiceId,
+                                         int parameterId) const noexcept
 {
    return lfoOf(voiceId, parameterId).amplitude();
 }
 
-inline float ParameterStorage::frequency(int voiceId, int parameterId) const noexcept
+inline float ParameterStorage::frequency(int voiceId,
+                                         int parameterId) const noexcept
 {
    return lfoOf(voiceId, parameterId).frequency();
 }
 
-inline uint32_t ParameterStorage::multiplierExp(int voiceId, int parameterId) const noexcept
+inline uint32_t ParameterStorage::multiplierExp(int voiceId,
+                                                int parameterId) const noexcept
 {
    return lfoOf(voiceId, parameterId).multiplierExp();
 }
-
 
 }   // namespace base::musicDevice::sound

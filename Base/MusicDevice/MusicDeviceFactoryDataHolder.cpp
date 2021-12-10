@@ -122,8 +122,15 @@ factory::DataHolder::getActualDevicePresetNames(
          const auto loadedPresetNames =
              settings.load<ActualPresetNames>(id.toStr());
          auto sh = std::make_shared<ActualPresetNames>(loadedPresetNames);
-         sh->resize(vSize);
-         it      = m_actualPresetNames.emplace(id, std::move(sh)).first;
+         if (sh->size() != vSize)
+         {
+            LOG_F(
+                WARNING,
+                "Loaded config voice size mismatch. loaded: {} != expected {}",
+                sh->size(), vSize);
+            sh->resize(vSize);
+         }
+         it = m_actualPresetNames.emplace(id, std::move(sh)).first;
       }
       catch (const std::exception& e)
       {

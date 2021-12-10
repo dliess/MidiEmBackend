@@ -27,18 +27,19 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                                 const ::capnzero::TextView& port,
                                 const ::capnzero::TextView& mediumId,
                                 ::capnzero::UInt8 midiVoiceOffset) {
-          rMDFactory.dataHolder().addUuid2MdId(uuid, MusicDeviceId{type, port});
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rMDFactory.dataHolder().addUuid2MdId(
+              uuidData, MusicDeviceId{std::string(type), std::string(port)});
           rSignals.MusicDevices__deviceAdded(
               uuidData, std::string(type), std::string(port),
               std::string(mediumId), midiVoiceOffset);
        });
    onMusicDevicesDeviceRemoved(
        [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid) {
-          rMDFactory.dataHolder().removeEntryForUuid(uuid);
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rMDFactory.dataHolder().removeEntryForUuid(uuidData);
           rSignals.MusicDevices__deviceRemoved(uuidData);
        });
 

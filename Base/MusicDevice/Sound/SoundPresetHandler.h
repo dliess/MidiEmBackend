@@ -29,11 +29,13 @@ class PresetHandler
 public:
    PresetHandler(const description::sound::Section& rSoundSection,
                  ParameterStorage& rParameterStorage,
-                 std::shared_ptr<DevicePresets> pSoundPresets) noexcept;
+                 std::shared_ptr<DevicePresets> pSoundPresets,
+                 std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept;
    void initMidiInHandler(sound::MidiInMsgHandlerT* pMidiInMsgHandler);
    void initMidiOutHandler(sound::MidiOutMsgHandlerT* pMidiOutMsgHandler);
    std::optional<std::string> getActualSoundPresetName(
        int voiceIdx) const noexcept;
+   void resetToInitialActualSoundPresetsIfSet() noexcept;
    void resetToActualSoundPreset(int voiceIdx) noexcept;
    void selectSoundPreset(int voiceIdx, const std::string& presetName) noexcept;
    void storeAsSoundPreset(int voiceIdx, const std::string& presetName,
@@ -55,6 +57,7 @@ private:
    std::shared_ptr<DevicePresets> m_pDevicePresets;
    sound::MidiInMsgHandlerT* m_pMidiInMsgHandler{nullptr};
    sound::MidiOutMsgHandlerT* m_pMidiOutMsgHandler{nullptr};
+   std::shared_ptr<std::vector<std::string>> m_pInitialActualPresetNames;
 };
 
 }   // namespace preset

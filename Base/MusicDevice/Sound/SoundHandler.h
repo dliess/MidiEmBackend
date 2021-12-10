@@ -33,7 +33,8 @@ class SoundHandler
 public:
    SoundHandler(std::string deviceName,
                 const description::sound::Section& rSoundSection,
-                std::shared_ptr<preset::DevicePresets> soundPresets) noexcept;
+                std::shared_ptr<preset::DevicePresets> soundPresets,
+                std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept;
    ~SoundHandler();
    SoundHandler(const SoundHandler& other) = delete;
    SoundHandler& operator=(const SoundHandler& other) = delete;
