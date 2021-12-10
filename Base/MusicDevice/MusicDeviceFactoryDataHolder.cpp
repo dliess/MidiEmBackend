@@ -46,6 +46,7 @@ void factory::DataHolder::soundDeviceActualPresetNameChanged(
    it->second->at(voiceIdx + 1) = newPresetName;
    util::Settings settings("EnginePresets", "ActualPresets.json");
    settings.save(uuidIt->second.toStr(), *it->second.get());
+   emitActualPresetNameChanged(uuid, voiceIdx, newPresetName);
 }
 
 std::shared_ptr<description::Description> factory::DataHolder::getDescription(
@@ -158,6 +159,21 @@ void factory::DataHolder::reEmitSignals()
                  sound::preset::Id({deviceName, engineIdx, presetName}),
                  preset.category, preset.genre);
           });
+   }
+   for(const auto& entries : m_uuidToDevIdMap)
+   {
+      const auto it = m_actualPresetNames.find(entries.second);
+      if(it != m_actualPresetNames.end())
+      {
+         for(int i = 0; i < it->second->size(); ++i)
+         {
+            const auto& presetName = it->second->at(i);
+            if(!presetName.empty())
+            {
+               emitActualPresetNameChanged(entries.first, i - 1, presetName);
+            }
+         }
+      }
    }
 }
 

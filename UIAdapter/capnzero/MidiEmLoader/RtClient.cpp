@@ -49,9 +49,6 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                                       const ::capnzero::TextView& presetName) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-          rSignals.SoundDevices__actualPresetChanged(uuidData, voiceIdx,
-                                                     std::string(presetName));
-
           rMDFactory.dataHolder().soundDeviceActualPresetNameChanged(
               uuidData, voiceIdx, std::string(presetName));
        });

@@ -32,6 +32,12 @@ LoaderRpc::LoaderRpc(
           m_rSignals.Presets__presetRemoved(id.musicDeviceName,
                                                   id.engineIdx, id.presetName);
        });
+
+    m_rMusicDevicFactory.dataHolder().onActualPresetNameChanged(
+        [this](const util::Identifiable::UUID& uuid, int voiceIdx, const std::string& presetName){
+          m_rSignals.SoundDevices__actualPresetChanged(uuid, voiceIdx, presetName);
+        }
+    );
 }
 
 void LoaderRpc::reEmitSignals()

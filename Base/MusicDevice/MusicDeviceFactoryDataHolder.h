@@ -43,6 +43,7 @@ struct DataHolder
    CB_SIGNAL(PresetUpdated, const sound::preset::Id&, sound::preset::Category,
              sound::preset::Genre);
    CB_SIGNAL(PresetRemoved, const sound::preset::Id&);
+   CB_SIGNAL(ActualPresetNameChanged, const util::Identifiable::UUID&, int, const std::string&);
 
    void reEmitSignals();
 

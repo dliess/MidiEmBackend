@@ -53,7 +53,7 @@ void PresetHandler::resetToInitialActualSoundPresetsIfSet() noexcept
    {
       if(!m_pInitialActualPresetNames->at(i).empty())
       {
-         resetToActualSoundPreset(i-1);
+         selectSoundPreset(i-1, m_pInitialActualPresetNames->at(i));
       }
    }
    m_pInitialActualPresetNames.reset();
