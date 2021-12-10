@@ -274,6 +274,9 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
       {
          pMusicDevice = createMusicDevice(deviceId, std::move(pDescr),
                                           std::move(pPresets), std::move(pActualPresetNames));
+         // NOTE: Important to insert it first to trigger cb-signals in right order                               
+         m_rHolder.musicDevices.insert(
+             std::make_pair(pMusicDevice->id(), pMusicDevice));
          if (pMidiIn)
          {
             pMusicDevice->initMidiIn(std::move(pMidiIn));
@@ -282,8 +285,6 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
          {
             pMusicDevice->initMidiOut(std::move(pMidiOut));
          }
-         m_rHolder.musicDevices.insert(
-             std::make_pair(pMusicDevice->id(), pMusicDevice));
       }
       catch (std::exception& e)
       {
