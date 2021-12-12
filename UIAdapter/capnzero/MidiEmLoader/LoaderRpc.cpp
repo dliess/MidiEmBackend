@@ -42,10 +42,6 @@ LoaderRpc::LoaderRpc(
 
 void LoaderRpc::reEmitSignals()
 {
-   LOG_F(INFO, "LoaderRpc::reEmitSignals() called"); 
-   m_rMusicDevicFactory.dataHolder().reEmitSignals();
-   m_rSignals.allMusicDevicesChanged(m_rMusicDevicFactory.getAllDevicesAsJson());
-   m_rSignals.allEmissionDone();
 }
 
 void LoaderRpc::loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,

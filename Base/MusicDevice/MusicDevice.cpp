@@ -65,6 +65,7 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
    assert(pMidiInput);
    if(!m_mediumId)
    {
+      //m_mediumId.emplace(m_deviceId);
       m_mediumId.emplace(pMidiInput->medium().getDeviceName(), pMidiInput->medium().getPortName());
    }
    if (soundHandler)
@@ -83,6 +84,7 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
    assert(pMidiOutput);
    if(!m_mediumId)
    {
+      //m_mediumId.emplace(m_deviceId);
       m_mediumId.emplace(pMidiOutput->medium().getDeviceName(), pMidiOutput->medium().getPortName());
    }
    if (soundHandler)
