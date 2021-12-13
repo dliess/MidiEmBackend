@@ -12,7 +12,7 @@ namespace base::arp
 struct ArpeggiatorPrivate
 {
    ArpeggiatorPrivate();
-   util::StackMempool<8192> m_memoryPool;
+   util::StackMempool<32768> m_memoryPool;
    bool m_bypass{true};
    FeedMode m_feedMode{FeedMode::Control};
    NoteContainer m_incomingNoteBuffer;

@@ -51,6 +51,7 @@ public:
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
    void incrementParameterValue(int voiceId, int parameterId, float increment) noexcept;
    void updateActualSoundStorageValues() noexcept;
+   inline std::optional<std::string> getActualPresetOfVoice(int voiceId) const noexcept;
    std::shared_ptr<preset::DevicePresets> presets() const noexcept;
    constexpr static int ALL = ParameterStorage::ALL;
    void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
@@ -115,6 +116,13 @@ void SoundHandler::forEachParameter(Cb&& cb) noexcept
 {
    m_paramStorage.forEachParameter(cb);
 }
+
+inline
+std::optional<std::string> SoundHandler::getActualPresetOfVoice(int voiceId) const noexcept
+{
+   return m_paramStorage.getActualPresetOfVoice(voiceId);
+}
+
 
 } // namespace sound
 } // namespace base::musicDevice

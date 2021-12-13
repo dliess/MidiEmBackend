@@ -13,18 +13,21 @@
 using namespace base::musicDevice;
 
 MusicDevice::MusicDevice(
-    MusicDeviceId deviceId, const std::string& resourceRootDir,
+    MusicDeviceId deviceId, const std::string& midiMediumName,
+    const std::string& resourceRootDir,
     std::shared_ptr<description::Description> descr,
     std::shared_ptr<sound::preset::DevicePresets> soundPresets,
     std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept :
     m_deviceId(std::move(deviceId)),
+    m_mediumId(midiMediumName, m_deviceId.portName),
     m_pDescr(std::move(descr)),
     m_pluginHandler(resourceRootDir)
 {
    if (m_pDescr->soundSection)
    {
       soundHandler.emplace(deviceId.deviceName, *m_pDescr->soundSection,
-                           std::move(soundPresets), std::move(pActualPresetNames));
+                           std::move(soundPresets),
+                           std::move(pActualPresetNames));
    }
 
    if (m_pDescr->controllerSection)
@@ -63,11 +66,6 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
                              uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiInput);
-   if(!m_mediumId)
-   {
-      //m_mediumId.emplace(m_deviceId);
-      m_mediumId.emplace(pMidiInput->medium().getDeviceName(), pMidiInput->medium().getPortName());
-   }
    if (soundHandler)
    {
       soundHandler->initMidiInHandler(pMidiInput, midiVoiceOffset);
@@ -82,11 +80,6 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
                               uint8_t midiVoiceOffset) noexcept
 {
    assert(pMidiOutput);
-   if(!m_mediumId)
-   {
-      //m_mediumId.emplace(m_deviceId);
-      m_mediumId.emplace(pMidiOutput->medium().getDeviceName(), pMidiOutput->medium().getPortName());
-   }
    if (soundHandler)
    {
       soundHandler->initMidiOutHandler(pMidiOutput, midiVoiceOffset);
@@ -101,7 +94,7 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
    }
 }
 
-const std::optional<MusicDeviceId>& MusicDevice::mediumId() const
+const MusicDeviceId& MusicDevice::mediumId() const
 {
    return m_mediumId;
 }

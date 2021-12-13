@@ -24,7 +24,6 @@ void MainRpc::reEmitSignals()
       const auto &deviceName = it.second.get()->deviceId().deviceName;
       const auto &portName   = it.second.get()->deviceId().portName;
       const auto mediumId    = it.second.get()->mediumId();
-      assert(mediumId.has_value());
       const auto midiVoiceOffset =
           it.second.get()->soundHandler
               ? it.second.get()->soundHandler->getMidiVoiceOffset()
@@ -32,7 +31,7 @@ void MainRpc::reEmitSignals()
       const base::musicDevice::description::Description &description =
           *it.second.get()->description();
       m_rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
-                                           mediumId->toStr(), midiVoiceOffset);
+                                           mediumId.toStr(), midiVoiceOffset);
       if (it.second.get()->soundHandler)
       {
          auto &arpeggiators = it.second.get()->soundHandler->arpeggiators();
@@ -62,6 +61,13 @@ void MainRpc::reEmitSignals()
                     arpeggiators.at(voiceIdx).getFeedMode()));
             m_rSignals.SoundDevices__arpeggiatorSeqSizeChanged(
                 uuid, voiceIdx, arpeggiators.at(voiceIdx).getSeqSize());
+            const auto actualPresetName =
+                it.second.get()->soundHandler->getActualPresetOfVoice(voiceIdx);
+            if (actualPresetName && !actualPresetName->empty())
+            {
+               m_rSignals.SoundDevices__actualPresetChanged(uuid, voiceIdx,
+                                                            *actualPresetName);
+            }
          }
       }
    }

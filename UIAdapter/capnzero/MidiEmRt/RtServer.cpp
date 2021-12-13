@@ -43,7 +43,6 @@ RtServer::RtServer(
           const auto &deviceName  = ptr.get()->deviceId().deviceName;
           const auto &description = *ptr.get()->description();
           const auto &mediumId    = ptr.get()->mediumId();
-          assert(mediumId.has_value());
           const auto midiVoiceOffset =
               ptr.get()->soundHandler
                   ? ptr.get()->soundHandler->getMidiVoiceOffset()
@@ -51,7 +50,7 @@ RtServer::RtServer(
 
           signals().MusicDevices__deviceAdded(
               ptr.get()->id(), ptr.get()->deviceId().deviceName,
-              ptr.get()->deviceId().portName, mediumId->toStr(),
+              ptr.get()->deviceId().portName, mediumId.toStr(),
               midiVoiceOffset);
        });
 

@@ -160,6 +160,7 @@ void factory::DataHolder::reEmitSignals()
                  preset.category, preset.genre);
           });
    }
+   /* TODO: for now, not here, but from rt-thread because of race confdition of signals
    for(const auto& entries : m_uuidToDevIdMap)
    {
       const auto it = m_actualPresetNames.find(entries.second);
@@ -175,6 +176,7 @@ void factory::DataHolder::reEmitSignals()
          }
       }
    }
+   */
 }
 
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
