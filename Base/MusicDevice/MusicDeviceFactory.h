@@ -139,12 +139,12 @@ private:
           std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
           std::shared_ptr<MusicDevice::MidiOutput> pMidiOut) noexcept;
       std::shared_ptr<MusicDevice> createMusicDevice(
-          const MusicDeviceId& deviceId, const std::string& midiDeviceName,
+          const MusicDeviceId& deviceId, const MusicDeviceId& midiDeviceId,
           std::shared_ptr<description::Description> pDescr,
           std::shared_ptr<sound::preset::DevicePresets> pPresets,
           std::shared_ptr<factory::DataHolder::ActualPresetNames>
               pActualPresetNames);
-      static std::string getMidiDevNameFrom(
+      static MusicDeviceId getMidiDevIdFrom(
           const std::shared_ptr<MusicDevice::MidiInput>& pMidiIn,
           const std::shared_ptr<MusicDevice::MidiOutput>& pMidiOut) noexcept;
    };

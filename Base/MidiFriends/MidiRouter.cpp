@@ -113,6 +113,7 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
    if (itSrc == m_routingData.end())
    {
       auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
+      assert(pMidiOut);
       m_routingData.emplace(std::make_pair(
           source,
           DstType({{dest, {true, std::move(pMidiOut), std::nullopt}}})));
@@ -123,6 +124,7 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
       if (itDst == itSrc->second.end())
       {
          auto pMidiOut = m_rMidiHolder.getMidiOut(dest);
+         assert(pMidiOut);
          itSrc->second.emplace(std::make_pair(
              dest, RoutingData{true, std::move(pMidiOut), std::nullopt}));
       }

@@ -51,7 +51,7 @@ class DevicePresets;
 struct MusicDevice : public util::Identifiable
 {
    MusicDevice(
-       MusicDeviceId deviceId, const std::string& midiMediumName,
+       MusicDeviceId deviceId, MusicDeviceId midiMediumId,
        const std::string& resourceRootDir,
        std::shared_ptr<description::Description> descr,
        std::shared_ptr<sound::preset::DevicePresets> soundPresets,

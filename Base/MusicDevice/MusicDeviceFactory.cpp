@@ -273,7 +273,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
       try
       {
          pMusicDevice = createMusicDevice(
-             deviceId, getMidiDevNameFrom(pMidiIn, pMidiOut), std::move(pDescr),
+             deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
              std::move(pPresets), std::move(pActualPresetNames));
          // NOTE: Important to insert it first to trigger cb-signals in right
          // order
@@ -299,14 +299,14 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
 }
 
 std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
-    const MusicDeviceId& deviceId, const std::string& midiDeviceName,
+    const MusicDeviceId& deviceId, const MusicDeviceId& midiDeviceId,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
     std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames)
 {
    LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
-       deviceId, midiDeviceName, m_resourceRootDir, std::move(pDescr),
+       deviceId, midiDeviceId, m_resourceRootDir, std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
    return std::move(pMusicDevice);
 }
@@ -427,16 +427,16 @@ void Factory::MusicDeviceInserter::action(EraseFromMidiOutHolder,
    m_rHolder.midiHolder.removeMidiOut(holderId);
 }
 
-std::string Factory::MusicDeviceInserter::getMidiDevNameFrom(
+MusicDeviceId Factory::MusicDeviceInserter::getMidiDevIdFrom(
     const std::shared_ptr<MusicDevice::MidiInput>& pMidiIn,
     const std::shared_ptr<MusicDevice::MidiOutput>& pMidiOut) noexcept
 {
    if (pMidiIn)
-      return pMidiIn->medium().getDeviceName();
+      return {pMidiIn->medium().getDeviceName(), pMidiIn->medium().getPortName()};
    if (pMidiOut)
-      return pMidiOut->medium().getDeviceName();
+      return {pMidiOut->medium().getDeviceName(), pMidiOut->medium().getPortName()};
    assert(false);
-   return std::string();
+   return MusicDeviceId();
 }
 
 void Factory::MusicDeviceInserter::action(
@@ -449,7 +449,7 @@ void Factory::MusicDeviceInserter::action(
     uint8_t midiVoiceOffset)
 {
    auto pMusicDevice = createMusicDevice(
-       deviceId, getMidiDevNameFrom(pMidiIn, pMidiOut), std::move(pDescr),
+       deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
    pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
    pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);

@@ -13,13 +13,13 @@
 using namespace base::musicDevice;
 
 MusicDevice::MusicDevice(
-    MusicDeviceId deviceId, const std::string& midiMediumName,
+    MusicDeviceId deviceId, MusicDeviceId midiMediumId,
     const std::string& resourceRootDir,
     std::shared_ptr<description::Description> descr,
     std::shared_ptr<sound::preset::DevicePresets> soundPresets,
     std::shared_ptr<std::vector<std::string>> pActualPresetNames) noexcept :
     m_deviceId(std::move(deviceId)),
-    m_mediumId(midiMediumName, m_deviceId.portName),
+    m_mediumId(std::move(midiMediumId)),
     m_pDescr(std::move(descr)),
     m_pluginHandler(resourceRootDir)
 {
