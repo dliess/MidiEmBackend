@@ -20,6 +20,8 @@
 #include "Measurer.h"
 #include "OutputterDestinationsZmq.h"
 
+#include <ableton/Link.hpp>
+
 using TenthMs           = std::chrono::duration<int, std::ratio<1, 10000>>;
 using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
 
@@ -46,6 +48,8 @@ base::Base::Base(const std::string &configDir) :
    instruments.load("relDir", "filename", "section");
 }
 
+base::Base::~Base() noexcept = default;
+
 void base::Base::start()
 {
    MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
@@ -66,6 +70,18 @@ void base::Base::start()
    m_portNotifierThread = std::make_unique<util::Thread>(
        [this](const std::atomic<bool> &terminateRequest)
        { loaderThreadFunction(terminateRequest); });
+
+   m_pAbletonLink = std::make_unique<ableton::Link>(120.0);
+   m_pAbletonLink->setTempoCallback([](double tempo){
+      LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);
+   });
+   m_pAbletonLink->setStartStopCallback([](bool start){
+      LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
+   });
+   m_pAbletonLink->setNumPeersCallback([](size_t numPeers){
+      LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
+   });
+   m_pAbletonLink->enable(true);
 }
 
 void base::Base::waitForEnd()
@@ -162,6 +178,8 @@ void base::Base::loopFn()
    // ... some code to measure ...
    //}
 
+   //auto session = m_pAbletonLink->captureAppSessionState();
+   //session.tempo
    tempo::BeatTick::instance().nextTimeSlot();
    {
       MeasurerTenthMs<0>::Guard guard;

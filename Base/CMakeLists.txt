@@ -34,4 +34,5 @@ target_link_libraries(Base
    PRIVATE TimeMeasure
    PRIVATE capnzero-rt-server
    PRIVATE capnzero-loader-server
+   PRIVATE Ableton::Link
 )

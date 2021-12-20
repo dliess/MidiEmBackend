@@ -15,12 +15,15 @@
 #include "TransportControl.h"
 #include "MidiRouter.h"
 
+namespace ableton { class Link; }
+
 namespace base
 {
 struct Base
 {
 public:
    Base(const std::string& configDir);
+   ~Base() noexcept;
    musicDevice::Holder musicDeviceHolder;
    musicDevice::factory::Factory musicDeviceFactory;
    musicDevice::TransportControl transportControl;
@@ -39,6 +42,7 @@ private:
    void loaderThreadFunction(const std::atomic<bool>& terminateRequest);
    void loopFn();
    void setRtScheduling();
+   std::unique_ptr<ableton::Link> m_pAbletonLink;
 };
 
 } // namespace base

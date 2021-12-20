@@ -87,6 +87,16 @@ CPMFindPackage(
   GIT_TAG 94542ec3082dfe5c0405199f7bb0ffbdffb3c618
 )
 
+CPMFindPackage(
+  NAME ableton-link
+  GITHUB_REPOSITORY Ableton/link
+  GIT_TAG master
+  DOWNLOAD_ONLY YES
+)
+if(ableton-link_ADDED)
+  include(${ableton-link_SOURCE_DIR}/AbletonLinkConfig.cmake)
+endif()
+
 add_subdirectory(3rdparty)
 add_subdirectory(Base)
 add_subdirectory(Util)
