@@ -5,10 +5,10 @@ using namespace uiadapter::capnzero;
 
 TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals)
 {
-	base::tempo::BeatTick::instance().registerRunningChangeNotifCb([&rSignals](bool running){
+	base::tempo::BeatTick::instance().onRunningChanged([&rSignals](bool running){
 		rSignals.Tempo__beatTickStartedChanged(running);
 	});
-	base::tempo::BeatTick::instance().registerBpmChangeNotifCb([&rSignals](int bpmCents){
+	base::tempo::BeatTick::instance().onBpmNudgedChanged([&rSignals](int bpmCents){
 		rSignals.Tempo__bpmCentsChanged(bpmCents);
 	});
 }

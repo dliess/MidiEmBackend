@@ -4,9 +4,10 @@
 		"dockerfile": "Dockerfile"
    },
    "runArgs" : ["--rm", "--privileged",
-     "--group-add", "audio"
+     "--group-add", "audio",
+     "--network=host"
    ],
-   "forwardPorts": [5555, 5556, 80],
+   //"forwardPorts": [55555, 55556, 80],
    "mounts" : [
       "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
       "type=bind,source=/dev,target=/dev"

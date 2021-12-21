@@ -21,7 +21,7 @@ RtServer::RtServer(
     base::musicDevice::TransportControl &rTransportControl,
     base::midifriends::Router &rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
-        rZmqContext, "tcp://*:5555", "tcp://*:5556",
+        rZmqContext, "tcp://*:55555", "tcp://*:55556",
         std::make_unique<MainRpc>(signals(), rInstruments,
                                   rMusicDeviceContainer, rTransportControl,
                                   rMidiRouter),

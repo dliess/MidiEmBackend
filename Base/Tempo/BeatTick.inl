@@ -14,4 +14,9 @@ inline uint64_t base::tempo::BeatTick::getBeatJiffies() const noexcept
    return m_beatJiffies;
 }
 
+inline void base::tempo::BeatTick::setBeatJiffies(uint64_t jiffies) noexcept
+{
+   m_beatJiffies = jiffies;
+}
+
 #endif

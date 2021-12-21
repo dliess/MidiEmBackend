@@ -15,12 +15,12 @@
 #include "UsbMidiPortNotifier.h"
 
 // ----- Time measuring -----
+#include <ableton/Link.hpp>
+
 #include "CyclicDataOutputterThread.h"
 #include "Histogram.h"
 #include "Measurer.h"
 #include "OutputterDestinationsZmq.h"
-
-#include <ableton/Link.hpp>
 
 using TenthMs           = std::chrono::duration<int, std::ratio<1, 10000>>;
 using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
@@ -55,7 +55,7 @@ void base::Base::start()
    MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
    MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
 
-   outThreadZmq.destination().bind("tcp://*:12341");
+   outThreadZmq.destination().bind("tcp://*:55570");
    outThreadZmq.startThread(500);
    if (!midi::PortNotifiers::instance().init())
    {
@@ -63,25 +63,36 @@ void base::Base::start()
       throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
    }
 
-   m_mainRtThread = std::make_unique<util::Thread>(
-       [this](const std::atomic<bool> &terminateRequest)
-       { mainRtThreadFunction(terminateRequest); });
-
-   m_portNotifierThread = std::make_unique<util::Thread>(
-       [this](const std::atomic<bool> &terminateRequest)
-       { loaderThreadFunction(terminateRequest); });
-
-   m_pAbletonLink = std::make_unique<ableton::Link>(120.0);
-   m_pAbletonLink->setTempoCallback([](double tempo){
+   m_pAbletonLink = std::make_unique<ableton::Link>(
+       base::tempo::BeatTick::instance().getBpmCentsNudged() / 100.0);
+   m_pAbletonLink->setTempoCallback([](double tempo) {
       LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);
    });
-   m_pAbletonLink->setStartStopCallback([](bool start){
+   m_pAbletonLink->setStartStopCallback([](bool start) {
       LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
    });
-   m_pAbletonLink->setNumPeersCallback([](size_t numPeers){
+   m_pAbletonLink->setNumPeersCallback([](size_t numPeers) {
       LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
    });
    m_pAbletonLink->enable(true);
+
+   m_mainRtThread = std::make_unique<util::Thread>(
+       [this](const std::atomic<bool> &terminateRequest) {
+          mainRtThreadFunction(terminateRequest);
+       });
+
+   m_portNotifierThread = std::make_unique<util::Thread>(
+       [this](const std::atomic<bool> &terminateRequest) {
+          loaderThreadFunction(terminateRequest);
+       });
+   base::tempo::BeatTick::instance().onBpmNudgedChanged([this](int bpmCents) {
+      if (m_pAbletonLink->isEnabled())
+      {
+         auto session = m_pAbletonLink->captureAudioSessionState();
+         session.setTempo(bpmCents / 100.0, m_pAbletonLink->clock().micros());
+         m_pAbletonLink->commitAudioSessionState(session);
+      }
+   });
 }
 
 void base::Base::waitForEnd()
@@ -124,17 +135,17 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd,
-               [this](int fd)
-               {
-                  std::array<uint8_t, 8> buf;
-                  read(fd, buf.data(), buf.size());
-                  loopFn();
-               });
-   fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd)
-               { rtServer.processNextRequestAllNonBlock(); });
-   fdSet.AddFd(rtServer.signals().getFd(), [&rtServer](int fd)
-               { rtServer.signals().handleAllSubscriptions(); });
+   fdSet.AddFd(timerFd, [this](int fd) {
+      std::array<uint8_t, 8> buf;
+      read(fd, buf.data(), buf.size());
+      loopFn();
+   });
+   fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
+      rtServer.processNextRequestAllNonBlock();
+   });
+   fdSet.AddFd(rtServer.signals().getFd(), [&rtServer](int fd) {
+      rtServer.signals().handleAllSubscriptions();
+   });
 
    tempo::BeatTick::instance().start();
    while (!terminateRequest) { fdSet.Select(); }
@@ -152,19 +163,20 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
    timerfd_settime(timerFd, 0, &t, NULL);
 
    utils::FdSet fdSet;
-   fdSet.AddFd(timerFd,
-               [this](int fd)
-               {
-                  std::array<uint8_t, 8> buf;
-                  read(fd, buf.data(), buf.size());
-                  midi::PortNotifiers::instance().update();
-               });
-   fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd)
-               { loaderServer.processNextRequestAllNonBlock(); });
-   fdSet.AddFd(loaderServer.signals().getFd(), [&loaderServer](int fd)
-               { loaderServer.signals().handleAllSubscriptions(); });
-   fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd)
-               { rtClient.handleIncomingSignalAllNonBlock(); });
+   fdSet.AddFd(timerFd, [this](int fd) {
+      std::array<uint8_t, 8> buf;
+      read(fd, buf.data(), buf.size());
+      midi::PortNotifiers::instance().update();
+   });
+   fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd) {
+      loaderServer.processNextRequestAllNonBlock();
+   });
+   fdSet.AddFd(loaderServer.signals().getFd(), [&loaderServer](int fd) {
+      loaderServer.signals().handleAllSubscriptions();
+   });
+   fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd) {
+      rtClient.handleIncomingSignalAllNonBlock();
+   });
    while (!terminateRequest) { fdSet.Select(); }
 }
 
@@ -178,9 +190,19 @@ void base::Base::loopFn()
    // ... some code to measure ...
    //}
 
-   //auto session = m_pAbletonLink->captureAppSessionState();
-   //session.tempo
-   tempo::BeatTick::instance().nextTimeSlot();
+   if (m_pAbletonLink->isEnabled())
+   {
+      auto session = m_pAbletonLink->captureAudioSessionState();
+      base::tempo::BeatTick::instance().setBpmCentsNudged(session.tempo() *
+                                                          100);
+      base::tempo::BeatTick::instance().setBeatJiffies(
+          base::tempo::BeatTick::PPQ *
+          session.beatAtTime(m_pAbletonLink->clock().micros(), 4));
+   }
+   else
+   {
+      tempo::BeatTick::instance().nextTimeSlot();
+   }
    {
       MeasurerTenthMs<0>::Guard guard;
       musicDeviceHolder.midiHolder.midiClock();

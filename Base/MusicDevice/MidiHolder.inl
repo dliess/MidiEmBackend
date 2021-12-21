@@ -104,13 +104,13 @@ inline void MidiHolder::midiClock() noexcept
 {
    constexpr int MIDI_PPQ               = 24;
    constexpr int MIDI_CLOCK_SEND_PERIOD = tempo::BeatTick::PPQ / MIDI_PPQ;
-   static int lastMidiSendPeriodCnt     = -1;
+   static uint64_t lastMidiSendPeriodCnt     = tempo::BeatTick::instance().getBeatJiffies() / MIDI_CLOCK_SEND_PERIOD;
    const auto midiSendPeriodCnt =
        tempo::BeatTick::instance().getBeatJiffies() / MIDI_CLOCK_SEND_PERIOD;
-   if (midiSendPeriodCnt != lastMidiSendPeriodCnt)
+   if (midiSendPeriodCnt > lastMidiSendPeriodCnt)
    {
       for (auto& e : m_midiOutputs) { e->send(midi::Message<midi::Clock>()); }
-      lastMidiSendPeriodCnt = midiSendPeriodCnt;
+      lastMidiSendPeriodCnt++;
    }
 }
 

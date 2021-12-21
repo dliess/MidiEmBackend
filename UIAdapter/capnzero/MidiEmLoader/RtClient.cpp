@@ -8,9 +8,9 @@ using namespace base::musicDevice;
 RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                    base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmRt::MidiEmRtClientRpc(rZmqContext,
-                                            "tcp://localhost:5555"),
+                                            "tcp://localhost:55555"),
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext,
-                                                "tcp://localhost:5556")
+                                                "tcp://localhost:55556")
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,

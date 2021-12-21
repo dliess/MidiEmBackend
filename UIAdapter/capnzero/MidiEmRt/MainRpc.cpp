@@ -74,7 +74,7 @@ void MainRpc::reEmitSignals()
    m_rSignals.Tempo__beatTickStartedChanged(
        base::tempo::BeatTick::instance().running());
    m_rSignals.Tempo__bpmCentsChanged(
-       base::tempo::BeatTick::instance().getBpmCents());
+       base::tempo::BeatTick::instance().getBpmCentsNudged());
    m_rSignals.Instruments__kitInstrumentsChanged(
        meta::serialize(m_rInstruments.data.kitInstruments).dump().c_str());
    m_rSignals.Instruments__melodicInstrumentsChanged(
