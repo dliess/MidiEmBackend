@@ -15,8 +15,6 @@
 #include "UsbMidiPortNotifier.h"
 
 // ----- Time measuring -----
-#include <ableton/Link.hpp>
-
 #include "CyclicDataOutputterThread.h"
 #include "Histogram.h"
 #include "Measurer.h"
@@ -42,7 +40,8 @@ base::Base::Base(const std::string &configDir) :
     transportControl(musicDeviceHolder.musicDevices),
     instruments(musicDeviceHolder.musicDevices),
     instrumentsFactory(instruments, musicDeviceHolder),
-    midiRouter(musicDeviceHolder.midiHolder)
+    midiRouter(musicDeviceHolder.midiHolder),
+    m_abletonLinkWrapper(transportControl)
 {
    // TODO: Remove Dummy
    instruments.load("relDir", "filename", "section");
@@ -63,18 +62,7 @@ void base::Base::start()
       throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
    }
 
-   m_pAbletonLink = std::make_unique<ableton::Link>(
-       base::tempo::BeatTick::instance().getBpmCentsNudged() / 100.0);
-   m_pAbletonLink->setTempoCallback([](double tempo) {
-      LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);
-   });
-   m_pAbletonLink->setStartStopCallback([](bool start) {
-      LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
-   });
-   m_pAbletonLink->setNumPeersCallback([](size_t numPeers) {
-      LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
-   });
-   m_pAbletonLink->enable(true);
+   m_abletonLinkWrapper.enable(true);
 
    m_mainRtThread = std::make_unique<util::Thread>(
        [this](const std::atomic<bool> &terminateRequest) {
@@ -85,14 +73,6 @@ void base::Base::start()
        [this](const std::atomic<bool> &terminateRequest) {
           loaderThreadFunction(terminateRequest);
        });
-   base::tempo::BeatTick::instance().onBpmNudgedChanged([this](int bpmCents) {
-      if (m_pAbletonLink->isEnabled())
-      {
-         auto session = m_pAbletonLink->captureAudioSessionState();
-         session.setTempo(bpmCents / 100.0, m_pAbletonLink->clock().micros());
-         m_pAbletonLink->commitAudioSessionState(session);
-      }
-   });
 }
 
 void base::Base::waitForEnd()
@@ -190,14 +170,9 @@ void base::Base::loopFn()
    // ... some code to measure ...
    //}
 
-   if (m_pAbletonLink->isEnabled())
+   if (m_abletonLinkWrapper.isEnabled())
    {
-      auto session = m_pAbletonLink->captureAudioSessionState();
-      base::tempo::BeatTick::instance().setBpmCentsNudged(session.tempo() *
-                                                          100);
-      base::tempo::BeatTick::instance().setBeatJiffies(
-          base::tempo::BeatTick::PPQ *
-          session.beatAtTime(m_pAbletonLink->clock().micros(), 4));
+      m_abletonLinkWrapper.update();
    }
    else
    {
@@ -205,6 +180,7 @@ void base::Base::loopFn()
    }
    {
       MeasurerTenthMs<0>::Guard guard;
+      transportControl.update();
       musicDeviceHolder.midiHolder.midiClock();
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();

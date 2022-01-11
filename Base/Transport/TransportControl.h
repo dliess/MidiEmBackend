@@ -5,12 +5,11 @@
 #include <string>
 #include <vector>
 
-#include "MusicDevice.h"
-#include "MusicDeviceHolder.h"
-#include "Settings.h"
+#include "Identifiable.h"
 
 namespace base::musicDevice
 {
+class MusicDeviceContainer;
 class TransportControl   //: public utils::Settings<TransportControl>
 {
 public:
@@ -25,6 +24,7 @@ public:
    using TransportMaskChangedCb = std::function<void(const util::Identifiable::UUID&, bool)>;
    void registerTransportMaskChangedCb(TransportMaskChangedCb cb);
    void retriggerCallbacks();
+   void update();
 
    /*
       // ============== Settings ===============
@@ -35,6 +35,7 @@ public:
    */
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
+   bool m_startRequested{false};
    bool m_started{false};
    std::vector<StartedChangeNotifCb> m_startedChangeNotifCb;
    std::vector<TransportMaskChangedCb> m_transportMaskChangedCbs;

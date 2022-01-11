@@ -12,10 +12,16 @@ add_subdirectory(Transport)
 add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 
 set(SOURCES
+   "AbletonLinkWrapper.cpp"
    "Base.cpp"
 )
 
-add_library(Base STATIC ${SOURCES})
+set(HEADERS
+   "AbletonLinkWrapper.h"
+   "Base.h"
+)
+
+add_library(Base STATIC ${SOURCES} ${HEADERS})
 
 target_include_directories(Base
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}

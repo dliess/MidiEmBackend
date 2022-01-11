@@ -1,5 +1,5 @@
 #include "TransportControl.h"
-#include "MusicDevice.h"
+#include "MusicDeviceContainer.h"
 #include <loguru.hpp>
 
 using namespace base::musicDevice;
@@ -97,6 +97,11 @@ void TransportControl::retriggerCallbacks()
       }
    }
    for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+}
+
+void TransportControl::update()
+{
+
 }
 
 /*

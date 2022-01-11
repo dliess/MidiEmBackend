@@ -14,8 +14,7 @@
 #include "MusicDeviceHolder.h"
 #include "TransportControl.h"
 #include "MidiRouter.h"
-
-namespace ableton { class Link; }
+#include "AbletonLinkWrapper.h"
 
 namespace base
 {
@@ -36,13 +35,13 @@ public:
 
 private:
    zmq::context_t m_zmqContext;
+   AbletonLinkWrapper m_abletonLinkWrapper;
    std::unique_ptr<util::Thread> m_mainRtThread;
    std::unique_ptr<util::Thread> m_portNotifierThread;
    void mainRtThreadFunction(const std::atomic<bool>& terminateRequest);
    void loaderThreadFunction(const std::atomic<bool>& terminateRequest);
    void loopFn();
    void setRtScheduling();
-   std::unique_ptr<ableton::Link> m_pAbletonLink;
 };
 
 } // namespace base
