@@ -13,7 +13,7 @@ TransportControl::TransportControl(
       {
          auto uuid = ptr->id();
          ptr->sequencer->registerTransportMaskChangedCb([this, uuid](bool masked){
-            for(auto& cb : m_transportMaskChangedCbs) cb(uuid, masked);
+            emitTransportMaskChanged(uuid, masked);
          });
       }
    });
@@ -39,15 +39,7 @@ void TransportControl::toggleEnabled(const util::Identifiable::UUID& uuid) noexc
 void TransportControl::start() noexcept
 {
    if(m_started) return;
-   m_started = true;
-   for(auto& md : m_rMusicDeviceContainer)
-   {
-      if(md.second->sequencer)
-      {
-         md.second->sequencer->start();
-      }
-   }
-   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+   m_startRequested = true;
 }
 
 void TransportControl::stop() noexcept
@@ -61,7 +53,7 @@ void TransportControl::stop() noexcept
          md.second->sequencer->stop();
       }
    }
-   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+   emitStartedChanged(m_started);
 }
 
 void TransportControl::toggleStartStop() noexcept
@@ -76,16 +68,6 @@ void TransportControl::toggleStartStop() noexcept
    }
 }
 
-void TransportControl::registerStartedChangeNotifCb(StartedChangeNotifCb cb)
-{
-   m_startedChangeNotifCb.push_back(cb);
-}
-
-void TransportControl::registerTransportMaskChangedCb(TransportMaskChangedCb cb)
-{
-   m_transportMaskChangedCbs.push_back(cb);
-}
-
 void TransportControl::retriggerCallbacks()
 {
    for(auto& md : m_rMusicDeviceContainer)
@@ -93,16 +75,48 @@ void TransportControl::retriggerCallbacks()
       if(md.second->sequencer)
       {
          const auto masked = !md.second->sequencer->getEnabled();
-         for(auto& cb : m_transportMaskChangedCbs) cb(md.second->id(), masked);
+         emitTransportMaskChanged(md.second->id(), masked);
       }
    }
-   for(auto& cb : m_startedChangeNotifCb) cb(m_started);
+   emitStartedChanged(m_started);
 }
 
 void TransportControl::update()
 {
-
+   if(!m_startRequested)
+   {
+      return;
+   }
+   if(m_startOnBeat)
+   {
+      static constexpr int threshold = tempo::BeatTick::PPQ / 10;
+      const int rest = tempo::BeatTick::instance().getBeatJiffies() % tempo::BeatTick::PPQ;
+      if(rest < threshold)
+      {
+         //TODO: compensate
+         startNow();
+      }
+   }
+   else
+   {
+      startNow();
+   }
 }
+
+void TransportControl::startNow()
+{
+   m_started = true;
+   m_startRequested = false;
+   for(auto& md : m_rMusicDeviceContainer)
+   {
+      if(md.second->sequencer)
+      {
+         md.second->sequencer->start();
+      }
+   }
+   emitStartedChanged(m_started);
+}
+
 
 /*
 

@@ -163,11 +163,11 @@ RtServer::RtServer(
        });
    // -----------------
 
-   rTransportControl.registerTransportMaskChangedCb(
+   rTransportControl.onTransportMaskChanged(
        [this](const util::Identifiable::UUID &uuid, bool masked) {
           signals().TransportControl__enabledChanged(uuid, !masked);
        });
-   rTransportControl.registerStartedChangeNotifCb([this](bool started) {
+   rTransportControl.onStartedChanged([this](bool started) {
       signals().TransportControl__startedChanged(started ? 1 : 0);
    });
 

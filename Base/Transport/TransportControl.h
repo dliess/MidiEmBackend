@@ -5,12 +5,13 @@
 #include <string>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "Identifiable.h"
 
 namespace base::musicDevice
 {
 class MusicDeviceContainer;
-class TransportControl   //: public utils::Settings<TransportControl>
+class TransportControl
 {
 public:
    TransportControl(
@@ -19,26 +20,21 @@ public:
    void start() noexcept;
    void stop() noexcept;
    void toggleStartStop() noexcept;
-   using StartedChangeNotifCb = std::function<void(bool)>;
-   void registerStartedChangeNotifCb(StartedChangeNotifCb cb);
-   using TransportMaskChangedCb = std::function<void(const util::Identifiable::UUID&, bool)>;
-   void registerTransportMaskChangedCb(TransportMaskChangedCb cb);
    void retriggerCallbacks();
    void update();
 
-   /*
-      // ============== Settings ===============
-      using Settings = std::vector<std::string>;
-      Settings getSettings() const noexcept;
-      void setSettings(const Settings& settings) noexcept;
-      // =======================================
-   */
+   void setStartOnBeat(bool startOnBeat) noexcept { m_startOnBeat = startOnBeat; };
+
+   CB_SIGNAL(StartedChanged, bool);
+   CB_SIGNAL(TransportMaskChanged, const util::Identifiable::UUID&, bool);
+
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
+   bool m_startOnBeat{false};
    bool m_startRequested{false};
    bool m_started{false};
-   std::vector<StartedChangeNotifCb> m_startedChangeNotifCb;
-   std::vector<TransportMaskChangedCb> m_transportMaskChangedCbs;
+
+   void startNow();
 };
 
 }   // namespace base::musicDevice

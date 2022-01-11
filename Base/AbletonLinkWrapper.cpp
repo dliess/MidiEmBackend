@@ -39,6 +39,7 @@ base::AbletonLinkWrapper::~AbletonLinkWrapper() = default;
 void base::AbletonLinkWrapper::enable(bool enable)
 {
    m_pAbletonLink->enable(enable);
+   m_rTransportControl.setStartOnBeat(enable);
 }
 
 bool base::AbletonLinkWrapper::isEnabled() const
