@@ -31,6 +31,8 @@ base::AbletonLinkWrapper::AbletonLinkWrapper(
          m_pAbletonLink->commitAudioSessionState(session);
       }
    });
+
+   update();
 }
 
 // Dummy for unique_ptr forward decl

@@ -10,12 +10,12 @@
 
 namespace base::musicDevice
 {
-class MusicDeviceContainer;
+struct Holder;
 class TransportControl
 {
 public:
    TransportControl(
-       musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
+       musicDevice::Holder& rMusicDeviceHolder) noexcept;
    void toggleEnabled(const util::Identifiable::UUID& uuid) noexcept;
    void start() noexcept;
    void stop() noexcept;
@@ -29,7 +29,7 @@ public:
    CB_SIGNAL(TransportMaskChanged, const util::Identifiable::UUID&, bool);
 
 private:
-   musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
+   musicDevice::Holder& m_rMusicDeviceHolder;
    bool m_startOnBeat{false};
    bool m_startRequested{false};
    bool m_started{false};

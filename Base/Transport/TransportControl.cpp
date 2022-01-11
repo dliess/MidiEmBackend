@@ -1,14 +1,14 @@
 #include "TransportControl.h"
-#include "MusicDeviceContainer.h"
+#include "MusicDeviceHolder.h"
 #include <loguru.hpp>
 
 using namespace base::musicDevice;
 
 TransportControl::TransportControl(
-  musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
-   m_rMusicDeviceContainer(rMusicDeviceContainer)
+  musicDevice::Holder& rMusicDeviceHolder) noexcept :
+   m_rMusicDeviceHolder(rMusicDeviceHolder)
 {
-   m_rMusicDeviceContainer.onAdded([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){
+   m_rMusicDeviceHolder.musicDevices.onAdded([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){
       if(ptr->sequencer)
       {
          auto uuid = ptr->id();
@@ -21,8 +21,8 @@ TransportControl::TransportControl(
 
 void TransportControl::toggleEnabled(const util::Identifiable::UUID& uuid) noexcept
 {
-   auto it = m_rMusicDeviceContainer.find(uuid);
-   if(it == m_rMusicDeviceContainer.end())
+   auto it = m_rMusicDeviceHolder.musicDevices.find(uuid);
+   if(it == m_rMusicDeviceHolder.musicDevices.end())
    {
       //LOG_F(ERROR, "UUID {} should be found in MusicDevices", uuid);
       return;
@@ -46,7 +46,7 @@ void TransportControl::stop() noexcept
 {
    if(!m_started) return;
    m_started = false;
-   for(auto& md : m_rMusicDeviceContainer)
+   for(auto& md : m_rMusicDeviceHolder.musicDevices)
    {
       if(md.second->sequencer)
       {
@@ -70,7 +70,7 @@ void TransportControl::toggleStartStop() noexcept
 
 void TransportControl::retriggerCallbacks()
 {
-   for(auto& md : m_rMusicDeviceContainer)
+   for(auto& md : m_rMusicDeviceHolder.musicDevices)
    {
       if(md.second->sequencer)
       {
@@ -93,8 +93,8 @@ void TransportControl::update()
       const int rest = tempo::BeatTick::instance().getBeatJiffies() % tempo::BeatTick::PPQ;
       if(rest < threshold)
       {
-         //TODO: compensate
          startNow();
+         m_rMusicDeviceHolder.midiHolder.midiClock(rest); // fast forward devices midi-time
       }
    }
    else
@@ -107,7 +107,7 @@ void TransportControl::startNow()
 {
    m_started = true;
    m_startRequested = false;
-   for(auto& md : m_rMusicDeviceContainer)
+   for(auto& md : m_rMusicDeviceHolder.musicDevices)
    {
       if(md.second->sequencer)
       {

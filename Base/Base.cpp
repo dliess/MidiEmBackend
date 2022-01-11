@@ -37,7 +37,7 @@ TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
 base::Base::Base(const std::string &configDir) :
     musicDeviceHolder(),
     musicDeviceFactory(musicDeviceHolder, configDir),
-    transportControl(musicDeviceHolder.musicDevices),
+    transportControl(musicDeviceHolder),
     instruments(musicDeviceHolder.musicDevices),
     instrumentsFactory(instruments, musicDeviceHolder),
     midiRouter(musicDeviceHolder.midiHolder),
@@ -181,7 +181,7 @@ void base::Base::loopFn()
    {
       MeasurerTenthMs<0>::Guard guard;
       transportControl.update();
-      musicDeviceHolder.midiHolder.midiClock();
+      musicDeviceHolder.midiHolder.midiClock(tempo::BeatTick::instance().getBeatJiffiesDelta());
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }

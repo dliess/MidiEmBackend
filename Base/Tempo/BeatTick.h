@@ -17,6 +17,7 @@ public:
    static inline BeatTick& instance() noexcept;
    static constexpr int PPQ = 240;
    inline uint64_t getBeatJiffies() const noexcept;
+   inline int getBeatJiffiesDelta() const noexcept;
    inline void setBeatJiffies(uint64_t jiffies) noexcept;
    void start() noexcept;
    void stop() noexcept;
@@ -34,6 +35,7 @@ public:
 
 private:
    BeatTick() noexcept;
+   uint64_t m_beatJiffiesBefore{0};
    uint64_t m_beatJiffies{0};
    std::chrono::nanoseconds calcPeriodNs() const noexcept;
    std::atomic<bool> m_running{false};
