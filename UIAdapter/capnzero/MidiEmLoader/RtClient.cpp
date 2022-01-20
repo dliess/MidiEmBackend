@@ -135,11 +135,4 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
           rSignals.SoundDevices__arpeggiatorSeqSizeChanged(uuidData, voiceIdx,
                                                            seqSize);
        });
-   onTransportControlEnabledChanged(
-       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::UInt8 enabled) {
-          ::capnzero::Data<16> uuidData;
-          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-          rSignals.TransportControl__enabledChanged(uuidData, enabled);
-       });
 }

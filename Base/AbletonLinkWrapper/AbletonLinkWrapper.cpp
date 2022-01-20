@@ -6,17 +6,27 @@
 #include "BeatTick.h"
 #include "TransportControl.h"
 
-base::AbletonLinkWrapper::AbletonLinkWrapper(
-    musicDevice::TransportControl& rTransportControl) :
-    m_rTransportControl(rTransportControl),
+base::AbletonLinkWrapper::AbletonLinkWrapper(base::musicDevice::TransportControl& rTransportControl) :
     m_pAbletonLink(std::make_unique<ableton::Link>(
-        base::tempo::BeatTick::instance().getBpmCentsNudged() / 100.0))
+        base::tempo::BeatTick::instance().getBpmCentsNudged() / 100.0)),
+    m_rTransportControl(rTransportControl)
 {
    m_pAbletonLink->setTempoCallback([](double tempo) {
       LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);
    });
-   m_pAbletonLink->setStartStopCallback([](bool start) {
+   m_pAbletonLink->setStartStopCallback([this](bool start) {
       LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
+      if(m_reactsOnTransport)
+      {
+         if(start)
+         {
+            m_rTransportControl.start();
+         }
+         else
+         {
+            m_rTransportControl.stop();
+         }
+      }
    });
    m_pAbletonLink->setNumPeersCallback([](size_t numPeers) {
       LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
@@ -40,13 +50,30 @@ base::AbletonLinkWrapper::~AbletonLinkWrapper() = default;
 
 void base::AbletonLinkWrapper::enable(bool enable)
 {
-   m_pAbletonLink->enable(enable);
-   m_rTransportControl.setStartOnBeat(enable);
+   if(m_pAbletonLink->isEnabled() != enable)
+   {
+      m_pAbletonLink->enable(enable);
+      emitEnabledChanged(enable);
+   }
 }
 
 bool base::AbletonLinkWrapper::isEnabled() const
 {
    return m_pAbletonLink->isEnabled();
+}
+
+void base::AbletonLinkWrapper::reactOnTransport(bool react) noexcept
+{
+   if(m_reactsOnTransport != react)
+   {
+      m_reactsOnTransport = react;
+      emitReactsOnTransportChanged(m_reactsOnTransport);
+   }
+}
+
+bool base::AbletonLinkWrapper::reactsOnTransport() const noexcept
+{
+   return m_reactsOnTransport;
 }
 
 void base::AbletonLinkWrapper::update()
@@ -56,4 +83,10 @@ void base::AbletonLinkWrapper::update()
    tempo::BeatTick::instance().setBeatJiffies(
        tempo::BeatTick::PPQ *
        session.beatAtTime(m_pAbletonLink->clock().micros(), 4));
+}
+
+void base::AbletonLinkWrapper::retriggerCallbacks()
+{
+   emitEnabledChanged(m_pAbletonLink->isEnabled());
+   emitReactsOnTransportChanged(m_reactsOnTransport);
 }

@@ -1,4 +1,5 @@
 set(SOURCES
+    "AbletonLinkRpc.cpp"
     "MainRpc.cpp"
     "RtServer.cpp"
     "InstrumentsRpc.cpp"
@@ -10,6 +11,7 @@ set(SOURCES
 
 set(HEADERS
     "Interface/RtServer.h"
+    "AbletonLinkRpc.h"
     "MainRpc.h"
     "InstrumentsRpc.h"
     "MidiRoutingRpc.h"
@@ -36,4 +38,5 @@ target_link_libraries(${TARGET_NAME}
     PRIVATE MusicDevice
     PRIVATE Transport
     PRIVATE MidiFriends
+    PRIVATE AbletonLinkWrapper
 )

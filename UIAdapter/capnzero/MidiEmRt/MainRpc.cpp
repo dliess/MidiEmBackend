@@ -6,11 +6,13 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
                  base::instruments::Instruments &rInstruments,
                  base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
                  base::musicDevice::TransportControl &rTransportControl,
+                 base::AbletonLinkWrapper& rAbletonLinkWrapper,
                  base::midifriends::Router &rMidiRouter) :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
     m_rTransportControl(rTransportControl),
+    m_rAbletonLinkWrapper(rAbletonLinkWrapper),
     m_rMidiRouter(rMidiRouter)
 {
 }
@@ -80,5 +82,6 @@ void MainRpc::reEmitSignals()
    m_rSignals.Instruments__melodicInstrumentsChanged(
        meta::serialize(m_rInstruments.data.melodicInstruments).dump().c_str());
    m_rTransportControl.retriggerCallbacks();
+   m_rAbletonLinkWrapper.retriggerCallbacks();
    m_rMidiRouter.retriggerCallbacks();
 }

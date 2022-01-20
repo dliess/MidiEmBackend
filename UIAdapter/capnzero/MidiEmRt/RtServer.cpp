@@ -1,5 +1,7 @@
 #include "RtServer.h"
 
+#include "AbletonLinkRpc.h"
+#include "AbletonLinkWrapper.h"
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "JsonCast.h"   // meta::serialize
@@ -19,16 +21,18 @@ RtServer::RtServer(
     zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
     base::musicDevice::TransportControl &rTransportControl,
+    base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:55555", "tcp://*:55556",
         std::make_unique<MainRpc>(signals(), rInstruments,
                                   rMusicDeviceContainer, rTransportControl,
-                                  rMidiRouter),
+                                  rAbletonLinkWrapper, rMidiRouter),
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
         std::make_unique<TempoRpc>(Super::signals()),
         std::make_unique<TransportControlRpc>(rTransportControl),
+        std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
         std::make_unique<MidiRoutingRpc>(rMidiRouter))
 {
    rInstruments.registerForDataChange([this, &rInstruments]() {
@@ -169,6 +173,17 @@ RtServer::RtServer(
        });
    rTransportControl.onStartedChanged([this](bool started) {
       signals().TransportControl__startedChanged(started ? 1 : 0);
+   });
+   rTransportControl.onStartOnBeat([this](bool startOnBeat) {
+      signals().TransportControl__QuantizedStartChanged(startOnBeat);
+   });
+
+   rAbletonLinkWrapper.onEnabledChanged([this](bool enabled) {
+      signals().AbletonLink__enabledChanged(enabled);
+   });
+
+   rAbletonLinkWrapper.onReactsOnTransportChanged([this](bool reacts) {
+      signals().AbletonLink__reactOnTransportChanged(reacts);
    });
 
    rMidiRouter.registerRoutedChangedCB(

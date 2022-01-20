@@ -7,6 +7,7 @@
 #include "MusicDeviceContainer.h"
 #include "RtServer.h"
 #include "TransportControl.h"
+#include "AbletonLinkWrapper.h"
 
 namespace uiadapter::capnzero
 {
@@ -17,6 +18,7 @@ public:
            base::instruments::Instruments &rInstruments,
            base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
            base::musicDevice::TransportControl &rTransportControl,
+           base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router &rMidiRouter);
    void reEmitSignals() override;
 
@@ -25,6 +27,7 @@ private:
    base::instruments::Instruments &m_rInstruments;
    base::musicDevice::MusicDeviceContainer &m_rMusicDeviceContainer;
    base::musicDevice::TransportControl &m_rTransportControl;
+   base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
    base::midifriends::Router &m_rMidiRouter;
 };
 

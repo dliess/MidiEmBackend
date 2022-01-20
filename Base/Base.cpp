@@ -104,7 +104,9 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    setRtScheduling();
    uiadapter::capnzero::RtServer rtServer(m_zmqContext, instruments,
                                           musicDeviceHolder.musicDevices,
-                                          transportControl, midiRouter);
+                                          transportControl,
+                                          m_abletonLinkWrapper, 
+                                          midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);

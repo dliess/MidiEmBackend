@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 set (CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(AbletonLinkWrapper)
 add_subdirectory(Arpeggiator)
 add_subdirectory(Tempo)
 add_subdirectory(Instruments)
@@ -12,12 +13,10 @@ add_subdirectory(Transport)
 add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 
 set(SOURCES
-   "AbletonLinkWrapper.cpp"
    "Base.cpp"
 )
 
 set(HEADERS
-   "AbletonLinkWrapper.h"
    "Base.h"
 )
 
@@ -35,10 +34,10 @@ target_link_libraries(Base
    PUBLIC  Tempo
    PUBLIC  Transport
    PUBLIC  Util
+   PUBLIC  AbletonLinkWrapper
    PRIVATE Loguru
    PRIVATE usbmidi
    PRIVATE TimeMeasure
    PRIVATE capnzero-rt-server
    PRIVATE capnzero-loader-server
-   PRIVATE Ableton::Link
 )

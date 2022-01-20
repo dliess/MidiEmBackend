@@ -16,6 +16,7 @@ public:
    TransportControlRpc(base::musicDevice::TransportControl& rTransportControl);
 	void toggleStartAllEnabled() override;
    void toggleEnabled(const ::capnzero::SpanCL<16>& uuid) override;
+   void toggleQuantizedStart() override;
    void setStarted(::capnzero::UInt8 val) override;
 
 private:

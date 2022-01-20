@@ -12,7 +12,7 @@ TransportControlRpc::TransportControlRpc(
 
 void TransportControlRpc::toggleStartAllEnabled()
 {
-    m_rTransportControl.toggleStartStop();
+   m_rTransportControl.toggleStartStop();
 }
 
 void TransportControlRpc::toggleEnabled(const ::capnzero::SpanCL<16>& uuid)
@@ -22,14 +22,19 @@ void TransportControlRpc::toggleEnabled(const ::capnzero::SpanCL<16>& uuid)
    m_rTransportControl.toggleEnabled(uuid_);
 }
 
+void TransportControlRpc::toggleQuantizedStart()
+{
+   m_rTransportControl.setStartOnBeat(!m_rTransportControl.getStartOnBeat());
+}
+
 void TransportControlRpc::setStarted(::capnzero::UInt8 val)
 {
-    if(val != 0)
-    {
-        m_rTransportControl.start();
-    }
-    else
-    {
-        m_rTransportControl.stop();
-    }
+   if (val != 0)
+   {
+      m_rTransportControl.start();
+   }
+   else
+   {
+      m_rTransportControl.stop();
+   }
 }

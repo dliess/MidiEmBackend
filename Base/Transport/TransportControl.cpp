@@ -79,6 +79,7 @@ void TransportControl::retriggerCallbacks()
       }
    }
    emitStartedChanged(m_started);
+   emitStartOnBeat(m_startOnBeat);
 }
 
 void TransportControl::update()
@@ -117,30 +118,16 @@ void TransportControl::startNow()
    emitStartedChanged(m_started);
 }
 
-
-/*
-
-TransportControl::Settings TransportControl::getSettings() const noexcept
-{
-   Settings settings;
-   for (auto& e : m_enabledDevices)
+void TransportControl::setStartOnBeat(bool startOnBeat) noexcept
+{ 
+   if(m_startOnBeat != startOnBeat)
    {
-      if (e.second)
-      {
-         settings.push_back(e.first.toStr());
-      }
+      m_startOnBeat = startOnBeat;
+      emitStartedChanged(m_startOnBeat);
    }
-   return settings;
-}
+};
 
-void TransportControl::setSettings(const Settings& settings) noexcept
+bool TransportControl::getStartOnBeat() const noexcept
 {
-   for (auto& e : settings)
-   {
-      const musicDevice::MidiHolder::Id id(e);
-      auto pMidiOut = m_rMidiHolder.getMidiOut(id);
-      m_enabledDevices.emplace(std::make_pair(id, std::move(pMidiOut)));
-   }
-}
-
-*/
+   return m_startOnBeat;
+};

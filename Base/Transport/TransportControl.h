@@ -23,10 +23,12 @@ public:
    void retriggerCallbacks();
    void update();
 
-   void setStartOnBeat(bool startOnBeat) noexcept { m_startOnBeat = startOnBeat; };
+   void setStartOnBeat(bool startOnBeat) noexcept;
+   [[nodiscard]] bool getStartOnBeat() const noexcept;
 
    CB_SIGNAL(StartedChanged, bool);
    CB_SIGNAL(TransportMaskChanged, const util::Identifiable::UUID&, bool);
+   CB_SIGNAL(StartOnBeat, bool);
 
 private:
    musicDevice::Holder& m_rMusicDeviceHolder;

@@ -1,0 +1,21 @@
+#ifndef ABLETON_LINK_RPC_H
+#define ABLETON_LINK_RPC_H
+
+#include "MidiEmRtAbletonLinkRpcIf.h"
+
+namespace base { class AbletonLinkWrapper; }
+
+namespace uiadapter::capnzero
+{
+class AbletonLinkRpc : public ::capnzero::MidiEmRt::AbletonLinkRpcIf
+{
+public:
+    AbletonLinkRpc(base::AbletonLinkWrapper& rAbletonLinkWrapper) noexcept;
+	void toggleEnabled() override;
+	void toggleReactOnTransport() override;
+private:
+	base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
+};
+
+}   // namespace uiadapter::capnzero
+#endif   // ABLETON_LINK_RPC_H
