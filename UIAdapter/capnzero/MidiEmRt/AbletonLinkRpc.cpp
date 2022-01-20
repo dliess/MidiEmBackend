@@ -8,9 +8,19 @@ AbletonLinkRpc::AbletonLinkRpc(base::AbletonLinkWrapper& rAbletonLinkWrapper) no
 {
 }
 
+void AbletonLinkRpc::setEnabled(::capnzero::UInt8 val)
+{
+    m_rAbletonLinkWrapper.enable(static_cast<bool>(val));
+}
+
 void AbletonLinkRpc::toggleEnabled()
 {
     m_rAbletonLinkWrapper.enable(!m_rAbletonLinkWrapper.isEnabled());
+}
+
+void AbletonLinkRpc::setReactOnTransport(::capnzero::UInt8 val)
+{
+    m_rAbletonLinkWrapper.reactOnTransport(static_cast<bool>(val));
 }
 
 void AbletonLinkRpc::toggleReactOnTransport()
