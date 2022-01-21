@@ -160,6 +160,7 @@ inline MusicDeviceContainer::iterator MusicDeviceContainer::findByDeviceId(const
 inline std::pair<MusicDeviceContainer::iterator, bool>
 MusicDeviceContainer::insert(const value_type& val)
 {
+   emitAboutToAdd(val.second);
    const auto ret = Super::insert(val);
    emitAdded(val.second);
    return ret;

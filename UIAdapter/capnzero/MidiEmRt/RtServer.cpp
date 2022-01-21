@@ -42,7 +42,7 @@ RtServer::RtServer(
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
 
-   rMusicDeviceContainer.onAdded(
+   rMusicDeviceContainer.onAboutToAdd(
        [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           const auto &deviceName  = ptr.get()->deviceId().deviceName;
           const auto &description = *ptr.get()->description();
