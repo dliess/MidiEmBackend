@@ -123,7 +123,7 @@ void TransportControl::setStartOnBeat(bool startOnBeat) noexcept
    if(m_startOnBeat != startOnBeat)
    {
       m_startOnBeat = startOnBeat;
-      emitStartedChanged(m_startOnBeat);
+      emitStartOnBeat(m_startOnBeat);
    }
 };
 

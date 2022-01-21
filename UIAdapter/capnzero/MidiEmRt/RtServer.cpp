@@ -175,7 +175,7 @@ RtServer::RtServer(
       signals().TransportControl__startedChanged(started ? 1 : 0);
    });
    rTransportControl.onStartOnBeat([this](bool startOnBeat) {
-      signals().TransportControl__QuantizedStartChanged(startOnBeat);
+      signals().TransportControl__quantizedStartChanged(startOnBeat);
    });
 
    rAbletonLinkWrapper.onEnabledChanged([this](bool enabled) {

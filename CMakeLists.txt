@@ -84,7 +84,7 @@ CPMFindPackage(
   NAME midiem-capnzero
   #GITHUB_REPOSITORY dliess/MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG 147b0d346e9ea5f4c317559ae9958c91ac3e0abc
+  GIT_TAG 321d11f0dde3efc277e5bb475589ffcc9130ea44
 )
 
 CPMFindPackage(

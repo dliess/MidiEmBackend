@@ -32,7 +32,7 @@ public:
 
 private:
    musicDevice::Holder& m_rMusicDeviceHolder;
-   bool m_startOnBeat{false};
+   bool m_startOnBeat{true};
    bool m_startRequested{false};
    bool m_started{false};
 
