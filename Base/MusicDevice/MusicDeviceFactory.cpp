@@ -42,9 +42,21 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           }
           const auto [resType, deviceName] =
               m_loader.getMatchType(devOnUsbPort.getDeviceName());
-          if (resType == Loader::ResultType::MarkedUnused)
+          switch(resType)
           {
-             return;
+              case Loader::ResultType::MusicDevice:
+              {
+                  if(devOnUsbPort.getMidiPort() > 0) return;
+                  break;
+              }
+              case Loader::ResultType::NotFound:
+              {
+                  break;
+              }
+              case Loader::ResultType::MarkedUnused:
+              {
+                  return;
+              }
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
@@ -102,9 +114,21 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           }
           const auto [resType, deviceName] =
               m_loader.getMatchType(devOnUsbPort.getDeviceName());
-          if (resType == Loader::ResultType::MarkedUnused)
+          switch(resType)
           {
-             return;
+              case Loader::ResultType::MusicDevice:
+              {
+                  if(devOnUsbPort.getMidiPort() > 0) return;
+                  break;
+              }
+              case Loader::ResultType::NotFound:
+              {
+                  break;
+              }
+              case Loader::ResultType::MarkedUnused:
+              {
+                  return;
+              }
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
