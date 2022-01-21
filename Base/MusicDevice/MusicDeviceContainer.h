@@ -44,7 +44,7 @@ public:
    
    inline size_t size() const noexcept;
 
-   CB_SIGNAL(AboutToAdd, std::shared_ptr<MusicDevice>);
+   CB_SIGNAL(AboutToAdd, const MusicDevice&);
    CB_SIGNAL(Added, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(AboutToRemove, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(SoundDevParamChanged, util::Identifiable::UUID, int, int, float, float);

@@ -43,18 +43,18 @@ RtServer::RtServer(
    });
 
    rMusicDeviceContainer.onAboutToAdd(
-       [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
-          const auto &deviceName  = ptr.get()->deviceId().deviceName;
-          const auto &description = *ptr.get()->description();
-          const auto &mediumId    = ptr.get()->mediumId();
+       [this](const base::musicDevice::MusicDevice& md) {
+          const auto &deviceName  = md.deviceId().deviceName;
+          const auto &description = *md.description();
+          const auto &mediumId    = md.mediumId();
           const auto midiVoiceOffset =
-              ptr.get()->soundHandler
-                  ? ptr.get()->soundHandler->getMidiVoiceOffset()
+              md.soundHandler
+                  ? md.soundHandler->getMidiVoiceOffset()
                   : 0;
 
           signals().MusicDevices__deviceAdded(
-              ptr.get()->id(), ptr.get()->deviceId().deviceName,
-              ptr.get()->deviceId().portName, mediumId.toStr(),
+              md.id(), md.deviceId().deviceName,
+              md.deviceId().portName, mediumId.toStr(),
               midiVoiceOffset);
        });
 
