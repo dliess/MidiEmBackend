@@ -41,7 +41,7 @@ inline void MidiHolder::addMidiOut(
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOutput) noexcept
 {
    for (auto& cb : m_outputAddedCbs) cb(pMidiOutput);
-   m_midiOutputs.emplace_back(std::move(pMidiOutput));
+   m_midiOutputs.emplace_back(std::move(pMidiOutput), 0, 0);
 }
 
 inline void MidiHolder::removeMidiIn(const Id& id) noexcept
@@ -62,11 +62,11 @@ inline void MidiHolder::removeMidiOut(const Id& id) noexcept
 {
    for (int i = 0; i < m_midiOutputs.size(); ++i)
    {
-      if (id == Id(m_midiOutputs[i]->medium().getDeviceName(),
-                   m_midiOutputs[i]->medium().getPortName()))
+      if (id == Id(m_midiOutputs[i].pMidiOut->medium().getDeviceName(),
+                   m_midiOutputs[i].pMidiOut->medium().getPortName()))
       {
          for (auto& cb : m_outputRemovedCbs) { cb(id); }
-         m_midiOutputs[i].reset();
+         m_midiOutputs[i].pMidiOut.reset();
          m_midiOutputs.erase(m_midiOutputs.begin() + i);
       }
    }
@@ -91,10 +91,10 @@ inline std::shared_ptr<MusicDevice::MidiOutput> MidiHolder::getMidiOut(
 {
    for (auto& e : m_midiOutputs)
    {
-      const Id actId(e->medium().getDeviceName(), e->medium().getPortName());
+      const Id actId(e.pMidiOut->medium().getDeviceName(), e.pMidiOut->medium().getPortName());
       if (actId == id)
       {
-         return e;
+         return e.pMidiOut;
       }
    }
    return nullptr;
@@ -110,7 +110,7 @@ inline void MidiHolder::midiClock(int beatTicks) noexcept
    beatTicksNotHandled = beatTicksNotHandled % MIDI_CLOCK_SEND_PERIOD;
    for (int i = 0; i < delta; ++i)
    {
-      for (auto& e : m_midiOutputs) { e->send(midi::Message<midi::Clock>()); }
+      for (auto& e : m_midiOutputs) { e.pMidiOut->send(midi::Message<midi::Clock>()); }
    }
 }
 

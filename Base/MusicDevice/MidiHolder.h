@@ -44,7 +44,19 @@ public:
 
 private:
    std::vector<std::shared_ptr<MusicDevice::MidiInput>> m_midiInputs;
-   std::vector<std::shared_ptr<MusicDevice::MidiOutput>> m_midiOutputs;
+   struct MidiOutEntry
+   {
+      template<typename T>
+      MidiOutEntry(T&& ptr, int a, int b) :
+         pMidiOut(std::forward<T>(ptr)),
+         offsetSpeedBpmCents(a),
+         accumulatedOffsetBeatTicks(b)
+      {}
+      std::shared_ptr<MusicDevice::MidiOutput> pMidiOut;
+      int offsetSpeedBpmCents{0};
+      int accumulatedOffsetBeatTicks{0};
+   };
+   std::vector<MidiOutEntry> m_midiOutputs;
    std::vector<CbIn> m_inputAddedCbs;
    std::vector<CbOut> m_outputAddedCbs;
    std::vector<CbRem> m_inputRemovedCbs;

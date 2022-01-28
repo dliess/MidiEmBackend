@@ -30,6 +30,14 @@ bool BeatTick::running() const noexcept
 void BeatTick::nextTimeSlot() noexcept
 {
    if(!m_running) return;
+   if(/* just got running */)
+   {
+
+   }
+   else
+   {
+      print("Hello");
+   }
    m_beatJiffiesBefore = m_beatJiffies;
    while(std::chrono::high_resolution_clock::now() > m_nextNotificationTimePoint)
    {

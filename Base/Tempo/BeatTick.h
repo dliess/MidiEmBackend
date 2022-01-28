@@ -41,6 +41,7 @@ private:
    std::atomic<bool> m_running{false};
    std::atomic<int> m_bpmCents{12000};
    std::atomic<int> m_nudgeCents{0};
+   std::chrono::time_point<std::chrono::high_resolution_clock> m_lastNotificationTimePoint;
    std::chrono::time_point<std::chrono::high_resolution_clock> m_nextNotificationTimePoint;
 };
 
