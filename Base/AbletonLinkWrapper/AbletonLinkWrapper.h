@@ -28,7 +28,7 @@ public:
 
     void setTempo(double bpm);
 
-    std::tuple<double, std::chrono::microseconds, double> snapshot();
+    std::pair<double, double> snapshot();
     void retriggerCallbacks();
  
     CB_SIGNAL(EnabledChanged, bool);

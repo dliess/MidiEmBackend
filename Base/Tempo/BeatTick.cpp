@@ -24,7 +24,7 @@ double BeatTick::nextTick() noexcept
 {
    if (m_abletonLink.enabled())
    {
-      const auto [bpm, timeNowUs, beat] = m_abletonLink.snapshot();
+      const auto [bpm, beat] = m_abletonLink.snapshot();
       m_beat                            = beat;
       setBpm(bpm);
    }
