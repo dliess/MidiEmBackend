@@ -62,6 +62,17 @@ void base::Base::start()
    }
 
    tempo::BeatTick::instance().abletonLink().enable(true);
+   tempo::BeatTick::instance().abletonLink().onStartStopChanged(
+       [&transportControl](bool start) {
+          if (start)
+          {
+             transportControl.start();
+          }
+          else
+          {
+             transportControl.stop();
+          }
+       });
 
    m_mainRtThread = std::make_unique<util::Thread>(
        [this](const std::atomic<bool> &terminateRequest) {
@@ -101,11 +112,9 @@ void base::Base::setRtScheduling()
 void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    setRtScheduling();
-   uiadapter::capnzero::RtServer rtServer(m_zmqContext, instruments,
-                                          musicDeviceHolder.musicDevices,
-                                          transportControl,
-                                          m_abletonLinkWrapper, 
-                                          midiRouter);
+   uiadapter::capnzero::RtServer rtServer(
+       m_zmqContext, instruments, musicDeviceHolder.musicDevices,
+       transportControl, tempo::BeatTick::instance().abletonLink(), midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);

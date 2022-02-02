@@ -42,6 +42,4 @@ private:
 
 } // namespace base
 
-#include "AbletonLinkWrapper.inl"
-
 #endif // BASE_ABLETON_LINK_WRAPPER_H
