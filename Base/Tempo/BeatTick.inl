@@ -9,20 +9,20 @@ inline base::tempo::BeatTick& base::tempo::BeatTick::instance() noexcept
    return theInstance;
 }
 
-inline uint64_t base::tempo::BeatTick::getBeatJiffies() const noexcept
+inline double base::tempo::BeatTick::getBeat() const noexcept
 {
-   return m_beatJiffies;
+   return m_beat;
 }
 
-inline int base::tempo::BeatTick::getBeatJiffiesDelta() const noexcept
+inline double base::tempo::BeatTick::getBpmNudged() const noexcept
 {
-   return m_beatJiffies - m_beatJiffiesBefore;
+   return m_bpm + m_nudge;
 }
 
-inline void base::tempo::BeatTick::setBeatJiffies(uint64_t jiffies) noexcept
-{
-   m_beatJiffiesBefore = m_beatJiffies;
-   m_beatJiffies = jiffies;
-}
+
+inline AbletonLinkWrapper& base::tempo::BeatTick::abletonLink() noexcept
+{ 
+   return *m_pAbletonLink.get();
+};
 
 #endif

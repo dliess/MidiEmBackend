@@ -40,8 +40,7 @@ base::Base::Base(const std::string &configDir) :
     transportControl(musicDeviceHolder),
     instruments(musicDeviceHolder.musicDevices),
     instrumentsFactory(instruments, musicDeviceHolder),
-    midiRouter(musicDeviceHolder.midiHolder),
-    m_abletonLinkWrapper(transportControl)
+    midiRouter(musicDeviceHolder.midiHolder)
 {
    // TODO: Remove Dummy
    instruments.load("relDir", "filename", "section");
@@ -62,7 +61,7 @@ void base::Base::start()
       throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
    }
 
-   m_abletonLinkWrapper.enable(true);
+   tempo::BeatTick::instance().abletonLink().enable(true);
 
    m_mainRtThread = std::make_unique<util::Thread>(
        [this](const std::atomic<bool> &terminateRequest) {
@@ -129,7 +128,6 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
       rtServer.signals().handleAllSubscriptions();
    });
 
-   tempo::BeatTick::instance().start();
    while (!terminateRequest) { fdSet.Select(); }
 }
 
@@ -172,18 +170,11 @@ void base::Base::loopFn()
    // ... some code to measure ...
    //}
 
-   if (m_abletonLinkWrapper.isEnabled())
-   {
-      m_abletonLinkWrapper.update();
-   }
-   else
-   {
-      tempo::BeatTick::instance().nextTimeSlot();
-   }
+   const double deltaBeats = tempo::BeatTick::instance().nextTick();
    {
       MeasurerTenthMs<0>::Guard guard;
       transportControl.update();
-      musicDeviceHolder.midiHolder.midiClock(tempo::BeatTick::instance().getBeatJiffiesDelta());
+      musicDeviceHolder.midiHolder.midiClock(deltaBeats);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }

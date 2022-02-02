@@ -1,94 +1,68 @@
 #include "BeatTick.h"
+
 #include <loguru.hpp>
 
 using namespace base::tempo;
 
-BeatTick::BeatTick() noexcept:
-   m_nextNotificationTimePoint(std::chrono::high_resolution_clock::now())
-{}
-
-void BeatTick::start() noexcept
+BeatTick::BeatTick() noexcept
 {
-   if(m_running) return;
-   m_nextNotificationTimePoint = std::chrono::high_resolution_clock::now();
-   m_running = true;
-   emitRunningChanged(true);
+   onBpmNudgedChanged([this](double bpm) {
+      if (m_abletonLink.isEnabled())
+      {
+         m_abletonLink.setTempo(bpm);
+      }
+   }
+   m_abletonLink.onEnabledChanged([this](bool enabled){
+      if(enabled)
+      {
+         m_tLast = std::nullopt;
+      }
+   });
 }
 
-void BeatTick::stop() noexcept
+double BeatTick::nextTick() noexcept
 {
-   if(!m_running) return;
-   m_running = false;
-   emitRunningChanged(false);
-}
-
-bool BeatTick::running() const noexcept
-{
-   return m_running;
-}
-
-void BeatTick::nextTimeSlot() noexcept
-{
-   if(!m_running) return;
-   if(/* just got running */)
+   if (m_abletonLink.enabled())
    {
-
+      const auto [bpm, timeNowUs, beat] = m_abletonLink.snapshot();
+      m_beat                            = beat;
+      setBpm(bpm);
    }
    else
    {
-      print("Hello");
-   }
-   m_beatJiffiesBefore = m_beatJiffies;
-   while(std::chrono::high_resolution_clock::now() > m_nextNotificationTimePoint)
-   {
-     // LOG_F(INFO, "period {} ns", calcPeriodNs().count());
-      m_nextNotificationTimePoint += calcPeriodNs();
-      m_beatJiffies++;
-   }
-}
-
-void BeatTick::incBpm(int cents) noexcept
-{
-   if(m_bpmCents + cents < 2 || m_bpmCents + cents > 40000) return;
-   m_bpmCents.fetch_add(cents);
-   emitBpmNudgedChanged(getBpmCentsNudged());
-}
-
-void BeatTick::setBpmCents(int cents) noexcept
-{
-   if(cents <= 0 || m_bpmCents == cents) return;
-   m_bpmCents = cents;
-   emitBpmNudgedChanged(getBpmCentsNudged());
-}
-
-void BeatTick::setBpmCentsNudged(int cents) noexcept
-{
-   if(cents <= 0 || getBpmCentsNudged() == cents) return;
-   m_bpmCents = cents - m_nudgeCents;
-   emitBpmNudgedChanged(getBpmCentsNudged());
-}
-
-void BeatTick::setNudgeCents(int cents) noexcept
-{
-   if(m_nudgeCents != cents)
-   {
-      m_nudgeCents = cents;
-      emitBpmNudgedChanged(getBpmCentsNudged());
+      if(!m_tLast)
+      {
+         m_tLast = std::chrono::high_resolution_clock::now();
+      }
+      else
+      {
+         const auto tNow     = std::chrono::high_resolution_clock::now();
+         const auto deltaTUs = duration_cast<microseconds>(tNow - *m_tLast);
+         m_tLast             = tNow;
+         m_beat += (deltaTUs.count * m_bpm) / (60000000.0);
+      }
    }
 }
 
-int BeatTick::getBpmCentsNudged() const noexcept
+void BeatTick::incBpm(double increment) noexcept
 {
-   return m_bpmCents + m_nudgeCents;
+   const auto reqBpm = m_bpm + increment;
+   if (reqBpm < BpmMin || reqBpm > BpmMax)
+      return;
+   m_bpm = reqBpm;
+   emitBpmNudgedChanged(getBpmNudged());
 }
 
-std::chrono::nanoseconds BeatTick::getBeatPeriodNs() const noexcept
+void BeatTick::setBpm(double reqBpm) noexcept
 {
-   return calcPeriodNs() * PPQ;
+   if (reqBpm < BpmMin || reqBpm > BpmMax)
+      return;
+   m_bpm = reqBpm;
+   emitBpmNudgedChanged(getBpmNudged());
 }
 
-std::chrono::nanoseconds BeatTick::calcPeriodNs() const noexcept
+void BeatTick::setNudge(double nudge) noexcept
 {
-   constexpr uint64_t NSEC_PER_MIN = std::chrono::nanoseconds(std::chrono::minutes(1)).count();
-   return std::chrono::duration<int64_t, std::nano>( (NSEC_PER_MIN * 100) / (getBpmCentsNudged() * PPQ) );
+   m_nudge = nudge;
+   emitBpmNudgedChanged(getBpmNudged());
 }

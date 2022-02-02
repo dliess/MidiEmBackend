@@ -1,12 +1,11 @@
 #ifndef BEAT_TICK_H
 #define BEAT_TICK_H
 
-#include <atomic>
 #include <chrono>
-#include <cstdint>
-#include <functional>
-#include "CallbackSignal.h"
+#include <optional>
 
+#include "AbletonLinkWrapper.h"
+#include "CallbackSignal.h"
 namespace base::tempo
 {
 class BeatTick
@@ -14,38 +13,32 @@ class BeatTick
 public:
    BeatTick(const BeatTick&) = delete;
    BeatTick& operator=(const BeatTick&) = delete;
+   BeatTick(BeatTick&&) noexcept        = delete;
+   BeatTick& operator=(BeatTick&&) noexcept = delete;
    static inline BeatTick& instance() noexcept;
-   static constexpr int PPQ = 240;
-   inline uint64_t getBeatJiffies() const noexcept;
-   inline int getBeatJiffiesDelta() const noexcept;
-   inline void setBeatJiffies(uint64_t jiffies) noexcept;
-   void start() noexcept;
-   void stop() noexcept;
-   bool running() const noexcept;
-   void nextTimeSlot() noexcept;
-   void incBpm(int cents) noexcept;
-   void setBpmCents(int cents) noexcept;
-   void setBpmCentsNudged(int cents) noexcept;
-   void setNudgeCents(int cents) noexcept;
-   int getBpmCentsNudged() const noexcept;
-   std::chrono::nanoseconds getBeatPeriodNs() const noexcept;
+   inline double getBeat() const noexcept;
+   double nextTick() noexcept;
+   void incBpm(double increment) noexcept;
+   void setBpm(double value) noexcept;
+   void setNudge(double nudge) noexcept;
+   double getBpmNudged() const noexcept;
+   inline AbletonLinkWrapper& abletonLink() noexcept;
 
-   CB_SIGNAL(RunningChanged, bool);
-   CB_SIGNAL(BpmNudgedChanged, int);
+   CB_SIGNAL(BpmNudgedChanged, double);
 
 private:
    BeatTick() noexcept;
-   uint64_t m_beatJiffiesBefore{0};
-   uint64_t m_beatJiffies{0};
-   std::chrono::nanoseconds calcPeriodNs() const noexcept;
-   std::atomic<bool> m_running{false};
-   std::atomic<int> m_bpmCents{12000};
-   std::atomic<int> m_nudgeCents{0};
-   std::chrono::time_point<std::chrono::high_resolution_clock> m_lastNotificationTimePoint;
-   std::chrono::time_point<std::chrono::high_resolution_clock> m_nextNotificationTimePoint;
+   double m_beat{0.0};
+   double m_bpm{120.0};
+   double m_nudge{0.0};
+   std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
+       m_tLast;
+   AbletonLinkWrapper m_abletonLink;
+   static constexpr double BpmMin{0.02};
+   static constexpr double BpmMax{400.0};
 };
 
-} // namespace base::tempo
+}   // namespace base::tempo
 
 #include "BeatTick.inl"
 

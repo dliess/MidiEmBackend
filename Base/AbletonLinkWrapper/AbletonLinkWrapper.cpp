@@ -7,8 +7,7 @@
 #include "TransportControl.h"
 
 base::AbletonLinkWrapper::AbletonLinkWrapper(base::musicDevice::TransportControl& rTransportControl) :
-    m_pAbletonLink(std::make_unique<ableton::Link>(
-        base::tempo::BeatTick::instance().getBpmCentsNudged() / 100.0)),
+    m_pAbletonLink(std::make_unique<ableton::Link>(120),
     m_rTransportControl(rTransportControl)
 {
    m_pAbletonLink->setTempoCallback([](double tempo) {
@@ -16,33 +15,15 @@ base::AbletonLinkWrapper::AbletonLinkWrapper(base::musicDevice::TransportControl
    });
    m_pAbletonLink->setStartStopCallback([this](bool start) {
       LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
-      if(m_reactsOnTransport)
+      if (m_reactsOnTransport)
       {
-         if(start)
-         {
-            m_rTransportControl.start();
-         }
-         else
-         {
-            m_rTransportControl.stop();
-         }
+         emitStartStopChanged(start);
       }
    });
-   m_pAbletonLink->setNumPeersCallback([](size_t numPeers) {
+   m_pAbletonLink->setNumPeersCallback([this](size_t numPeers) {
       LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
+      emitNumPeersChanged(numPeers);
    });
-   m_pAbletonLink->enable(true);
-
-   base::tempo::BeatTick::instance().onBpmNudgedChanged([this](int bpmCents) {
-      if (m_pAbletonLink->isEnabled())
-      {
-         auto session = m_pAbletonLink->captureAudioSessionState();
-         session.setTempo(bpmCents / 100.0, m_pAbletonLink->clock().micros());
-         m_pAbletonLink->commitAudioSessionState(session);
-      }
-   });
-
-   update();
 }
 
 // Dummy for unique_ptr forward decl
@@ -50,7 +31,7 @@ base::AbletonLinkWrapper::~AbletonLinkWrapper() = default;
 
 void base::AbletonLinkWrapper::enable(bool enable)
 {
-   if(m_pAbletonLink->isEnabled() != enable)
+   if (m_pAbletonLink->isEnabled() != enable)
    {
       m_pAbletonLink->enable(enable);
       emitEnabledChanged(enable);
@@ -64,7 +45,7 @@ bool base::AbletonLinkWrapper::isEnabled() const
 
 void base::AbletonLinkWrapper::reactOnTransport(bool react) noexcept
 {
-   if(m_reactsOnTransport != react)
+   if (m_reactsOnTransport != react)
    {
       m_reactsOnTransport = react;
       emitReactsOnTransportChanged(m_reactsOnTransport);
@@ -76,17 +57,23 @@ bool base::AbletonLinkWrapper::reactsOnTransport() const noexcept
    return m_reactsOnTransport;
 }
 
-void base::AbletonLinkWrapper::update()
+void base::AbletonLinkWrapper::setTempo(double bpm)
 {
    auto session = m_pAbletonLink->captureAudioSessionState();
-   tempo::BeatTick::instance().setBpmCentsNudged(session.tempo() * 100);
-   tempo::BeatTick::instance().setBeatJiffies(
-       tempo::BeatTick::PPQ *
-       session.beatAtTime(m_pAbletonLink->clock().micros(), 4));
+   session.setTempo(bpm, m_pAbletonLink->clock().micros());
+   m_pAbletonLink->commitAudioSessionState(session);
+}
+
+std::tuple<double, std::chrono::microseconds, double> base::AbletonLinkWrapper::snapshot()
+{
+   auto session     = m_pAbletonLink->captureAudioSessionState();
+   const auto nowUs = m_pAbletonLink->clock().micros();
+   return std::make_tuple(session.tempo(), nowUs, session.beatAtTime(nowUs, 4));
 }
 
 void base::AbletonLinkWrapper::retriggerCallbacks()
 {
    emitEnabledChanged(m_pAbletonLink->isEnabled());
    emitReactsOnTransportChanged(m_reactsOnTransport);
+   emitNumPeersChanged(m_pAbletonLink->numPeers());
 }

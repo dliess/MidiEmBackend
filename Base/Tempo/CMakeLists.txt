@@ -16,4 +16,5 @@ target_include_directories(Tempo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Tempo
    PRIVATE Loguru
    PUBLIC  Util
+   PUBLIC  AbletonLinkWrapper
 )

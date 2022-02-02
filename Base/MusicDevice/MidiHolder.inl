@@ -67,8 +67,8 @@ inline void MidiHolder::removeMidiOut(const Id& id) noexcept
       {
          for (auto& cb : m_outputRemovedCbs) { cb(id); }
          m_midiOutputs[i].pMidiOut.reset();
-         m_midiOutputs.erase(m_midiOutputs.begin() + i);
-      }
+          m_midiOutputs.erase(m_midiOutputs.begin() + i);
+      } 
    }
 }
 
