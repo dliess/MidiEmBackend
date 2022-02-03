@@ -95,7 +95,7 @@ public:
                              ::capnzero::Int8 on) override;
    void setArpeggiatorStepLength(const ::capnzero::SpanCL<16>& uuid,
                                  ::capnzero::Int8 voiceIdx,
-                                 ::capnzero::Int32 stepLength) override;
+                                 ::capnzero::Float32 stepLength) override;
    void setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
                                ::capnzero::Int8 voiceIdx,
                                ::capnzero::Float32 gateFill) override;

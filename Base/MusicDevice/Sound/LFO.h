@@ -55,7 +55,7 @@ private:
    float m_amplitude{DefaultAmplitude};
    float m_frequency{DefaultFrequency};
    uint32_t m_multiplierExp{DefaultMultiplierExp};
-   uint64_t m_lastWaveStartJiffies{0};
+   double m_beatAtWaveStart{0.0};
    mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
    static constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 };

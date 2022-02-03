@@ -136,7 +136,7 @@ RtServer::RtServer(
                                                              gateFill);
        });
    rMusicDeviceContainer.onArpStepLengthChanged(
-       [this](util::Identifiable::UUID uuid, int voiceIdx, int stepLength) {
+       [this](util::Identifiable::UUID uuid, int voiceIdx, float stepLength) {
           signals().SoundDevices__arpeggiatorStepLengthChanged(uuid, voiceIdx,
                                                                stepLength);
        });

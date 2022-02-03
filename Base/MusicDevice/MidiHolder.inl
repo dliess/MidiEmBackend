@@ -100,15 +100,14 @@ inline std::shared_ptr<MusicDevice::MidiOutput> MidiHolder::getMidiOut(
    return nullptr;
 }
 
-inline void MidiHolder::midiClock(int beatTicks) noexcept
+inline void MidiHolder::midiClock(double beatsDelta) noexcept
 {
    constexpr int MIDI_PPQ               = 24;
-   constexpr int MIDI_CLOCK_SEND_PERIOD = tempo::BeatTick::PPQ / MIDI_PPQ;
-   static int beatTicksNotHandled = 0;
-   beatTicksNotHandled += beatTicks;
-   const int delta = beatTicksNotHandled / MIDI_CLOCK_SEND_PERIOD;
-   beatTicksNotHandled = beatTicksNotHandled % MIDI_CLOCK_SEND_PERIOD;
-   for (int i = 0; i < delta; ++i)
+   static double midiClockTickNotHandled = 0;
+   midiClockTickNotHandled += (beatsDelta * MIDI_PPQ);
+   const int ticksToSend = static_cast<int>(midiClockTickNotHandled);
+   midiClockTickNotHandled = midiClockTickNotHandled - ticksToSend;
+   for (int i = 0; i < ticksToSend; ++i)
    {
       for (auto& e : m_midiOutputs) { e.pMidiOut->send(midi::Message<midi::Clock>()); }
    }

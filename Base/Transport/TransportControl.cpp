@@ -90,9 +90,10 @@ void TransportControl::update()
    }
    if(m_startOnBeat)
    {
-      static constexpr int threshold = tempo::BeatTick::PPQ / 10;
-      const int rest = tempo::BeatTick::instance().getBeatJiffies() % tempo::BeatTick::PPQ;
-      if(rest < threshold)
+      static constexpr double Threshold = 0.1;
+      const auto beat = tempo::BeatTick::instance().getBeat();
+      const double rest = beat - static_cast<int>(beat);
+      if(rest < Threshold)
       {
          startNow();
          m_rMusicDeviceHolder.midiHolder.midiClock(rest); // fast forward devices midi-time

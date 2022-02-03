@@ -22,7 +22,7 @@ public:
       static constexpr int PauseNote = -1;
       int note;
       float velocity{1.0};
-      uint64_t bpmTimestamp{0};
+      double bpmTimestamp{0};
    };
 
    using ContainerT = std::pmr::list<NoteData>;
@@ -38,7 +38,7 @@ public:
 
 private:
    ContainerT m_noteList;
-   static constexpr int Threshold = 30;
+   static constexpr double Threshold = 0.125;
 };
 
 }   // namespace base::arp

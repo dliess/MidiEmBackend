@@ -12,7 +12,7 @@ public:
 
 private:
    std::chrono::system_clock::time_point m_lastTapTimepoint;
-   std::chrono::nanoseconds m_sum;
+   std::chrono::microseconds m_sumUs;
    int m_count{0};
    static constexpr int NUM_PERIODS_TO_RESET_FROM{3};
    static constexpr int NUM_TAPS_TO_SET_BPM{2};

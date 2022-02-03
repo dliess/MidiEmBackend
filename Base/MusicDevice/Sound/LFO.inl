@@ -15,15 +15,15 @@ inline bool LFO::enabled() const noexcept
 
 inline float LFO::calculateValue() noexcept 
 {
-   const auto jiffies = tempo::BeatTick::instance().getBeatJiffies();
-   auto jiffiesInCurrentPeriod = jiffies - m_lastWaveStartJiffies;
-   const float jiffiesPerPeriod = float(tempo::BeatTick::PPQ) / (m_frequency * (1 << m_multiplierExp));
-   if(jiffiesInCurrentPeriod > jiffiesPerPeriod)
+   const auto beat = tempo::BeatTick::instance().getBeat();
+   auto deltaBeat = beat - m_beatAtWaveStart;
+   const auto period = 1.0 / (m_frequency * (1 << m_multiplierExp));
+   if(deltaBeat >= period)
    {
-      m_lastWaveStartJiffies = jiffies;
-      jiffiesInCurrentPeriod = 0;
+      m_beatAtWaveStart = beat;
+      deltaBeat = 0;
    }
-   const float t = jiffiesInCurrentPeriod / jiffiesPerPeriod;
+   const auto t = deltaBeat / period;
    const auto fnVal = mpark::visit(util::overload{
       [t](auto && f){ return f(t); }
    }, m_waveform);

@@ -4,23 +4,24 @@
 
 void base::tempo::TapTempoHandler::tap() noexcept
 {
-   auto now           = std::chrono::high_resolution_clock::now();
-   auto diff          = now - m_lastTapTimepoint;
+   constexpr uint64_t USEC_PER_MIN =
+       std::chrono::microseconds(std::chrono::minutes(1)).count();
+   const auto now    = std::chrono::high_resolution_clock::now();
+   const auto diffUs = std::chrono::duration_cast<std::chrono::microseconds>(
+       now - m_lastTapTimepoint);
    m_lastTapTimepoint = now;
-   if (diff >
-       BeatTick::instance().getBeatPeriodNs() * NUM_PERIODS_TO_RESET_FROM)
+
+   if (diffUs.count() > ((USEC_PER_MIN / BeatTick::instance().getBpmNudged()) *
+                 NUM_PERIODS_TO_RESET_FROM))
    {
-      m_sum   = std::chrono::nanoseconds::zero();
+      m_sumUs = std::chrono::microseconds::zero();
       m_count = 0;
       return;
    }
-   m_sum += diff;
+   m_sumUs += diffUs;
    ++m_count;
    if (m_count >= NUM_TAPS_TO_SET_BPM)
    {
-      constexpr uint64_t NSEC_PER_MIN =
-         std::chrono::nanoseconds(std::chrono::minutes(1)).count();
-      BeatTick::instance().setBpmCents((NSEC_PER_MIN * 100 * m_count) /
-                                       m_sum.count());
+      BeatTick::instance().setBpm((USEC_PER_MIN * m_count) / m_sumUs.count());
    }
 }

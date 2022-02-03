@@ -6,9 +6,8 @@
 #include "BeatTick.h"
 #include "TransportControl.h"
 
-base::AbletonLinkWrapper::AbletonLinkWrapper(base::musicDevice::TransportControl& rTransportControl) :
-    m_pAbletonLink(std::make_unique<ableton::Link>(120),
-    m_rTransportControl(rTransportControl)
+base::AbletonLinkWrapper::AbletonLinkWrapper() :
+    m_pAbletonLink(std::make_unique<ableton::Link>(120))
 {
    m_pAbletonLink->setTempoCallback([](double tempo) {
       LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);

@@ -196,7 +196,7 @@ void Arpeggiator::setGateFill(float gateFill) noexcept
    m_pImpl->m_arpSequencePlayer.setGateFill(gateFill);
 }
 
-void Arpeggiator::setStepLength(int stepLength) noexcept
+void Arpeggiator::setStepLength(float stepLength) noexcept
 {
    m_pImpl->m_arpSequencePlayer.setStepLength(stepLength);
 }
@@ -257,7 +257,7 @@ float Arpeggiator::getGateFill() const noexcept
 {
    return m_pImpl->m_arpSequencePlayer.getGateFill();
 }
-int Arpeggiator::getStepLength() const noexcept
+float Arpeggiator::getStepLength() const noexcept
 {
    return m_pImpl->m_arpSequencePlayer.getStepLength();
 }

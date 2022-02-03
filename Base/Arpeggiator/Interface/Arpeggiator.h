@@ -26,7 +26,7 @@ public:
    void noteOff(int note, float velocity) noexcept;
    void setRange(RangeType rangeType, int value) noexcept;
    void setGateFill(float gateFill) noexcept;
-   void setStepLength(int beatTicks) noexcept;
+   void setStepLength(float beats) noexcept;
    void setAlgorithm(Algorithm algorithm) noexcept;
    void setHoldNotes(bool on) noexcept;
    void setFeedMode(FeedMode feedMode) noexcept;
@@ -37,7 +37,7 @@ public:
    [[nodiscard]] RangeType getRangeType() const noexcept;
    [[nodiscard]] int getRange() const noexcept;
    [[nodiscard]] float getGateFill() const noexcept;
-   [[nodiscard]] int getStepLength() const noexcept;
+   [[nodiscard]] float getStepLength() const noexcept;
    [[nodiscard]] Algorithm getAlgorithm() const noexcept;
    [[nodiscard]] bool getHoldNotes() const noexcept;
    [[nodiscard]] FeedMode getFeedMode() const noexcept;

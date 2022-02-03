@@ -13,7 +13,7 @@ ArpSequencePlayer::ArpSequencePlayer(const ArpSequence& rArpSequence) noexcept :
 void ArpSequencePlayer::start() noexcept
 {
    //LOG_F(INFO, "ArpSequencePlayer::start()");
-   m_tStepEnd = base::tempo::BeatTick::instance().getBeatJiffies();
+   m_tStepEnd = base::tempo::BeatTick::instance().getBeat();
    m_tNoteOff = m_tStepEnd;
    m_actualIdx       = -1;
    m_started = true;
@@ -44,9 +44,9 @@ void ArpSequencePlayer::setGateFill(float gateFill) noexcept
    }
 }
 
-void ArpSequencePlayer::setStepLength(int stepLength) noexcept
+void ArpSequencePlayer::setStepLength(float stepLength) noexcept
 {
-   stepLength = std::max(stepLength, 1);
+   stepLength = std::max(stepLength, 0.001f);
    if (m_stepLength != stepLength)
    {
       m_stepLength = stepLength;
@@ -60,7 +60,7 @@ void ArpSequencePlayer::update()
    {
       return;
    }
-   const uint64_t now = base::tempo::BeatTick::instance().getBeatJiffies();
+   const auto now = base::tempo::BeatTick::instance().getBeat();
    if (now < m_tNoteOff)
    {
       return;
@@ -79,8 +79,7 @@ void ArpSequencePlayer::update()
          do {
             m_tStepEnd += m_stepLength;
          } while (m_tStepEnd < now);
-         const int noteOffTicks = std::min(int(m_stepLength * (1.0 - m_gateFill)), m_stepLength - 1);
-         m_tNoteOff = m_tStepEnd - noteOffTicks;
+         m_tNoteOff = m_tStepEnd - (m_stepLength * (1.0 - m_gateFill));
          if (++m_actualIdx >= m_rArpSequence.size())
          {
             m_actualIdx = 0;

@@ -112,7 +112,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorStepLengthChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 stepLength) {
+                   ::capnzero::Int8 voiceIdx, ::capnzero::Float32 stepLength) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorStepLengthChanged(

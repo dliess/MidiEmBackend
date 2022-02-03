@@ -20,9 +20,9 @@ inline double base::tempo::BeatTick::getBpmNudged() const noexcept
 }
 
 
-inline AbletonLinkWrapper& base::tempo::BeatTick::abletonLink() noexcept
+inline base::AbletonLinkWrapper& base::tempo::BeatTick::abletonLink() noexcept
 { 
-   return *m_pAbletonLink.get();
+   return m_abletonLink;
 };
 
 #endif

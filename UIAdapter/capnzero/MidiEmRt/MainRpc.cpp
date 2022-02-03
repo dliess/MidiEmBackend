@@ -6,7 +6,7 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
                  base::instruments::Instruments &rInstruments,
                  base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
                  base::musicDevice::TransportControl &rTransportControl,
-                 base::AbletonLinkWrapper& rAbletonLinkWrapper,
+                 base::AbletonLinkWrapper &rAbletonLinkWrapper,
                  base::midifriends::Router &rMidiRouter) :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
@@ -73,10 +73,8 @@ void MainRpc::reEmitSignals()
          }
       }
    }
-   m_rSignals.Tempo__beatTickStartedChanged(
-       base::tempo::BeatTick::instance().running());
-   m_rSignals.Tempo__bpmCentsChanged(
-       base::tempo::BeatTick::instance().getBpmCentsNudged());
+   m_rSignals.Tempo__bpmChanged(
+       base::tempo::BeatTick::instance().getBpmNudged());
    m_rSignals.Instruments__kitInstrumentsChanged(
        meta::serialize(m_rInstruments.data.kitInstruments).dump().c_str());
    m_rSignals.Instruments__melodicInstrumentsChanged(

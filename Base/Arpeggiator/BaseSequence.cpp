@@ -12,7 +12,7 @@ BaseSequence::BaseSequence(std::pmr::unsynchronized_pool_resource& pool) :
 
 void BaseSequence::addNote(int note, float velocity)
 {
-   uint64_t ts_now = base::tempo::BeatTick::instance().getBeatJiffies();
+   const auto ts_now = base::tempo::BeatTick::instance().getBeat();
    if (m_noteList.size() && m_noteList.back().note == NoteData::PauseNote &&
        ((ts_now - m_noteList.back().bpmTimestamp) < Threshold))
    {
@@ -33,7 +33,7 @@ void BaseSequence::clear() noexcept
 
 void BaseSequence::addPause() noexcept
 {
-   uint64_t ts_now = base::tempo::BeatTick::instance().getBeatJiffies();
+   const auto ts_now = base::tempo::BeatTick::instance().getBeat();
    if (m_noteList.size() && m_noteList.back().note != NoteData::PauseNote &&
        ((ts_now - m_noteList.back().bpmTimestamp) < Threshold))
    {

@@ -33,6 +33,7 @@ private:
    double m_nudge{0.0};
    std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
        m_tLast;
+   std::optional<double> m_prevTickBeats;
    AbletonLinkWrapper m_abletonLink;
    static constexpr double BpmMin{0.02};
    static constexpr double BpmMax{400.0};

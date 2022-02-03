@@ -40,7 +40,7 @@ public:
    inline std::shared_ptr<MusicDevice::MidiInput> getMidiIn(const Id& id) const noexcept;
    inline std::shared_ptr<MusicDevice::MidiOutput> getMidiOut(const Id& id) const noexcept;
 
-   inline void midiClock(int beatTicks) noexcept;
+   inline void midiClock(double beatsDelta) noexcept;
 
 private:
    std::vector<std::shared_ptr<MusicDevice::MidiInput>> m_midiInputs;

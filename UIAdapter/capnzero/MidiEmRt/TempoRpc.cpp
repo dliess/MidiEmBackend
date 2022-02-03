@@ -6,40 +6,30 @@ using namespace uiadapter::capnzero;
 
 TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals)
 {
-   base::tempo::BeatTick::instance().onRunningChanged(
-       [&rSignals](bool running) {
-          rSignals.Tempo__beatTickStartedChanged(running);
-       });
    base::tempo::BeatTick::instance().onBpmNudgedChanged(
-       [&rSignals](int bpmCents) {
-          rSignals.Tempo__bpmCentsChanged(bpmCents);
-       });
+       [&rSignals](double bpm) { rSignals.Tempo__bpmChanged(bpm); });
 }
-
-void TempoRpc::start() { base::tempo::BeatTick::instance().start(); }
-
-void TempoRpc::stop() { base::tempo::BeatTick::instance().stop(); }
 
 void TempoRpc::tapTempo() { m_tapTempoHandler.tap(); }
 
-void TempoRpc::setNudge(::capnzero::Int32 bpmCents)
+void TempoRpc::setNudge(::capnzero::Float32 bpm)
 {
-   base::tempo::BeatTick::instance().setNudgeCents(bpmCents);
+   base::tempo::BeatTick::instance().setNudge(bpm);
 }
 
-void TempoRpc::increaseBpm(::capnzero::Int32 bpmCents)
+void TempoRpc::increaseBpm(::capnzero::Float32 bpm)
 {
-   base::tempo::BeatTick::instance().incBpm(bpmCents);
+   base::tempo::BeatTick::instance().incBpm(bpm);
 }
 
-void TempoRpc::increaseRelativeTempoOfAll(::capnzero::Int32 bpmCents) {}
+void TempoRpc::increaseRelativeTempoOfAll(::capnzero::Float32 bpm) {}
 
 void TempoRpc::increaseRelativeTempo(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::Int32 bpmCents)
+                                     ::capnzero::Float32 bpm)
 {
 }
 
-void TempoRpc::setBpmCents(::capnzero::UInt32 val)
+void TempoRpc::setBpm(::capnzero::Float32 bpm)
 {
-   base::tempo::BeatTick::instance().setBpmCents(val);
+   base::tempo::BeatTick::instance().setBpm(bpm);
 }

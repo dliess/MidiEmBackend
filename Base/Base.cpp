@@ -63,7 +63,7 @@ void base::Base::start()
 
    tempo::BeatTick::instance().abletonLink().enable(true);
    tempo::BeatTick::instance().abletonLink().onStartStopChanged(
-       [&transportControl](bool start) {
+       [this](bool start) {
           if (start)
           {
              transportControl.start();

@@ -14,7 +14,7 @@ namespace base
 class AbletonLinkWrapper
 {
 public:
-    AbletonLinkWrapper() = default;
+    AbletonLinkWrapper();
     ~AbletonLinkWrapper(); // Dummy for unique_ptr forward decl
     AbletonLinkWrapper(const AbletonLinkWrapper&) = delete;
     AbletonLinkWrapper& operator=(const AbletonLinkWrapper&) = delete;
