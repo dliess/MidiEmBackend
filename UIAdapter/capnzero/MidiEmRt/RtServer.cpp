@@ -8,8 +8,8 @@
 #include "MainRpc.h"
 #include "MidiRouter.h"
 #include "MidiRoutingRpc.h"
-#include "MusicDeviceContainer.h"
 #include "MusicDeviceDescription.h"
+#include "MusicDeviceHolder.h"
 #include "SoundDevicesRpc.h"
 #include "TempoRpc.h"
 #include "TransportControl.h"
@@ -17,20 +17,20 @@
 
 using namespace uiadapter::capnzero;
 
-RtServer::RtServer(
-    zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
-    base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
-    base::musicDevice::TransportControl &rTransportControl,
-    base::AbletonLinkWrapper &rAbletonLinkWrapper,
-    base::midifriends::Router &rMidiRouter) :
+RtServer::RtServer(zmq::context_t &rZmqContext,
+                   base::instruments::Instruments &rInstruments,
+                   base::musicDevice::Holder &rMDHolder,
+                   base::musicDevice::TransportControl &rTransportControl,
+                   base::AbletonLinkWrapper &rAbletonLinkWrapper,
+                   base::midifriends::Router &rMidiRouter) :
     ::capnzero::MidiEmRt::MidiEmRtServer(
         rZmqContext, "tcp://*:55555", "tcp://*:55556",
         std::make_unique<MainRpc>(signals(), rInstruments,
-                                  rMusicDeviceContainer, rTransportControl,
+                                  rMDHolder.musicDevices, rTransportControl,
                                   rAbletonLinkWrapper, rMidiRouter),
         std::make_unique<InstrumentsRpc>(rInstruments),
-        std::make_unique<SoundDevicesRpc>(rMusicDeviceContainer),
-        std::make_unique<TempoRpc>(Super::signals()),
+        std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
+        std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
         std::make_unique<TransportControlRpc>(rTransportControl),
         std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
         std::make_unique<MidiRoutingRpc>(rMidiRouter))
@@ -42,35 +42,32 @@ RtServer::RtServer(
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
 
-   rMusicDeviceContainer.onAboutToAdd(
-       [this](const base::musicDevice::MusicDevice& md) {
+   rMDHolder.musicDevices.onAboutToAdd(
+       [this](const base::musicDevice::MusicDevice &md) {
           const auto &deviceName  = md.deviceId().deviceName;
           const auto &description = *md.description();
           const auto &mediumId    = md.mediumId();
           const auto midiVoiceOffset =
-              md.soundHandler
-                  ? md.soundHandler->getMidiVoiceOffset()
-                  : 0;
+              md.soundHandler ? md.soundHandler->getMidiVoiceOffset() : 0;
 
           signals().MusicDevices__deviceAdded(
-              md.id(), md.deviceId().deviceName,
-              md.deviceId().portName, mediumId.toStr(),
-              midiVoiceOffset);
+              md.id(), md.deviceId().deviceName, md.deviceId().portName,
+              mediumId.toStr(), midiVoiceOffset);
        });
 
-   rMusicDeviceContainer.onAboutToRemove(
+   rMDHolder.musicDevices.onAboutToRemove(
        [this](std::shared_ptr<base::musicDevice::MusicDevice> ptr) {
           signals().MusicDevices__deviceRemoved(ptr.get()->id());
        });
 
-   rMusicDeviceContainer.onSoundDevParamChanged(
+   rMDHolder.musicDevices.onSoundDevParamChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float commanded, float actual) {
           signals().SoundDevices__parameterChanged(uuid, voiceId, paramIdx,
                                                    commanded, actual);
        });
 
-   rMusicDeviceContainer.onLFOWaveformChanged(
+   rMDHolder.musicDevices.onLFOWaveformChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               base::musicDevice::sound::lfo::Waveform waveform) {
           signals().SoundDevices__lFOWaveformChanged(
@@ -78,35 +75,35 @@ RtServer::RtServer(
               static_cast<::capnzero::MidiEmRt::LFOWaveform>(waveform));
        });
 
-   rMusicDeviceContainer.onLFOAmplitudeChanged(
+   rMDHolder.musicDevices.onLFOAmplitudeChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float amplitude) {
           signals().SoundDevices__lFOAmplitudeChanged(uuid, voiceId, paramIdx,
                                                       amplitude);
        });
 
-   rMusicDeviceContainer.onLFOFrequencyChanged(
+   rMDHolder.musicDevices.onLFOFrequencyChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               float frequency) {
           signals().SoundDevices__lFOFrequencyChanged(uuid, voiceId, paramIdx,
                                                       frequency);
        });
 
-   rMusicDeviceContainer.onLFOMultiplierExpChanged(
+   rMDHolder.musicDevices.onLFOMultiplierExpChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               uint32_t multiplierExp) {
           signals().SoundDevices__lFOMultiplierExpChanged(
               uuid, voiceId, paramIdx, multiplierExp);
        });
 
-   rMusicDeviceContainer.onEnginePresetChanged(
+   rMDHolder.musicDevices.onEnginePresetChanged(
        [this](const std::string &musicDeviceName, int engineIdx,
               const std::string &presetName) {
           signals().SoundDevices__presetChanged(musicDeviceName, engineIdx,
                                                 presetName);
        });
    // Actual Preset -----------------
-   rMusicDeviceContainer.onActualPresetChanged(
+   rMDHolder.musicDevices.onActualPresetChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx,
               const std::string &presetName) {
           signals().SoundDevices__actualPresetChanged(uuid, voiceIdx,
@@ -114,11 +111,11 @@ RtServer::RtServer(
        });
 
    // ARP -------------
-   rMusicDeviceContainer.onArpBypassChanged(
+   rMDHolder.musicDevices.onArpBypassChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, bool on) {
           signals().SoundDevices__arpeggiatorBypassChanged(uuid, voiceIdx, on);
        });
-   rMusicDeviceContainer.onArpRangeTypeChanged(
+   rMDHolder.musicDevices.onArpRangeTypeChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx,
               base::arp::RangeType rangeType) {
           signals().SoundDevices__arpeggiatorRangeTypeChanged(
@@ -126,21 +123,22 @@ RtServer::RtServer(
               static_cast<::capnzero::MidiEmRt::ArpeggiatorRangeType>(
                   rangeType));
        });
-   rMusicDeviceContainer.onArpRangeChanged([this](util::Identifiable::UUID uuid,
-                                                  int voiceIdx, int range) {
-      signals().SoundDevices__arpeggiatorRangeChanged(uuid, voiceIdx, range);
-   });
-   rMusicDeviceContainer.onArpGateFillChanged(
+   rMDHolder.musicDevices.onArpRangeChanged(
+       [this](util::Identifiable::UUID uuid, int voiceIdx, int range) {
+          signals().SoundDevices__arpeggiatorRangeChanged(uuid, voiceIdx,
+                                                          range);
+       });
+   rMDHolder.musicDevices.onArpGateFillChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, float gateFill) {
           signals().SoundDevices__arpeggiatorGateFillChanged(uuid, voiceIdx,
                                                              gateFill);
        });
-   rMusicDeviceContainer.onArpStepLengthChanged(
+   rMDHolder.musicDevices.onArpStepLengthChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, float stepLength) {
           signals().SoundDevices__arpeggiatorStepLengthChanged(uuid, voiceIdx,
                                                                stepLength);
        });
-   rMusicDeviceContainer.onArpAlgorithmChanged(
+   rMDHolder.musicDevices.onArpAlgorithmChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx,
               base::arp::Algorithm algorithm) {
           signals().SoundDevices__arpeggiatorAlgorithmChanged(
@@ -148,19 +146,19 @@ RtServer::RtServer(
               static_cast<::capnzero::MidiEmRt::ArpeggiatorAlgorithm>(
                   algorithm));
        });
-   rMusicDeviceContainer.onArpHoldNotesChanged(
+   rMDHolder.musicDevices.onArpHoldNotesChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, bool holdNotes) {
           signals().SoundDevices__arpeggiatorHoldNotesChanged(uuid, voiceIdx,
                                                               holdNotes);
        });
-   rMusicDeviceContainer.onArpFeedModeChanged(
+   rMDHolder.musicDevices.onArpFeedModeChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx,
               base::arp::FeedMode feedMode) {
           signals().SoundDevices__arpeggiatorFeedModeChanged(
               uuid, voiceIdx,
               static_cast<::capnzero::MidiEmRt::ArpeggiatorFeedMode>(feedMode));
        });
-   rMusicDeviceContainer.onArpSeqSizeChanged(
+   rMDHolder.musicDevices.onArpSeqSizeChanged(
        [this](util::Identifiable::UUID uuid, int voiceIdx, int seqSize) {
           signals().SoundDevices__arpeggiatorSeqSizeChanged(uuid, voiceIdx,
                                                             seqSize);

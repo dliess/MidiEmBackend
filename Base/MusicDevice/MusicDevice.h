@@ -68,7 +68,7 @@ struct MusicDevice : public util::Identifiable
                    uint8_t midiVoiceOffset = 0) noexcept;
    void initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
                     uint8_t midiVoiceOffset = 0) noexcept;
-   const MusicDeviceId& mediumId() const;
+   [[nodiscard]] const MusicDeviceId& mediumId() const;
 
    std::shared_ptr<description::Description> description() const noexcept;
 

@@ -4,7 +4,7 @@
 #include "MidiEmRt_Server.h"
 
 namespace base::instruments { struct Instruments; }
-namespace base::musicDevice { class MusicDeviceContainer; }
+namespace base::musicDevice { struct Holder; }
 namespace base::musicDevice { class TransportControl; }
 namespace base { class AbletonLinkWrapper; }
 namespace base::midifriends { class Router; }
@@ -17,7 +17,7 @@ class RtServer : public ::capnzero::MidiEmRt::MidiEmRtServer
 public:
     RtServer(zmq::context_t& rZmqContext,
            base::instruments::Instruments& rInstruments,
-           base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer,
+           base::musicDevice::Holder& rMusicDeviceHolder,
            base::musicDevice::TransportControl& rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router& rMidiRouter);

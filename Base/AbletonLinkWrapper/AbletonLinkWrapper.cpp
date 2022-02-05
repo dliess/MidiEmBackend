@@ -63,12 +63,13 @@ void base::AbletonLinkWrapper::setTempo(double bpm)
    m_pAbletonLink->commitAudioSessionState(session);
 }
 
-std::pair<double, double> base::AbletonLinkWrapper::snapshot()
+std::tuple<double, double, std::chrono::microseconds>
+base::AbletonLinkWrapper::snapshot()
 {
-   auto session = m_pAbletonLink->captureAudioSessionState();
-   return std::make_pair(
-       session.tempo(),
-       session.beatAtTime(m_pAbletonLink->clock().micros(), 4));
+   auto session      = m_pAbletonLink->captureAudioSessionState();
+   const auto tNowUs = m_pAbletonLink->clock().micros();
+   return std::make_tuple(session.tempo(), session.beatAtTime(tNowUs, 4),
+                          tNowUs);
 }
 
 void base::AbletonLinkWrapper::retriggerCallbacks()

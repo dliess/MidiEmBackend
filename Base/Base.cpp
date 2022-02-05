@@ -113,7 +113,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    setRtScheduling();
    uiadapter::capnzero::RtServer rtServer(
-       m_zmqContext, instruments, musicDeviceHolder.musicDevices,
+       m_zmqContext, instruments, musicDeviceHolder,
        transportControl, tempo::BeatTick::instance().abletonLink(), midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
@@ -179,11 +179,11 @@ void base::Base::loopFn()
    // ... some code to measure ...
    //}
 
-   const double deltaBeats = tempo::BeatTick::instance().nextTick();
+   const auto [deltaBeats, deltaTime] = tempo::BeatTick::instance().nextTick();
    {
       MeasurerTenthMs<0>::Guard guard;
       transportControl.update();
-      musicDeviceHolder.midiHolder.midiClock(deltaBeats);
+      musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }

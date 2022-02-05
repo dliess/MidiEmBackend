@@ -17,7 +17,7 @@ public:
    BeatTick& operator=(BeatTick&&) noexcept = delete;
    static inline BeatTick& instance() noexcept;
    inline double getBeat() const noexcept;
-   double nextTick() noexcept;
+   std::pair<double, std::chrono::microseconds> nextTick() noexcept;
    void incBpm(double increment) noexcept;
    void setBpm(double value) noexcept;
    void setNudge(double nudge) noexcept;
@@ -27,10 +27,11 @@ public:
    CB_SIGNAL(BpmNudgedChanged, double);
 
 private:
-   BeatTick() noexcept;
+   BeatTick() = default;
    double m_beat{0.0};
    double m_bpm{120.0};
    double m_nudge{0.0};
+   std::optional<std::chrono::microseconds> m_lastAbletonLinkSampleTimePointUs;
    std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>
        m_tLast;
    std::optional<double> m_prevTickBeats;

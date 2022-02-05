@@ -1,10 +1,13 @@
 #include "TempoRpc.h"
 
 #include "BeatTick.h"
+#include "MusicDeviceHolder.h"
 
 using namespace uiadapter::capnzero;
 
-TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals)
+TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals,
+                   base::musicDevice::Holder& rMdHolder) :
+   m_rMdHolder(rMdHolder)
 {
    base::tempo::BeatTick::instance().onBpmNudgedChanged(
        [&rSignals](double bpm) { rSignals.Tempo__bpmChanged(bpm); });
@@ -27,6 +30,18 @@ void TempoRpc::increaseRelativeTempoOfAll(::capnzero::Float32 bpm) {}
 void TempoRpc::increaseRelativeTempo(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Float32 bpm)
 {
+   util::Identifiable::UUID uuid_;
+   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
+   auto iter = m_rMdHolder.musicDevices.find(uuid_);
+   if (iter != m_rMdHolder.musicDevices.end())
+   {
+      auto midiOutEntry = m_rMdHolder.midiHolder.midiOutEntry(iter->second->mediumId());
+      if(midiOutEntry)
+      {
+         midiOutEntry->offsetSpeedBpm = bpm;
+      }
+   }
+
 }
 
 void TempoRpc::setBpm(::capnzero::Float32 bpm)

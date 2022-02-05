@@ -4,23 +4,21 @@
 
 using namespace base::tempo;
 
-BeatTick::BeatTick() noexcept
+std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
 {
-   m_abletonLink.onEnabledChanged([this](bool enabled){
-      if(enabled)
-      {
-         m_tLast = std::nullopt;
-      }
-   });
-}
-
-double BeatTick::nextTick() noexcept
-{
+   std::chrono::microseconds deltaTUs{0};
    if (m_abletonLink.isEnabled())
    {
-      const auto [bpm, beat] = m_abletonLink.snapshot();
+      const auto [bpm, beat, tNowUs] = m_abletonLink.snapshot();
+      if(!m_lastAbletonLinkSampleTimePointUs)
+      {
+         m_lastAbletonLinkSampleTimePointUs = tNowUs;
+         m_tLast = std::nullopt;
+      }
       m_beat                            = beat;
       m_bpm = bpm - m_nudge;
+      deltaTUs = tNowUs - *m_lastAbletonLinkSampleTimePointUs;
+      m_lastAbletonLinkSampleTimePointUs = tNowUs;
       emitBpmNudgedChanged(getBpmNudged());
    }
    else
@@ -28,11 +26,12 @@ double BeatTick::nextTick() noexcept
       if(!m_tLast)
       {
          m_tLast = std::chrono::high_resolution_clock::now();
+         m_lastAbletonLinkSampleTimePointUs = std::nullopt;
       }
       else
       {
          const auto tNow     = std::chrono::high_resolution_clock::now();
-         const auto deltaTUs = std::chrono::duration_cast<std::chrono::microseconds>(tNow - *m_tLast);
+         deltaTUs = std::chrono::duration_cast<std::chrono::microseconds>(tNow - *m_tLast);
          m_tLast             = tNow;
          m_beat += (deltaTUs.count() * m_bpm) / (60000000.0);
       }
@@ -43,7 +42,7 @@ double BeatTick::nextTick() noexcept
    }
    const auto tmp = m_prevTickBeats.value();
    m_prevTickBeats = m_beat;
-   return m_beat - tmp;
+   return std::make_pair(m_beat - tmp, deltaTUs);
 }
 
 void BeatTick::incBpm(double increment) noexcept
