@@ -93,7 +93,7 @@ ArpeggiatorPrivate::ArpeggiatorPrivate() :
    m_arpSequencePlayer.onGateFillChanged(
        [this](float gateFill) { emitGateFillChanged(gateFill); });
    m_arpSequencePlayer.onStepLengthChanged(
-       [this](int stepLength) { emitStepLengthChanged(stepLength); });
+       [this](float stepLength) { emitStepLengthChanged(stepLength); });
    m_arpSequencePlayer.onTurnOver(
        [this]() { m_arpSequenceFactory.createIfDirty(); });
 }

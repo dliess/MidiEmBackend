@@ -49,7 +49,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
             ptr->soundHandler->arpeggiators().at(voiceIdx).onGateFillChanged([this, uuid, voiceIdx](float value){
                emitArpGateFillChanged(uuid, voiceIdx, value);
             });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onStepLengthChanged([this, uuid, voiceIdx](int value){
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onStepLengthChanged([this, uuid, voiceIdx](float value){
                emitArpStepLengthChanged(uuid, voiceIdx, value);
             });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onAlgorithmChanged([this, uuid, voiceIdx](base::arp::Algorithm algorithm){

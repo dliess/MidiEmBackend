@@ -52,7 +52,7 @@ public:
    CB_SIGNAL(ArpRangeTypeChanged, util::Identifiable::UUID, int, base::arp::RangeType);
    CB_SIGNAL(ArpRangeChanged, util::Identifiable::UUID, int, int);
    CB_SIGNAL(ArpGateFillChanged, util::Identifiable::UUID, int, float);
-   CB_SIGNAL(ArpStepLengthChanged, util::Identifiable::UUID, int, int);
+   CB_SIGNAL(ArpStepLengthChanged, util::Identifiable::UUID, int, float);
    CB_SIGNAL(ArpAlgorithmChanged, util::Identifiable::UUID, int, base::arp::Algorithm);
    CB_SIGNAL(ArpHoldNotesChanged, util::Identifiable::UUID, int, bool);
    CB_SIGNAL(ArpFeedModeChanged, util::Identifiable::UUID, int, base::arp::FeedMode);
