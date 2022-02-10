@@ -42,14 +42,13 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
 
-   rMDHolder.musicDevices.onAboutToAdd(
+   rMDHolder.musicDevices.onAboutToAdd( 
        [this](const base::musicDevice::MusicDevice &md) {
           const auto &deviceName  = md.deviceId().deviceName;
           const auto &description = *md.description();
           const auto &mediumId    = md.mediumId();
           const auto midiVoiceOffset =
               md.soundHandler ? md.soundHandler->getMidiVoiceOffset() : 0;
-
           signals().MusicDevices__deviceAdded(
               md.id(), md.deviceId().deviceName, md.deviceId().portName,
               mediumId.toStr(), midiVoiceOffset);
