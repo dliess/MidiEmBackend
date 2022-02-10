@@ -77,4 +77,23 @@ void base::AbletonLinkWrapper::retriggerCallbacks()
    emitEnabledChanged(m_pAbletonLink->isEnabled());
    emitReactsOnTransportChanged(m_reactsOnTransport);
    emitNumPeersChanged(m_pAbletonLink->numPeers());
+   offset.retriggerCallbacks();
+}
+
+void base::AbletonLinkWrapper::Offset::calcOffsets(std::chrono::microseconds timeDiff)
+{
+   const double offsetBeatsIncr = (timeDiff.count() * m_offsetSetupBpm) / (60000000.0);
+   if(std::fabs(offsetBeatsIncr) > std::numeric_limits<double>::epsilon())
+   {
+      m_offsetBeats += offsetBeatsIncr;
+      emitOffsetBeatsChanged(m_offsetBeats);
+   }
+   //TODO: m_offsetUs = ...
+}
+
+void base::AbletonLinkWrapper::Offset::retriggerCallbacks()
+{
+   emitOffsetSetupBpmChanged(m_offsetSetupBpm);
+   emitOffsetBeatsChanged(m_offsetBeats);
+   emitOffsetUsChanged(m_offsetUs);
 }

@@ -25,8 +25,6 @@ void TempoRpc::increaseBpm(::capnzero::Float32 bpm)
    base::tempo::BeatTick::instance().incBpm(bpm);
 }
 
-void TempoRpc::increaseRelativeTempoOfAll(::capnzero::Float32 bpm) {}
-
 void TempoRpc::increaseRelativeTempo(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Float32 bpm)
 {

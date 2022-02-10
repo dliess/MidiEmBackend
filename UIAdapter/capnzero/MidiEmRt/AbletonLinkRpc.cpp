@@ -27,3 +27,8 @@ void AbletonLinkRpc::toggleReactOnTransport()
 {
     m_rAbletonLinkWrapper.reactOnTransport(!m_rAbletonLinkWrapper.reactsOnTransport());
 }
+
+void AbletonLinkRpc::setOffsetSetupTempo(::capnzero::Float32 val)
+{
+    m_rAbletonLinkWrapper.offset.setOffsetSetupTempo(val);
+}

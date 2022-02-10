@@ -1,6 +1,7 @@
 #include "BeatTick.h"
 
 #include <loguru.hpp>
+#include <limits>
 
 using namespace base::tempo;
 
@@ -15,11 +16,16 @@ std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
          m_lastAbletonLinkSampleTimePointUs = tNowUs;
          m_tLast = std::nullopt;
       }
-      m_beat                            = beat;
-      m_bpm = bpm - m_nudge;
+      m_beat = beat;
       deltaTUs = tNowUs - *m_lastAbletonLinkSampleTimePointUs;
       m_lastAbletonLinkSampleTimePointUs = tNowUs;
-      emitBpmNudgedChanged(getBpmNudged());
+      if(std::fabs(m_bpm - (bpm - m_nudge)) > std::numeric_limits<double>::epsilon())
+      {
+         m_bpm = bpm - m_nudge;
+         emitBpmNudgedChanged(getBpmNudged());
+      }
+      m_abletonLink.offset.calcOffsets(deltaTUs);
+      m_beat += m_abletonLink.offset.offsetBeats();
    }
    else
    {

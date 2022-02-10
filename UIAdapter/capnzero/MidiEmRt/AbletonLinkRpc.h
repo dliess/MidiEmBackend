@@ -15,6 +15,7 @@ public:
 	void toggleEnabled() override;
     void setReactOnTransport(::capnzero::UInt8 val) override;
 	void toggleReactOnTransport() override;
+	void setOffsetSetupTempo(::capnzero::Float32 val) override;
 private:
 	base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
 };
