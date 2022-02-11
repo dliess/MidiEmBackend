@@ -42,7 +42,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
           meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
    });
 
-   rMDHolder.musicDevices.onAboutToAdd( 
+   rMDHolder.musicDevices.onAboutToAdd(
        [this](const base::musicDevice::MusicDevice &md) {
           const auto &deviceName  = md.deviceId().deviceName;
           const auto &description = *md.description();
@@ -174,14 +174,25 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
    rTransportControl.onStartOnBeat([this](bool startOnBeat) {
       signals().TransportControl__quantizedStartChanged(startOnBeat);
    });
-
    rAbletonLinkWrapper.onEnabledChanged([this](bool enabled) {
       signals().AbletonLink__enabledChanged(enabled);
    });
-
    rAbletonLinkWrapper.onReactsOnTransportChanged([this](bool reacts) {
       signals().AbletonLink__reactOnTransportChanged(reacts);
    });
+   rAbletonLinkWrapper.onNumPeersChanged([this](size_t numPeers){
+       signals().AbletonLink__numberOfParticipantsChanged(numPeers);
+   });
+   rAbletonLinkWrapper.offset.onOffsetSetupBpmChanged([this](double bpm) {
+       signals().AbletonLink__offsetSetupTempoChanged(bpm);
+   });
+   rAbletonLinkWrapper.offset.onOffsetBeatsChanged([this](double offsetBeats) {
+       signals().AbletonLink__offsetBeatsChanged(offsetBeats);
+   });
+   rAbletonLinkWrapper.offset.onOffsetUsChanged(
+       [this](const std::chrono::microseconds &us) {
+           signals().AbletonLink__offsetTimeUsChanged(us.count());
+       });
 
    rMidiRouter.registerRoutedChangedCB(
        [this](const base::musicDevice::MidiHolder::Id &source,

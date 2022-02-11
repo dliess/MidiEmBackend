@@ -19,10 +19,12 @@ base::AbletonLinkWrapper::AbletonLinkWrapper() :
          emitStartStopChanged(start);
       }
    });
+   /* Don't do this from this context
    m_pAbletonLink->setNumPeersCallback([this](size_t numPeers) {
       LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
       emitNumPeersChanged(numPeers);
    });
+   */
 }
 
 // Dummy for unique_ptr forward decl
@@ -80,15 +82,36 @@ void base::AbletonLinkWrapper::retriggerCallbacks()
    offset.retriggerCallbacks();
 }
 
-void base::AbletonLinkWrapper::Offset::calcOffsets(std::chrono::microseconds timeDiff)
+void base::AbletonLinkWrapper::checkNumPeers()
 {
-   const double offsetBeatsIncr = (timeDiff.count() * m_offsetSetupBpm) / (60000000.0);
-   if(std::fabs(offsetBeatsIncr) > std::numeric_limits<double>::epsilon())
+   if(m_numPeers != m_pAbletonLink->numPeers())
+   {
+      m_numPeers = m_pAbletonLink->numPeers();
+      emitNumPeersChanged(m_numPeers);
+   }
+}
+
+void base::AbletonLinkWrapper::Offset::calcOffsets(
+    std::chrono::microseconds timeDiff, double mainBpm)
+{
+   static constexpr auto USecInAMinute =
+       std::chrono::duration_cast<std::chrono::microseconds>(
+           std::chrono::minutes(1));
+   const double offsetBeatsIncr =
+       (timeDiff.count() * m_offsetSetupBpm) / USecInAMinute.count();
+   if (std::fabs(offsetBeatsIncr) > std::numeric_limits<double>::epsilon())
    {
       m_offsetBeats += offsetBeatsIncr;
       emitOffsetBeatsChanged(m_offsetBeats);
    }
-   //TODO: m_offsetUs = ...
+   const auto offsetUsIncr =
+       std::chrono::duration_cast<std::chrono::microseconds>(
+           offsetBeatsIncr * USecInAMinute / mainBpm);
+   if (offsetUsIncr.count())
+   {
+      m_offsetUs = m_offsetUs + offsetUsIncr;
+      emitOffsetUsChanged(m_offsetUs);
+   }
 }
 
 void base::AbletonLinkWrapper::Offset::retriggerCallbacks()

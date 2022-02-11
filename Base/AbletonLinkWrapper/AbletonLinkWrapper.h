@@ -38,17 +38,18 @@ public:
    std::tuple<double, double, std::chrono::microseconds> snapshot();
    void retriggerCallbacks();
 
+   void checkNumPeers();
 
    CB_SIGNAL(EnabledChanged, bool);
    CB_SIGNAL(ReactsOnTransportChanged, bool);
    CB_SIGNAL(StartStopChanged, bool);
-   CB_SIGNAL(NumPeersChanged, bool);
+   CB_SIGNAL(NumPeersChanged, size_t);
 
    class Offset 
    {
    public:
       void setOffsetSetupTempo(double bpm) noexcept { m_offsetSetupBpm = bpm; };
-      void calcOffsets(std::chrono::microseconds timeDiff);
+      void calcOffsets(std::chrono::microseconds timeDiff, double mainBpm);
       double offsetBeats() const noexcept { return m_offsetBeats; }
       std::chrono::microseconds offsetUs() const noexcept { return m_offsetUs; }
       void retriggerCallbacks();
@@ -64,6 +65,7 @@ public:
 private:
    std::unique_ptr<ableton::Link> m_pAbletonLink;
    bool m_reactsOnTransport{false};
+   size_t m_numPeers{0};
 };
 
 }   // namespace base

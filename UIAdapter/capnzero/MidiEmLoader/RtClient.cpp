@@ -228,4 +228,11 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
               std::string(from), std::string(to), sourceChannel, destChannel,
               enable);
        });
+
+    onAbletonLinkEnabledChanged([](::capnzero::UInt8 val){
+        // TODO: save it to file and load
+    });
+    onAbletonLinkOffsetTimeUsChanged([](::capnzero::Int32 val){
+        // TODO: save it to file and load
+    });
 }

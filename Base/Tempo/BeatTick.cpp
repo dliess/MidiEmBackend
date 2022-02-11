@@ -24,8 +24,9 @@ std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
          m_bpm = bpm - m_nudge;
          emitBpmNudgedChanged(getBpmNudged());
       }
-      m_abletonLink.offset.calcOffsets(deltaTUs);
+      m_abletonLink.offset.calcOffsets(deltaTUs, getBpmNudged());
       m_beat += m_abletonLink.offset.offsetBeats();
+      m_abletonLink.checkNumPeers();
    }
    else
    {
