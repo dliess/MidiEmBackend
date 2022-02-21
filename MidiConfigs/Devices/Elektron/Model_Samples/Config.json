@@ -518,5 +518,8 @@
       }
     ]
   },
+  "controllerSection": { 
+    "widgets": []
+  },
   "reactsToTransportCommands": true
 }
