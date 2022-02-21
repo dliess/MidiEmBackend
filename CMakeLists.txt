@@ -10,7 +10,8 @@ include(cmake/CPM.cmake)
 CPMAddPackage(
   NAME fmt
   GITHUB_REPOSITORY fmtlib/fmt
-  VERSION 7.0.3
+  #VERSION 7.0.3
+  VERSION 6.2.0
   GIT_TAG 76e97dc4df0517749da366a2f78ebb4f87977804
 )
 
