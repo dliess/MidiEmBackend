@@ -18,7 +18,7 @@ CPMAddPackage(
 CPMAddPackage(
   NAME docopt
   GITHUB_REPOSITORY docopt/docopt.cpp
-  VERSION 0.6.3
+  VERSION 0.6.2
 )
 
 CPMAddPackage(
