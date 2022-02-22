@@ -21,7 +21,7 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
-  NAME variant
+  NAME mpark_variant
   GITHUB_REPOSITORY mpark/variant
   VERSION 1.4.0
 )
