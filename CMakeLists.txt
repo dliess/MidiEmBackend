@@ -10,22 +10,14 @@ include(cmake/CPM.cmake)
 CPMAddPackage(
   NAME fmt
   GITHUB_REPOSITORY fmtlib/fmt
-  #VERSION 7.0.3
   VERSION 6.2.0
-  GIT_TAG 76e97dc4df0517749da366a2f78ebb4f87977804
+  GIT_TAG 9bdd1596cef1b57b9556f8bef32dc4a32322ef3e
 )
 
 CPMAddPackage(
   NAME docopt
   GITHUB_REPOSITORY docopt/docopt.cpp
   VERSION 0.6.2
-)
-
-CPMAddPackage(
-  NAME rtmidi
-  GITHUB_REPOSITORY dliess/rtmidi
-  GIT_TAG 27f55e39deae3cdf7ddb43d304b1e432199e4517
-  OPTIONS "BUILD_SHARED_LIBS OFF"
 )
 
 CPMAddPackage(
