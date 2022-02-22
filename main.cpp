@@ -12,7 +12,9 @@
 
 static const char USAGE[] = R"(
    Usage:
-      BaseRun [CONFIGDIR]
+      MidiEmBackend [CONFIGDIR]
+   Options:
+      -v --verbose            ShowDebug Logs
 )";
 
 
@@ -21,9 +23,15 @@ int main(int argc, char *argv[])
    std::map<std::string, docopt::value> args =
       docopt::docopt(USAGE, {argv + 1, argv + argc},
                      true,           // show help if requested
-                     "BaseRun 0.1"); // version string
+                     "MidiEmBackend 0.1"); // version string
 
    const std::string configRoot(args["CONFIGDIR"] ? args["CONFIGDIR"].asString() : "");
+   const auto verbose = args["--verbose"].asBool();
+   if (verbose)
+   {
+      spdlog::info("Set loglevel to debug");
+      spdlog::set_level(spdlog::level::debug);
+   }
 
    base::Base base(configRoot);
    base.start();
