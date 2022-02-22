@@ -56,18 +56,28 @@ CPMFindPackage(
 endif()
 
 CPMFindPackage(
-  NAME metastuff
-  GITHUB_REPOSITORY eliasdaler/MetaStuff
-  GIT_TAG c883f789596a3231bf357bedbda81a389cf73d0c
+  NAME nlohmann_json
+  GITHUB_REPOSITORY nlohmann/json
+  VERSION 3.7.0
 )
+if(nlohmann_json_ADDED)
+  add_library(nlohmann_json::nlohmann_json ALIAS nlohmann_json)
+endif()
 
-if(metastuff_ADDED)
-  add_library(Serialize INTERFACE)
-  target_include_directories(Serialize
+CPMFindPackage(
+  NAME MetaStuff
+  GITHUB_REPOSITORY eliasdaler/MetaStuff
+  #GIT_TAG 70652dc73fe6268ef304cb062884a330a27c9f6f
+  GIT_TAG c883f789596a3231bf357bedbda81a389cf73d0c
+  OPTIONS
+    "WITH_EXAMPLES OFF"
+)
+if(MetaStuff_ADDED)
+  add_library(MetaStuff INTERFACE)
+  target_include_directories(MetaStuff
       INTERFACE
-          ${metastuff_SOURCE_DIR}/include
-          ${CMAKE_CURRENT_LIST_DIR}/3rdparty/nlohmann_json
-  )
+          ${MetaStuff_SOURCE_DIR}/include
+)
 endif()
 
 CPMFindPackage(

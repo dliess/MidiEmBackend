@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <optional>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include <Meta.h>
 #include "StringCast.h"
