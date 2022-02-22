@@ -9,11 +9,15 @@ include(cmake/CPM.cmake)
 
 # WORKAROUND: get Midi before "fmt"
 CPMFindPackage(
-  NAME Midi
+  NAME midi
   #GITHUB_REPOSITORY dliess/Midi
   GIT_REPOSITORY git@danita-hp:app/Midi.git
   GIT_TAG master
 )
+if(midi_ADDED)
+  add_library(Midi::midi ALIAS midi)
+  add_library(Midi::usbmidi ALIAS usbmidi)
+endif()
 
 CPMFindPackage(
   NAME fmt

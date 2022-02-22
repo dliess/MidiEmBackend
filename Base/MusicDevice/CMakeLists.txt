@@ -26,11 +26,10 @@ target_link_libraries(MusicDevice
    PUBLIC  MusicDeviceDescription
    PUBLIC  MusicDeviceController
    PUBLIC  MusicDeviceSound
-   PUBLIC  midi
-   PUBLIC  usbMidiPortHandling
+   PUBLIC  Midi::midi
    PUBLIC  MusicDevicePluginHandler
    PUBLIC  Tempo
-   PRIVATE usbmidi
+   PRIVATE Midi::usbmidi
    PRIVATE spdlog::spdlog
 )
 

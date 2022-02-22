@@ -14,6 +14,6 @@ target_link_libraries(MusicDeviceController
    PRIVATE spdlog::spdlog
    PRIVATE MusicDeviceDescription
    PUBLIC Util
-   PUBLIC midi
+   PUBLIC Midi::midi
    PUBLIC MusicDevicePluginHandler
 )

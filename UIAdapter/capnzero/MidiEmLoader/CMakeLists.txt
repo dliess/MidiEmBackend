@@ -25,5 +25,6 @@ target_include_directories(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} 
     PUBLIC midiem-capnzero-loader
     PUBLIC midiem-capnzero-rt
+    PUBLIC Midi::usbmidi
     PRIVATE MusicDevice
 )

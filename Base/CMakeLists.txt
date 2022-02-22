@@ -36,7 +36,7 @@ target_link_libraries(Base
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper
    PRIVATE spdlog::spdlog
-   PRIVATE usbmidi
+   PRIVATE Midi::usbmidi
    PRIVATE TimeMeasure
    PRIVATE capnzero-rt-server
    PRIVATE capnzero-loader-server
