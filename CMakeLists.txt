@@ -15,8 +15,8 @@ CPMFindPackage(
   GIT_TAG master
 )
 if(midi_ADDED)
-  add_library(Midi::midi ALIAS midi)
-  add_library(Midi::usbmidi ALIAS usbmidi)
+  add_library(MIDI::midi ALIAS midi)
+  add_library(MIDI::usbmidi ALIAS usbmidi)
 endif()
 
 CPMFindPackage(

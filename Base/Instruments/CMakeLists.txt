@@ -17,7 +17,7 @@ target_include_directories(Instruments PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(Instruments
    PUBLIC  MusicDevice
-   PRIVATE Midi::usbmidi
+   PRIVATE MIDI::usbmidi
    PRIVATE spdlog::spdlog
    PUBLIC  util
 )

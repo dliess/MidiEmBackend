@@ -17,5 +17,5 @@ target_link_libraries(MidiFriends
    PUBLIC  MusicDevice
    PRIVATE spdlog::spdlog
    PUBLIC  util
-   PUBLIC  Midi::midi
+   PUBLIC  MIDI::midi
 )

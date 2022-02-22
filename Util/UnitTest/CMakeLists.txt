@@ -16,5 +16,5 @@ set(SOURCES "UT_main.cpp"
 )
 
 add_executable(UtilsTest ${SOURCES})
-target_link_libraries(UtilsTest gtest pthread Util Midi::midi)
+target_link_libraries(UtilsTest gtest pthread Util MIDI::midi)
 

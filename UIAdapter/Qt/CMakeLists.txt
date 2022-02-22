@@ -24,7 +24,7 @@ target_link_libraries(UIAdapterQt
    PUBLIC Qt5::Core
    PRIVATE Base
    PRIVATE Util
-   PUBLIC Midi::usbmidi
+   PUBLIC MIDI::usbmidi
    PUBLIC Qt5::WebSockets
    PUBLIC Qt5::WebChannel
    PUBLIC QtWebSocketClientWrapper

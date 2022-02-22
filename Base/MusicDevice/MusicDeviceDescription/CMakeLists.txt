@@ -30,6 +30,6 @@ add_library(MusicDeviceDescription STATIC ${SOURCES} ${HEADERS})
 target_include_directories(MusicDeviceDescription PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(MusicDeviceDescription
    PUBLIC Util
-   PUBLIC Midi::midi
+   PUBLIC MIDI::midi
    PRIVATE MusicDeviceCommon
 )
