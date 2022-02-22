@@ -34,18 +34,7 @@ CPMFindPackage(
   VERSION 1.4.0
 )
 
-CPMFindPackage(
-  NAME loguru
-  GITHUB_REPOSITORY emilk/loguru
-  VERSION 1.5.0
-)
-if (loguru_ADDED)
-  add_library(Loguru STATIC "${loguru_SOURCE_DIR}/loguru.cpp")
-  target_include_directories(Loguru PUBLIC ${loguru_SOURCE_DIR})
-  target_link_libraries(Loguru PRIVATE pthread dl)
-  target_compile_definitions(Loguru PUBLIC "LOGURU_USE_FMTLIB=1")
-  target_link_libraries(Loguru PUBLIC fmt)
-endif()
+find_package(spdlog CONFIG REQUIRED)
 
 CPMFindPackage(
   NAME googletest

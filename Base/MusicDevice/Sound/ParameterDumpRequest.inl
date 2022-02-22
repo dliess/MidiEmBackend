@@ -89,7 +89,7 @@ void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest(
                             }
                             if(!found)
                             {
-                               LOG_F(ERROR, "Could not determine what channel id to write into parameter dump sysex message");
+                               spdlog::error( "Could not determine what channel id to write into parameter dump sysex message");
                                sysexMsgToSend.push_back(0);
                             }
                          },

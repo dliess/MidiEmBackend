@@ -1,7 +1,7 @@
 #ifndef MUSIC_DEVICE_CONTAINER_INL
 #define MUSIC_DEVICE_CONTAINER_INL
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "MusicDeviceContainer.h"
 #include "SoundParameterStorage.h"

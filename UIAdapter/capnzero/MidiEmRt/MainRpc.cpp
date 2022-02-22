@@ -19,7 +19,7 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
 
 void MainRpc::reEmitSignals()
 {
-   LOG_F(INFO, "MainRpc::reEmitSignals() called");
+   spdlog::info( "MainRpc::reEmitSignals() called");
    for (auto &it : m_rMusicDeviceContainer)
    {
       const auto uuid        = it.second.get()->id();

@@ -1,4 +1,4 @@
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "ControllerMidiInMsgHandler.h"
 #include "ControllerSection.h"
@@ -36,7 +36,7 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
           if (m_map.end() == iter)
           {
              /*
-             LOG_F(INFO, "CONTROLLER --- {} No mapping for Midi msg id {}",
+             spdlog::info( "CONTROLLER --- {} No mapping for Midi msg id {}",
                    m_pMidiInIf->medium().getDeviceName(),
                    meta::serialize(midiId).dump());
              */
@@ -188,7 +188,7 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               {
                  if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
                  {
-                    LOG_F(ERROR, "MPE mode note-on without widget coordinate");
+                    spdlog::error( "MPE mode note-on without widget coordinate");
                     return mpark::monostate();
                  }
                  m_mpeMap[msg.channel() - 1] = id.widgetCoord;

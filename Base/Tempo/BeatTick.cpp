@@ -1,6 +1,6 @@
 #include "BeatTick.h"
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 #include <limits>
 
 using namespace base::tempo;

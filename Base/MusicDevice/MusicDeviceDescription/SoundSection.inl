@@ -1,7 +1,7 @@
 #ifndef SOUND_SECTION_INL_H
 #define SOUND_SECTION_INL_H
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "JsonCast.h"
 #include "Overload.h"

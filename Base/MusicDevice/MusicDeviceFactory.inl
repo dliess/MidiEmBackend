@@ -1,4 +1,4 @@
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "MusicDeviceFactory.h"
 #include "MusicDevice.h"
@@ -27,7 +27,7 @@ std::shared_ptr<MidiType> Factory::createMidi(
    //VLOG_SCOPE_F(1, "open port");
    if (!pMedium->openPort(index))
    {
-      LOG_F(ERROR, "failed to open port with index {}", index);
+      spdlog::error( "failed to open port with index {}", index);
       return nullptr;
    }
    return std::make_shared<MidiType>(std::move(pMedium));

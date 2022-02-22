@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y \
         libgmock-dev \
         libusb-1.0-0-dev \
         uuid-dev \
+        libspdlog-dev \
         && rm -rf /var/lib/apt/lists/*
 
 # install Qt build common dependencies

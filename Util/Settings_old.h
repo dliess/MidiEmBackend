@@ -3,7 +3,7 @@
 
 #include <Meta.h>
 #include <JsonCast.h>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 #include <fstream>
 #include <functional>
 #include <experimental/filesystem>
@@ -52,15 +52,15 @@ void utils::Settings<Derived>::save(const std::string& relDirName,
    }
    catch(nlohmann::json::exception& e)
    {
-      LOG_F(ERROR, "{} id: {}", e.what(), e.id);
+      spdlog::error( "{} id: {}", e.what(), e.id);
    }
    catch(std::experimental::filesystem::filesystem_error& e)
    {
-      LOG_F(ERROR, "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
+      spdlog::error( "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
    }
    catch(std::exception& e)
    {
-      LOG_F(ERROR, "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
+      spdlog::error( "Erorr in Settings Save: Filename '{}' Section '{}' exception: {}", path, section, e.what());
    }
 }
 
@@ -79,19 +79,19 @@ bool utils::Settings<Derived>::load(const std::string& relDirName,
       settingsFile.open(path);
       if(settingsFile.fail())
       {
-         LOG_F(INFO, "No settings file '{}' NOT found, its possibly the first run", path);
+         spdlog::info( "No settings file '{}' NOT found, its possibly the first run", path);
          return false;
       }
       settingsFile >> j;
       derived->setSettings(j[section].get<typename Derived::Settings>());
    }
    catch(nlohmann::json::exception& e){
-      LOG_F(INFO, "{} id: {}", e.what(), e.id);
+      spdlog::info( "{} id: {}", e.what(), e.id);
       return false;
    }
    catch(std::exception& e)
    {
-      LOG_F(ERROR, "{}", e.what());
+      spdlog::error( "{}", e.what());
       return false;  
    }
    return true;

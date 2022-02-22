@@ -26,5 +26,5 @@ target_include_directories(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} 
     PUBLIC Util
     PRIVATE Tempo
-    PRIVATE Loguru
+    PRIVATE spdlog::spdlog
 )

@@ -1,6 +1,6 @@
 #include "TransportControl.h"
 #include "MusicDeviceHolder.h"
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 using namespace base::musicDevice;
 
@@ -24,12 +24,12 @@ void TransportControl::toggleEnabled(const util::Identifiable::UUID& uuid) noexc
    auto it = m_rMusicDeviceHolder.musicDevices.find(uuid);
    if(it == m_rMusicDeviceHolder.musicDevices.end())
    {
-      //LOG_F(ERROR, "UUID {} should be found in MusicDevices", uuid);
+      //spdlog::error( "UUID {} should be found in MusicDevices", uuid);
       return;
    }
    if(!it->second->sequencer)
    {
-      //LOG_F(ERROR, "UUID {} in MusicDevices has no sequencer", uuid);
+      //spdlog::error( "UUID {} in MusicDevices has no sequencer", uuid);
       return;
    }
    it->second->sequencer->toggleEnabled();

@@ -4,7 +4,7 @@
 
 #include "ParameterDumpRequest.h"
 #include "SoundMidiInSysExDumpHandler.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
@@ -54,7 +54,7 @@ void PresetFetcher::fetchPresets()
    m_pMidiIn->registerMidiInCb([this, &voiceIdxInFocus, &presetFteched,
                                 &presetSlotIndex](
                                    const midi::MidiMessage& midiMessage) {
-      // LOG_F(INFO, "Received {}", midi::toString(midiMessage));
+      // spdlog::info( "Received {}", midi::toString(midiMessage));
       if (INVALID_VOICE_IDX == voiceIdxInFocus)
       {
          return;
@@ -83,7 +83,7 @@ void PresetFetcher::fetchPresets()
                    }
                    else
                    {
-                      LOG_F(INFO, "Parameter '{}' not in vector range: 0 .. {}",
+                      spdlog::info( "Parameter '{}' not in vector range: 0 .. {}",
                             parameterId, preset.parameters.size());
                    }
                 }
@@ -97,7 +97,7 @@ void PresetFetcher::fetchPresets()
             preset.genre = sysexDumpHandler.presetGenre().value();
          preset.slotOnDeviceIndex = presetSlotIndex;
          /*
-         LOG_F(INFO, "Preset '[{}]  {}' '{}' '{}' received",
+         spdlog::info( "Preset '[{}]  {}' '{}' '{}' received",
                *preset.slotOnDeviceIndex, presetName, ~preset.category,
                ~preset.genre);
          */
@@ -112,7 +112,7 @@ void PresetFetcher::fetchPresets()
            int engineIdx, description::sound::EngineBase& rEngineBase) {
           if (!rEngineBase.canDumpPresets())
              return;
-          //LOG_F(INFO, "----> Looking at engine: {}", engineIdx);
+          //spdlog::info( "----> Looking at engine: {}", engineIdx);
           bool engineFetched = false;
           for (int voiceIdx = 0;
                voiceIdx < m_pDescription->soundSection->voices.size();
@@ -135,7 +135,7 @@ void PresetFetcher::fetchPresets()
                            .midiChannel,
                        presetSlotIndex);
                    m_pMidiOut->send(prChMsg);
-                   //LOG_F(INFO, "Sent Program change: {}", prChMsg.toString());
+                   //spdlog::info( "Sent Program change: {}", prChMsg.toString());
                    std::this_thread::sleep_for(std::chrono::milliseconds(20));
                    const uint8_t TODO_midiVoiceOffset = 0;
                    ParameterDumpRequest(*m_pMidiOut,

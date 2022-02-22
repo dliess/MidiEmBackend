@@ -31,7 +31,7 @@ target_link_libraries(MusicDevice
    PUBLIC  MusicDevicePluginHandler
    PUBLIC  Tempo
    PRIVATE usbmidi
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
 )
 
 option(__INSERT_DUMMY_MIDI_DEVICES__ "insert dummy devices for testing" OFF)

@@ -1,5 +1,5 @@
 #include "NoteMapper.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 #include <Overload.h>
 
 NoteMapper::NoteMapper(MusicDeviceHolder::MusicDevices& rControllerDevices,
@@ -58,7 +58,7 @@ void NoteMapper::setSettings(const Settings& settings) noexcept
                     auto kitIndex = findIndexOfElementByName(m_rInstruments.kitInstruments, rKitSndIdSettings.kitInstrumentId);
                     if(!kitIndex)
                     {
-                        LOG_F(WARNING, "could not find '{}' in KitInstruments", rKitSndIdSettings.kitInstrumentId);
+                        spdlog::warn(, "could not find '{}' in KitInstruments", rKitSndIdSettings.kitInstrumentId);
                         throw std::exception();
                     }
                     mappingDestination.emplace<KitSoundId>(KitSoundId{*kitIndex, rKitSndIdSettings.soundIndex});
@@ -69,7 +69,7 @@ void NoteMapper::setSettings(const Settings& settings) noexcept
                     auto index = findIndexOfElementByName(m_rInstruments.melodicInstruments, rMelodicInstrumentIdSettings.melodicInstrumentId);
                     if(!index)
                     {
-                        LOG_F(WARNING, "could not find '{}' in melodicInstruments", rMelodicInstrumentIdSettings.melodicInstrumentId);
+                        spdlog::warn(, "could not find '{}' in melodicInstruments", rMelodicInstrumentIdSettings.melodicInstrumentId);
                         throw std::exception();
                     }
                     mappingDestination.emplace<MelodicInstrumentId>(MelodicInstrumentId{*index});

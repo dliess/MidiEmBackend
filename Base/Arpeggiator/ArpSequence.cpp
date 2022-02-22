@@ -1,5 +1,5 @@
 #include "ArpSequence.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::arp;
 
@@ -10,13 +10,13 @@ ArpSequence::ArpSequence(std::pmr::unsynchronized_pool_resource& pool) :
 
 void ArpSequence::push_back(int note, float velocity)
 {
-   //LOG_F(INFO, "ArpSequence push_back({}, {})", note, velocity);
+   //spdlog::info( "ArpSequence push_back({}, {})", note, velocity);
    m_noteList.push_back({note, velocity});
 }
 
 void ArpSequence::clear() noexcept
 {
-   //LOG_F(INFO, "----------------Clear ArpSequence----------------");
+   //spdlog::info( "----------------Clear ArpSequence----------------");
    m_noteList.clear();
 }
 

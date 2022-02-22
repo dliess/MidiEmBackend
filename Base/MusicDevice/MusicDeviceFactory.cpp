@@ -14,7 +14,7 @@
 #include "MidiMediumDummy.h"
 #endif
 #include <cassert>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 #include <memory>
 
 #define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
@@ -32,12 +32,12 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "--> input added: {}", devOnUsbPort.getDeviceName());
+          spdlog::info( "--> input added: {}", devOnUsbPort.getDeviceName());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
           if (!pMidiIn)
           {
-             LOG_F(ERROR, "Could not create pMidiIn");
+             spdlog::error( "Could not create pMidiIn");
              return;
           }
           const auto [resType, deviceName] =
@@ -104,12 +104,12 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "--> output added: {}", devOnUsbPort.getDeviceName());
+          spdlog::info( "--> output added: {}", devOnUsbPort.getDeviceName());
           auto pMidiOut =
               createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
           if (!pMidiOut)
           {
-             LOG_F(ERROR, "Could not create pMidiOut");
+             spdlog::error( "Could not create pMidiOut");
              return;
           }
           const auto [resType, deviceName] =
@@ -174,7 +174,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "<-- input removed: {}", devOnUsbPort.getDeviceName());
+          spdlog::info( "<-- input removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_loader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
@@ -200,7 +200,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          LOG_F(INFO, "<-- output removed: {}", devOnUsbPort.getDeviceName());
+          spdlog::info( "<-- output removed: {}", devOnUsbPort.getDeviceName());
           const auto [resType, deviceName] =
               m_loader.getMatchType(devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
@@ -314,7 +314,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "Failed to add midi input medium'{}' {}",
+         spdlog::error( "Failed to add midi input medium'{}' {}",
                deviceId.toStr(), e.what());
          return nullptr;
       }
@@ -328,7 +328,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
     std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames)
 {
-   LOG_F(INFO, "Created Music Device {}", deviceId.toStr());
+   spdlog::info( "Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, midiDeviceId, m_resourceRootDir, std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));

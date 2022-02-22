@@ -19,7 +19,7 @@ target_include_directories(MusicDeviceSound PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(MusicDeviceSound
    PRIVATE MusicDeviceDescription
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
    PUBLIC Util
    PUBLIC Tempo
    PUBLIC MusicDeviceCommon

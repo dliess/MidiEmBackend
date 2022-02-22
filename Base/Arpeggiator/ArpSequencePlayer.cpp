@@ -1,7 +1,7 @@
 #include "ArpSequencePlayer.h"
 
 #include "BeatTick.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::arp;
 
@@ -12,7 +12,7 @@ ArpSequencePlayer::ArpSequencePlayer(const ArpSequence& rArpSequence) noexcept :
 
 void ArpSequencePlayer::start() noexcept
 {
-   //LOG_F(INFO, "ArpSequencePlayer::start()");
+   //spdlog::info( "ArpSequencePlayer::start()");
    m_tStepEnd = base::tempo::BeatTick::instance().getBeat();
    m_tNoteOff = m_tStepEnd;
    m_actualIdx       = -1;
@@ -21,11 +21,11 @@ void ArpSequencePlayer::start() noexcept
 
 void ArpSequencePlayer::stop() noexcept
 {
-   //LOG_F(INFO, "ArpSequencePlayer::stop()");
+   //spdlog::info( "ArpSequencePlayer::stop()");
    if(m_actualIdx > -1)
    {
       const ArpSequence::NoteData noteToRelease = m_rArpSequence.get(m_actualIdx);
-      //LOG_F(INFO, "ArpSequencePlayer::stop() NoteOff({})", noteToRelease.note);
+      //spdlog::info( "ArpSequencePlayer::stop() NoteOff({})", noteToRelease.note);
       emitNoteOff(noteToRelease.note, 1.0);
    }
    m_released = true;

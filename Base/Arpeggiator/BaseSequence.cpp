@@ -1,7 +1,7 @@
 #include "BaseSequence.h"
 
 #include "BeatTick.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::arp;
 

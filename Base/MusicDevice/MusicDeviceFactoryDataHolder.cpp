@@ -125,8 +125,7 @@ factory::DataHolder::getActualDevicePresetNames(
          auto sh = std::make_shared<ActualPresetNames>(loadedPresetNames);
          if (sh->size() != vSize)
          {
-            LOG_F(
-                WARNING,
+            spdlog::warn(
                 "Loaded config voice size mismatch. loaded: {} != expected {}",
                 sh->size(), vSize);
             sh->resize(vSize);

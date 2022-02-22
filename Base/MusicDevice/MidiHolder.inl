@@ -1,7 +1,7 @@
 #ifndef MUSIC_DEVICE_MIDI_HOLDER_INL
 #define MUSIC_DEVICE_MIDI_HOLDER_INL
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 namespace base::musicDevice

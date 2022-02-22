@@ -35,7 +35,7 @@ target_link_libraries(Base
    PUBLIC  Transport
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
    PRIVATE usbmidi
    PRIVATE TimeMeasure
    PRIVATE capnzero-rt-server

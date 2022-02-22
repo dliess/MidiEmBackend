@@ -2,7 +2,7 @@
 
 #include "SoundParameterStorage.h"
 #include "SoundSection.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::musicDevice::sound::preset;
 

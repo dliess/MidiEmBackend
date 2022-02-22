@@ -14,7 +14,7 @@ add_library(Tempo STATIC ${SOURCES})
 target_include_directories(Tempo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(Tempo
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper
 )

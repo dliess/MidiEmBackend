@@ -1,4 +1,4 @@
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "ControllerColor.h"
 #include "ControllerEvents.h"
@@ -23,7 +23,7 @@ void controller::MidiOutMsgHandler<MidiOutIfPtr, PluginIf>::enlightLed(
 {
    if (widgetId >= m_rControllerSection.widgets.size())
    {
-      LOG_F(ERROR,
+      spdlog::error(
             "Requested enlightLed() for widget id({}), but it exceeds vector "
             "range",
             widgetId);
@@ -34,7 +34,7 @@ void controller::MidiOutMsgHandler<MidiOutIfPtr, PluginIf>::enlightLed(
 
    if (!midiMessages)
    {
-      LOG_F(ERROR, "Plugin did not return any midi message");
+      spdlog::error( "Plugin did not return any midi message");
       return;
    }
    for (const auto& msg : *midiMessages)

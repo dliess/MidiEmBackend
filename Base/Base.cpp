@@ -4,7 +4,7 @@
 
 #include <cassert>
 #include <exception>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 #include "FdSet.h"
@@ -104,7 +104,7 @@ void base::Base::setRtScheduling()
    int policy                = SCHED_FIFO;
    if (sched_setscheduler(0, policy, &schedParam) == -1)
    {
-      LOG_F(ERROR, "sched_setscheduler failed: {}", strerror(errno));
+      spdlog::error( "sched_setscheduler failed: {}", strerror(errno));
    }
    pthread_setname_np(pthread_self(), "MidiemBackend Main RT");
 }

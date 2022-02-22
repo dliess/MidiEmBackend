@@ -416,7 +416,7 @@ void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorBypass {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorBypass {}", e.what());
       }
    }
 }
@@ -438,7 +438,7 @@ void SoundDevicesRpc::setArpeggiatorStepLength(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorStepLength {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorStepLength {}", e.what());
       }
    }
 }
@@ -460,7 +460,7 @@ void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorGateFill {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorGateFill {}", e.what());
       }
    }
 }
@@ -482,7 +482,7 @@ void SoundDevicesRpc::setArpeggiatorAlgorithm(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorAlgorithm {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorAlgorithm {}", e.what());
       }
    }
 }
@@ -505,7 +505,7 @@ void SoundDevicesRpc::setArpeggiatorRange(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorRange {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorRange {}", e.what());
       }
    }
 }
@@ -527,7 +527,7 @@ void SoundDevicesRpc::setArpeggiatorHoldNotes(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorHoldNotes {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorHoldNotes {}", e.what());
       }
    }
 }
@@ -549,7 +549,7 @@ void SoundDevicesRpc::setArpeggiatorFeedMode(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::setArpeggiatorFeedMode {}", e.what());
+         spdlog::error( "SoundDevicesRpc::setArpeggiatorFeedMode {}", e.what());
       }
    }
 }
@@ -571,7 +571,7 @@ void SoundDevicesRpc::arpeggiatorSeqInsertPause(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::arpeggiatorSeqInsertPause {}",
+         spdlog::error( "SoundDevicesRpc::arpeggiatorSeqInsertPause {}",
                e.what());
       }
    }
@@ -594,7 +594,7 @@ void SoundDevicesRpc::arpeggiatorSeqRemoveLastNote(
       }
       catch (std::exception& e)
       {
-         LOG_F(ERROR, "SoundDevicesRpc::arpeggiatorSeqRemoveLastNote {}",
+         spdlog::error( "SoundDevicesRpc::arpeggiatorSeqRemoveLastNote {}",
                e.what());
       }
    }

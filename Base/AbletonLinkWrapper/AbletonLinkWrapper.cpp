@@ -1,7 +1,7 @@
 #include "AbletonLinkWrapper.h"
 
 #include <ableton/Link.hpp>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 #include "TransportControl.h"
@@ -10,10 +10,10 @@ base::AbletonLinkWrapper::AbletonLinkWrapper() :
     m_pAbletonLink(std::make_unique<ableton::Link>(120))
 {
    m_pAbletonLink->setTempoCallback([](double tempo) {
-      LOG_F(INFO, "Ableton-Link :: Tempo changed: {}", tempo);
+      spdlog::info( "Ableton-Link :: Tempo changed: {}", tempo);
    });
    m_pAbletonLink->setStartStopCallback([this](bool start) {
-      LOG_F(INFO, "Ableton-Link :: StartStop changed: {}", start);
+      spdlog::info( "Ableton-Link :: StartStop changed: {}", start);
       if (m_reactsOnTransport)
       {
          emitStartStopChanged(start);
@@ -21,7 +21,7 @@ base::AbletonLinkWrapper::AbletonLinkWrapper() :
    });
    /* Don't do this from this context
    m_pAbletonLink->setNumPeersCallback([this](size_t numPeers) {
-      LOG_F(INFO, "Ableton-Link :: NumPeersChanged: {}", numPeers);
+      spdlog::info( "Ableton-Link :: NumPeersChanged: {}", numPeers);
       emitNumPeersChanged(numPeers);
    });
    */

@@ -1,7 +1,7 @@
 #ifndef UTIL_PRINT_ALLOC_H
 #define UTIL_PRINT_ALLOC_H
 
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 #include <memory_resource>
 #include <cassert>
 
@@ -21,10 +21,10 @@ class PrintAlloc : public std::pmr::memory_resource {
   std::pmr::memory_resource* m_upstream;
 
   void* do_allocate(std::size_t bytes, std::size_t alignment) override {
-    LOG_F(INFO, "[{} (alloc)] Size: {} Alignment: {} ...", m_name, bytes,
+    spdlog::info( "[{} (alloc)] Size: {} Alignment: {} ...", m_name, bytes,
                   alignment);
     auto result = m_upstream->allocate(bytes, alignment);
-    LOG_F(INFO, "[{} (alloc)] ... Address: {}", m_name, result);
+    spdlog::info( "[{} (alloc)] ... Address: {}", m_name, result);
     return result;
   }
 
@@ -74,7 +74,7 @@ class PrintAlloc : public std::pmr::memory_resource {
 
   void do_deallocate(void* p, std::size_t bytes,
                      std::size_t alignment) override {
-    LOG_F(INFO, 
+    spdlog::info( 
         "[{} (dealloc)] Address: {} Dealloc Size: {} Alignment: {} Data: {}",
         m_name, p, bytes, alignment,
         format_destroyed_bytes(static_cast<std::byte*>(p), bytes));

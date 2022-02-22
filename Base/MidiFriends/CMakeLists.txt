@@ -15,7 +15,7 @@ target_include_directories(MidiFriends PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(MidiFriends
    PUBLIC  MusicDevice
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
    PUBLIC  util
    PUBLIC  midi
 )

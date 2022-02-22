@@ -15,6 +15,6 @@ target_include_directories(Mapping PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Mapping
    PUBLIC  MusicDevice
    PUBLIC  Instruments
-   PRIVATE Loguru
+   PRIVATE spdlog::spdlog
    PUBLIC  util
 )

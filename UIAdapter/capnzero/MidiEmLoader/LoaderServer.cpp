@@ -14,11 +14,11 @@ LoaderServer::LoaderServer(zmq::context_t& rZmqContext,
 {
    signals().registerAllEmissionDoneSubscrCb(
        [&rMDFactory](Signals& signals) {
-          LOG_F(INFO, "_____ A new client has subscribed, reemitting signals ____");
+          spdlog::info( "_____ A new client has subscribed, reemitting signals ____");
           rMDFactory.dataHolder().reEmitSignals();
           signals.allMusicDevicesChanged(
               rMDFactory.getAllDevicesAsJson());
           signals.allEmissionDone();
-          LOG_F(INFO, "_____ allEmissionDone() sent _____");
+          spdlog::info( "_____ allEmissionDone() sent _____");
        });
 }

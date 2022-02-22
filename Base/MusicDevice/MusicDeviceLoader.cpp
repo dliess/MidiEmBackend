@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "MusicDeviceId.h"
 
@@ -26,7 +26,7 @@ Loader::Loader(const std::string &configDir) :
    }
    if (deviceChainsFile.fail())
    {
-      LOG_F(INFO,
+      spdlog::info(
             "There is no custom midi interface connection config file '{}' so lets create an empty one",
             m_deviceChainsFileName);
       std::filesystem::path path(m_deviceChainsFileName);
@@ -45,12 +45,12 @@ Loader::Loader(const std::string &configDir) :
       }
       catch (json::type_error &e)
       {
-         LOG_F(ERROR, "ERROR at parsing ill formed '{}' reason: {}",
+         spdlog::error( "ERROR at parsing ill formed '{}' reason: {}",
                m_deviceChainsFileName, e.what());
       }
       catch (...)
       {
-         LOG_F(ERROR, "ERROR at parsing ill formed '{}'", m_deviceChainsFileName);
+         spdlog::error( "ERROR at parsing ill formed '{}'", m_deviceChainsFileName);
       }
    }
 
@@ -60,7 +60,7 @@ Loader::Loader(const std::string &configDir) :
    }
    catch (...)
    {
-      LOG_F(ERROR, "ERROR at parsing ill formed '{}'", m_mapFileName);
+      spdlog::error( "ERROR at parsing ill formed '{}'", m_mapFileName);
    }
 }
 
@@ -210,7 +210,7 @@ std::string Loader::getAllDevicesAsJson() const
              fmt::format("{}/Config.json", deviceDir.path().string());
          if (!std::filesystem::exists(configFile))
          {
-            LOG_F(WARNING, "There is no Config.json present in config dir {}",
+            spdlog::warn("There is no Config.json present in config dir {}",
                   deviceDir.path().string());
             continue;
          }
@@ -237,7 +237,7 @@ void Loader::appendDeviceToChain(
    try{
       saveDeviceChainsToFile();
    } catch(std::exception& e){
-      LOG_F(ERROR, "Exception occured at saving device chains to file: {}", e.what());
+      spdlog::error( "Exception occured at saving device chains to file: {}", e.what());
    }
 }
 
@@ -257,7 +257,7 @@ void Loader::removeDeviceFromEndOf(
    try{
       saveDeviceChainsToFile();
    } catch(std::exception& e){
-      LOG_F(ERROR, "Exception occured at saving device chains to file: {}", e.what());
+      spdlog::error( "Exception occured at saving device chains to file: {}", e.what());
    }
 }
 
@@ -266,7 +266,7 @@ void Loader::saveDeviceChainsToFile()
    std::ofstream deviceChainsFile(m_deviceChainsFileName);
    if (deviceChainsFile.fail())
    {
-      LOG_F(INFO,
+      spdlog::info(
             "deviceChainsFile.fail() {}", m_deviceChainsFileName);
    }
    deviceChainsFile << meta::serialize(m_deviceChains).dump(3);

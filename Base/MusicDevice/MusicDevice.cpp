@@ -1,7 +1,7 @@
 #include "MusicDevice.h"
 
 #include <iostream>
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "IMidiInMedium.h"
 #include "IMidiOutMedium.h"
@@ -52,7 +52,7 @@ MusicDevice::MusicDevice(
    }
    catch (PluginHandler::SymbolError& e)
    {
-      LOG_F(ERROR, "Symbol not found in {}, detail: {}",
+      spdlog::error( "Symbol not found in {}, detail: {}",
             m_pDescr->relDevicePath, e.what());
    }
 }

@@ -1,6 +1,6 @@
 #include <docopt.h>
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 #include <map>
 
 #include "Base.h"
@@ -12,8 +12,6 @@ static const char USAGE[] = R"(
 
 int main(int argc, char* argv[])
 {
-   loguru::init(argc, argv);
-
    std::map<std::string, docopt::value> args =
       docopt::docopt(USAGE, {argv + 1, argv + argc},
                      true,           // show help if requested
@@ -29,7 +27,7 @@ int main(int argc, char* argv[])
    }
    catch (std::exception& e)
    {
-      LOG_F(ERROR, "Exception caught: {}", e.what());
+      spdlog::error( "Exception caught: {}", e.what());
    }
    return 0;
 }

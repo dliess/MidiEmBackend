@@ -1,5 +1,5 @@
 #include "NoteContainer.h"
-#include "loguru.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace base::arp;
 
@@ -10,7 +10,7 @@ NoteContainer::NoteContainer(std::pmr::unsynchronized_pool_resource& pool) :
 
 void NoteContainer::addNote(int note, float velocity) noexcept
 {
-   //LOG_F(INFO, "NoteContainer::addNote({}, {})", note, velocity);
+   //spdlog::info( "NoteContainer::addNote({}, {})", note, velocity);
    if(m_holdNotes && allReleased())
    {
       const size_t sizeBef = m_noteList.size();
@@ -43,7 +43,7 @@ void NoteContainer::addNote(int note, float velocity) noexcept
 
 void NoteContainer::removeNote(int note) noexcept
 {
-   //LOG_F(INFO, "NoteContainer::removeNote({})", note);
+   //spdlog::info( "NoteContainer::removeNote({})", note);
    auto it = std::find_if(m_noteList.begin(), m_noteList.end(),
                           [note](const NotePress& notePress) -> bool {
                              return notePress.note == note;

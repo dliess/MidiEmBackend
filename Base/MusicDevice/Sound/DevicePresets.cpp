@@ -44,7 +44,7 @@ std::optional<std::string> DevicePresets::getPresetNameByPresetSlot(
    const auto it =
        std::find_if(enginePresets.begin(), enginePresets.end(),
                     [slotIndex](const std::pair<std::string, Preset>& preset) {
-                       LOG_F(INFO, "checking {} <-> {}",
+                       spdlog::info( "checking {} <-> {}",
                              *preset.second.slotOnDeviceIndex, slotIndex);
                        return preset.second.slotOnDeviceIndex &&
                               (*preset.second.slotOnDeviceIndex == slotIndex);
@@ -109,7 +109,7 @@ std::string DevicePresets::incrementNameIdx(
       }
       catch (std::invalid_argument& e)
       {
-         LOG_F(ERROR, "Could not get index of preset file '{}', {}", presetName,
+         spdlog::error( "Could not get index of preset file '{}', {}", presetName,
                e.what());
          return incrementNameIdx(engineIdx, baseName + "_");
       }
@@ -149,7 +149,7 @@ void DevicePresets::save() const noexcept
    }
    catch (const std::exception& e)
    {
-      LOG_F(INFO, "Could not save preset for {}, e: {}", m_musicDeviceName,
+      spdlog::info( "Could not save preset for {}, e: {}", m_musicDeviceName,
             e.what());
    }
 }
@@ -162,7 +162,7 @@ void DevicePresets::load() noexcept
    }
    catch (const std::exception& e)
    {
-      LOG_F(INFO, "Could not load preset for {}, e: {}", m_musicDeviceName,
+      spdlog::info( "Could not load preset for {}, e: {}", m_musicDeviceName,
             e.what());
    }
 }

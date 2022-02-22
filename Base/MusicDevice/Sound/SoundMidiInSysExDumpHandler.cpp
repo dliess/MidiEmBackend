@@ -1,7 +1,7 @@
 #include "SoundMidiInSysExDumpHandler.h"
 #include "Trim.h"
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
@@ -25,7 +25,7 @@ MidiInSysExDumpHandler::determineSysexDescriptor(
    {
       if (!m_rSoundSection.engines[*engineIdx].parameterDumpAnswer)
       {
-         LOG_F(ERROR, "Engine of index {} has no parameterDumpAnswer field",
+         spdlog::error( "Engine of index {} has no parameterDumpAnswer field",
                *engineIdx);
          return nullptr;
       }
@@ -33,7 +33,7 @@ MidiInSysExDumpHandler::determineSysexDescriptor(
                              .parameterDumpAnswer->sysexDescriptors);
       if (!checkIfIsParameterDumpMsg(sysexMsg, *pSysexMsgDescr))
       {
-         LOG_F(ERROR,
+         spdlog::error(
                "Incoming Sysex does not correspond to descriptor in Engine of "
                "index {}",
                *engineIdx);
@@ -75,7 +75,7 @@ void MidiInSysExDumpHandler::handle(
    const auto voiceIdx = getVoiceIdFromSysex(sysexMsg, *pSysexMsgDescr);
    if (!voiceIdx)
    {
-      LOG_F(ERROR, "Could not extract voiceId from sysex msg");
+      spdlog::error( "Could not extract voiceId from sysex msg");
       return;
    }
    for (const auto& fieldDescr : *pSysexMsgDescr)
@@ -88,7 +88,7 @@ void MidiInSysExDumpHandler::handle(
                      *voiceIdx, param.component, param.parameter);
                  if (!paramIdx)
                  {
-                    LOG_F(ERROR,
+                    spdlog::error(
                           "There is no parameter in voice {} named {}::{}",
                           *voiceIdx, param.component, param.parameter);
                     return;

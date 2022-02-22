@@ -1,4 +1,4 @@
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 #include <mpark/variant.hpp>
 
 #include "JsonCast.h"
@@ -30,7 +30,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
     m_drainCb(cb)
 {
    initCacheBySoundSection();
-   // LOG_F(INFO, "Initialized Sound cache \n{}", cache2Str(m_map));
+   // spdlog::info( "Initialized Sound cache \n{}", cache2Str(m_map));
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
       
@@ -38,28 +38,28 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       if(pSysEX)
       {
          /*
-         LOG_F(INFO, "SOUND --- {} Received Sysex\n {}",
+         spdlog::info( "SOUND --- {} Received Sysex\n {}",
             m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
          */
          m_sysExHandler.handle(*pSysEX);
          return;
       }
       /*
-      LOG_F(INFO, "SOUND --- {} Received {}",
+      spdlog::info( "SOUND --- {} Received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));
       */
       const std::optional<int> voiceIdx = getVoiceIdFromMidiMsg(midiMsg);
       if(!voiceIdx)
       {
          /*
-         LOG_F(INFO, "SOUND --- {} Strange message received {}",
+         spdlog::info( "SOUND --- {} Strange message received {}",
          m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          */
          return;
       }
       if(!m_rSoundSection.isValidVoiceIdx(*voiceIdx))
       {
-         //LOG_F(ERROR, "Midi Msg Received from {} has invalid voice nmbr {}",
+         //spdlog::error( "Midi Msg Received from {} has invalid voice nmbr {}",
          //m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          return;
       }
@@ -79,7 +79,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       if (map.end() == iter)
       {
         /* 
-         LOG_F(INFO, "SOUND --- {} No mapping for Midi msg id {}",
+         spdlog::info( "SOUND --- {} No mapping for Midi msg id {}",
                m_pMidiInIf->medium().getDeviceName(),
                meta::serialize(midiId).dump());
          */

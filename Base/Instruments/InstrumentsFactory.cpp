@@ -18,14 +18,14 @@ InstrumentsFactory::InstrumentsFactory(
        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
          add(std::move(ptr));
          m_rInstruments.triggerChanged();
-         //LOG_F(INFO, "m_rInstruments.triggerChanged();");
+         //spdlog::info( "m_rInstruments.triggerChanged();");
       });
    rMusicDeviceHolder.musicDevices.onAboutToRemove(
       [this,
        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
          remove(std::move(ptr));
          m_rInstruments.triggerChanged();
-         //LOG_F(INFO, "m_rInstruments.triggerChanged();");
+         //spdlog::info( "m_rInstruments.triggerChanged();");
       });
 }
 
@@ -119,7 +119,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
       }
       default:
       {
-         LOG_F(ERROR, "INTERNAL ERROR");
+         spdlog::error( "INTERNAL ERROR");
          break;
       }
    }
@@ -155,7 +155,7 @@ void InstrumentsFactory::remove(
             });
          if (isDeviceContained && (*it)->isDefaultCreated())
          {
-            LOG_F(INFO, "Erasing");
+            spdlog::info( "Erasing");
             it = m_rInstruments.data.kitInstruments.erase(it);
          }
          else

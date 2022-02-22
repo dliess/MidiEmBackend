@@ -23,7 +23,7 @@ target_include_directories(Util
 )
 target_link_libraries(Util
     PUBLIC UtilSerialize
-    PUBLIC Loguru
+    PUBLIC spdlog::spdlog
     PUBLIC mpark_variant
     PUBLIC -lstdc++fs
     PUBLIC uuid

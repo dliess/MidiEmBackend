@@ -1,4 +1,4 @@
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "SoundParameterStorage.h"
 
@@ -426,7 +426,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       if (int(actualBefore) != int(actual))
       {
-         // LOG_F(INFO, "actualBefore {} actual {}", actualBefore, actual);
+         // spdlog::info( "actualBefore {} actual {}", actualBefore, actual);
          dirtyFlagUi = true;
          return actualBefore;
       }

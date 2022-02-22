@@ -1,6 +1,6 @@
 #include "Instruments.h"
 
-#include <loguru.hpp>
+#include <spdlog/spdlog.h>
 
 #include "MusicDeviceContainer.h"
 #include "MusicDeviceHolder.h"
