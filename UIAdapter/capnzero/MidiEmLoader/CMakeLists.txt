@@ -23,8 +23,8 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME} 
-    PUBLIC midiem-capnzero-loader
-    PUBLIC midiem-capnzero-rt
+    PUBLIC MIDIEMCAPNZERO::midiem-capnzero-loader
+    PUBLIC MIDIEMCAPNZERO::midiem-capnzero-rt
     PUBLIC MIDI::usbmidi
     PRIVATE MusicDevice
 )

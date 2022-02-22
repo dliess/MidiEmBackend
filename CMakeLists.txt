@@ -68,12 +68,18 @@ CPMFindPackage(
 )
 
 CPMFindPackage(
-  NAME midiem-capnzero
+  NAME MidiEmCapnZero
   #GITHUB_REPOSITORY dliess/MidiEmCapnZero
   #GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
   GIT_REPOSITORY git@danita-hp:app/MidiEmCapnZero.git
   GIT_TAG develop
 )
+if(MidiEmCapnZero_ADDED)
+  add_library(MIDIEMCAPNZERO::midiem-capnzero-loader ALIAS midiem-capnzero-loader)
+  add_library(MIDIEMCAPNZERO::midiem-capnzero-rt ALIAS midiem-capnzero-rt)
+  add_library(MIDIEMCAPNZERO::midiem-capnzero-loader-qt ALIAS midiem-capnzero-loader-qt)
+  add_library(MIDIEMCAPNZERO::midiem-capnzero-rt-qt ALIAS midiem-capnzero-rt-qt)
+endif()
 
 CPMFindPackage(
   NAME ableton-link

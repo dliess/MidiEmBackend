@@ -33,7 +33,7 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME} 
-    PUBLIC midiem-capnzero-rt
+    PUBLIC MIDIEMCAPNZERO::midiem-capnzero-rt
     PRIVATE Instruments
     PRIVATE MusicDevice
     PRIVATE Transport
