@@ -10,9 +10,13 @@ set(SOURCES
    "UT_MelodicInstrument.cpp"
 )
 
-add_executable(InstrumentsTest ${SOURCES})
-target_link_libraries(InstrumentsTest
+set(TARGET_NAME InstrumentsTest)
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    Instruments
    gtest 
    pthread
 )
+
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})

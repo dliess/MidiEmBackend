@@ -7,10 +7,14 @@ set(SOURCES
    "UT_MusicDevice.cpp"
 )
 
-add_executable(MusicDeviceTest ${SOURCES})
-target_link_libraries(MusicDeviceTest
+set(TARGET_NAME "MusicDeviceTest")
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    MusicDevice
    MusicDeviceDescription
    gtest 
    pthread
 )
+
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})

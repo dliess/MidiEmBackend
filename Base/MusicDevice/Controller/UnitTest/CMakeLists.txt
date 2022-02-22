@@ -9,10 +9,14 @@ set(SOURCES
    "UT_ControllerMidiOutMsgHandler.cpp"
 )
 
-add_executable(MusicDeviceControllerTest ${SOURCES})
-target_link_libraries(MusicDeviceControllerTest
+set(TARGET_NAME "MusicDeviceControllerTest")
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    MusicDeviceController
    MusicDeviceDescription
    gtest 
    pthread
 )
+
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})

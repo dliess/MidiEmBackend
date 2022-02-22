@@ -8,9 +8,13 @@ set(SOURCES
    "UT_TapTempoHandler.cpp"
 )
 
-add_executable(TempoTest ${SOURCES})
-target_link_libraries(TempoTest
+set(TARGET_NAME "TempoTest")
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    Tempo
    gtest 
    pthread
 )
+
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})

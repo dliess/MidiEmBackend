@@ -7,12 +7,16 @@ set(SOURCES
    "UT_musicDeviceDescription.cpp"
 )
 
-add_executable(MusicDeviceDescriptionTest ${SOURCES})
-target_link_libraries(MusicDeviceDescriptionTest
+set(TARGET_NAME "MusicDeviceDescriptionTest")
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    MusicDeviceDescription
    gtest 
    pthread
    fmt
 )
 
-target_compile_definitions(MusicDeviceDescriptionTest PRIVATE -DRESOURCE_ROOT_DIR="${PROJECT_SOURCE_DIR}")
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})
+
+target_compile_definitions(${TARGET_NAME} PRIVATE -DRESOURCE_ROOT_DIR="${PROJECT_SOURCE_DIR}")

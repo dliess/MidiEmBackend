@@ -5,6 +5,13 @@ set(CMAKE_DEBUG_POSTFIX _g)
 project(MidiEmBackend LANGUAGES CXX)
 include(GNUInstallDirs)
 
+include(CTest)
+option (MIDIEM_BACKEND_BUILD_TESTS "build tests enabled" ON)
+if (${MIDIEM_BACKEND_BUILD_TESTS})
+   message(STATUS "Build with Unit Tests")
+   enable_testing()
+endif()
+
 include(cmake/CPM.cmake)
 
 # WORKAROUND: get Midi before "fmt"
@@ -40,11 +47,13 @@ CPMFindPackage(
 
 find_package(spdlog CONFIG REQUIRED)
 
+if(${MIDIEM_BACKEND_BUILD_TESTS})
 CPMFindPackage(
   NAME googletest
   GITHUB_REPOSITORY google/googletest
   GIT_TAG b155875f32dc74e293d96c0de2dfcdfa913804e4
 )
+endif()
 
 CPMFindPackage(
   NAME metastuff
@@ -109,7 +118,6 @@ target_link_libraries(${TARGET_NAME}
   UIAdapterQt
   Base
   docopt_s
-  gtest
 )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MidiEmBackendBackend

@@ -7,9 +7,13 @@ set(SOURCES
    "UT_TransportControl.cpp"
 )
 
-add_executable(TransportTest ${SOURCES})
-target_link_libraries(TransportTest
+set(TARGET_NAME "TransportTest")
+
+add_executable(${TARGET_NAME} ${SOURCES})
+target_link_libraries(${TARGET_NAME}
    Transport
    gtest 
    pthread
 )
+
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})
