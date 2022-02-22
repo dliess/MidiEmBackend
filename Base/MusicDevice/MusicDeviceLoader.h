@@ -6,7 +6,7 @@
 #include "MusicDeviceChains.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 namespace base::musicDevice
 {

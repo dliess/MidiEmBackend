@@ -3,7 +3,7 @@
 #include <fstream>
 
 #include "MusicDeviceId.h"
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 std::shared_ptr<base::musicDevice::description::Description>
 base::musicDevice::description::loadDescription(const std::string& configDir,
