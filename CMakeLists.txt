@@ -7,31 +7,38 @@ include(GNUInstallDirs)
 
 include(cmake/CPM.cmake)
 
-CPMAddPackage(
+# WORKAROUND: get Midi before "fmt"
+CPMFindPackage(
+  NAME Midi
+  #GITHUB_REPOSITORY dliess/Midi
+  GIT_REPOSITORY git@danita-hp:app/Midi.git
+  GIT_TAG master
+)
+
+CPMFindPackage(
   NAME fmt
   GITHUB_REPOSITORY fmtlib/fmt
   VERSION 6.2.0
   GIT_TAG 9bdd1596cef1b57b9556f8bef32dc4a32322ef3e
 )
 
-CPMAddPackage(
+CPMFindPackage(
   NAME docopt
   GITHUB_REPOSITORY docopt/docopt.cpp
-  VERSION 0.6.2
+  VERSION 0.6.3
 )
 
-CPMAddPackage(
+CPMFindPackage(
   NAME mpark_variant
   GITHUB_REPOSITORY mpark/variant
   VERSION 1.4.0
 )
 
-CPMAddPackage(
+CPMFindPackage(
   NAME loguru
   GITHUB_REPOSITORY emilk/loguru
-  VERSION 2.1.0
+  VERSION 1.5.0
 )
-
 if (loguru_ADDED)
   add_library(Loguru STATIC "${loguru_SOURCE_DIR}/loguru.cpp")
   target_include_directories(Loguru PUBLIC ${loguru_SOURCE_DIR})
@@ -40,13 +47,13 @@ if (loguru_ADDED)
   target_link_libraries(Loguru PUBLIC fmt)
 endif()
 
-CPMAddPackage(
+CPMFindPackage(
   NAME googletest
   GITHUB_REPOSITORY google/googletest
   GIT_TAG b155875f32dc74e293d96c0de2dfcdfa913804e4
 )
 
-CPMAddPackage(
+CPMFindPackage(
   NAME metastuff
   GITHUB_REPOSITORY eliasdaler/MetaStuff
   GIT_TAG c883f789596a3231bf357bedbda81a389cf73d0c
@@ -61,13 +68,7 @@ if(metastuff_ADDED)
   )
 endif()
 
-CPMAddPackage(
-  NAME Midi
-  GITHUB_REPOSITORY dliess/Midi
-  GIT_TAG b97a9e53bede3bb77ea8e63e08668800b9ae8170
-)
-
-CPMAddPackage(
+CPMFindPackage(
   NAME timemeasure
   GITHUB_REPOSITORY dliess/TimeMeasure
   GIT_TAG develop
@@ -76,8 +77,9 @@ CPMAddPackage(
 CPMFindPackage(
   NAME midiem-capnzero
   #GITHUB_REPOSITORY dliess/MidiEmCapnZero
-  GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG 57e94295b4002ce198d565d398c37248924816bc
+  #GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
+  GIT_REPOSITORY git@danita-hp:app/MidiEmCapnZero.git
+  GIT_TAG develop
 )
 
 CPMFindPackage(
