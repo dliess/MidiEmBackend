@@ -70,25 +70,23 @@ endif()
 
 CPMFindPackage(
   NAME MetaStuff
-  GITHUB_REPOSITORY eliasdaler/MetaStuff
-  GIT_TAG 70652dc73fe6268ef304cb062884a330a27c9f6f
-  #GIT_TAG c883f789596a3231bf357bedbda81a389cf73d0c
+  GIT_REPOSITORY git@danita-hp:3rd-mirror/metastuff-dliess.git
+  GIT_TAG b61e30e5cee867b96b730b0524bb9aeac808e69c
   OPTIONS
     "WITH_EXAMPLES OFF"
 )
-#if(MetaStuff_ADDED)
-#  add_library(MetaStuff INTERFACE)
-#  target_include_directories(MetaStuff
-#      INTERFACE
-#          ${MetaStuff_SOURCE_DIR}/include
-#)
-#endif()
+if(MetaStuff_ADDED)
+  add_library(MetaStuff::MetaStuff ALIAS MetaStuff)
+endif()
 
 CPMFindPackage(
-  NAME timemeasure
+  NAME TimeMeasure
   GITHUB_REPOSITORY dliess/TimeMeasure
   GIT_TAG develop
 )
+if(TimeMeasure_ADDED)
+  add_library(TimeMeasure::TimeMeasure ALIAS TimeMeasure)
+endif()
 
 CPMFindPackage(
   NAME MidiEmCapnZero

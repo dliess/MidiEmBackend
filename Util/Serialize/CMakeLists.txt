@@ -13,6 +13,6 @@ target_include_directories(UtilSerialize
 
 target_link_libraries(UtilSerialize
     PUBLIC nlohmann_json::nlohmann_json
-    PUBLIC MetaStuff
+    PUBLIC MetaStuff::MetaStuff
     PUBLIC fmt
 )
