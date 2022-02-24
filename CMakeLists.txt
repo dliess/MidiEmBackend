@@ -90,8 +90,6 @@ endif()
 
 CPMFindPackage(
   NAME MidiEmCapnZero
-  #GITHUB_REPOSITORY dliess/MidiEmCapnZero
-  #GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
   GIT_REPOSITORY git@danita-hp:app/MidiEmCapnZero.git
   GIT_TAG develop
 )
@@ -103,13 +101,12 @@ if(MidiEmCapnZero_ADDED)
 endif()
 
 CPMFindPackage(
-  NAME ableton-link
-  GITHUB_REPOSITORY Ableton/link
-  GIT_TAG master
-  DOWNLOAD_ONLY YES
+  NAME AbletonLink
+  GIT_REPOSITORY git@danita-hp:app/ableton-link.git
+  GIT_TAG dliess/develop
 )
-if(ableton-link_ADDED)
-  include(${ableton-link_SOURCE_DIR}/AbletonLinkConfig.cmake)
+if(AbletonLink_ADDED)
+  add_library(AbletonLink::AbletonLink ALIAS AbletonLink)
 endif()
 
 add_subdirectory(3rdparty)

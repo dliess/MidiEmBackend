@@ -22,5 +22,5 @@ target_link_libraries(${TARGET_NAME}
    PUBLIC  Util
    PRIVATE Tempo
    PRIVATE Transport
-   PRIVATE Ableton::Link
+   PRIVATE AbletonLink::AbletonLink
 )

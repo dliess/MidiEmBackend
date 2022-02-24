@@ -15,6 +15,6 @@ target_include_directories(Transport PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Transport
    PUBLIC  MusicDevice
    PRIVATE spdlog::spdlog
-   PRIVATE Ableton::Link
+   PRIVATE AbletonLink::AbletonLink
    PUBLIC  util
 )
