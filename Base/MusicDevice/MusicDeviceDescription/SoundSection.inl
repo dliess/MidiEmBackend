@@ -628,7 +628,8 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
    const auto& paramDescr = parameterDescr(voiceId, parameterId);
    return mpark::visit(
        util::overload{
-           [this, paramDescr](const float& val) -> float { return val; },
+           [this, paramDescr](const int& val) -> float { return val; },
+           [this, paramDescr](const double& val) -> float { return val; },
            [this,
             paramDescr](const base::musicDevice::description::sound::
                             ParameterSourceRangeBase::Role& role) -> float {
@@ -645,7 +646,8 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
 }
 
 inline mpark::variant<
-    float,
+    int,
+    double,
     base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
 base::musicDevice::description::sound::Section::_getInitialValueFor(
     int voiceId, int parameterId) const noexcept

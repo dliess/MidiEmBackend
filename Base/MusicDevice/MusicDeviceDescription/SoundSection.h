@@ -373,7 +373,7 @@ struct Section
 
    inline bool canDumpPresets() const noexcept;
 private:
-   inline mpark::variant<float, ParameterSourceRangeBase::Role>
+   inline mpark::variant<int, double, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
    inline Engine inherit(const Engine& parent, const Engine& child) noexcept;
 
