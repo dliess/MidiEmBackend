@@ -129,9 +129,11 @@ target_link_libraries(${TARGET_NAME}
   docopt_s
 )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MidiEmBackendBackend
-  DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+install(TARGETS ${TARGET_NAME}  EXPORT ${PROJECT_NAME}-targets)
+
+#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MidiEmBackendBackend
+#  DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
 
 install(
   DIRECTORY "MidiConfigs"
