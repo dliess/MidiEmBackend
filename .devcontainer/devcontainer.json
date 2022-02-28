@@ -8,13 +8,19 @@
      "--network=host"
    ],
    //"forwardPorts": [55555, 55556, 80],
+   "workspaceMount": "source=${localWorkspaceFolder},target=/home/build-user/s,type=bind,consistency=delegated",
+   "workspaceFolder": "/home/build-user/s",
    "mounts" : [
       "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
+      "type=bind,source=${localWorkspaceFolder}/../CPM_DOWNLOADS,target=/home/build-user/CPM_DOWNLOADS",
       "type=bind,source=/dev,target=/dev"
    ],
    "settings": { 
       "terminal.integrated.shell.linux": "/bin/zsh",
       "terminal.integrated.detectLocale": "off"
+   },
+   "containerEnv": {
+      "CPM_SOURCE_CACHE": "/home/build-user/CPM_DOWNLOADS"
    },
    "extensions": [
       "eamodio.gitlens",

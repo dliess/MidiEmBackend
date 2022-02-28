@@ -84,6 +84,9 @@ RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $BUILD_USE
 RUN echo "$BUILD_USER:$BUILD_USER_PWD" | chpasswd
 RUN usermod -aG sudo $BUILD_USER
 
+RUN mkdir -p /home/$BUILD_USER/s
+RUN mkdir -p /home/$BUILD_USER/CPM_DOWNLOADS
+
 USER $BUILD_USER:$BUILD_USER
 WORKDIR /home/build-user
 
