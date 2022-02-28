@@ -7,12 +7,10 @@
 
 #include "Base.h"
 #include "StartQt.h"
-//#include "gRPCServerAsync.h"
-
 
 static const char USAGE[] = R"(
    Usage:
-      MidiEmBackend [CONFIGDIR]
+      NomidiBackend [CONFIGDIR] [--verbose]
    Options:
       -v --verbose            ShowDebug Logs
 )";
@@ -23,7 +21,7 @@ int main(int argc, char *argv[])
    std::map<std::string, docopt::value> args =
       docopt::docopt(USAGE, {argv + 1, argv + argc},
                      true,           // show help if requested
-                     "MidiEmBackend 0.1"); // version string
+                     "NomidiBackend 0.1"); // version string
 
    const std::string configRoot(args["CONFIGDIR"] ? args["CONFIGDIR"].asString() : "");
    const auto verbose = args["--verbose"].asBool();
