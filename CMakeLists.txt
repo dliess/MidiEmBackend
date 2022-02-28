@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.15)
 set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_DEBUG_POSTFIX _g)
 
-project(MidiEmBackend LANGUAGES CXX)
+project(NomidiBackend LANGUAGES CXX)
 include(GNUInstallDirs)
 
 include(CTest)
-option (MIDIEM_BACKEND_BUILD_TESTS "build tests enabled" ON)
-if (${MIDIEM_BACKEND_BUILD_TESTS})
+option (NOMIDI_BACKEND_BUILD_TESTS "build tests enabled" ON)
+if (${NOMIDI_BACKEND_BUILD_TESTS})
    message(STATUS "Build with Unit Tests")
    enable_testing()
 endif()
@@ -47,7 +47,7 @@ CPMFindPackage(
 
 find_package(spdlog CONFIG REQUIRED)
 
-if(${MIDIEM_BACKEND_BUILD_TESTS})
+if(${NOMIDI_BACKEND_BUILD_TESTS})
 CPMFindPackage(
   NAME googletest
   GITHUB_REPOSITORY google/googletest
@@ -129,13 +129,19 @@ target_link_libraries(${TARGET_NAME}
   docopt_s
 )
 
-install(TARGETS ${TARGET_NAME}  EXPORT ${PROJECT_NAME}-targets)
-
-#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MidiEmBackendBackend
-#  DESTINATION ${CMAKE_INSTALL_BINDIR}
-#)
+install(TARGETS ${TARGET_NAME}  
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
 install(
   DIRECTORY "MidiConfigs"
-  DESTINATION "/etc/midiem-backend/"
+  DESTINATION "/etc/nomidi-backend/"
+)
+
+set(SYSTEM_UNIT_FILES
+   "systemd/nomidi-backend.service"
+)
+
+install (FILES ${SYSTEM_UNIT_FILES} 
+   DESTINATION ${CMAKE_INSTALL_LIBDIR}/systemd/system
 )

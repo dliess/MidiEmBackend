@@ -1,0 +1,17 @@
+[Unit]
+Description=Run NomidiBackend
+
+Wants=multi-user.target
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/NomidiBackend /etc/nomidi-backend
+User=nomidiuser
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target
