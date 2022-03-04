@@ -10,9 +10,10 @@
 
 static const char USAGE[] = R"(
    Usage:
-      NomidiBackend [CONFIGDIR] [--verbose]
+      NomidiBackend CONFIGDIR [-v | --verbose]
+
    Options:
-      -v --verbose            ShowDebug Logs
+      -v --verbose  Verbose Output
 )";
 
 
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
                      "NomidiBackend 0.1"); // version string
 
    const std::string configRoot(args["CONFIGDIR"] ? args["CONFIGDIR"].asString() : "");
+   
    const auto verbose = args["--verbose"].asBool();
    if (verbose)
    {
@@ -31,15 +33,12 @@ int main(int argc, char *argv[])
       spdlog::set_level(spdlog::level::debug);
    }
 
+
+   spdlog::info("Using Config Dir: '{}'", configRoot);
    base::Base base(configRoot);
    base.start();
    auto qtThread = std::thread([&base, &argc, &argv](){
       uiadapter::qt::startQt(base, argc, argv);
    });
-   /*
-   auto grpcThread = std::thread([&base](){
-      uiadapter::googlerpc::startAsyncServer();
-   });
-   */
    qtThread.join();
 }
