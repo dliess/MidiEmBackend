@@ -15,7 +15,7 @@ using namespace base::musicDevice;
 Loader::Loader(const std::string &configDir) :
     m_configDir(configDir.empty() ? "." : configDir),
     m_mapFileName(fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
-    m_deviceChainsFileName(fmt::format("{}/.nomidi/MidiConfigs/midiDeviceChains.json", getenv("HOME")))
+    m_deviceChainsFileName(fmt::format("{}/nomidi/MidiConfigs/midiDeviceChains.json", getenv("HOME")))
 {
    std::ifstream mapFile(m_mapFileName);
    std::ifstream deviceChainsFile(m_deviceChainsFileName);
