@@ -43,7 +43,7 @@ base::Base::Base(const std::string &configDir) :
     midiRouter(musicDeviceHolder.midiHolder)
 {
    // TODO: Remove Dummy
-   instruments.load("relDir", "filename", "section");
+   //instruments.load("relDir", "filename", "section");
 }
 
 base::Base::~Base() noexcept = default;
