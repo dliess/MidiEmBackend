@@ -6,6 +6,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
+ExecStartPre=+/bin/chown -R nomidiuser:nomidiuser /home/nomidiuser/nomidi
 ExecStart=/usr/bin/NomidiBackend /etc/nomidi-backend
 User=nomidiuser
 StandardOutput=journal
