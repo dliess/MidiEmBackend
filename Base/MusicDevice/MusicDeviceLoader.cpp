@@ -1,12 +1,12 @@
 #include "MusicDeviceLoader.h"
 
 #include <fmt/format.h>
+#include <spdlog/spdlog.h>
 
 #include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <spdlog/spdlog.h>
 
 #include "MusicDeviceId.h"
 
@@ -14,8 +14,10 @@ using namespace base::musicDevice;
 
 Loader::Loader(const std::string &configDir) :
     m_configDir(configDir.empty() ? "." : configDir),
-    m_mapFileName(fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
-    m_deviceChainsFileName(fmt::format("{}/nomidi/MidiConfigs/midiDeviceChains.json", getenv("HOME")))
+    m_mapFileName(
+        fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
+    m_deviceChainsFileName(fmt::format(
+        "{}/nomidi/MidiConfigs/midiDeviceChains.json", getenv("HOME")))
 {
    std::ifstream mapFile(m_mapFileName);
    std::ifstream deviceChainsFile(m_deviceChainsFileName);
@@ -26,13 +28,13 @@ Loader::Loader(const std::string &configDir) :
    }
    if (deviceChainsFile.fail())
    {
-      spdlog::info(
-            "There is no custom midi interface connection config file '{}' so lets create an empty one",
-            m_deviceChainsFileName);
+      spdlog::info("There is no custom midi interface connection config file "
+                   "'{}' so lets create an empty one",
+                   m_deviceChainsFileName);
       std::filesystem::path path(m_deviceChainsFileName);
       std::filesystem::create_directories(path.parent_path());
       std::ofstream ofs(path);
-      ofs << "\n"; 
+      ofs << "\n";
       ofs.close();
    }
    else
@@ -45,12 +47,13 @@ Loader::Loader(const std::string &configDir) :
       }
       catch (json::type_error &e)
       {
-         spdlog::error( "ERROR at parsing ill formed '{}' reason: {}",
-               m_deviceChainsFileName, e.what());
+         spdlog::error("ERROR at parsing ill formed '{}' reason: {}",
+                       m_deviceChainsFileName, e.what());
       }
       catch (...)
       {
-         spdlog::error( "ERROR at parsing ill formed '{}'", m_deviceChainsFileName);
+         spdlog::error("ERROR at parsing ill formed '{}'",
+                       m_deviceChainsFileName);
       }
    }
 
@@ -60,17 +63,22 @@ Loader::Loader(const std::string &configDir) :
    }
    catch (...)
    {
-      spdlog::error( "ERROR at parsing ill formed '{}'", m_mapFileName);
+      spdlog::error("ERROR at parsing ill formed '{}'", m_mapFileName);
    }
 }
 
-std::pair<Loader::ResultType, std::string>
-Loader::getMatchType(const std::string &deviceName) const noexcept
+std::pair<Loader::ResultType, std::string> Loader::getMatchType(
+    const std::string &fullMidiPortName,
+    const std::string &deviceName) const noexcept
 {
-   const auto iter = m_jUsbMidiName2deviceMap.find(deviceName);
+   auto iter = m_jUsbMidiName2deviceMap.find(fullMidiPortName);
    if (m_jUsbMidiName2deviceMap.end() == iter)
    {
-      return std::make_pair(ResultType::NotFound, deviceName);
+      iter = m_jUsbMidiName2deviceMap.find(deviceName);
+      if (m_jUsbMidiName2deviceMap.end() == iter)
+      {
+         return std::make_pair(ResultType::NotFound, deviceName);
+      }
    }
    if (iter->get<std::string>() == "--UNUSED--")
    {
@@ -83,7 +91,8 @@ Loader::getMatchType(const std::string &deviceName) const noexcept
 }
 
 template <typename T>
-typename T::const_iterator searchByDeviceId(const T &container, const MusicDeviceId &deviceId)
+typename T::const_iterator searchByDeviceId(const T &container,
+                                            const MusicDeviceId &deviceId)
 {
    auto it = container.find(deviceId.toStr());
    if (it == container.end())
@@ -101,7 +110,8 @@ typename T::const_iterator searchByDeviceId(const T &container, const MusicDevic
 }
 
 template <typename T>
-typename T::iterator searchByDeviceId(T &container, const MusicDeviceId &deviceId)
+typename T::iterator searchByDeviceId(T &container,
+                                      const MusicDeviceId &deviceId)
 {
    auto it = container.find(deviceId.toStr());
    if (it == container.end())
@@ -120,7 +130,9 @@ typename T::iterator searchByDeviceId(T &container, const MusicDeviceId &deviceI
 
 void Loader::forEachDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &nextDeviceId, uint8_t midiVoiceOffset)> cb)
+    std::function<void(const MusicDeviceId &nextDeviceId,
+                       uint8_t midiVoiceOffset)>
+        cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -130,14 +142,17 @@ void Loader::forEachDeviceInChain(
    std::string port(rootDeviceId.toStr());
    for (const auto &deviceDescr : it->second)
    {
-      cb(MusicDeviceId(deviceDescr.musicDeviceName, port), deviceDescr.midiVoiceOffset);
+      cb(MusicDeviceId(deviceDescr.musicDeviceName, port),
+         deviceDescr.midiVoiceOffset);
       port = fmt::format("{}@{}", deviceDescr.musicDeviceName, port);
    }
 }
 
 void Loader::forFirstDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &firstDeviceId, uint8_t midiVoiceOffset)> cb)
+    std::function<void(const MusicDeviceId &firstDeviceId,
+                       uint8_t midiVoiceOffset)>
+        cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -147,13 +162,16 @@ void Loader::forFirstDeviceInChain(
    std::string port(rootDeviceId.toStr());
    if (it->second.size())
    {
-      cb(MusicDeviceId(it->second[0].musicDeviceName, port), it->second[0].midiVoiceOffset);
+      cb(MusicDeviceId(it->second[0].musicDeviceName, port),
+         it->second[0].midiVoiceOffset);
    }
 }
 
 void Loader::forLastDeviceInChain(
     const MusicDeviceId &rootDeviceId,
-    std::function<void(const MusicDeviceId &lastDeviceId, uint8_t midiVoiceOffset)> cb)
+    std::function<void(const MusicDeviceId &lastDeviceId,
+                       uint8_t midiVoiceOffset)>
+        cb)
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
@@ -164,9 +182,10 @@ void Loader::forLastDeviceInChain(
    std::string port(rootDeviceId.toStr());
    for (int i = 0; i < it->second.size(); ++i)
    {
-      if(i == (it->second.size() - 1))
+      if (i == (it->second.size() - 1))
       {
-         cb(MusicDeviceId(it->second[i].musicDeviceName, port), it->second[i].midiVoiceOffset);
+         cb(MusicDeviceId(it->second[i].musicDeviceName, port),
+            it->second[i].midiVoiceOffset);
       }
       port = fmt::format("{}@{}", it->second[i].musicDeviceName, port);
    }
@@ -211,7 +230,7 @@ std::string Loader::getAllDevicesAsJson() const
          if (!std::filesystem::exists(configFile))
          {
             spdlog::warn("There is no Config.json present in config dir {}",
-                  deviceDir.path().string());
+                         deviceDir.path().string());
             continue;
          }
          manufacturerEntry.devices.push_back(device);
@@ -224,40 +243,49 @@ std::string Loader::getAllDevicesAsJson() const
    return meta::serialize(ret).dump();
 }
 
-void Loader::appendDeviceToChain(
-    const MusicDeviceId &rootDeviceId, const MusicDeviceName &deviceName, uint8_t midiVoiceOffset) noexcept
-{ 
+void Loader::appendDeviceToChain(const MusicDeviceId &rootDeviceId,
+                                 const MusicDeviceName &deviceName,
+                                 uint8_t midiVoiceOffset) noexcept
+{
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
-      m_deviceChains.deviceChains.insert(std::make_pair( rootDeviceId.toStr(), std::vector<DeviceChainsDeviceDescription>() ));
+      m_deviceChains.deviceChains.insert(std::make_pair(
+          rootDeviceId.toStr(), std::vector<DeviceChainsDeviceDescription>()));
       it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    }
    it->second.push_back({deviceName, midiVoiceOffset});
-   try{
+   try
+   {
       saveDeviceChainsToFile();
-   } catch(std::exception& e){
-      spdlog::error( "Exception occured at saving device chains to file: {}", e.what());
+   }
+   catch (std::exception &e)
+   {
+      spdlog::error("Exception occured at saving device chains to file: {}",
+                    e.what());
    }
 }
 
-void Loader::removeDeviceFromEndOf(
-    const MusicDeviceId &rootDeviceId) noexcept
+void Loader::removeDeviceFromEndOf(const MusicDeviceId &rootDeviceId) noexcept
 {
    auto it = searchByDeviceId(m_deviceChains.deviceChains, rootDeviceId);
    if (it == m_deviceChains.deviceChains.end())
    {
       return;
    }
-   if(it->second.empty())
+   if (it->second.empty())
    {
       return;
    }
    it->second.pop_back();
-   try{
+   try
+   {
       saveDeviceChainsToFile();
-   } catch(std::exception& e){
-      spdlog::error( "Exception occured at saving device chains to file: {}", e.what());
+   }
+   catch (std::exception &e)
+   {
+      spdlog::error("Exception occured at saving device chains to file: {}",
+                    e.what());
    }
 }
 
@@ -266,8 +294,7 @@ void Loader::saveDeviceChainsToFile()
    std::ofstream deviceChainsFile(m_deviceChainsFileName);
    if (deviceChainsFile.fail())
    {
-      spdlog::info(
-            "deviceChainsFile.fail() {}", m_deviceChainsFileName);
+      spdlog::info("deviceChainsFile.fail() {}", m_deviceChainsFileName);
    }
    deviceChainsFile << meta::serialize(m_deviceChains).dump(3);
 }

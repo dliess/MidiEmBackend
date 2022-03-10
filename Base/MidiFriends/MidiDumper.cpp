@@ -9,8 +9,8 @@ Dumper::Dumper(musicDevice::MidiHolder& rMidiHolder) noexcept
    rMidiHolder.registerForInputAdded(
       [this](
          const std::shared_ptr<musicDevice::MusicDevice::MidiInput>& pMidiIn) {
-         const musicDevice::MidiHolder::Id id(pMidiIn->medium().getDeviceName(),
-                                              pMidiIn->medium().getPortName());
+         const musicDevice::MidiHolder::Id id(pMidiIn->medium().getDevicePortName(),
+                                              pMidiIn->medium().getHostConnectorPortName());
          pMidiIn->registerMidiInCb(
             [this, &id](const midi::MidiMessage& midiMsg) {
                handleMidiIn(id, midiMsg);

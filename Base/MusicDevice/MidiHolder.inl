@@ -49,8 +49,8 @@ inline void MidiHolder::removeMidiIn(const Id& id) noexcept
 {
    for (int i = 0; i < m_midiInputs.size(); ++i)
    {
-      if (id == Id(m_midiInputs[i]->medium().getDeviceName(),
-                   m_midiInputs[i]->medium().getPortName()))
+      if (id == Id(m_midiInputs[i]->medium().getDevicePortName(),
+                   m_midiInputs[i]->medium().getHostConnectorPortName()))
       {
          for (auto& cb : m_inputRemovedCbs) { cb(id); }
          m_midiInputs[i].reset();
@@ -63,8 +63,8 @@ inline void MidiHolder::removeMidiOut(const Id& id) noexcept
 {
    for (int i = 0; i < m_midiOutputs.size(); ++i)
    {
-      if (id == Id(m_midiOutputs[i].pMidiOut->medium().getDeviceName(),
-                   m_midiOutputs[i].pMidiOut->medium().getPortName()))
+      if (id == Id(m_midiOutputs[i].pMidiOut->medium().getDevicePortName(),
+                   m_midiOutputs[i].pMidiOut->medium().getHostConnectorPortName()))
       {
          for (auto& cb : m_outputRemovedCbs) { cb(id); }
          m_midiOutputs[i].pMidiOut.reset();
@@ -78,7 +78,7 @@ inline std::shared_ptr<MusicDevice::MidiInput> MidiHolder::getMidiIn(
 {
    for (auto& e : m_midiInputs)
    {
-      const Id actId(e->medium().getDeviceName(), e->medium().getPortName());
+      const Id actId(e->medium().getDevicePortName(), e->medium().getHostConnectorPortName());
       if (actId == id)
       {
          return e;
@@ -92,8 +92,8 @@ inline std::shared_ptr<MusicDevice::MidiOutput> MidiHolder::getMidiOut(
 {
    for (auto& e : m_midiOutputs)
    {
-      const Id actId(e.pMidiOut->medium().getDeviceName(),
-                     e.pMidiOut->medium().getPortName());
+      const Id actId(e.pMidiOut->medium().getDevicePortName(),
+                     e.pMidiOut->medium().getHostConnectorPortName());
       if (actId == id)
       {
          return e.pMidiOut;
@@ -106,8 +106,8 @@ inline MidiHolder::MidiOutEntry* MidiHolder::midiOutEntry(const Id& id) noexcept
 {
    for (auto& e : m_midiOutputs)
    {
-      const Id actId(e.pMidiOut->medium().getDeviceName(),
-                     e.pMidiOut->medium().getPortName());
+      const Id actId(e.pMidiOut->medium().getDevicePortName(),
+                     e.pMidiOut->medium().getHostConnectorPortName());
       if (actId == id)
       {
          return &e;

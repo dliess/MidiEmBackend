@@ -13,8 +13,9 @@
 #ifdef __INSERT_DUMMY_MIDI_DEVICES__
 #include "MidiMediumDummy.h"
 #endif
-#include <cassert>
 #include <spdlog/spdlog.h>
+
+#include <cassert>
 #include <memory>
 
 #define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
@@ -32,31 +33,30 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          spdlog::info( "--> input added: {}", devOnUsbPort.getDeviceName());
+          spdlog::info("--> input added: {}", devOnUsbPort.getMidiPort());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
           if (!pMidiIn)
           {
-             spdlog::error( "Could not create pMidiIn");
+             spdlog::error("Could not create pMidiIn");
              return;
           }
-          const auto [resType, deviceName] =
-              m_loader.getMatchType(devOnUsbPort.getDeviceName());
-          switch(resType)
+          const auto [resType, deviceName] = m_loader.getMatchType(
+              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          switch (resType)
           {
-              case Loader::ResultType::MusicDevice:
-              {
-                  if(devOnUsbPort.getMidiPort() > 0) return;
-                  break;
-              }
-              case Loader::ResultType::NotFound:
-              {
-                  break;
-              }
-              case Loader::ResultType::MarkedUnused:
-              {
-                  return;
-              }
+             case Loader::ResultType::MusicDevice:
+             {
+                break;
+             }
+             case Loader::ResultType::NotFound:
+             {
+                break;
+             }
+             case Loader::ResultType::MarkedUnused:
+             {
+                return;
+             }
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
@@ -104,31 +104,30 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          spdlog::info( "--> output added: {}", devOnUsbPort.getDeviceName());
+          spdlog::info("--> output added: {}", devOnUsbPort.getMidiPort());
           auto pMidiOut =
               createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
           if (!pMidiOut)
           {
-             spdlog::error( "Could not create pMidiOut");
+             spdlog::error("Could not create pMidiOut");
              return;
           }
-          const auto [resType, deviceName] =
-              m_loader.getMatchType(devOnUsbPort.getDeviceName());
-          switch(resType)
+          const auto [resType, deviceName] = m_loader.getMatchType(
+              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          switch (resType)
           {
-              case Loader::ResultType::MusicDevice:
-              {
-                  if(devOnUsbPort.getMidiPort() > 0) return;
-                  break;
-              }
-              case Loader::ResultType::NotFound:
-              {
-                  break;
-              }
-              case Loader::ResultType::MarkedUnused:
-              {
-                  return;
-              }
+             case Loader::ResultType::MusicDevice:
+             {
+                break;
+             }
+             case Loader::ResultType::NotFound:
+             {
+                break;
+             }
+             case Loader::ResultType::MarkedUnused:
+             {
+                return;
+             }
           }
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
@@ -174,9 +173,9 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          spdlog::info( "<-- input removed: {}", devOnUsbPort.getDeviceName());
-          const auto [resType, deviceName] =
-              m_loader.getMatchType(devOnUsbPort.getDeviceName());
+          spdlog::info("<-- input removed: {}", devOnUsbPort.getMidiPort());
+          const auto [resType, deviceName] = m_loader.getMatchType(
+              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
@@ -193,16 +192,16 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromMidiInHolder(),
-                    MidiHolder::Id(devOnUsbPort.getDeviceName(),
+                    MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
        },
        {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          spdlog::info( "<-- output removed: {}", devOnUsbPort.getDeviceName());
-          const auto [resType, deviceName] =
-              m_loader.getMatchType(devOnUsbPort.getDeviceName());
+          spdlog::info("<-- output removed: {}", devOnUsbPort.getMidiPort());
+          const auto [resType, deviceName] = m_loader.getMatchType(
+              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           m_soundPresetFetchers.erase(deviceId);
@@ -217,7 +216,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               });
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(EraseFromMidiOutHolder(),
-                    MidiHolder::Id(devOnUsbPort.getDeviceName(),
+                    MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
        },
        {{}, {IGNORED_DEVICES}, false});
@@ -314,8 +313,8 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::findOrCreateDevice(
       }
       catch (std::exception& e)
       {
-         spdlog::error( "Failed to add midi input medium'{}' {}",
-               deviceId.toStr(), e.what());
+         spdlog::error("Failed to add midi input medium'{}' {}",
+                       deviceId.toStr(), e.what());
          return nullptr;
       }
    }
@@ -328,7 +327,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
     std::shared_ptr<factory::DataHolder::ActualPresetNames> pActualPresetNames)
 {
-   spdlog::info( "Created Music Device {}", deviceId.toStr());
+   spdlog::info("Created Music Device {}", deviceId.toStr());
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, midiDeviceId, m_resourceRootDir, std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
@@ -456,9 +455,11 @@ MusicDeviceId Factory::MusicDeviceInserter::getMidiDevIdFrom(
     const std::shared_ptr<MusicDevice::MidiOutput>& pMidiOut) noexcept
 {
    if (pMidiIn)
-      return {pMidiIn->medium().getDeviceName(), pMidiIn->medium().getPortName()};
+      return {pMidiIn->medium().getDevicePortName(),
+              pMidiIn->medium().getHostConnectorPortName()};
    if (pMidiOut)
-      return {pMidiOut->medium().getDeviceName(), pMidiOut->medium().getPortName()};
+      return {pMidiOut->medium().getDevicePortName(),
+              pMidiOut->medium().getHostConnectorPortName()};
    assert(false);
    return MusicDeviceId();
 }

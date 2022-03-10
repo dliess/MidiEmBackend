@@ -9,8 +9,8 @@ Router::Router(musicDevice::MidiHolder& rMidiHolder) noexcept :
        [this](const std::shared_ptr<musicDevice::MusicDevice::MidiInput>&
                   pMidiIn) {
           const musicDevice::MidiHolder::Id id(
-              pMidiIn->medium().getDeviceName(),
-              pMidiIn->medium().getPortName());
+              pMidiIn->medium().getDevicePortName(),
+              pMidiIn->medium().getHostConnectorPortName());
           pMidiIn->registerMidiInCb(
               [this, id](const midi::MidiMessage& midiMsg) {
                  handleMidiIn(id, midiMsg);

@@ -17,21 +17,14 @@ include(cmake/CPM.cmake)
 # WORKAROUND: get Midi before "fmt"
 CPMFindPackage(
   NAME midi
-  #GITHUB_REPOSITORY dliess/Midi
-  GIT_REPOSITORY git@danita-hp:app/Midi.git
+  GITHUB_REPOSITORY dliess/Midi
+  #GIT_REPOSITORY git@danita-hp:app/Midi.git
   GIT_TAG master
 )
 if(midi_ADDED)
   add_library(MIDI::midi ALIAS midi)
   add_library(MIDI::usbmidi ALIAS usbmidi)
 endif()
-
-CPMFindPackage(
-  NAME fmt
-  GITHUB_REPOSITORY fmtlib/fmt
-  VERSION 6.2.0
-  GIT_TAG 9bdd1596cef1b57b9556f8bef32dc4a32322ef3e
-)
 
 CPMFindPackage(
   NAME docopt
@@ -45,7 +38,7 @@ CPMFindPackage(
   VERSION 1.4.0
 )
 
-find_package(spdlog CONFIG REQUIRED)
+find_package(spdlog 1.8.1 CONFIG REQUIRED)
 
 if(${NOMIDI_BACKEND_BUILD_TESTS})
 CPMFindPackage(
@@ -70,8 +63,8 @@ endif()
 
 CPMFindPackage(
   NAME MetaStuff
-  GIT_REPOSITORY git@danita-hp:3rd-mirror/metastuff-dliess.git
-  GIT_TAG b61e30e5cee867b96b730b0524bb9aeac808e69c
+  GIT_REPOSITORY git@github.com:dliess/MetaStuff.git
+  GIT_TAG develop
   OPTIONS
     "WITH_EXAMPLES OFF"
 )
@@ -90,7 +83,7 @@ endif()
 
 CPMFindPackage(
   NAME MidiEmCapnZero
-  GIT_REPOSITORY git@danita-hp:app/MidiEmCapnZero.git
+  GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
   GIT_TAG develop
 )
 if(MidiEmCapnZero_ADDED)
@@ -102,7 +95,7 @@ endif()
 
 CPMFindPackage(
   NAME AbletonLink
-  GIT_REPOSITORY git@danita-hp:app/ableton-link.git
+  GIT_REPOSITORY git@github.com:dliess/link.git
   GIT_TAG dliess/develop
 )
 if(AbletonLink_ADDED)
