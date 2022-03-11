@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/MidiEmBackend",
+            "program": "${workspaceFolder}/build/NomidiBackend",
             "args": ["${workspaceFolder}"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -24,10 +24,10 @@
             ]
         },
         {
-            "name": "[Remote] GDB-midiem-backend_g",
+            "name": "[Remote] GDB-nomidi-backend_g",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/MidiEmBackend",
+            "program": "${workspaceFolder}/build/NomidiBackend",
             "args": [ ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
