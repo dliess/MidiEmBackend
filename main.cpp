@@ -37,11 +37,8 @@ int main(int argc, char *argv[])
    spdlog::info("Using Config Dir: '{}'", configRoot);
    base::Base base(configRoot);
    base.start();
-   /*
    auto qtThread = std::thread([&base, &argc, &argv](){
       uiadapter::qt::startQt(base, argc, argv);
    });
    qtThread.join();
-   */
-   base.waitForEnd();
 }

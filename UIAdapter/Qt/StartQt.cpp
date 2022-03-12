@@ -14,6 +14,7 @@
 
 int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
 {
+   pthread_setname_np(pthread_self(), "NMBackend-Qt");
    QCoreApplication app(argc, argv);
    QWebSocketServer server(QStringLiteral("Push2BackendServer"),
                            QWebSocketServer::NonSecureMode);
