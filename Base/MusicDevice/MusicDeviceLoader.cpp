@@ -77,7 +77,7 @@ std::pair<Loader::ResultType, std::string> Loader::getMatchType(
       iter = m_jUsbMidiName2deviceMap.find(deviceName);
       if (m_jUsbMidiName2deviceMap.end() == iter)
       {
-         return std::make_pair(ResultType::NotFound, deviceName);
+         return std::make_pair(ResultType::NotFound, fullMidiPortName);
       }
    }
    if (iter->get<std::string>() == "--UNUSED--")
