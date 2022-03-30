@@ -68,16 +68,15 @@ Loader::Loader(const std::string &configDir) :
 }
 
 std::pair<Loader::ResultType, std::string> Loader::getMatchType(
-    const std::string &fullMidiPortName,
-    const std::string &deviceName) const noexcept
+    const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) const noexcept
 {
-   auto iter = m_jUsbMidiName2deviceMap.find(fullMidiPortName);
+   auto iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getFullMidiPort());
    if (m_jUsbMidiName2deviceMap.end() == iter)
    {
-      iter = m_jUsbMidiName2deviceMap.find(deviceName);
+      iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getDeviceName());
       if (m_jUsbMidiName2deviceMap.end() == iter)
       {
-         return std::make_pair(ResultType::NotFound, fullMidiPortName);
+         return std::make_pair(ResultType::NotFound, devOnUsbPort.getMidiPort());
       }
    }
    if (iter->get<std::string>() == "--UNUSED--")

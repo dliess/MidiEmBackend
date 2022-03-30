@@ -41,8 +41,8 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              spdlog::error("Could not create pMidiIn");
              return;
           }
-          const auto [resType, deviceName] = m_loader.getMatchType(
-              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          const auto [resType, deviceName] =
+              m_loader.getMatchType(devOnUsbPort);
           switch (resType)
           {
              case Loader::ResultType::MusicDevice:
@@ -112,8 +112,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              spdlog::error("Could not create pMidiOut");
              return;
           }
-          const auto [resType, deviceName] = m_loader.getMatchType(
-              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
           switch (resType)
           {
              case Loader::ResultType::MusicDevice:
@@ -174,8 +173,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- input removed: {}", devOnUsbPort.getMidiPort());
-          const auto [resType, deviceName] = m_loader.getMatchType(
-              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
@@ -200,8 +198,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- output removed: {}", devOnUsbPort.getMidiPort());
-          const auto [resType, deviceName] = m_loader.getMatchType(
-              devOnUsbPort.getFullMidiPort(), devOnUsbPort.getDeviceName());
+          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           m_soundPresetFetchers.erase(deviceId);

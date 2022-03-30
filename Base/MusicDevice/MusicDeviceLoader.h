@@ -7,6 +7,7 @@
 #include "MusicDeviceChains.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
+#include "RtMidiAdaptTypes.h"
 
 namespace base::musicDevice
 {
@@ -22,8 +23,7 @@ public:
 
    Loader(const std::string& configDir);
    std::pair<ResultType, std::string> getMatchType(
-       const std::string& fullMidiPortName,
-       const std::string& deviceName) const noexcept;
+       const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) const noexcept;
    std::shared_ptr<description::Description> load(
        const std::string& deviceName) const;
 
