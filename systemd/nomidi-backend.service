@@ -13,6 +13,7 @@ StandardOutput=journal
 StandardError=journal
 Restart=on-failure
 RestartSec=3s
+LimitRTPRIO=50
 
 [Install]
 WantedBy=multi-user.target
