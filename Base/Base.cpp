@@ -1,10 +1,10 @@
 #include "Base.h"
 
+#include <spdlog/spdlog.h>
 #include <sys/timerfd.h>
 
 #include <cassert>
 #include <exception>
-#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 #include "FdSet.h"
@@ -43,7 +43,7 @@ base::Base::Base(const std::string &configDir) :
     midiRouter(musicDeviceHolder.midiHolder)
 {
    // TODO: Remove Dummy
-   //instruments.load("relDir", "filename", "section");
+   // instruments.load("relDir", "filename", "section");
 }
 
 base::Base::~Base() noexcept = default;
@@ -78,11 +78,19 @@ void base::Base::start()
        [this](const std::atomic<bool> &terminateRequest) {
           mainRtThreadFunction(terminateRequest);
        });
+   if (0 != pthread_setname_np(m_mainRtThread->native_handle(), "NMBE-Main-RT"))
+   {
+      spdlog::error("Could not set thread name: NMBE-Main-RT");
+   }
 
    m_portNotifierThread = std::make_unique<util::Thread>(
        [this](const std::atomic<bool> &terminateRequest) {
           loaderThreadFunction(terminateRequest);
        });
+   if (0 != pthread_setname_np(m_portNotifierThread->native_handle(), "NMBE-Loader"))
+   {
+      spdlog::error("Could not set thread name: NMBE-Loader");
+   }
 }
 
 void base::Base::waitForEnd()
@@ -104,20 +112,16 @@ void base::Base::setRtScheduling()
    int policy                = SCHED_FIFO;
    if (sched_setscheduler(0, policy, &schedParam) == -1)
    {
-      spdlog::error( "sched_setscheduler failed: {}", strerror(errno));
+      spdlog::error("sched_setscheduler failed: {}", strerror(errno));
    }
 }
 
 void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    setRtScheduling();
-   if(0 != pthread_setname_np(pthread_self(), "NMBackend-Main-RT"))
-   {
-      spdlog::error("Could not set thread name: NMBackend-Main-RT");
-   }
    uiadapter::capnzero::RtServer rtServer(
-       m_zmqContext, instruments, musicDeviceHolder,
-       transportControl, tempo::BeatTick::instance().abletonLink(), midiRouter);
+       m_zmqContext, instruments, musicDeviceHolder, transportControl,
+       tempo::BeatTick::instance().abletonLink(), midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
@@ -145,10 +149,6 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
-   if(0 != pthread_setname_np(pthread_self(), "NMBackend-Loader"))
-   {
-      spdlog::error("Could not set thread name: NMBackend-Loader");
-   }
    uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
                                                   musicDeviceFactory);
    uiadapter::capnzero::RtClient rtClient(m_zmqContext, loaderServer.signals(),

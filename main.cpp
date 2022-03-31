@@ -40,5 +40,9 @@ int main(int argc, char *argv[])
    auto qtThread = std::thread([&base, &argc, &argv](){
       uiadapter::qt::startQt(base, argc, argv);
    });
+   if (0 != pthread_setname_np(qtThread.native_handle(), "NMBE-Qt"))
+   {
+      spdlog::error("Could not set thread name: NMBE-Qt");
+   }
    qtThread.join();
 }

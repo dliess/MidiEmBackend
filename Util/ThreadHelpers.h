@@ -40,6 +40,8 @@ public:
    }
    void join() { m_thread.join(); }
 
+   std::thread::native_handle_type native_handle() {return m_thread.native_handle();}
+
 protected:
    std::thread m_thread;
    std::atomic<bool> m_terminateRequest{false};
