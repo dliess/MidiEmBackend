@@ -1,41 +1,100 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "options": {
         "env": {
-            "buildType": "Debug",
-            "buildDirectory": "${workspaceRoot}/build-manually"
-        }
+           "SSH_KEY": "/home/build-user/.ssh/id_rsa"
+        },
     },
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "targetIp",
+            "description": "target to deploy to?",
+            "options": [
+                "raspberrypi4-64-nomidi",
+                "raspberrypi3-64-nomidi",
+                "192.168.1.176"
+            ],
+            "default": "192.168.1.176"
+        }
+    ],
     "tasks": [
         {
-            "label": "Create build dir",
+            "label": "CMake-ARM-Debug",
             "type": "shell",
-            "command": "mkdir -p ${buildDirectory}",
-            "problemMatcher": []
-        },
-        {
-            "label": "Generate UNIX makefiles",
-            "type": "shell",
-            "command": "cd ${buildDirectory}; cmake ${workspaceRoot}",
-            "problemMatcher": [],
-            "dependsOn": [
-                "Create build dir"
-            ]
-        },
-        {
-            "label": "Build release",
-            "type": "shell",
-            "command": "cd ${buildDirectory}; cmake --build . --parallel 8 --config {buildType}",
-            "problemMatcher": [],
-            "dependsOn": [
-                "Generate UNIX makefiles"
+            "command": "${workspaceRoot}/Scripts/build_for_target.sh",
+            "args": [
+                "build/arm64-linux-gcc",
+                "Debug"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+        },
+        {
+            "label": "CMake-ARM-Release",
+            "type": "shell",
+            "command": "${workspaceRoot}/Scripts/build_for_target.sh",
+            "args": [
+                "build/arm64-linux-gcc",
+                "Release"
+            ],
+            "group": {
+            "kind": "build",
+            "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+        },
+        {
+            "label": "Deploy-ARM-Debug",
+            "type": "shell",
+            "command": "${workspaceRoot}/Scripts/deploy.sh",
+            "args": [
+                "build/arm64-linux-gcc",
+                "Debug",
+                "${input:targetIp}"
+            ],
+            "group": {
+               "kind": "build",
+               "isDefault": true
+            },
+            "problemMatcher": [ ],
+            "dependsOn":["CMake-ARM-Debug"]
+        },
+        {
+            "label": "Deploy-ARM-Release",
+            "type": "shell",
+            "command": "${workspaceRoot}/Scripts/deploy.sh",
+            "args": [
+                "build/arm64-linux-gcc",
+                "Release",
+                "${input:targetIp}"
+            ],
+            "group": {
+               "kind": "build",
+               "isDefault": true
+            },
+            "problemMatcher": [ ],
+            "dependsOn":["CMake-ARM-Release"]
+        },
+        {
+            "label": "Journalctl Target",
+            "type": "shell",
+            "command": "${workspaceRoot}/Scripts/journalctl.sh",
+            "args": [
+                "${input:targetIp}"
+            ],
+            "group": {
+               "kind": "build",
+               "isDefault": true
+            },
+            "problemMatcher": [ ]
         }
     ]
 }

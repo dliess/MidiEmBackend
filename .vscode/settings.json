@@ -1,4 +1,9 @@
 {
+    "cmake.buildDirectory": "${workspaceRoot}/build/${buildKit}_${buildType}",
+    "cmake.installPrefix": "${workspaceRoot}/build/${buildKit}_${buildType}/_INSTALL",
+    "cmake.configureArgs": [
+        "-DCPM_LOCAL_PACKAGES_ONLY=OFF"
+    ],
     "files.associations": {
         "memory_resource": "cpp",
         "limits": "cpp",
