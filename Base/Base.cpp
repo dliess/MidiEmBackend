@@ -124,7 +124,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        tempo::BeatTick::instance().abletonLink(), midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
-   constexpr auto Period = std::chrono::milliseconds(1);
+   constexpr auto Period = std::chrono::milliseconds(4);
    constexpr auto PeriodNs =
        std::chrono::duration_cast<std::chrono::nanoseconds>(Period);
    itimerspec t(
