@@ -124,18 +124,31 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        tempo::BeatTick::instance().abletonLink(), midiRouter);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
-   constexpr auto Period = std::chrono::milliseconds(4);
+   constexpr auto Period = std::chrono::milliseconds(1);
    constexpr auto PeriodNs =
        std::chrono::duration_cast<std::chrono::nanoseconds>(Period);
    itimerspec t(
        {.it_interval = {0, PeriodNs.count()}, .it_value = {0, 1000000}});
    timerfd_settime(timerFd, 0, &t, NULL);
 
+   int timerFdUIUpdate = timerfd_create(CLOCK_MONOTONIC, 0);
+   constexpr auto PeriodUIUpdate = std::chrono::milliseconds(50);
+   constexpr auto PeriodNsUIUpdate =
+       std::chrono::duration_cast<std::chrono::nanoseconds>(PeriodUIUpdate);
+   itimerspec tUIUpdate(
+       {.it_interval = {0, PeriodNsUIUpdate.count()}, .it_value = {0, 1000000}});
+   timerfd_settime(timerFdUIUpdate, 0, &tUIUpdate, NULL);
+
    utils::FdSet fdSet;
    fdSet.AddFd(timerFd, [this](int fd) {
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
       loopFn();
+   });
+   fdSet.AddFd(timerFdUIUpdate, [this](int fd) {
+      std::array<uint8_t, 8> buf;
+      read(fd, buf.data(), buf.size());
+      musicDeviceHolder.musicDevices.updateSoundParameterUI();
    });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
       rtServer.processNextRequestAllNonBlock();
@@ -194,8 +207,6 @@ void base::Base::loopFn()
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
-
-   musicDeviceHolder.musicDevices.updateSoundParameterUI();
    musicDeviceFactory.invokeInserterQueueActions();
    MeasurerTenthMs<1>::instance().sample();
 }
