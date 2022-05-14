@@ -32,7 +32,7 @@ int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
    capnzero::MidiEmRt::QClient rtClient(m_zmqContext, "tcp://localhost:55555", "tcp://localhost:55556");
    capnzero::MidiEmLoader::QClient loaderClient(m_zmqContext, "tcp://localhost:55557", "tcp://localhost:55558");
 
-   channel.registerObject(QStringLiteral("MidiEmBackendRtServer"), &rtClient);
-   channel.registerObject(QStringLiteral("MidiEmBackendLoaderServer"), &loaderClient);
+   channel.registerObject(QStringLiteral("Rt"), &rtClient);
+   channel.registerObject(QStringLiteral("Loader"), &loaderClient);
    return app.exec();
 }
