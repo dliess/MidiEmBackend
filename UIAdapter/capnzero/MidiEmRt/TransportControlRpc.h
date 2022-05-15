@@ -15,9 +15,9 @@ class TransportControlRpc : public ::capnzero::MidiEmRt::TransportControlRpcIf
 public:
    TransportControlRpc(base::musicDevice::TransportControl& rTransportControl);
    void toggleEnabled(const ::capnzero::SpanCL<16>& uuid) override;
-	void setStarted(::capnzero::UInt8 val) override;
+	void setStarted(::capnzero::Bool start) override;
 	void toggleStarted() override;
-	void setQuantizedStart(::capnzero::UInt8 val) override;
+	void setQuantizedStart(::capnzero::Bool val) override;
    void toggleQuantizedStart() override;
 
 private:

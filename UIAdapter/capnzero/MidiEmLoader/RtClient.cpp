@@ -194,7 +194,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onTransportControlEnabledChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::UInt8 enabled) {
+                   ::capnzero::Bool enabled) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.TransportControl__enabledChanged(uuidData, enabled);
@@ -223,13 +223,13 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        [&rSignals](const ::capnzero::TextView& from,
                    const ::capnzero::TextView& to,
                    ::capnzero::UInt8 sourceChannel,
-                   ::capnzero::UInt8 destChannel, ::capnzero::UInt8 enable) {
+                   ::capnzero::UInt8 destChannel, ::capnzero::Bool enable) {
           rSignals.MidiRouting__specializedRoutingSet(
               std::string(from), std::string(to), sourceChannel, destChannel,
               enable);
        });
 
-    onAbletonLinkEnabledChanged([](::capnzero::UInt8 val){
+    onAbletonLinkEnabledChanged([](::capnzero::Bool val){
         // TODO: save it to file and load
     });
     onAbletonLinkOffsetTimeUsChanged([](::capnzero::Int32 val){
