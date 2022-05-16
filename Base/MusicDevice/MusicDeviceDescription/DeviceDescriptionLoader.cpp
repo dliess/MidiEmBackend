@@ -17,6 +17,7 @@ base::musicDevice::description::loadDescription(const std::string& configDir,
       // So we assume its a midi interface
       auto pDescr = std::make_shared<Description>();
       pDescr->hubSection.emplace(hub::Section{true, true});
+      pDescr->reactsToTransportCommands = true;
       return std::move(pDescr);
    }
 
