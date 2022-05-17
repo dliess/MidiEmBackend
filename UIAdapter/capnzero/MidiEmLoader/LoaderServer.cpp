@@ -12,13 +12,4 @@ LoaderServer::LoaderServer(zmq::context_t& rZmqContext,
         rZmqContext, "tcp://*:55557", "tcp://*:55558",
         std::make_unique<LoaderRpc>(signals(), rMDFactory))
 {
-   signals().registerAllEmissionDoneSubscrCb(
-       [&rMDFactory](Signals& signals) {
-          spdlog::info( "_____ A new client has subscribed, reemitting signals ____");
-          rMDFactory.dataHolder().reEmitSignals();
-          signals.allMusicDevicesChanged(
-              rMDFactory.getAllDevicesAsJson());
-          signals.allEmissionDone();
-          spdlog::info( "_____ allEmissionDone() sent _____");
-       });
 }

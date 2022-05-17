@@ -16,6 +16,7 @@
 #include "TransportControlRpc.h"
 
 using namespace uiadapter::capnzero;
+using ::capnzero::MidiEmRt::MidiEmRtServer;
 
 RtServer::RtServer(zmq::context_t &rZmqContext,
                    base::instruments::Instruments &rInstruments,
@@ -23,18 +24,24 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                    base::musicDevice::TransportControl &rTransportControl,
                    base::AbletonLinkWrapper &rAbletonLinkWrapper,
                    base::midifriends::Router &rMidiRouter) :
-    ::capnzero::MidiEmRt::MidiEmRtServer(
-        rZmqContext, "tcp://*:55555", "tcp://*:55556",
-        std::make_unique<MainRpc>(signals(), rInstruments,
-                                  rMDHolder.musicDevices, rTransportControl,
-                                  rAbletonLinkWrapper, rMidiRouter),
-        std::make_unique<InstrumentsRpc>(rInstruments),
-        std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
-        std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
-        std::make_unique<TransportControlRpc>(rTransportControl),
-        std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
-        std::make_unique<MidiRoutingRpc>(rMidiRouter))
+    MidiEmRtServer(rZmqContext, "tcp://*:55555", "tcp://*:55556",
+                   std::make_unique<MainRpc>(
+                       signals(), rInstruments, rMDHolder.musicDevices,
+                       rTransportControl, rAbletonLinkWrapper, rMidiRouter),
+                   std::make_unique<InstrumentsRpc>(rInstruments),
+                   std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
+                   std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
+                   std::make_unique<TransportControlRpc>(rTransportControl),
+                   std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
+                   std::make_unique<MidiRoutingRpc>(rMidiRouter))
 {
+    /*
+   Super::signals().registerAbletonLinkEnabledChangedSubscrCb(
+       [&rAbletonLinkWrapper](Signals &signals) {
+           signals.AbletonLink__enabledChanged(rAbletonLinkWrapper.isEnabled());
+       });
+    */
+
    rInstruments.registerForDataChange([this, &rInstruments]() {
       Super::signals().Instruments__kitInstrumentsChanged(
           meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
@@ -180,18 +187,18 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
    rAbletonLinkWrapper.onReactsOnTransportChanged([this](bool reacts) {
       signals().AbletonLink__reactOnTransportChanged(reacts);
    });
-   rAbletonLinkWrapper.onNumPeersChanged([this](size_t numPeers){
-       signals().AbletonLink__numberOfParticipantsChanged(numPeers);
+   rAbletonLinkWrapper.onNumPeersChanged([this](size_t numPeers) {
+      signals().AbletonLink__numberOfParticipantsChanged(numPeers);
    });
    rAbletonLinkWrapper.offset.onOffsetSetupBpmChanged([this](double bpm) {
-       signals().AbletonLink__offsetSetupTempoChanged(bpm);
+      signals().AbletonLink__offsetSetupTempoChanged(bpm);
    });
    rAbletonLinkWrapper.offset.onOffsetBeatsChanged([this](double offsetBeats) {
-       signals().AbletonLink__offsetBeatsChanged(offsetBeats);
+      signals().AbletonLink__offsetBeatsChanged(offsetBeats);
    });
    rAbletonLinkWrapper.offset.onOffsetUsChanged(
        [this](const std::chrono::microseconds &us) {
-           signals().AbletonLink__offsetTimeUsChanged(us.count());
+          signals().AbletonLink__offsetTimeUsChanged(us.count());
        });
 
    rMidiRouter.registerRoutedChangedCB(
