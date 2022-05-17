@@ -12,12 +12,6 @@ LoaderRpc::LoaderRpc(
     base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept :
     m_rSignals(rSignals), m_rMusicDevicFactory(rMusicDevicFactory)
 {
-
-   m_rSignals.registerAllEmissionDoneSubscrCb(
-       [this](LoaderServer::Signals& signals) {
-           reEmitSignals();
-       });
-
    m_rMusicDevicFactory.dataHolder().onDescriptionAdded(
        [this](const std::string& deviceName,
               const description::Description& description) {
