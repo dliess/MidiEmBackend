@@ -14,7 +14,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,
-                           ::capnzero::Int8 engineIdx,
+                           ::capnzero::Int16 engineIdx,
                            const ::capnzero::TextView& presetName) {
           const sound::preset::Id presetId(
               {std::string(deviceName), engineIdx, std::string(presetName)});
@@ -26,7 +26,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                                 const ::capnzero::TextView& type,
                                 const ::capnzero::TextView& port,
                                 const ::capnzero::TextView& mediumId,
-                                ::capnzero::UInt8 midiVoiceOffset) {
+                                ::capnzero::Int16 midiVoiceOffset) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rMDFactory.dataHolder().addUuid2MdId(
@@ -45,7 +45,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onSoundDevicesParameterChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx,
                    ::capnzero::Float32 commanded, ::capnzero::Float32 actual) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -55,7 +55,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onSoundDevicesActualPresetChanged(
        [this, &rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       const ::capnzero::TextView& presetName) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -65,7 +65,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onSoundDevicesLFOWaveformChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx,
                    ::capnzero::MidiEmRt::LFOWaveform waveform) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -75,7 +75,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesLFOAmplitudeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx,
                    ::capnzero::Float32 amplitude) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -84,7 +84,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesLFOFrequencyChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx,
                    ::capnzero::Float32 frequency) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -93,7 +93,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesLFOMultiplierExpChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int16 paramIdx,
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 paramIdx,
                    ::capnzero::UInt32 multiplierExp) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -103,7 +103,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onSoundDevicesArpeggiatorAlgorithmChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::Int16 voiceIdx,
                    ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -114,7 +114,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorBypassChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int8 on) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 on) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorBypassChanged(uuidData, voiceIdx,
@@ -123,7 +123,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
 
    onSoundDevicesArpeggiatorGateFillChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Float32 gateFill) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Float32 gateFill) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorGateFillChanged(uuidData, voiceIdx,
@@ -131,7 +131,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorHoldNotesChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int8 on) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int16 on) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorHoldNotesChanged(uuidData, voiceIdx,
@@ -139,7 +139,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorRangeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 range) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int32 range) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorRangeChanged(uuidData, voiceIdx,
@@ -147,7 +147,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorRangeTypeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::Int16 voiceIdx,
                    ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -158,7 +158,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorStepLengthChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Float32 stepLength) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Float32 stepLength) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorStepLengthChanged(
@@ -166,7 +166,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorFeedModeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx,
+                   ::capnzero::Int16 voiceIdx,
                    ::capnzero::MidiEmRt::ArpeggiatorFeedMode feedMode) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
@@ -177,7 +177,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
        });
    onSoundDevicesArpeggiatorSeqSizeChanged(
        [&rSignals](const ::capnzero::SpanCL<16>& uuid,
-                   ::capnzero::Int8 voiceIdx, ::capnzero::Int32 seqSize) {
+                   ::capnzero::Int16 voiceIdx, ::capnzero::Int32 seqSize) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rSignals.SoundDevices__arpeggiatorSeqSizeChanged(uuidData, voiceIdx,
@@ -222,8 +222,8 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
    onMidiRoutingSpecializedRoutingSet(
        [&rSignals](const ::capnzero::TextView& from,
                    const ::capnzero::TextView& to,
-                   ::capnzero::UInt8 sourceChannel,
-                   ::capnzero::UInt8 destChannel, ::capnzero::Bool enable) {
+                   ::capnzero::Int16 sourceChannel,
+                   ::capnzero::Int16 destChannel, ::capnzero::Bool enable) {
           rSignals.MidiRouting__specializedRoutingSet(
               std::string(from), std::string(to), sourceChannel, destChannel,
               enable);

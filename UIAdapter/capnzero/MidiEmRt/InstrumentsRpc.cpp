@@ -12,7 +12,7 @@ void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView &name) {}
 void InstrumentsRpc::removeKitInstrument(
     const ::capnzero::SpanCL<16> &instrumentUUID) {}
 
-void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 note, ::capnzero::Float32 velocity)
 {
     util::Identifiable::UUID uuid_;
     std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -24,7 +24,7 @@ void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzer
     }
 }
 
-void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 note, ::capnzero::Float32 velocity)
 {
     util::Identifiable::UUID uuid_;
     std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -36,7 +36,7 @@ void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnze
     }
 }
 
-void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 soundIndex, ::capnzero::Int16 note, ::capnzero::Float32 velocity)
 {
     util::Identifiable::UUID uuid_;
     std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -48,7 +48,7 @@ void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid, ::capnzero::U
     }
 }
 
-void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::UInt8 soundIndex, ::capnzero::UInt8 note, ::capnzero::Float32 velocity)
+void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 soundIndex, ::capnzero::Int16 note, ::capnzero::Float32 velocity)
 {
     util::Identifiable::UUID uuid_;
     std::copy(uuid.begin(), uuid.end(), uuid_.begin());

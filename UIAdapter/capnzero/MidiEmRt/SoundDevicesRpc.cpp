@@ -11,7 +11,7 @@ SoundDevicesRpc::SoundDevicesRpc(
 }
 
 void SoundDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid,
-                             ::capnzero::Int8 voiceIdx, ::capnzero::UInt8 note,
+                             ::capnzero::Int16 voiceIdx, ::capnzero::Int16 note,
                              ::capnzero::Float32 velocity)
 {
    util::Identifiable::UUID uuid_;
@@ -25,7 +25,7 @@ void SoundDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid,
-                              ::capnzero::Int8 voiceIdx, ::capnzero::UInt8 note,
+                              ::capnzero::Int16 voiceIdx, ::capnzero::Int16 note,
                               ::capnzero::Float32 velocity)
 {
    util::Identifiable::UUID uuid_;
@@ -39,7 +39,7 @@ void SoundDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::pitchBend(const ::capnzero::SpanCL<16>& uuid,
-                                ::capnzero::Int8 voiceIdx,
+                                ::capnzero::Int16 voiceIdx,
                                 ::capnzero::Float32 value)
 {
    util::Identifiable::UUID uuid_;
@@ -53,8 +53,8 @@ void SoundDevicesRpc::pitchBend(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::Int8 voiceIdx,
-                                     ::capnzero::UInt8 note,
+                                     ::capnzero::Int16 voiceIdx,
+                                     ::capnzero::Int16 note,
                                      ::capnzero::Float32 value)
 {
    util::Identifiable::UUID uuid_;
@@ -68,7 +68,7 @@ void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::afterTouch(const ::capnzero::SpanCL<16>& uuid,
-                                 ::capnzero::Int8 voiceIdx,
+                                 ::capnzero::Int16 voiceIdx,
                                  ::capnzero::Float32 value)
 {
    util::Identifiable::UUID uuid_;
@@ -82,7 +82,7 @@ void SoundDevicesRpc::afterTouch(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::registerForParameterChange(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -97,7 +97,7 @@ void SoundDevicesRpc::registerForParameterChange(
 }
 
 void SoundDevicesRpc::unregisterForParameterChange(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -112,7 +112,7 @@ void SoundDevicesRpc::unregisterForParameterChange(
 }
 
 void SoundDevicesRpc::incrementParameterValue(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment)
 {
    util::Identifiable::UUID uuid_;
@@ -127,7 +127,7 @@ void SoundDevicesRpc::incrementParameterValue(
 }
 
 void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
-                                        ::capnzero::Int8 voiceIdx,
+                                        ::capnzero::Int16 voiceIdx,
                                         ::capnzero::Int16 paramIdx,
                                         ::capnzero::Float32 value)
 {
@@ -142,7 +142,7 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
-                                          ::capnzero::Int8 voiceIdx,
+                                          ::capnzero::Int16 voiceIdx,
                                           ::capnzero::Int16 paramIdx)
 {
    util::Identifiable::UUID uuid_;
@@ -156,7 +156,7 @@ void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
-                                           ::capnzero::Int8 voiceIdx)
+                                           ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -182,7 +182,7 @@ void SoundDevicesRpc::blankAllVoiceParameters(
 }
 
 void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::Int8 voiceIdx,
+                                     ::capnzero::Int16 voiceIdx,
                                      ::capnzero::Int16 paramIdx,
                                      ::capnzero::MidiEmRt::LFOWaveform waveform)
 {
@@ -199,9 +199,9 @@ void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
-                                     ::capnzero::Int8 voiceIdx,
+                                     ::capnzero::Int16 voiceIdx,
                                      ::capnzero::Int16 paramIdx,
-                                     ::capnzero::Int8 increment)
+                                     ::capnzero::Int16 increment)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -214,7 +214,7 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 amplitude)
 {
@@ -230,7 +230,7 @@ void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
@@ -246,7 +246,7 @@ void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 frequency)
 {
@@ -262,7 +262,7 @@ void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
@@ -278,7 +278,7 @@ void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
-                                          ::capnzero::Int8 voiceIdx,
+                                          ::capnzero::Int16 voiceIdx,
                                           ::capnzero::Int16 paramIdx,
                                           ::capnzero::UInt32 exponent)
 {
@@ -294,7 +294,7 @@ void SoundDevicesRpc::setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
-                                          ::capnzero::Int8 voiceIdx,
+                                          ::capnzero::Int16 voiceIdx,
                                           ::capnzero::Int16 paramIdx,
                                           ::capnzero::Int32 increment)
 {
@@ -310,7 +310,7 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::stageParameterValues(const ::capnzero::SpanCL<16>& uuid,
-                                           ::capnzero::Int8 voiceIdx)
+                                           ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -323,7 +323,7 @@ void SoundDevicesRpc::stageParameterValues(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::restoreToStagedParameterValues(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -336,7 +336,7 @@ void SoundDevicesRpc::restoreToStagedParameterValues(
 }
 
 void SoundDevicesRpc::restoreToLastActualPreset(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -350,7 +350,7 @@ void SoundDevicesRpc::restoreToLastActualPreset(
 }
 
 void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
-                                   ::capnzero::Int8 voiceIdx,
+                                   ::capnzero::Int16 voiceIdx,
                                    const ::capnzero::TextView& presetName,
                                    const ::capnzero::TextView& category,
                                    const ::capnzero::TextView& genre)
@@ -372,7 +372,7 @@ void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
-                                      ::capnzero::Int8 voiceIdx,
+                                      ::capnzero::Int16 voiceIdx,
                                       const ::capnzero::TextView& presetName)
 {
    util::Identifiable::UUID uuid_;
@@ -387,7 +387,7 @@ void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::sendParameterDumpRequest(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -400,8 +400,8 @@ void SoundDevicesRpc::sendParameterDumpRequest(
 }
 
 void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
-                                           ::capnzero::Int8 voiceIdx,
-                                           ::capnzero::Int8 on)
+                                           ::capnzero::Int16 voiceIdx,
+                                           ::capnzero::Int16 on)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -422,7 +422,7 @@ void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setArpeggiatorStepLength(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Float32 stepLength)
 {
    util::Identifiable::UUID uuid_;
@@ -444,7 +444,7 @@ void SoundDevicesRpc::setArpeggiatorStepLength(
 }
 
 void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
-                                             ::capnzero::Int8 voiceIdx,
+                                             ::capnzero::Int16 voiceIdx,
                                              ::capnzero::Float32 gateFill)
 {
    util::Identifiable::UUID uuid_;
@@ -466,7 +466,7 @@ void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
 }
 
 void SoundDevicesRpc::setArpeggiatorAlgorithm(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm)
 {
    util::Identifiable::UUID uuid_;
@@ -488,7 +488,7 @@ void SoundDevicesRpc::setArpeggiatorAlgorithm(
 }
 
 void SoundDevicesRpc::setArpeggiatorRange(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
     ::capnzero::Int32 range)
 {
@@ -511,8 +511,8 @@ void SoundDevicesRpc::setArpeggiatorRange(
 }
 
 void SoundDevicesRpc::setArpeggiatorHoldNotes(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
-    ::capnzero::Int8 on)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 on)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -533,7 +533,7 @@ void SoundDevicesRpc::setArpeggiatorHoldNotes(
 }
 
 void SoundDevicesRpc::setArpeggiatorFeedMode(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx,
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::MidiEmRt::ArpeggiatorFeedMode feedMode)
 {
    util::Identifiable::UUID uuid_;
@@ -555,7 +555,7 @@ void SoundDevicesRpc::setArpeggiatorFeedMode(
 }
 
 void SoundDevicesRpc::arpeggiatorSeqInsertPause(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
@@ -578,7 +578,7 @@ void SoundDevicesRpc::arpeggiatorSeqInsertPause(
 }
 
 void SoundDevicesRpc::arpeggiatorSeqRemoveLastNote(
-    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int8 voiceIdx)
+    const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());

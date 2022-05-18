@@ -51,7 +51,7 @@ void LoaderRpc::reEmitSignals()
 void LoaderRpc::loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,
                                        const ::capnzero::TextView& manufacturer,
                                        const ::capnzero::TextView& device,
-                                       ::capnzero::UInt8 midiVoiceOffset)
+                                       ::capnzero::Int16 midiVoiceOffset)
 {
    std::string mdName(manufacturer);
    mdName.append("/");

@@ -25,8 +25,8 @@ public:
                                 const ::capnzero::TextView& to) override;
    void toggleSpecializedRouting(const ::capnzero::TextView& from,
                                  const ::capnzero::TextView& to,
-                                 ::capnzero::UInt8 sourceChannel,
-                                 ::capnzero::UInt8 destChannel) override;
+                                 ::capnzero::Int16 sourceChannel,
+                                 ::capnzero::Int16 destChannel) override;
 
 private:
    base::midifriends::Router& m_rMidiRouter;

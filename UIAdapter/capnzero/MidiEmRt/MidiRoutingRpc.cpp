@@ -35,8 +35,8 @@ void MidiRoutingRpc::clearSpecializedRouting(const ::capnzero::TextView& from,
 
 void MidiRoutingRpc::toggleSpecializedRouting(const ::capnzero::TextView& from,
                                               const ::capnzero::TextView& to,
-                                              ::capnzero::UInt8 sourceChannel,
-                                              ::capnzero::UInt8 destChannel)
+                                              ::capnzero::Int16 sourceChannel,
+                                              ::capnzero::Int16 destChannel)
 {
    m_rMidiRouter.toggleMappingForChannelIdx(std::string(from), std::string(to),
                                             sourceChannel, destChannel);
