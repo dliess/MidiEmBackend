@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 2.8.12)
-
-set (CMAKE_CXX_STANDARD 17)
-
 file(RELATIVE_PATH DEV_DIR "${PROJECT_SOURCE_DIR}/MusicDevicePlugins/Devices/" "${CMAKE_CURRENT_SOURCE_DIR}")
 string(REPLACE "/" "__" TARGET_NAME "${DEV_DIR}")
 
