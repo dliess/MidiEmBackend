@@ -3,7 +3,7 @@
 
 #include <mpark/variant.hpp>
 #include <string>
-
+#include "Identifiable.h"
 #include "Overload.h"
 
 namespace base::musicDevice::controller
@@ -54,8 +54,14 @@ struct Event
    EventValue value;
 };
 
+struct EventExt
+{
+   util::Identifiable::UUID uuid;
+   Event event;
+};
+
 } // namespace base::musicDevice::controller
 
+#include "ControllerEvents.inl"
 #include "ControllerEventsMeta.h"
-
 #endif

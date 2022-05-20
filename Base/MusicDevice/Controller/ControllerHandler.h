@@ -7,6 +7,8 @@
 #include "Midi1Output.h"
 #include "MusicDevicePluginHandler.h"
 #include "DoubleBufferedMessageDrain.h"
+#include "CallbackSignal.h"
+#include "ControllerEvents.h"
 
 namespace base::musicDevice
 {
@@ -39,6 +41,8 @@ public:
    float getParameterValue(int presetId, int parameterId) const noexcept;
    void enlightLed(int widgetId, const WidgetCoord& widgetCoord,
                    const ColorARGB& color) noexcept;
+
+   CB_SIGNAL(EventReceived, const Event&);
 
 private:
    std::string m_deviceName;

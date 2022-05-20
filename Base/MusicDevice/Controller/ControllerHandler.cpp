@@ -26,12 +26,12 @@ void ControllerHandler::initMidiInHandler(
 {
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
-      pMidiIn, m_rControllerSection, [](const Event& event) {
-         /*
+      pMidiIn, m_rControllerSection, [this](const Event& event) {
+         emitEventReceived(event);
          spdlog::info( "Received evt id {} | value: {}",
                meta::serialize(event.id).dump(),
                meta::serialize(event.value).dump());
-         */
+         
       });
 }
 

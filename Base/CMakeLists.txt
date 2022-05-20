@@ -6,6 +6,7 @@ add_subdirectory(Instruments)
 add_subdirectory(MidiFriends)
 add_subdirectory(MusicDevice)
 add_subdirectory(Transport)
+add_subdirectory(ControllerEventRouter)
 add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 
 set(SOURCES
