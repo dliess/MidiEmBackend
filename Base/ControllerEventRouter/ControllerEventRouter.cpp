@@ -44,14 +44,14 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
-                 handlePressReleaseDirect(eventIdExt, destIter->second, value);
+                 handlePressReleaseDirect(destIter->second, value);
               }
            },
            [this, &eventIdExt, &value](const Note& note) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
-                 handlePressReleaseDirect(eventIdExt, destIter->second, value);
+                 handlePressReleaseDirect(destIter->second, value);
               }
               else
               {
@@ -69,8 +69,37 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
 }
 
 void EventRouter::handleContinousValueType(
-    const EventIdExt& event, const ContinousValueType& value) noexcept
+    const EventIdExt& eventIdExt, const ContinousValueType& value) noexcept
 {
+   mpark::visit(
+       util::overload{
+           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+              const auto destIter = m_map.find(eventIdExt);
+              if (destIter != m_map.end())
+              {
+                 handleContinousValueDirect(destIter->second, value);
+              }
+           },
+           [this, &eventIdExt, &value](const Note& note) {
+              const auto destIter = m_map.find(eventIdExt);
+              if (destIter != m_map.end())
+              {
+                 handleContinousValueDirect(destIter->second, value);
+              }
+              else
+              {
+                 EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{-1});
+                 const auto destIter2 = m_map.find(melodicEvent);
+                 if (destIter2 != m_map.end())
+                 {
+                    sendMPEContinousValue(note.number, destIter2->second,
+                                          value);
+                 }
+              }
+           },
+           [this](auto&&) {}},
+       eventIdExt.eventId.widgetCoord);
 }
 
 void EventRouter::handleIncrementType(const EventIdExt& event,
@@ -84,7 +113,7 @@ void EventRouter::handleRelativeValueType(
 }
 
 void EventRouter::handlePressReleaseDirect(
-    const EventIdExt& eventIdExt, const EventDestination& eventDestination,
+    const EventDestination& eventDestination,
     const PressReleaseType& value) noexcept
 {
    const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
@@ -92,7 +121,7 @@ void EventRouter::handlePressReleaseDirect(
    {
       mpark::visit(
           util::overload{
-              [&mdIter, &eventDestination, &eventIdExt,
+              [&mdIter, &eventDestination,
                &value](const EventDestination::Note& note) {
                  if (value.value > 0)
                  {
@@ -105,7 +134,7 @@ void EventRouter::handlePressReleaseDirect(
                         eventDestination.voiceIdx, note.value, -value.value);
                  }
               },
-              [&mdIter, &eventDestination, &eventIdExt,
+              [&mdIter, &eventDestination,
                &value](const EventDestination::ParameterId& parameterId) {
                  if (value.value > 0)
                  {
@@ -139,5 +168,43 @@ void EventRouter::sendNoteOnOff(int note,
          mdIter->second->soundHandler->noteOff(eventDestination.voiceIdx, note,
                                                -value.value);
       }
+   }
+}
+
+void EventRouter::handleContinousValueDirect(
+    const EventDestination& eventDestination,
+    const ContinousValueType& value) noexcept
+{
+   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
+   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
+   {
+      mpark::visit(
+          util::overload{[&mdIter, &eventDestination, &value](
+                             const EventDestination::ParameterId& parameterId) {
+                            mdIter->second->soundHandler->setParameterValue(
+                                eventDestination.voiceIdx, parameterId.id,
+                                value.value);
+                         },
+                         [](auto&&) { assert(false); }},
+          eventDestination.endpoint);
+   }
+}
+
+void EventRouter::sendMPEContinousValue(
+    int note, const EventDestination& eventDestination,
+    const ContinousValueType& value) noexcept
+{
+   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
+   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
+   {
+      mpark::visit(
+          util::overload{[&mdIter, &note, &value](
+                             const EventDestination::ParameterId& parameterId) {
+                            // TODO:
+                            // mdIter->second->soundHandler->setMPEParameterValue(
+                            //     note, parameterId.id, value.value);
+                         },
+                         [](auto&&) { assert(false); }},
+          eventDestination.endpoint);
    }
 }

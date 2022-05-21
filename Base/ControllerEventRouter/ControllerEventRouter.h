@@ -30,11 +30,16 @@ private:
    void handleRelativeValueType(const EventIdExt& event,
                                 const RelativeValueType& value) noexcept;
 
-   void handlePressReleaseDirect(const EventIdExt& eventIdExt,
-                                 const EventDestination& eventDestination,
+   void handlePressReleaseDirect(const EventDestination& eventDestination,
                                  const PressReleaseType& value) noexcept;
    void sendNoteOnOff(int note, const EventDestination& eventDestination,
                       const PressReleaseType& value) noexcept;
+
+   void handleContinousValueDirect(const EventDestination& eventDestination,
+                                   const ContinousValueType& value) noexcept;
+   void sendMPEContinousValue(int note,
+                              const EventDestination& eventDestination,
+                              const ContinousValueType& value) noexcept;
 };
 
 }   // namespace controller
