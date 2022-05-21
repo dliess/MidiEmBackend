@@ -19,7 +19,8 @@ struct EventDestination
    };
    struct ParameterId
    {
-      int value;
+      int id;
+      int maxValue{1};
    };
    using Endpoint = mpark::variant<mpark::monostate, Note, ParameterId,
                                    InternalFunctionality>;
