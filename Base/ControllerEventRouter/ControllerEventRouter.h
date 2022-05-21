@@ -20,15 +20,21 @@ public:
 
 private:
    MusicDeviceContainer& m_rMusicDeviceContainer;
-   std::unordered_map<EventExt, EventDestination> m_map;
-   void handlePressReleaseType(const EventExt& event,
+   std::unordered_map<EventIdExt, EventDestination> m_map;
+   void handlePressReleaseType(const EventIdExt& event,
                                const PressReleaseType& value) noexcept;
-   void handleContinousValueType(const EventExt& event,
-                               const ContinousValueType& value) noexcept;
-   void handleIncrementType(const EventExt& event,
-                               const IncrementType& value) noexcept;
-   void handleRelativeValueType(const EventExt& event,
-                               const RelativeValueType& value) noexcept;
+   void handleContinousValueType(const EventIdExt& event,
+                                 const ContinousValueType& value) noexcept;
+   void handleIncrementType(const EventIdExt& event,
+                            const IncrementType& value) noexcept;
+   void handleRelativeValueType(const EventIdExt& event,
+                                const RelativeValueType& value) noexcept;
+
+   void handlePressReleaseDirect(const EventIdExt& eventIdExt,
+                                 const EventDestination& eventDestination,
+                                 const PressReleaseType& value) noexcept;
+   void sendNoteOnOff(int note, const EventDestination& eventDestination,
+                      const PressReleaseType& value) noexcept;
 };
 
 }   // namespace controller

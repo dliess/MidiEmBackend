@@ -51,24 +51,24 @@ inline bool operator==(Event const& lhs, Event const& rhs)
           lhs.value == rhs.value;
 }
 
-inline bool operator==(EventExt const& lhs, EventExt const& rhs)
+inline bool operator==(EventIdExt const& lhs, EventIdExt const& rhs)
 {
    return lhs.uuid == rhs.uuid &&
-          lhs.event == rhs.event;
+          lhs.eventId == rhs.eventId;
 }
 
 } // namespace base::musicDevice::controller
 
 namespace std {
-    template<> struct hash<base::musicDevice::controller::Event> {
-        std::size_t operator()(const base::musicDevice::controller::Event &event) const {
+    template<> struct hash<base::musicDevice::controller::EventId> {
+        std::size_t operator()(const base::musicDevice::controller::EventId &eventId) const {
            //TODO
             return 1;
         }  
     };
 
-    template<> struct hash<base::musicDevice::controller::EventExt> {
-        std::size_t operator()(const base::musicDevice::controller::EventExt &event) const {
+    template<> struct hash<base::musicDevice::controller::EventIdExt> {
+        std::size_t operator()(const base::musicDevice::controller::EventIdExt &event) const {
            //TODO
             return 1;
         }  

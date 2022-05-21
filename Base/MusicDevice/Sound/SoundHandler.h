@@ -49,7 +49,7 @@ public:
    void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
    void afterTouch(int voiceIndex, float value) noexcept;
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
-   void incrementParameterValue(int voiceId, int parameterId, float increment) noexcept;
+   void incrementParameterValue(int voiceId, int parameterId, float increment, bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;
    inline std::optional<std::string> getActualPresetOfVoice(int voiceId) const noexcept;
    std::shared_ptr<preset::DevicePresets> presets() const noexcept;

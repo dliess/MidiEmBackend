@@ -54,10 +54,10 @@ struct Event
    EventValue value;
 };
 
-struct EventExt
+struct EventIdExt
 {
    util::Identifiable::UUID uuid;
-   Event event;
+   EventId eventId;
 };
 
 } // namespace base::musicDevice::controller

@@ -75,11 +75,22 @@ void ParameterStorage::setCommandedValuesOfVoice(int voiceIdx,
    }
 }
 
+inline void ParameterStorage::incSoundParameterValue(int voiceIdx,
+                                                     int parameterIdx,
+                                                     float increment,
+                                                     bool roundRobin) noexcept
+{
+   elementContainer(voiceIdx).parameters[parameterIdx].incCommandedValue(
+       increment, roundRobin);
+}
+
 inline void ParameterStorage::setSoundParameterValue(int voiceIdx,
                                                      int parameterIdx,
-                                                     float value) noexcept
+                                                     float value,
+                                                     bool roundRobin) noexcept
 {
-   elementContainer(voiceIdx).parameters[parameterIdx].setCommandedValue(value);
+   elementContainer(voiceIdx).parameters[parameterIdx].setCommandedValue(
+       value, roundRobin);
 }
 
 inline void ParameterStorage::setSoundParameterActualValue(int voiceIdx,
@@ -241,8 +252,9 @@ inline void ParameterStorage::resetToInitialValues() noexcept
       element.dirtyFlagRt = true;
       element.setCommandedValue(initVal);
    });
-   forEachElementContainer(
-       [](EngineData& engineData, int voiceIdx) { engineData.actualPreset.reset(); });
+   forEachElementContainer([](EngineData& engineData, int voiceIdx) {
+      engineData.actualPreset.reset();
+   });
 }
 
 inline std::optional<std::string> ParameterStorage::getActualPresetOfVoice(
@@ -469,20 +481,43 @@ inline void ParameterStorage::Element::setActualValue(float value) noexcept
 }
 
 inline void ParameterStorage::Element::setCommandedValue(
-    float value, bool markDirtyRt) noexcept
+    float value, bool markDirtyRt, bool roundRobin) noexcept
 {
    const float range = m_isListIndex ? m_resolution : 1.0;
-   if (value < 0.0)
+   if (roundRobin)
    {
-      value = 0.0;
+      if (value < 0.0)
+      {
+         value = m_isListIndex ? range - 1 : range - FUZZ;
+      }
+      if (value >= range)
+      {
+         value = 0.0;
+      }
    }
-   if (value >= range)
+   else
    {
-      value = m_isListIndex ? range - 1 : range - FUZZ;
+      if (value < 0.0)
+      {
+         value = 0.0;
+      }
+      if (value >= range)
+      {
+         value = m_isListIndex ? range - 1 : range - FUZZ;
+      }
    }
    commanded   = value;
    dirtyFlagRt = markDirtyRt;
    dirtyFlagUi = true;
+}
+
+template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+
+inline void ParameterStorage::Element::incCommandedValue(
+    float increment, bool roundRobin) noexcept
+{
+   const float theIncrement = m_isListIndex ? sgn(increment) : increment;
+   setCommandedValue(commanded + theIncrement, true, roundRobin);
 }
 
 inline float ParameterStorage::Element::calcModified() const noexcept

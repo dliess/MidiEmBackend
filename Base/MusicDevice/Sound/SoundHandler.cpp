@@ -190,7 +190,7 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
-                                           float increment) noexcept
+                                           float increment, bool roundRobin) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -200,9 +200,7 @@ void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
           m_deviceName);
       return;
    }
-   const float actualValue =
-       m_paramStorage.getCommandedValue(voiceId, parameterId);
-   setParameterValue(voiceId, parameterId, actualValue + increment);
+   m_paramStorage.incSoundParameterValue(voiceId, parameterId, increment, roundRobin);
 }
 
 void SoundHandler::updateActualSoundStorageValues() noexcept

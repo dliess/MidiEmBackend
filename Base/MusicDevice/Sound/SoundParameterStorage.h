@@ -21,12 +21,14 @@ namespace sound
 class ParameterStorage
 {
 public:
-   inline ParameterStorage(
-       const description::sound::Section& rSoundSection);
+   inline ParameterStorage(const description::sound::Section& rSoundSection);
    template <typename T>
    void setCommandedValuesOfVoice(int voiceId, const T& container) noexcept;
-   inline void setSoundParameterValue(int voiceId, int parameterId,
-                                      float value) noexcept;
+   inline void incSoundParameterValue(int voiceId, int parameterId,
+                                      float increment,
+                                      bool roundRobin = false) noexcept;
+   inline void setSoundParameterValue(int voiceId, int parameterId, float value,
+                                      bool roundRobin = false) noexcept;
    inline void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
 
@@ -101,8 +103,10 @@ public:
       inline std::optional<float> updateActualValue() noexcept;
       inline void setActualValueUnsynced(float value) noexcept;
       inline void setActualValue(float value) noexcept;
-      inline void setCommandedValue(float value,
-                                    bool markDirtyRt = true) noexcept;
+      inline void setCommandedValue(float value, bool markDirtyRt = true,
+                                    bool roundRobin = false) noexcept;
+      inline void incCommandedValue(float increment,
+                                    bool roundRobin = false) noexcept;
 
    private:
       const bool m_isListIndex;
