@@ -3,10 +3,13 @@
 
 #include <mpark/variant.hpp>
 
+#include "EnumReflect.h"
 #include "Identifiable.h"
 
 namespace base::musicDevice::controller
 {
+DECLARE_ENUM(ParameterDestination, uint, Parameter, LFOWaveform, LFOAmplitude,
+             LFOFrequency, LFOMultiplier);
 struct EventDestination
 {
    enum class InternalFunctionality
@@ -17,12 +20,15 @@ struct EventDestination
    {
       int value;
    };
-   struct ParameterId
+   struct Parameter
    {
       int id;
       bool upwards{true};
+      ParameterDestination parameterDestination{ParameterDestination::Parameter};
+      bool isList{false};
+      size_t resolution {128};
    };
-   using Endpoint = mpark::variant<mpark::monostate, Note, ParameterId,
+   using Endpoint = mpark::variant<mpark::monostate, Note, Parameter,
                                    InternalFunctionality>;
    util::Identifiable::UUID uuid;
    int voiceIdx;

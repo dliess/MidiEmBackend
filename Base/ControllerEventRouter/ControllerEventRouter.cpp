@@ -146,13 +146,13 @@ void EventRouter::handlePressReleaseDirect(
                  }
               },
               [&mdIter, &eventDestination,
-               &value](const EventDestination::ParameterId& parameterId) {
+               &value](const EventDestination::Parameter& parameter) {
                  if (value.value > 0)
                  {
                     const float incr =
-                        parameterId.upwards ? value.value : -value.value;
+                        parameter.upwards ? value.value : -value.value;
                     mdIter->second->soundHandler->incrementParameterValue(
-                        eventDestination.voiceIdx, parameterId.id, incr);
+                        eventDestination.voiceIdx, parameter.id, incr);
                  }
               },
               [](const EventDestination::InternalFunctionality& internalFunct) {
@@ -191,9 +191,9 @@ void EventRouter::handleContinousValueDirect(
    {
       mpark::visit(
           util::overload{[&mdIter, &eventDestination, &value](
-                             const EventDestination::ParameterId& parameterId) {
+                             const EventDestination::Parameter& parameter) {
                             mdIter->second->soundHandler->setParameterValue(
-                                eventDestination.voiceIdx, parameterId.id,
+                                eventDestination.voiceIdx, parameter.id,
                                 value.value);
                          },
                          [](auto&&) { assert(false); }},
@@ -210,10 +210,10 @@ void EventRouter::sendMPEContinousValue(
    {
       mpark::visit(
           util::overload{[&mdIter, &note, &value](
-                             const EventDestination::ParameterId& parameterId) {
+                             const EventDestination::Parameter& parameter) {
                             // TODO:
                             // mdIter->second->soundHandler->setMPEParameterValue(
-                            //     note, parameterId.id, value.value);
+                            //     note, parameter.id, value.value);
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);
@@ -228,11 +228,20 @@ void EventRouter::handleIncrementDirect(
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
       mpark::visit(
-          util::overload{[&mdIter, &eventDestination, &value](
-                             const EventDestination::ParameterId& parameterId) {
+          util::overload{[&mdIter, &eventDestination, &increment](
+                             const EventDestination::Parameter& parameter) {
+                            float incr = 0;
+                            if(parameter.isList)
+                            {
+                               incr = increment.value * 12 / std::max(increment.resolution, 12);
+                            }
+                            else
+                            { // TODO: highres mode
+                               incr = increment.value / increment.resolution;
+                            }
                             mdIter->second->soundHandler->incrementParameterValue(
-                                eventDestination.voiceIdx, parameterId.id,
-                                value.value);
+                                eventDestination.voiceIdx, parameter.id,
+                                incr);
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);
