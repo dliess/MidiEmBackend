@@ -119,8 +119,36 @@ void EventRouter::handleIncrementType(const EventIdExt& eventIdExt,
 }
 
 void EventRouter::handleRelativeValueType(
-    const EventIdExt& event, const RelativeValueType& value) noexcept
+    const EventIdExt& eventIdExt, const RelativeValueType& value) noexcept
 {
+   mpark::visit(
+       util::overload{
+           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+              const auto destIter = m_map.find(eventIdExt);
+              if (destIter != m_map.end())
+              {
+                 handleRelativeValueDirect(destIter->second, value);
+              }
+           },
+           [this, &eventIdExt, &value](const Note& note) {
+              const auto destIter = m_map.find(eventIdExt);
+              if (destIter != m_map.end())
+              {
+                 handleRelativeValueDirect(destIter->second, value);
+              }
+              else
+              {
+                 EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{-1});
+                 const auto destIter2 = m_map.find(melodicEvent);
+                 if (destIter2 != m_map.end())
+                 {
+                    sendMPERelativeValue(note.number, destIter2->second, value);
+                 }
+              }
+           },
+           [this](auto&&) {}},
+       eventIdExt.eventId.widgetCoord);
 }
 
 void EventRouter::handlePressReleaseDirect(
@@ -227,21 +255,72 @@ void EventRouter::handleIncrementDirect(
    const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
+      mpark::visit(util::overload{
+                       [&mdIter, &eventDestination, &increment](
+                           const EventDestination::Parameter& parameter) {
+                          float incr = 0;
+                          if (parameter.isList)
+                          {
+                             incr = increment.value * 12 /
+                                    std::max(increment.resolution, 12);
+                          }
+                          else
+                          {   // TODO: highres mode
+                             incr = increment.value / increment.resolution;
+                          }
+                          mdIter->second->soundHandler->incrementParameterValue(
+                              eventDestination.voiceIdx, parameter.id, incr);
+                       },
+                       [](auto&&) { assert(false); }},
+                   eventDestination.endpoint);
+   }
+}
+
+void EventRouter::handleRelativeValueDirect(
+    const EventDestination& eventDestination,
+    const RelativeValueType& value) noexcept
+{
+   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
+   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
+   {
       mpark::visit(
-          util::overload{[&mdIter, &eventDestination, &increment](
+          util::overload{
+              [&mdIter, &eventDestination,
+               &value](const EventDestination::Parameter& parameter) {
+                 float valueToSet = value.value;
+                 if (!parameter.valueAtPress)
+                 {
+                    parameter.valueAtPress.emplace<float>(
+                        mdIter->second->soundHandler->getParameterValue(
+                            eventDestination.voiceIdx, parameter.id));
+                 }
+                 valueToSet += parameter.valueAtPress.value();
+                 mdIter->second->soundHandler->setParameterValue(
+                     eventDestination.voiceIdx, parameter.id, valueToSet);
+                  if(0 == value.value)
+                  {
+                     parameter.valueAtPress = std::nullopt;
+                  }
+              },
+              [](auto&&) { assert(false); }},
+          eventDestination.endpoint);
+   }
+}
+
+void EventRouter::sendMPERelativeValue(int note,
+                                       const EventDestination& eventDestination,
+                                       const RelativeValueType& value) noexcept
+{
+   // TODO !!!
+   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
+   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
+   {
+      mpark::visit(
+          util::overload{[&mdIter, &note, &value](
                              const EventDestination::Parameter& parameter) {
-                            float incr = 0;
-                            if(parameter.isList)
-                            {
-                               incr = increment.value * 12 / std::max(increment.resolution, 12);
-                            }
-                            else
-                            { // TODO: highres mode
-                               incr = increment.value / increment.resolution;
-                            }
-                            mdIter->second->soundHandler->incrementParameterValue(
-                                eventDestination.voiceIdx, parameter.id,
-                                incr);
+                            // TODO:
+                            // mdIter->second->soundHandler->setMPEParameterValue(
+                            //     note, parameter.id, value.value);
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);

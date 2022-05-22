@@ -2,6 +2,7 @@
 #define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_H
 
 #include <mpark/variant.hpp>
+#include <optional>
 
 #include "EnumReflect.h"
 #include "Identifiable.h"
@@ -27,6 +28,7 @@ struct EventDestination
       ParameterDestination parameterDestination{ParameterDestination::Parameter};
       bool isList{false};
       size_t resolution {128};
+      mutable std::optional<float> valueAtPress{0};
    };
    using Endpoint = mpark::variant<mpark::monostate, Note, Parameter,
                                    InternalFunctionality>;

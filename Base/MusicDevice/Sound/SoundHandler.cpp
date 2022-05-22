@@ -189,6 +189,19 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
 }
 
+float SoundHandler::getParameterValue(int voiceId, int parameterId) const noexcept
+{
+   if (!m_midiOutHandler)
+   {
+      spdlog::error(
+          "setSoundParameterValue() called but there is no m_midiOutHandler in "
+          "device '{}'",
+          m_deviceName);
+      return -1;
+   }
+   return m_paramStorage.getCommandedValue(voiceId, parameterId);
+}
+
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
                                            float increment, bool roundRobin) noexcept
 {
