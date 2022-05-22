@@ -40,6 +40,8 @@ private:
    void sendMPEContinousValue(int note,
                               const EventDestination& eventDestination,
                               const ContinousValueType& value) noexcept;
+   void handleIncrementDirect(const EventDestination& eventDestination,
+                              const IncrementType& increment) noexcept;
 };
 
 }   // namespace controller

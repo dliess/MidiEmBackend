@@ -38,6 +38,7 @@ struct ContinousValueType
 };
 struct IncrementType
 {
+   int resolution;
    int value;
 };
 struct RelativeValueType

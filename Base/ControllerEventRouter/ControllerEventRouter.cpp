@@ -102,9 +102,20 @@ void EventRouter::handleContinousValueType(
        eventIdExt.eventId.widgetCoord);
 }
 
-void EventRouter::handleIncrementType(const EventIdExt& event,
+void EventRouter::handleIncrementType(const EventIdExt& eventIdExt,
                                       const IncrementType& value) noexcept
 {
+   mpark::visit(
+       util::overload{
+           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+              const auto destIter = m_map.find(eventIdExt);
+              if (destIter != m_map.end())
+              {
+                 handleIncrementDirect(destIter->second, value);
+              }
+           },
+           [this](auto&&) { assert(false); }},
+       eventIdExt.eventId.widgetCoord);
 }
 
 void EventRouter::handleRelativeValueType(
@@ -203,6 +214,25 @@ void EventRouter::sendMPEContinousValue(
                             // TODO:
                             // mdIter->second->soundHandler->setMPEParameterValue(
                             //     note, parameterId.id, value.value);
+                         },
+                         [](auto&&) { assert(false); }},
+          eventDestination.endpoint);
+   }
+}
+
+void EventRouter::handleIncrementDirect(
+    const EventDestination& eventDestination,
+    const IncrementType& increment) noexcept
+{
+   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
+   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
+   {
+      mpark::visit(
+          util::overload{[&mdIter, &eventDestination, &value](
+                             const EventDestination::ParameterId& parameterId) {
+                            mdIter->second->soundHandler->incrementParameterValue(
+                                eventDestination.voiceIdx, parameterId.id,
+                                value.value);
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);
