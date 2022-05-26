@@ -13,11 +13,13 @@ set(HEADERS
     "error_msg.hpp"
 )
 
-add_library(Util STATIC ${SOURCES} ${HEADERS})
-target_include_directories(Util
+set(TARGET_NAME Util)
+
+add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
+target_include_directories(${TARGET_NAME}
     PUBLIC ${CMAKE_CURRENT_LIST_DIR}
 )
-target_link_libraries(Util
+target_link_libraries(${TARGET_NAME}
     PUBLIC UtilSerialize
     PUBLIC spdlog::spdlog
     PUBLIC mpark_variant

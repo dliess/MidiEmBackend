@@ -2,6 +2,7 @@
 #define UTIL_IDENTIFIABLE_INL
 
 #include "Identifiable.h"
+#include <sstream>
 
 namespace util
 {
@@ -19,6 +20,16 @@ inline Identifiable& Identifiable::operator=(const Identifiable& other) noexcept
 inline const Identifiable::UUID& Identifiable::id() const noexcept
 {
    return m_uuid;
+}
+
+inline std::string Identifiable::uuid2Str() const
+{
+   std::stringstream ss;
+   for(const auto& e : m_uuid)
+   {
+      ss << int(e) << ":"; 
+   }
+   return ss.str();
 }
 
 } // namespace util

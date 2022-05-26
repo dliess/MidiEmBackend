@@ -25,6 +25,8 @@ target_link_libraries(UIAdapterQt
    PUBLIC Qt5::WebSockets
    PUBLIC Qt5::WebChannel
    PUBLIC QtWebSocketClientWrapper
-   PUBLIC MIDIEMCAPNZERO::midiem-capnzero-rt-qt
-   PUBLIC MIDIEMCAPNZERO::midiem-capnzero-loader-qt
+   PUBLIC MIDIEMCAPNZERO::midiem-capnzero-rt-qt-wc
+   PUBLIC MIDIEMCAPNZERO::midiem-capnzero-loader-qt-wc
 )
+
+add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
