@@ -23,10 +23,11 @@ protected:
 public:
    using UUID = std::array<uint8_t, util::array_count_v<uuid_t>>;
    inline const UUID &id() const noexcept;
-   inline std::string uuid2Str() const;
 protected:
    UUID m_uuid;
 };
+
+inline std::string uuid2Str(const Identifiable::UUID& uuid);
 
 } // namespace util
 

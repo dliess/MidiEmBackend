@@ -11,6 +11,7 @@ target_link_libraries(${TARGET_NAME}
    GTest::GTest
    GTest::Main
    Util
+   Qt5::Core
 )
 
 add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})

@@ -22,10 +22,10 @@ inline const Identifiable::UUID& Identifiable::id() const noexcept
    return m_uuid;
 }
 
-inline std::string Identifiable::uuid2Str() const
+inline std::string uuid2Str(const Identifiable::UUID& uuid)
 {
    std::stringstream ss;
-   for(const auto& e : m_uuid)
+   for(const auto& e : uuid)
    {
       ss << int(e) << ":"; 
    }
