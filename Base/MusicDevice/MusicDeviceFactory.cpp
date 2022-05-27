@@ -328,7 +328,7 @@ std::shared_ptr<MusicDevice> Factory::MusicDeviceInserter::createMusicDevice(
    auto pMusicDevice = std::make_shared<MusicDevice>(
        deviceId, midiDeviceId, m_resourceRootDir, std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
-   spdlog::info("uuid: [{}]", util::uuid2str(pMusicDevice->id()));
+   spdlog::info("uuid: [{}]", util::uuid2Str(pMusicDevice->id()));
    return std::move(pMusicDevice);
 }
 

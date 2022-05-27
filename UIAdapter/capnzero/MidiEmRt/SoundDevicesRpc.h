@@ -119,8 +119,12 @@ public:
 
 private:
    base::musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
+   template<typename Cb>
+   void withSoundHandlerDo(const ::capnzero::SpanCL<16>& uuid, Cb&& cb);
 };
 
 }   // namespace uiadapter::capnzero
+
+#include "SoundDevicesRpc.inl"
 
 #endif   // SOUND_DEVICES_RPC_H

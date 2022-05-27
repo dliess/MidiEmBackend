@@ -1,8 +1,10 @@
 #include "SoundDevicesRpc.h"
 
 #include "MusicDeviceContainer.h"
+#include "SoundHandler.h"
 
 using namespace uiadapter::capnzero;
+using base::musicDevice::sound::SoundHandler;
 
 SoundDevicesRpc::SoundDevicesRpc(
     base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer) :
@@ -14,42 +16,28 @@ void SoundDevicesRpc::noteOn(const ::capnzero::SpanCL<16>& uuid,
                              ::capnzero::Int16 voiceIdx, ::capnzero::Int16 note,
                              ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->noteOn(voiceIdx, note, velocity);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.noteOn(voiceIdx, note, velocity);
+   });
 }
 
 void SoundDevicesRpc::noteOff(const ::capnzero::SpanCL<16>& uuid,
-                              ::capnzero::Int16 voiceIdx, ::capnzero::Int16 note,
+                              ::capnzero::Int16 voiceIdx,
+                              ::capnzero::Int16 note,
                               ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->noteOff(voiceIdx, note, velocity);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.noteOff(voiceIdx, note, velocity);
+   });
 }
 
 void SoundDevicesRpc::pitchBend(const ::capnzero::SpanCL<16>& uuid,
                                 ::capnzero::Int16 voiceIdx,
                                 ::capnzero::Float32 value)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->pitchBend(voiceIdx, value);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.pitchBend(voiceIdx, value);
+   });
 }
 
 void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
@@ -57,73 +45,45 @@ void SoundDevicesRpc::afterTouchPoly(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Int16 note,
                                      ::capnzero::Float32 value)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->afterTouchPoly(voiceIdx, note, value);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.afterTouchPoly(voiceIdx, note, value);
+   });
 }
 
 void SoundDevicesRpc::afterTouch(const ::capnzero::SpanCL<16>& uuid,
                                  ::capnzero::Int16 voiceIdx,
                                  ::capnzero::Float32 value)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->afterTouch(voiceIdx, value);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.afterTouch(voiceIdx, value);
+   });
 }
 
 void SoundDevicesRpc::registerForParameterChange(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->uiShowsInterestInParameter(voiceIdx,
-                                                             paramIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.uiShowsInterestInParameter(voiceIdx, paramIdx);
+   });
 }
 
 void SoundDevicesRpc::unregisterForParameterChange(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->uiLoosesInterestInParameter(voiceIdx,
-                                                              paramIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.uiLoosesInterestInParameter(voiceIdx, paramIdx);
+   });
 }
 
 void SoundDevicesRpc::incrementParameterValue(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->incrementParameterValue(voiceIdx, paramIdx,
-                                                          increment);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.incrementParameterValue(voiceIdx, paramIdx, increment);
+   });
 }
 
 void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
@@ -131,54 +91,34 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
                                         ::capnzero::Int16 paramIdx,
                                         ::capnzero::Float32 value)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->setParameterValue(voiceIdx, paramIdx, value);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.setParameterValue(voiceIdx, paramIdx, value);
+   });
 }
 
 void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
                                           ::capnzero::Int16 voiceIdx,
                                           ::capnzero::Int16 paramIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->blankVoiceParameter(voiceIdx, paramIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.blankVoiceParameter(voiceIdx, paramIdx);
+   });
 }
 
 void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
                                            ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->blankVoiceParameters(voiceIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.blankVoiceParameters(voiceIdx);
+   });
 }
 
 void SoundDevicesRpc::blankAllVoiceParameters(
     const ::capnzero::SpanCL<16>& uuid)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->blankAllVoiceParameters();
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.blankAllVoiceParameters();
+   });
 }
 
 void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
@@ -186,16 +126,11 @@ void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Int16 paramIdx,
                                      ::capnzero::MidiEmRt::LFOWaveform waveform)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOWaveform(
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.setLFOWaveform(
           voiceIdx, paramIdx,
           static_cast<base::musicDevice::sound::lfo::Waveform>(waveform));
-   }
+   });
 }
 
 void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
@@ -203,14 +138,9 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Int16 paramIdx,
                                      ::capnzero::Int16 increment)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOWaveform(voiceIdx, paramIdx, increment);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.incLFOWaveform(voiceIdx, paramIdx, increment);
+   });
 }
 
 void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
@@ -218,15 +148,9 @@ void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 amplitude)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOAmplitude(voiceIdx, paramIdx,
-                                                  amplitude);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.setLFOAmplitude(voiceIdx, paramIdx, amplitude);
+   });
 }
 
 void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
@@ -234,15 +158,9 @@ void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOAmplitude(voiceIdx, paramIdx,
-                                                  increment);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.incLFOAmplitude(voiceIdx, paramIdx, increment);
+   });
 }
 
 void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
@@ -250,15 +168,9 @@ void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 frequency)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOFrequency(voiceIdx, paramIdx,
-                                                  frequency);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.setLFOFrequency(voiceIdx, paramIdx, frequency);
+   });
 }
 
 void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
@@ -266,15 +178,9 @@ void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 paramIdx,
                                       ::capnzero::Float32 increment)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOFrequency(voiceIdx, paramIdx,
-                                                  increment);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.incLFOFrequency(voiceIdx, paramIdx, increment);
+   });
 }
 
 void SoundDevicesRpc::setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
@@ -282,15 +188,9 @@ void SoundDevicesRpc::setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
                                           ::capnzero::Int16 paramIdx,
                                           ::capnzero::UInt32 exponent)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->setLFOMultiplierExp(voiceIdx, paramIdx,
-                                                      exponent);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.setLFOMultiplierExp(voiceIdx, paramIdx, exponent);
+   });
 }
 
 void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
@@ -298,55 +198,33 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
                                           ::capnzero::Int16 paramIdx,
                                           ::capnzero::Int32 increment)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->incLFOMultiplierExp(voiceIdx, paramIdx,
-                                                      increment);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.incLFOMultiplierExp(voiceIdx, paramIdx, increment);
+   });
 }
 
 void SoundDevicesRpc::stageParameterValues(const ::capnzero::SpanCL<16>& uuid,
                                            ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->presetHandler().stageCurrentState(voiceIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.presetHandler().stageCurrentState(voiceIdx);
+   });
 }
 
 void SoundDevicesRpc::restoreToStagedParameterValues(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->presetHandler().resetToStaged(voiceIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.presetHandler().resetToStaged(voiceIdx);
+   });
 }
 
 void SoundDevicesRpc::restoreToLastActualPreset(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->presetHandler().resetToActualSoundPreset(
-          voiceIdx);
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.presetHandler().resetToActualSoundPreset(voiceIdx);
+   });
 }
 
 void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
@@ -355,136 +233,70 @@ void SoundDevicesRpc::saveAsPreset(const ::capnzero::SpanCL<16>& uuid,
                                    const ::capnzero::TextView& category,
                                    const ::capnzero::TextView& genre)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->presetHandler().storeAsSoundPreset(
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.presetHandler().storeAsSoundPreset(
           voiceIdx, std::string(presetName),
           base::musicDevice::sound::preset::create_Category(
               std::string(category)),
           base::musicDevice::sound::preset::create_Genre(std::string(genre)));
-      iter->second->soundHandler->presetHandler().selectSoundPreset(
-          voiceIdx, std::string(presetName));
-   }
+      soundHandler.presetHandler().selectSoundPreset(voiceIdx,
+                                                     std::string(presetName));
+   });
 }
 
 void SoundDevicesRpc::setActualPreset(const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 voiceIdx,
                                       const ::capnzero::TextView& presetName)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->presetHandler().selectSoundPreset(
-          voiceIdx, std::string(presetName));
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.presetHandler().selectSoundPreset(voiceIdx,
+                                                     std::string(presetName));
+   });
 }
 
 void SoundDevicesRpc::sendParameterDumpRequest(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      iter->second->soundHandler->doParameterDumpRequest();
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.doParameterDumpRequest();
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorBypass(const ::capnzero::SpanCL<16>& uuid,
                                            ::capnzero::Int16 voiceIdx,
                                            ::capnzero::Int16 on)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).bypass(
-             static_cast<bool>(on));
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorBypass {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).bypass(static_cast<bool>(on));
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorStepLength(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Float32 stepLength)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setStepLength(
-             stepLength);
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorStepLength {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setStepLength(stepLength);
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorGateFill(const ::capnzero::SpanCL<16>& uuid,
                                              ::capnzero::Int16 voiceIdx,
                                              ::capnzero::Float32 gateFill)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setGateFill(
-             gateFill);
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorGateFill {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setGateFill(gateFill);
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorAlgorithm(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::MidiEmRt::ArpeggiatorAlgorithm algorithm)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setAlgorithm(
-             static_cast<base::arp::Algorithm>(algorithm));
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorAlgorithm {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setAlgorithm(
+          static_cast<base::arp::Algorithm>(algorithm));
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorRange(
@@ -492,110 +304,43 @@ void SoundDevicesRpc::setArpeggiatorRange(
     ::capnzero::MidiEmRt::ArpeggiatorRangeType rangeType,
     ::capnzero::Int32 range)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setRange(
-             static_cast<base::arp::RangeType>(rangeType), range);
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorRange {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setRange(
+          static_cast<base::arp::RangeType>(rangeType), range);
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorHoldNotes(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 on)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setHoldNotes(
-             on);
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorHoldNotes {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setHoldNotes(on);
+   });
 }
 
 void SoundDevicesRpc::setArpeggiatorFeedMode(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::MidiEmRt::ArpeggiatorFeedMode feedMode)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators().at(voiceIdx).setFeedMode(
-             static_cast<base::arp::FeedMode>(feedMode));
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::setArpeggiatorFeedMode {}", e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).setFeedMode(
+          static_cast<base::arp::FeedMode>(feedMode));
+   });
 }
 
 void SoundDevicesRpc::arpeggiatorSeqInsertPause(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators()
-             .at(voiceIdx)
-             .seqInsertPause();
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::arpeggiatorSeqInsertPause {}",
-               e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).seqInsertPause();
+   });
 }
 
 void SoundDevicesRpc::arpeggiatorSeqRemoveLastNote(
     const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rMusicDeviceContainer.find(uuid_);
-   if (iter != m_rMusicDeviceContainer.end())
-   {
-      assert(iter->second->soundHandler);
-      try
-      {
-         iter->second->soundHandler->arpeggiators()
-             .at(voiceIdx)
-             .seqRemoveLastNote();
-      }
-      catch (std::exception& e)
-      {
-         spdlog::error( "SoundDevicesRpc::arpeggiatorSeqRemoveLastNote {}",
-               e.what());
-      }
-   }
+   withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      soundHandler.arpeggiators().at(voiceIdx).seqRemoveLastNote();
+   });
 }
