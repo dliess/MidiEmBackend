@@ -73,6 +73,23 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                                                    commanded, actual);
        });
 
+   rMDHolder.musicDevices.onControllerDevEventOccured(
+       [this](util::Identifiable::UUID uuid, const base::musicDevice::controller::Event& event) {
+           const float val = mpark::visit(util::overload{
+                        [](const mpark::monostate& value) -> float { return 0; },
+                        [](auto&& value) -> float { return value.value; }
+                        }, event.value);
+           mpark::visit(util::overload{
+                [this, &event, &uuid, val](const base::musicDevice::controller::WidgetCoord& widgetCoord){
+                    signals().ControllerDevices__controllerEventOccured(uuid, event.id.widgetId, widgetCoord.col, widgetCoord.row, event.id.eventId, val);
+                },
+                [this, &event, &uuid, val](const base::musicDevice::controller::Note& note){
+                    signals().ControllerDevices__controllerNoteEventOccured(uuid, event.id.widgetId, note.number, event.id.eventId, val);
+                },
+                [](auto&&){}
+           }, event.id.widgetCoord);
+       });
+
    rMDHolder.musicDevices.onLFOWaveformChanged(
        [this](util::Identifiable::UUID uuid, int voiceId, int paramIdx,
               base::musicDevice::sound::lfo::Waveform waveform) {

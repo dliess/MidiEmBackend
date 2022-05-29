@@ -48,6 +48,7 @@ public:
    CB_SIGNAL(Added, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(AboutToRemove, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(SoundDevParamChanged, util::Identifiable::UUID, int, int, float, float);
+   CB_SIGNAL(ControllerDevEventOccured, util::Identifiable::UUID, const controller::Event&);
    CB_SIGNAL(ArpBypassChanged, util::Identifiable::UUID, int, bool);
    CB_SIGNAL(ArpRangeTypeChanged, util::Identifiable::UUID, int, base::arp::RangeType);
    CB_SIGNAL(ArpRangeChanged, util::Identifiable::UUID, int, int);

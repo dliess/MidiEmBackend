@@ -66,6 +66,13 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
             });
          }
       }
+      if(ptr->controllerHandler)
+      {
+         const auto uuid = ptr->id();
+         ptr->controllerHandler->onEventReceived([this, &uuid](const controller::Event& event) {
+            emitControllerDevEventOccured(uuid, event);
+         });
+      }
    });
 }
 
