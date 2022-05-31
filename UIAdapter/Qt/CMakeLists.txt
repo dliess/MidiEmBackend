@@ -29,4 +29,6 @@ target_link_libraries(UIAdapterQt
    PUBLIC MIDIEMCAPNZERO::midiem-capnzero-loader-qt-wc
 )
 
-add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+if(NOMIDI_BACKEND_BUILD_TESTS)
+   add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+endif()

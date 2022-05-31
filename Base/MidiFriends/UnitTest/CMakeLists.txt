@@ -1,5 +1,4 @@
 set(SOURCES
-   "UT_main.cpp"
    "UT_MidiDumper.cpp"
    "UT_MidiRouter.cpp"
 )
@@ -9,7 +8,8 @@ set(TARGET_NAME "MidiFriendsTest")
 add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    MidiFriends
-   gtest 
+   GTest::GTest
+   GTest::Main 
    pthread
 )
 

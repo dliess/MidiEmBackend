@@ -1,5 +1,4 @@
 set(SOURCES
-   "UT_main.cpp"
    "UT_musicDeviceDescription.cpp"
 )
 
@@ -8,7 +7,8 @@ set(TARGET_NAME "MusicDeviceDescriptionTest")
 add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    MusicDeviceDescription
-   gtest 
+   GTest::GTest
+   GTest::Main 
    pthread
    fmt
 )

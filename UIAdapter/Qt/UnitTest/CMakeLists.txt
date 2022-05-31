@@ -1,5 +1,3 @@
-find_package(GTest REQUIRED)
-
 set(SOURCES
    "UT_Base64.cpp"
 )

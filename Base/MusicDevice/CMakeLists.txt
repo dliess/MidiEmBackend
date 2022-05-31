@@ -1,4 +1,6 @@
-add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+if(NOMIDI_BACKEND_BUILD_TESTS)
+   add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+endif()
 add_subdirectory(Common)
 add_subdirectory(Controller)
 add_subdirectory(MusicDeviceDescription)

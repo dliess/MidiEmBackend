@@ -7,7 +7,9 @@ add_subdirectory(MidiFriends)
 add_subdirectory(MusicDevice)
 add_subdirectory(Transport)
 add_subdirectory(ControllerEventRouter)
-add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+if(NOMIDI_BACKEND_BUILD_TESTS)
+   add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
+endif()
 
 set(SOURCES
    "Base.cpp"

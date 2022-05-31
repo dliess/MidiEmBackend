@@ -41,11 +41,7 @@ CPMFindPackage(
 find_package(spdlog 1.8.1 CONFIG REQUIRED)
 
 if(${NOMIDI_BACKEND_BUILD_TESTS})
-CPMFindPackage(
-  NAME googletest
-  GITHUB_REPOSITORY google/googletest
-  GIT_TAG b155875f32dc74e293d96c0de2dfcdfa913804e4
-)
+  find_package(GTest REQUIRED)
 endif()
 
 CPMFindPackage(

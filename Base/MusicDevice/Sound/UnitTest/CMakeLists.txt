@@ -1,5 +1,4 @@
 set(SOURCES
-   "UT_main.cpp"
    "UT_DevicePresets.cpp"
    "UT_SoundHandler.cpp"
    "UT_SoundMidiInMsgHandler.cpp"
@@ -14,7 +13,8 @@ add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    MusicDeviceSound
    MusicDeviceDescription
-   gtest 
+   GTest::GTest
+   GTest::Main 
    pthread
 )
 
