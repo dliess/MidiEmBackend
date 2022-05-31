@@ -28,10 +28,12 @@ void ControllerHandler::initMidiInHandler(
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
       pMidiIn, m_rControllerSection, [this](const Event& event) {
          emitEventReceived(event);
+         m_uiEventBuffer[event.id] = std::make_pair(event, true);
+         /*
          spdlog::info( "Received evt id {} | value: {}",
                meta::serialize(event.id).dump(),
                meta::serialize(event.value).dump());
-         
+         */
       });
 }
 
@@ -58,6 +60,19 @@ void ControllerHandler::enlightLed(int widgetId, const WidgetCoord& widgetCoord,
                                    const ColorARGB& color) noexcept
 {
    // TODO
+}
+
+void ControllerHandler::triggerUICallbacks(bool forceAll)
+{
+   if(forceAll) spdlog::info("triggerUICallbacks called {}", forceAll);
+   for(auto& e : m_uiEventBuffer) 
+   {
+      if(e.second.second || forceAll) // TODO: don't send encoder increments at forceAll
+      {
+         emitEventReceivedUI(e.second.first);
+         e.second.second = false;
+      }
+   }
 }
 
 /*

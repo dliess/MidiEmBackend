@@ -42,8 +42,9 @@ public:
    void enlightLed(int widgetId, const WidgetCoord& widgetCoord,
                    const ColorARGB& color) noexcept;
 
+   void triggerUICallbacks(bool forceAll = false);
    CB_SIGNAL(EventReceived, const Event&);
-
+   CB_SIGNAL(EventReceivedUI, const Event&);
 private:
    std::string m_deviceName;
    PluginHandler& m_rPluginHandler;
@@ -53,6 +54,7 @@ private:
       MidiOutMsgHandler<std::shared_ptr<MidiOutput>, PluginHandler>;
    std::unique_ptr<MidiInMsgHandlerT>     m_midiInMsgHandler;
    std::unique_ptr<MidiOutMsgHandlerT>    m_midiOutHandler;
+   std::map<EventId, std::pair<Event, bool>>  m_uiEventBuffer;
 };
 
 } // namespace controller

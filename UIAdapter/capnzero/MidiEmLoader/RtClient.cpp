@@ -53,6 +53,27 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
                                                   commanded, actual);
        });
 
+   onControllerDevicesControllerEventOccured(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
+                   ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
+                   ::capnzero::Float32 value) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.ControllerDevices__controllerEventOccured(
+              uuidData, widgetIdx, widgetCoordX, widgetCoordY, eventIdx, value);
+       });
+
+   onControllerDevicesControllerNoteEventOccured(
+       [&rSignals](const ::capnzero::SpanCL<16>& uuid,
+                   ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
+                   ::capnzero::Int16 eventIdx, ::capnzero::Float32 value) {
+          ::capnzero::Data<16> uuidData;
+          std::copy(uuid.begin(), uuid.end(), uuidData.begin());
+          rSignals.ControllerDevices__controllerNoteEventOccured(
+              uuidData, widgetIdx, note, eventIdx, value);
+       });
+
    onSoundDevicesActualPresetChanged(
        [this, &rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
                                       ::capnzero::Int16 voiceIdx,
@@ -229,10 +250,10 @@ RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
               enable);
        });
 
-    onAbletonLinkEnabledChanged([](::capnzero::Bool val){
-        // TODO: save it to file and load
-    });
-    onAbletonLinkOffsetTimeUsChanged([](::capnzero::Int32 val){
-        // TODO: save it to file and load
-    });
+   onAbletonLinkEnabledChanged([](::capnzero::Bool val) {
+      // TODO: save it to file and load
+   });
+   onAbletonLinkOffsetTimeUsChanged([](::capnzero::Int32 val) {
+      // TODO: save it to file and load
+   });
 }

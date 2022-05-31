@@ -31,6 +31,14 @@ inline std::string uuid2Str(const Identifiable::UUID& uuid);
 
 } // namespace util
 
+inline bool operator<(const util::Identifiable::UUID& lhs, const util::Identifiable::UUID& rhs) noexcept
+{
+   for(int i = 0; i <lhs.size(); ++i)
+   {
+      if(lhs[i] != rhs[i]) return lhs[i] < rhs[i];
+   }
+   return false;
+}
 
 namespace std
 {

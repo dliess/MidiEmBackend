@@ -12,15 +12,35 @@ inline bool operator==(const WidgetCoord& lhs, const WidgetCoord& rhs)
    return lhs.row == rhs.row && lhs.col == rhs.col;
 }
 
+inline bool operator<(const WidgetCoord& lhs, const WidgetCoord& rhs)
+{
+   if(lhs.row != rhs.row) return lhs.row < rhs.row;
+   if(lhs.col != rhs.col) return lhs.col < rhs.col;
+   return false;
+}
+
 inline bool operator==(const Note& lhs, const Note& rhs)
 {
    return lhs.number == rhs.number;
+}
+
+inline bool operator<(const Note& lhs, const Note& rhs)
+{
+   return lhs.number < rhs.number;
 }
 
 inline bool operator==(const EventId& lhs, const EventId& rhs)
 {
    return lhs.widgetId == rhs.widgetId && lhs.widgetCoord == rhs.widgetCoord &&
           lhs.eventId == rhs.eventId;
+}
+
+inline bool operator<(const EventId& lhs, const EventId& rhs)
+{
+   if(!(lhs.widgetId == rhs.widgetId)) return lhs.widgetId < rhs.widgetId;
+   if(!(lhs.widgetCoord == rhs.widgetCoord)) return lhs.widgetCoord < rhs.widgetCoord;
+   if(!(lhs.eventId == rhs.eventId)) return lhs.eventId < rhs.eventId;
+   return false;
 }
 
 inline bool operator==(const PressReleaseType& lhs, const PressReleaseType& rhs)

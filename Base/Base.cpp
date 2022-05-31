@@ -148,7 +148,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    fdSet.AddFd(timerFdUIUpdate, [this](int fd) {
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
-      musicDeviceHolder.musicDevices.updateSoundParameterUI();
+      musicDeviceHolder.musicDevices.updateMDParameterUI();
    });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
       rtServer.processNextRequestAllNonBlock();

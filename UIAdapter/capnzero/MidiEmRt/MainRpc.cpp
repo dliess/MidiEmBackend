@@ -72,6 +72,10 @@ void MainRpc::reEmitSignals()
             }
          }
       }
+      if (it.second.get()->controllerHandler)
+      {
+          it.second.get()->controllerHandler->triggerUICallbacks(true);
+      }
    }
    m_rSignals.Tempo__bpmChanged(
        base::tempo::BeatTick::instance().getBpmNudged());

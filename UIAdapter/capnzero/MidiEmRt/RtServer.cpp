@@ -73,7 +73,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                                                    commanded, actual);
        });
 
-   rMDHolder.musicDevices.onControllerDevEventOccured(
+   rMDHolder.musicDevices.onControllerDevEventOccuredUI(
        [this](util::Identifiable::UUID uuid, const base::musicDevice::controller::Event& event) {
            const float val = mpark::visit(util::overload{
                         [](const mpark::monostate& value) -> float { return 0; },

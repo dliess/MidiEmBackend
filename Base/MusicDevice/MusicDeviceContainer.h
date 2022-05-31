@@ -21,7 +21,7 @@ public:
       std::unordered_map<util::Identifiable::UUID, std::shared_ptr<MusicDevice>>;
    inline MusicDeviceContainer();
    inline void updateSoundParameterActualValues();
-   inline void updateSoundParameterUI();
+   inline void updateMDParameterUI();
 
    using iterator       = Super::iterator;
    using const_iterator = Super::const_iterator;
@@ -49,6 +49,7 @@ public:
    CB_SIGNAL(AboutToRemove, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(SoundDevParamChanged, util::Identifiable::UUID, int, int, float, float);
    CB_SIGNAL(ControllerDevEventOccured, util::Identifiable::UUID, const controller::Event&);
+   CB_SIGNAL(ControllerDevEventOccuredUI, util::Identifiable::UUID, const controller::Event&);
    CB_SIGNAL(ArpBypassChanged, util::Identifiable::UUID, int, bool);
    CB_SIGNAL(ArpRangeTypeChanged, util::Identifiable::UUID, int, base::arp::RangeType);
    CB_SIGNAL(ArpRangeChanged, util::Identifiable::UUID, int, int);

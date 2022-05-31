@@ -69,8 +69,11 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       if(ptr->controllerHandler)
       {
          const auto uuid = ptr->id();
-         ptr->controllerHandler->onEventReceived([this, &uuid](const controller::Event& event) {
+         ptr->controllerHandler->onEventReceived([this, uuid](const controller::Event& event) {
             emitControllerDevEventOccured(uuid, event);
+         });
+         ptr->controllerHandler->onEventReceivedUI([this, uuid](const controller::Event& event) {
+            emitControllerDevEventOccuredUI(uuid, event);
          });
       }
    });
@@ -88,7 +91,7 @@ inline void MusicDeviceContainer::updateSoundParameterActualValues()
    }
 }
 
-inline void MusicDeviceContainer::updateSoundParameterUI()
+inline void MusicDeviceContainer::updateMDParameterUI()
 {
    for (auto& e : *this)
    {
@@ -102,6 +105,10 @@ inline void MusicDeviceContainer::updateSoundParameterUI()
                emitSoundDevParamChanged(e.second->id(), voiceIdx, paramIdx, changedValues->first, changedValues->second);
             }
          });
+      }
+      if (e.second->controllerHandler)
+      {
+         e.second->controllerHandler->triggerUICallbacks();
       }
    }
 }
