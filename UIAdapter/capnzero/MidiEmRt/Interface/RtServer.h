@@ -8,6 +8,7 @@ namespace base::musicDevice { struct Holder; }
 namespace base::musicDevice { class TransportControl; }
 namespace base { class AbletonLinkWrapper; }
 namespace base::midifriends { class Router; }
+namespace base::musicDevice::controller{ class EventRouter; }
 
 namespace uiadapter::capnzero
 {
@@ -20,7 +21,8 @@ public:
            base::musicDevice::Holder& rMusicDeviceHolder,
            base::musicDevice::TransportControl& rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
-           base::midifriends::Router& rMidiRouter);
+           base::midifriends::Router& rMidiRouter,
+           base::musicDevice::controller::EventRouter& rCtrlEventRouter);
     using Super = ::capnzero::MidiEmRt::MidiEmRtServer;
     using WaitMode = Super::WaitMode;
 };

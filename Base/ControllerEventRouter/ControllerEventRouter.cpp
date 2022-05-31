@@ -28,6 +28,15 @@ EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
    });
 }
 
+void EventRouter::createConnection(const EventIdExt& from, const EventDestination& to) noexcept
+{
+   const auto& [iter, success] = m_map.emplace(from, to);
+   if(success)
+   {
+      emitGotConnected(from, to);
+   }
+}
+
 void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                                          const PressReleaseType& value) noexcept
 {

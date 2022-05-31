@@ -6,6 +6,7 @@
 
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -17,7 +18,7 @@ class EventRouter
 {
 public:
    EventRouter(MusicDeviceContainer& rMusicDeviceContainer);
-
+   void createConnection(const EventIdExt& from, const EventDestination& to) noexcept;
 private:
    MusicDeviceContainer& m_rMusicDeviceContainer;
    std::unordered_map<EventIdExt, EventDestination> m_map;
@@ -47,6 +48,8 @@ private:
                               const RelativeValueType& value) noexcept;
    void handleIncrementDirect(const EventDestination& eventDestination,
                               const IncrementType& increment) noexcept;
+
+   CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
 };
 
 }   // namespace controller
