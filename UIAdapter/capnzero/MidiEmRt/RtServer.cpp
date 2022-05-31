@@ -80,13 +80,15 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                         [](auto&& value) -> float { return value.value; }
                         }, event.value);
            mpark::visit(util::overload{
+                [this, &event, &uuid, val](const mpark::monostate&){
+                    signals().ControllerDevices__controllerEventOccured(uuid, event.id.widgetId, 0, 0, event.id.eventId, val);
+                },
                 [this, &event, &uuid, val](const base::musicDevice::controller::WidgetCoord& widgetCoord){
                     signals().ControllerDevices__controllerEventOccured(uuid, event.id.widgetId, widgetCoord.col, widgetCoord.row, event.id.eventId, val);
                 },
                 [this, &event, &uuid, val](const base::musicDevice::controller::Note& note){
                     signals().ControllerDevices__controllerNoteEventOccured(uuid, event.id.widgetId, note.number, event.id.eventId, val);
-                },
-                [](auto&&){}
+                }
            }, event.id.widgetCoord);
        });
 
