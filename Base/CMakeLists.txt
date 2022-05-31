@@ -28,6 +28,7 @@ target_link_libraries(Base
    #PUBLIC  Mapping
    PUBLIC  MidiFriends
    PUBLIC  MusicDevice
+   PUBLIC  MusicDeviceControllerEventRouter
    PUBLIC  Tempo
    PUBLIC  Transport
    PUBLIC  Util

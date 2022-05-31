@@ -7,6 +7,8 @@ set(SOURCES
     "SoundDevicesRpc.cpp"
     "TempoRpc.cpp"
     "TransportControlRpc.cpp"
+    "ControllerDevicesRpc.cpp"
+    "ControllerEventRouterRpc.cpp"
 )
 
 set(HEADERS
@@ -18,6 +20,8 @@ set(HEADERS
     "SoundDevicesRpc.h"
     "TempoRpc.h"
     "TransportControlRpc.h"
+    "ControllerDevicesRpc.h"
+    "ControllerEventRouterRpc.h"
 )
 
 set(TARGET_NAME capnzero-rt-server)

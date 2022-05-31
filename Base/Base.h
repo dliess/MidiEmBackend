@@ -14,6 +14,7 @@
 #include "MusicDeviceHolder.h"
 #include "TransportControl.h"
 #include "MidiRouter.h"
+#include "ControllerEventRouter.h"
 
 namespace base
 {
@@ -28,6 +29,7 @@ public:
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;
    midifriends::Router midiRouter;
+   musicDevice::controller::EventRouter controllerEventRouter;
 
    void start();
    void waitForEnd();

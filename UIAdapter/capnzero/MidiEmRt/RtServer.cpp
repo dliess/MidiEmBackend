@@ -14,6 +14,8 @@
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
+#include "ControllerDevicesRpc.h"
+#include "ControllerEventRouterRpc.h"
 
 using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
@@ -30,10 +32,13 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                        rTransportControl, rAbletonLinkWrapper, rMidiRouter),
                    std::make_unique<InstrumentsRpc>(rInstruments),
                    std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
+                   std::make_unique<ControllerDevicesRpc>(),
                    std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
                    std::make_unique<TransportControlRpc>(rTransportControl),
                    std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
-                   std::make_unique<MidiRoutingRpc>(rMidiRouter))
+                   std::make_unique<MidiRoutingRpc>(rMidiRouter),
+                   std::make_unique<ControllerEventRouterRpc>()
+                   )
 {
     /*
    Super::signals().registerAbletonLinkEnabledChangedSubscrCb(

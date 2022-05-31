@@ -8,13 +8,7 @@ using namespace base::musicDevice::controller;
 EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
     m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
-   m_rMusicDeviceContainer.onAdded([this](std::shared_ptr<MusicDevice> pMd) {
-      if (!pMd->controllerHandler)
-      {
-         return;
-      }
-      const auto uuid = pMd->id();
-      pMd->controllerHandler->onEventReceived([this, uuid](const Event& event) {
+   m_rMusicDeviceContainer.onControllerDevEventOccured([this](const util::Identifiable::UUID uuid, const controller::Event& event){
          const EventIdExt eventIdExt{uuid, event.id};
          mpark::visit(util::overload{
                           [this, &eventIdExt](const PressReleaseType& value) {
@@ -31,7 +25,6 @@ EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
                           },
                           [this](auto&&) {}},
                       event.value);
-      });
    });
 }
 

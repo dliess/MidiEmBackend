@@ -40,7 +40,8 @@ base::Base::Base(const std::string &configDir) :
     transportControl(musicDeviceHolder),
     instruments(musicDeviceHolder.musicDevices),
     instrumentsFactory(instruments, musicDeviceHolder),
-    midiRouter(musicDeviceHolder.midiHolder)
+    midiRouter(musicDeviceHolder.midiHolder),
+    controllerEventRouter(musicDeviceHolder.musicDevices)
 {
    // TODO: Remove Dummy
    // instruments.load("relDir", "filename", "section");
