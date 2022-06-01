@@ -11,7 +11,12 @@ set(SOURCES
    "PresetFetcher.cpp"
 )
 
-add_library(MusicDeviceSound STATIC ${SOURCES})
+set(HEADERS
+   "Modifiers.h"
+   "ParameterPart.h"
+)
+
+add_library(MusicDeviceSound STATIC ${SOURCES} ${HEADERS})
 
 target_include_directories(MusicDeviceSound PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

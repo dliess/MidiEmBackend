@@ -9,6 +9,7 @@
 #include "CallbackSignal.h"
 #include "LFO.h"
 #include "SoundSection.h"
+#include "ParameterPart.h"
 
 namespace base::musicDevice
 {
@@ -82,11 +83,6 @@ public:
    {
       inline Element(bool isListIndex, int resolution) noexcept;
       static constexpr float FUZZ        = 0.00001f;
-      struct Modifier
-      {
-         float destinationValue{0};
-         float intensity{0};
-      };
 
       bool enabled{true};
       float commanded{0};
@@ -106,13 +102,6 @@ public:
                                     bool roundRobin = false) noexcept;
       inline void incCommandedValue(float increment,
                                     bool roundRobin = false) noexcept;
-      enum class ParameterPart {
-         Commanded = 0,
-         LfoAmplitude,
-         LfoFrequency,
-         LfoWaveform,
-         LfoMultiplierExp
-      };
       inline void applyModifier(float destination, float intensity, ParameterPart parameerPart) noexcept;
 
    private:
