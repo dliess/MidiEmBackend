@@ -2,6 +2,7 @@
 #define DEVICE_LOADER_H
 
 #include <nlohmann/json.hpp>
+#include <set>
 #include <string>
 
 #include "MusicDeviceChains.h"
@@ -14,6 +15,11 @@ namespace base::musicDevice
 class Loader
 {
 public:
+   enum class Direction
+   {
+      IN  = 0,
+      OUT = 1
+   };
    enum class ResultType
    {
       NotFound,
@@ -23,6 +29,7 @@ public:
 
    Loader(const std::string& configDir);
    std::pair<ResultType, std::string> getMatchType(
+       Direction direction,
        const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) const noexcept;
    std::shared_ptr<description::Description> load(
        const std::string& deviceName) const;
@@ -51,12 +58,20 @@ public:
                             uint8_t midiVoiceOffset) noexcept;
    void removeDeviceFromEndOf(const MusicDeviceId& rootDeviceId) noexcept;
 
+   void markAsUsed(
+       Direction direction,
+       const rtmidiadapt::DeviceOnUsbPort& deviceOnUsbPort) noexcept;
+   void markAsUnused(
+       Direction direction,
+       const rtmidiadapt::DeviceOnUsbPort& deviceOnUsbPort) noexcept;
+
 private:
    const std::string m_configDir;
    const std::string m_mapFileName;
    const std::string m_deviceChainsFileName;
    using json = nlohmann::json;
    json m_jUsbMidiName2deviceMap;
+   std::set<std::pair<Direction, rtmidiadapt::DeviceOnUsbPort>> m_usedMap;
    DeviceChains
        m_deviceChains;   // TODO: put device-chain handling in separate class
    void saveDeviceChainsToFile();

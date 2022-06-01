@@ -68,15 +68,30 @@ Loader::Loader(const std::string &configDir) :
 }
 
 std::pair<Loader::ResultType, std::string> Loader::getMatchType(
-    const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) const noexcept
+    Direction direction,
+    const rtmidiadapt::DeviceOnUsbPort &devOnUsbPort) const noexcept
 {
    auto iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getFullMidiPort());
    if (m_jUsbMidiName2deviceMap.end() == iter)
    {
+      const auto usedIter = std::find_if(
+          m_usedMap.begin(), m_usedMap.end(),
+          [direction, &devOnUsbPort](
+              const std::pair<Direction, rtmidiadapt::DeviceOnUsbPort> &value) {
+             return (direction == value.first &&
+                     devOnUsbPort.getDeviceName() ==
+                         value.second.getDeviceName() &&
+                     devOnUsbPort.getUsbPortName() ==
+                         value.second.getUsbPortName());
+          });
+          if(usedIter != m_usedMap.end()) {
+             return std::make_pair(ResultType::MarkedUnused, ""); 
+          }
       iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getDeviceName());
       if (m_jUsbMidiName2deviceMap.end() == iter)
       {
-         return std::make_pair(ResultType::NotFound, devOnUsbPort.getMidiPort());
+         return std::make_pair(ResultType::NotFound,
+                               devOnUsbPort.getMidiPort());
       }
    }
    if (iter->get<std::string>() == "--UNUSED--")
@@ -296,4 +311,19 @@ void Loader::saveDeviceChainsToFile()
       spdlog::info("deviceChainsFile.fail() {}", m_deviceChainsFileName);
    }
    deviceChainsFile << meta::serialize(m_deviceChains).dump(3);
+}
+
+void Loader::markAsUsed(
+    Direction direction,
+    const rtmidiadapt::DeviceOnUsbPort &deviceOnUsbPort) noexcept
+{
+   m_usedMap.insert(std::make_pair(direction, deviceOnUsbPort)).second;
+}
+
+void Loader::markAsUnused(
+    Direction direction,
+    const rtmidiadapt::DeviceOnUsbPort &deviceOnUsbPort) noexcept
+{
+   const auto iter = m_usedMap.find(std::make_pair(direction, deviceOnUsbPort));
+   m_usedMap.erase(iter);
 }

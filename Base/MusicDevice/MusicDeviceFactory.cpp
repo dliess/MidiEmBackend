@@ -42,7 +42,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              return;
           }
           const auto [resType, deviceName] =
-              m_loader.getMatchType(devOnUsbPort);
+              m_loader.getMatchType(Loader::Direction::IN, devOnUsbPort);
           switch (resType)
           {
              case Loader::ResultType::MusicDevice:
@@ -55,9 +55,13 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              }
              case Loader::ResultType::MarkedUnused:
              {
+                spdlog::info(
+                    "Marked UNUSED: {} | {} | {}", devOnUsbPort.getDeviceName(),
+                    devOnUsbPort.getMidiPort(), devOnUsbPort.getUsbPortName());
                 return;
              }
           }
+          m_loader.markAsUsed(Loader::Direction::IN, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
@@ -112,7 +116,8 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              spdlog::error("Could not create pMidiOut");
              return;
           }
-          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
+          const auto [resType, deviceName] =
+              m_loader.getMatchType(Loader::Direction::OUT, devOnUsbPort);
           switch (resType)
           {
              case Loader::ResultType::MusicDevice:
@@ -125,9 +130,13 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
              }
              case Loader::ResultType::MarkedUnused:
              {
+                spdlog::info(
+                    "Marked UNUSED: {} | {} | {}", devOnUsbPort.getDeviceName(),
+                    devOnUsbPort.getMidiPort(), devOnUsbPort.getUsbPortName());
                 return;
              }
           }
+          m_loader.markAsUsed(Loader::Direction::OUT, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
@@ -173,7 +182,8 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- input removed: {}", devOnUsbPort.getMidiPort());
-          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
+          const auto [resType, deviceName] =
+              m_loader.getMatchType(Loader::Direction::IN, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
@@ -192,13 +202,15 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromMidiInHolder(),
                     MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
+          m_loader.markAsUnused(Loader::Direction::IN, devOnUsbPort);
        },
        {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- output removed: {}", devOnUsbPort.getMidiPort());
-          const auto [resType, deviceName] = m_loader.getMatchType(devOnUsbPort);
+          const auto [resType, deviceName] =
+              m_loader.getMatchType(Loader::Direction::OUT, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           m_soundPresetFetchers.erase(deviceId);
@@ -215,6 +227,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromMidiOutHolder(),
                     MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
+          m_loader.markAsUnused(Loader::Direction::OUT, devOnUsbPort);
        },
        {{}, {IGNORED_DEVICES}, false});
 #else
