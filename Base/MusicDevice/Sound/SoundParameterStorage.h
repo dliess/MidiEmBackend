@@ -81,7 +81,6 @@ public:
    struct Element
    {
       inline Element(bool isListIndex, int resolution) noexcept;
-      static constexpr int NUM_MODIFIERS = 10;
       static constexpr float FUZZ        = 0.00001f;
       struct Modifier
       {
@@ -91,8 +90,9 @@ public:
 
       bool enabled{true};
       float commanded{0};
-      std::array<std::optional<Modifier>, NUM_MODIFIERS> modifiers;
+      float modifier{0};
       lfo::LFO lfo;
+      lfo::LFO lfoModifier;
       float actual{-1};
       bool dirtyFlagRt{false};
       bool dirtyFlagUi{true};
@@ -107,6 +107,15 @@ public:
                                     bool roundRobin = false) noexcept;
       inline void incCommandedValue(float increment,
                                     bool roundRobin = false) noexcept;
+      enum class ParameterPart {
+         Commanded,
+         LfoAmplitude,
+         LfoFrequency,
+         LfoWaveform,
+         LfoMultiplier,
+         LfoMultiplierExp
+      };
+      inline void applyModifier(float destination, float intensity, ParameterPart parameerPart) noexcept;
 
    private:
       const bool m_isListIndex;
