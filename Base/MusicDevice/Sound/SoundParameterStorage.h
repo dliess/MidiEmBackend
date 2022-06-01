@@ -92,7 +92,6 @@ public:
       float commanded{0};
       float modifier{0};
       lfo::LFO lfo;
-      lfo::LFO lfoModifier;
       float actual{-1};
       bool dirtyFlagRt{false};
       bool dirtyFlagUi{true};
@@ -108,11 +107,10 @@ public:
       inline void incCommandedValue(float increment,
                                     bool roundRobin = false) noexcept;
       enum class ParameterPart {
-         Commanded,
+         Commanded = 0,
          LfoAmplitude,
          LfoFrequency,
          LfoWaveform,
-         LfoMultiplier,
          LfoMultiplierExp
       };
       inline void applyModifier(float destination, float intensity, ParameterPart parameerPart) noexcept;

@@ -196,8 +196,8 @@ template <typename Cb> void ParameterStorage::forEachElementContainer(Cb&& cb)
 inline void ParameterStorage::resetToInitialValue(int voiceIdx,
                                                   int paramIdx) noexcept
 {
-   auto& element = elementContainer(voiceIdx).parameters[paramIdx];
-   for (auto& e : element.modifiers) { e.reset(); }
+   auto& element    = elementContainer(voiceIdx).parameters[paramIdx];
+   element.modifier = 0;
    element.lfo.reset();
    const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
    if (descr.role &&
@@ -215,7 +215,7 @@ inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
 {
    forEachParameter(
        [this, voiceIdx](int paramIdx, Element& element) {
-          for (auto& e : element.modifiers) { e.reset(); }
+          element.modifier = 0;
           element.lfo.reset();
           const auto& descr =
               m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
@@ -238,7 +238,7 @@ inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
 inline void ParameterStorage::resetToInitialValues() noexcept
 {
    forEachParameter([this](int voiceId, int paramIdx, Element& element) {
-      for (auto& e : element.modifiers) { e.reset(); }
+      element.modifier = 0;
       element.lfo.reset();
       const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
       if (descr.role &&
@@ -408,15 +408,39 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    }
    return std::nullopt;
 }
-    
-inline void ParameterStorage::Element::applyModifier(float destination, float intensity, ParameterPart parameterPart) noexcept
+
+inline void ParameterStorage::Element::applyModifier(
+    float destination, float intensity, ParameterPart parameterPart) noexcept
 {
-    switch(parameterPart)
-    {
-         case ParameterPart::Commanded: modified += intensity * (destination*resolution - commanded); break;
-            ...
-            
-    }
+   switch (parameterPart)
+   {
+      case ParameterPart::Commanded:
+      {
+         modifier += intensity * ((destination * m_resolution) - commanded);
+         break;
+      }
+      case ParameterPart::LfoAmplitude:
+      {
+         lfo.applyModifier2Amplitude(destination, intensity);
+         break;
+      }
+      case ParameterPart::LfoFrequency:
+      {
+         lfo.applyModifier2Frequency(destination, intensity);
+         break;
+      }
+      case ParameterPart::LfoWaveform:
+      {
+         lfo.applyModifier2Waveform(destination, intensity);
+         break;
+      }
+      case ParameterPart::LfoMultiplierExp:
+      {
+         lfo.applyModifier2MultiplierExp(destination, intensity);
+         break;
+      }
+   }
+   dirtyFlagRt = true;
 }
 
 inline std::optional<float>
@@ -475,18 +499,8 @@ inline void ParameterStorage::Element::setActualValueUnsynced(
 
 inline void ParameterStorage::Element::setActualValue(float value) noexcept
 {
-   float A = 0;
-   float B = 0;
-   for (const auto& modifier : modifiers)
-   {
-      if (modifier)
-      {
-         A += modifier->intensity * modifier->destinationValue;
-         B += modifier->intensity;
-      }
-   }
    actual      = value;
-   commanded   = (actual - m_cachedLfoValue - A) / (1.0f - B);
+   commanded   = actual - (m_cachedLfoValue + modifier);
    dirtyFlagUi = true;
 }
 

@@ -10,14 +10,14 @@ namespace base::musicDevice::sound::lfo
 
 inline bool LFO::enabled() const noexcept
 {
-   return (m_amplitude != 0.0) && (m_frequency != 0.0);
+   return (modifiedAmplitude() != 0.0) && (modifiedFrequency() != 0.0);
 }
 
 inline float LFO::calculateValue() noexcept 
 {
    const auto beat = tempo::BeatTick::instance().getBeat();
    auto deltaBeat = beat - m_beatAtWaveStart;
-   const auto period = 1.0 / (m_frequency * (1 << m_multiplierExp));
+   const auto period = 1.0 / (modifiedFrequency() * (1 << modifiedMultiplierExp()));
    if(deltaBeat >= period)
    {
       m_beatAtWaveStart = beat;
@@ -26,8 +26,8 @@ inline float LFO::calculateValue() noexcept
    const auto t = deltaBeat / period;
    const auto fnVal = mpark::visit(util::overload{
       [t](auto && f){ return f(t); }
-   }, m_waveform);
-   return m_amplitude * fnVal;
+   }, modifiedWaveform());
+   return modifiedAmplitude() * fnVal;
 };
 
 inline bool LFO::setWaveform(Waveform waveform) noexcept
@@ -76,6 +76,26 @@ inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
    return false;
 }
 
+inline void LFO::applyModifier2Waveform(float destination, float intensity) noexcept
+{
+   m_modifierWaveform += ((destination * mpark::variant_size_v<decltype(m_waveform)>) - m_waveform.index()) * intensity;
+}
+
+inline void LFO::applyModifier2Amplitude(float destination, float intensity) noexcept
+{
+   m_modifierAmplitude += (destination - m_amplitude) * intensity;
+}
+
+inline void LFO::applyModifier2Frequency(float destination, float intensity) noexcept
+{
+   m_modifierFrequency += (destination - m_frequency) * intensity;
+}
+
+inline void LFO::applyModifier2MultiplierExp(float destination, float intensity) noexcept
+{
+   m_modifierMultiplierExp += (destination * MAX_MULTIPLIER_EXP - m_multiplierExp) * intensity;
+}
+
 inline Waveform LFO::waveform() const noexcept
 {
    if(mpark::holds_alternative<Sine>(m_waveform))
@@ -119,6 +139,41 @@ inline bool LFO::getAndResetJustGotDisabled() noexcept
    bool ret = m_justGotDisabled;
    m_justGotDisabled = false;
    return ret;
+}
+
+template <typename T>
+T clip(const T& n, const T& lower, const T& upper) {
+  return std::max(lower, std::min(n, upper));
+}
+
+template <typename... Ts>
+[[nodiscard]] mpark::variant<Ts...>
+expand_type(std::size_t i)
+{
+    assert(i < sizeof...(Ts));
+    static constexpr mpark::variant<Ts...> table[] = { Ts{ }... };
+    return table[i];
+}
+
+inline LFO::WaveformVariant LFO::modifiedWaveform() const noexcept
+{
+   const int varIndex = clip(0, int(m_waveform.index() + m_modifierWaveform), int(mpark::variant_size_v<decltype(m_waveform)> -1));
+   return expand_type<Sine, Square, Triangle, Saw, Random>(varIndex);
+}
+
+inline float LFO::modifiedAmplitude() const noexcept
+{
+   return clip(0.0f, m_amplitude + m_modifierAmplitude, 1.0f);
+}
+
+inline float LFO::modifiedFrequency() const noexcept
+{
+   return clip(0.0f, m_frequency + m_modifierFrequency, 1.0f);
+}
+
+inline uint32_t LFO::modifiedMultiplierExp() const noexcept
+{
+   return clip(0, int(m_multiplierExp + m_modifierMultiplierExp), int(MAX_MULTIPLIER_EXP));
 }
 
 inline float LFO::Sine::operator()(float t) const noexcept

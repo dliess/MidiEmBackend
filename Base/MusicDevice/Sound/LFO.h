@@ -22,12 +22,17 @@ public:
    inline bool setAmplitude(float amplitude) noexcept;
    inline bool setFrequency(float frequency) noexcept;
    inline bool setMultiplierExp(uint32_t multiplierExp) noexcept;
+   inline void applyModifier2Waveform(float destination, float intensity) noexcept;
+   inline void applyModifier2Amplitude(float destination, float intensity) noexcept;
+   inline void applyModifier2Frequency(float destination, float intensity) noexcept;
+   inline void applyModifier2MultiplierExp(float destination, float intensity) noexcept;
    [[nodiscard]] inline Waveform waveform() const noexcept;
    [[nodiscard]] inline float amplitude() const noexcept;
    [[nodiscard]] inline float frequency() const noexcept;
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
+
    struct Sine
    {
       [[nodiscard]] inline float operator()(float t) const noexcept;
@@ -56,8 +61,18 @@ private:
    float m_frequency{DefaultFrequency};
    uint32_t m_multiplierExp{DefaultMultiplierExp};
    double m_beatAtWaveStart{0.0};
-   mpark::variant<Sine, Square, Triangle, Saw, Random> m_waveform;
+   using WaveformVariant = mpark::variant<Sine, Square, Triangle, Saw, Random>;
+   WaveformVariant m_waveform;
    static constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
+
+   float m_modifierAmplitude{0};
+   float m_modifierFrequency{0};
+   int m_modifierMultiplierExp{0};
+   int m_modifierWaveform{0};
+   [[nodiscard]] inline WaveformVariant modifiedWaveform() const noexcept;
+   [[nodiscard]] inline float modifiedAmplitude() const noexcept;
+   [[nodiscard]] inline float modifiedFrequency() const noexcept;
+   [[nodiscard]] inline uint32_t modifiedMultiplierExp() const noexcept;
 };
 
 } // namespace base::musicDevice::sound::lfo
