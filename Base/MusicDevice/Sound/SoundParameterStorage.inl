@@ -408,6 +408,16 @@ ParameterStorage::Element::uiAsksForChangedValues() noexcept
    }
    return std::nullopt;
 }
+    
+inline void ParameterStorage::Element::applyModifier(float destination, float intensity, ParameterPart parameterPart) noexcept
+{
+    switch(parameterPart)
+    {
+         case ParameterPart::Commanded: modified += intensity * (destination*resolution - commanded); break;
+            ...
+            
+    }
+}
 
 inline std::optional<float>
 ParameterStorage::Element::updateActualValue() noexcept
@@ -419,7 +429,7 @@ ParameterStorage::Element::updateActualValue() noexcept
       return std::nullopt;
    }
    float actualBefore = actual;
-   actual             = calcModified();
+   actual             = commanded + modifier;
    const float range  = m_isListIndex ? m_resolution : 1.0;
    if (lfo.enabled())
    {
@@ -518,19 +528,6 @@ inline void ParameterStorage::Element::incCommandedValue(
 {
    const float theIncrement = m_isListIndex ? sgn(increment) : increment;
    setCommandedValue(commanded + theIncrement, true, roundRobin);
-}
-
-inline float ParameterStorage::Element::calcModified() const noexcept
-{
-   float ret = commanded;
-   for (const auto& modifier : modifiers)
-   {
-      if (modifier && modifier->intensity)
-      {
-         ret += (modifier->destinationValue - commanded) * modifier->intensity;
-      }
-   }
-   return ret;
 }
 
 inline void ParameterStorage::setWaveform(int voiceId, int parameterId,
