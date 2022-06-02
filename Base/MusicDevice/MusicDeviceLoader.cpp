@@ -74,6 +74,12 @@ std::pair<Loader::ResultType, std::string> Loader::getMatchType(
    auto iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getFullMidiPort());
    if (m_jUsbMidiName2deviceMap.end() == iter)
    {
+      iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getDeviceName());
+      if (m_jUsbMidiName2deviceMap.end() == iter)
+      {
+         return std::make_pair(ResultType::NotFound,
+                               devOnUsbPort.getMidiPort());
+      }
       const auto usedIter = std::find_if(
           m_usedMap.begin(), m_usedMap.end(),
           [direction, &devOnUsbPort](
@@ -85,14 +91,8 @@ std::pair<Loader::ResultType, std::string> Loader::getMatchType(
                          value.second.getUsbPortName());
           });
           if(usedIter != m_usedMap.end()) {
-             return std::make_pair(ResultType::MarkedUnused, ""); 
+             return std::make_pair(ResultType::MarkedUnused, iter->get<std::string>()); 
           }
-      iter = m_jUsbMidiName2deviceMap.find(devOnUsbPort.getDeviceName());
-      if (m_jUsbMidiName2deviceMap.end() == iter)
-      {
-         return std::make_pair(ResultType::NotFound,
-                               devOnUsbPort.getMidiPort());
-      }
    }
    if (iter->get<std::string>() == "--UNUSED--")
    {

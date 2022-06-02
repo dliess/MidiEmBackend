@@ -182,6 +182,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- input removed: {}", devOnUsbPort.getMidiPort());
+          m_loader.markAsUnused(Loader::Direction::IN, devOnUsbPort);
           const auto [resType, deviceName] =
               m_loader.getMatchType(Loader::Direction::IN, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
@@ -202,13 +203,13 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromMidiInHolder(),
                     MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
-          m_loader.markAsUnused(Loader::Direction::IN, devOnUsbPort);
        },
        {{}, {IGNORED_DEVICES}, false});
 
    midi::PortNotifiers::instance().outputs.registerRemovedPortCb(
        [this](const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           spdlog::info("<-- output removed: {}", devOnUsbPort.getMidiPort());
+          m_loader.markAsUnused(Loader::Direction::OUT, devOnUsbPort);
           const auto [resType, deviceName] =
               m_loader.getMatchType(Loader::Direction::OUT, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
@@ -227,7 +228,6 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
               .push(EraseFromMidiOutHolder(),
                     MidiHolder::Id(devOnUsbPort.getMidiPort(),
                                    devOnUsbPort.getUsbPortName()));
-          m_loader.markAsUnused(Loader::Direction::OUT, devOnUsbPort);
        },
        {{}, {IGNORED_DEVICES}, false});
 #else

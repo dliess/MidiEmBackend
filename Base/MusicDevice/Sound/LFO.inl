@@ -26,7 +26,7 @@ inline float LFO::calculateValue() noexcept
    const auto t = deltaBeat / period;
    const auto fnVal = mpark::visit(util::overload{
       [t](auto && f){ return f(t); }
-   }, modifiedWaveform());
+   }, m_waveform); // TODO: waveform modification does not work
    return modifiedAmplitude() * fnVal;
 };
 

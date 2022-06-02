@@ -90,6 +90,8 @@ public:
 
    std::vector<arp::Arpeggiator>& arpeggiators() noexcept;
 
+   [[nodiscard]] bool checkValidity(int voiceIdx, int  parameterIdx) const noexcept;
+
    CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
    CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
    CB_SIGNAL(LFOFrequencyChanged, int, int, float);

@@ -64,6 +64,11 @@ void SoundDevicesRpc::registerForParameterChange(
     ::capnzero::Int16 paramIdx)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
+      if(!soundHandler.checkValidity(voiceIdx, paramIdx))
+      {
+         spdlog::error("SoundDevicesRpc: invalid Parameters: voiceIdx {}, parameterIdx {}", voiceIdx, paramIdx);
+         return;
+      }
       soundHandler.uiShowsInterestInParameter(voiceIdx, paramIdx);
    });
 }

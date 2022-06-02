@@ -449,3 +449,13 @@ void SoundHandler::applyModifier(int voiceIndex, int paramIdx,
    m_paramStorage.applyModifier(voiceIndex, paramIdx, parameterPart, destValue,
                                 intensity);
 }
+
+bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
+{
+   return (-1 <= voiceIdx && voiceIdx < int(m_rSoundSection.voices.size())) &&
+          (-1 <= parameterIdx &&
+           parameterIdx <
+               int(m_rSoundSection
+                   .engines[m_rSoundSection.voice2EngineIdx(voiceIdx)]
+                   .parameters.size()));
+}
