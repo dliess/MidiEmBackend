@@ -8,8 +8,8 @@
 
 #include "CallbackSignal.h"
 #include "LFO.h"
-#include "SoundSection.h"
 #include "ParameterPart.h"
+#include "SoundSection.h"
 
 namespace base::musicDevice
 {
@@ -73,6 +73,10 @@ public:
    [[nodiscard]] inline uint32_t multiplierExp(int voiceId,
                                                int parameterId) const noexcept;
 
+   inline void applyModifier(int voiceIndex, int paramIdx,
+                             ParameterPart parameterPart, float destValue,
+                             float intensity) noexcept;
+
    CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
    CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
    CB_SIGNAL(LFOFrequencyChanged, int, int, float);
@@ -82,7 +86,7 @@ public:
    struct Element
    {
       inline Element(bool isListIndex, int resolution) noexcept;
-      static constexpr float FUZZ        = 0.00001f;
+      static constexpr float FUZZ = 0.00001f;
 
       bool enabled{true};
       float commanded{0};
@@ -102,7 +106,8 @@ public:
                                     bool roundRobin = false) noexcept;
       inline void incCommandedValue(float increment,
                                     bool roundRobin = false) noexcept;
-      inline void applyModifier(float destination, float intensity, ParameterPart parameerPart) noexcept;
+      inline void applyModifier(float destination, float intensity,
+                                ParameterPart parameterPart) noexcept;
 
    private:
       const bool m_isListIndex;
@@ -138,9 +143,9 @@ private:
    EngineData m_globalData;
    std::vector<EngineData> m_voicesData;
 
-   inline void resize() noexcept;
    inline const EngineData& elementContainer(int voiceIdx) const noexcept;
    inline EngineData& elementContainer(int voiceIdx) noexcept;
+   inline void resize() noexcept;
 };
 
 }   // namespace sound

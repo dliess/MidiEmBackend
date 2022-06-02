@@ -604,4 +604,13 @@ inline uint32_t ParameterStorage::multiplierExp(int voiceId,
    return lfoOf(voiceId, parameterId).multiplierExp();
 }
 
+inline void ParameterStorage::applyModifier(int voiceIndex, int paramIdx,
+                                            ParameterPart parameterPart,
+                                            float destValue,
+                                            float intensity) noexcept
+{
+   elementContainer(voiceIndex).parameters[paramIdx].applyModifier(destValue, intensity,
+                                                        parameterPart);
+}
+
 }   // namespace base::musicDevice::sound

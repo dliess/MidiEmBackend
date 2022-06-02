@@ -13,6 +13,7 @@
 #include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
+#include "ModifiersApplyer.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"
@@ -206,6 +207,7 @@ void base::Base::loopFn()
       transportControl.update();
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
+      base::musicDevice::ModifiersApplyer(modifiersList, musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
    musicDeviceFactory.invokeInserterQueueActions();

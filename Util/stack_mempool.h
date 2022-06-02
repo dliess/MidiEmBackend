@@ -2,6 +2,7 @@
 #define UTIL_STACK_MEMPOOL_H
 
 #include <memory_resource>
+#include "print_alloc.h"
 
 namespace util
 {

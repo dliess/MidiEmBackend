@@ -8,11 +8,16 @@ add_subdirectory(PluginHandler)
 add_subdirectory(Sound)
 
 set(SOURCES
+   "ModifiersApplyer.cpp"
    "MusicDevice.cpp"
    "MusicDeviceLoader.cpp"
    "MusicDeviceFactory.cpp"
    "MusicDeviceSequencer.cpp"
    "MusicDeviceFactoryDataHolder.cpp"
+)
+
+set(HEADERS
+   "ModifiersApplyer.h"
 )
 
 add_library(MusicDevice STATIC ${SOURCES})

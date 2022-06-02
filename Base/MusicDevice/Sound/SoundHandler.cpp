@@ -106,14 +106,14 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
    if (!m_midiOutHandler)
    {
       spdlog::error(
-            "noteOn() called but there is no m_midiOutHandler in device '{}'",
-            m_deviceName);
+          "noteOn() called but there is no m_midiOutHandler in device '{}'",
+          m_deviceName);
       return;
    }
    if (voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
    {
-      spdlog::error( "noteOn() called for global section for device '{}'",
-            m_deviceName);
+      spdlog::error("noteOn() called for global section for device '{}'",
+                    m_deviceName);
       return;
    }
    m_arpeggiators[voiceIndex].noteOn(note, velocity);
@@ -124,14 +124,14 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
    if (!m_midiOutHandler)
    {
       spdlog::error(
-            "noteOff() called but there is no m_midiOutHandler in device '{}'",
-            m_deviceName);
+          "noteOff() called but there is no m_midiOutHandler in device '{}'",
+          m_deviceName);
       return;
    }
    if (voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
    {
-      spdlog::error( "noteOff() called for global section for device '{}'",
-            m_deviceName);
+      spdlog::error("noteOff() called for global section for device '{}'",
+                    m_deviceName);
       return;
    }
    m_arpeggiators[voiceIndex].noteOff(note, velocity);
@@ -155,9 +155,9 @@ void SoundHandler::afterTouchPoly(int voiceIndex, int note,
    if (!m_midiOutHandler)
    {
       spdlog::error(
-            "afterTouchPoly() called but there is no m_midiOutHandler in "
-            "device '{}'",
-            m_deviceName);
+          "afterTouchPoly() called but there is no m_midiOutHandler in "
+          "device '{}'",
+          m_deviceName);
       return;
    }
    m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
@@ -189,7 +189,8 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
 }
 
-float SoundHandler::getParameterValue(int voiceId, int parameterId) const noexcept
+float SoundHandler::getParameterValue(int voiceId,
+                                      int parameterId) const noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -203,7 +204,8 @@ float SoundHandler::getParameterValue(int voiceId, int parameterId) const noexce
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
-                                           float increment, bool roundRobin) noexcept
+                                           float increment,
+                                           bool roundRobin) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -213,7 +215,8 @@ void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
           m_deviceName);
       return;
    }
-   m_paramStorage.incSoundParameterValue(voiceId, parameterId, increment, roundRobin);
+   m_paramStorage.incSoundParameterValue(voiceId, parameterId, increment,
+                                         roundRobin);
 }
 
 void SoundHandler::updateActualSoundStorageValues() noexcept
@@ -437,4 +440,12 @@ preset::PresetHandler& SoundHandler::presetHandler() noexcept
 std::vector<base::arp::Arpeggiator>& SoundHandler::arpeggiators() noexcept
 {
    return m_arpeggiators;
+}
+
+void SoundHandler::applyModifier(int voiceIndex, int paramIdx,
+                                 ParameterPart parameterPart, float destValue,
+                                 float intensity) noexcept
+{
+   m_paramStorage.applyModifier(voiceIndex, paramIdx, parameterPart, destValue,
+                                intensity);
 }

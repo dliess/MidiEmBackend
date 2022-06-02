@@ -12,7 +12,7 @@ set(SOURCES
 )
 
 set(HEADERS
-   "Modifiers.h"
+   "ModifiersList.h"
    "ParameterPart.h"
 )
 

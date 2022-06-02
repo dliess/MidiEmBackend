@@ -77,6 +77,8 @@ public:
    void incLFOFrequency(int voiceIndex, int paramIdx, float increment) noexcept;
    void incLFOMultiplierExp(int voiceIndex, int paramIdx, int increment) noexcept;
 
+   void applyModifier(int voiceIndex, int paramIdx, ParameterPart parameterPart, float destValue, float intensity) noexcept;
+
    // TODO: do we need this?
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
    // inline const SoundPresetHandler* soundPresetHandler() const noexcept;
