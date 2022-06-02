@@ -39,7 +39,7 @@ RtServer::RtServer(
                    std::make_unique<TransportControlRpc>(rTransportControl),
                    std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
                    std::make_unique<MidiRoutingRpc>(rMidiRouter),
-                   std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter))
+                   std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter, rMDHolder.musicDevices))
 {
    /*
   Super::signals().registerAbletonLinkEnabledChangedSubscrCb(
