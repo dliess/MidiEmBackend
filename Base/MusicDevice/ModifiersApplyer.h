@@ -1,7 +1,7 @@
 #ifndef BASE_MUSIC_DEVICE_MODIFIERS_APPLYER_H
 #define BASE_MUSIC_DEVICE_MODIFIERS_APPLYER_H
 
-#include "ModifiersList.h"
+#include "ParameterSceneContainer.h"
 #include "MusicDeviceContainer.h"
 
 namespace base::musicDevice
@@ -9,12 +9,12 @@ namespace base::musicDevice
 class ModifiersApplyer
 {
 public:
-   ModifiersApplyer(sound::ModifiersList &rModifiersList,
+   ModifiersApplyer(sound::ParameterSceneContainer &rParameterSceneContainer,
                     MusicDeviceContainer &rMusicDeviceContainer) noexcept;
    void operator()() noexcept;
 
 private:
-   sound::ModifiersList &m_rModifiersList;
+   sound::ParameterSceneContainer &m_rParameterSceneContainer;
    MusicDeviceContainer &m_rMusicDeviceContainer;
 };
 

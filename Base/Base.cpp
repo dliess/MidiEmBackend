@@ -207,7 +207,7 @@ void base::Base::loopFn()
       transportControl.update();
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
-      base::musicDevice::ModifiersApplyer(modifiersList, musicDeviceHolder.musicDevices)();
+      base::musicDevice::ModifiersApplyer(parameterSceneContainer, musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
    musicDeviceFactory.invokeInserterQueueActions();

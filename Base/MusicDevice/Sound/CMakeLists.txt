@@ -12,15 +12,19 @@ set(SOURCES
 )
 
 set(HEADERS
-   "ModifiersList.h"
    "ParameterPart.h"
+   "ParameterCoordinate.h"
+   "ParameterScene.h"
+   "ParameterSceneContainer.h"
 )
 
-add_library(MusicDeviceSound STATIC ${SOURCES} ${HEADERS})
+set(TARGET_NAME "MusicDeviceSound")
 
-target_include_directories(MusicDeviceSound PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(MusicDeviceSound
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(${TARGET_NAME}
    PRIVATE MusicDeviceDescription
    PRIVATE spdlog::spdlog
    PUBLIC Util

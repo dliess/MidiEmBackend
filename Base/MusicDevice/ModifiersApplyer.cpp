@@ -3,28 +3,35 @@
 using namespace base::musicDevice;
 
 ModifiersApplyer::ModifiersApplyer(
-    sound::ModifiersList &rModifiersList,
+    sound::ParameterSceneContainer &rParameterSceneContainer,
     MusicDeviceContainer &rMusicDeviceContainer) noexcept :
-    m_rModifiersList(rModifiersList),
+    m_rParameterSceneContainer(rParameterSceneContainer),
     m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
 }
 
 void ModifiersApplyer::operator()() noexcept
 {
-   for (auto &modifier : m_rModifiersList)
+   for (auto &parameterScene : m_rParameterSceneContainer.data())
    {
-      if (modifier.intensity || modifier.justGotZeroIntensity)
+      if (parameterScene.intensity)
       {
-         auto mdIter = m_rMusicDeviceContainer.find(modifier.destination.uuid);
-         if (mdIter != m_rMusicDeviceContainer.end() &&
-             mdIter->second->soundHandler)
+         for(const auto& modifier : parameterScene.modifiers)
          {
-            mdIter->second->soundHandler->applyModifier(
-                modifier.destination.voiceIdx,
-                modifier.destination.parameterIdx,
-                modifier.destination.parameterPart, modifier.goalValue,
-                modifier.intensity);
+            auto mdIter = m_rMusicDeviceContainer.find(modifier.destParamCoord.uuid);
+            if (mdIter != m_rMusicDeviceContainer.end() &&
+               mdIter->second->soundHandler)
+            {
+               mdIter->second->soundHandler->applyModifier(
+                  modifier.destParamCoord.voiceIdx,
+                  modifier.destParamCoord.parameterIdx,
+                  modifier.destParamCoord.parameterPart, modifier.goalValue,
+                  parameterScene.intensity.value());
+            }
+         }
+         if(0 == parameterScene.intensity.value())
+         {
+            parameterScene.intensity.reset();
          }
       }
    }
