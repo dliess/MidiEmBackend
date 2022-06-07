@@ -17,6 +17,8 @@
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
+#include "ParameterSceneContainer.h"
+#include "ParameterSceneRpc.h"
 
 using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
@@ -27,13 +29,15 @@ RtServer::RtServer(
     base::musicDevice::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
-    base::musicDevice::controller::EventRouter &rCtrlEventRouter) :
+    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
+    base::musicDevice::sound::ParameterSceneContainer& rParameterSceneContainer) :
     MidiEmRtServer(rZmqContext, "tcp://*:55555", "tcp://*:55556",
                    std::make_unique<MainRpc>(
                        signals(), rInstruments, rMDHolder.musicDevices,
                        rTransportControl, rAbletonLinkWrapper, rMidiRouter),
                    std::make_unique<InstrumentsRpc>(rInstruments),
                    std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
+                   std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
                    std::make_unique<ControllerDevicesRpc>(),
                    std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
                    std::make_unique<TransportControlRpc>(rTransportControl),

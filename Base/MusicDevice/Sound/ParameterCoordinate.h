@@ -1,12 +1,11 @@
 #ifndef BASE_MUSIC_DEVICE_SOUND_PARAMETER_COORDINATE_H
 #define BASE_MUSIC_DEVICE_SOUND_PARAMETER_COORDINATE_H
 
-#include "ParameterPart.h"
 #include "Identifiable.h"
+#include "ParameterPart.h"
 
 namespace base::musicDevice::sound
 {
-
 struct ParameterCoordinate
 {
    util::Identifiable::UUID uuid;
@@ -16,4 +15,14 @@ struct ParameterCoordinate
 };
 
 }   // namespace base::musicDevice::sound
+
+inline bool operator==(
+    const base::musicDevice::sound::ParameterCoordinate& lhs,
+    const base::musicDevice::sound::ParameterCoordinate& rhs) noexcept
+{
+   return (lhs.uuid == rhs.uuid) && (lhs.voiceIdx == rhs.voiceIdx) &&
+          (lhs.parameterIdx == rhs.parameterIdx) &&
+          (lhs.parameterPart == rhs.parameterPart);
+}
+
 #endif

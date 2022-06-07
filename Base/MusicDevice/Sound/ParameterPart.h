@@ -7,8 +7,8 @@ namespace base::musicDevice::sound
 enum class ParameterPart
 {
    Commanded = 0,
-   LfoAmplitude,
    LfoFrequency,
+   LfoAmplitude,
    LfoWaveform,
    LfoMultiplierExp
 };

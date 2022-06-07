@@ -9,6 +9,7 @@ set(SOURCES
    "SoundPresetHandler.cpp"
    "SoundMidiInSysExDumpHandler.cpp"
    "PresetFetcher.cpp"
+   "ParameterSceneContainer.cpp"
 )
 
 set(HEADERS

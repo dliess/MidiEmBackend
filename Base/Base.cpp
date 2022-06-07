@@ -9,11 +9,11 @@
 #include "BeatTick.h"
 #include "FdSet.h"
 #include "LoaderServer.h"
+#include "ModifiersApplyer.h"
 #include "RtClient.h"
 #include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
-#include "ModifiersApplyer.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"
@@ -89,7 +89,8 @@ void base::Base::start()
        [this](const std::atomic<bool> &terminateRequest) {
           loaderThreadFunction(terminateRequest);
        });
-   if (0 != pthread_setname_np(m_portNotifierThread->native_handle(), "NMBE-Loader"))
+   if (0 !=
+       pthread_setname_np(m_portNotifierThread->native_handle(), "NMBE-Loader"))
    {
       spdlog::error("Could not set thread name: NMBE-Loader");
    }
@@ -123,7 +124,8 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
    setRtScheduling();
    uiadapter::capnzero::RtServer rtServer(
        m_zmqContext, instruments, musicDeviceHolder, transportControl,
-       tempo::BeatTick::instance().abletonLink(), midiRouter, controllerEventRouter);
+       tempo::BeatTick::instance().abletonLink(), midiRouter,
+       controllerEventRouter, parameterSceneContainer);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
@@ -133,12 +135,12 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        {.it_interval = {0, PeriodNs.count()}, .it_value = {0, 1000000}});
    timerfd_settime(timerFd, 0, &t, NULL);
 
-   int timerFdUIUpdate = timerfd_create(CLOCK_MONOTONIC, 0);
+   int timerFdUIUpdate           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto PeriodUIUpdate = std::chrono::milliseconds(50);
    constexpr auto PeriodNsUIUpdate =
        std::chrono::duration_cast<std::chrono::nanoseconds>(PeriodUIUpdate);
-   itimerspec tUIUpdate(
-       {.it_interval = {0, PeriodNsUIUpdate.count()}, .it_value = {0, 1000000}});
+   itimerspec tUIUpdate({.it_interval = {0, PeriodNsUIUpdate.count()},
+                         .it_value    = {0, 1000000}});
    timerfd_settime(timerFdUIUpdate, 0, &tUIUpdate, NULL);
 
    utils::FdSet fdSet;
@@ -207,7 +209,8 @@ void base::Base::loopFn()
       transportControl.update();
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
-      base::musicDevice::ModifiersApplyer(parameterSceneContainer, musicDeviceHolder.musicDevices)();
+      base::musicDevice::ModifiersApplyer(parameterSceneContainer,
+                                          musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
    musicDeviceFactory.invokeInserterQueueActions();

@@ -9,6 +9,7 @@ namespace base::musicDevice { class TransportControl; }
 namespace base { class AbletonLinkWrapper; }
 namespace base::midifriends { class Router; }
 namespace base::musicDevice::controller{ class EventRouter; }
+namespace base::musicDevice::sound { class ParameterSceneContainer; }
 
 namespace uiadapter::capnzero
 {
@@ -22,7 +23,8 @@ public:
            base::musicDevice::TransportControl& rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router& rMidiRouter,
-           base::musicDevice::controller::EventRouter& rCtrlEventRouter);
+           base::musicDevice::controller::EventRouter& rCtrlEventRouter,
+           base::musicDevice::sound::ParameterSceneContainer& rParameterSceneContainer);
     using Super = ::capnzero::MidiEmRt::MidiEmRtServer;
     using WaitMode = Super::WaitMode;
 };
