@@ -78,3 +78,23 @@ void ParameterSceneContainer::removeModifier(
       emitModifierRemoved(sceneIdx, paramCoord);
    }
 }
+
+void ParameterSceneContainer::retriggerCallbacks() noexcept
+{
+   for (int sceneIdx = 0; sceneIdx < MAX_NUM_SCENES; ++sceneIdx)
+   {
+      if(!m_data[sceneIdx].name.empty())
+      {
+         emitSceneNameChanged(sceneIdx, m_data[sceneIdx].name.c_str());
+      }
+      if(m_data[sceneIdx].modifiers.size() > 0)
+      {
+         const float intensity = m_data[sceneIdx].intensity ? m_data[sceneIdx].intensity.value() : 0;
+         emitSceneIntensityChanged(sceneIdx, intensity);
+      }
+      for (const auto& modifier : m_data[sceneIdx].modifiers)
+      { 
+         emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue); 
+      }
+   }
+}

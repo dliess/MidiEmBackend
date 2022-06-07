@@ -34,9 +34,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                        &rParameterSceneContainer) :
     MidiEmRtServer(
         rZmqContext, "tcp://*:55555", "tcp://*:55556",
-        std::make_unique<MainRpc>(signals(), rInstruments,
-                                  rMDHolder.musicDevices, rTransportControl,
-                                  rAbletonLinkWrapper, rMidiRouter),
+        std::make_unique<MainRpc>(
+            signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
+            rAbletonLinkWrapper, rMidiRouter, rParameterSceneContainer),
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),

@@ -30,6 +30,8 @@ public:
    CB_SIGNAL(ModifierEndValueChanged, int, const ParameterCoordinate&, float);
    CB_SIGNAL(ModifierRemoved, int, const ParameterCoordinate&);
 
+   void retriggerCallbacks() noexcept;
+
 private:
    static constexpr size_t MAX_NUM_SCENES = 64;
    using ContainerT = std::vector<ParameterScene>;

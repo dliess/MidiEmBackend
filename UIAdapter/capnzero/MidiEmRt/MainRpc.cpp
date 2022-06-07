@@ -7,13 +7,15 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
                  base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
                  base::musicDevice::TransportControl &rTransportControl,
                  base::AbletonLinkWrapper &rAbletonLinkWrapper,
-                 base::midifriends::Router &rMidiRouter) :
+                 base::midifriends::Router &rMidiRouter,
+                 base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer) :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
     m_rTransportControl(rTransportControl),
     m_rAbletonLinkWrapper(rAbletonLinkWrapper),
-    m_rMidiRouter(rMidiRouter)
+    m_rMidiRouter(rMidiRouter),
+    m_rParameterSceneContainer(rParameterSceneContainer)
 {
 }
 
@@ -86,4 +88,5 @@ void MainRpc::reEmitSignals()
    m_rTransportControl.retriggerCallbacks();
    m_rAbletonLinkWrapper.retriggerCallbacks();
    m_rMidiRouter.retriggerCallbacks();
+   m_rParameterSceneContainer.retriggerCallbacks();
 }
