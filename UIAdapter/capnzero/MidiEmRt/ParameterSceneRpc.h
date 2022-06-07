@@ -5,7 +5,7 @@
 
 namespace base::musicDevice::sound
 {
-	class ParameterSceneContainer;
+class ParameterSceneContainer;
 }
 
 namespace uiadapter::capnzero
@@ -15,20 +15,18 @@ class ParameterSceneRpc : public ::capnzero::MidiEmRt::ParameterSceneRpcIf
 public:
    ParameterSceneRpc(base::musicDevice::sound::ParameterSceneContainer&
                          rParameterSceneContainer);
-   void setSceneName(const ::capnzero::SpanCL<16>& sceneUuid,
+   void setSceneName(::capnzero::Int16 sceneIdx,
                      const ::capnzero::TextView& name) override;
-   void setSceneIntensity(const ::capnzero::SpanCL<16>& sceneUuid,
+   void setSceneIntensity(::capnzero::Int16 sceneIdx,
                           ::capnzero::Float32 intensity) override;
    void setModifierEndValue(
-       const ::capnzero::SpanCL<16>& sceneUuid,
-       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 parameterIdx,
+       ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
+       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
        ::capnzero::Float32 endValue) override;
    void removeModifier(
-       const ::capnzero::SpanCL<16>& sceneUuid, const ::capnzero::SpanCL<16>& uuid,
-       ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 parameterIdx,
+       ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
+       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination parameterPart) override;
 
 private:

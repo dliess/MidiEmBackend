@@ -1,102 +1,80 @@
 #include "ParameterSceneContainer.h"
+#include "VectorIndexInRange.h"
+
+#define CHECK_IN_RANGE(sceneIdx) \
+   if(!util::vector_index_in_range(sceneIdx, m_data))   \
+   {                                                    \
+      spdlog::error("Index out of range: {}", sceneIdx);\
+      return;                                           \
+   }
 
 using namespace base::musicDevice::sound;
 ParameterSceneContainer::ParameterSceneContainer() :
-    m_memoryPool("ParameterSceneContainer"), m_data(&m_memoryPool.pool())
+    m_memoryPool("ParameterSceneContainer")
 {
+   m_data.reserve(MAX_NUM_SCENES);
+   for(int i = 0; i < MAX_NUM_SCENES; ++i)
+   {
+      m_data.emplace_back(m_memoryPool.pool());
+   }
 }
 
-void ParameterSceneContainer::setSceneName(const util::Identifiable::UUID& uuid,
+void ParameterSceneContainer::setSceneName(int sceneIdx,
                                            std::string_view name) noexcept
 {
-   auto it = std::find_if(
-       m_data.begin(), m_data.end(),
-       [uuid](const ParameterScene& ps) { return ps.id() == uuid; });
-   if (it != m_data.end())
+   CHECK_IN_RANGE(sceneIdx);
+   if (m_data[sceneIdx].name != name)
    {
-      if (it->name != name)
-      {
-         it->name = name;
-         emitSceneNameChanged(uuid, std::string(name));
-      }
-   }
-   else
-   {
-      m_data.emplace_back(name, m_memoryPool.pool());
-      emitSceneNameChanged(uuid, std::string(name));
+      m_data[sceneIdx].name = name;
+      emitSceneNameChanged(sceneIdx, std::string(name));
    }
 }
 
-void ParameterSceneContainer::setSceneIntensity(
-    const util::Identifiable::UUID& uuid, float intensity) noexcept
+void ParameterSceneContainer::setSceneIntensity(int sceneIdx,
+                                                float intensity) noexcept
 {
-   auto it = std::find_if(
-       m_data.begin(), m_data.end(),
-       [uuid](const ParameterScene& ps) { return ps.id() == uuid; });
-   if (it != m_data.end())
+   CHECK_IN_RANGE(sceneIdx);
+   if (m_data[sceneIdx].intensity != intensity)
    {
-      if (it->intensity != intensity)
-      {
-         it->intensity = intensity;
-         emitSceneIntensityChanged(uuid, intensity);
-      }
-   }
-   else
-   {
-      spdlog::error("No scene found with uuid: {}", util::uuid2Str(uuid));
+      m_data[sceneIdx].intensity = intensity;
+      emitSceneIntensityChanged(sceneIdx, intensity);
    }
 }
 
 void ParameterSceneContainer::setModifierEndValue(
-    const util::Identifiable::UUID& sceneUuid,
-    const ParameterCoordinate& paramCoord, float value) noexcept
+    int sceneIdx, const ParameterCoordinate& paramCoord, float value) noexcept
 {
-   auto it = std::find_if(
-       m_data.begin(), m_data.end(),
-       [sceneUuid](const ParameterScene& ps) { return ps.id() == sceneUuid; });
-   if (it == m_data.end())
-   {
-      spdlog::error("No scene found with uuid: {}", util::uuid2Str(sceneUuid));
-      return;
-   }
-   auto modIt = std::find_if(it->modifiers.begin(), it->modifiers.end(),
+   CHECK_IN_RANGE(sceneIdx);
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
                              [&](const ParameterScene::Modifier& m) {
                                 return m.destParamCoord == paramCoord;
                              });
-   if (modIt == it->modifiers.end())
+   if (modIt == m_data[sceneIdx].modifiers.end())
    {
-      it->modifiers.emplace_back(paramCoord, value);
-      emitModifierEndValueChanged(sceneUuid, paramCoord, value);
+      m_data[sceneIdx].modifiers.emplace_back(paramCoord, value);
+      emitModifierEndValueChanged(sceneIdx, paramCoord, value);
    }
    else
    {
       if (modIt->goalValue != value)
       {
          modIt->goalValue = value;
-         emitModifierEndValueChanged(sceneUuid, paramCoord, value);
+         emitModifierEndValueChanged(sceneIdx, paramCoord, value);
       }
    }
 }
 
 void ParameterSceneContainer::removeModifier(
-    const util::Identifiable::UUID& sceneUuid,
-    const ParameterCoordinate& paramCoord) noexcept
+    int sceneIdx, const ParameterCoordinate& paramCoord) noexcept
 {
-   auto it = std::find_if(
-       m_data.begin(), m_data.end(),
-       [sceneUuid](const ParameterScene& ps) { return ps.id() == sceneUuid; });
-   if (it == m_data.end())
-   {
-      spdlog::error("No scene found with uuid: {}", util::uuid2Str(sceneUuid));
-      return;
-   }
-   auto modIt = std::find_if(it->modifiers.begin(), it->modifiers.end(),
+   CHECK_IN_RANGE(sceneIdx);
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
                              [&](const ParameterScene::Modifier& m) {
                                 return m.destParamCoord == paramCoord;
                              });
-   if(modIt != it->modifiers.end())
+   if (modIt != m_data[sceneIdx].modifiers.end())
    {
-      it->modifiers.erase(modIt);
-      emitModifierRemoved(sceneUuid, paramCoord);
+      m_data[sceneIdx].modifiers.erase(modIt);
+      emitModifierRemoved(sceneIdx, paramCoord);
    }
 }

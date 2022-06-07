@@ -13,37 +13,40 @@
 #include "MidiRoutingRpc.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceHolder.h"
+#include "ParameterSceneContainer.h"
+#include "ParameterSceneRpc.h"
 #include "SoundDevicesRpc.h"
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
-#include "ParameterSceneContainer.h"
-#include "ParameterSceneRpc.h"
 
 using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
 
-RtServer::RtServer(
-    zmq::context_t &rZmqContext, base::instruments::Instruments &rInstruments,
-    base::musicDevice::Holder &rMDHolder,
-    base::musicDevice::TransportControl &rTransportControl,
-    base::AbletonLinkWrapper &rAbletonLinkWrapper,
-    base::midifriends::Router &rMidiRouter,
-    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
-    base::musicDevice::sound::ParameterSceneContainer& rParameterSceneContainer) :
-    MidiEmRtServer(rZmqContext, "tcp://*:55555", "tcp://*:55556",
-                   std::make_unique<MainRpc>(
-                       signals(), rInstruments, rMDHolder.musicDevices,
-                       rTransportControl, rAbletonLinkWrapper, rMidiRouter),
-                   std::make_unique<InstrumentsRpc>(rInstruments),
-                   std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
-                   std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
-                   std::make_unique<ControllerDevicesRpc>(),
-                   std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
-                   std::make_unique<TransportControlRpc>(rTransportControl),
-                   std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
-                   std::make_unique<MidiRoutingRpc>(rMidiRouter),
-                   std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter, rMDHolder.musicDevices))
+RtServer::RtServer(zmq::context_t &rZmqContext,
+                   base::instruments::Instruments &rInstruments,
+                   base::musicDevice::Holder &rMDHolder,
+                   base::musicDevice::TransportControl &rTransportControl,
+                   base::AbletonLinkWrapper &rAbletonLinkWrapper,
+                   base::midifriends::Router &rMidiRouter,
+                   base::musicDevice::controller::EventRouter &rCtrlEventRouter,
+                   base::musicDevice::sound::ParameterSceneContainer
+                       &rParameterSceneContainer) :
+    MidiEmRtServer(
+        rZmqContext, "tcp://*:55555", "tcp://*:55556",
+        std::make_unique<MainRpc>(signals(), rInstruments,
+                                  rMDHolder.musicDevices, rTransportControl,
+                                  rAbletonLinkWrapper, rMidiRouter),
+        std::make_unique<InstrumentsRpc>(rInstruments),
+        std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
+        std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
+        std::make_unique<ControllerDevicesRpc>(),
+        std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
+        std::make_unique<TransportControlRpc>(rTransportControl),
+        std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
+        std::make_unique<MidiRoutingRpc>(rMidiRouter),
+        std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter,
+                                                   rMDHolder.musicDevices))
 {
    /*
   Super::signals().registerAbletonLinkEnabledChangedSubscrCb(
@@ -282,15 +285,18 @@ RtServer::RtServer(
                                               EventDestination &to) {
       mpark::visit(
           util::overload{
-              [this](const mpark::monostate &) {/* TODO */
-                spdlog::error("Unhandled path in controller-event-connection");
+              [this](
+                  const mpark::monostate
+                      &) { /* TODO */
+                           spdlog::error(
+                               "Unhandled path in controller-event-connection");
               },
               [&](const base::musicDevice::controller::WidgetCoord
-                       &widgetCoord) {
+                      &widgetCoord) {
                  mpark::visit(
                      util::overload{
                          [&](const base::musicDevice::controller::
-                                EventDestination::Note &note) {
+                                 EventDestination::Note &note) {
                             signals()
                                 .ControllerEventRouter__connectedWidget2Notes(
                                     from.uuid, from.eventId.widgetId,
@@ -298,7 +304,7 @@ RtServer::RtServer(
                                     from.eventId.eventId, to.uuid, to.voiceIdx);
                          },
                          [&](const base::musicDevice::controller::
-                                       EventDestination::Parameter &parameter) {
+                                 EventDestination::Parameter &parameter) {
                             signals()
                                 .ControllerEventRouter__connectedWidget2Parameter(
                                     from.uuid, from.eventId.widgetId,
@@ -309,7 +315,8 @@ RtServer::RtServer(
                                         SDParameterDestination::PARAMETER);
                          },
                          [](auto &&) {
-                             spdlog::error("Unhandled path in controller-event-connection");
+                            spdlog::error("Unhandled path in "
+                                          "controller-event-connection");
                          }},
                      to.endpoint);
               },
@@ -317,30 +324,58 @@ RtServer::RtServer(
                  mpark::visit(
                      util::overload{
                          [&](const base::musicDevice::controller::
-                                EventDestination::Note &) {
+                                 EventDestination::Note &) {
                             signals()
                                 .ControllerEventRouter__connectedNotes2Notes(
                                     from.uuid, from.eventId.widgetId,
-                                    note.number,
-                                    from.eventId.eventId, to.uuid, to.voiceIdx);
+                                    note.number, from.eventId.eventId, to.uuid,
+                                    to.voiceIdx);
                          },
                          [&](const base::musicDevice::controller::
-                                       EventDestination::Parameter &parameter) {
+                                 EventDestination::Parameter &parameter) {
                             signals()
                                 .ControllerEventRouter__connectedNotes2Parameter(
                                     from.uuid, from.eventId.widgetId,
-                                    note.number,
-                                    from.eventId.eventId, to.uuid, to.voiceIdx,
-                                    parameter.id,
+                                    note.number, from.eventId.eventId, to.uuid,
+                                    to.voiceIdx, parameter.id,
                                     ::capnzero::MidiEmRt::
                                         SDParameterDestination::PARAMETER);
                          },
                          [](auto &&) {
-                             spdlog::error("Unhandled path in controller-event-connection");
+                            spdlog::error("Unhandled path in "
+                                          "controller-event-connection");
                          }},
                      to.endpoint);
               },
           },
           from.eventId.widgetCoord);
    });
+   rParameterSceneContainer.onSceneNameChanged(
+       [this](int sceneIdx, const std::string &name) {
+          signals().ParameterScene__sceneNameChanged(sceneIdx, name);
+       });
+   rParameterSceneContainer.onSceneIntensityChanged(
+       [this](int sceneIdx, float intensity) {
+          signals().ParameterScene__sceneIntensityChanged(sceneIdx, intensity);
+       });
+   rParameterSceneContainer.onModifierEndValueChanged(
+       [this](int sceneIdx,
+              const base::musicDevice::sound::ParameterCoordinate &paramCoord,
+              float value) {
+          signals().ParameterScene__modifierEndValueChanged(
+              sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
+              paramCoord.parameterIdx,
+              static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+                  paramCoord.parameterPart),
+              value);
+       });
+   rParameterSceneContainer.onModifierRemoved(
+       [this](int sceneIdx,
+              const base::musicDevice::sound::ParameterCoordinate &paramCoord) {
+          signals().ParameterScene__modifierRemoved(
+              sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
+              paramCoord.parameterIdx,
+              static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+                  paramCoord.parameterPart));
+       });
 }

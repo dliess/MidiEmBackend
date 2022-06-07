@@ -1,9 +1,9 @@
 #ifndef BASE_MUSIC_DEVICE_SOUND_PARAMETER_SCENE_CONTAINER_H
 #define BASE_MUSIC_DEVICE_SOUND_PARAMETER_SCENE_CONTAINER_H
 
-#include <list>
-#include <memory_resource>
+#include <vector>
 #include <functional>
+#include <memory_resource>
 
 #include "CallbackSignal.h"
 #include "ParameterScene.h"
@@ -15,32 +15,24 @@ class ParameterSceneContainer
 {
 public:
    ParameterSceneContainer();
-   using ContainerT = std::pmr::list<ParameterScene>;
-   const ContainerT& data() const noexcept { return m_data; }
-   ContainerT& data() noexcept { return m_data; }
 
-   template <typename CB>
-   void forEachActiveModifier(CB &&cb);
+   template <typename CB> void forEachActiveModifier(CB&& cb);
 
-   void setSceneName(const util::Identifiable::UUID& uuid,
-                     std::string_view name) noexcept;
-   void setSceneIntensity(const util::Identifiable::UUID& uuid,
-                          float intensity) noexcept;
-   void setModifierEndValue(const util::Identifiable::UUID& sceneUuid,
-                            const ParameterCoordinate& paramCoord,
+   void setSceneName(int sceneIdx, std::string_view name) noexcept;
+   void setSceneIntensity(int sceneIdx, float intensity) noexcept;
+   void setModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
                             float value) noexcept;
-   void removeModifier(const util::Identifiable::UUID& sceneUuid,
+   void removeModifier(int sceneIdx,
                        const ParameterCoordinate& paramCoord) noexcept;
 
-   CB_SIGNAL(SceneNameChanged, const util::Identifiable::UUID&,
-             const std::string&);
-   CB_SIGNAL(SceneIntensityChanged, const util::Identifiable::UUID&, float);
-   CB_SIGNAL(ModifierEndValueChanged, const util::Identifiable::UUID&,
-             const ParameterCoordinate&, float);
-   CB_SIGNAL(ModifierRemoved, const util::Identifiable::UUID&,
-             const ParameterCoordinate&);
+   CB_SIGNAL(SceneNameChanged, int, const std::string&);
+   CB_SIGNAL(SceneIntensityChanged, int, float);
+   CB_SIGNAL(ModifierEndValueChanged, int, const ParameterCoordinate&, float);
+   CB_SIGNAL(ModifierRemoved, int, const ParameterCoordinate&);
 
 private:
+   static constexpr size_t MAX_NUM_SCENES = 64;
+   using ContainerT = std::vector<ParameterScene>;
    util::StackMempool<32768> m_memoryPool;
    ContainerT m_data;
 };

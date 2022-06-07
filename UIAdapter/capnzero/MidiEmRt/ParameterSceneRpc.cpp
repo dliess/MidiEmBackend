@@ -11,34 +11,28 @@ ParameterSceneRpc::ParameterSceneRpc(
 {
 }
 
-void ParameterSceneRpc::setSceneName(const ::capnzero::SpanCL<16>& sceneUuid,
+void ParameterSceneRpc::setSceneName(::capnzero::Int16 sceneIdx,
                                      const ::capnzero::TextView& name)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(sceneUuid.begin(), sceneUuid.end(), uuid_.begin());
-   m_rParameterSceneContainer.setSceneName(uuid_, std::string(name));
+   m_rParameterSceneContainer.setSceneName(sceneIdx, std::string(name));
 }
 
-void ParameterSceneRpc::setSceneIntensity(
-    const ::capnzero::SpanCL<16>& sceneUuid, ::capnzero::Float32 intensity)
+void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
+                                          ::capnzero::Float32 intensity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(sceneUuid.begin(), sceneUuid.end(), uuid_.begin());
-   m_rParameterSceneContainer.setSceneIntensity(uuid_, intensity);
+   m_rParameterSceneContainer.setSceneIntensity(sceneIdx, intensity);
 }
 
 void ParameterSceneRpc::setModifierEndValue(
-    const ::capnzero::SpanCL<16>& sceneUuid, const ::capnzero::SpanCL<16>& uuid,
+    ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
     ::capnzero::Float32 endValue)
 {
-   util::Identifiable::UUID sceneUuid_;
    util::Identifiable::UUID deviceUuid_;
-   std::copy(sceneUuid.begin(), sceneUuid.end(), sceneUuid_.begin());
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
    m_rParameterSceneContainer.setModifierEndValue(
-       sceneUuid_,
+       sceneIdx,
        base::musicDevice::sound::ParameterCoordinate{
            deviceUuid_, voiceIdx, parameterIdx,
            static_cast<base::musicDevice::sound::ParameterPart>(parameterPart)},
@@ -46,18 +40,15 @@ void ParameterSceneRpc::setModifierEndValue(
 }
 
 void ParameterSceneRpc::removeModifier(
-    const ::capnzero::SpanCL<16>& sceneUuid, const ::capnzero::SpanCL<16>& uuid,
+    ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination parameterPart)
 {
-   util::Identifiable::UUID sceneUuid_;
    util::Identifiable::UUID deviceUuid_;
-   std::copy(sceneUuid.begin(), sceneUuid.end(), sceneUuid_.begin());
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
    m_rParameterSceneContainer.removeModifier(
-       sceneUuid_,
-       base::musicDevice::sound::ParameterCoordinate{
-           deviceUuid_, voiceIdx, parameterIdx,
-           static_cast<base::musicDevice::sound::ParameterPart>(
-               parameterPart)});
+       sceneIdx, base::musicDevice::sound::ParameterCoordinate{
+                     deviceUuid_, voiceIdx, parameterIdx,
+                     static_cast<base::musicDevice::sound::ParameterPart>(
+                         parameterPart)});
 }
