@@ -1,5 +1,6 @@
 #include "ParameterSceneContainer.h"
 #include "VectorIndexInRange.h"
+#include "clip.h"
 
 #define CHECK_IN_RANGE(sceneIdx) \
    if(!util::vector_index_in_range(sceneIdx, m_data))   \
@@ -56,11 +57,32 @@ void ParameterSceneContainer::setModifierEndValue(
    }
    else
    {
-      if (modIt->goalValue != value)
+      if (modIt->goalValue.value() != value)
       {
          modIt->goalValue = value;
          emitModifierEndValueChanged(sceneIdx, paramCoord, value);
       }
+   }
+}
+
+void ParameterSceneContainer::incrementModifierEndValue(
+    int sceneIdx, const ParameterCoordinate& paramCoord, float increment) noexcept
+{
+   CHECK_IN_RANGE(sceneIdx);
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
+                             [&](const ParameterScene::Modifier& m) {
+                                return m.destParamCoord == paramCoord;
+                             });
+   if (modIt == m_data[sceneIdx].modifiers.end())
+   {
+      m_data[sceneIdx].modifiers.emplace_back(paramCoord);
+      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
+   }
+   else
+   {
+      const float newVal = util::clip(0.0f, modIt->goalValue.value() + increment, 1.0f);
+      modIt->goalValue = newVal;
+      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
    }
 }
 
@@ -94,7 +116,7 @@ void ParameterSceneContainer::retriggerCallbacks() noexcept
       }
       for (const auto& modifier : m_data[sceneIdx].modifiers)
       { 
-         emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue); 
+         emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue.value()); 
       }
    }
 }

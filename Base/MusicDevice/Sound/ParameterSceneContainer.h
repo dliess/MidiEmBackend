@@ -22,6 +22,8 @@ public:
    void setSceneIntensity(int sceneIdx, float intensity) noexcept;
    void setModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
                             float value) noexcept;
+   void incrementModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
+                            float increment) noexcept;
    void removeModifier(int sceneIdx,
                        const ParameterCoordinate& paramCoord) noexcept;
 

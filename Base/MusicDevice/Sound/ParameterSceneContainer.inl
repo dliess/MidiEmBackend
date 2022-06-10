@@ -10,7 +10,7 @@ void ParameterSceneContainer::forEachActiveModifier(CB&& cb)
    {
       if (scene.intensity)
       {
-         for (const auto& modifier : scene.modifiers) { cb(modifier, scene.intensity.value()); }
+         for (auto& modifier : scene.modifiers) { cb(modifier, scene.intensity.value()); }
          if (0 == scene.intensity.value())
          {
             scene.intensity.reset();

@@ -24,6 +24,11 @@ public:
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
        ::capnzero::Float32 endValue) override;
+   void incrementModifierEndValue(
+       ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
+       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
+       ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+       ::capnzero::Float32 increment) override;
    void removeModifier(
        ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,

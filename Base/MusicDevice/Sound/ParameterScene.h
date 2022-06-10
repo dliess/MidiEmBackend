@@ -28,8 +28,9 @@ struct ParameterScene : public util::Identifiable
    struct Modifier
    {
       Modifier(const ParameterCoordinate& pc, float val) noexcept: destParamCoord(pc), goalValue(val) {}
+      Modifier(const ParameterCoordinate& pc) noexcept: destParamCoord(pc), goalValue() {}
       ParameterCoordinate destParamCoord;
-      float goalValue{0};
+      std::optional<float> goalValue{0};
    };
    std::pmr::list<Modifier> modifiers;
 };

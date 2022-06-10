@@ -46,7 +46,7 @@ public:
 
    inline void markAllDirty() noexcept;
 
-   inline float getCommandedValue(int voiceIdx, int parameterId) const noexcept;
+   inline float getCommandedValue(int voiceIdx, int parameterId, ParameterPart parameterPart = ParameterPart::Commanded) const noexcept;
    inline std::vector<float> getCommandedValuesOfVoice(
        int voiceIdx) const noexcept;
 

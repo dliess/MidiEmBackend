@@ -189,8 +189,8 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
 }
 
-float SoundHandler::getParameterValue(int voiceId,
-                                      int parameterId) const noexcept
+float SoundHandler::getParameterValue(
+    int voiceId, int parameterId, ParameterPart parameterPart) const noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -200,7 +200,7 @@ float SoundHandler::getParameterValue(int voiceId,
           m_deviceName);
       return -1;
    }
-   return m_paramStorage.getCommandedValue(voiceId, parameterId);
+   return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterPart);
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
@@ -456,6 +456,6 @@ bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
           (-1 <= parameterIdx &&
            parameterIdx <
                int(m_rSoundSection
-                   .engines[m_rSoundSection.voice2EngineIdx(voiceIdx)]
-                   .parameters.size()));
+                       .engines[m_rSoundSection.voice2EngineIdx(voiceIdx)]
+                       .parameters.size()));
 }

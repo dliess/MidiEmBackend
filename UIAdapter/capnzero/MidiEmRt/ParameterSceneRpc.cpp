@@ -39,6 +39,22 @@ void ParameterSceneRpc::setModifierEndValue(
        endValue);
 }
 
+void ParameterSceneRpc::incrementModifierEndValue(
+    ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
+    ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+    ::capnzero::Float32 increment)
+{
+   util::Identifiable::UUID deviceUuid_;
+   std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
+   m_rParameterSceneContainer.incrementModifierEndValue(
+       sceneIdx,
+       base::musicDevice::sound::ParameterCoordinate{
+           deviceUuid_, voiceIdx, parameterIdx,
+           static_cast<base::musicDevice::sound::ParameterPart>(parameterPart)},
+       increment);
+}
+
 void ParameterSceneRpc::removeModifier(
     ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,

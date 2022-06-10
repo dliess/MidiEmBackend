@@ -293,9 +293,33 @@ inline void ParameterStorage::markAllDirty() noexcept
 }
 
 inline float ParameterStorage::getCommandedValue(int voiceIdx,
-                                                 int parameterId) const noexcept
+                                                 int parameterId,
+                                                 ParameterPart parameterPart) const noexcept
 {
-   return elementContainer(voiceIdx).parameters[parameterId].commanded;
+   switch(parameterPart)
+   {
+      case ParameterPart::Commanded:
+      {
+         return elementContainer(voiceIdx).parameters[parameterId].commanded;
+      }
+      case ParameterPart::LfoAmplitude:
+      {
+         return amplitude(voiceIdx, parameterId);
+      }
+      case ParameterPart::LfoFrequency:
+      {
+         return frequency(voiceIdx, parameterId);
+      }
+      case ParameterPart::LfoWaveform:
+      {
+         return elementContainer(voiceIdx).parameters[parameterId].lfo.waveformAsFloat();
+      }
+      case ParameterPart::LfoMultiplierExp:
+      {
+         return elementContainer(voiceIdx).parameters[parameterId].lfo.multiplierExpAsFloat();
+      }
+   }
+   return 0;
 }
 
 inline std::vector<float> ParameterStorage::getCommandedValuesOfVoice(

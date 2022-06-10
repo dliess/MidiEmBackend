@@ -27,9 +27,11 @@ public:
    inline void applyModifier2Frequency(float destination, float intensity) noexcept;
    inline void applyModifier2MultiplierExp(float destination, float intensity) noexcept;
    [[nodiscard]] inline Waveform waveform() const noexcept;
+   [[nodiscard]] inline float waveformAsFloat() const noexcept;
    [[nodiscard]] inline float amplitude() const noexcept;
    [[nodiscard]] inline float frequency() const noexcept;
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
+   [[nodiscard]] inline float multiplierExpAsFloat() const noexcept;
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
 

@@ -15,18 +15,28 @@ ModifiersApplyer::ModifiersApplyer(
 void ModifiersApplyer::operator()() noexcept
 {
    m_rParameterSceneContainer.forEachActiveModifier(
-       [this](const sound::ParameterScene::Modifier &modifier,
-              float intensity) {
+       [this](sound::ParameterScene::Modifier &modifier, float intensity) {
           auto mdIter =
               m_rMusicDeviceContainer.find(modifier.destParamCoord.uuid);
           if (mdIter != m_rMusicDeviceContainer.end() &&
               mdIter->second->soundHandler)
           {
-             mdIter->second->soundHandler->applyModifier(
-                 modifier.destParamCoord.voiceIdx,
-                 modifier.destParamCoord.parameterIdx,
-                 modifier.destParamCoord.parameterPart, modifier.goalValue,
-                 intensity);
+             if (modifier.goalValue)
+             {
+                mdIter->second->soundHandler->applyModifier(
+                    modifier.destParamCoord.voiceIdx,
+                    modifier.destParamCoord.parameterIdx,
+                    modifier.destParamCoord.parameterPart,
+                    modifier.goalValue.value(), intensity);
+             }
+             else
+             {
+                modifier.goalValue =
+                    mdIter->second->soundHandler->getParameterValue(
+                        modifier.destParamCoord.voiceIdx,
+                        modifier.destParamCoord.parameterIdx,
+                        modifier.destParamCoord.parameterPart);
+             }
           }
        });
 }
