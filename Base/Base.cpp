@@ -62,7 +62,8 @@ void base::Base::start()
       // TODO: put this code to Midi lib
       throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
    }
-
+   musicDeviceFactory.createVirtualMidiDevices();
+   
    tempo::BeatTick::instance().abletonLink().enable(true);
    tempo::BeatTick::instance().abletonLink().onStartStopChanged(
        [this](bool start) {

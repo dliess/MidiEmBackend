@@ -19,7 +19,7 @@ CPMFindPackage(
   NAME midi
   GITHUB_REPOSITORY dliess/Midi
   #GIT_REPOSITORY git@danita-hp:app/Midi.git
-  GIT_TAG 1032a3fa13d3fe02fbe71f202f032e7074503f7b
+  GIT_TAG a6708f7597fc8ae8ed6ebff54fb4640a83579925
 )
 if(midi_ADDED)
   add_library(MIDI::midi ALIAS midi)

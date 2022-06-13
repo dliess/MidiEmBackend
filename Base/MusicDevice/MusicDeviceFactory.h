@@ -44,10 +44,8 @@ public:
    void removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot);
    inline const DataHolder& dataHolder() const noexcept;
    inline DataHolder& dataHolder() noexcept;
+   void createVirtualMidiDevices() noexcept;
 
-#ifdef __INSERT_DUMMY_MIDI_DEVICES__
-   void insertMusicDeviceDummies();
-#endif
 private:
    Holder& m_rHolder;
    DataHolder m_dataHolder;
@@ -154,9 +152,8 @@ private:
    static std::shared_ptr<MidiType> createMidi(
        rtmidiadapt::PortIndex index) noexcept;
 
-#ifdef __INSERT_DUMMY_MIDI_DEVICES__
-   void addDummy(const std::string& deviceName) noexcept;
-#endif
+   template <typename MidiType, typename MidiMediumType>
+   std::shared_ptr<MidiType> createVirtualMidi(std::string portName) noexcept;
 };
 
 }   // namespace factory

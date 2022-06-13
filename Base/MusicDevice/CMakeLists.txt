@@ -35,9 +35,3 @@ target_link_libraries(MusicDevice
    PRIVATE MIDI::usbmidi
    PRIVATE spdlog::spdlog
 )
-
-option(__INSERT_DUMMY_MIDI_DEVICES__ "insert dummy devices for testing" OFF)
-if(${__INSERT_DUMMY_MIDI_DEVICES__})
-   target_compile_definitions(MusicDevice PUBLIC "__INSERT_DUMMY_MIDI_DEVICES__")
-   target_link_libraries(MusicDevice PRIVATE MidiMediumDummy)
-endif(${__INSERT_DUMMY_MIDI_DEVICES__})

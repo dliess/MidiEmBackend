@@ -1,5 +1,10 @@
 #include "MusicDeviceFactory.h"
 
+#include <spdlog/spdlog.h>
+
+#include <cassert>
+#include <memory>
+
 #include "DevicePresets.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
@@ -9,14 +14,6 @@
 #include "UsbMidiOut.h"
 #include "UsbMidiPortNotifier.h"
 #include "itcActionSender.h"
-
-#ifdef __INSERT_DUMMY_MIDI_DEVICES__
-#include "MidiMediumDummy.h"
-#endif
-#include <spdlog/spdlog.h>
-
-#include <cassert>
-#include <memory>
 
 #define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
 
@@ -29,7 +26,6 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
     m_loader(resourceRootDir),
     m_musicDeviceInserter(rHolder, resourceRootDir)
 {
-#ifndef __INSERT_DUMMY_MIDI_DEVICES__
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
@@ -230,9 +226,38 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                                    devOnUsbPort.getUsbPortName()));
        },
        {{}, {IGNORED_DEVICES}, false});
-#else
-   insertMusicDeviceDummies();
-#endif
+}
+
+void Factory::createVirtualMidiDevices() noexcept
+{
+   {
+      const std::string virtMidiInPortName = "nomidi-virt";
+      spdlog::info("-->Virtual Midi Input input added: {}", virtMidiInPortName);
+      auto pMidiIn = createVirtualMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(
+          virtMidiInPortName);
+      if (!pMidiIn)
+      {
+         spdlog::error("Could not create pMidiIn");
+         return;
+      }
+      const MusicDeviceId deviceId(virtMidiInPortName, "0000");
+      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+      fillActionQueueForMidiIn(deviceId, std::move(pMidiIn));
+   }
+   {
+      const std::string virtMidiOutPortName = "nomidi-virt";
+      spdlog::info("-->Virtual Midi Output input added: {}", virtMidiOutPortName);
+      auto pMidiOut = createVirtualMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(
+          virtMidiOutPortName);
+      if (!pMidiOut)
+      {
+         spdlog::error("Could not create pMidiIn");
+         return;
+      }
+      const MusicDeviceId deviceId(virtMidiOutPortName, "0000");
+      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+      fillActionQueueForMidiOut(deviceId, std::move(pMidiOut));
+   }
 }
 
 void Factory::invokeInserterQueueActions() { m_actionQueue.popCallAll(); }
@@ -492,82 +517,3 @@ void Factory::MusicDeviceInserter::action(
    m_rHolder.musicDevices.insert(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
 }
-
-/*
-void Factory::DataHolder::onSoundDevicesPresetChanged(
-    const MusicDeviceName& musicDeviceName, int engineIdx,
-    const std::string& parameterName)
-{
-    auto it = presetCache.find(musicDeviceName);
-    if(it != presetCache.end())
-    {
-        const auto attrs = it->second->getPresetAttributes(engineIdx,
-parameterName); if(attrs)
-        {
-            for(auto& cb : updatedCbs) cb(musicDeviceName, engineIdx,
-parameterName, attrs->first, attrs->second );
-        }
-        else
-        {
-            for(auto& cb : removedCbs) cb(musicDeviceName, engineIdx,
-parameterName);
-        }
-        //it->second->save();
-    }
-}
-*/
-
-#ifdef __INSERT_DUMMY_MIDI_DEVICES__
-void Factory::addDummy(const std::string& usbDeviceName) noexcept
-{
-   midi::MidiMediumDummy dummy(usbDeviceName, midi::IMidiMedium::Type::USB);
-
-   const auto [resType, deviceName] = m_loader.getMatchType(usbDeviceName);
-   if (resType == description::Loader::ResultType::MarkedUnused)
-   {
-      return;
-   }
-   const MusicDeviceId deviceId(deviceName, "DummyPort");
-   auto pDevice = findOrCreateDevice(deviceId);
-   if (!pDevice)
-   {
-      return;
-   }
-   auto pMidiIn = std::make_shared<MusicDevice::MidiInput>(
-       std::move(dummy.hijackInMedium()));
-   pDevice->initMidiIn(pMidiIn);
-   handleDeviceChainIn(deviceId, pMidiIn);
-   m_rHolder.midiHolder.addMidiIn(pMidiIn);
-   auto pMidiOut = std::make_shared<MusicDevice::MidiOutput>(
-       std::move(dummy.hijackOutMedium()));
-   pDevice->initMidiOut(pMidiOut);
-   handleDeviceChainOut(deviceId, pMidiOut);
-   m_rHolder.midiHolder.addMidiOut(pMidiOut);
-}
-
-void Factory::insertMusicDeviceDummies()
-{
-   addDummy("Moog Minitaur:Moog Minitaur MIDI 1");
-   addDummy("MIDIFACE 8x8:MIDIFACE 8x8 MIDI 1");
-   addDummy("TOUCHE_SE:TOUCHE_SE MIDI 1");
-   addDummy("Deluge:Deluge MIDI 1");
-   addDummy("Arturia KeyStep 32:Arturia KeyStep 32 MIDI 1");
-   addDummy("MODEL D:MODEL D MIDI 1");
-   addDummy("Space Pedal:Space Pedal MIDI 1");
-   addDummy("Launch Control XL:Launch Control XL MIDI 1");
-   addDummy("Seaboard BLOCK:Seaboard BLOCK MIDI 1");
-   addDummy("Buzzzy! polysynth:Buzzzy! polysynth MIDI 1");
-   addDummy("MicroBrute:MicroBrute MIDI 1");
-   addDummy("SUONOBUONO nABC:SUONOBUONO nABC MIDI 1");
-   /*
-   addDummy("__JUST_4_TEST__MAM/MB33");
-   addDummy("__JUST_4_TEST__Korg/VolcaKeys");
-   addDummy("__JUST_4_TEST__Korg/VolcaKick");
-   addDummy("__JUST_4_TEST__Mitxela/Flash");
-   addDummy("__JUST_4_TEST__Elektron/Octatrack_Mk1");
-   addDummy("__JUST_4_TEST__Elektron/Analog4_Mk1");
-   addDummy("__JUST_4_TEST__Elektron/AnalogRytm_Mk1");
-   */
-}
-
-#endif

@@ -33,4 +33,19 @@ std::shared_ptr<MidiType> Factory::createMidi(
    return std::make_shared<MidiType>(std::move(pMedium));
 }
 
+template<typename MidiType, typename MidiMediumType>
+std::shared_ptr<MidiType> Factory::createVirtualMidi(
+   std::string portName) noexcept
+{
+   auto pMedium = std::make_unique<MidiMediumType>();
+   //LOG_SCOPE_FUNCTION(INFO);
+   //VLOG_SCOPE_F(1, "open port");
+   if (!pMedium->openVirtualPort(std::move(portName)))
+   {
+      spdlog::error( "failed to open port");
+      return nullptr;
+   }
+   return std::make_shared<MidiType>(std::move(pMedium));
+}
+
 } // namespace base::musicDevice::factory
