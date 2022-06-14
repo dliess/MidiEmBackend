@@ -20,6 +20,11 @@ void ParameterSceneRpc::setSceneName(::capnzero::Int16 sceneIdx,
 void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
                                           ::capnzero::Float32 intensity)
 {
+   if (intensity < 0 || 1.0 < intensity)
+   {
+      spdlog::error("intensity out of range");
+      return;
+   }
    m_rParameterSceneContainer.setSceneIntensity(sceneIdx, intensity);
 }
 

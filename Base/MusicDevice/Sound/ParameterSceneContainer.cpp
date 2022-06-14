@@ -80,9 +80,12 @@ void ParameterSceneContainer::incrementModifierEndValue(
    }
    else
    {
-      const float newVal = util::clip(0.0f, modIt->goalValue.value() + increment, 1.0f);
-      modIt->goalValue = newVal;
-      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
+      if(modIt->goalValue)
+      {
+         const float newVal = util::clip(0.0f, modIt->goalValue.value() + increment, 1.0f);
+         modIt->goalValue = newVal;
+         emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
+      }
    }
 }
 
@@ -115,8 +118,11 @@ void ParameterSceneContainer::retriggerCallbacks() noexcept
          emitSceneIntensityChanged(sceneIdx, intensity);
       }
       for (const auto& modifier : m_data[sceneIdx].modifiers)
-      { 
-         emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue.value()); 
+      {
+         if(modifier.goalValue)
+         {
+            emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue.value()); 
+         }
       }
    }
 }

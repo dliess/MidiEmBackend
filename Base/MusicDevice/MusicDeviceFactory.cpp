@@ -15,7 +15,7 @@
 #include "UsbMidiPortNotifier.h"
 #include "itcActionSender.h"
 
-#define IGNORED_DEVICES "RtMidi", "Ableton Push 2", "Midi Through"
+#define IGNORED_DEVICES "RtMidi", "Ableton Push 2"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::factory;
@@ -29,6 +29,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
+          if (devOnUsbPort.getMidiPort().rfind("Midi Through", 0) == 0)
+          {
+            return;
+          }
           spdlog::info("--> input added: {}", devOnUsbPort.getMidiPort());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
@@ -230,9 +234,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
 
 void Factory::createVirtualMidiDevices() noexcept
 {
+   /*
    {
       const std::string virtMidiInPortName = "nomidi-virt";
-      spdlog::info("-->Virtual Midi Input input added: {}", virtMidiInPortName);
+      spdlog::info("-->Virtual Midi Input added: {}", virtMidiInPortName);
       auto pMidiIn = createVirtualMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(
           virtMidiInPortName);
       if (!pMidiIn)
@@ -240,21 +245,28 @@ void Factory::createVirtualMidiDevices() noexcept
          spdlog::error("Could not create pMidiIn");
          return;
       }
-      const MusicDeviceId deviceId(virtMidiInPortName, "0000");
+      const MusicDeviceId deviceId(
+          pMidiIn->medium().getDevicePortName(),
+          pMidiIn->medium().getHostConnectorPortName());
       auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
       fillActionQueueForMidiIn(deviceId, std::move(pMidiIn));
    }
+   */
    {
       const std::string virtMidiOutPortName = "nomidi-virt";
-      spdlog::info("-->Virtual Midi Output input added: {}", virtMidiOutPortName);
-      auto pMidiOut = createVirtualMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(
-          virtMidiOutPortName);
+      spdlog::info("-->Virtual Midi Output added: {}",
+                   virtMidiOutPortName);
+      auto pMidiOut =
+          createVirtualMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(
+              virtMidiOutPortName);
       if (!pMidiOut)
       {
-         spdlog::error("Could not create pMidiIn");
+         spdlog::error("Could not create pMidiOut");
          return;
       }
-      const MusicDeviceId deviceId(virtMidiOutPortName, "0000");
+      const MusicDeviceId deviceId(
+          pMidiOut->medium().getDevicePortName(),
+          pMidiOut->medium().getHostConnectorPortName());
       auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
       fillActionQueueForMidiOut(deviceId, std::move(pMidiOut));
    }

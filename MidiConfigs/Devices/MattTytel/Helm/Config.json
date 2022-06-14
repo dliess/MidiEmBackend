@@ -1,0 +1,198 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "MattTytel",
+  "productName": "Helm",
+  "soundSection": {
+    "defaultInstrumentType": "InstrumentPerVoice",
+    "voices": [
+      {
+        "name": "melodic 1",
+        "engineId": 0,
+        "midiChannel": 1
+      }
+    ],
+    "engines": [
+      {
+        "name": "MelodicEngine",
+        "components": [
+          {
+            "name": "LPFilter",
+            "role": "LPFilter"
+          },
+          {
+            "name": "Env1 (Amp)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Env2 (Filt)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Oscillator",
+            "role": "Oscillator"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Cutoff",
+            "type": "continous",
+            "component": "LPFilter",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "Adjusts the Filter Resonance",
+            "type": "continous",
+            "component": "LPFilter",
+            "role": "LPFilterResonance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Sustain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Sustain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise",
+            "type": "continous",
+            "component": "Oscillator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 5
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "controllerSection": {
+    "widgets": []
+  },
+  "reactsToTransportCommands": true
+}

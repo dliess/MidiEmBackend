@@ -440,7 +440,7 @@ inline void ParameterStorage::Element::applyModifier(
    {
       case ParameterPart::Commanded:
       {
-         modifier += intensity * ((destination * m_resolution) - commanded);
+         modifier += intensity * (destination - commanded);
          break;
       }
       case ParameterPart::LfoAmplitude:
@@ -478,6 +478,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    }
    float actualBefore = actual;
    actual             = commanded + modifier;
+   modifier = 0;
    const float range  = m_isListIndex ? m_resolution : 1.0;
    if (lfo.enabled())
    {
