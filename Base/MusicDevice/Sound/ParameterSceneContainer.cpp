@@ -82,7 +82,7 @@ void ParameterSceneContainer::incrementModifierEndValue(
    {
       if(modIt->goalValue)
       {
-         const float newVal = util::clip(0.0f, modIt->goalValue.value() + increment, 1.0f);
+         const float newVal = util::clip(modIt->goalValue.value() + increment, 0.0f, 1.0f);
          modIt->goalValue = newVal;
          emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
       }

@@ -166,24 +166,24 @@ template <typename... Ts>
 inline LFO::WaveformVariant LFO::modifiedWaveform() const noexcept
 {
    const int varIndex =
-       util::clip(0, int(m_waveform.index() + m_modifierWaveform),
+       util::clip(int(m_waveform.index() + m_modifierWaveform), 0,
                   int(mpark::variant_size_v<decltype(m_waveform)> - 1));
    return expand_type<Sine, Square, Triangle, Saw, Random>(varIndex);
 }
 
 inline float LFO::modifiedAmplitude() const noexcept
 {
-   return util::clip(0.0f, m_amplitude + m_modifierAmplitude, 1.0f);
+   return util::clip(m_amplitude + m_modifierAmplitude, 0.0f, 1.0f);
 }
 
 inline float LFO::modifiedFrequency() const noexcept
 {
-   return util::clip(0.0f, m_frequency + m_modifierFrequency, 1.0f);
+   return util::clip(m_frequency + m_modifierFrequency, 0.0f, 1.0f);
 }
 
 inline uint32_t LFO::modifiedMultiplierExp() const noexcept
 {
-   return util::clip(0, int(m_multiplierExp + m_modifierMultiplierExp),
+   return util::clip(int(m_multiplierExp + m_modifierMultiplierExp), 0,
                      int(MAX_MULTIPLIER_EXP));
 }
 
