@@ -1,7 +1,8 @@
 #include "SoundMidiInSysExDumpHandler.h"
-#include "Trim.h"
 
 #include <spdlog/spdlog.h>
+
+#include "Trim.h"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::sound;
@@ -25,8 +26,8 @@ MidiInSysExDumpHandler::determineSysexDescriptor(
    {
       if (!m_rSoundSection.engines[*engineIdx].parameterDumpAnswer)
       {
-         spdlog::error( "Engine of index {} has no parameterDumpAnswer field",
-               *engineIdx);
+         spdlog::error("Engine of index {} has no parameterDumpAnswer field",
+                       *engineIdx);
          return nullptr;
       }
       pSysexMsgDescr = &(m_rSoundSection.engines[*engineIdx]
@@ -34,9 +35,9 @@ MidiInSysExDumpHandler::determineSysexDescriptor(
       if (!checkIfIsParameterDumpMsg(sysexMsg, *pSysexMsgDescr))
       {
          spdlog::error(
-               "Incoming Sysex does not correspond to descriptor in Engine of "
-               "index {}",
-               *engineIdx);
+             "Incoming Sysex does not correspond to descriptor in Engine of "
+             "index {}",
+             *engineIdx);
          return nullptr;
       }
       return pSysexMsgDescr;
@@ -45,7 +46,8 @@ MidiInSysExDumpHandler::determineSysexDescriptor(
    {
       m_rSoundSection.forEachEngineBase(
           [&sysexMsg, &pSysexMsgDescr](
-              int engineIdx, const description::sound::EngineBase& rEngineBase) {
+              int engineIdx,
+              const description::sound::EngineBase& rEngineBase) {
              if (rEngineBase.parameterDumpAnswer &&
                  checkIfIsParameterDumpMsg(
                      sysexMsg,
@@ -72,10 +74,15 @@ void MidiInSysExDumpHandler::handle(
    m_presetGenre    = std::nullopt;
    const description::sound::SysExDescriptors* pSysexMsgDescr =
        determineSysexDescriptor(sysexMsg, engineIdx);
+   if (!pSysexMsgDescr)
+   {
+      spdlog::error("determineSysexDescriptor returned nullptr");
+      return;
+   }
    const auto voiceIdx = getVoiceIdFromSysex(sysexMsg, *pSysexMsgDescr);
    if (!voiceIdx)
    {
-      spdlog::error( "Could not extract voiceId from sysex msg");
+      spdlog::error("Could not extract voiceId from sysex msg");
       return;
    }
    for (const auto& fieldDescr : *pSysexMsgDescr)
@@ -89,8 +96,8 @@ void MidiInSysExDumpHandler::handle(
                  if (!paramIdx)
                  {
                     spdlog::error(
-                          "There is no parameter in voice {} named {}::{}",
-                          *voiceIdx, param.component, param.parameter);
+                        "There is no parameter in voice {} named {}::{}",
+                        *voiceIdx, param.component, param.parameter);
                     return;
                  }
                  const auto& descr =
@@ -116,7 +123,9 @@ void MidiInSysExDumpHandler::handle(
               [this,
                &sysexMsg](const description::sound::midisysex::PatchNameStr&
                               patchName) {
-                 std::string presetName = std::string(&sysexMsg[patchName.offset], &sysexMsg[patchName.offset + patchName.size]);
+                 std::string presetName =
+                     std::string(&sysexMsg[patchName.offset],
+                                 &sysexMsg[patchName.offset + patchName.size]);
                  util::trim(presetName);
                  m_presetName = presetName;
               },
@@ -138,8 +147,7 @@ void MidiInSysExDumpHandler::handle(
 
 bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
     const midi::Message<midi::SystemExclusive>& sysexMsg,
-    const description::sound::SysExDescriptors& sysexMsgDescriptor)
-    noexcept
+    const description::sound::SysExDescriptors& sysexMsgDescriptor) noexcept
 {
    int accumSize = 0;
    for (const auto& fieldDescr : sysexMsgDescriptor)
@@ -154,7 +162,8 @@ bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
 
 std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
     const midi::Message<midi::SystemExclusive>& sysexMsg,
-    const description::sound::SysExDescriptors& sysexMsgDescriptors) const noexcept
+    const description::sound::SysExDescriptors& sysexMsgDescriptors)
+    const noexcept
 {
    for (const auto& fieldDescr : sysexMsgDescriptors)
    {

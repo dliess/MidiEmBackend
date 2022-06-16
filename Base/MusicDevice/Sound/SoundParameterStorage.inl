@@ -484,8 +484,7 @@ ParameterStorage::Element::updateActualValue() noexcept
    {
       m_cachedLfoValue = lfo.calculateValue() * range;
       actual += m_cachedLfoValue;
-      actual = std::min(range - FUZZ, actual);
-      actual = std::max(0.0f, actual);
+      actual = util::clip(actual, 0.0f, range);
    }
    else
    {
