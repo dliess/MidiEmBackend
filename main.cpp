@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Base.h"
+#include "ReplaceAsteriskToLocalhost.h"
 #include "StartQt.h"
 
 static const char USAGE[] = R"(
@@ -26,6 +27,8 @@ int main(int argc, char *argv[])
 
    const std::string configRoot(args["CONFIGDIR"] ? args["CONFIGDIR"].asString()
                                                   : "");
+   const std::string address(args["ADDRESS"] ? args["ADDRESS"].asString()
+                                             : "tcp://*");
 
    const auto verbose = args["--verbose"].asBool();
    if (verbose)
@@ -36,20 +39,42 @@ int main(int argc, char *argv[])
 
    spdlog::info("Using Config Dir: '{}'", configRoot);
 
-   const std::string rtServerRpcBindAddr("tcp://*:55555");
-   const std::string rtServerSignalBindAddr("tcp://*:55556");
-   const std::string loaderServerRpcBindAddr("tcp://*:55557");
-   const std::string loaderServerSignalBindAddr("tcp://*:55558");
+   std::string rtServerRpcBindAddr;
+   std::string rtServerSignalBindAddr;
+   std::string loaderServerRpcBindAddr;
+   std::string loaderServerSignalBindAddr;
+
+   if (address.rfind("tcp", 0) == 0)
+   {
+      rtServerRpcBindAddr        = fmt::format("{}:55555", address);
+      rtServerSignalBindAddr     = fmt::format("{}:55556", address);
+      loaderServerRpcBindAddr    = fmt::format("{}:55557", address);
+      loaderServerSignalBindAddr = fmt::format("{}:55558", address);
+   }
+   else if (address.rfind("ipc", 0) == 0)
+   {
+      rtServerRpcBindAddr     = fmt::format("{}/rtServerRpc", address);
+      rtServerSignalBindAddr  = fmt::format("{}/rtServerSignal", address);
+      loaderServerRpcBindAddr = fmt::format("{}/loaderServerRpc", address);
+      loaderServerSignalBindAddr =
+          fmt::format("{}/loaderServersignal", address);
+   }
+   else
+   {
+      spdlog::error("illegal address str added");
+      return -1;
+   }
    base::Base base(configRoot, rtServerRpcBindAddr, rtServerSignalBindAddr,
                    loaderServerRpcBindAddr, loaderServerSignalBindAddr);
    base.start();
-   auto qtThread = std::thread(
-       [=, &argc, &argv]() { uiadapter::qt::startQt(
-         std::string(rtServerRpcBindAddr).replace(rtServerRpcBindAddr.find("*"), 1, "localhost"),
-         std::string(rtServerSignalBindAddr).replace(rtServerSignalBindAddr.find("*"), 1, "localhost"),
-         std::string(loaderServerRpcBindAddr).replace(loaderServerRpcBindAddr.find("*"), 1, "localhost"),
-         std::string(loaderServerSignalBindAddr).replace(loaderServerSignalBindAddr.find("*"), 1, "localhost"),
-         argc, argv); });
+   auto qtThread = std::thread([=, &argc, &argv]() {
+      uiadapter::qt::startQt(
+          util::replaceAsteriskToLocalhost(rtServerRpcBindAddr),
+          util::replaceAsteriskToLocalhost(rtServerSignalBindAddr),
+          util::replaceAsteriskToLocalhost(loaderServerRpcBindAddr),
+          util::replaceAsteriskToLocalhost(loaderServerSignalBindAddr), argc,
+          argv);
+   });
    if (0 != pthread_setname_np(qtThread.native_handle(), "NMBE-Qt"))
    {
       spdlog::error("Could not set thread name: NMBE-Qt");

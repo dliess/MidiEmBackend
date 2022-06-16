@@ -325,5 +325,8 @@ void Loader::markAsUnused(
     const rtmidiadapt::DeviceOnUsbPort &deviceOnUsbPort) noexcept
 {
    const auto iter = m_usedMap.find(std::make_pair(direction, deviceOnUsbPort));
-   m_usedMap.erase(iter);
+   if(iter != m_usedMap.end())
+   {
+      m_usedMap.erase(iter);
+   }
 }

@@ -14,6 +14,7 @@
 #include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
+#include "ReplaceAsteriskToLocalhost.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"
@@ -179,8 +180,8 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
        musicDeviceFactory);
    uiadapter::capnzero::RtClient rtClient(
        m_zmqContext,
-       std::string(m_rtRpcBindAddr).replace(m_rtRpcBindAddr.find("*"), 1, "localhost"),
-       std::string(m_rtSignalBindAddr).replace(m_rtRpcBindAddr.find("*"), 1, "localhost"),
+       util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
+       util::replaceAsteriskToLocalhost(m_rtSignalBindAddr),
        loaderServer.signals(), musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
