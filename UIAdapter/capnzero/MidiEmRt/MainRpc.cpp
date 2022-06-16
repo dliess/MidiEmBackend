@@ -1,4 +1,6 @@
 #include "MainRpc.h"
+#include "JsonCast.h"   // meta::serialize
+#include "MusicDeviceDescription.h"
 
 using namespace uiadapter::capnzero;
 
@@ -8,7 +10,8 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
                  base::musicDevice::TransportControl &rTransportControl,
                  base::AbletonLinkWrapper &rAbletonLinkWrapper,
                  base::midifriends::Router &rMidiRouter,
-                 base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer) :
+                 base::musicDevice::sound::ParameterSceneContainer
+                     &rParameterSceneContainer) :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
@@ -21,7 +24,7 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
 
 void MainRpc::reEmitSignals()
 {
-   spdlog::info( "MainRpc::reEmitSignals() called");
+   spdlog::info("MainRpc::reEmitSignals() called");
    for (auto &it : m_rMusicDeviceContainer)
    {
       const auto uuid        = it.second.get()->id();
@@ -34,6 +37,8 @@ void MainRpc::reEmitSignals()
               : 0;
       const base::musicDevice::description::Description &description =
           *it.second.get()->description();
+      m_rSignals.MusicDevices__musicDeviceDescriptionAdded(
+          deviceName, meta::serialize(description).dump().c_str());
       m_rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
                                            mediumId.toStr(), midiVoiceOffset);
       if (it.second.get()->soundHandler)
@@ -76,7 +81,7 @@ void MainRpc::reEmitSignals()
       }
       if (it.second.get()->controllerHandler)
       {
-          it.second.get()->controllerHandler->triggerUICallbacks(true);
+         it.second.get()->controllerHandler->triggerUICallbacks(true);
       }
    }
    m_rSignals.Tempo__bpmChanged(

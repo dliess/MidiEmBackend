@@ -36,10 +36,10 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                        &rParameterSceneContainer) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
+        std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<MainRpc>(
             signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
             rAbletonLinkWrapper, rMidiRouter, rParameterSceneContainer),
-        std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
         std::make_unique<ControllerDevicesRpc>(),
@@ -71,6 +71,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
           const auto &mediumId    = md.mediumId();
           const auto midiVoiceOffset =
               md.soundHandler ? md.soundHandler->getMidiVoiceOffset() : 0;
+          signals().MusicDevices__musicDeviceDescriptionAdded(
+            deviceName, meta::serialize(description).dump().c_str()
+          );
           signals().MusicDevices__deviceAdded(
               md.id(), md.deviceId().deviceName, md.deviceId().portName,
               mediumId.toStr(), midiVoiceOffset);
