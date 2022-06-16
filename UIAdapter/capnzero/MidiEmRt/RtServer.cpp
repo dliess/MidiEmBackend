@@ -24,6 +24,8 @@ using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
 
 RtServer::RtServer(zmq::context_t &rZmqContext,
+                   const std::string& rpcBindAddr,
+                   const std::string& signalBindAddr,
                    base::instruments::Instruments &rInstruments,
                    base::musicDevice::Holder &rMDHolder,
                    base::musicDevice::TransportControl &rTransportControl,
@@ -33,7 +35,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                    base::musicDevice::sound::ParameterSceneContainer
                        &rParameterSceneContainer) :
     MidiEmRtServer(
-        rZmqContext, "tcp://*:55555", "tcp://*:55556",
+        rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<MainRpc>(
             signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
             rAbletonLinkWrapper, rMidiRouter, rParameterSceneContainer),

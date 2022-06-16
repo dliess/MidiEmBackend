@@ -1,5 +1,4 @@
 #include "StartQt.h"
-#include "Base.h"
 
 // Qt stuff
 #include <WebSocketClientWrapper.h>
@@ -9,10 +8,14 @@
 #include <QWebChannel>
 #include <QWebSocketServer>
 
-#include "MidiEmRt_QObjectClient.h"
 #include "MidiEmLoader_QObjectClient.h"
+#include "MidiEmRt_QObjectClient.h"
 
-int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
+int uiadapter::qt::startQt(const std::string& rtServerRpcAddr,
+                           const std::string& rtServerSignalAddr,
+                           const std::string& loaderServerRpcAddr,
+                           const std::string& loaderServerSignalAddr, int& argc,
+                           char**& argv)
 {
    QCoreApplication app(argc, argv);
    app.setApplicationName("NMBackend-Qt");
@@ -29,8 +32,10 @@ int uiadapter::qt::startQt(base::Base& base, int& argc, char**& argv)
                     &channel, &QWebChannel::connectTo);
 
    zmq::context_t m_zmqContext;
-   capnzero::MidiEmRt::QClient rtClient(m_zmqContext, "tcp://localhost:55555", "tcp://localhost:55556");
-   capnzero::MidiEmLoader::QClient loaderClient(m_zmqContext, "tcp://localhost:55557", "tcp://localhost:55558");
+   capnzero::MidiEmRt::QClient rtClient(m_zmqContext, rtServerRpcAddr,
+                                        rtServerSignalAddr);
+   capnzero::MidiEmLoader::QClient loaderClient(
+       m_zmqContext, loaderServerRpcAddr, loaderServerSignalAddr);
 
    channel.registerObject(QStringLiteral("Rt"), &rtClient);
    channel.registerObject(QStringLiteral("Loader"), &loaderClient);

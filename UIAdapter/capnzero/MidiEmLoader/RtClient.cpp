@@ -5,12 +5,15 @@
 using namespace uiadapter::capnzero;
 using namespace base::musicDevice;
 
-RtClient::RtClient(zmq::context_t& rZmqContext, LoaderServer::Signals& rSignals,
+RtClient::RtClient(zmq::context_t& rZmqContext,
+                   const std::string& rtServerRpcAddr,
+                   const std::string& rtServerSignalAddr,
+                   LoaderServer::Signals& rSignals,
                    base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmRt::MidiEmRtClientRpc(rZmqContext,
-                                            "tcp://localhost:55555"),
+                                            rtServerRpcAddr),
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext,
-                                                "tcp://localhost:55556")
+                                                rtServerSignalAddr)
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,

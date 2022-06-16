@@ -13,6 +13,8 @@ class LoaderServer : public ::capnzero::MidiEmLoader::MidiEmLoaderServer
 {
 public:
    LoaderServer(zmq::context_t& rZmqContext,
+               const std::string& rpcBindAddr,
+               const std::string& signalBindAddr,
                 base::musicDevice::factory::Factory& rMDFactory);
    using Super    = ::capnzero::MidiEmLoader::MidiEmLoaderServer;
    using WaitMode = Super::WaitMode;

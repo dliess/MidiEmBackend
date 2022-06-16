@@ -17,6 +17,8 @@ class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientRpc,
 {
 public:
    RtClient(zmq::context_t& rZmqContext,
+            const std::string& rtServerRpcAddr,
+            const std::string& rtServerSignalAddr,
             LoaderServer::Signals& rSignals,
             base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;

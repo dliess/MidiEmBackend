@@ -35,7 +35,13 @@ TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
     });
 // --------------------------
 
-base::Base::Base(const std::string &configDir) :
+base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
+                 std::string rtSignalBindAddr, std::string loaderRpcBindAddr,
+                 std::string loaderSignalBindAddr) :
+    m_rtRpcBindAddr(std::move(rtRpcBindAddr)),
+    m_rtSignalBindAddr(std::move(rtSignalBindAddr)),
+    m_loaderRpcBindAddr(std::move(loaderRpcBindAddr)),
+    m_loaderSignalBindAddr(std::move(loaderSignalBindAddr)),
     musicDeviceHolder(),
     musicDeviceFactory(musicDeviceHolder, configDir),
     transportControl(musicDeviceHolder),
@@ -63,7 +69,7 @@ void base::Base::start()
       throw std::runtime_error("midi::PortNotifiers::instance().init() failed");
    }
    musicDeviceFactory.createVirtualMidiDevices();
-   
+
    tempo::BeatTick::instance().abletonLink().enable(true);
    tempo::BeatTick::instance().abletonLink().onStartStopChanged(
        [this](bool start) {
@@ -124,7 +130,8 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    setRtScheduling();
    uiadapter::capnzero::RtServer rtServer(
-       m_zmqContext, instruments, musicDeviceHolder, transportControl,
+       m_zmqContext, m_rtRpcBindAddr, m_rtSignalBindAddr, instruments,
+       musicDeviceHolder, transportControl,
        tempo::BeatTick::instance().abletonLink(), midiRouter,
        controllerEventRouter, parameterSceneContainer);
 
@@ -167,10 +174,14 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
-   uiadapter::capnzero::LoaderServer loaderServer(m_zmqContext,
-                                                  musicDeviceFactory);
-   uiadapter::capnzero::RtClient rtClient(m_zmqContext, loaderServer.signals(),
-                                          musicDeviceFactory);
+   uiadapter::capnzero::LoaderServer loaderServer(
+       m_zmqContext, m_loaderRpcBindAddr, m_loaderSignalBindAddr,
+       musicDeviceFactory);
+   uiadapter::capnzero::RtClient rtClient(
+       m_zmqContext,
+       std::string(m_rtRpcBindAddr).replace(m_rtRpcBindAddr.find("*"), 1, "localhost"),
+       std::string(m_rtSignalBindAddr).replace(m_rtRpcBindAddr.find("*"), 1, "localhost"),
+       loaderServer.signals(), musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
