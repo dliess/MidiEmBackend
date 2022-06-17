@@ -51,8 +51,10 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     midiRouter(musicDeviceHolder.midiHolder),
     controllerEventRouter(musicDeviceHolder.musicDevices)
 {
-   // TODO: Remove Dummy
-   // instruments.load("relDir", "filename", "section");
+   //m_zmqContext.set(zmq::ctxopt::io_threads, 1);
+   m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);
+   //m_zmqContext.set(zmq::ctxopt::thread_sched_policy, 4);
+   //m_zmqContext.set(zmq::ctxopt::thread_priority, 1);
 }
 
 base::Base::~Base() noexcept = default;
