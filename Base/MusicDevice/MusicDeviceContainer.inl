@@ -16,6 +16,9 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       {
          const auto uuid = ptr->id();
          const std::string musicDeviceName = ptr->deviceId().deviceName;
+         ptr->soundHandler->onSoundDevParamChanged([this, uuid](int voiceId, int paramId, float commanded, float actual){
+            emitSoundDevParamChanged(uuid, voiceId, paramId, commanded, actual);
+         });
          ptr->soundHandler->onLFOWaveformChanged([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
             emitLFOWaveformChanged(uuid, voiceId, paramId, waveform);
          });
@@ -98,13 +101,7 @@ inline void MusicDeviceContainer::updateMDParameterUI()
       assert(e.second);
       if (e.second->soundHandler)
       {
-         e.second->soundHandler->forEachParameter([this, &e](int voiceIdx, int paramIdx, sound::ParameterStorageElement& element) {
-            const auto changedValues = element.uiAsksForChangedValues();
-            if(changedValues)
-            {
-               emitSoundDevParamChanged(e.second->id(), voiceIdx, paramIdx, changedValues->first, changedValues->second);
-            }
-         });
+         e.second->soundHandler->triggerUICallbacks();
       }
       if (e.second->controllerHandler)
       {

@@ -4,9 +4,9 @@
 
 namespace base::musicDevice::sound
 {
-
 inline ParameterStorageElement::ParameterStorageElement(bool isListIndex,
-                                          int resolution) noexcept :
+                                                        int resolution) noexcept
+    :
     m_isListIndex(isListIndex), m_resolution(resolution)
 {
 }
@@ -14,10 +14,10 @@ inline ParameterStorageElement::ParameterStorageElement(bool isListIndex,
 inline std::optional<std::pair<float, float>>
 ParameterStorageElement::uiAsksForChangedValues() noexcept
 {
-   if (dirtyFlagUi && uiInterestCount)
+   if (m_dirtyFlagUi && m_uiInterestCount)
    {
-      dirtyFlagUi = false;
-      return std::make_pair(commanded, actual);
+      m_dirtyFlagUi = false;
+      return std::make_pair(m_commanded, m_actual);
    }
    return std::nullopt;
 }
@@ -29,133 +29,188 @@ inline void ParameterStorageElement::applyModifier(
    {
       case ParameterPart::Commanded:
       {
-         modifier += intensity * (destination - commanded);
+         m_modifier += intensity * (destination - m_commanded);
          break;
       }
       case ParameterPart::LfoAmplitude:
       {
-         lfo.applyModifier2Amplitude(destination, intensity);
+         m_lfo.applyModifier2Amplitude(destination, intensity);
          break;
       }
       case ParameterPart::LfoFrequency:
       {
-         lfo.applyModifier2Frequency(destination, intensity);
+         m_lfo.applyModifier2Frequency(destination, intensity);
          break;
       }
       case ParameterPart::LfoWaveform:
       {
-         lfo.applyModifier2Waveform(destination, intensity);
+         m_lfo.applyModifier2Waveform(destination, intensity);
          break;
       }
       case ParameterPart::LfoMultiplierExp:
       {
-         lfo.applyModifier2MultiplierExp(destination, intensity);
+         m_lfo.applyModifier2MultiplierExp(destination, intensity);
          break;
       }
    }
-   dirtyFlagRt = true;
+   m_dirtyFlagRt = true;
 }
 
-inline std::optional<float>
+inline std::optional<std::pair<float, float>>
 ParameterStorageElement::updateActualValue() noexcept
 {
-   if (lfo.getAndResetJustGotDisabled())
-      dirtyFlagRt = true;
-   if (!enabled || (!dirtyFlagRt && !lfo.enabled()))
+   if (m_lfo.getAndResetJustGotDisabled())
+      m_dirtyFlagRt = true;
+   if (!m_enabled || (!m_dirtyFlagRt && !m_lfo.enabled()))
    {
       return std::nullopt;
    }
-   float actualBefore = actual;
-   actual             = commanded + modifier;
-   modifier           = 0;
+   float actualBefore = m_actual;
+   m_actual           = m_commanded + m_modifier;
+   m_modifier         = 0;
    const float range  = m_isListIndex ? m_resolution : 1.0;
-   if (lfo.enabled())
+   if (m_lfo.enabled())
    {
-      m_cachedLfoValue = lfo.calculateValue() * range;
-      actual += m_cachedLfoValue;
-      actual = util::clip(actual, 0.0f, range);
+      m_cachedLfoValue = m_lfo.calculateValue() * range;
+      m_lfo.clearModifiers();
+      m_actual += m_cachedLfoValue;
+      m_actual = util::clip(m_actual, 0.0f, range);
    }
    else
    {
       m_cachedLfoValue = 0.0;
    }
 
-   dirtyFlagRt = false;
+   m_dirtyFlagRt = false;
    if (m_isListIndex)
    {
-      if (int(actualBefore) != int(actual))
+      actualBefore = int(actualBefore);
+      m_actual = int(m_actual);
+      if (int(actualBefore) != int(m_actual))
       {
-         // spdlog::info( "actualBefore {} actual {}", actualBefore, actual);
-         dirtyFlagUi = true;
-         return actualBefore;
+         m_dirtyFlagUi = true;
+         return std::make_pair(actualBefore, m_actual);
       }
    }
    else
    {
-      if (int(actualBefore * m_resolution) != int(actual * m_resolution)
-          //|| actual == 0
-      )
+      if (int(actualBefore * m_resolution) != int(m_actual * m_resolution))
       {
-         dirtyFlagUi = true;
-         return actualBefore;
+         m_dirtyFlagUi = true;
+         return std::make_pair(actualBefore, m_actual);
       }
    }
    return std::nullopt;
 }
 
-inline void ParameterStorageElement::setActualValueUnsynced(
-    float value) noexcept
+inline void ParameterStorageElement::setCommandedValue(float value,
+                                                       bool roundRobin) noexcept
 {
-   actual      = value;
-   dirtyFlagUi = true;
+   m_commanded   = limitValue(value, roundRobin);
+   m_dirtyFlagRt = true;
+   m_dirtyFlagUi = true;
 }
 
-inline void ParameterStorageElement::setActualValue(float value) noexcept
+template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+
+inline void ParameterStorageElement::incCommandedValue(float increment,
+                                                       bool roundRobin) noexcept
 {
-   actual      = value;
-   commanded   = actual - (m_cachedLfoValue + modifier);
-   dirtyFlagUi = true;
+   const float theIncrement = m_isListIndex ? sgn(increment) : increment;
+   setCommandedValue(m_commanded + theIncrement, roundRobin);
 }
 
-inline void ParameterStorageElement::setCommandedValue(
-    float value, bool markDirtyRt, bool roundRobin) noexcept
+inline void ParameterStorageElement::setValueFromDeviceRel(float value) noexcept
 {
+   m_actual      = value;
+   m_commanded   = limitValue(m_actual - (m_cachedLfoValue + m_modifier));
+   m_dirtyFlagUi = true;
+}
+
+inline void ParameterStorageElement::setValueFromDevice(float value) noexcept
+{
+   m_commanded   = limitValue(value);
+   m_actual      = m_commanded;
+   m_dirtyFlagRt = true;
+   m_dirtyFlagUi = true;
+}
+
+inline float ParameterStorageElement::limitValue(float value,
+                                                 bool roundRobin) const noexcept
+{
+   float ret = value;
    const float range = m_isListIndex ? m_resolution : 1.0;
    if (roundRobin)
    {
       if (value < 0.0)
       {
-         value = m_isListIndex ? range - 1 : range;
+         ret = m_isListIndex ? range - 1 : range;
       }
       if (value >= range)
       {
-         value = 0.0;
+         ret = 0.0;
       }
    }
    else
    {
       if (value < 0.0)
       {
-         value = 0.0;
+         ret = 0.0;
       }
       if (value >= range)
       {
-         value = m_isListIndex ? range - 1 : range;
+         ret = m_isListIndex ? range - 1 : range;
       }
    }
-   commanded   = value;
-   dirtyFlagRt = markDirtyRt;
-   dirtyFlagUi = true;
+   return ret;
 }
 
-template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
-
-inline void ParameterStorageElement::incCommandedValue(
-    float increment, bool roundRobin) noexcept
+inline void ParameterStorageElement::enable(bool enable) noexcept
 {
-   const float theIncrement = m_isListIndex ? sgn(increment) : increment;
-   setCommandedValue(commanded + theIncrement, true, roundRobin);
+   if (m_enabled != enable)
+   {
+      m_enabled = enable;
+      if (m_enabled)
+      {
+         forceRecalculationAndSending();
+      }
+   }
 }
 
+inline void ParameterStorageElement::incUiInterestCount() noexcept
+{
+   m_dirtyFlagUi = true;
+   ++m_uiInterestCount;
+}
+
+inline void ParameterStorageElement::decUiInterestCount() noexcept
+{
+   --m_uiInterestCount;
+   if (m_uiInterestCount < 0)
+      m_uiInterestCount = 0;
+}
+
+inline void ParameterStorageElement::forceRecalculationAndSending() noexcept
+{
+   m_actual      = -1;
+   m_dirtyFlagRt = true;
+}
+
+inline bool ParameterStorageElement::isInSync() const noexcept
+{
+   return m_actual != -1;
+}
+
+inline float ParameterStorageElement::commanded() const noexcept
+{
+   return m_commanded;
+}
+
+inline const lfo::LFO& ParameterStorageElement::lfo() const noexcept
+{
+   return m_lfo;
+}
+
+inline lfo::LFO& ParameterStorageElement::lfo() noexcept { return m_lfo; }
 
 }   // namespace base::musicDevice::sound

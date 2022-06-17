@@ -9,8 +9,8 @@
 #include "CallbackSignal.h"
 #include "LFO.h"
 #include "ParameterPart.h"
-#include "SoundSection.h"
 #include "SoundParameterStorageElement.h"
+#include "SoundSection.h"
 
 namespace base::musicDevice
 {
@@ -45,9 +45,9 @@ public:
 
    template <typename Cb> void updateActualValues(Cb&& cb) noexcept;
 
-   inline void markAllDirty() noexcept;
-
-   inline float getCommandedValue(int voiceIdx, int parameterId, ParameterPart parameterPart = ParameterPart::Commanded) const noexcept;
+   inline float getCommandedValue(
+       int voiceIdx, int parameterId,
+       ParameterPart parameterPart = ParameterPart::Commanded) const noexcept;
    inline std::vector<float> getCommandedValuesOfVoice(
        int voiceIdx) const noexcept;
 
@@ -84,7 +84,8 @@ public:
    CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
-   inline const ParameterStorageElement& parameter(int voiceIdx, int paramIdx) const;
+   inline const ParameterStorageElement& parameter(int voiceIdx,
+                                                   int paramIdx) const;
    inline ParameterStorageElement& parameter(int voiceIdx, int paramIdx);
 
    template <typename Cb> void forEachParameter(Cb&& cb) const noexcept;
@@ -114,6 +115,9 @@ private:
    inline const EngineData& elementContainer(int voiceIdx) const noexcept;
    inline EngineData& elementContainer(int voiceIdx) noexcept;
    inline void resize() noexcept;
+
+   inline void _resetToInitialValue(int voiceIdx, int paramIdx,
+                                    ParameterStorageElement& element) noexcept;
 };
 
 }   // namespace sound

@@ -33,6 +33,7 @@ inline float LFO::calculateValue() noexcept
 
 inline bool LFO::setWaveform(Waveform waveform) noexcept
 {
+   m_dirtyFlagsUi.waveform = true;
    switch (waveform)
    {
       case Waveform::Sine: m_waveform.emplace<Sine>(); return true;
@@ -46,6 +47,7 @@ inline bool LFO::setWaveform(Waveform waveform) noexcept
 
 inline bool LFO::setAmplitude(float amplitude) noexcept
 {
+   m_dirtyFlagsUi.amplitude = true;
    if (m_amplitude != amplitude && amplitude >= -1.0 && amplitude <= 1.0)
    {
       m_amplitude = amplitude;
@@ -58,6 +60,7 @@ inline bool LFO::setAmplitude(float amplitude) noexcept
 
 inline bool LFO::setFrequency(float frequency) noexcept
 {
+   m_dirtyFlagsUi.frequency = true;
    if (frequency < 0.0)
       frequency = 0.0;
    if (m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
@@ -72,6 +75,7 @@ inline bool LFO::setFrequency(float frequency) noexcept
 
 inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 {
+   m_dirtyFlagsUi.multiplierExp = true;
    if (m_multiplierExp != multiplierExp && multiplierExp <= MAX_MULTIPLIER_EXP)
    {
       m_multiplierExp = multiplierExp;
@@ -83,29 +87,29 @@ inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 inline void LFO::applyModifier2Waveform(float destination,
                                         float intensity) noexcept
 {
-   m_modifierWaveform +=
-       ((destination *
-         mpark::variant_size_v<decltype(m_waveform)>)-m_waveform.index()) *
-       intensity;
+   m_modifierWaveform += (destination - m_waveform.index()) * intensity;
+   m_dirtyFlagsUi.waveform = true;
 }
 
 inline void LFO::applyModifier2Amplitude(float destination,
                                          float intensity) noexcept
 {
    m_modifierAmplitude += (destination - m_amplitude) * intensity;
+   m_dirtyFlagsUi.amplitude = true;
 }
 
 inline void LFO::applyModifier2Frequency(float destination,
                                          float intensity) noexcept
 {
    m_modifierFrequency += (destination - m_frequency) * intensity;
+   m_dirtyFlagsUi.frequency = true;
 }
 
 inline void LFO::applyModifier2MultiplierExp(float destination,
                                              float intensity) noexcept
 {
-   m_modifierMultiplierExp +=
-       (destination * MAX_MULTIPLIER_EXP - m_multiplierExp) * intensity;
+   m_modifierMultiplierExp += (destination - m_multiplierExp) * intensity;
+   m_dirtyFlagsUi.multiplierExp = true;
 }
 
 inline Waveform LFO::waveform() const noexcept
@@ -125,8 +129,7 @@ inline Waveform LFO::waveform() const noexcept
 
 inline float LFO::waveformAsFloat() const noexcept
 {
-   return static_cast<float>(waveform()) /
-          mpark::variant_size_v<decltype(m_waveform)>;
+   return static_cast<float>(waveform());
 }
 
 inline float LFO::amplitude() const noexcept { return m_amplitude; }
@@ -137,7 +140,7 @@ inline uint32_t LFO::multiplierExp() const noexcept { return m_multiplierExp; }
 
 inline float LFO::multiplierExpAsFloat() const noexcept
 {
-   return float(m_multiplierExp) / MAX_MULTIPLIER_EXP;
+   return float(m_multiplierExp);
 }
 
 inline void LFO::reset() noexcept
@@ -185,6 +188,39 @@ inline uint32_t LFO::modifiedMultiplierExp() const noexcept
 {
    return util::clip(int(m_multiplierExp + m_modifierMultiplierExp), 0,
                      int(MAX_MULTIPLIER_EXP));
+}
+
+inline void LFO::clearModifiers() noexcept
+{
+   m_modifierWaveform = 0;
+   m_modifierAmplitude = 0;
+   m_modifierFrequency = 0;
+   m_modifierMultiplierExp = 0;
+}
+
+template<typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
+void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw, CB_mult&& cb_mult)
+{
+   if(m_dirtyFlagsUi.amplitude)
+   {
+      cbAmp(modifiedAmplitude());
+      m_dirtyFlagsUi.amplitude = false;
+   }
+   if(m_dirtyFlagsUi.frequency)
+   {
+      cbFreq(modifiedFrequency());
+      m_dirtyFlagsUi.frequency = false;
+   }
+   if(m_dirtyFlagsUi.waveform)
+   {
+      cbWaw(waveform());
+      m_dirtyFlagsUi.waveform = false;
+   }
+   if(m_dirtyFlagsUi.multiplierExp)
+   {
+      cb_mult(modifiedMultiplierExp());
+      m_dirtyFlagsUi.multiplierExp = false;
+   }
 }
 
 inline float LFO::Sine::operator()(float t) const noexcept

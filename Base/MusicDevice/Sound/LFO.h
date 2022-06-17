@@ -34,7 +34,10 @@ public:
    [[nodiscard]] inline float multiplierExpAsFloat() const noexcept;
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
+   inline void clearModifiers() noexcept;
 
+   template<typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
+   void uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw, CB_mult&& cb_mult);
    struct Sine
    {
       [[nodiscard]] inline float operator()(float t) const noexcept;
@@ -75,6 +78,14 @@ private:
    [[nodiscard]] inline float modifiedAmplitude() const noexcept;
    [[nodiscard]] inline float modifiedFrequency() const noexcept;
    [[nodiscard]] inline uint32_t modifiedMultiplierExp() const noexcept;
+
+   struct DirtyFlags {
+      bool amplitude{false};
+      bool frequency{false};
+      bool waveform{false};
+      bool multiplierExp{false};
+   };
+   DirtyFlags m_dirtyFlagsUi;
 };
 
 } // namespace base::musicDevice::sound::lfo

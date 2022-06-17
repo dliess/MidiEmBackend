@@ -8,37 +8,48 @@
 
 namespace base::musicDevice::sound
 {
-
 struct ParameterStorageElement
 {
    inline ParameterStorageElement(bool isListIndex, int resolution) noexcept;
 
-   bool enabled{true};
-   float commanded{0};
-   float modifier{0};
-   lfo::LFO lfo;
-   float actual{-1};
-   bool dirtyFlagRt{false};
-   bool dirtyFlagUi{true};
-   int uiInterestCount{0};
-
-   inline std::optional<std::pair<float, float>>
+   [[nodiscard]] inline std::optional<std::pair<float, float>>
    uiAsksForChangedValues() noexcept;
-   inline std::optional<float> updateActualValue() noexcept;
-   inline void setActualValueUnsynced(float value) noexcept;
-   inline void setActualValue(float value) noexcept;
-   inline void setCommandedValue(float value, bool markDirtyRt = true,
-                                 bool roundRobin = false) noexcept;
+   [[nodiscard]] inline std::optional<std::pair<float, float>>
+   updateActualValue() noexcept;
+   inline void setCommandedValue(float value, bool roundRobin = false) noexcept;
    inline void incCommandedValue(float increment,
                                  bool roundRobin = false) noexcept;
+   inline void setValueFromDeviceRel(float value) noexcept;
+   inline void setValueFromDevice(float value) noexcept;
    inline void applyModifier(float destination, float intensity,
                              ParameterPart parameterPart) noexcept;
+
+   inline void enable(bool enable) noexcept;
+   inline void incUiInterestCount() noexcept;
+   inline void decUiInterestCount() noexcept;
+   [[nodiscard]] inline bool isInSync() const noexcept;
+   [[nodiscard]] inline float commanded() const noexcept;
+   [[nodiscard]] inline const lfo::LFO& lfo() const noexcept;
+   [[nodiscard]] inline lfo::LFO& lfo() noexcept;
 
 private:
    const bool m_isListIndex;
    const int m_resolution;
    float m_cachedLfoValue{0.0};
    inline float calcModified() const noexcept;
+
+   bool m_enabled{true};
+   int m_uiInterestCount{0};
+   bool m_dirtyFlagUi{true};
+   float m_actual{-1};
+   bool m_dirtyFlagRt{false};
+   float m_modifier{0};
+   float m_commanded{0};
+   lfo::LFO m_lfo;
+
+   [[nodiscard]] inline float limitValue(
+       float value, bool roundRobin = false) const noexcept;
+   inline void forceRecalculationAndSending() noexcept;
 };
 
 }   // namespace base::musicDevice::sound

@@ -73,9 +73,14 @@ void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
    m_rParameterStorage.forEachParameter(
        [this, &presetData, voiceIdx](int paramIdx, ParameterStorageElement& param) {
           const auto& from = presetData.parameters[paramIdx];
-          param.setCommandedValue(from.commanded,
-                                  !presetData.slotOnDeviceIndex.has_value());
-          param.setActualValueUnsynced(from.commanded);
+          if(presetData.slotOnDeviceIndex.has_value())
+          {
+            param.setValueFromDevice(from.commanded);
+          }
+          else
+          {
+            param.setCommandedValue(from.commanded);
+          }
           // we have to call them by ParameterStorage so cb_signals get emitted on change 
           m_rParameterStorage.setAmplitude(voiceIdx, paramIdx, from.lfoData.amplitude);
           m_rParameterStorage.setFrequency(voiceIdx, paramIdx, from.lfoData.frequency);
@@ -116,11 +121,11 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
    m_rParameterStorage.forEachParameter(
        [&presetData](int paramIdx, const ParameterStorageElement& param) {
           auto& dest                 = presetData.parameters[paramIdx];
-          dest.commanded             = param.commanded;
-          dest.lfoData.amplitude     = param.lfo.amplitude();
-          dest.lfoData.frequency     = param.lfo.frequency();
-          dest.lfoData.waveform      = param.lfo.waveform();
-          dest.lfoData.multiplierExp = param.lfo.multiplierExp();
+          dest.commanded             = param.commanded();
+          dest.lfoData.amplitude     = param.lfo().amplitude();
+          dest.lfoData.frequency     = param.lfo().frequency();
+          dest.lfoData.waveform      = param.lfo().waveform();
+          dest.lfoData.multiplierExp = param.lfo().multiplierExp();
        },
        voiceIdx);
 

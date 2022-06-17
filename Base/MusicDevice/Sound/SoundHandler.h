@@ -92,6 +92,8 @@ public:
 
    [[nodiscard]] bool checkValidity(int voiceIdx, int  parameterIdx) const noexcept;
 
+   void triggerUICallbacks() noexcept;
+   CB_SIGNAL(SoundDevParamChanged, int, int, float, float);
    CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
    CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
    CB_SIGNAL(LFOFrequencyChanged, int, int, float);

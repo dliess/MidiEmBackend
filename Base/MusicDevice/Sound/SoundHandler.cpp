@@ -250,13 +250,11 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
                            m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
                        if (descr.component && *descr.component == compNamePrev)
                        {
-                          element.enabled = false;
+                          element.enable(false);
                        }
                        if (descr.component && *descr.component == compName)
                        {
-                          element.enabled     = true;
-                          element.actual      = -1;
-                          element.dirtyFlagRt = true;
+                          element.enable(true);
                        }
                     },
                     voiceIdx);
@@ -280,13 +278,14 @@ void SoundHandler::uiShowsInterestInParameter(int voiceId,
                                     ParameterStorageElement& element) {
           if (parameterId == ALL || parameterId == paramIdx)
           {
-             emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
+             emitLFOWaveformChanged(voiceId, paramIdx,
+                                    element.lfo().waveform());
              emitLFOAmplitudeChanged(voiceId, paramIdx,
-                                     element.lfo.amplitude());
+                                     element.lfo().amplitude());
              emitLFOFrequencyChanged(voiceId, paramIdx,
-                                     element.lfo.frequency());
+                                     element.lfo().frequency());
              emitLFOMultiplierExpChanged(voiceId, paramIdx,
-                                         element.lfo.multiplierExp());
+                                         element.lfo().multiplierExp());
           }
        },
        voiceId);
@@ -314,13 +313,14 @@ void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
                                  ParameterStorageElement& element) {
           if (paramIdx == ALL || paramIdx == _paramIdx)
           {
-             emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
+             emitLFOWaveformChanged(voiceId, paramIdx,
+                                    element.lfo().waveform());
              emitLFOAmplitudeChanged(voiceId, paramIdx,
-                                     element.lfo.amplitude());
+                                     element.lfo().amplitude());
              emitLFOFrequencyChanged(voiceId, paramIdx,
-                                     element.lfo.frequency());
+                                     element.lfo().frequency());
              emitLFOMultiplierExpChanged(voiceId, paramIdx,
-                                         element.lfo.multiplierExp());
+                                         element.lfo().multiplierExp());
           }
        },
        voiceId);
@@ -332,11 +332,11 @@ void SoundHandler::blankVoiceParameters(int voiceId) noexcept
    // TODO
    m_paramStorage.forEachParameter(
        [voiceId, this](int paramIdx, ParameterStorageElement& element) {
-          emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
-          emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
-          emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
+          emitLFOWaveformChanged(voiceId, paramIdx, element.lfo().waveform());
+          emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo().amplitude());
+          emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo().frequency());
           emitLFOMultiplierExpChanged(voiceId, paramIdx,
-                                      element.lfo.multiplierExp());
+                                      element.lfo().multiplierExp());
        },
        voiceId);
 }
@@ -347,11 +347,11 @@ void SoundHandler::blankAllVoiceParameters() noexcept
    // TODO
    m_paramStorage.forEachParameter(
        [this](int voiceId, int paramIdx, ParameterStorageElement& element) {
-          emitLFOWaveformChanged(voiceId, paramIdx, element.lfo.waveform());
-          emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo.amplitude());
-          emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo.frequency());
+          emitLFOWaveformChanged(voiceId, paramIdx, element.lfo().waveform());
+          emitLFOAmplitudeChanged(voiceId, paramIdx, element.lfo().amplitude());
+          emitLFOFrequencyChanged(voiceId, paramIdx, element.lfo().frequency());
           emitLFOMultiplierExpChanged(voiceId, paramIdx,
-                                      element.lfo.multiplierExp());
+                                      element.lfo().multiplierExp());
        });
 }
 
@@ -458,4 +458,25 @@ bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
                int(m_rSoundSection
                        .engines[m_rSoundSection.voice2EngineIdx(voiceIdx)]
                        .parameters.size()));
+}
+
+void SoundHandler::triggerUICallbacks() noexcept
+{
+   forEachParameter(
+       [this](int voiceIdx, int paramIdx,
+                  sound::ParameterStorageElement& element) {
+          const auto changedValues = element.uiAsksForChangedValues();
+          if (changedValues)
+          {
+             emitSoundDevParamChanged(voiceIdx, paramIdx,
+                                      changedValues->first,
+                                      changedValues->second);
+             element.lfo().uiAsksForChanges(
+               [=](float value){ emitLFOAmplitudeChanged(voiceIdx, paramIdx, value); },
+               [=](float value){ emitLFOFrequencyChanged(voiceIdx, paramIdx, value); },
+               [=](lfo::Waveform value){ emitLFOWaveformChanged(voiceIdx, paramIdx, value); },
+               [=](uint32_t value){ emitLFOMultiplierExpChanged(voiceIdx, paramIdx, value); }
+             );
+          }
+       });
 }

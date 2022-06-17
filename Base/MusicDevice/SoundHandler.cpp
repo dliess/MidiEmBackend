@@ -241,8 +241,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
                        if (descr.component && *descr.component == compName)
                        {
                           element.enabled     = true;
-                          element.actual      = -1;
-                          element.dirtyFlagRt = true;
+                          element.forceRecalculationAndSending();
                        }
                     },
                     voiceIdx);
