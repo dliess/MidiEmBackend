@@ -98,7 +98,7 @@ inline void MusicDeviceContainer::updateMDParameterUI()
       assert(e.second);
       if (e.second->soundHandler)
       {
-         e.second->soundHandler->forEachParameter([this, &e](int voiceIdx, int paramIdx, sound::ParameterStorage::Element& element) {
+         e.second->soundHandler->forEachParameter([this, &e](int voiceIdx, int paramIdx, sound::ParameterStorageElement& element) {
             const auto changedValues = element.uiAsksForChangedValues();
             if(changedValues)
             {

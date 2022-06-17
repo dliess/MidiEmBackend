@@ -214,7 +214,7 @@ inline void ParameterStorage::resetToInitialValue(int voiceIdx,
 inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
 {
    forEachParameter(
-       [this, voiceIdx](int paramIdx, Element& element) {
+       [this, voiceIdx](int paramIdx, ParameterStorageElement& element) {
           element.modifier = 0;
           element.lfo.reset();
           const auto& descr =
@@ -237,21 +237,22 @@ inline void ParameterStorage::resetToInitialValues(int voiceIdx) noexcept
 
 inline void ParameterStorage::resetToInitialValues() noexcept
 {
-   forEachParameter([this](int voiceId, int paramIdx, Element& element) {
-      element.modifier = 0;
-      element.lfo.reset();
-      const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
-      if (descr.role &&
-          descr.role.value() ==
-              description::sound::Parameter::Role::ComponentSelector &&
-          element.actual != -1)
-         return;
-      const float initVal =
-          m_rSoundSection.getInitialValueFor(voiceId, paramIdx);
-      element.actual      = -1;
-      element.dirtyFlagRt = true;
-      element.setCommandedValue(initVal);
-   });
+   forEachParameter(
+       [this](int voiceId, int paramIdx, ParameterStorageElement& element) {
+          element.modifier = 0;
+          element.lfo.reset();
+          const auto& descr = m_rSoundSection.parameterDescr(voiceId, paramIdx);
+          if (descr.role &&
+              descr.role.value() ==
+                  description::sound::Parameter::Role::ComponentSelector &&
+              element.actual != -1)
+             return;
+          const float initVal =
+              m_rSoundSection.getInitialValueFor(voiceId, paramIdx);
+          element.actual      = -1;
+          element.dirtyFlagRt = true;
+          element.setCommandedValue(initVal);
+       });
    forEachElementContainer([](EngineData& engineData, int voiceIdx) {
       engineData.actualPreset.reset();
    });
@@ -276,27 +277,28 @@ inline void ParameterStorage::setActualPresetOfVoice(
 template <typename Cb>
 void ParameterStorage::updateActualValues(Cb&& cb) noexcept
 {
-   forEachParameter([cb](int voiceIdx, int paramIdx, Element& element) {
-      const auto prevVal = element.updateActualValue();
-      if (prevVal)
-      {
-         cb(voiceIdx, paramIdx, element.actual, *prevVal);
-      }
-   });
+   forEachParameter(
+       [cb](int voiceIdx, int paramIdx, ParameterStorageElement& element) {
+          const auto prevVal = element.updateActualValue();
+          if (prevVal)
+          {
+             cb(voiceIdx, paramIdx, element.actual, *prevVal);
+          }
+       });
 }
 
 inline void ParameterStorage::markAllDirty() noexcept
 {
-   forEachParameter([](int voiceIdx, int paramIdx, Element& element) {
-      element.dirtyFlagRt = true;
-   });
+   forEachParameter(
+       [](int voiceIdx, int paramIdx, ParameterStorageElement& element) {
+          element.dirtyFlagRt = true;
+       });
 }
 
-inline float ParameterStorage::getCommandedValue(int voiceIdx,
-                                                 int parameterId,
-                                                 ParameterPart parameterPart) const noexcept
+inline float ParameterStorage::getCommandedValue(
+    int voiceIdx, int parameterId, ParameterPart parameterPart) const noexcept
 {
-   switch(parameterPart)
+   switch (parameterPart)
    {
       case ParameterPart::Commanded:
       {
@@ -312,11 +314,15 @@ inline float ParameterStorage::getCommandedValue(int voiceIdx,
       }
       case ParameterPart::LfoWaveform:
       {
-         return elementContainer(voiceIdx).parameters[parameterId].lfo.waveformAsFloat();
+         return elementContainer(voiceIdx)
+             .parameters[parameterId]
+             .lfo.waveformAsFloat();
       }
       case ParameterPart::LfoMultiplierExp:
       {
-         return elementContainer(voiceIdx).parameters[parameterId].lfo.multiplierExpAsFloat();
+         return elementContainer(voiceIdx)
+             .parameters[parameterId]
+             .lfo.multiplierExpAsFloat();
       }
    }
    return 0;
@@ -365,7 +371,7 @@ inline void ParameterStorage::uiShowsInterestInParameter(
     int voiceId_, int parameterId_) noexcept
 {
    forEachParameter(
-       [parameterId_](int paramIdx, Element& element) {
+       [parameterId_](int paramIdx, ParameterStorageElement& element) {
           if (parameterId_ == ALL || parameterId_ == paramIdx)
           {
              element.dirtyFlagUi = true;
@@ -379,7 +385,7 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
     int voiceId_, int parameterId_) noexcept
 {
    forEachParameter(
-       [parameterId_](int paramIdx, Element& element) {
+       [parameterId_](int paramIdx, ParameterStorageElement& element) {
           if (parameterId_ == ALL || parameterId_ == paramIdx)
           {
              element.uiInterestCount--;
@@ -388,14 +394,19 @@ inline void ParameterStorage::uiLoosesInterestInParameter(
        voiceId_);
 }
 
-inline const ParameterStorage::Element& ParameterStorage::parameter(
+inline int ParameterStorage::paramCount(int voiceIdx) const noexcept
+{
+   return elementContainer(voiceIdx).parameters.size();
+}
+
+inline const ParameterStorageElement& ParameterStorage::parameter(
     int voiceIdx, int paramIdx) const
 {
    return elementContainer(voiceIdx).parameters[paramIdx];
 }
 
-inline ParameterStorage::Element& ParameterStorage::parameter(int voiceIdx,
-                                                              int paramIdx)
+inline ParameterStorageElement& ParameterStorage::parameter(int voiceIdx,
+                                                            int paramIdx)
 {
    return elementContainer(voiceIdx).parameters[paramIdx];
 }
@@ -409,163 +420,6 @@ inline const lfo::LFO& ParameterStorage::lfoOf(int voiceId,
                                                int parameterId) const noexcept
 {
    return parameter(voiceId, parameterId).lfo;
-}
-
-inline int ParameterStorage::paramCount(int voiceIdx) const noexcept
-{
-   return elementContainer(voiceIdx).parameters.size();
-}
-
-inline ParameterStorage::Element::Element(bool isListIndex,
-                                          int resolution) noexcept :
-    m_isListIndex(isListIndex), m_resolution(resolution)
-{
-}
-
-inline std::optional<std::pair<float, float>>
-ParameterStorage::Element::uiAsksForChangedValues() noexcept
-{
-   if (dirtyFlagUi && uiInterestCount)
-   {
-      dirtyFlagUi = false;
-      return std::make_pair(commanded, actual);
-   }
-   return std::nullopt;
-}
-
-inline void ParameterStorage::Element::applyModifier(
-    float destination, float intensity, ParameterPart parameterPart) noexcept
-{
-   switch (parameterPart)
-   {
-      case ParameterPart::Commanded:
-      {
-         modifier += intensity * (destination - commanded);
-         break;
-      }
-      case ParameterPart::LfoAmplitude:
-      {
-         lfo.applyModifier2Amplitude(destination, intensity);
-         break;
-      }
-      case ParameterPart::LfoFrequency:
-      {
-         lfo.applyModifier2Frequency(destination, intensity);
-         break;
-      }
-      case ParameterPart::LfoWaveform:
-      {
-         lfo.applyModifier2Waveform(destination, intensity);
-         break;
-      }
-      case ParameterPart::LfoMultiplierExp:
-      {
-         lfo.applyModifier2MultiplierExp(destination, intensity);
-         break;
-      }
-   }
-   dirtyFlagRt = true;
-}
-
-inline std::optional<float>
-ParameterStorage::Element::updateActualValue() noexcept
-{
-   if (lfo.getAndResetJustGotDisabled())
-      dirtyFlagRt = true;
-   if (!enabled || (!dirtyFlagRt && !lfo.enabled()))
-   {
-      return std::nullopt;
-   }
-   float actualBefore = actual;
-   actual             = commanded + modifier;
-   modifier = 0;
-   const float range  = m_isListIndex ? m_resolution : 1.0;
-   if (lfo.enabled())
-   {
-      m_cachedLfoValue = lfo.calculateValue() * range;
-      actual += m_cachedLfoValue;
-      actual = util::clip(actual, 0.0f, range);
-   }
-   else
-   {
-      m_cachedLfoValue = 0.0;
-   }
-
-   dirtyFlagRt = false;
-   if (m_isListIndex)
-   {
-      if (int(actualBefore) != int(actual))
-      {
-         // spdlog::info( "actualBefore {} actual {}", actualBefore, actual);
-         dirtyFlagUi = true;
-         return actualBefore;
-      }
-   }
-   else
-   {
-      if (int(actualBefore * m_resolution) != int(actual * m_resolution)
-          //|| actual == 0
-      )
-      {
-         dirtyFlagUi = true;
-         return actualBefore;
-      }
-   }
-   return std::nullopt;
-}
-
-inline void ParameterStorage::Element::setActualValueUnsynced(
-    float value) noexcept
-{
-   actual      = value;
-   dirtyFlagUi = true;
-}
-
-inline void ParameterStorage::Element::setActualValue(float value) noexcept
-{
-   actual      = value;
-   commanded   = actual - (m_cachedLfoValue + modifier);
-   dirtyFlagUi = true;
-}
-
-inline void ParameterStorage::Element::setCommandedValue(
-    float value, bool markDirtyRt, bool roundRobin) noexcept
-{
-   const float range = m_isListIndex ? m_resolution : 1.0;
-   if (roundRobin)
-   {
-      if (value < 0.0)
-      {
-         value = m_isListIndex ? range - 1 : range - FUZZ;
-      }
-      if (value >= range)
-      {
-         value = 0.0;
-      }
-   }
-   else
-   {
-      if (value < 0.0)
-      {
-         value = 0.0;
-      }
-      if (value >= range)
-      {
-         value = m_isListIndex ? range - 1 : range - FUZZ;
-      }
-   }
-   commanded   = value;
-   dirtyFlagRt = markDirtyRt;
-   dirtyFlagUi = true;
-}
-
-template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
-
-inline void ParameterStorage::Element::incCommandedValue(
-    float increment, bool roundRobin) noexcept
-{
-   const float theIncrement = m_isListIndex ? sgn(increment) : increment;
-   setCommandedValue(commanded + theIncrement, true, roundRobin);
 }
 
 inline void ParameterStorage::setWaveform(int voiceId, int parameterId,
@@ -633,8 +487,9 @@ inline void ParameterStorage::applyModifier(int voiceIndex, int paramIdx,
                                             float destValue,
                                             float intensity) noexcept
 {
-   elementContainer(voiceIndex).parameters[paramIdx].applyModifier(destValue, intensity,
-                                                        parameterPart);
+   elementContainer(voiceIndex)
+       .parameters[paramIdx]
+       .applyModifier(destValue, intensity, parameterPart);
 }
 
 }   // namespace base::musicDevice::sound

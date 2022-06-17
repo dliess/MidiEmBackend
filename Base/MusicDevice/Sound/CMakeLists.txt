@@ -17,6 +17,10 @@ set(HEADERS
    "ParameterCoordinate.h"
    "ParameterScene.h"
    "ParameterSceneContainer.h"
+   "SoundParameterStorage.h"
+   "SoundParameterStorage.inl"
+   "SoundParameterStorageElement.h"
+   "SoundParameterStorageElement.inl"
 )
 
 set(TARGET_NAME "MusicDeviceSound")

@@ -71,7 +71,7 @@ void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
    const auto& presetData =
        m_pDevicePresets->preset(engineIdx, *actualPresetName);
    m_rParameterStorage.forEachParameter(
-       [this, &presetData, voiceIdx](int paramIdx, ParameterStorage::Element& param) {
+       [this, &presetData, voiceIdx](int paramIdx, ParameterStorageElement& param) {
           const auto& from = presetData.parameters[paramIdx];
           param.setCommandedValue(from.commanded,
                                   !presetData.slotOnDeviceIndex.has_value());
@@ -114,7 +114,7 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
    presetData.genre    = genre;
    presetData.parameters.resize(m_rParameterStorage.paramCount(voiceIdx));
    m_rParameterStorage.forEachParameter(
-       [&presetData](int paramIdx, const ParameterStorage::Element& param) {
+       [&presetData](int paramIdx, const ParameterStorageElement& param) {
           auto& dest                 = presetData.parameters[paramIdx];
           dest.commanded             = param.commanded;
           dest.lfoData.amplitude     = param.lfo.amplitude();
