@@ -35,22 +35,6 @@ SoundHandler::SoundHandler(
           });
       m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
    }
-   m_paramStorage.onLFOWaveformChanged(
-       [this](int voiceIdx, int parameterIdx, lfo::Waveform waveform) {
-          emitLFOWaveformChanged(voiceIdx, parameterIdx, waveform);
-       });
-   m_paramStorage.onLFOAmplitudeChanged(
-       [this](int voiceIdx, int parameterIdx, float amplitude) {
-          emitLFOAmplitudeChanged(voiceIdx, parameterIdx, amplitude);
-       });
-   m_paramStorage.onLFOFrequencyChanged(
-       [this](int voiceIdx, int parameterIdx, float frequency) {
-          emitLFOFrequencyChanged(voiceIdx, parameterIdx, frequency);
-       });
-   m_paramStorage.onLFOMultiplierExpChanged(
-       [this](int voiceIdx, int parameterIdx, uint32_t multiplExp) {
-          emitLFOMultiplierExpChanged(voiceIdx, parameterIdx, multiplExp);
-       });
    m_paramStorage.onActualPresetChanged(
        [this](int voiceIdx, const std::string& presetName) {
           emitActualPresetChanged(voiceIdx, presetName);
@@ -192,15 +176,50 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
 float SoundHandler::getParameterValue(
     int voiceId, int parameterId, ParameterPart parameterPart) const noexcept
 {
-   if (!m_midiOutHandler)
-   {
-      spdlog::error(
-          "setSoundParameterValue() called but there is no m_midiOutHandler in "
-          "device '{}'",
-          m_deviceName);
-      return -1;
-   }
    return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterPart);
+}
+
+float SoundHandler::getParameterRange(int voiceId, int parameterId,
+                                      ParameterPart parameterPart) const
+{
+   float maxVal = 1.0;
+   switch (parameterPart)
+   {
+      case ParameterPart::Commanded:
+      {
+         const auto& pd = m_rSoundSection.parameterDescr(voiceId, parameterId);
+         if (pd.type == description::sound::Parameter::Type::List)
+         {
+            maxVal = pd.source.midi->sourceRanges->size() - 1;
+         }
+         else
+         {
+            maxVal = 1.0;
+         }
+         break;
+      }
+      case ParameterPart::LfoAmplitude:
+      {
+         maxVal = 1.0;
+         break;
+      }
+      case ParameterPart::LfoFrequency:
+      {
+         maxVal = 1.0;
+         break;
+      }
+      case ParameterPart::LfoWaveform:
+      {
+         maxVal = 4.0;
+         break;
+      }
+      case ParameterPart::LfoMultiplierExp:
+      {
+         maxVal = lfo::MAX_MULTIPLIER_EXP;
+         break;
+      }
+   }
+   return maxVal;
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
@@ -462,21 +481,26 @@ bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
 
 void SoundHandler::triggerUICallbacks() noexcept
 {
-   forEachParameter(
-       [this](int voiceIdx, int paramIdx,
-                  sound::ParameterStorageElement& element) {
-          const auto changedValues = element.uiAsksForChangedValues();
-          if (changedValues)
-          {
-             emitSoundDevParamChanged(voiceIdx, paramIdx,
-                                      changedValues->first,
-                                      changedValues->second);
-             element.lfo().uiAsksForChanges(
-               [=](float value){ emitLFOAmplitudeChanged(voiceIdx, paramIdx, value); },
-               [=](float value){ emitLFOFrequencyChanged(voiceIdx, paramIdx, value); },
-               [=](lfo::Waveform value){ emitLFOWaveformChanged(voiceIdx, paramIdx, value); },
-               [=](uint32_t value){ emitLFOMultiplierExpChanged(voiceIdx, paramIdx, value); }
-             );
-          }
-       });
+   forEachParameter([this](int voiceIdx, int paramIdx,
+                           sound::ParameterStorageElement& element) {
+      const auto changedValues = element.uiAsksForChangedValues();
+      if (changedValues)
+      {
+         emitSoundDevParamChanged(voiceIdx, paramIdx, changedValues->first,
+                                  changedValues->second);
+         element.lfo().uiAsksForChanges(
+             [=](float value) {
+                emitLFOAmplitudeChanged(voiceIdx, paramIdx, value);
+             },
+             [=](float value) {
+                emitLFOFrequencyChanged(voiceIdx, paramIdx, value);
+             },
+             [=](lfo::Waveform value) {
+                emitLFOWaveformChanged(voiceIdx, paramIdx, value);
+             },
+             [=](uint32_t value) {
+                emitLFOMultiplierExpChanged(voiceIdx, paramIdx, value);
+             });
+      }
+   });
 }

@@ -5,13 +5,12 @@
 #include <memory_resource>
 #include <optional>
 
-#include "Identifiable.h"
 #include "stack_mempool.h"
 #include "ParameterCoordinate.h"
 
 namespace base::musicDevice::sound
 {
-struct ParameterScene : public util::Identifiable
+struct ParameterScene
 {
    ParameterScene(std::pmr::unsynchronized_pool_resource& pool) :
        name(&pool),
@@ -27,10 +26,15 @@ struct ParameterScene : public util::Identifiable
    std::optional<float> intensity{0};
    struct Modifier
    {
-      Modifier(const ParameterCoordinate& pc, float val) noexcept: destParamCoord(pc), goalValue(val) {}
+      Modifier(const ParameterCoordinate& pc, float val, float range) noexcept: destParamCoord(pc), goalValue({val, range}) {}
       Modifier(const ParameterCoordinate& pc) noexcept: destParamCoord(pc), goalValue() {}
       ParameterCoordinate destParamCoord;
-      std::optional<float> goalValue{0};
+      struct GoalValue{
+        GoalValue(float _value, float _range) noexcept : value(_value), range(_range) {}
+        float value{0};
+        float range{1.0};
+      };
+      std::optional<GoalValue> goalValue;
    };
    std::pmr::list<Modifier> modifiers;
 };

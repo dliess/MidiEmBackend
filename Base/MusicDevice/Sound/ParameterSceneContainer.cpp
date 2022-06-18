@@ -52,14 +52,14 @@ void ParameterSceneContainer::setModifierEndValue(
                              });
    if (modIt == m_data[sceneIdx].modifiers.end())
    {
-      m_data[sceneIdx].modifiers.emplace_back(paramCoord, value);
+      m_data[sceneIdx].modifiers.emplace_back(paramCoord, value, -1);
       emitModifierEndValueChanged(sceneIdx, paramCoord, value);
    }
    else
    {
-      if (modIt->goalValue.value() != value)
+      if (modIt->goalValue->value != value)
       {
-         modIt->goalValue = value;
+         modIt->goalValue->value = value;
          emitModifierEndValueChanged(sceneIdx, paramCoord, value);
       }
    }
@@ -76,15 +76,15 @@ void ParameterSceneContainer::incrementModifierEndValue(
    if (modIt == m_data[sceneIdx].modifiers.end())
    {
       m_data[sceneIdx].modifiers.emplace_back(paramCoord);
-      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
+      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue->value);
    }
    else
    {
       if(modIt->goalValue)
       {
-         const float newVal = util::clip(modIt->goalValue.value() + increment, 0.0f, 1.0f);
-         modIt->goalValue = newVal;
-         emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue.value());
+         const float newVal = util::clip(modIt->goalValue->value + increment, 0.0f, modIt->goalValue->range);
+         modIt->goalValue->value = newVal;
+         emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue->value);
       }
    }
 }
@@ -121,7 +121,7 @@ void ParameterSceneContainer::retriggerCallbacks() noexcept
       {
          if(modifier.goalValue)
          {
-            emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue.value()); 
+            emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue->value); 
          }
       }
    }

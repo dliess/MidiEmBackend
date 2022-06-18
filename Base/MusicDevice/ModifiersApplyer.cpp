@@ -27,15 +27,21 @@ void ModifiersApplyer::operator()() noexcept
                     modifier.destParamCoord.voiceIdx,
                     modifier.destParamCoord.parameterIdx,
                     modifier.destParamCoord.parameterPart,
-                    modifier.goalValue.value(), intensity);
+                    modifier.goalValue->value, intensity);
              }
              else
              {
-                modifier.goalValue =
+                const auto pv = 
                     mdIter->second->soundHandler->getParameterValue(
                         modifier.destParamCoord.voiceIdx,
                         modifier.destParamCoord.parameterIdx,
                         modifier.destParamCoord.parameterPart);
+                const auto pr = 
+                    mdIter->second->soundHandler->getParameterRange(
+                        modifier.destParamCoord.voiceIdx,
+                        modifier.destParamCoord.parameterIdx,
+                        modifier.destParamCoord.parameterPart);
+                modifier.goalValue.emplace(pv, pr);
              }
           }
        });

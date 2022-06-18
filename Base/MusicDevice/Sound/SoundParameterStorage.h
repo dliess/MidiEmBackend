@@ -78,10 +78,6 @@ public:
                              ParameterPart parameterPart, float destValue,
                              float intensity) noexcept;
 
-   CB_SIGNAL(LFOWaveformChanged, int, int, lfo::Waveform);
-   CB_SIGNAL(LFOAmplitudeChanged, int, int, float);
-   CB_SIGNAL(LFOFrequencyChanged, int, int, float);
-   CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
    inline const ParameterStorageElement& parameter(int voiceIdx,

@@ -6,12 +6,13 @@
 namespace base::musicDevice::sound::lfo
 {
 
-DECLARE_ENUM(Waveform, uint, Sine, Square, Triangle, Saw, Random);
+DECLARE_ENUM(Waveform, uint, Sine = 0, Square, Triangle, Saw, Random);
 
 constexpr float DefaultAmplitude = 0.0;
 constexpr float DefaultFrequency = 1.0;
 constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
 constexpr int DefaultMultiplierExp = 0;
+constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 
 class LFO
 {
@@ -68,13 +69,13 @@ private:
    double m_beatAtWaveStart{0.0};
    using WaveformVariant = mpark::variant<Sine, Square, Triangle, Saw, Random>;
    WaveformVariant m_waveform;
-   static constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
+   Waveform m_actualWaveform{Waveform::Sine};
 
    float m_modifierAmplitude{0};
    float m_modifierFrequency{0};
-   int m_modifierMultiplierExp{0};
-   int m_modifierWaveform{0};
-   [[nodiscard]] inline WaveformVariant modifiedWaveform() const noexcept;
+   float m_modifierMultiplierExp{0};
+   float m_modifierWaveform{0};
+   [[nodiscard]] inline Waveform modifiedWaveform() const noexcept;
    [[nodiscard]] inline float modifiedAmplitude() const noexcept;
    [[nodiscard]] inline float modifiedFrequency() const noexcept;
    [[nodiscard]] inline uint32_t modifiedMultiplierExp() const noexcept;

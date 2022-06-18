@@ -25,9 +25,16 @@ inline float LFO::calculateValue() noexcept
       deltaBeat         = 0;
    }
    const auto t = deltaBeat / period;
+
+   if(m_actualWaveform != modifiedWaveform())
+   {
+      m_actualWaveform = modifiedWaveform();
+      setWaveform(modifiedWaveform());
+   }
+
    const auto fnVal =
        mpark::visit(util::overload{[t](auto&& f) { return f(t); }},
-                    m_waveform);   // TODO: waveform modification does not work
+                    m_waveform);
    return modifiedAmplitude() * fnVal;
 };
 
@@ -166,12 +173,11 @@ template <typename... Ts>
    return table[i];
 }
 
-inline LFO::WaveformVariant LFO::modifiedWaveform() const noexcept
+inline Waveform LFO::modifiedWaveform() const noexcept
 {
-   const int varIndex =
+   return static_cast<Waveform>(
        util::clip(int(m_waveform.index() + m_modifierWaveform), 0,
-                  int(mpark::variant_size_v<decltype(m_waveform)> - 1));
-   return expand_type<Sine, Square, Triangle, Saw, Random>(varIndex);
+                  int(mpark::variant_size_v<decltype(m_waveform)> - 1)));
 }
 
 inline float LFO::modifiedAmplitude() const noexcept
@@ -213,7 +219,7 @@ void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw, CB_
    }
    if(m_dirtyFlagsUi.waveform)
    {
-      cbWaw(waveform());
+      cbWaw(modifiedWaveform());
       m_dirtyFlagsUi.waveform = false;
    }
    if(m_dirtyFlagsUi.multiplierExp)

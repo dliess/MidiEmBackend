@@ -398,37 +398,25 @@ inline const lfo::LFO& ParameterStorage::lfoOf(int voiceId,
 inline void ParameterStorage::setWaveform(int voiceId, int parameterId,
                                           lfo::Waveform waveform) noexcept
 {
-   if (lfoOf(voiceId, parameterId).setWaveform(waveform))
-   {
-      emitLFOWaveformChanged(voiceId, parameterId, waveform);
-   }
+   lfoOf(voiceId, parameterId).setWaveform(waveform);
 }
 
 inline void ParameterStorage::setAmplitude(int voiceId, int parameterId,
                                            float amplitude) noexcept
 {
-   if (lfoOf(voiceId, parameterId).setAmplitude(amplitude))
-   {
-      emitLFOAmplitudeChanged(voiceId, parameterId, amplitude);
-   }
+   lfoOf(voiceId, parameterId).setAmplitude(amplitude);
 }
 
 inline void ParameterStorage::setFrequency(int voiceId, int parameterId,
                                            float frequency) noexcept
 {
-   if (lfoOf(voiceId, parameterId).setFrequency(frequency))
-   {
-      emitLFOFrequencyChanged(voiceId, parameterId, frequency);
-   }
+   lfoOf(voiceId, parameterId).setFrequency(frequency);
 }
 
 inline void ParameterStorage::setMultiplierExp(int voiceId, int parameterId,
                                                uint32_t multiplierExp) noexcept
 {
-   if (lfoOf(voiceId, parameterId).setMultiplierExp(multiplierExp))
-   {
-      emitLFOMultiplierExpChanged(voiceId, parameterId, multiplierExp);
-   }
+   lfoOf(voiceId, parameterId).setMultiplierExp(multiplierExp);
 }
 
 inline lfo::Waveform ParameterStorage::waveform(int voiceId,
@@ -463,35 +451,6 @@ inline void ParameterStorage::applyModifier(int voiceIndex, int paramIdx,
    elementContainer(voiceIndex)
        .parameters[paramIdx]
        .applyModifier(destValue, intensity, parameterPart);
-       /*
-   switch (parameterPart)
-   {
-      case ParameterPart::Commanded:
-      {
-         break;
-      }
-      case ParameterPart::LfoAmplitude:
-      {
-         emitLFOAmplitudeChanged();
-         break;
-      }
-      case ParameterPart::LfoFrequency:
-      {
-         emitLFOFrequencyChanged
-         break;
-      }
-      case ParameterPart::LfoWaveform:
-      {
-         emitLFOWaveformChanged();
-         break;
-      }
-      case ParameterPart::LfoMultiplierExp:
-      {
-         emitLFOMultiplierExpChanged();
-         break;
-      }
-   }
-   */
 }
 
 }   // namespace base::musicDevice::sound
