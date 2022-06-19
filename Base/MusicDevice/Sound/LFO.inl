@@ -1,6 +1,5 @@
 #include <cmath>
 #include <random>
-#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 #include "LFO.h"
@@ -36,16 +35,12 @@ inline void LFO::calculateValueMods() noexcept
 {
    if (m_actualWaveform != modifiedWaveform())
    {
-      spdlog::info("Waveform modified: {} -> {}", int(m_actualWaveform),
-                   int(modifiedWaveform()));
       m_actualWaveform = modifiedWaveform();
       setWaveformVariant(m_actualWaveform);
       m_dirtyFlagsUi.waveform = true;
    }
    if (m_actualAmplitude != modifiedAmplitude())
    {
-      spdlog::info("Amplitude modified: {} -> {}", m_actualAmplitude,
-                   modifiedAmplitude());
       m_actualAmplitude = modifiedAmplitude();
       if (m_actualAmplitude == 0.0)
       {
@@ -55,8 +50,6 @@ inline void LFO::calculateValueMods() noexcept
    }
    if (m_actualFrequency != modifiedFrequency())
    {
-      spdlog::info("Frequency modified: {} -> {}", m_actualFrequency,
-                   modifiedFrequency());
       m_actualFrequency = modifiedFrequency();
       if (m_actualFrequency == 0.0)
       {
@@ -66,8 +59,6 @@ inline void LFO::calculateValueMods() noexcept
    }
    if (m_actualMultiplierExp != modifiedMultiplierExp())
    {
-      spdlog::info("MultiplierExp modified: {} -> {}", m_actualMultiplierExp,
-                   modifiedMultiplierExp());
       m_actualMultiplierExp        = modifiedMultiplierExp();
       m_dirtyFlagsUi.multiplierExp = true;
    }
@@ -213,22 +204,22 @@ void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw,
 {
    if (m_dirtyFlagsUi.amplitude)
    {
-      cbAmp(modifiedAmplitude());
+      cbAmp(m_actualAmplitude);
       m_dirtyFlagsUi.amplitude = false;
    }
    if (m_dirtyFlagsUi.frequency)
    {
-      cbFreq(modifiedFrequency());
+      cbFreq(m_actualFrequency);
       m_dirtyFlagsUi.frequency = false;
    }
    if (m_dirtyFlagsUi.waveform)
    {
-      cbWaw(modifiedWaveform());
+      cbWaw(m_actualWaveform);
       m_dirtyFlagsUi.waveform = false;
    }
    if (m_dirtyFlagsUi.multiplierExp)
    {
-      cb_mult(modifiedMultiplierExp());
+      cb_mult(m_actualMultiplierExp);
       m_dirtyFlagsUi.multiplierExp = false;
    }
 }
