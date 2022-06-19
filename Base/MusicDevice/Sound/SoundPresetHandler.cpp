@@ -121,6 +121,7 @@ void PresetHandler::storeAsSoundPreset(int voiceIdx,
    m_rParameterStorage.forEachParameter(
        [&presetData](int paramIdx, const ParameterStorageElement& param) {
           auto& dest                 = presetData.parameters[paramIdx];
+          /*TODO: take commanded or actual/modified values*/
           dest.commanded             = param.commanded();
           dest.lfoData.amplitude     = param.lfo().amplitude();
           dest.lfoData.frequency     = param.lfo().frequency();

@@ -1,5 +1,6 @@
 #include <cmath>
 #include <random>
+#include <spdlog/spdlog.h>
 
 #include "BeatTick.h"
 #include "LFO.h"
@@ -15,10 +16,10 @@ inline bool LFO::enabled() const noexcept
 
 inline float LFO::calculateValue() noexcept
 {
-   const auto beat = tempo::BeatTick::instance().getBeat();
-   auto deltaBeat  = beat - m_beatAtWaveStart;
-   const auto period =
-       1.0 / (modifiedFrequency() * (1 << modifiedMultiplierExp()));
+   calculateValueMods();
+   const auto beat   = tempo::BeatTick::instance().getBeat();
+   auto deltaBeat    = beat - m_beatAtWaveStart;
+   const auto period = 1.0 / (m_actualFrequency * (1 << m_actualMultiplierExp));
    if (deltaBeat >= period)
    {
       m_beatAtWaveStart = beat;
@@ -26,136 +27,146 @@ inline float LFO::calculateValue() noexcept
    }
    const auto t = deltaBeat / period;
 
-   if(m_actualWaveform != modifiedWaveform())
-   {
-      m_actualWaveform = modifiedWaveform();
-      setWaveform(modifiedWaveform());
-   }
-
-   const auto fnVal =
-       mpark::visit(util::overload{[t](auto&& f) { return f(t); }},
-                    m_waveform);
-   return modifiedAmplitude() * fnVal;
+   const auto fnVal = mpark::visit(
+       util::overload{[t](auto&& f) { return f(t); }}, m_waveformVariant);
+   return m_actualAmplitude * fnVal;
 };
 
-inline bool LFO::setWaveform(Waveform waveform) noexcept
+inline void LFO::calculateValueMods() noexcept
+{
+   if (m_actualWaveform != modifiedWaveform())
+   {
+      spdlog::info("Waveform modified: {} -> {}", int(m_actualWaveform),
+                   int(modifiedWaveform()));
+      m_actualWaveform = modifiedWaveform();
+      setWaveformVariant(m_actualWaveform);
+      m_dirtyFlagsUi.waveform = true;
+   }
+   if (m_actualAmplitude != modifiedAmplitude())
+   {
+      spdlog::info("Amplitude modified: {} -> {}", m_actualAmplitude,
+                   modifiedAmplitude());
+      m_actualAmplitude = modifiedAmplitude();
+      if (m_actualAmplitude == 0.0)
+      {
+         m_justGotDisabled = true;
+      }
+      m_dirtyFlagsUi.amplitude = true;
+   }
+   if (m_actualFrequency != modifiedFrequency())
+   {
+      spdlog::info("Frequency modified: {} -> {}", m_actualFrequency,
+                   modifiedFrequency());
+      m_actualFrequency = modifiedFrequency();
+      if (m_actualFrequency == 0.0)
+      {
+         m_justGotDisabled = true;
+      }
+      m_dirtyFlagsUi.frequency = true;
+   }
+   if (m_actualMultiplierExp != modifiedMultiplierExp())
+   {
+      spdlog::info("MultiplierExp modified: {} -> {}", m_actualMultiplierExp,
+                   modifiedMultiplierExp());
+      m_actualMultiplierExp        = modifiedMultiplierExp();
+      m_dirtyFlagsUi.multiplierExp = true;
+   }
+}
+
+inline void LFO::setWaveform(Waveform waveform) noexcept
+{
+   if (m_waveform != waveform)
+   {
+      m_waveform              = waveform;
+      m_dirtyFlagsUi.waveform = true;
+   }
+}
+
+inline void LFO::setWaveformVariant(Waveform waveform) noexcept
 {
    m_dirtyFlagsUi.waveform = true;
    switch (waveform)
    {
-      case Waveform::Sine: m_waveform.emplace<Sine>(); return true;
-      case Waveform::Square: m_waveform.emplace<Square>(); return true;
-      case Waveform::Triangle: m_waveform.emplace<Triangle>(); return true;
-      case Waveform::Saw: m_waveform.emplace<Saw>(); return true;
-      case Waveform::Random: m_waveform.emplace<Random>(); return true;
+      case Waveform::Sine: m_waveformVariant.emplace<Sine>(); break;
+      case Waveform::Square: m_waveformVariant.emplace<Square>(); break;
+      case Waveform::Triangle: m_waveformVariant.emplace<Triangle>(); break;
+      case Waveform::Saw: m_waveformVariant.emplace<Saw>(); break;
+      case Waveform::Random: m_waveformVariant.emplace<Random>(); break;
    }
-   return false;
 }
 
-inline bool LFO::setAmplitude(float amplitude) noexcept
+inline void LFO::setAmplitude(float amplitude) noexcept
 {
-   m_dirtyFlagsUi.amplitude = true;
-   if (m_amplitude != amplitude && amplitude >= -1.0 && amplitude <= 1.0)
+   amplitude = util::clip(amplitude, 0.0f, 1.0f);
+   if (m_amplitude != amplitude)
    {
-      m_amplitude = amplitude;
-      if (m_amplitude == 0.0)
-         m_justGotDisabled = true;
-      return true;
+      m_amplitude              = amplitude;
+      m_dirtyFlagsUi.amplitude = true;
    }
-   return false;
 }
 
-inline bool LFO::setFrequency(float frequency) noexcept
+inline void LFO::setFrequency(float frequency) noexcept
 {
-   m_dirtyFlagsUi.frequency = true;
-   if (frequency < 0.0)
-      frequency = 0.0;
+   frequency = util::clip(frequency, 0.0f, 1.0f);
    if (m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
    {
-      m_frequency = frequency;
-      if (m_frequency == 0.0)
-         m_justGotDisabled = true;
-      return true;
+      m_frequency              = frequency;
+      m_dirtyFlagsUi.frequency = true;
    }
-   return false;
 }
 
-inline bool LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
+inline void LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 {
-   m_dirtyFlagsUi.multiplierExp = true;
-   if (m_multiplierExp != multiplierExp && multiplierExp <= MAX_MULTIPLIER_EXP)
+   multiplierExp = util::clip(multiplierExp, uint32_t(1), MAX_MULTIPLIER_EXP);
+   if (m_multiplierExp != multiplierExp)
    {
       m_multiplierExp = multiplierExp;
-      return true;
+      m_dirtyFlagsUi.multiplierExp = true;
    }
-   return false;
 }
 
 inline void LFO::applyModifier2Waveform(float destination,
                                         float intensity) noexcept
 {
-   m_modifierWaveform += (destination - m_waveform.index()) * intensity;
-   m_dirtyFlagsUi.waveform = true;
+   m_modifierWaveform +=
+       (destination - static_cast<int>(m_waveform)) * intensity;
 }
 
 inline void LFO::applyModifier2Amplitude(float destination,
                                          float intensity) noexcept
 {
    m_modifierAmplitude += (destination - m_amplitude) * intensity;
-   m_dirtyFlagsUi.amplitude = true;
 }
 
 inline void LFO::applyModifier2Frequency(float destination,
                                          float intensity) noexcept
 {
    m_modifierFrequency += (destination - m_frequency) * intensity;
-   m_dirtyFlagsUi.frequency = true;
 }
 
 inline void LFO::applyModifier2MultiplierExp(float destination,
                                              float intensity) noexcept
 {
    m_modifierMultiplierExp += (destination - m_multiplierExp) * intensity;
-   m_dirtyFlagsUi.multiplierExp = true;
 }
 
 inline Waveform LFO::waveform() const noexcept
 {
-   if (mpark::holds_alternative<Sine>(m_waveform))
-      return Waveform::Sine;
-   else if (mpark::holds_alternative<Square>(m_waveform))
-      return Waveform::Square;
-   else if (mpark::holds_alternative<Triangle>(m_waveform))
-      return Waveform::Triangle;
-   else if (mpark::holds_alternative<Saw>(m_waveform))
-      return Waveform::Saw;
-   else if (mpark::holds_alternative<Random>(m_waveform))
-      return Waveform::Random;
-   return Waveform::Sine;   // should not happen
+   return m_actualWaveform;
 }
 
-inline float LFO::waveformAsFloat() const noexcept
-{
-   return static_cast<float>(waveform());
-}
+inline float LFO::amplitude() const noexcept { return m_actualAmplitude; }
 
-inline float LFO::amplitude() const noexcept { return m_amplitude; }
+inline float LFO::frequency() const noexcept { return m_actualFrequency; }
 
-inline float LFO::frequency() const noexcept { return m_frequency; }
-
-inline uint32_t LFO::multiplierExp() const noexcept { return m_multiplierExp; }
-
-inline float LFO::multiplierExpAsFloat() const noexcept
-{
-   return float(m_multiplierExp);
-}
+inline uint32_t LFO::multiplierExp() const noexcept { return m_actualMultiplierExp; }
 
 inline void LFO::reset() noexcept
 {
    setAmplitude(DefaultAmplitude);
    setFrequency(DefaultFrequency);
    setMultiplierExp(DefaultMultiplierExp);
-   m_waveform.emplace<Sine>();
+   setWaveform(DefaultWaveform);
 }
 
 inline bool LFO::getAndResetJustGotDisabled() noexcept
@@ -165,19 +176,11 @@ inline bool LFO::getAndResetJustGotDisabled() noexcept
    return ret;
 }
 
-template <typename... Ts>
-[[nodiscard]] mpark::variant<Ts...> expand_type(std::size_t i)
-{
-   assert(i < sizeof...(Ts));
-   static constexpr mpark::variant<Ts...> table[] = {Ts{}...};
-   return table[i];
-}
-
 inline Waveform LFO::modifiedWaveform() const noexcept
 {
-   return static_cast<Waveform>(
-       util::clip(int(m_waveform.index() + m_modifierWaveform), 0,
-                  int(mpark::variant_size_v<decltype(m_waveform)> - 1)));
+   return static_cast<Waveform>(util::clip(
+       float(static_cast<int>(m_waveform) + m_modifierWaveform), 0.0f,
+       float(mpark::variant_size_v<decltype(m_waveformVariant)> - 1)));
 }
 
 inline float LFO::modifiedAmplitude() const noexcept
@@ -198,31 +201,32 @@ inline uint32_t LFO::modifiedMultiplierExp() const noexcept
 
 inline void LFO::clearModifiers() noexcept
 {
-   m_modifierWaveform = 0;
-   m_modifierAmplitude = 0;
-   m_modifierFrequency = 0;
+   m_modifierWaveform      = 0;
+   m_modifierAmplitude     = 0;
+   m_modifierFrequency     = 0;
    m_modifierMultiplierExp = 0;
 }
 
-template<typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
-void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw, CB_mult&& cb_mult)
+template <typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
+void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw,
+                           CB_mult&& cb_mult)
 {
-   if(m_dirtyFlagsUi.amplitude)
+   if (m_dirtyFlagsUi.amplitude)
    {
       cbAmp(modifiedAmplitude());
       m_dirtyFlagsUi.amplitude = false;
    }
-   if(m_dirtyFlagsUi.frequency)
+   if (m_dirtyFlagsUi.frequency)
    {
       cbFreq(modifiedFrequency());
       m_dirtyFlagsUi.frequency = false;
    }
-   if(m_dirtyFlagsUi.waveform)
+   if (m_dirtyFlagsUi.waveform)
    {
       cbWaw(modifiedWaveform());
       m_dirtyFlagsUi.waveform = false;
    }
-   if(m_dirtyFlagsUi.multiplierExp)
+   if (m_dirtyFlagsUi.multiplierExp)
    {
       cb_mult(modifiedMultiplierExp());
       m_dirtyFlagsUi.multiplierExp = false;

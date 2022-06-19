@@ -286,17 +286,17 @@ inline float ParameterStorage::getCommandedValue(
       }
       case ParameterPart::LfoWaveform:
       {
-         return elementContainer(voiceIdx)
+         return static_cast<float>(elementContainer(voiceIdx)
              .parameters[parameterId]
              .lfo()
-             .waveformAsFloat();
+             .waveform());
       }
       case ParameterPart::LfoMultiplierExp:
       {
-         return elementContainer(voiceIdx)
+         return static_cast<float>(elementContainer(voiceIdx)
              .parameters[parameterId]
              .lfo()
-             .multiplierExpAsFloat();
+             .multiplierExp());
       }
    }
    return 0;

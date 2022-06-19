@@ -19,20 +19,18 @@ class LFO
 public:
    [[nodiscard]] inline bool enabled() const noexcept;
    [[nodiscard]] inline float calculateValue() noexcept;
-   inline bool setWaveform(Waveform waveform) noexcept;
-   inline bool setAmplitude(float amplitude) noexcept;
-   inline bool setFrequency(float frequency) noexcept;
-   inline bool setMultiplierExp(uint32_t multiplierExp) noexcept;
+   inline void setWaveform(Waveform waveform) noexcept;
+   inline void setAmplitude(float amplitude) noexcept;
+   inline void setFrequency(float frequency) noexcept;
+   inline void setMultiplierExp(uint32_t multiplierExp) noexcept;
    inline void applyModifier2Waveform(float destination, float intensity) noexcept;
    inline void applyModifier2Amplitude(float destination, float intensity) noexcept;
    inline void applyModifier2Frequency(float destination, float intensity) noexcept;
    inline void applyModifier2MultiplierExp(float destination, float intensity) noexcept;
    [[nodiscard]] inline Waveform waveform() const noexcept;
-   [[nodiscard]] inline float waveformAsFloat() const noexcept;
    [[nodiscard]] inline float amplitude() const noexcept;
    [[nodiscard]] inline float frequency() const noexcept;
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
-   [[nodiscard]] inline float multiplierExpAsFloat() const noexcept;
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
    inline void clearModifiers() noexcept;
@@ -64,12 +62,16 @@ public:
 private:
    bool m_justGotDisabled {false};
    float m_amplitude{DefaultAmplitude};
+   float m_actualAmplitude{DefaultAmplitude};
    float m_frequency{DefaultFrequency};
+   float m_actualFrequency{DefaultFrequency};
    uint32_t m_multiplierExp{DefaultMultiplierExp};
+   uint32_t m_actualMultiplierExp{DefaultMultiplierExp};
    double m_beatAtWaveStart{0.0};
    using WaveformVariant = mpark::variant<Sine, Square, Triangle, Saw, Random>;
-   WaveformVariant m_waveform;
+   Waveform m_waveform{Waveform::Sine};
    Waveform m_actualWaveform{Waveform::Sine};
+   WaveformVariant m_waveformVariant{Sine{}};
 
    float m_modifierAmplitude{0};
    float m_modifierFrequency{0};
@@ -80,6 +82,8 @@ private:
    [[nodiscard]] inline float modifiedFrequency() const noexcept;
    [[nodiscard]] inline uint32_t modifiedMultiplierExp() const noexcept;
 
+   inline void setWaveformVariant(Waveform waveform) noexcept;
+   inline void calculateValueMods() noexcept;
    struct DirtyFlags {
       bool amplitude{false};
       bool frequency{false};
