@@ -49,7 +49,7 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
    from.eventId = {widgetIdx,
-                   controller::WidgetCoord{widgetCoordX, widgetCoordY},
+                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
                    eventIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
