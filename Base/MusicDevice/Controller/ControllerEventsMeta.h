@@ -82,6 +82,15 @@ inline auto registerMembers<base::musicDevice::controller::Event>()
    );
 }
 
+template<>
+inline auto registerMembers<base::musicDevice::controller::EventIdExt>()
+{
+   return members(
+      member("uuid", &base::musicDevice::controller::EventIdExt::uuid),
+      member("eventId", &base::musicDevice::controller::EventIdExt::eventId)
+   );
+}
+
 } // namespace meta
 
 #endif

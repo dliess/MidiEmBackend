@@ -8,30 +8,34 @@ using namespace base::musicDevice::controller;
 EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
     m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
-   m_rMusicDeviceContainer.onControllerDevEventOccured([this](const util::Identifiable::UUID uuid, const controller::Event& event){
-         const EventIdExt eventIdExt{uuid, event.id};
-         mpark::visit(util::overload{
-                          [this, &eventIdExt](const PressReleaseType& value) {
-                             handlePressReleaseType(eventIdExt, value);
-                          },
-                          [this, &eventIdExt](const ContinousValueType& value) {
-                             handleContinousValueType(eventIdExt, value);
-                          },
-                          [this, &eventIdExt](const IncrementType& value) {
-                             handleIncrementType(eventIdExt, value);
-                          },
-                          [this, &eventIdExt](const RelativeValueType& value) {
-                             handleRelativeValueType(eventIdExt, value);
-                          },
-                          [this](auto&&) {}},
-                      event.value);
-   });
+   m_rMusicDeviceContainer.onControllerDevEventOccured(
+       [this](const util::Identifiable::UUID uuid,
+              const controller::Event& event) {
+          const EventIdExt eventIdExt{uuid, event.id};
+          mpark::visit(
+              util::overload{
+                  [this, &eventIdExt](const PressReleaseType& value) {
+                     handlePressReleaseType(eventIdExt, value);
+                  },
+                  [this, &eventIdExt](const ContinousValueType& value) {
+                     handleContinousValueType(eventIdExt, value);
+                  },
+                  [this, &eventIdExt](const IncrementType& value) {
+                     handleIncrementType(eventIdExt, value);
+                  },
+                  [this, &eventIdExt](const RelativeValueType& value) {
+                     handleRelativeValueType(eventIdExt, value);
+                  },
+                  [this](auto&&) {}},
+              event.value);
+       });
 }
 
-void EventRouter::createConnection(const EventIdExt& from, const EventDestination& to) noexcept
+void EventRouter::createConnection(const EventIdExt& from,
+                                   const EventDestination& to) noexcept
 {
    const auto& [iter, success] = m_map.emplace(from, to);
-   if(success)
+   if (success)
    {
       emitGotConnected(from, to);
    }
@@ -80,6 +84,12 @@ void EventRouter::handleContinousValueType(
               if (destIter != m_map.end())
               {
                  handleContinousValueDirect(destIter->second, value);
+              }
+              else
+              {
+                 spdlog::info("Not match found for event: {}\n in map:\n",
+                              meta::serialize(eventIdExt).dump().c_str());
+                  printMap();
               }
            },
            [this, &eventIdExt, &value](const Note& note) {
@@ -299,10 +309,10 @@ void EventRouter::handleRelativeValueDirect(
                  valueToSet += parameter.valueAtPress.value();
                  mdIter->second->soundHandler->setParameterValue(
                      eventDestination.voiceIdx, parameter.id, valueToSet);
-                  if(0 == value.value)
-                  {
-                     parameter.valueAtPress = std::nullopt;
-                  }
+                 if (0 == value.value)
+                 {
+                    parameter.valueAtPress = std::nullopt;
+                 }
               },
               [](auto&&) { assert(false); }},
           eventDestination.endpoint);
@@ -326,5 +336,13 @@ void EventRouter::sendMPERelativeValue(int note,
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);
+   }
+}
+
+void EventRouter::printMap() const noexcept
+{
+   for(const auto& e : m_map)
+   {
+      spdlog::info("{}", meta::serialize(e.first).dump().c_str());
    }
 }

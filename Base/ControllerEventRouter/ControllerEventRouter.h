@@ -50,6 +50,8 @@ private:
                               const IncrementType& increment) noexcept;
 
    CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
+
+   void printMap() const noexcept;
 };
 
 }   // namespace controller
