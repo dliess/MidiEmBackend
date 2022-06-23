@@ -85,12 +85,14 @@ void EventRouter::handleContinousValueType(
               {
                  handleContinousValueDirect(destIter->second, value);
               }
+              /*
               else
               {
                  spdlog::info("Not match found for event: {}\n in map:\n",
                               meta::serialize(eventIdExt).dump().c_str());
                   printMap();
               }
+              */
            },
            [this, &eventIdExt, &value](const Note& note) {
               const auto destIter = m_map.find(eventIdExt);
