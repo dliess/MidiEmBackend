@@ -39,7 +39,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<MainRpc>(
             signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
-            rAbletonLinkWrapper, rMidiRouter, rParameterSceneContainer),
+            rAbletonLinkWrapper, rMidiRouter, rCtrlEventRouter, rParameterSceneContainer),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
         std::make_unique<ControllerDevicesRpc>(),

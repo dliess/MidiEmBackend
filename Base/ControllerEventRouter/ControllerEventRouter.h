@@ -52,6 +52,7 @@ private:
    CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
 
    void printMap() const noexcept;
+   void retriggerCallbacks();
 };
 
 }   // namespace controller

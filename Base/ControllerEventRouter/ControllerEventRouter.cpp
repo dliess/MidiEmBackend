@@ -348,3 +348,12 @@ void EventRouter::printMap() const noexcept
       spdlog::info("{}", meta::serialize(e.first).dump().c_str());
    }
 }
+
+void EventRouter::retriggerCallbacks()
+{
+   for(auto& e : m_map)
+   {
+      emitGotConnected(e.first, e.second);
+   }
+
+}
