@@ -234,9 +234,15 @@ void EventRouter::handleContinousValueDirect(
       mpark::visit(
           util::overload{[&mdIter, &eventDestination, &value](
                              const EventDestination::Parameter& parameter) {
-                            mdIter->second->soundHandler->setParameterValue(
-                                eventDestination.voiceIdx, parameter.id,
-                                value.value);
+                            const float actualVal =
+                                mdIter->second->soundHandler->getParameterValue(
+                                    eventDestination.voiceIdx, parameter.id);
+                            if (std::fabs(actualVal - value.value) < 0.01)
+                            {
+                               mdIter->second->soundHandler->setParameterValue(
+                                   eventDestination.voiceIdx, parameter.id,
+                                   value.value);
+                            }
                          },
                          [](auto&&) { assert(false); }},
           eventDestination.endpoint);
@@ -343,7 +349,7 @@ void EventRouter::sendMPERelativeValue(int note,
 
 void EventRouter::printMap() const noexcept
 {
-   for(const auto& e : m_map)
+   for (const auto& e : m_map)
    {
       spdlog::info("{}", meta::serialize(e.first).dump().c_str());
    }
@@ -351,9 +357,5 @@ void EventRouter::printMap() const noexcept
 
 void EventRouter::retriggerCallbacks()
 {
-   for(auto& e : m_map)
-   {
-      emitGotConnected(e.first, e.second);
-   }
-
+   for (auto& e : m_map) { emitGotConnected(e.first, e.second); }
 }
