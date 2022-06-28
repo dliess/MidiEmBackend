@@ -232,19 +232,24 @@ void EventRouter::handleContinousValueDirect(
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
       mpark::visit(
-          util::overload{[&mdIter, &eventDestination, &value](
-                             const EventDestination::Parameter& parameter) {
-                            const float actualVal =
-                                mdIter->second->soundHandler->getParameterValue(
-                                    eventDestination.voiceIdx, parameter.id);
-                            if (std::fabs(actualVal - value.value) < 0.01)
-                            {
-                               mdIter->second->soundHandler->setParameterValue(
-                                   eventDestination.voiceIdx, parameter.id,
-                                   value.value);
-                            }
-                         },
-                         [](auto&&) { assert(false); }},
+          util::overload{
+              [&mdIter, &eventDestination,
+               &value](const EventDestination::Parameter& parameter) {
+                 const float val =
+                     mdIter->second->soundHandler->normalizePercentageValue(
+                         eventDestination.voiceIdx, parameter.id,
+                         sound::ParameterPart::Commanded, value.value);
+                 const float actualVal =
+                     mdIter->second->soundHandler->getParameterValue(
+                         eventDestination.voiceIdx, parameter.id);
+                 const float diff = std::fabs(actualVal - val);
+                 if ((diff != 0) && (diff < 0.02 || diff >= 1.0))
+                 {
+                    mdIter->second->soundHandler->setParameterValue(
+                        eventDestination.voiceIdx, parameter.id, val);
+                 }
+              },
+              [](auto&&) { assert(false); }},
           eventDestination.endpoint);
    }
 }

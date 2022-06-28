@@ -179,6 +179,18 @@ float SoundHandler::getParameterValue(
    return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterPart);
 }
 
+float SoundHandler::normalizePercentageValue(
+    int voiceId, int parameterId, ParameterPart parameterPart,
+    float percentageValue) const noexcept
+{
+   const auto range = getParameterRange(voiceId, parameterId, parameterPart);
+   const auto& pd   = m_rSoundSection.parameterDescr(voiceId, parameterId);
+   if (pd.type == description::sound::Parameter::Type::List) {
+      return static_cast<int>(range * percentageValue);
+   }
+   return range * percentageValue;
+}
+
 float SoundHandler::getParameterRange(int voiceId, int parameterId,
                                       ParameterPart parameterPart) const
 {
@@ -190,7 +202,7 @@ float SoundHandler::getParameterRange(int voiceId, int parameterId,
          const auto& pd = m_rSoundSection.parameterDescr(voiceId, parameterId);
          if (pd.type == description::sound::Parameter::Type::List)
          {
-            maxVal = pd.source.midi->sourceRanges->size() - 1;
+            maxVal = pd.source.midi->sourceRanges->size();
          }
          else
          {
