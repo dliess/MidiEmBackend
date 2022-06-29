@@ -194,7 +194,7 @@ void EventRouter::handlePressReleaseDirect(
                     const float incr =
                         parameter.upwards ? value.value : -value.value;
                     mdIter->second->soundHandler->incrementParameterValue(
-                        eventDestination.voiceIdx, parameter.id, incr);
+                        eventDestination.voiceIdx, parameter.id, incr, true);
                  }
               },
               [](const EventDestination::InternalFunctionality& internalFunct) {
