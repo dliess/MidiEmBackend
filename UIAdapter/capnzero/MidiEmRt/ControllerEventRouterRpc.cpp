@@ -37,8 +37,18 @@ void ControllerEventRouterRpc::connectWidget2Notes(
     ::capnzero::Int16 eventIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
     ::capnzero::Int16 voiceIdx)
 {
-   /*TODO*/
+   controller::EventIdExt from;
+   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
+   from.eventId = {widgetIdx,
+                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
+                   eventIdx};
+   controller::EventDestination to;
+   std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
+   to.voiceIdx   = voiceIdx;
+   to.endpoint = controller::EventDestination::Note { 65 }; // TODO
+   m_rCtrlEventRouter.createConnection(from, to);
 }
+
 void ControllerEventRouterRpc::connectWidget2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
