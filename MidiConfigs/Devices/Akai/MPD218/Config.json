@@ -187,6 +187,7 @@
           {
             ".type": "Incremental",
             "name": "Encoders-Increments",
+            "resolution" : 128,
             "source": [
               [
                 {

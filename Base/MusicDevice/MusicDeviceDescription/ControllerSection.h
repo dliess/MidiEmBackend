@@ -18,6 +18,7 @@ struct WidgetDimension
 struct EventIncremental
 {
    std::string name;
+   int resolution;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 

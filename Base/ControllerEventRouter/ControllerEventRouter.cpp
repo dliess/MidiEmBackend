@@ -291,7 +291,7 @@ void EventRouter::handleIncrementDirect(
                           }
                           else
                           {   // TODO: highres mode
-                             incr = increment.value / increment.resolution;
+                             incr = float(increment.value) / float(increment.resolution);
                           }
                           mdIter->second->soundHandler->incrementParameterValue(
                               eventDestination.voiceIdx, parameter.id, incr);

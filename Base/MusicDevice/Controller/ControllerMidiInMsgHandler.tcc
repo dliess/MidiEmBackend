@@ -102,9 +102,21 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [this, &msg](
                           const description::controller::EventIncremental& evt)
                           -> EventValue {
-                         return IncrementType{
-                             msg.controllerValue() -
-                             (midi::Message<midi::ControlChange>::RES_MAX / 2)};
+                         const int ccVal = msg.controllerValue();
+                         static constexpr int middleVal = midi::Message<midi::ControlChange>::RES_MAX / 2;
+                         static constexpr int THRESHOLD = middleVal / 2;
+                         const int diffFromMiddleVal = ccVal - middleVal;
+                         if(std::abs(diffFromMiddleVal) > THRESHOLD) {
+                            if(ccVal < middleVal){
+                                return IncrementType{evt.resolution, ccVal};
+                            }
+                            else {
+                                return IncrementType{evt.resolution, ccVal - midi::Message<midi::ControlChange>::RES_MAX};
+                            }
+                         }
+                         else {
+                            return IncrementType{evt.resolution, diffFromMiddleVal};
+                         }
                       }},
                   eventDescr);
            },

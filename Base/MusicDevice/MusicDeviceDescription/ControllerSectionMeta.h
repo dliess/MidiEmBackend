@@ -32,6 +32,7 @@ inline auto registerMembers<base::musicDevice::description::controller::EventInc
 {
    return members(
       member("name", &base::musicDevice::description::controller::EventIncremental::name),
+      member("resolution", &base::musicDevice::description::controller::EventIncremental::resolution),
       member("source", &base::musicDevice::description::controller::EventIncremental::source)
    );
 }
