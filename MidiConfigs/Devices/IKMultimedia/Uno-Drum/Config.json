@@ -1,0 +1,1006 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "IK Multimedia",
+  "productName": "Uno Drum",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "Kick 1",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 36
+      },
+      {
+        "name": "Kick 2",
+        "engineId": 1,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 35
+      },
+      {
+        "name": "Snare",
+        "engineId": 2,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 38
+      },
+      {
+        "name": "Clap",
+        "engineId": 3,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 39
+      },
+      {
+        "name": "Rim",
+        "engineId": 4,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 37
+      },
+      {
+        "name": "Closed Hat",
+        "engineId": 5,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 42
+      },
+      {
+        "name": "Open Hat",
+        "engineId": 6,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 46
+      },
+      {
+        "name": "Tom 1",
+        "engineId": 7,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 41
+      },
+      {
+        "name": "Tom 2",
+        "engineId": 8,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 43
+      },
+      {
+        "name": "Cymbal",
+        "engineId": 9,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 49
+      },
+      {
+        "name": "Ride",
+        "engineId": 10,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 51
+      },
+      {
+        "name": "Cowbell",
+        "engineId": 10,
+        "midiChannel": 11,
+        "midiTriggerNoteNumber": 56
+      }
+    ],
+    "engines": [
+      {
+        "name": "Kick 1",
+        "parameters": [
+          {
+            "name": "Volume",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 7
+                }
+              }
+            }
+          },
+          {
+            "name": "Swing",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 9
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequencer Div",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Pattern Len",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Compressor Amnt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
+                }
+              }
+            }
+          },
+          {
+            "name": "Drive Amnt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 18
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 20
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Kick 1 Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 21
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 Snap",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 22
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 23
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 FM Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 24
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 FM Amnt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 25
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 Sweep Time",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 26
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 2 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 27
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 2 Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 28
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 2 Snap",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 29
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 2 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 30
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Snap",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare LPF",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Clap Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Closed Hat Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed Hat Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed Hat Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+
+
+
+          {
+            "name": "Open Hat Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Open Hat Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Open Hat Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Rim Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Tom 1 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 1 Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 1 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Tom 2 Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 2 Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 2 Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Cowbell Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Cowbell Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Cowbell Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Ride Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+
+          {
+            "name": "Cymbal Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Cymbal Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Cymbal Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+
+
+          {
+            "name": "Stutter Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Stutter Amnt",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Stutter On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          },
+          {
+            "name": "Roll Type",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Roll On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Pad Double Vel On/Off",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Metronome On/Off/Play",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
+          },
+          {
+            "name": "Pad Npte Length",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 77
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 1 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
+          {
+            "name": "Kick 2 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed HH Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
+                }
+              }
+            }
+          },
+          {
+            "name": "Open HH Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 1  Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 2 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
+                }
+              }
+            }
+          },
+          {
+            "name": "Cowbell Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 91
+                }
+              }
+            }
+          },
+          {
+            "name": "Crash Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          }
+
+
+        ]
+      }
+    ]
+  }
+}
