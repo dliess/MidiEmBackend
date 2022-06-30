@@ -74,8 +74,8 @@
       },
       {
         "name": "Cowbell",
-        "engineId": 10,
-        "midiChannel": 11,
+        "engineId": 11,
+        "midiChannel": 10,
         "midiTriggerNoteNumber": 56
       }
     ],
@@ -252,7 +252,12 @@
                 }
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "name": "Kick 2",
+        "parameters": [
           {
             "name": "Kick 2 Level",
             "description": "",
@@ -304,7 +309,12 @@
                 }
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "name": "Snare",
+        "parameters": [
           {
             "name": "Snare Level",
             "description": "",
@@ -369,9 +379,12 @@
                 }
               }
             }
-          },
-
-
+          }
+        ]
+      },
+      {
+        "name": "Clap",
+        "parameters": [
           {
             "name": "Clap Level",
             "description": "",
@@ -397,8 +410,12 @@
                 }
               }
             }
-          },
-
+          }
+        ]
+      },
+      {
+        "name": "Closed Hat",
+        "parameters": [
           {
             "name": "Closed Hat Level",
             "description": "",
@@ -437,10 +454,12 @@
                 }
               }
             }
-          },
-
-
-
+          }
+        ]
+      },
+      {
+        "name": "Open Hat",
+        "parameters": [
           {
             "name": "Open Hat Level",
             "description": "",
@@ -479,8 +498,12 @@
                 }
               }
             }
-          },
-
+          }
+        ]
+      },
+      {
+        "name": "Rim",
+        "parameters": [
           {
             "name": "Rim Level",
             "description": "",
@@ -519,9 +542,12 @@
                 }
               }
             }
-          },
-
-
+          }
+        ]
+      },
+      {
+        "name": "Tom 1",
+        "parameters": [
           {
             "name": "Tom 1 Level",
             "description": "",
@@ -560,9 +586,12 @@
                 }
               }
             }
-          },
-
-
+          }
+        ]
+      },
+      {
+        "name": "Tom 2",
+        "parameters": [
           {
             "name": "Tom 2 Level",
             "description": "",
@@ -601,8 +630,12 @@
                 }
               }
             }
-          },
-
+          }
+        ]
+      },
+      {
+        "name": "Cowbell",
+        "parameters": [
           {
             "name": "Cowbell Level",
             "description": "",
@@ -641,8 +674,12 @@
                 }
               }
             }
-          },
-
+          }
+        ]
+      },
+      {
+        "name": "Ride",
+        "parameters": [
           {
             "name": "Ride Level",
             "description": "",
@@ -681,8 +718,12 @@
                 }
               }
             }
-          },
-
+          }
+        ]
+      },
+      {
+        "name": "Cymbal",
+        "parameters": [
           {
             "name": "Cymbal Level",
             "description": "",
@@ -721,9 +762,12 @@
                 }
               }
             }
-          },
-
-
+          }
+        ]
+      },
+      {
+        "name": "Stutter",
+        "parameters": [
           {
             "name": "Stutter Type",
             "description": "",
@@ -762,7 +806,12 @@
                 }
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "name": "Roll",
+        "parameters": [
           {
             "name": "Roll Type",
             "description": "",
@@ -816,7 +865,7 @@
             }
           },
           {
-            "name": "Pad Npte Length",
+            "name": "Pad Note Length",
             "description": "",
             "type": "continous",
             "source": {
@@ -997,8 +1046,6 @@
               }
             }
           }
-
-
         ]
       }
     ]
