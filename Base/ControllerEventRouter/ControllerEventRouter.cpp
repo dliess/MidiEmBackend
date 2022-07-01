@@ -68,6 +68,12 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  {
                     sendNoteOnOff(note.number, destIter2->second, value);
                  }
+                 else
+                 {
+                    spdlog::info("Note could not find its way {}",
+                                 meta::serialize(melodicEvent).dump().c_str());
+                    printMap();
+                 }
               }
            },
            [this](auto&&) {}},
@@ -280,24 +286,25 @@ void EventRouter::handleIncrementDirect(
    const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
-      mpark::visit(util::overload{
-                       [&mdIter, &eventDestination, &increment](
-                           const EventDestination::Parameter& parameter) {
-                          float incr = 0;
-                          if (parameter.isList)
-                          {
-                             incr = increment.value * 12 /
-                                    std::max(increment.resolution, 12);
-                          }
-                          else
-                          {   // TODO: highres mode
-                             incr = float(increment.value) / float(increment.resolution);
-                          }
-                          mdIter->second->soundHandler->incrementParameterValue(
-                              eventDestination.voiceIdx, parameter.id, incr);
-                       },
-                       [](auto&&) { assert(false); }},
-                   eventDestination.endpoint);
+      mpark::visit(
+          util::overload{
+              [&mdIter, &eventDestination,
+               &increment](const EventDestination::Parameter& parameter) {
+                 float incr = 0;
+                 if (parameter.isList)
+                 {
+                    incr = increment.value * 12 /
+                           std::max(increment.resolution, 12);
+                 }
+                 else
+                 {   // TODO: highres mode
+                    incr = float(increment.value) / float(increment.resolution);
+                 }
+                 mdIter->second->soundHandler->incrementParameterValue(
+                     eventDestination.voiceIdx, parameter.id, incr);
+              },
+              [](auto&&) { assert(false); }},
+          eventDestination.endpoint);
    }
 }
 

@@ -518,7 +518,8 @@
       }
     ]
   },
-  "controllerSection": { 
+  "controllerSection": {
+    "nativeNoteMode": true,
     "widgets": []
   },
   "reactsToTransportCommands": true

@@ -220,8 +220,5 @@
       }
     ]
   },
-  "controllerSection": {
-    "widgets": []
-  },
   "reactsToTransportCommands": true
 }

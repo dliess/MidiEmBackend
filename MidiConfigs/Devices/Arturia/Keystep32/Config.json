@@ -3,6 +3,7 @@
   "manufacturer": "Arturia",
   "productName": "Keystep32",
   "controllerSection": {
+    "nativeNoteMode": true,
     "widgets": [
       {
         "name": "Keypad",

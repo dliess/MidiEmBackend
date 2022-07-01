@@ -56,6 +56,7 @@ struct Widget
 
 struct Section
 {
+   bool nativeNoteMode;
    std::vector<Widget> widgets;
 };
 

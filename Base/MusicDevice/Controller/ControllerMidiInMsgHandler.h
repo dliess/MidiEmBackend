@@ -31,7 +31,7 @@ private:
    mutable std::array<EventId::Coord, midi::NUM_CHANNELS>
       m_mpeMap;
    Cb m_drainCb;
-   bool m_nativeNoteMode{false};
+   bool m_nativeNoteMode{true};
 
    static std::string cache2Str(
       const std::unordered_map<midi::MidiMessageId, EventId>& map);

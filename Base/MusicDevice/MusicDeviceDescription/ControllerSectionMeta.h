@@ -99,6 +99,7 @@ template <>
 inline auto registerMembers<base::musicDevice::description::controller::Section>()
 {
    return members(
+      member("nativeNoteMode", &base::musicDevice::description::controller::Section::nativeNoteMode),
       member("widgets", &base::musicDevice::description::controller::Section::widgets)
    );
 }

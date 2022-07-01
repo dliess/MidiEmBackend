@@ -26,24 +26,24 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
     :
     m_pMidiInIf(std::move(pMidiInIf)),
     m_rControllerSection(rControllerSection),
-    m_drainCb(cb)
+    m_drainCb(cb),
+    m_nativeNoteMode(rControllerSection.nativeNoteMode)
 {
    initCache();
-   m_pMidiInIf->registerMidiInCb(
-       [this](const midi::MidiMessage& midiMsg) {
-          const auto midiId = midiMessageToId(midiMsg);
-          auto iter         = m_map.find(midiId);
-          if (m_map.end() == iter)
-          {
-             /*
-             spdlog::info( "CONTROLLER --- {} No mapping for Midi msg id {}",
-                   m_pMidiInIf->medium().getDeviceName(),
-                   meta::serialize(midiId).dump());
-             */
-             return;
-          }
-          handleRouting(iter->second, midiMsg);
-       });
+   m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
+      const auto midiId = midiMessageToId(midiMsg);
+      auto iter         = m_map.find(midiId);
+      if (m_map.end() == iter)
+      {
+        /*
+         spdlog::info("CONTROLLER --- {} No mapping for Midi msg id {}",
+                      m_pMidiInIf->medium().getDeviceName(),
+                      meta::serialize(midiId).dump());
+        */
+         return;
+      }
+      handleRouting(iter->second, midiMsg);
+   });
 }
 
 template <typename MidiInIfPtr>
@@ -103,19 +103,28 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                           const description::controller::EventIncremental& evt)
                           -> EventValue {
                          const int ccVal = msg.controllerValue();
-                         static constexpr int middleVal = midi::Message<midi::ControlChange>::RES_MAX / 2;
+                         static constexpr int middleVal =
+                             midi::Message<midi::ControlChange>::RES_MAX / 2;
                          static constexpr int THRESHOLD = middleVal / 2;
-                         const int diffFromMiddleVal = ccVal - middleVal;
-                         if(std::abs(diffFromMiddleVal) > THRESHOLD) {
-                            if(ccVal < middleVal){
-                                return IncrementType{evt.resolution, ccVal};
+                         const int diffFromMiddleVal    = ccVal - middleVal;
+                         if (std::abs(diffFromMiddleVal) > THRESHOLD)
+                         {
+                            if (ccVal < middleVal)
+                            {
+                               return IncrementType{evt.resolution, ccVal};
                             }
-                            else {
-                                return IncrementType{evt.resolution, ccVal - midi::Message<midi::ControlChange>::RES_MAX};
+                            else
+                            {
+                               return IncrementType{
+                                   evt.resolution,
+                                   ccVal - midi::Message<
+                                               midi::ControlChange>::RES_MAX};
                             }
                          }
-                         else {
-                            return IncrementType{evt.resolution, diffFromMiddleVal};
+                         else
+                         {
+                            return IncrementType{evt.resolution,
+                                                 diffFromMiddleVal};
                          }
                       }},
                   eventDescr);
@@ -200,7 +209,7 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               {
                  if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
                  {
-                    spdlog::error( "MPE mode note-on without widget coordinate");
+                    spdlog::error("MPE mode note-on without widget coordinate");
                     return mpark::monostate();
                  }
                  m_mpeMap[msg.channel() - 1] = id.widgetCoord;
