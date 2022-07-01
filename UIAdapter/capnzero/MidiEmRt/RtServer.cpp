@@ -23,9 +23,8 @@
 using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
 
-RtServer::RtServer(zmq::context_t &rZmqContext,
-                   const std::string& rpcBindAddr,
-                   const std::string& signalBindAddr,
+RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
+                   const std::string &signalBindAddr,
                    base::instruments::Instruments &rInstruments,
                    base::musicDevice::Holder &rMDHolder,
                    base::musicDevice::TransportControl &rTransportControl,
@@ -37,9 +36,10 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<InstrumentsRpc>(rInstruments),
-        std::make_unique<MainRpc>(
-            signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
-            rAbletonLinkWrapper, rMidiRouter, rCtrlEventRouter, rParameterSceneContainer),
+        std::make_unique<MainRpc>(signals(), rInstruments,
+                                  rMDHolder.musicDevices, rTransportControl,
+                                  rAbletonLinkWrapper, rMidiRouter,
+                                  rCtrlEventRouter, rParameterSceneContainer),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
         std::make_unique<ControllerDevicesRpc>(),
@@ -72,8 +72,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
           const auto midiVoiceOffset =
               md.soundHandler ? md.soundHandler->getMidiVoiceOffset() : 0;
           signals().MusicDevices__musicDeviceDescriptionAdded(
-            deviceName, meta::serialize(description).dump().c_str()
-          );
+              deviceName, meta::serialize(description).dump().c_str());
           signals().MusicDevices__deviceAdded(
               md.id(), md.deviceId().deviceName, md.deviceId().portName,
               mediumId.toStr(), midiVoiceOffset);
@@ -103,20 +102,22 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
               util::overload{
                   [this, &event, &uuid, val](const mpark::monostate &) {
                      signals().ControllerDevices__controllerEventOccured(
-                         uuid, event.id.widgetId, 0, 0, event.id.eventId, val);
+                         uuid, event.id.widgetId, 0, 0, event.id.eventId,
+                         event.id.channelId, val);
                   },
                   [this, &event, &uuid,
                    val](const base::musicDevice::controller::WidgetCoord
                             &widgetCoord) {
                      signals().ControllerDevices__controllerEventOccured(
                          uuid, event.id.widgetId, widgetCoord.col,
-                         widgetCoord.row, event.id.eventId, val);
+                         widgetCoord.row, event.id.eventId, event.id.channelId,
+                         val);
                   },
                   [this, &event, &uuid,
                    val](const base::musicDevice::controller::Note &note) {
                      signals().ControllerDevices__controllerNoteEventOccured(
                          uuid, event.id.widgetId, note.number, event.id.eventId,
-                         val);
+                         event.id.channelId, val);
                   }},
               event.id.widgetCoord);
        });
@@ -306,7 +307,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                                 .ControllerEventRouter__connectedWidget2Notes(
                                     from.uuid, from.eventId.widgetId,
                                     widgetCoord.col, widgetCoord.row,
-                                    from.eventId.eventId, to.uuid, to.voiceIdx);
+                                    from.eventId.eventId,
+                                    from.eventId.channelId, to.uuid,
+                                    to.voiceIdx);
                          },
                          [&](const base::musicDevice::controller::
                                  EventDestination::Parameter &parameter) {
@@ -314,8 +317,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                                 .ControllerEventRouter__connectedWidget2Parameter(
                                     from.uuid, from.eventId.widgetId,
                                     widgetCoord.col, widgetCoord.row,
-                                    from.eventId.eventId, to.uuid, to.voiceIdx,
-                                    parameter.id,
+                                    from.eventId.eventId,
+                                    from.eventId.channelId, to.uuid,
+                                    to.voiceIdx, parameter.id,
                                     ::capnzero::MidiEmRt::
                                         SDParameterDestination::PARAMETER);
                          },
@@ -333,7 +337,8 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                             signals()
                                 .ControllerEventRouter__connectedNotes2Notes(
                                     from.uuid, from.eventId.widgetId,
-                                    note.number, from.eventId.eventId, to.uuid,
+                                    note.number, from.eventId.eventId,
+                                    from.eventId.channelId, to.uuid,
                                     to.voiceIdx);
                          },
                          [&](const base::musicDevice::controller::
@@ -341,7 +346,8 @@ RtServer::RtServer(zmq::context_t &rZmqContext,
                             signals()
                                 .ControllerEventRouter__connectedNotes2Parameter(
                                     from.uuid, from.eventId.widgetId,
-                                    note.number, from.eventId.eventId, to.uuid,
+                                    note.number, from.eventId.eventId,
+                                    from.eventId.channelId, to.uuid,
                                     to.voiceIdx, parameter.id,
                                     ::capnzero::MidiEmRt::
                                         SDParameterDestination::PARAMETER);

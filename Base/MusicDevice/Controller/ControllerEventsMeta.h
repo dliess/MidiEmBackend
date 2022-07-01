@@ -28,7 +28,8 @@ inline auto registerMembers<base::musicDevice::controller::EventId>()
 {
    return members(member("widgetId", &base::musicDevice::controller::EventId::widgetId),
                   member("widgetCoord", &base::musicDevice::controller::EventId::widgetCoord),
-                  member("eventId", &base::musicDevice::controller::EventId::eventId));
+                  member("eventId", &base::musicDevice::controller::EventId::eventId),
+                  member("channelId", &base::musicDevice::controller::EventId::channelId));
 }
 
 template<>

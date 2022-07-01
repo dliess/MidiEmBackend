@@ -18,32 +18,29 @@ ControllerEventRouterRpc::ControllerEventRouterRpc(
 void ControllerEventRouterRpc::connectNotes2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx)
+    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
+    ::capnzero::Int16 voiceIdx)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx,
-                   controller::Note{note},
-                   eventIdx};
+   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx   = voiceIdx;
-   to.endpoint = controller::EventDestination::Note { 65 }; // TODO
+   to.voiceIdx = voiceIdx;
+   to.endpoint = controller::EventDestination::Note{65};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
 }
 
 void ControllerEventRouterRpc::connectNotes2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 parameterIdx,
+    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
+    ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx,
-                   controller::Note{note},
-                   eventIdx};
+   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
    to.voiceIdx   = voiceIdx;
@@ -70,33 +67,34 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
 void ControllerEventRouterRpc::connectWidget2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
-    ::capnzero::Int16 eventIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx)
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
    from.eventId = {widgetIdx,
                    controller::WidgetCoord{widgetCoordY, widgetCoordX},
-                   eventIdx};
+                   eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx   = voiceIdx;
-   to.endpoint = controller::EventDestination::Note { 65 }; // TODO
+   to.voiceIdx = voiceIdx;
+   to.endpoint = controller::EventDestination::Note{65};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
 }
 
 void ControllerEventRouterRpc::connectWidget2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
-    ::capnzero::Int16 eventIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
    from.eventId = {widgetIdx,
                    controller::WidgetCoord{widgetCoordY, widgetCoordX},
-                   eventIdx};
+                   eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
    to.voiceIdx   = voiceIdx;

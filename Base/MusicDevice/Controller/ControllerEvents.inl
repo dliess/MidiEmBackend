@@ -32,7 +32,7 @@ inline bool operator<(const Note& lhs, const Note& rhs)
 inline bool operator==(const EventId& lhs, const EventId& rhs)
 {
    return lhs.widgetId == rhs.widgetId && lhs.widgetCoord == rhs.widgetCoord &&
-          lhs.eventId == rhs.eventId;
+          lhs.eventId == rhs.eventId && lhs.channelId == rhs.channelId;
 }
 
 inline bool operator<(const EventId& lhs, const EventId& rhs)
@@ -40,6 +40,7 @@ inline bool operator<(const EventId& lhs, const EventId& rhs)
    if(!(lhs.widgetId == rhs.widgetId)) return lhs.widgetId < rhs.widgetId;
    if(!(lhs.widgetCoord == rhs.widgetCoord)) return lhs.widgetCoord < rhs.widgetCoord;
    if(!(lhs.eventId == rhs.eventId)) return lhs.eventId < rhs.eventId;
+   if(!(lhs.channelId == rhs.channelId)) return lhs.channelId < rhs.channelId;
    return false;
 }
 
@@ -107,7 +108,8 @@ template <> struct hash<base::musicDevice::controller::EventId>
       return std::hash<int>{}(eventId.widgetId) ^
              std::hash<base::musicDevice::controller::EventId::Coord>{}(
                  eventId.widgetCoord) ^
-             std::hash<int>{}(eventId.eventId);
+             std::hash<int>{}(eventId.eventId) ^
+             std::hash<int>{}(eventId.channelId);
    }
 };
 

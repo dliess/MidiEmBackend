@@ -26,6 +26,7 @@ struct EventId
    using Coord = mpark::variant<mpark::monostate, WidgetCoord, Note>;
    Coord widgetCoord;
    int eventId;
+   int channelId{0};
 };
 
 struct PressReleaseType

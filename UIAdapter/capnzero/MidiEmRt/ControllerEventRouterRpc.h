@@ -20,32 +20,34 @@ class ControllerEventRouterRpc
 public:
    ControllerEventRouterRpc(
        base::musicDevice::controller::EventRouter& rCtrlEventRouter,
-       base::musicDevice::MusicDeviceContainer&
-           rMusicDeviceContainer) noexcept;
+       base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
    void connectNotes2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
                            ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
                            ::capnzero::Int16 eventIdx,
+                           ::capnzero::Int16 channelIdx,
                            const ::capnzero::SpanCL<16>& soundDevUUID,
                            ::capnzero::Int16 voiceIdx) override;
    void connectNotes2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
-       ::capnzero::Int16 eventIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
+       ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+       const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination paramFunc) override;
    void connectWidget2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
                             ::capnzero::Int16 widgetIdx,
                             ::capnzero::Int16 widgetCoordX,
                             ::capnzero::Int16 widgetCoordY,
                             ::capnzero::Int16 eventIdx,
+                            ::capnzero::Int16 channelIdx,
                             const ::capnzero::SpanCL<16>& soundDevUUID,
                             ::capnzero::Int16 voiceIdx) override;
    void connectWidget2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
        ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
-       const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 parameterIdx,
+       ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
+       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination paramFunc) override;
 
 private:
