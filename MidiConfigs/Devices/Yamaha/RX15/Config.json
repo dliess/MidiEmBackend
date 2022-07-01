@@ -1,0 +1,90 @@
+{
+  "version": "0.0.0",
+  "manufacturer": "Yamaha",
+  "productName": "RX-15",
+  "reactsToTransportCommands": true,
+  "soundSection": {
+    "defaultInstrumentType": "DrumKit",
+    "voices": [
+      {
+        "name": "BaseDrum",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 36
+      },
+      {
+        "name": "Snare",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 38
+      },
+      {
+        "name": "Rim",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 40
+      },
+      {
+        "name": "Lo Tom",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 45
+      },
+      {
+        "name": "Mid Tom",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 43
+      },
+      {
+        "name": "Hi Tom",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 41
+      },
+      {
+        "name": "Cl Hat",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 47
+      },
+      {
+        "name": "Op Hat",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 48
+      },
+      {
+        "name": "Ride",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 50
+      },
+      {
+        "name": "Crash",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 52
+      },
+      {
+        "name": "Shaker",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 53
+      },
+      {
+        "name": "Clap",
+        "engineId": 0,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 55
+      }
+    ],
+    "engines": [
+      {
+        "name": "Dummy",
+        "parameters": [
+        ]
+      }
+    ]
+  }
+}

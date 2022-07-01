@@ -4,40 +4,108 @@
   "productName": "volca beats",
   "reactsToTransportCommands": true,
   "soundSection": {
-    "defaultInstrumentType": "InstrumentPerVoice",
+    "defaultInstrumentType": "DrumKit",
+    "global": {
+      "midiChannel": 10,
+      "parameters": [
+        {
+          "name": "Stutter time",
+          "description": "",
+          "type": "continous",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 54
+              }
+            }
+          }
+        },
+        {
+          "name": "Stutter depth",
+          "description": "",
+          "type": "continous",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 55
+              }
+            }
+          }
+        }
+      ]
+    },
     "voices": [
       {
-        "name": "1",
+        "name": "Kick",
         "engineId": 0,
-        "midiChannel": 1
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 36
+      },
+      {
+        "name": "Snare",
+        "engineId": 1,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 38
+      },
+      {
+        "name": "Lo Tom",
+        "engineId": 2,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 43
+      },
+      {
+        "name": "Hi Tom",
+        "engineId": 3,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 50
+      },
+      {
+        "name": "Cl Hat",
+        "engineId": 4,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 42
+      },
+      {
+        "name": "Op Hat",
+        "engineId": 5,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 46
+      },
+      {
+        "name": "Clap",
+        "engineId": 6,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 39
+      },
+      {
+        "name": "Calves",
+        "engineId": 7,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 51
+      },
+      {
+        "name": "Agogo",
+        "engineId": 8,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 52
+      },
+      {
+        "name": "Crash",
+        "engineId": 9,
+        "midiChannel": 10,
+        "midiTriggerNoteNumber": 53
       }
     ],
     "engines": [
       {
-        "name": "MainEngine",
-        "components": [
-          {
-            "name": "Levels"
-          },
-          {
-            "name": "PCM speed"
-          },
-          {
-            "name": "Stutter"
-          },
-          {
-            "name": "Decay"
-          },
-          {
-            "name": "Other"
-          }
-        ],
+        "name": "Kick",
         "parameters": [
           {
             "name": "Kick level",
             "description": "",
             "type": "continous",
-            "component": "Levels",
             "source": {
               "midi": {
                 "id": {
@@ -46,12 +114,16 @@
                 }
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "name": "Snare",
+        "parameters": [
           {
             "name": "Snare level",
             "description": "",
             "type": "continous",
-            "component": "Levels",
             "source": {
               "midi": {
                 "id": {
@@ -60,12 +132,16 @@
                 }
               }
             }
-          },
+          }  
+        ]
+      },
+      {
+        "name": "Lo Tom",
+        "parameters": [
           {
             "name": "Lo tom level",
             "description": "",
             "type": "continous",
-            "component": "Levels",
             "source": {
               "midi": {
                 "id": {
@@ -76,10 +152,27 @@
             }
           },
           {
+            "name": "Tom decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          }  
+        ]
+      },
+      {
+        "name": "Hi Tom",
+        "parameters": [
+          {
             "name": "Hi tom level",
             "description": "",
             "type": "continous",
-            "component": "Levels",
             "source": {
               "midi": {
                 "id": {
@@ -90,10 +183,27 @@
             }
           },
           {
+            "name": "Tom decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          }  
+        ]
+      },
+      {
+        "name": "Cl Hat",
+        "parameters": [
+          {
             "name": "Closed hat level",
             "description": "",
             "type": "continous",
-            "component": "Levels",
             "source": {
               "midi": {
                 "id": {
@@ -104,178 +214,9 @@
             }
           },
           {
-            "name": "Open hat level",
-            "description": "",
-            "type": "continous",
-            "component": "Levels",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 45
-                }
-              }
-            }
-          },
-          {
-            "name": "Clap level",
-            "description": "",
-            "type": "continous",
-            "component": "Levels",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 46
-                }
-              }
-            }
-          },
-          {
-            "name": "Claves level",
-            "description": "",
-            "type": "continous",
-            "component": "Levels",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 47
-                }
-              }
-            }
-          },
-          {
-            "name": "Agogo level",
-            "description": "",
-            "type": "continous",
-            "component": "Levels",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 48
-                }
-              }
-            }
-          },
-          {
-            "name": "Crash level",
-            "description": "",
-            "type": "continous",
-            "component": "Levels",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 49
-                }
-              }
-            }
-          },
-          {
-            "name": "Clap PCM speed",
-            "description": "",
-            "type": "continous",
-            "component": "PCM speed",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 50
-                }
-              }
-            }
-          },
-          {
-            "name": "Claves PCM speed",
-            "description": "",
-            "type": "continous",
-            "component": "PCM speed",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 51
-                }
-              }
-            }
-          },
-          {
-            "name": "Agogo PCM speed",
-            "description": "",
-            "type": "continous",
-            "component": "PCM speed",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 52
-                }
-              }
-            }
-          },
-          {
-            "name": "Crash PCM speed",
-            "description": "",
-            "type": "continous",
-            "component": "PCM speed",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 53
-                }
-              }
-            }
-          },
-          {
-            "name": "Stutter time",
-            "description": "",
-            "type": "continous",
-            "component": "Stutter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 54
-                }
-              }
-            }
-          },
-          {
-            "name": "Stutter depth",
-            "description": "",
-            "type": "continous",
-            "component": "Stutter",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 55
-                }
-              }
-            }
-          },
-          {
-            "name": "Tom decay",
-            "description": "",
-            "type": "continous",
-            "component": "Decay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 56
-                }
-              }
-            }
-          },
-          {
             "name": "Closed hat decay",
             "description": "",
             "type": "continous",
-            "component": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -286,10 +227,40 @@
             }
           },
           {
+            "name": "Hat grain",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          }   
+        ]
+      },
+      {
+        "name": "Op Hat",
+        "parameters": [
+          {
+            "name": "Open hat level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
             "name": "Open hat decay",
             "description": "",
             "type": "continous",
-            "component": "Decay",
             "source": {
               "midi": {
                 "id": {
@@ -303,7 +274,6 @@
             "name": "Hat grain",
             "description": "",
             "type": "continous",
-            "component": "Other",
             "source": {
               "midi": {
                 "id": {
@@ -312,7 +282,131 @@
                 }
               }
             }
-          }
+          }    
+        ]
+      },
+      {
+        "name": "Clap",
+        "parameters": [
+          {
+            "name": "Clap level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap PCM speed",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          }  
+        ]
+      },
+      {
+        "name": "Calves",
+        "parameters": [
+          {
+            "name": "Claves level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Claves PCM speed",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          }  
+        ]
+      },
+      {
+        "name": "Agogo",
+        "parameters": [
+          {
+            "name": "Agogo level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Agogo PCM speed",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          }  
+        ]
+      },
+      {
+        "name": "Crash",
+        "parameters": [
+          {
+            "name": "Crash level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Crash PCM speed",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          }  
         ]
       }
     ]
