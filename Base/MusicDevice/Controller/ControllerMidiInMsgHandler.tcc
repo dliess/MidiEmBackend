@@ -35,6 +35,10 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       auto iter         = m_map.find(midiId);
       if (m_map.end() == iter)
       {
+        if(m_nativeNoteMode)
+        {
+            handleNativeRouting(midiMsg);
+        }
         /*
          spdlog::info("CONTROLLER --- {} No mapping for Midi msg id {}",
                       m_pMidiInIf->medium().getDeviceName(),
@@ -325,6 +329,13 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
    {
       m_drainCb(Event{id, value});
    }
+}
+
+template <typename MidiInIfPtr>
+void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
+    EventId id, const midi::MidiMessage& midiMsg) const noexcept
+{
+    
 }
 
 template <typename MidiInIfPtr>

@@ -39,6 +39,7 @@ private:
    void handleEventSource(const std::vector<std::vector<midi::MidiMessageId>>& source,
                           int widgetId, int eventId) noexcept;
    void handleRouting(EventId id, const midi::MidiMessage& midiMsg) const noexcept;
+   void handleNativeRouting(const midi::MidiMessage& midiMsg) const noexcept;
 };
 
 } // namespace controller
