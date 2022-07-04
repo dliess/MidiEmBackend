@@ -15,6 +15,11 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
    const auto midiMsgId = mpark::visit(
       midi::overload{
          [&widgetCoord](
+            const base::musicDevice::description::controller::EventNativeNote&
+               evt) -> midi::MidiMessageId {
+            return mpark::monostate();
+         },
+         [&widgetCoord](
             const base::musicDevice::description::controller::EventPressRelease&
                evt) -> midi::MidiMessageId {
             return evt.pressSource[widgetCoord.row][widgetCoord.col];

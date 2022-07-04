@@ -2622,7 +2622,6 @@
     ]
   },
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": [
       {
         "name": "Cross-fader",

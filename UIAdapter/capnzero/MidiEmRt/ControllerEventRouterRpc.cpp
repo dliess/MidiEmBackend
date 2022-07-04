@@ -23,12 +23,30 @@ void ControllerEventRouterRpc::connectNotes2Notes(
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx = voiceIdx;
-   to.endpoint = controller::EventDestination::Note{65};   // TODO
+
+   if (note >= 0 && isMelodic(to.uuid))
+   {
+     note = -1;
+   }
+   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
+   to.voiceIdx  = voiceIdx;
+   to.endpoint  = controller::EventDestination::Note{64};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
+}
+
+bool ControllerEventRouterRpc::isMelodic(const util::Identifiable::UUID& uuid) const noexcept
+{
+      const auto it = m_rMusicDeviceContainer.find(uuid);
+      if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
+      {
+        return it->second->description()->soundSection->defaultInstrumentType ==
+        base::musicDevice::description::sound::Section::DefaultInstrumentType::InstrumentPerVoice ||
+        it->second->description()->soundSection->defaultInstrumentType ==
+        base::musicDevice::description::sound::Section::DefaultInstrumentType::OnePolyphonicInstrument;
+      }
+    return false;
 }
 
 void ControllerEventRouterRpc::connectNotes2Parameter(

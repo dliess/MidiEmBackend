@@ -3,7 +3,6 @@
   "manufacturer": "Arturia",
   "productName": "Keystep32",
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": [
       {
         "name": "Keypad",
@@ -12,6 +11,10 @@
           "numColumns": 32
         },
         "events": [
+          {
+            ".type": "NativeNote",
+            "name": "keys-native"
+          },
           {
             ".type": "PressRelease",
             "name": "key",

@@ -3,7 +3,6 @@
   "manufacturer": "Generic",
   "productName": "Controller",
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": [],
     "parameter_categories": []
   }

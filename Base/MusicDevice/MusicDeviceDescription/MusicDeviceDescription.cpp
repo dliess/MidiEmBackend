@@ -54,6 +54,7 @@ void Description::checkValidity() const
          {
             mpark::visit(
                 util::overload{
+                    [&widget](const controller::EventNativeNote& evt) { /*nothing to check*/ },
                     [&widget](const controller::EventPressRelease& evt) {
                        checkSource(evt.pressSource, widget.dimension, evt.name);
                        checkSource(evt.releaseSource, widget.dimension,

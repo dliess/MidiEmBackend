@@ -1347,7 +1347,6 @@
     ]
   },
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": [
       {
         "name": "Pad",

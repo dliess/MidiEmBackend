@@ -26,24 +26,27 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
     :
     m_pMidiInIf(std::move(pMidiInIf)),
     m_rControllerSection(rControllerSection),
-    m_drainCb(cb),
-    m_nativeNoteMode(rControllerSection.nativeNoteMode)
+    m_drainCb(cb)
 {
    initCache();
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
-      const auto midiId = midiMessageToId(midiMsg);
-      auto iter         = m_map.find(midiId);
+      auto midiId = midiMessageToId(midiMsg);
+      if(m_nativeNoteMode)
+      {
+        mpark::visit(util::overload{
+            [](midi::MidiMsgId<midi::NoteOn>& msg){ msg.note = -1; },
+            [](midi::MidiMsgId<midi::NoteOff>& msg){ msg.note = -1; },
+            [](auto&&) {}
+        }, midiId);
+      }
+      auto iter = m_map.find(midiId);
       if (m_map.end() == iter)
       {
-        if(m_nativeNoteMode)
-        {
-            handleNativeRouting(midiMsg);
-        }
-        /*
-         spdlog::info("CONTROLLER --- {} No mapping for Midi msg id {}",
-                      m_pMidiInIf->medium().getDeviceName(),
-                      meta::serialize(midiId).dump());
-        */
+         /*
+          spdlog::info("CONTROLLER --- {} No mapping for Midi msg id {}",
+                       m_pMidiInIf->medium().getDeviceName(),
+                       meta::serialize(midiId).dump());
+         */
          return;
       }
       handleRouting(iter->second, midiMsg);
@@ -73,14 +76,18 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                const midi::Message<midi::ControlChange>& msg) -> EventValue {
               if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
               {
-                id.widgetCoord = m_mpeMap[msg.channel() - 1];
+                 id.widgetCoord = m_mpeMap[msg.channel() - 1];
               }
               else
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
+                      [](const description::controller::EventNativeNote&) -> EventValue {
+                        // This should not happen
+                        return mpark::monostate();
+                      },
                       [this, &msg](
                           const description::controller::EventPressRelease& evt)
                           -> EventValue {
@@ -146,10 +153,14 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               }
               else
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
+                      [](const description::controller::EventNativeNote&) -> EventValue {
+                        // This should not happen
+                        return mpark::monostate();
+                      },
                       [this, &msg](
                           const description::controller::EventPressRelease& evt)
                           -> EventValue {
@@ -186,10 +197,14 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               }
               else
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
+                      [](const description::controller::EventNativeNote&) -> EventValue {
+                        // This should not happen
+                        return mpark::monostate();
+                      },
                       [this, &msg](
                           const description::controller::EventPressRelease& evt)
                           -> EventValue {
@@ -236,6 +251,9 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               }
               return mpark::visit(
                   midi::overload{
+                      [&msg](const description::controller::EventNativeNote&) -> EventValue {
+                       return PressReleaseType{msg.relativeVelocity()};
+                      },
                       [this, &msg](
                           const description::controller::EventPressRelease& evt)
                           -> EventValue {
@@ -244,18 +262,21 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [](auto&&) -> EventValue { return mpark::monostate(); }},
                   eventDescr);
            },
-           [this, &id, &eventDescr, mpeMode](
-               const midi::Message<midi::NoteOff>& msg) -> EventValue {
+           [this, &id, &eventDescr,
+            mpeMode](const midi::Message<midi::NoteOff>& msg) -> EventValue {
               if (m_nativeNoteMode)
               {
                  id.widgetCoord = Note{msg.noteNumber()};
               }
-              if(!mpeMode)
+              if (!mpeMode)
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
+                      [&msg](const description::controller::EventNativeNote&) -> EventValue {
+                       return PressReleaseType{-1.0f * msg.relativeVelocity()};
+                      },
                       [this, &msg](
                           const description::controller::EventPressRelease& evt)
                           -> EventValue {
@@ -274,7 +295,7 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               }
               else
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
@@ -288,10 +309,10 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
            },
            [this, &id, &eventDescr, mpeMode](
                const midi::Message<midi::AfterTouchPoly>& msg) -> EventValue {
-                if(!mpeMode)
-                {
-                    id.channelId = msg.channel() - 1;
-                }
+              if (!mpeMode)
+              {
+                 id.channelId = msg.channel() - 1;
+              }
               return mpark::visit(
                   midi::overload{
                       [this,
@@ -310,7 +331,7 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
               }
               else
               {
-                id.channelId = msg.channel() - 1;
+                 id.channelId = msg.channel() - 1;
               }
               return mpark::visit(
                   midi::overload{
@@ -329,13 +350,6 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
    {
       m_drainCb(Event{id, value});
    }
-}
-
-template <typename MidiInIfPtr>
-void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
-    EventId id, const midi::MidiMessage& midiMsg) const noexcept
-{
-    
 }
 
 template <typename MidiInIfPtr>
@@ -373,6 +387,13 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::initCache() noexcept
          const auto& event = widget.events[eventId];
          mpark::visit(
              midi::overload{
+                 [=](const description::controller::EventNativeNote& evt){
+                       m_nativeNoteMode = true;
+                       m_map[midi::MidiMsgId<midi::NoteOn>{-1}] =
+                           EventId{widgetId, mpark::monostate(), eventId};
+                       m_map[midi::MidiMsgId<midi::NoteOff>{-1}] =
+                           EventId{widgetId, mpark::monostate(), eventId};
+                 },
                  [this, widgetId, eventId](
                      const description::controller::EventPressRelease& evt) {
                     handleEventSource(evt.pressSource, widgetId, eventId);

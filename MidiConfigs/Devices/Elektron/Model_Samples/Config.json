@@ -519,7 +519,6 @@
     ]
   },
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": []
   },
   "reactsToTransportCommands": true

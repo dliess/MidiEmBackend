@@ -31,7 +31,7 @@ private:
    mutable std::array<EventId::Coord, midi::NUM_CHANNELS>
       m_mpeMap;
    Cb m_drainCb;
-   bool m_nativeNoteMode{true};
+   bool m_nativeNoteMode{false};
 
    static std::string cache2Str(
       const std::unordered_map<midi::MidiMessageId, EventId>& map);
@@ -39,7 +39,6 @@ private:
    void handleEventSource(const std::vector<std::vector<midi::MidiMessageId>>& source,
                           int widgetId, int eventId) noexcept;
    void handleRouting(EventId id, const midi::MidiMessage& midiMsg) const noexcept;
-   void handleNativeRouting(const midi::MidiMessage& midiMsg) const noexcept;
 };
 
 } // namespace controller

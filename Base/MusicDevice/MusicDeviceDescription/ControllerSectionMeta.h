@@ -38,6 +38,21 @@ inline auto registerMembers<base::musicDevice::description::controller::EventInc
 }
 
 template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventNativeNote>(int i) noexcept
+{
+   return "NativeNote";
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::controller::EventNativeNote>()
+{
+   return members(
+      member("name", &base::musicDevice::description::controller::EventNativeNote::name)
+   );
+}
+
+
+template <>
 inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventPressRelease>(int i) noexcept
 {
    return "PressRelease";
@@ -99,7 +114,6 @@ template <>
 inline auto registerMembers<base::musicDevice::description::controller::Section>()
 {
    return members(
-      member("nativeNoteMode", &base::musicDevice::description::controller::Section::nativeNoteMode),
       member("widgets", &base::musicDevice::description::controller::Section::widgets)
    );
 }

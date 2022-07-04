@@ -3,7 +3,6 @@
   "manufacturer": "Roli",
   "productName": "Seaboard Blocks",
   "controllerSection": {
-    "nativeNoteMode": true,
     "widgets": [
       {
         "name": "Keypad",
@@ -13,6 +12,10 @@
         },
         "mpe": true,
         "events": [
+          {
+            ".type": "NativeNote",
+            "name": "keys-native"
+          },
           {
             ".type": "PressRelease",
             "name": "key",

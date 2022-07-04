@@ -2,6 +2,7 @@
 #define CONTROLLER_EVENT_ROUTER_RPC_H
 
 #include "MidiEmRtControllerEventRouterRpcIf.h"
+#include "Identifiable.h"
 
 namespace base::musicDevice::controller
 {
@@ -49,6 +50,8 @@ public:
        ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmRt::SDParameterDestination paramFunc) override;
+
+    [[nodiscard]] bool isMelodic(const util::Identifiable::UUID& uuid) const noexcept;
 
 private:
    base::musicDevice::controller::EventRouter& m_rCtrlEventRouter;

@@ -3,7 +3,6 @@
   "manufacturer": "ExpressiveE",
   "productName": "Touche SE",
   "controllerSection": {
-    "nativeNoteMode": false,
     "widgets": [
       {
         "name": "Pad",

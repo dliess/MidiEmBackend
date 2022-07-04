@@ -3,7 +3,6 @@
   "manufacturer": "Novation",
   "productName": "Launch Control XL",
   "controllerSection": {
-    "nativeNoteMode": false,
     "widgets": [
       {
         "name": "Rotary Knobs",

@@ -22,6 +22,12 @@ struct EventIncremental
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
+
+struct EventNativeNote
+{
+   std::string name;
+};
+
 struct EventPressRelease
 {
    std::string name;
@@ -43,7 +49,7 @@ struct EventRelativeValue
 };
 
 using Event = mpark::variant<
-   EventIncremental, EventPressRelease,
+   EventIncremental, EventNativeNote, EventPressRelease,
    EventContinousValue, EventRelativeValue>;
 
 struct Widget
@@ -56,7 +62,6 @@ struct Widget
 
 struct Section
 {
-   bool nativeNoteMode;
    std::vector<Widget> widgets;
 };
 

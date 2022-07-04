@@ -506,8 +506,21 @@
     ]
   },
   "controllerSection": {
-    "nativeNoteMode": true,
-    "widgets": []
+    "widgets": [
+      {
+        "name": "Sequencer",
+        "dimension": {
+          "numRows": 1,
+          "numColumns": 1
+        },
+        "events": [
+          {
+            ".type": "NativeNote",
+            "name": "keys-native"
+          }
+        ]
+      }
+    ]
   },
   "reactsToTransportCommands": true
 }
