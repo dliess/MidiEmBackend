@@ -5,6 +5,217 @@
   "reactsToTransportCommands": true,
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
+    "global": {
+      "midiChannel": 10,
+      "components": [
+        {
+          "name": "Amp",
+          "role": "Amp"
+        },
+        {
+          "name": "Sequencer",
+          "role": "Sequencer"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Volume",
+          "description": "",
+          "type": "continous",
+          "component" : "Amp",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 7
+              }
+            }
+          }
+        },
+        {
+          "name": "Compressor Amnt",
+          "description": "",
+          "type": "continous",
+          "component" : "Amp",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 17
+              }
+            }
+          }
+        },
+        {
+          "name": "Drive Amnt",
+          "description": "",
+          "type": "continous",
+          "component" : "Amp",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 18
+              }
+            }
+          }
+        },
+        {
+          "name": "Swing",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 9
+              }
+            }
+          }
+        },
+        {
+          "name": "Sequencer Div",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 12
+              }
+            }
+          }
+        },
+        {
+          "name": "Pattern Len",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 12
+              }
+            }
+          }
+        },
+        {
+          "name": "Stutter Type",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 70
+              }
+            }
+          }
+        },
+        {
+          "name": "Stutter Amnt",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 71
+              }
+            }
+          }
+        },
+        {
+          "name": "Stutter On/Off",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 70
+              }
+            }
+          }
+        },
+        {
+          "name": "Roll Type",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 73
+              }
+            }
+          }
+        },
+        {
+          "name": "Roll On/Off",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 74
+              }
+            }
+          }
+        },
+        {
+          "name": "Pad Double Vel On/Off",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 75
+              }
+            }
+          }
+        },
+        {
+          "name": "Metronome On/Off/Play",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 76
+              }
+            }
+          }
+        },
+        {
+          "name": "Pad Note Length",
+          "description": "",
+          "type": "continous",
+          "component" : "Sequencer",
+          "source": {
+            "midi": {
+              "id": {
+                ".type": "MidiControlChange",
+                "id": 77
+              }
+            }
+          }
+        }
+      ]
+    },
     "voices": [
       {
         "name": "Kick 1",
@@ -84,84 +295,6 @@
         "name": "Kick 1",
         "parameters": [
           {
-            "name": "Volume",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 7
-                }
-              }
-            }
-          },
-          {
-            "name": "Swing",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 9
-                }
-              }
-            }
-          },
-          {
-            "name": "Sequencer Div",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 12
-                }
-              }
-            }
-          },
-          {
-            "name": "Pattern Len",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 12
-                }
-              }
-            }
-          },
-          {
-            "name": "Compressor Amnt",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 17
-                }
-              }
-            }
-          },
-          {
-            "name": "Drive Amnt",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 18
-                }
-              }
-            }
-          },
-          {
             "name": "Kick 1 Level",
             "description": "",
             "type": "continous",
@@ -174,7 +307,19 @@
               }
             }
           },
-
+          {
+            "name": "Kick 1 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 80
+                }
+              }
+            }
+          },
           {
             "name": "Kick 1 Tune",
             "description": "",
@@ -272,6 +417,19 @@
             }
           },
           {
+            "name": "Kick 2 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 81
+                }
+              }
+            }
+          },
+          {
             "name": "Kick 2 Tune",
             "description": "",
             "type": "continous",
@@ -324,6 +482,19 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Snare Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 82
                 }
               }
             }
@@ -399,6 +570,19 @@
             }
           },
           {
+            "name": "Clap Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 83
+                }
+              }
+            }
+          },
+          {
             "name": "Clap Decay",
             "description": "",
             "type": "continous",
@@ -425,6 +609,19 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Closed HH Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 84
                 }
               }
             }
@@ -474,6 +671,19 @@
             }
           },
           {
+            "name": "Open HH Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 85
+                }
+              }
+            }
+          },
+          {
             "name": "Open Hat Tune",
             "description": "",
             "type": "continous",
@@ -513,6 +723,19 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
                 }
               }
             }
@@ -562,6 +785,19 @@
             }
           },
           {
+            "name": "Tom 1  Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 87
+                }
+              }
+            }
+          },
+          {
             "name": "Tom 1 Tune",
             "description": "",
             "type": "continous",
@@ -601,6 +837,19 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Tom 2 Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 88
                 }
               }
             }
@@ -650,6 +899,19 @@
             }
           },
           {
+            "name": "Cowbell Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 89
+                }
+              }
+            }
+          },
+          {
             "name": "Cowbell Tune",
             "description": "",
             "type": "continous",
@@ -689,6 +951,19 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Ride Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 90
                 }
               }
             }
@@ -738,6 +1013,19 @@
             }
           },
           {
+            "name": "Cymball Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 92
+                }
+              }
+            }
+          },
+          {
             "name": "Cymbal Tune",
             "description": "",
             "type": "continous",
@@ -759,289 +1047,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 62
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "Stutter",
-        "parameters": [
-          {
-            "name": "Stutter Type",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 70
-                }
-              }
-            }
-          },
-          {
-            "name": "Stutter Amnt",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 71
-                }
-              }
-            }
-          },
-          {
-            "name": "Stutter On/Off",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 70
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "Roll",
-        "parameters": [
-          {
-            "name": "Roll Type",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 73
-                }
-              }
-            }
-          },
-          {
-            "name": "Roll On/Off",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 74
-                }
-              }
-            }
-          },
-          {
-            "name": "Pad Double Vel On/Off",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 75
-                }
-              }
-            }
-          },
-          {
-            "name": "Metronome On/Off/Play",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 76
-                }
-              }
-            }
-          },
-          {
-            "name": "Pad Note Length",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 77
-                }
-              }
-            }
-          },
-          {
-            "name": "Kick 1 Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 80
-                }
-              }
-            }
-          },
-          {
-            "name": "Kick 2 Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 81
-                }
-              }
-            }
-          },
-          {
-            "name": "Snare Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 82
-                }
-              }
-            }
-          },
-          {
-            "name": "Clap Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 83
-                }
-              }
-            }
-          },
-          {
-            "name": "Closed HH Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 84
-                }
-              }
-            }
-          },
-          {
-            "name": "Open HH Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 85
-                }
-              }
-            }
-          },
-          {
-            "name": "Rim Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "Tom 1  Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 87
-                }
-              }
-            }
-          },
-          {
-            "name": "Tom 2 Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 88
-                }
-              }
-            }
-          },
-          {
-            "name": "Cowbell Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 89
-                }
-              }
-            }
-          },
-          {
-            "name": "Ride Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 90
-                }
-              }
-            }
-          },
-          {
-            "name": "Ride Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 91
-                }
-              }
-            }
-          },
-          {
-            "name": "Crash Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 92
                 }
               }
             }
