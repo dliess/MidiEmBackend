@@ -253,11 +253,22 @@ namespace base::musicDevice::description::sound
 inline const Parameter& Section::parameterDescr(
     const ParameterId& parameterId) const noexcept
 {
-   assert(parameterId.engineId >= 0 && parameterId.engineId < engines.size());
-   assert(parameterId.parameterId >= 0 &&
-          parameterId.parameterId <
-              engines[parameterId.engineId].parameters.size());
-   return engines[parameterId.engineId].parameters[parameterId.parameterId];
+   if (base::musicDevice::description::sound::GlobalSectionId ==
+       parameterId.engineId)
+   {
+      assert(global);
+      assert(parameterId.parameterId >= 0 &&
+             parameterId.parameterId < global->parameters.size());
+      return global->parameters[parameterId.parameterId];
+   }
+   else
+   {
+      assert(parameterId.engineId >= 0 && parameterId.engineId < engines.size());
+      assert(parameterId.parameterId >= 0 &&
+            parameterId.parameterId <
+               engines[parameterId.engineId].parameters.size());
+      return engines[parameterId.engineId].parameters[parameterId.parameterId];
+   }
 }
 
 }   // namespace base::musicDevice::description::sound
@@ -373,16 +384,16 @@ inline std::optional<int>
 base::musicDevice::description::sound::Section::getVoiceIdx(
     int midiChannelNr) const noexcept
 {
-   if(global)
+   if (global)
    {
-      if(global->midiChannel == midiChannelNr)
+      if (global->midiChannel == midiChannelNr)
       {
          return base::musicDevice::description::sound::GlobalSectionId;
       }
    }
-   for(int i = 0; i < voices.size(); ++i)
+   for (int i = 0; i < voices.size(); ++i)
    {
-      if(voices[i].midiChannel == midiChannelNr)
+      if (voices[i].midiChannel == midiChannelNr)
       {
          return i;
       }
@@ -646,8 +657,7 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
 }
 
 inline mpark::variant<
-    int,
-    double,
+    int, double,
     base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
 base::musicDevice::description::sound::Section::_getInitialValueFor(
     int voiceId, int parameterId) const noexcept
