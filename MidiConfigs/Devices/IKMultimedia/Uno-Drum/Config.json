@@ -598,6 +598,63 @@
         ]
       },
       {
+        "name": "Rim",
+        "parameters": [
+          {
+            "name": "Rim Level",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Sound 1..5",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 86
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Rim Decay",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
         "name": "Closed Hat",
         "parameters": [
           {
@@ -705,63 +762,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 44
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "Rim",
-        "parameters": [
-          {
-            "name": "Rim Level",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 45
-                }
-              }
-            }
-          },
-          {
-            "name": "Rim Sound 1..5",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 86
-                }
-              }
-            }
-          },
-          {
-            "name": "Rim Tune",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 46
-                }
-              }
-            }
-          },
-          {
-            "name": "Rim Decay",
-            "description": "",
-            "type": "continous",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 47
                 }
               }
             }
@@ -883,56 +883,56 @@
         ]
       },
       {
-        "name": "Cowbell",
+        "name": "Cymbal",
         "parameters": [
           {
-            "name": "Cowbell Level",
+            "name": "Cymbal Level",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 54
+                  "id": 60
                 }
               }
             }
           },
           {
-            "name": "Cowbell Sound 1..5",
+            "name": "Cymball Sound 1..5",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 89
+                  "id": 92
                 }
               }
             }
           },
           {
-            "name": "Cowbell Tune",
+            "name": "Cymbal Tune",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 55
+                  "id": 61
                 }
               }
             }
           },
           {
-            "name": "Cowbell Decay",
+            "name": "Cymbal Decay",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 56
+                  "id": 62
                 }
               }
             }
@@ -997,56 +997,56 @@
         ]
       },
       {
-        "name": "Cymbal",
+        "name": "Cowbell",
         "parameters": [
           {
-            "name": "Cymbal Level",
+            "name": "Cowbell Level",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 60
+                  "id": 54
                 }
               }
             }
           },
           {
-            "name": "Cymball Sound 1..5",
+            "name": "Cowbell Sound 1..5",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 92
+                  "id": 89
                 }
               }
             }
           },
           {
-            "name": "Cymbal Tune",
+            "name": "Cowbell Tune",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 61
+                  "id": 55
                 }
               }
             }
           },
           {
-            "name": "Cymbal Decay",
+            "name": "Cowbell Decay",
             "description": "",
             "type": "continous",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
-                  "id": 62
+                  "id": 56
                 }
               }
             }
