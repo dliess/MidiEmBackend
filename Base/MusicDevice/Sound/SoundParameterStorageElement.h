@@ -46,6 +46,7 @@ private:
    float m_modifier{0};
    float m_commanded{0};
    lfo::LFO m_lfo;
+   static constexpr float FUZZ {0.0001};
 
    [[nodiscard]] inline float limitValue(
        float value, bool roundRobin = false) const noexcept;

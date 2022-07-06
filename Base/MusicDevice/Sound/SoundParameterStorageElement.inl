@@ -144,7 +144,7 @@ inline float ParameterStorageElement::limitValue(float value,
    {
       if (value < 0.0)
       {
-         ret = m_isListIndex ? range - 1 : range;
+         ret = m_isListIndex ? range - 1 : range - FUZZ;
       }
       if (value >= range)
       {
@@ -159,7 +159,7 @@ inline float ParameterStorageElement::limitValue(float value,
       }
       if (value >= range)
       {
-         ret = m_isListIndex ? range - 1 : range;
+         ret = m_isListIndex ? range - 1 : range - FUZZ;
       }
    }
    return ret;
