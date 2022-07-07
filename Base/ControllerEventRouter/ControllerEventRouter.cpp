@@ -72,7 +72,7 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  {
                     spdlog::info("Note could not find its way {}",
                                  meta::serialize(melodicEvent).dump().c_str());
-                    printMap();
+                    //printMap();
                  }
               }
            },

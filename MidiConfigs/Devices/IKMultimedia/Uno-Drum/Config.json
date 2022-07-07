@@ -564,6 +564,19 @@
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Clap Tune",
+            "description": "",
+            "type": "continous",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
                   "id": 37
                 }
               }
