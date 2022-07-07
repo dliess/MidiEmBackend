@@ -68,12 +68,6 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  {
                     sendNoteOnOff(note.number, destIter2->second, value);
                  }
-                 else
-                 {
-                    spdlog::info("Note could not find its way {}",
-                                 meta::serialize(melodicEvent).dump().c_str());
-                    //printMap();
-                 }
               }
            },
            [this](auto&&) {}},
