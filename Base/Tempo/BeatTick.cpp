@@ -40,7 +40,7 @@ std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
          const auto tNow     = std::chrono::high_resolution_clock::now();
          deltaTUs = std::chrono::duration_cast<std::chrono::microseconds>(tNow - *m_tLast);
          m_tLast             = tNow;
-         m_beat += (deltaTUs.count() * m_bpm) / (60000000.0);
+         m_beat += (deltaTUs.count() * getBpmNudged()) / (60000000.0);
       }
    }
    if(!m_prevTickBeats)
