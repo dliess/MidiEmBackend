@@ -20,6 +20,7 @@
       "parameters": [
         {
           "name": "Volume",
+          "role": "Volume",
           "description": "",
           "type": "continous",
           "component" : "Amp",
@@ -28,12 +29,16 @@
               "id": {
                 ".type": "MidiControlChange",
                 "id": 7
+              },
+              "sourceValueRange": {
+                "from": 0,
+                "to": 120
               }
             }
           }
         },
         {
-          "name": "Compressor Amnt",
+          "name": "Compressor",
           "description": "",
           "type": "continous",
           "component" : "Amp",
@@ -47,7 +52,7 @@
           }
         },
         {
-          "name": "Drive Amnt",
+          "name": "Drive",
           "description": "",
           "type": "continous",
           "component" : "Amp",
@@ -133,14 +138,15 @@
         {
           "name": "Stutter On/Off",
           "description": "",
-          "type": "continous",
+          "type": "list",
           "component" : "Sequencer",
           "source": {
             "midi": {
               "id": {
                 ".type": "MidiControlChange",
                 "id": 70
-              }
+              },
+              "sourceRangesFrom": "onOff"
             }
           }
         },
@@ -161,42 +167,67 @@
         {
           "name": "Roll On/Off",
           "description": "",
-          "type": "continous",
+          "type": "list",
           "component" : "Sequencer",
           "source": {
             "midi": {
               "id": {
                 ".type": "MidiControlChange",
                 "id": 74
-              }
+              },
+              "sourceRangesFrom": "onOff"
             }
           }
         },
         {
           "name": "Pad Double Vel On/Off",
           "description": "",
-          "type": "continous",
+          "type": "list",
           "component" : "Sequencer",
           "source": {
             "midi": {
               "id": {
                 ".type": "MidiControlChange",
                 "id": 75
-              }
+              },
+              "sourceRangesFrom": "onOff"
             }
           }
         },
         {
           "name": "Metronome On/Off/Play",
           "description": "",
-          "type": "continous",
+          "type": "list",
           "component" : "Sequencer",
           "source": {
             "midi": {
               "id": {
                 ".type": "MidiControlChange",
                 "id": 76
-              }
+              },
+              "sourceRanges": [
+                {
+                  "name": "Off",
+                  "range": {
+                    "from": 0,
+                    "to": 0
+                  }
+                },
+                {
+                  "name": "On",
+                  "range": {
+                    "from": 1,
+                    "to": 1
+                  }
+                },
+                {
+                  "name": "Play",
+                  "range": {
+                    "from": 2,
+                    "to": 2
+                  }
+                }
+              ]
             }
           }
         },
@@ -295,7 +326,8 @@
         "name": "Kick 1",
         "parameters": [
           {
-            "name": "Kick 1 Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -308,20 +340,22 @@
             }
           },
           {
-            "name": "Kick 1 Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 80
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Kick 1 Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -334,7 +368,7 @@
             }
           },
           {
-            "name": "Kick 1 Snap",
+            "name": "Snap",
             "description": "",
             "type": "continous",
             "source": {
@@ -347,7 +381,8 @@
             }
           },
           {
-            "name": "Kick 1 Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -360,7 +395,7 @@
             }
           },
           {
-            "name": "Kick 1 FM Tune",
+            "name": "FM Tune",
             "description": "",
             "type": "continous",
             "source": {
@@ -373,7 +408,7 @@
             }
           },
           {
-            "name": "Kick 1 FM Amnt",
+            "name": "FM Amnt",
             "description": "",
             "type": "continous",
             "source": {
@@ -386,7 +421,7 @@
             }
           },
           {
-            "name": "Kick 1 Sweep Time",
+            "name": "Sweep Time",
             "description": "",
             "type": "continous",
             "source": {
@@ -404,7 +439,8 @@
         "name": "Kick 2",
         "parameters": [
           {
-            "name": "Kick 2 Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -417,20 +453,22 @@
             }
           },
           {
-            "name": "Kick 2 Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 81
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Kick 2 Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -443,7 +481,7 @@
             }
           },
           {
-            "name": "Kick 2 Snap",
+            "name": "Snap",
             "description": "",
             "type": "continous",
             "source": {
@@ -456,7 +494,8 @@
             }
           },
           {
-            "name": "Kick 2 Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -474,7 +513,8 @@
         "name": "Snare",
         "parameters": [
           {
-            "name": "Snare Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -487,7 +527,7 @@
             }
           },
           {
-            "name": "Snare Sound 1..5",
+            "name": "Sound",
             "description": "",
             "type": "continous",
             "source": {
@@ -495,12 +535,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 82
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Snare Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -513,7 +555,7 @@
             }
           },
           {
-            "name": "Snare Snap",
+            "name": "Snap",
             "description": "",
             "type": "continous",
             "source": {
@@ -526,7 +568,8 @@
             }
           },
           {
-            "name": "Snare Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -539,7 +582,7 @@
             }
           },
           {
-            "name": "Snare LPF",
+            "name": "LPF",
             "description": "",
             "type": "continous",
             "source": {
@@ -557,7 +600,8 @@
         "name": "Clap",
         "parameters": [
           {
-            "name": "Clap Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -570,7 +614,8 @@
             }
           },
           {
-            "name": "Clap Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -583,20 +628,22 @@
             }
           },
           {
-            "name": "Clap Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 83
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Clap Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -614,7 +661,8 @@
         "name": "Rim",
         "parameters": [
           {
-            "name": "Rim Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -627,20 +675,21 @@
             }
           },
           {
-            "name": "Rim Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 86
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Rim Tune",
+            "name": "Tune",
             "description": "",
             "type": "continous",
             "source": {
@@ -653,7 +702,8 @@
             }
           },
           {
-            "name": "Rim Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -671,7 +721,8 @@
         "name": "Closed Hat",
         "parameters": [
           {
-            "name": "Closed Hat Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -684,20 +735,22 @@
             }
           },
           {
-            "name": "Closed HH Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 84
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Closed Hat Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -705,12 +758,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 40
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Closed Hat Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -728,7 +783,8 @@
         "name": "Open Hat",
         "parameters": [
           {
-            "name": "Open Hat Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -741,20 +797,22 @@
             }
           },
           {
-            "name": "Open HH Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 85
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Open Hat Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -767,7 +825,8 @@
             }
           },
           {
-            "name": "Open Hat Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -785,7 +844,8 @@
         "name": "Tom 1",
         "parameters": [
           {
-            "name": "Tom 1 Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -798,7 +858,7 @@
             }
           },
           {
-            "name": "Tom 1  Sound 1..5",
+            "name": "Sound",
             "description": "",
             "type": "continous",
             "source": {
@@ -806,12 +866,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 87
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Tom 1 Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -824,7 +886,8 @@
             }
           },
           {
-            "name": "Tom 1 Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -842,7 +905,8 @@
         "name": "Tom 2",
         "parameters": [
           {
-            "name": "Tom 2 Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -855,7 +919,7 @@
             }
           },
           {
-            "name": "Tom 2 Sound 1..5",
+            "name": "Sound",
             "description": "",
             "type": "continous",
             "source": {
@@ -863,12 +927,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 88
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Tom 2 Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -881,7 +947,8 @@
             }
           },
           {
-            "name": "Tom 2 Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -899,7 +966,8 @@
         "name": "Cymbal",
         "parameters": [
           {
-            "name": "Cymbal Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -912,20 +980,22 @@
             }
           },
           {
-            "name": "Cymball Sound 1..5",
+            "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 92
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Cymbal Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -938,7 +1008,8 @@
             }
           },
           {
-            "name": "Cymbal Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -956,7 +1027,8 @@
         "name": "Ride",
         "parameters": [
           {
-            "name": "Ride Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -969,7 +1041,7 @@
             }
           },
           {
-            "name": "Ride Sound 1..5",
+            "name": "Sound",
             "description": "",
             "type": "continous",
             "source": {
@@ -977,12 +1049,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 90
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Ride Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -995,7 +1069,8 @@
             }
           },
           {
-            "name": "Ride Decay",
+            "name": "Decay",
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
@@ -1013,7 +1088,8 @@
         "name": "Cowbell",
         "parameters": [
           {
-            "name": "Cowbell Level",
+            "name": "Level",
+            "role": "Volume",
             "description": "",
             "type": "continous",
             "source": {
@@ -1026,7 +1102,7 @@
             }
           },
           {
-            "name": "Cowbell Sound 1..5",
+            "name": "Sound",
             "description": "",
             "type": "continous",
             "source": {
@@ -1034,12 +1110,14 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 89
-                }
+                },
+                "sourceRangesFrom": "oneToFive"
               }
             }
           },
           {
-            "name": "Cowbell Tune",
+            "name": "Tune",
+            "role": "Pitch",
             "description": "",
             "type": "continous",
             "source": {
@@ -1052,7 +1130,8 @@
             }
           },
           {
-            "name": "Cowbell Decay",
+            "name": "Decay",
+            "role": "Decay",Decay
             "description": "",
             "type": "continous",
             "source": {
@@ -1066,6 +1145,63 @@
           }
         ]
       }
-    ]
+    ],
+    "sourceRanges": {
+      "onOff": [
+        {
+          "name": "OFF",
+          "role": "Off",
+          "range": {
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "ON",
+          "role": "On",
+          "range": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "oneToFive": [
+        {
+          "name": "1",
+          "range": {
+            "from": 0,
+            "to": 0
+          }
+        },
+        {
+          "name": "2",
+          "range": {
+            "from": 1,
+            "to": 1
+          }
+        },
+        {
+          "name": "3",
+          "range": {
+            "from": 2,
+            "to": 2
+          }
+        },
+        {
+          "name": "4",
+          "range": {
+            "from": 3,
+            "to": 3
+          }
+        },
+        {
+          "name": "5",
+          "range": {
+            "from": 4,
+            "to": 4
+          }
+        }
+      ]
+    }
   }
 }
