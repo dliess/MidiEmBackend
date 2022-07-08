@@ -283,12 +283,14 @@ void EventRouter::handleIncrementDirect(
       mpark::visit(
           util::overload{
               [&mdIter, &eventDestination,
-               &increment](const EventDestination::Parameter& parameter) {
+               &increment](EventDestination::Parameter& parameter) {
                  float incr = 0;
                  if (parameter.isList)
                  {
-                    incr = increment.value * 12 /
-                           std::max(increment.resolution, 12);
+                    const int accIncr = increment.value + parameter.storedIncrements;
+                    const int incrForOneStep = increment.resolution / 12;
+                    incr = accIncr / incrForOneStep;
+                    parameter.storedIncrements = accIncr % incrForOneStep;
                  }
                  else
                  {   // TODO: highres mode

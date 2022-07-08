@@ -28,6 +28,7 @@ struct EventDestination
       ParameterDestination parameterDestination{ParameterDestination::Parameter};
       bool isList{false};
       int resolution {128};
+      int storedIncrements{0};
       mutable std::optional<float> valueAtPress{0};
    };
    using Endpoint = mpark::variant<mpark::monostate, Note, Parameter,
