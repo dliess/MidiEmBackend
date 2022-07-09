@@ -1131,7 +1131,7 @@
           },
           {
             "name": "Decay",
-            "role": "Decay",Decay
+            "role": "Decay",
             "description": "",
             "type": "continous",
             "source": {
