@@ -324,12 +324,19 @@
     "engines": [
       {
         "name": "Kick 1",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],  
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -343,6 +350,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -358,6 +366,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -371,6 +380,7 @@
             "name": "Snap",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -385,6 +395,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -398,6 +409,7 @@
             "name": "FM Tune",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -411,6 +423,7 @@
             "name": "FM Amnt",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -424,6 +437,7 @@
             "name": "Sweep Time",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -437,12 +451,19 @@
       },
       {
         "name": "Kick 2",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -456,6 +477,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -471,6 +493,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -484,6 +507,7 @@
             "name": "Snap",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -498,6 +522,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -511,12 +536,19 @@
       },
       {
         "name": "Snare",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -530,6 +562,7 @@
             "name": "Sound",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -545,6 +578,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -558,6 +592,7 @@
             "name": "Snap",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -572,6 +607,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -585,6 +621,7 @@
             "name": "LPF",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -598,12 +635,19 @@
       },
       {
         "name": "Clap",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -618,6 +662,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -631,6 +676,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -646,6 +692,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -659,12 +706,19 @@
       },
       {
         "name": "Rim",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -678,6 +732,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -692,6 +747,7 @@
             "name": "Tune",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -706,6 +762,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -719,12 +776,19 @@
       },
       {
         "name": "Closed Hat",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -738,6 +802,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -753,6 +818,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -768,6 +834,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -781,12 +848,19 @@
       },
       {
         "name": "Open Hat",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -800,6 +874,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -815,6 +890,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -829,6 +905,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -842,12 +919,19 @@
       },
       {
         "name": "Tom 1",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -861,6 +945,7 @@
             "name": "Sound",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -876,6 +961,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -890,6 +976,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -903,12 +990,19 @@
       },
       {
         "name": "Tom 2",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -922,6 +1016,7 @@
             "name": "Sound",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -937,6 +1032,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -951,6 +1047,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -964,12 +1061,19 @@
       },
       {
         "name": "Cymbal",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -983,6 +1087,7 @@
             "name": "Sound",
             "description": "",
             "type": "list",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -998,6 +1103,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1012,6 +1118,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1025,12 +1132,19 @@
       },
       {
         "name": "Ride",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1044,6 +1158,7 @@
             "name": "Sound",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1059,6 +1174,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1073,6 +1189,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1086,12 +1203,19 @@
       },
       {
         "name": "Cowbell",
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          }
+        ],
         "parameters": [
           {
             "name": "Level",
             "role": "Volume",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1105,6 +1229,7 @@
             "name": "Sound",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1120,6 +1245,7 @@
             "role": "Pitch",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
@@ -1134,6 +1260,7 @@
             "role": "Decay",
             "description": "",
             "type": "continous",
+            "component" : "Amp",
             "source": {
               "midi": {
                 "id": {
