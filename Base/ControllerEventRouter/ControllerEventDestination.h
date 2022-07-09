@@ -21,11 +21,15 @@ struct EventDestination
    {
       int value;
    };
-   struct Parameter
+   struct ParameterBase
    {
       int id;
-      bool upwards{true};
       ParameterDestination parameterDestination{ParameterDestination::Parameter};
+   };
+
+   struct Parameter : public ParameterBase
+   {
+      bool upwards{true};
       bool isList{false};
       int resolution {128};
       int storedIncrements{0};

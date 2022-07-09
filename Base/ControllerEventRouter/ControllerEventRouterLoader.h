@@ -1,7 +1,6 @@
 #ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_LOADER_H
 #define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_LOADER_H
 
-//#include <map>
 #include <unordered_map>
 
 #include "ControllerEventDestination.h"
@@ -23,13 +22,21 @@ struct EventIdExt
    EventId eventId;
 };
 
+struct EventDestinationL
+{
+   MusicDeviceId mdId;
+   int voiceIdx;
+   using Endpoint = mpark::variant<mpark::monostate, EventDestination::Note, EventDestination::ParameterBase>;
+   Endpoint endpoint;
+};
+
+
 
 class EventRouter
 {
 public:
-   EventRouterLoader();
 private:
-   std::unordered_map<EventIdExt, EventDestination> m_map;
+   std::unordered_map<EventIdExt, EventDestinationL> m_map;
 };
 
 }   // namespace controller

@@ -69,8 +69,9 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
           it->second->description()->soundSection->parameterDescr(voiceIdx,
                                                                   parameterIdx);
       to.endpoint = controller::EventDestination::Parameter{
-          parameterIdx, true,
+          parameterIdx,
           static_cast<controller::ParameterDestination>(paramFunc),
+          true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution()};
       m_rCtrlEventRouter.createConnection(from, to);
@@ -123,8 +124,9 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
           it->second->description()->soundSection->parameterDescr(voiceIdx,
                                                                   parameterIdx);
       to.endpoint = controller::EventDestination::Parameter{
-          parameterIdx, true,
+          parameterIdx,
           static_cast<controller::ParameterDestination>(paramFunc),
+          true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution()};
       m_rCtrlEventRouter.createConnection(from, to);
