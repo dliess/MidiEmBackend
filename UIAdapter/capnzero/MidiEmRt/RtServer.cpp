@@ -320,8 +320,8 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
                                     from.eventId.eventId,
                                     from.eventId.channelId, to.uuid,
                                     to.voiceIdx, parameter.id,
-                                    ::capnzero::MidiEmRt::
-                                        SDParameterDestination::PARAMETER);
+                                    static_cast<int>(::capnzero::MidiEmRt::
+                                        SDParameterDestination::PARAMETER));
                          },
                          [](auto &&) {
                             spdlog::error("Unhandled path in "
@@ -349,8 +349,8 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
                                     note.number, from.eventId.eventId,
                                     from.eventId.channelId, to.uuid,
                                     to.voiceIdx, parameter.id,
-                                    ::capnzero::MidiEmRt::
-                                        SDParameterDestination::PARAMETER);
+                                    static_cast<int>(::capnzero::MidiEmRt::
+                                        SDParameterDestination::PARAMETER));
                          },
                          [](auto &&) {
                             spdlog::error("Unhandled path in "

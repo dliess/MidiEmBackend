@@ -54,7 +54,7 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
     ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
+    ::capnzero::Int16 paramFunc)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
@@ -107,7 +107,7 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
     const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
+    ::capnzero::Int16 paramFunc)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());

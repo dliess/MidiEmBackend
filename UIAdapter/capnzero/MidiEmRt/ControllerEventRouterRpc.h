@@ -34,7 +34,7 @@ public:
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
        const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmRt::SDParameterDestination paramFunc) override;
+       ::capnzero::Int16 paramFunc) override;
    void connectWidget2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
                             ::capnzero::Int16 widgetIdx,
                             ::capnzero::Int16 widgetCoordX,
@@ -49,7 +49,7 @@ public:
        ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
        ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmRt::SDParameterDestination paramFunc) override;
+       ::capnzero::Int16 paramFunc) override;
 
     [[nodiscard]] bool isMelodic(const util::Identifiable::UUID& uuid) const noexcept;
 
