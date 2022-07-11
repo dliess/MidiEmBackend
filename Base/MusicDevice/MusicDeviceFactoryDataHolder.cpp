@@ -159,8 +159,8 @@ void factory::DataHolder::reEmitSignals()
                  preset.category, preset.genre);
           });
    }
-   /* TODO: for now, not here, but from rt-thread because of race confdition of signals
-   for(const auto& entries : m_uuidToDevIdMap)
+   /* TODO: for now, not here, but from rt-thread because of race confdition of
+   signals for(const auto& entries : m_uuidToDevIdMap)
    {
       const auto it = m_actualPresetNames.find(entries.second);
       if(it != m_actualPresetNames.end())
@@ -176,6 +176,17 @@ void factory::DataHolder::reEmitSignals()
       }
    }
    */
+}
+
+const MusicDeviceId* factory::DataHolder::musicDeviceId(
+    const util::Identifiable::UUID& uuid) const noexcept
+{
+   const auto it = m_uuidToDevIdMap.find(uuid);
+   if (it == m_uuidToDevIdMap.end())
+   {
+      return nullptr;
+   }
+   return &it->second;
 }
 
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,

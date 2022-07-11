@@ -27,4 +27,5 @@ target_link_libraries(${TARGET_NAME}
     PUBLIC MIDIEMCAPNZERO::midiem-capnzero-rt
     PUBLIC MIDI::usbmidi
     PRIVATE MusicDevice
+    PUBLIC MusicDeviceControllerEventRouter
 )

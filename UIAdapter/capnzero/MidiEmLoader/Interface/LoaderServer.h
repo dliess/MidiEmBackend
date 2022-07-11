@@ -7,6 +7,7 @@ namespace base::musicDevice::factory
 {
 class Factory;
 }
+
 namespace uiadapter::capnzero
 {
 class LoaderServer : public ::capnzero::MidiEmLoader::MidiEmLoaderServer
