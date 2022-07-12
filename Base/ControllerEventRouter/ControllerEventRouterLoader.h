@@ -3,10 +3,9 @@
 
 #include <unordered_map>
 
+#include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
-#include "CallbackSignal.h"
-
 #include "MusicDeviceId.h"
 #include "Settings.h"
 
@@ -16,7 +15,6 @@ class MusicDeviceContainer;
 
 namespace controller::loader
 {
-
 struct EventIdExt
 {
    MusicDeviceId mdId;
@@ -32,53 +30,60 @@ struct EventDestinationL
 {
    MusicDeviceId mdId;
    int voiceIdx;
-   using Endpoint = mpark::variant<mpark::monostate, EventDestination::Note, EventDestination::ParameterBase>;
+   using Endpoint = mpark::variant<mpark::monostate, EventDestination::Note,
+                                   EventDestination::ParameterBase>;
    Endpoint endpoint;
 };
+
+inline bool operator==(const EventDestinationL& lhs,
+                       const EventDestinationL& rhs)
+{
+   return lhs.mdId == rhs.mdId &&
+          lhs.voiceIdx == rhs.voiceIdx &&
+          lhs.endpoint == rhs.endpoint;
+}
 
 class EventRoutes
 {
 public:
    EventRoutes();
    void loadFromFile();
-   void connectedNotes2Notes(
-            const MusicDeviceId& controllerID,
-            int widgetIdx,
-            int note,
-            int eventIdx, 
-            int channelIdx,
-            const MusicDeviceId& soundDevID,
-            int voiceIdx);
-   void connectedNotes2Parameter(
-            const MusicDeviceId& controllerID,
-            int widgetIdx,
-            int note,
-            int eventIdx, 
-            int channelIdx,
-            const MusicDeviceId& soundDevID,
-            int voiceIdx,
-            int parameterIdx,
-            ParameterDestination paramFunc);
-   void connectedWidget2Notes(
-            const MusicDeviceId& controllerID,
-            int widgetIdx,
-            int widgetCoordX,
-            int widgetCoordY,
-            int eventIdx, 
-            int channelIdx,
-            const MusicDeviceId& soundDevID,
-            int voiceIdx);
-   void connectedWidget2Parameter(
-            const MusicDeviceId& controllerID,
-            int widgetIdx,
-            int widgetCoordX,
-            int widgetCoordY,
-            int eventIdx, 
-            int channelIdx,
-            const MusicDeviceId& soundDevID,
-            int voiceIdx,
-            int parameterIdx,
-            ParameterDestination paramFunc);
+   void musicDeviceAppeared(const MusicDeviceId& mdId);
+   void connectedNotes2Notes(const MusicDeviceId& controllerID, int widgetIdx,
+                             int note, int eventIdx, int channelIdx,
+                             const MusicDeviceId& soundDevID, int voiceIdx);
+   void connectedNotes2Parameter(const MusicDeviceId& controllerID,
+                                 int widgetIdx, int note, int eventIdx,
+                                 int channelIdx,
+                                 const MusicDeviceId& soundDevID, int voiceIdx,
+                                 int parameterIdx,
+                                 ParameterDestination paramFunc);
+   void connectedWidget2Notes(const MusicDeviceId& controllerID, int widgetIdx,
+                              int widgetCoordX, int widgetCoordY, int eventIdx,
+                              int channelIdx, const MusicDeviceId& soundDevID,
+                              int voiceIdx);
+   void connectedWidget2Parameter(const MusicDeviceId& controllerID,
+                                  int widgetIdx, int widgetCoordX,
+                                  int widgetCoordY, int eventIdx,
+                                  int channelIdx,
+                                  const MusicDeviceId& soundDevID, int voiceIdx,
+                                  int parameterIdx,
+                                  ParameterDestination paramFunc);
+   CB_SIGNAL(ConnectionLoadedNotes2Notes, const MusicDeviceId& controllerID,
+             int widgetIdx, int note, int eventIdx, int channelIdx,
+             const MusicDeviceId& soundDevID, int voiceIdx);
+   CB_SIGNAL(ConnectionLoadedNotes2Parameter, const MusicDeviceId& controllerID,
+             int widgetIdx, int note, int eventIdx, int channelIdx,
+             const MusicDeviceId& soundDevID, int voiceIdx, int parameterIdx,
+             ParameterDestination paramFunc);
+   CB_SIGNAL(ConnectionLoadedWidget2Notes, const MusicDeviceId& controllerID,
+             int widgetIdx, int widgetCoordX, int widgetCoordY, int eventIdx,
+             int channelIdx, const MusicDeviceId& soundDevID, int voiceIdx);
+   CB_SIGNAL(ConnectionLoadedWidget2Parameter,
+             const MusicDeviceId& controllerID, int widgetIdx, int widgetCoordX,
+             int widgetCoordY, int eventIdx, int channelIdx,
+             const MusicDeviceId& soundDevID, int voiceIdx, int parameterIdx,
+             ParameterDestination paramFunc);
    struct MapEntry
    {
       EventIdExt from;
@@ -87,12 +92,13 @@ public:
 
 private:
    std::vector<MapEntry> m_data;
+   void emitEntry(const MapEntry& mapEntry);
    util::Settings m_settings;
    void insert(const EventIdExt from, const EventDestinationL& to);
    static const std::string CONFIG_SECTION;
 };
 
-}   // namespace controller
+}   // namespace controller::loader
 }   // namespace base::musicDevice
 
 #include "ControllerEventRouterLoaderMeta.h"

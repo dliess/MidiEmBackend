@@ -23,6 +23,7 @@ public:
             LoaderServer::Signals& rSignals,
             base::musicDevice::factory::Factory& rMDFactory);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
+   void loadControllerEventRoutes();
 private:
    base::musicDevice::controller::loader::EventRoutes m_eventRoutes;
 };

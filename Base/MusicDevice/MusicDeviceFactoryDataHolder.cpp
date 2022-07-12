@@ -189,6 +189,32 @@ const MusicDeviceId* factory::DataHolder::musicDeviceId(
    return &it->second;
 }
 
+const util::Identifiable::UUID* factory::DataHolder::getUUIDByMdId(
+    const MusicDeviceId& mdId) const noexcept
+{
+   const auto it = std::find_if(
+       m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
+       [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
+         return e.second == mdId;
+       });
+   if(it == m_uuidToDevIdMap.end())
+   {
+      const auto it2 = std::find_if(
+         m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
+         [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
+            MusicDeviceId mdId2 = mdId;
+            mdId2.portName = MusicDeviceId::ANY_PORT;
+            return e.second == mdId2;
+         });
+      if(it2 == m_uuidToDevIdMap.end())
+      {
+         return nullptr;
+      }
+      return &it2->first;
+   }
+   return &it->first;
+}
+
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
                                        const MusicDeviceId& mdId) noexcept
 {

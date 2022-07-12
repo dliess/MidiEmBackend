@@ -30,6 +30,7 @@ struct DataHolder
        const MusicDeviceName& deviceName) noexcept;
 
    const MusicDeviceId* musicDeviceId(const util::Identifiable::UUID& uuid) const noexcept; 
+   const util::Identifiable::UUID* getUUIDByMdId(const MusicDeviceId& mdId) const noexcept;
 
    void addUuid2MdId(const util::Identifiable::UUID& uuid,
                      const MusicDeviceId& mdId) noexcept;

@@ -22,15 +22,16 @@ RtClient::RtClient(
        });
 
    onMusicDevicesDeviceAdded(
-       [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid,
+       [&rMDFactory, &rSignals, this](const ::capnzero::SpanCL<16>& uuid,
                                 const ::capnzero::TextView& type,
                                 const ::capnzero::TextView& port,
                                 const ::capnzero::TextView& mediumId,
                                 ::capnzero::Int16 midiVoiceOffset) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-          rMDFactory.dataHolder().addUuid2MdId(
-              uuidData, MusicDeviceId{std::string(type), std::string(port)});
+          const MusicDeviceId mdId{std::string(type), std::string(port)};
+          rMDFactory.dataHolder().addUuid2MdId(uuidData, mdId);
+          m_eventRoutes.musicDeviceAppeared(mdId);
        });
    onMusicDevicesDeviceRemoved(
        [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid) {
@@ -176,4 +177,110 @@ RtClient::RtClient(
               channelIdx, *pSoundDevUUID, voiceIdx, parameterIdx,
               static_cast<controller::ParameterDestination>(paramFunc));
        });
+
+       m_eventRoutes.onConnectionLoadedNotes2Notes([this, &rMDFactory](const MusicDeviceId& controllerID,
+            int widgetIdx,
+            int note,
+            int eventIdx, 
+            int channelIdx,
+            const MusicDeviceId& soundDevID,
+            int voiceIdx){
+                const auto pControllerUUID = rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+                const auto psoundDevUUID = rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
+                if(pControllerUUID != nullptr && psoundDevUUID != nullptr)
+                {
+                    ControllerEventRouter__connectNotes2Notes(
+                        *pControllerUUID,
+                        widgetIdx,
+                        note,
+                        eventIdx,
+                        channelIdx,
+                        *psoundDevUUID,
+                        voiceIdx
+                    );
+                }
+            });
+       m_eventRoutes.onConnectionLoadedNotes2Parameter([this, &rMDFactory](const MusicDeviceId& controllerID,
+            int widgetIdx,
+            int note,
+            int eventIdx, 
+            int channelIdx,
+            const MusicDeviceId& soundDevID,
+            int voiceIdx,
+            int parameterIdx,
+            controller::ParameterDestination paramFunc){
+                const auto pControllerUUID = rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+                const auto psoundDevUUID = rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
+                if(pControllerUUID != nullptr && psoundDevUUID != nullptr)
+                {
+                    ControllerEventRouter__connectNotes2Parameter(
+                        *pControllerUUID,
+                        widgetIdx,
+                        note,
+                        eventIdx,
+                        channelIdx,
+                        *psoundDevUUID,
+                        voiceIdx,
+                        parameterIdx,
+                        static_cast<int>(paramFunc)
+                    );
+                }
+            });
+       m_eventRoutes.onConnectionLoadedWidget2Notes([this, &rMDFactory](const MusicDeviceId& controllerID,
+            int widgetIdx,
+            int widgetCoordX,
+            int widgetCoordY,
+            int eventIdx, 
+            int channelIdx,
+            const MusicDeviceId& soundDevID,
+            int voiceIdx){
+                const auto pControllerUUID = rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+                const auto psoundDevUUID = rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
+                if(pControllerUUID != nullptr && psoundDevUUID != nullptr)
+                {
+                    ControllerEventRouter__connectWidget2Notes(
+                        *pControllerUUID,
+                        widgetIdx,
+                        widgetCoordX,
+                        widgetCoordY,
+                        eventIdx,
+                        channelIdx,
+                        *psoundDevUUID,
+                        voiceIdx
+                    );
+                }
+            });
+       m_eventRoutes.onConnectionLoadedWidget2Parameter([this, &rMDFactory](const MusicDeviceId& controllerID,
+            int widgetIdx,
+            int widgetCoordX,
+            int widgetCoordY,
+            int eventIdx, 
+            int channelIdx,
+            const MusicDeviceId& soundDevID,
+            int voiceIdx,
+            int parameterIdx,
+            controller::ParameterDestination paramFunc){
+                const auto pControllerUUID = rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+                const auto psoundDevUUID = rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
+                if(pControllerUUID != nullptr && psoundDevUUID != nullptr)
+                {
+                    ControllerEventRouter__connectWidget2Parameter(
+                        *pControllerUUID,
+                        widgetIdx,
+                        widgetCoordX,
+                        widgetCoordY,
+                        eventIdx,
+                        channelIdx,
+                        *psoundDevUUID,
+                        voiceIdx,
+                        parameterIdx,
+                        static_cast<int>(paramFunc)
+                    );
+                }
+            });
+}
+
+void RtClient::loadControllerEventRoutes()
+{
+    m_eventRoutes.loadFromFile();
 }

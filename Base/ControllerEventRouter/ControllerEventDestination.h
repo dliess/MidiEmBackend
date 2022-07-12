@@ -44,4 +44,6 @@ struct EventDestination
 
 }   // namespace base::musicDevice::controller
 
+#include "ControllerEventDestination.inl"
+
 #endif

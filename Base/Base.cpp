@@ -205,6 +205,11 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
    fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd) {
       rtClient.handleIncomingSignalAllNonBlock();
    });
+   try {
+      rtClient.loadControllerEventRoutes();
+   } catch(const std::exception& e) {
+      spdlog::error("Exception at loading ControllerEventRoutes: {}", e.what());
+   }
    while (!terminateRequest) { fdSet.Select(); }
 }
 
