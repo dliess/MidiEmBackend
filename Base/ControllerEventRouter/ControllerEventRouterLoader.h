@@ -38,8 +38,7 @@ struct EventDestinationL
 inline bool operator==(const EventDestinationL& lhs,
                        const EventDestinationL& rhs)
 {
-   return lhs.mdId == rhs.mdId &&
-          lhs.voiceIdx == rhs.voiceIdx &&
+   return lhs.mdId == rhs.mdId && lhs.voiceIdx == rhs.voiceIdx &&
           lhs.endpoint == rhs.endpoint;
 }
 
@@ -49,6 +48,7 @@ public:
    EventRoutes();
    void loadFromFile();
    void musicDeviceAppeared(const MusicDeviceId& mdId);
+   void musicDeviceDisappeared(const MusicDeviceId& mdId);
    void connectedNotes2Notes(const MusicDeviceId& controllerID, int widgetIdx,
                              int note, int eventIdx, int channelIdx,
                              const MusicDeviceId& soundDevID, int voiceIdx);
@@ -84,6 +84,13 @@ public:
              int widgetCoordY, int eventIdx, int channelIdx,
              const MusicDeviceId& soundDevID, int voiceIdx, int parameterIdx,
              ParameterDestination paramFunc);
+
+   CB_SIGNAL(ConnectionUnloadedNotes, const MusicDeviceId& controllerID,
+             int widgetIdx, int note, int eventIdx, int channelIdx);
+   CB_SIGNAL(ConnectionUnloadedWidget, const MusicDeviceId& controllerID,
+             int widgetIdx, int widgetCoordX, int widgetCoordY, int eventIdx,
+             int channelIdx);
+
    struct MapEntry
    {
       EventIdExt from;
@@ -93,6 +100,7 @@ public:
 private:
    std::vector<MapEntry> m_data;
    void emitEntry(const MapEntry& mapEntry);
+   void emitEntryGotDisabled(const MapEntry& e);
    util::Settings m_settings;
    void insert(const EventIdExt from, const EventDestinationL& to);
    static const std::string CONFIG_SECTION;

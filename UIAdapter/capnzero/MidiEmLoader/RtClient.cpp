@@ -38,10 +38,15 @@ RtClient::RtClient(
           m_rEventRoutes.musicDeviceAppeared(mdId);
        });
    onMusicDevicesDeviceRemoved(
-       [&rMDFactory, &rSignals](const ::capnzero::SpanCL<16>& uuid) {
+       [&rMDFactory, &rSignals, this](const ::capnzero::SpanCL<16>& uuid) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rMDFactory.dataHolder().removeEntryForUuid(uuidData);
+          const auto pMdId = rMDFactory.dataHolder().musicDeviceId(uuidData);
+          if(pMdId)
+          {
+            m_rEventRoutes.musicDeviceDisappeared(*pMdId);
+          }
        });
 
    onAbletonLinkEnabledChanged([](::capnzero::Bool val) {

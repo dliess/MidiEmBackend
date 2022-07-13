@@ -34,15 +34,15 @@ EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
 void EventRouter::createConnection(const EventIdExt& from,
                                    const EventDestination& to) noexcept
 {
-   /*
-   const auto& [iter, success] = m_map.emplace(from, to);
-   if (success)
-   {
-      emitGotConnected(from, to);
-   }
-   */
    m_map[from] = to;
    emitGotConnected(from, to);
+}
+
+void EventRouter::removeConnection(const EventIdExt& eventIdExt) noexcept
+{
+   auto it = m_map.find(eventIdExt);
+   m_map.erase(it);
+   emitGotErased(eventIdExt);
 }
 
 void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
@@ -287,7 +287,7 @@ void EventRouter::handleIncrementDirect(
       mpark::visit(
           util::overload{
               [&mdIter, &eventDestination,
-               &increment](EventDestination::Parameter& parameter) {
+               &increment](const EventDestination::Parameter& parameter) {
                  float incr = 0;
                  if (parameter.isList)
                  {
@@ -303,7 +303,8 @@ void EventRouter::handleIncrementDirect(
                  mdIter->second->soundHandler->incrementParameterValue(
                      eventDestination.voiceIdx, parameter.id, incr);
               },
-              [](auto&&) { assert(false); }},
+              [](auto&& e) { assert(false); }
+            },
           eventDestination.endpoint);
    }
 }

@@ -19,6 +19,7 @@ class EventRouter
 public:
    EventRouter(MusicDeviceContainer& rMusicDeviceContainer);
    void createConnection(const EventIdExt& from, const EventDestination& to) noexcept;
+   void removeConnection(const EventIdExt& eventIdExt) noexcept;
 private:
    MusicDeviceContainer& m_rMusicDeviceContainer;
    std::unordered_map<EventIdExt, EventDestination> m_map;
@@ -50,6 +51,7 @@ private:
                               const IncrementType& increment) noexcept;
 
    CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
+   CB_SIGNAL(GotErased, const EventIdExt&);
 
    void printMap() const noexcept;
    void retriggerCallbacks();

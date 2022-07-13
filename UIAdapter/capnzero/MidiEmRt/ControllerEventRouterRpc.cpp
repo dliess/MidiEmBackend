@@ -124,6 +124,10 @@ void ControllerEventRouterRpc::eraseConnectionForNotes(
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
     ::capnzero::Int16 channelIdx)
 {
+   controller::EventIdExt from;
+   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
+   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
+    m_rCtrlEventRouter.removeConnection(from);
 }
 
 void ControllerEventRouterRpc::eraseConnectionForWidget(
@@ -131,4 +135,10 @@ void ControllerEventRouterRpc::eraseConnectionForWidget(
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
 {
+   controller::EventIdExt from;
+   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
+   from.eventId = {widgetIdx,
+                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
+                   eventIdx, channelIdx};
+    m_rCtrlEventRouter.removeConnection(from);
 }

@@ -320,8 +320,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
                                     from.eventId.eventId,
                                     from.eventId.channelId, to.uuid,
                                     to.voiceIdx, parameter.id,
-                                    static_cast<int>(::capnzero::MidiEmRt::
-                                        SDParameterDestination::PARAMETER));
+                                    static_cast<int>(
+                                        ::capnzero::MidiEmRt::
+                                            SDParameterDestination::PARAMETER));
                          },
                          [](auto &&) {
                             spdlog::error("Unhandled path in "
@@ -349,8 +350,9 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
                                     note.number, from.eventId.eventId,
                                     from.eventId.channelId, to.uuid,
                                     to.voiceIdx, parameter.id,
-                                    static_cast<int>(::capnzero::MidiEmRt::
-                                        SDParameterDestination::PARAMETER));
+                                    static_cast<int>(
+                                        ::capnzero::MidiEmRt::
+                                            SDParameterDestination::PARAMETER));
                          },
                          [](auto &&) {
                             spdlog::error("Unhandled path in "
@@ -361,6 +363,31 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
           },
           from.eventId.widgetCoord);
    });
+   rCtrlEventRouter.onGotErased([this](const base::musicDevice::controller::
+                                           EventIdExt &from) {
+      mpark::visit(
+          util::overload{
+              [](const mpark::monostate
+                     &) { /* TODO */
+                          spdlog::error(
+                              "Unhandled path in controller-event-connection");
+              },
+              [&](const base::musicDevice::controller::WidgetCoord
+                      &widgetCoord) {
+                 signals().ControllerEventRouter__erasedConnectionForWidget(
+                     from.uuid, from.eventId.widgetId, widgetCoord.col,
+                     widgetCoord.row, from.eventId.eventId,
+                     from.eventId.channelId);
+              },
+              [&](const base::musicDevice::controller::Note &note) {
+                 signals().ControllerEventRouter__erasedConnectionForNotes(
+                     from.uuid, from.eventId.widgetId, note.number,
+                     from.eventId.eventId, from.eventId.channelId);
+              },
+          },
+          from.eventId.widgetCoord);
+   });
+
    rParameterSceneContainer.onSceneNameChanged(
        [this](int sceneIdx, const std::string &name) {
           signals().ParameterScene__sceneNameChanged(sceneIdx, name);

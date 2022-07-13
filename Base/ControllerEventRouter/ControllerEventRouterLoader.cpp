@@ -15,10 +15,7 @@ EventRoutes::EventRoutes() :
 void EventRoutes::loadFromFile()
 {
    m_data = m_settings.load<decltype(m_data)>(CONFIG_SECTION);
-   for (const auto& e : m_data)
-   {
-      emitEntry(e);
-   }
+   for (const auto& e : m_data) { emitEntry(e); }
 }
 
 void EventRoutes::emitEntry(const MapEntry& e)
@@ -83,15 +80,43 @@ void EventRoutes::emitEntry(const MapEntry& e)
        e.from.eventId.widgetCoord);
 }
 
+void EventRoutes::emitEntryGotDisabled(const MapEntry& e)
+{
+   mpark::visit(util::overload{
+                    [&e, this](const WidgetCoord& wc) {
+                       emitConnectionUnloadedWidget(
+                           e.from.mdId, e.from.eventId.widgetId, wc.col, wc.row,
+                           e.from.eventId.eventId, e.from.eventId.channelId);
+                    },
+                    [&e, this](const Note& note) {
+                       emitConnectionUnloadedNotes(
+                           e.from.mdId, e.from.eventId.widgetId, note.number,
+                           e.from.eventId.eventId, e.from.eventId.channelId);
+                    },
+                    [](auto&&) {}},
+                e.from.eventId.widgetCoord);
+}
+
 void EventRoutes::musicDeviceAppeared(const MusicDeviceId& mdId)
 {
    MusicDeviceId _mdID = mdId;
-   _mdID.portName = MusicDeviceId::ANY_PORT;
+   _mdID.portName      = MusicDeviceId::ANY_PORT;
    for (const auto& e : m_data)
    {
-      if(e.from.mdId == _mdID || e.to.mdId == _mdID)
+      if (e.from.mdId == _mdID || e.to.mdId == _mdID)
       {
          emitEntry(e);
+      }
+   }
+}
+
+void EventRoutes::musicDeviceDisappeared(const MusicDeviceId& mdId)
+{
+   for (const auto& e : m_data)
+   {
+      if (e.from.mdId == mdId || e.to.mdId == mdId)
+      {
+         emitEntryGotDisabled(e);
       }
    }
 }
