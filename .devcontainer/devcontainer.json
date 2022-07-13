@@ -33,6 +33,7 @@
       "xaver.clang-format",
       "abronan.capnproto-syntax",
       "be5invis.toml",
-      "mitaki28.vscode-clang"
+      "mitaki28.vscode-clang",
+      "hbenl.vscode-test-explorer"
    ]
 }
