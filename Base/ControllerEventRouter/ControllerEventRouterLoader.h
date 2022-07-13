@@ -69,6 +69,14 @@ public:
                                   const MusicDeviceId& soundDevID, int voiceIdx,
                                   int parameterIdx,
                                   ParameterDestination paramFunc);
+   void eraseConnectionForNotes(const MusicDeviceId& controllerID,
+                                int widgetIdx, int note, int eventIdx,
+                                int channelIdx);
+   void eraseConnectionForWidget(const MusicDeviceId& controllerID,
+                                 int widgetIdx, int widgetCoordX,
+                                 int widgetCoordY, int eventIdx,
+                                 int channelIdx);
+
    CB_SIGNAL(ConnectionLoadedNotes2Notes, const MusicDeviceId& controllerID,
              int widgetIdx, int note, int eventIdx, int channelIdx,
              const MusicDeviceId& soundDevID, int voiceIdx);
@@ -102,7 +110,8 @@ private:
    void emitEntry(const MapEntry& mapEntry);
    void emitEntryGotDisabled(const MapEntry& e);
    util::Settings m_settings;
-   void insert(const EventIdExt from, const EventDestinationL& to);
+   void insert(const EventIdExt& from, const EventDestinationL& to);
+   void erase(const EventIdExt& from);
    static const std::string CONFIG_SECTION;
 };
 

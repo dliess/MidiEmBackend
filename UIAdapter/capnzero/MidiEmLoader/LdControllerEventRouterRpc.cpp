@@ -163,6 +163,18 @@ void LdControllerEventRouterRpc::eraseConnectionForNotes(
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
     ::capnzero::Int16 channelIdx)
 {
+   util::Identifiable::UUID _controllerUUID;
+   std::copy(controllerUUID.begin(), controllerUUID.end(),
+             _controllerUUID.begin());
+   const auto pControllerUUID =
+       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+   if (!pControllerUUID)
+   {
+      spdlog::error("No mdId found for uuid");
+      return;
+   }
+   m_rEventRoutes.eraseConnectionForNotes(*pControllerUUID, widgetIdx, note,
+                                          eventIdx, channelIdx);
 }
 
 void LdControllerEventRouterRpc::eraseConnectionForWidget(
@@ -170,4 +182,17 @@ void LdControllerEventRouterRpc::eraseConnectionForWidget(
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
 {
+   util::Identifiable::UUID _controllerUUID;
+   std::copy(controllerUUID.begin(), controllerUUID.end(),
+             _controllerUUID.begin());
+   const auto pControllerUUID =
+       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+   if (!pControllerUUID)
+   {
+      spdlog::error("No mdId found for uuid");
+      return;
+   }
+   m_rEventRoutes.eraseConnectionForWidget(*pControllerUUID, widgetIdx,
+                                           widgetCoordX, widgetCoordY, eventIdx,
+                                           channelIdx);
 }

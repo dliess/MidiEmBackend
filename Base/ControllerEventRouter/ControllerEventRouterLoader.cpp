@@ -179,7 +179,27 @@ void EventRoutes::connectedWidget2Parameter(const MusicDeviceId& controllerID,
    insert(from, to);
 }
 
-void EventRoutes::insert(const EventIdExt from, const EventDestinationL& to)
+void EventRoutes::eraseConnectionForNotes(const MusicDeviceId& controllerID,
+                                          int widgetIdx, int note, int eventIdx,
+                                          int channelIdx)
+{
+   const EventIdExt from{controllerID,
+                         EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
+   erase(from);
+}
+
+void EventRoutes::eraseConnectionForWidget(const MusicDeviceId& controllerID,
+                                           int widgetIdx, int widgetCoordX,
+                                           int widgetCoordY, int eventIdx,
+                                           int channelIdx)
+{
+   const EventIdExt from{
+       controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
+                             eventIdx, channelIdx}};
+   erase(from);
+}
+
+void EventRoutes::insert(const EventIdExt& from, const EventDestinationL& to)
 {
    auto it = std::find_if(m_data.begin(), m_data.end(),
                           [&from, &to](const MapEntry& e) {
@@ -196,6 +216,21 @@ void EventRoutes::insert(const EventIdExt from, const EventDestinationL& to)
    {
       m_data.erase(it2);
    }
-   m_data.push_back(MapEntry{from, to});
+   const MapEntry mapEntry{from, to};
+   m_data.push_back(mapEntry);
+   emitEntry(mapEntry);
    m_settings.save(CONFIG_SECTION, m_data);
+}
+
+void EventRoutes::erase(const EventIdExt& from)
+{
+   auto it =
+       std::find_if(m_data.begin(), m_data.end(),
+                    [&from](const MapEntry& e) { return e.from == from; });
+   if (it != m_data.end())
+   {
+      emitEntryGotDisabled(*it);
+      m_data.erase(it);
+      m_settings.save(CONFIG_SECTION, m_data);
+   }
 }
