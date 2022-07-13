@@ -6,6 +6,8 @@
 #include "LoaderServer.h"
 #include "ControllerEventRouterLoader.h"
 
+namespace base::musicDevice::controller::loader { class EventRoutes; };
+
 namespace base::musicDevice::factory
 {
 class Factory;
@@ -21,11 +23,11 @@ public:
             const std::string& rtServerRpcAddr,
             const std::string& rtServerSignalAddr,
             LoaderServer::Signals& rSignals,
-            base::musicDevice::factory::Factory& rMDFactory);
+            base::musicDevice::factory::Factory& rMDFactory,
+            base::musicDevice::controller::loader::EventRoutes& rEventRoutes);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
-   void loadControllerEventRoutes();
 private:
-   base::musicDevice::controller::loader::EventRoutes m_eventRoutes;
+   base::musicDevice::controller::loader::EventRoutes& m_rEventRoutes;
 };
 
 }   // namespace uiadapter::capnzero

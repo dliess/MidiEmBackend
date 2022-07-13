@@ -15,6 +15,7 @@
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
 #include "ReplaceAsteriskToLocalhost.h"
+#include "ControllerEventRouterLoader.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"
@@ -177,14 +178,15 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
+   base::musicDevice::controller::loader::EventRoutes eventRoutes;
    uiadapter::capnzero::LoaderServer loaderServer(
        m_zmqContext, m_loaderRpcBindAddr, m_loaderSignalBindAddr,
-       musicDeviceFactory);
+       musicDeviceFactory, eventRoutes);
    uiadapter::capnzero::RtClient rtClient(
        m_zmqContext,
        util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
        util::replaceAsteriskToLocalhost(m_rtSignalBindAddr),
-       loaderServer.signals(), musicDeviceFactory);
+       loaderServer.signals(), musicDeviceFactory, eventRoutes);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
@@ -206,7 +208,7 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
       rtClient.handleIncomingSignalAllNonBlock();
    });
    try {
-      rtClient.loadControllerEventRoutes();
+      eventRoutes.loadFromFile();
    } catch(const std::exception& e) {
       spdlog::error("Exception at loading ControllerEventRoutes: {}", e.what());
    }
