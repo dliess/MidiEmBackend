@@ -70,6 +70,16 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
    return std::move(pDescr);
 }
 
+const description::Description* factory::DataHolder::getDescription(
+      const util::Identifiable::UUID& uuid) const noexcept
+{
+   const auto pMdId = musicDeviceId(uuid);
+   if(!pMdId) return nullptr;
+   const auto itDescr = m_descriptionCache.find(pMdId->deviceName);
+   if(itDescr == m_descriptionCache.end()) return nullptr;
+   return itDescr->second.get();
+}
+
 std::shared_ptr<sound::preset::DevicePresets>
 factory::DataHolder::getDevicePresets(
     const MusicDeviceName& deviceName) noexcept

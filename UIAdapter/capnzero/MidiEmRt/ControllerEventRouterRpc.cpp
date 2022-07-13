@@ -26,27 +26,10 @@ void ControllerEventRouterRpc::connectNotes2Notes(
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
 
-   if (note >= 0 && isMelodic(to.uuid))
-   {
-     note = -1;
-   }
    from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
    to.voiceIdx  = voiceIdx;
    to.endpoint  = controller::EventDestination::Note{64};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
-}
-
-bool ControllerEventRouterRpc::isMelodic(const util::Identifiable::UUID& uuid) const noexcept
-{
-      const auto it = m_rMusicDeviceContainer.find(uuid);
-      if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
-      {
-        return it->second->description()->soundSection->defaultInstrumentType ==
-        base::musicDevice::description::sound::Section::DefaultInstrumentType::InstrumentPerVoice ||
-        it->second->description()->soundSection->defaultInstrumentType ==
-        base::musicDevice::description::sound::Section::DefaultInstrumentType::OnePolyphonicInstrument;
-      }
-    return false;
 }
 
 void ControllerEventRouterRpc::connectNotes2Parameter(
@@ -70,8 +53,7 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
                                                                   parameterIdx);
       to.endpoint = controller::EventDestination::Parameter{
           parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc),
-          true,
+          static_cast<controller::ParameterDestination>(paramFunc), true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution()};
       m_rCtrlEventRouter.createConnection(from, to);
@@ -125,8 +107,7 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
                                                                   parameterIdx);
       to.endpoint = controller::EventDestination::Parameter{
           parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc),
-          true,
+          static_cast<controller::ParameterDestination>(paramFunc), true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution()};
       m_rCtrlEventRouter.createConnection(from, to);
@@ -136,4 +117,18 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
       spdlog::error("Could not find destination uuid {} in music devices",
                     util::uuid2Str(to.uuid));
    }
+}
+
+void ControllerEventRouterRpc::eraseConnectionForNotes(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
+    ::capnzero::Int16 channelIdx)
+{
+}
+
+void ControllerEventRouterRpc::eraseConnectionForWidget(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
+{
 }

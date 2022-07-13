@@ -46,6 +46,18 @@ public:
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::Int16 paramFunc) override;
 
+   void eraseConnectionForNotes(const ::capnzero::SpanCL<16>& controllerUUID,
+                                ::capnzero::Int16 widgetIdx,
+                                ::capnzero::Int16 note,
+                                ::capnzero::Int16 eventIdx,
+                                ::capnzero::Int16 channelIdx) override;
+   void eraseConnectionForWidget(const ::capnzero::SpanCL<16>& controllerUUID,
+                                 ::capnzero::Int16 widgetIdx,
+                                 ::capnzero::Int16 widgetCoordX,
+                                 ::capnzero::Int16 widgetCoordY,
+                                 ::capnzero::Int16 eventIdx,
+                                 ::capnzero::Int16 channelIdx) override;
+
     [[nodiscard]] bool isMelodic(const util::Identifiable::UUID& uuid) const noexcept;
 
 private:
