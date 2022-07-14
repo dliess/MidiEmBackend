@@ -121,11 +121,11 @@ void EventRoutes::musicDeviceDisappeared(const MusicDeviceId& mdId)
    }
 }
 
-void EventRoutes::connectedNotes2Notes(const MusicDeviceId& controllerID,
-                                       int widgetIdx, int note, int eventIdx,
-                                       int channelIdx,
-                                       const MusicDeviceId& soundDevID,
-                                       int voiceIdx)
+void EventRoutes::connectNotes2Notes(const MusicDeviceId& controllerID,
+                                     int widgetIdx, int note, int eventIdx,
+                                     int channelIdx,
+                                     const MusicDeviceId& soundDevID,
+                                     int voiceIdx)
 {
    const EventIdExt from{controllerID,
                          EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
@@ -133,12 +133,12 @@ void EventRoutes::connectedNotes2Notes(const MusicDeviceId& controllerID,
    insert(from, to);
 }
 
-void EventRoutes::connectedNotes2Parameter(const MusicDeviceId& controllerID,
-                                           int widgetIdx, int note,
-                                           int eventIdx, int channelIdx,
-                                           const MusicDeviceId& soundDevID,
-                                           int voiceIdx, int parameterIdx,
-                                           ParameterDestination paramFunc)
+void EventRoutes::connectNotes2Parameter(const MusicDeviceId& controllerID,
+                                         int widgetIdx, int note, int eventIdx,
+                                         int channelIdx,
+                                         const MusicDeviceId& soundDevID,
+                                         int voiceIdx, int parameterIdx,
+                                         ParameterDestination paramFunc)
 {
    const EventIdExt from{controllerID,
                          EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
@@ -148,12 +148,12 @@ void EventRoutes::connectedNotes2Parameter(const MusicDeviceId& controllerID,
    insert(from, to);
 }
 
-void EventRoutes::connectedWidget2Notes(const MusicDeviceId& controllerID,
-                                        int widgetIdx, int widgetCoordX,
-                                        int widgetCoordY, int eventIdx,
-                                        int channelIdx,
-                                        const MusicDeviceId& soundDevID,
-                                        int voiceIdx)
+void EventRoutes::connectWidget2Notes(const MusicDeviceId& controllerID,
+                                      int widgetIdx, int widgetCoordX,
+                                      int widgetCoordY, int eventIdx,
+                                      int channelIdx,
+                                      const MusicDeviceId& soundDevID,
+                                      int voiceIdx)
 {
    const EventIdExt from{
        controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
@@ -162,13 +162,13 @@ void EventRoutes::connectedWidget2Notes(const MusicDeviceId& controllerID,
    insert(from, to);
 }
 
-void EventRoutes::connectedWidget2Parameter(const MusicDeviceId& controllerID,
-                                            int widgetIdx, int widgetCoordX,
-                                            int widgetCoordY, int eventIdx,
-                                            int channelIdx,
-                                            const MusicDeviceId& soundDevID,
-                                            int voiceIdx, int parameterIdx,
-                                            ParameterDestination paramFunc)
+void EventRoutes::connectWidget2Parameter(const MusicDeviceId& controllerID,
+                                          int widgetIdx, int widgetCoordX,
+                                          int widgetCoordY, int eventIdx,
+                                          int channelIdx,
+                                          const MusicDeviceId& soundDevID,
+                                          int voiceIdx, int parameterIdx,
+                                          ParameterDestination paramFunc)
 {
    const EventIdExt from{
        controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},

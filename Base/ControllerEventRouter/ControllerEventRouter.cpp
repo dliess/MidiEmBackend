@@ -303,6 +303,9 @@ void EventRouter::handleIncrementDirect(
                  mdIter->second->soundHandler->incrementParameterValue(
                      eventDestination.voiceIdx, parameter.id, incr);
               },
+              [&increment](const EventDestination::Note& note){
+                 note.value += increment.value;
+              },
               [](auto&& e) { assert(false); }
             },
           eventDestination.endpoint);

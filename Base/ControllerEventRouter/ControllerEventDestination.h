@@ -19,7 +19,7 @@ struct EventDestination
    };
    struct Note
    {
-      int value;
+      mutable int value;
    };
    struct ParameterBase
    {

@@ -43,7 +43,7 @@ void LdControllerEventRouterRpc::connectNotes2Notes(
    {
       note = -1;
    }
-   m_rEventRoutes.connectedNotes2Notes(*pControllerUUID, widgetIdx, note,
+   m_rEventRoutes.connectNotes2Notes(*pControllerUUID, widgetIdx, note,
                                        eventIdx, channelIdx, *pSoundDevUUID,
                                        voiceIdx);
 }
@@ -90,7 +90,7 @@ void LdControllerEventRouterRpc::connectNotes2Parameter(
       spdlog::error("No mdId found for uuid");
       return;
    }
-   m_rEventRoutes.connectedNotes2Parameter(
+   m_rEventRoutes.connectNotes2Parameter(
        *pControllerUUID, widgetIdx, note, eventIdx, channelIdx, *pSoundDevUUID,
        voiceIdx, parameterIdx,
        static_cast<controller::ParameterDestination>(paramFunc));
@@ -121,7 +121,7 @@ void LdControllerEventRouterRpc::connectWidget2Notes(
       spdlog::error("No mdId found for uuid");
       return;
    }
-   m_rEventRoutes.connectedWidget2Notes(*pControllerUUID, widgetIdx,
+   m_rEventRoutes.connectWidget2Notes(*pControllerUUID, widgetIdx,
                                         widgetCoordX, widgetCoordY, eventIdx,
                                         channelIdx, *pSoundDevUUID, voiceIdx);
 }
@@ -152,7 +152,7 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
       spdlog::error("No mdId found for uuid");
       return;
    }
-   m_rEventRoutes.connectedWidget2Parameter(
+   m_rEventRoutes.connectWidget2Parameter(
        *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY, eventIdx,
        channelIdx, *pSoundDevUUID, voiceIdx, parameterIdx,
        static_cast<controller::ParameterDestination>(paramFunc));

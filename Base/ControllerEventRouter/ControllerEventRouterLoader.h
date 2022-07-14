@@ -49,20 +49,20 @@ public:
    void loadFromFile();
    void musicDeviceAppeared(const MusicDeviceId& mdId);
    void musicDeviceDisappeared(const MusicDeviceId& mdId);
-   void connectedNotes2Notes(const MusicDeviceId& controllerID, int widgetIdx,
+   void connectNotes2Notes(const MusicDeviceId& controllerID, int widgetIdx,
                              int note, int eventIdx, int channelIdx,
                              const MusicDeviceId& soundDevID, int voiceIdx);
-   void connectedNotes2Parameter(const MusicDeviceId& controllerID,
+   void connectNotes2Parameter(const MusicDeviceId& controllerID,
                                  int widgetIdx, int note, int eventIdx,
                                  int channelIdx,
                                  const MusicDeviceId& soundDevID, int voiceIdx,
                                  int parameterIdx,
                                  ParameterDestination paramFunc);
-   void connectedWidget2Notes(const MusicDeviceId& controllerID, int widgetIdx,
+   void connectWidget2Notes(const MusicDeviceId& controllerID, int widgetIdx,
                               int widgetCoordX, int widgetCoordY, int eventIdx,
                               int channelIdx, const MusicDeviceId& soundDevID,
                               int voiceIdx);
-   void connectedWidget2Parameter(const MusicDeviceId& controllerID,
+   void connectWidget2Parameter(const MusicDeviceId& controllerID,
                                   int widgetIdx, int widgetCoordX,
                                   int widgetCoordY, int eventIdx,
                                   int channelIdx,
