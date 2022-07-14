@@ -41,61 +41,61 @@
         "name": "Kick",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 36
+        "midiTriggerNoteNumber": 24
       },
       {
         "name": "Snare",
         "engineId": 1,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 38
+        "midiTriggerNoteNumber": 26
       },
       {
         "name": "Lo Tom",
         "engineId": 2,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 43
+        "midiTriggerNoteNumber": 31
       },
       {
         "name": "Hi Tom",
         "engineId": 3,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 50
+        "midiTriggerNoteNumber": 38
       },
       {
         "name": "Cl Hat",
         "engineId": 4,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 42
+        "midiTriggerNoteNumber": 30
       },
       {
         "name": "Op Hat",
         "engineId": 5,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 46
+        "midiTriggerNoteNumber": 34
       },
       {
         "name": "Clap",
         "engineId": 6,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 39
+        "midiTriggerNoteNumber": 27
       },
       {
         "name": "Calves",
         "engineId": 7,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 51
+        "midiTriggerNoteNumber": 63
       },
       {
         "name": "Agogo",
         "engineId": 8,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 52
+        "midiTriggerNoteNumber": 55
       },
       {
         "name": "Crash",
         "engineId": 9,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 53
+        "midiTriggerNoteNumber": 37
       }
     ],
     "engines": [

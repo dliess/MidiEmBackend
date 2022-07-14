@@ -10,31 +10,31 @@
         "name": "BaseDrum",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 36
+        "midiTriggerNoteNumber": 33
       },
       {
         "name": "Snare",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 38
+        "midiTriggerNoteNumber": 40
       },
       {
         "name": "Rim",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 40
+        "midiTriggerNoteNumber": 39
       },
       {
         "name": "Lo Tom",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 45
+        "midiTriggerNoteNumber": 36
       },
       {
         "name": "Mid Tom",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 43
+        "midiTriggerNoteNumber": 38
       },
       {
         "name": "Hi Tom",
@@ -46,13 +46,13 @@
         "name": "Cl Hat",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 47
+        "midiTriggerNoteNumber": 45
       },
       {
         "name": "Op Hat",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 48
+        "midiTriggerNoteNumber": 47
       },
       {
         "name": "Ride",
@@ -64,19 +64,19 @@
         "name": "Crash",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 52
+        "midiTriggerNoteNumber": 48
       },
       {
         "name": "Shaker",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 53
+        "midiTriggerNoteNumber": 44
       },
       {
         "name": "Clap",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 55
+        "midiTriggerNoteNumber": 42
       }
     ],
     "engines": [
