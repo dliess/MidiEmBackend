@@ -54,6 +54,30 @@
         "midiTriggerNoteNumber": 43
       },
       {
+        "name": "drum 9",
+        "engineId": 0,
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 44
+      },
+      {
+        "name": "drum 10",
+        "engineId": 0,
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 45
+      },
+      {
+        "name": "drum 11",
+        "engineId": 0,
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 46
+      },
+      {
+        "name": "drum 12",
+        "engineId": 0,
+        "midiChannel": 1,
+        "midiTriggerNoteNumber": 47
+      },
+      {
         "name": "melodic 1",
         "engineId": 1,
         "midiChannel": 2
@@ -72,26 +96,6 @@
         "name": "melodic 4",
         "engineId": 1,
         "midiChannel": 5
-      },
-      {
-        "name": "melodic 5",
-        "engineId": 1,
-        "midiChannel": 6
-      },
-      {
-        "name": "melodic 6",
-        "engineId": 1,
-        "midiChannel": 7
-      },
-      {
-        "name": "melodic 7",
-        "engineId": 1,
-        "midiChannel": 8
-      },
-      {
-        "name": "melodic 8",
-        "engineId": 1,
-        "midiChannel": 9
       }
     ],
     "engines": [
@@ -110,13 +114,15 @@
         },
         "components": [
           {
-            "name": "Filter"
+            "name": "Filter",
+            "role": "Filter"
           },
           {
             "name": "Shape"
           },
           {
-            "name": "Amp"
+            "name": "Amp",
+            "role": "Amp"
           }
         ],
         "parameters": [
@@ -298,6 +304,10 @@
         "name": "MelodicEngine",
         "components": [
           {
+            "name": "Amp",
+            "role": "Amp"
+          },
+          {
             "name": "LPFilter",
             "role": "LPFilter"
           },
@@ -314,11 +324,121 @@
             "role": "Envelope"
           },
           {
-            "name": "Oscillator",
+            "name": "Oscillator1",
             "role": "Oscillator"
+          },
+          {
+            "name": "Oscillator2",
+            "role": "Oscillator"
+          },
+          {
+            "name": "Distortion",
+            "role": "Distortion"
+          },
+          {
+            "name": "FM Mod1",
+            "role": "FM"
+          },
+          {
+            "name": "FM Mod2",
+            "role": "FM"
+          },
+          {
+            "name": "Sidechain",
+            "role": "Sidechain"
+          },
+          {
+            "name": "Equalizer",
+            "role": "Equalizer"
+          },
+          {
+            "name": "Arpeggiator",
+            "role": "Arpeggiator"
+          },
+          {
+            "name": "LFO",
+            "role": "LFO"
+          },
+          {
+            "name": "MOD FX"
+          },
+          {
+            "name": "Reverb",
+            "role": "Reverb"
+          },
+          {
+            "name": "Delay",
+            "role": "Delay"
           }
         ],
         "parameters": [
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Amp",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous",
+            "component": "Amp",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
           {
             "name": "Cutoff",
             "type": "continous",
@@ -491,12 +611,428 @@
           {
             "name": "Noise",
             "type": "continous",
-            "component": "Oscillator",
+            "component": "Oscillator1",
             "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 5
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 100
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 101
+                }
+              }
+            }
+          },
+          {
+            "name": "PulseWidth",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 102
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 105
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 106
+                }
+              }
+            }
+          },
+          {
+            "name": "PulseWidth",
+            "type": "continous",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 107
+                }
+              }
+            }
+          },
+          {
+            "name": "Bitcrush",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 108
+                }
+              }
+            }
+          },
+          {
+            "name": "Decimator",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 109
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 110
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 111
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 112
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 113
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 114
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 115
+                }
+              }
+            }
+          },
+          {
+            "name": "Duck",
+            "type": "continous",
+            "component": "Sidechain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 116
+                }
+              }
+            }
+          },
+          {
+            "name": "Shape",
+            "type": "continous",
+            "component": "Sidechain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 117
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass Freq",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass Adjust",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble Freq",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 118
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble Adjust",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 119
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 120
+                }
+              }
+            }
+          },
+          {
+            "name": "Gate",
+            "type": "continous",
+            "component": "Arpeggiator",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 121
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO1 Rate",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 122
+                }
+              }
+            }
+          },
+          {
+            "name": "LFO2 Rate",
+            "type": "continous",
+            "component": "LFO",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 123
+                }
+              }
+            }
+          },
+          {
+            "name": "Offset",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 10
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 11
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 12
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 13
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 14
+                }
+              }
+            }
+          },
+          {
+            "name": "Amount",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 15
+                }
+              }
+            }
+          },
+          {
+            "name": "Amount",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 16
+                }
+              }
+            }
+          },
+          {
+            "name": "Amount",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 17
                 }
               }
             }
