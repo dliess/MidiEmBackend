@@ -15,7 +15,7 @@
           "name": "Reverb",
           "role": "Reverb"
         }
-    ],
+      ],
       "parameters": [
         {
           "name": "Delay Time",

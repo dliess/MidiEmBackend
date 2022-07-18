@@ -345,7 +345,7 @@
           },
           {
             "name": "Sidechain",
-            "role": "Sidechain"
+            "role": "Compressor"
           },
           {
             "name": "Equalizer",
