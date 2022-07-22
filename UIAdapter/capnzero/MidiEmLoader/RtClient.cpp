@@ -43,9 +43,9 @@ RtClient::RtClient(
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rMDFactory.dataHolder().removeEntryForUuid(uuidData);
           const auto pMdId = rMDFactory.dataHolder().musicDeviceId(uuidData);
-          if(pMdId)
+          if (pMdId)
           {
-            m_rEventRoutes.musicDeviceDisappeared(*pMdId);
+             m_rEventRoutes.musicDeviceDisappeared(*pMdId);
           }
        });
 
@@ -86,7 +86,8 @@ RtClient::RtClient(
              ControllerEventRouter__connectNotes2Parameter(
                  *pControllerUUID, widgetIdx, note, eventIdx, channelIdx,
                  *psoundDevUUID, voiceIdx, parameterIdx,
-                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(paramFunc));
+                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+                     paramFunc));
           }
        });
    m_rEventRoutes.onConnectionLoadedWidget2Notes(
@@ -120,7 +121,32 @@ RtClient::RtClient(
              ControllerEventRouter__connectWidget2Parameter(
                  *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY,
                  eventIdx, channelIdx, *psoundDevUUID, voiceIdx, parameterIdx,
-                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(paramFunc));
+                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+                     paramFunc));
+          }
+       });
+   m_rEventRoutes.onConnectionUnloadedNotes(
+       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
+                           int note, int eventIdx, int channelIdx) {
+          const auto pControllerUUID =
+              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+          if (pControllerUUID != nullptr)
+          {
+             ControllerEventRouter__eraseConnectionForNotes(
+                 *pControllerUUID, widgetIdx, note, eventIdx, channelIdx);
+          }
+       });
+   m_rEventRoutes.onConnectionUnloadedWidget(
+       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
+                           int widgetCoordX, int widgetCoordY, int eventIdx,
+                           int channelIdx) {
+          const auto pControllerUUID =
+              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
+          if (pControllerUUID != nullptr)
+          {
+             ControllerEventRouter__eraseConnectionForWidget(
+                 *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY,
+                 eventIdx, channelIdx);
           }
        });
 }
