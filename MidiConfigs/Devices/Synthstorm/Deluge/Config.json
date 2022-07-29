@@ -4,6 +4,600 @@
   "productName": "Deluge",
   "soundSection": {
     "defaultInstrumentType": "DrumKit",
+    "engineTemplates": {
+      "commonEngine": {
+        "components": [
+          {
+            "name": "Amp",
+            "role": "Amp"
+          },
+          {
+            "name": "LPFilter",
+            "role": "LPFilter"
+          },
+          {
+            "name": "HPFilter",
+            "role": "HPFilter"
+          },
+          {
+            "name": "Env1 (Amp)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Env2 (Filt)",
+            "role": "Envelope"
+          },
+          {
+            "name": "Oscillator1",
+            "role": "Oscillator"
+          },
+          {
+            "name": "Oscillator2",
+            "role": "Oscillator"
+          },
+          {
+            "name": "Distortion",
+            "role": "Distortion"
+          },
+          {
+            "name": "Sidechain",
+            "role": "Compressor"
+          },
+          {
+            "name": "Equalizer",
+            "role": "Equalizer"
+          },
+          {
+            "name": "MOD FX"
+          },
+          {
+            "name": "Reverb",
+            "role": "Reverb"
+          },
+          {
+            "name": "Delay",
+            "role": "Delay"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Amp",
+            "role": "Volume",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 31
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous-bipolar",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 32
+                }
+              }
+            }
+          },
+          {
+            "name": "Vibrato",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 33
+                }
+              }
+            }
+          },
+          {
+            "name": "Pan",
+            "type": "continous-bipolar",
+            "component": "Amp",
+            "role": "Pan",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 34
+                }
+              }
+            }
+          },
+          {
+            "name": "Portamento",
+            "type": "continous",
+            "component": "Amp",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 35
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff",
+            "type": "continous",
+            "component": "LPFilter",
+            "role": "LPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 36
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "description": "Adjusts the Filter Resonance",
+            "type": "continous",
+            "component": "LPFilter",
+            "role": "LPFilterResonance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 37
+                }
+              }
+            }
+          },
+          {
+            "name": "Cutoff",
+            "type": "continous",
+            "component": "HPFilter",
+            "role": "HPFilterCutoff",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 38
+                }
+              }
+            }
+          },
+          {
+            "name": "Resonance",
+            "type": "continous",
+            "component": "HPFilter",
+            "role": "HPFilterResonance",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 39
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 40
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 41
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Sustain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 42
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Env1 (Amp)",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 43
+                }
+              }
+            }
+          },
+          {
+            "name": "Attack",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Attack",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 44
+                }
+              }
+            }
+          },
+          {
+            "name": "Decay",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Decay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 45
+                }
+              }
+            }
+          },
+          {
+            "name": "Sustain",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Sustain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 46
+                }
+              }
+            }
+          },
+          {
+            "name": "Release",
+            "type": "continous",
+            "component": "Env2 (Filt)",
+            "role": "Release",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 47
+                }
+              }
+            }
+          },
+          {
+            "name": "Noise",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 48
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 49
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous-bipolar",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 50
+                }
+              }
+            }
+          },
+          {
+            "name": "PulseWidth",
+            "type": "continous",
+            "component": "Oscillator1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 51
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 52
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous-bipolar",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 53
+                }
+              }
+            }
+          },
+          {
+            "name": "PulseWidth",
+            "type": "continous",
+            "component": "Oscillator2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 54
+                }
+              }
+            }
+          },
+          {
+            "name": "Bitcrush",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 55
+                }
+              }
+            }
+          },
+          {
+            "name": "Decimator",
+            "type": "continous",
+            "component": "Distortion",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 56
+                }
+              }
+            }
+          },
+          {
+            "name": "Duck",
+            "type": "continous",
+            "component": "Sidechain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 57
+                }
+              }
+            }
+          },
+          {
+            "name": "Shape",
+            "type": "continous",
+            "component": "Sidechain",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 58
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass Freq",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 59
+                }
+              }
+            }
+          },
+          {
+            "name": "Bass Adjust",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 60
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble Freq",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 61
+                }
+              }
+            }
+          },
+          {
+            "name": "Treble Adjust",
+            "type": "continous",
+            "component": "Equalizer",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 62
+                }
+              }
+            }
+          },
+          {
+            "name": "Offset",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 63
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 64
+                }
+              }
+            }
+          },
+          {
+            "name": "Depth",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 65
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "MOD FX",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 66
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 67
+                }
+              }
+            }
+          },
+          {
+            "name": "Amount",
+            "type": "continous",
+            "component": "Delay",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 68
+                }
+              }
+            }
+          },
+          {
+            "name": "Rate",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 69
+                }
+              }
+            }
+          },
+          {
+            "name": "Amount",
+            "type": "continous",
+            "component": "Reverb",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 70
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "voices": [
       {
         "name": "drum 1",
@@ -101,6 +695,7 @@
     "engines": [
       {
         "name": "DrumEngine",
+        "from": "commonEngine",
         "noteSettings": {
           "noteRange": {
             "from": 27,
@@ -108,611 +703,15 @@
           },
           "midi": {
             "pitchRouting": {
-              "destinationParameter": "Pitch"
+              "destinationParameter": "Transpose"
             }
           }
-        },
-        "components": [
-          {
-            "name": "Amp",
-            "role": "Amp"
-          },
-          {
-            "name": "LPFilter",
-            "role": "LPFilter"
-          },
-          {
-            "name": "HPFilter",
-            "role": "HPFilter"
-          },
-          {
-            "name": "Env1 (Amp)",
-            "role": "Envelope"
-          },
-          {
-            "name": "Env2 (Filt)",
-            "role": "Envelope"
-          },
-          {
-            "name": "Oscillator1",
-            "role": "Oscillator"
-          },
-          {
-            "name": "Oscillator2",
-            "role": "Oscillator"
-          },
-          {
-            "name": "Distortion",
-            "role": "Distortion"
-          },
-          {
-            "name": "Sidechain",
-            "role": "Compressor"
-          },
-          {
-            "name": "Equalizer",
-            "role": "Equalizer"
-          },
-          {
-            "name": "MOD FX"
-          },
-          {
-            "name": "Reverb",
-            "role": "Reverb"
-          },
-          {
-            "name": "Delay",
-            "role": "Delay"
-          }
-
-        ],
-        "parameters": [
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Volume",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 1
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 2
-                }
-              }
-            }
-          },
-          {
-            "name": "Vibrato",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 3
-                }
-              }
-            }
-          },
-          {
-            "name": "Pan",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Pan",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 4
-                }
-              }
-            }
-          },
-          {
-            "name": "Portamento",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 5
-                }
-              }
-            }
-          },
-          {
-            "name": "Cutoff",
-            "type": "continous",
-            "component": "LPFilter",
-            "role": "LPFilterCutoff",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 6
-                }
-              }
-            }
-          },
-          {
-            "name": "Resonance",
-            "description": "Adjusts the Filter Resonance",
-            "type": "continous",
-            "component": "LPFilter",
-            "role": "LPFilterResonance",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 7
-                }
-              }
-            }
-          },
-          {
-            "name": "Cutoff",
-            "type": "continous",
-            "component": "HPFilter",
-            "role": "HPFilterCutoff",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 8
-                }
-              }
-            }
-          },
-          {
-            "name": "Resonance",
-            "type": "continous",
-            "component": "HPFilter",
-            "role": "HPFilterResonance",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 9
-                }
-              }
-            }
-          },
-          {
-            "name": "Attack",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Attack",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 10
-                }
-              }
-            }
-          },
-          {
-            "name": "Decay",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Decay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 11
-                }
-              }
-            }
-          },
-          {
-            "name": "Sustain",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Sustain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 12
-                }
-              }
-            }
-          },
-          {
-            "name": "Release",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Release",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 13
-                }
-              }
-            }
-          },
-          {
-            "name": "Attack",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Attack",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 14
-                }
-              }
-            }
-          },
-          {
-            "name": "Decay",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Decay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 15
-                }
-              }
-            }
-          },
-          {
-            "name": "Sustain",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Sustain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 16
-                }
-              }
-            }
-          },
-          {
-            "name": "Release",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Release",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 17
-                }
-              }
-            }
-          },
-          {
-            "name": "Noise",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 18
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 19
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 20
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Oscillator2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 21
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Oscillator2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 22
-                }
-              }
-            }
-          },
-          {
-            "name": "Bitcrush",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 23
-                }
-              }
-            }
-          },
-          {
-            "name": "Decimator",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 24
-                }
-              }
-            }
-          },
-          {
-            "name": "Duck",
-            "type": "continous",
-            "component": "Sidechain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 25
-                }
-              }
-            }
-          },
-          {
-            "name": "Shape",
-            "type": "continous",
-            "component": "Sidechain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 26
-                }
-              }
-            }
-          },
-          {
-            "name": "Bass Freq",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 27
-                }
-              }
-            }
-          },
-          {
-            "name": "Bass Adjust",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 28
-                }
-              }
-            }
-          },
-          {
-            "name": "Treble Freq",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 29
-                }
-              }
-            }
-          },
-          {
-            "name": "Treble Adjust",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 30
-                }
-              }
-            }
-          },
-          {
-            "name": "Offset",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 31
-                }
-              }
-            }
-          },
-          {
-            "name": "Feedback",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 32
-                }
-              }
-            }
-          },
-          {
-            "name": "Depth",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 33
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 34
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 35
-                }
-              }
-            }
-          },
-          {
-            "name": "Amount",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 36
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 37
-                }
-              }
-            }
-          },
-          {
-            "name": "Amount",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 38
-                }
-              }
-            }
-          }
-        ]
+        }
       },
       {
         "name": "MelodicEngine",
+        "from": "commonEngine",
         "components": [
-          {
-            "name": "Amp",
-            "role": "Amp"
-          },
-          {
-            "name": "LPFilter",
-            "role": "LPFilter"
-          },
-          {
-            "name": "HPFilter",
-            "role": "HPFilter"
-          },
-          {
-            "name": "Env1 (Amp)",
-            "role": "Envelope"
-          },
-          {
-            "name": "Env2 (Filt)",
-            "role": "Envelope"
-          },
-          {
-            "name": "Oscillator1",
-            "role": "Oscillator"
-          },
-          {
-            "name": "Oscillator2",
-            "role": "Oscillator"
-          },
-          {
-            "name": "Distortion",
-            "role": "Distortion"
-          },
           {
             "name": "FM Mod1",
             "role": "FM"
@@ -720,381 +719,9 @@
           {
             "name": "FM Mod2",
             "role": "FM"
-          },
-          {
-            "name": "Sidechain",
-            "role": "Compressor"
-          },
-          {
-            "name": "Equalizer",
-            "role": "Equalizer"
-          },
-          {
-            "name": "MOD FX"
-          },
-          {
-            "name": "Reverb",
-            "role": "Reverb"
-          },
-          {
-            "name": "Delay",
-            "role": "Delay"
           }
         ],
         "parameters": [
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Volume",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 50
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 49
-                }
-              }
-            }
-          },
-          {
-            "name": "Vibrato",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 48
-                }
-              }
-            }
-          },
-          {
-            "name": "Pan",
-            "type": "continous",
-            "component": "Amp",
-            "role": "Pan",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 47
-                }
-              }
-            }
-          },
-          {
-            "name": "Portamento",
-            "type": "continous",
-            "component": "Amp",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 46
-                }
-              }
-            }
-          },
-          {
-            "name": "Cutoff",
-            "type": "continous",
-            "component": "LPFilter",
-            "role": "LPFilterCutoff",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 51
-                }
-              }
-            }
-          },
-          {
-            "name": "Resonance",
-            "description": "Adjusts the Filter Resonance",
-            "type": "continous",
-            "component": "LPFilter",
-            "role": "LPFilterResonance",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 52
-                }
-              }
-            }
-          },
-          {
-            "name": "Cutoff",
-            "type": "continous",
-            "component": "HPFilter",
-            "role": "HPFilterCutoff",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 54
-                }
-              }
-            }
-          },
-          {
-            "name": "Resonance",
-            "type": "continous",
-            "component": "HPFilter",
-            "role": "HPFilterResonance",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 55
-                }
-              }
-            }
-          },
-          {
-            "name": "Attack",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Attack",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 61
-                }
-              }
-            }
-          },
-          {
-            "name": "Decay",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Decay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 62
-                }
-              }
-            }
-          },
-          {
-            "name": "Sustain",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Sustain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 63
-                }
-              }
-            }
-          },
-          {
-            "name": "Release",
-            "type": "continous",
-            "component": "Env1 (Amp)",
-            "role": "Release",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 64
-                }
-              }
-            }
-          },
-          {
-            "name": "Attack",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Attack",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 66
-                }
-              }
-            }
-          },
-          {
-            "name": "Decay",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Decay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 67
-                }
-              }
-            }
-          },
-          {
-            "name": "Sustain",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Sustain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 68
-                }
-              }
-            }
-          },
-          {
-            "name": "Release",
-            "type": "continous",
-            "component": "Env2 (Filt)",
-            "role": "Release",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 69
-                }
-              }
-            }
-          },
-          {
-            "name": "Noise",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 5
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 100
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 101
-                }
-              }
-            }
-          },
-          {
-            "name": "PulseWidth",
-            "type": "continous",
-            "component": "Oscillator1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 102
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "Oscillator2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 105
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "Oscillator2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 106
-                }
-              }
-            }
-          },
-          {
-            "name": "PulseWidth",
-            "type": "continous",
-            "component": "Oscillator2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 107
-                }
-              }
-            }
-          },
-          {
-            "name": "Bitcrush",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 108
-                }
-              }
-            }
-          },
-          {
-            "name": "Decimator",
-            "type": "continous",
-            "component": "Distortion",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 109
-                }
-              }
-            }
-          },
           {
             "name": "Volume",
             "type": "continous",
@@ -1169,188 +796,6 @@
                 "id": {
                   ".type": "MidiControlChange",
                   "id": 115
-                }
-              }
-            }
-          },
-          {
-            "name": "Duck",
-            "type": "continous",
-            "component": "Sidechain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 116
-                }
-              }
-            }
-          },
-          {
-            "name": "Shape",
-            "type": "continous",
-            "component": "Sidechain",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 117
-                }
-              }
-            }
-          },
-          {
-            "name": "Bass Freq",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 118
-                }
-              }
-            }
-          },
-          {
-            "name": "Bass Adjust",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 119
-                }
-              }
-            }
-          },
-          {
-            "name": "Treble Freq",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 118
-                }
-              }
-            }
-          },
-          {
-            "name": "Treble Adjust",
-            "type": "continous",
-            "component": "Equalizer",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 119
-                }
-              }
-            }
-          },
-          {
-            "name": "Offset",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 10
-                }
-              }
-            }
-          },
-          {
-            "name": "Feedback",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 11
-                }
-              }
-            }
-          },
-          {
-            "name": "Depth",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 12
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "MOD FX",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 13
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 14
-                }
-              }
-            }
-          },
-          {
-            "name": "Amount",
-            "type": "continous",
-            "component": "Delay",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 15
-                }
-              }
-            }
-          },
-          {
-            "name": "Rate",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 16
-                }
-              }
-            }
-          },
-          {
-            "name": "Amount",
-            "type": "continous",
-            "component": "Reverb",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 17
                 }
               }
             }
