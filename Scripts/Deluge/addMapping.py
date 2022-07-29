@@ -15,9 +15,10 @@ synthChannelNr = 13
 synthChannelNrMax = 16
 
 def createMidiKnobs(channelNr):
-    mr = copy.deepcopy(midiKnobs.getroot())
+    mn = copy.deepcopy(midiKnobs)
+    mr = mn.getroot()
     for midiKnob in mr.findall("midiKnob"):
-        midiKnob.attrib["channel"] = channelNr
+        midiKnob.attrib["channel"] = str(channelNr)
     return mr
 
 
@@ -26,13 +27,14 @@ for kit in instruments.findall("kit"):
     ss = kit.find("soundSources")
     for sound in ss.findall("sound"):
         if(kitChannelNr <= kitChannelNrMax):
-            sound.append(createMidiKnobs(kitChannelNr))
+            sound.insert(0, createMidiKnobs(kitChannelNr))
             kitChannelNr = kitChannelNr + 1
 
 for sound in instruments.findall("sound"):
     if(synthChannelNr <= synthChannelNrMax):
-        sound.append(createMidiKnobs(synthChannelNr))
+        sound.insert(0, createMidiKnobs(synthChannelNr))
         synthChannelNr = synthChannelNr + 1
 
-xmlstr = ET.tostring(midiKnobs, encoding='utf8', method='xml')
-print(xmlstr)
+#xmlstr = ET.tostring(tree, encoding='utf8', method='xml')
+#print(xmlstr)
+tree.write("ValentinMidiKnobs.xml")
