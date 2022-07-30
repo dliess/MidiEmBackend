@@ -6,6 +6,7 @@
     "defaultInstrumentType": "DrumKit",
     "engineTemplates": {
       "commonEngine": {
+        "name": "commonEngine",
         "components": [
           {
             "name": "Amp",
@@ -57,6 +58,14 @@
           {
             "name": "Delay",
             "role": "Delay"
+          },
+          {
+            "name": "FM Mod1",
+            "role": "FM"
+          },
+          {
+            "name": "FM Mod2",
+            "role": "FM"
           }
         ],
         "parameters": [
@@ -594,6 +603,84 @@
                 }
               }
             }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 71
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous-bipolar",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 72
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "FM Mod1",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 73
+                }
+              }
+            }
+          },
+          {
+            "name": "Volume",
+            "type": "continous",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 74
+                }
+              }
+            }
+          },
+          {
+            "name": "Transpose",
+            "type": "continous-bipolar",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 75
+                }
+              }
+            }
+          },
+          {
+            "name": "Feedback",
+            "type": "continous",
+            "component": "FM Mod2",
+            "source": {
+              "midi": {
+                "id": {
+                  ".type": "MidiControlChange",
+                  "id": 76
+                }
+              }
+            }
           }
         ]
       }
@@ -603,73 +690,73 @@
         "name": "drum 1",
         "engineId": 0,
         "midiChannel": 1,
-        "midiTriggerNoteNumber": 36
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 2",
         "engineId": 0,
         "midiChannel": 2,
-        "midiTriggerNoteNumber": 37
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 3",
         "engineId": 0,
         "midiChannel": 3,
-        "midiTriggerNoteNumber": 38
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 4",
         "engineId": 0,
         "midiChannel": 4,
-        "midiTriggerNoteNumber": 39
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 5",
         "engineId": 0,
         "midiChannel": 5,
-        "midiTriggerNoteNumber": 40
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 6",
         "engineId": 0,
         "midiChannel": 6,
-        "midiTriggerNoteNumber": 41
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 7",
         "engineId": 0,
         "midiChannel": 7,
-        "midiTriggerNoteNumber": 42
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 8",
         "engineId": 0,
         "midiChannel": 8,
-        "midiTriggerNoteNumber": 43
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 9",
         "engineId": 0,
         "midiChannel": 9,
-        "midiTriggerNoteNumber": 44
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 10",
         "engineId": 0,
         "midiChannel": 10,
-        "midiTriggerNoteNumber": 45
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 11",
         "engineId": 0,
         "midiChannel": 11,
-        "midiTriggerNoteNumber": 46
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "drum 12",
         "engineId": 0,
         "midiChannel": 12,
-        "midiTriggerNoteNumber": 47
+        "midiTriggerNoteNumber": 1
       },
       {
         "name": "melodic 1",
@@ -706,101 +793,13 @@
               "destinationParameter": "Transpose"
             }
           }
-        }
+        },
+        "parameters": []
       },
       {
         "name": "MelodicEngine",
         "from": "commonEngine",
-        "components": [
-          {
-            "name": "FM Mod1",
-            "role": "FM"
-          },
-          {
-            "name": "FM Mod2",
-            "role": "FM"
-          }
-        ],
-        "parameters": [
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "FM Mod1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 110
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "FM Mod1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 111
-                }
-              }
-            }
-          },
-          {
-            "name": "Feedback",
-            "type": "continous",
-            "component": "FM Mod1",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 112
-                }
-              }
-            }
-          },
-          {
-            "name": "Volume",
-            "type": "continous",
-            "component": "FM Mod2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 113
-                }
-              }
-            }
-          },
-          {
-            "name": "Transpose",
-            "type": "continous",
-            "component": "FM Mod2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 114
-                }
-              }
-            }
-          },
-          {
-            "name": "Feedback",
-            "type": "continous",
-            "component": "FM Mod2",
-            "source": {
-              "midi": {
-                "id": {
-                  ".type": "MidiControlChange",
-                  "id": 115
-                }
-              }
-            }
-          }
-        ]
+        "parameters": []
       }
     ]
   },

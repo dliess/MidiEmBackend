@@ -119,4 +119,22 @@
     <midiKnob channel="1" ccNumber="68" relative="0" controlsParam="delayFeedback">
         <device port="upstreamUSB" />
     </midiKnob>
+    <midiKnob channel="1" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
 </midiKnobs>
