@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import copy
 
 inputFile = sys.argv[1]
-outputFile = inputFile + "_mod"
+outputFile = "mod_" + inputFile
 midiKnobs = ET.parse('midiKnobs.xml')
 
 tree = ET.parse(inputFile)
@@ -33,8 +33,8 @@ def createKitNoteMapping(sound, channelNr):
         sound.erase(el)
     eMidiInput = ET.Element('midiInput')
     eDevice = ET.SubElement(eMidiInput, 'device')
-    eMidiInput.attrib["channel"] = channelNr
-    eMidiInput.attrib["note"] = 1
+    eMidiInput.attrib["channel"] = str(channelNr)
+    eMidiInput.attrib["note"] = "1"
     eDevice.attrib["port"] = "upstreamUSB"
     sound.insert(1, eMidiInput)
 
@@ -59,7 +59,7 @@ for sound in instruments.findall("sound"):
     if(synthChannelNr <= synthChannelNrMax):
         createMidiKnobs(sound, synthChannelNr)
         createInputDeviceForNoteMapping(sound)
-        sound.attrib("inputMidiChannel") = synthChannelNr
+        sound.attrib["inputMidiChannel"] = str(synthChannelNr)
         synthChannelNr = synthChannelNr + 1
 
 #xmlstr = ET.tostring(tree, encoding='utf8', method='xml')
