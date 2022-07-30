@@ -84,7 +84,7 @@
             }
           },
           {
-            "name": "Transpose",
+            "name": "MainTranspose",
             "type": "continous-bipolar",
             "component": "Amp",
             "source": {
@@ -785,12 +785,12 @@
         "from": "commonEngine",
         "noteSettings": {
           "noteRange": {
-            "from": 27,
-            "to": 75
+            "from": 0,
+            "to": 128
           },
           "midi": {
             "pitchRouting": {
-              "destinationParameter": "Transpose"
+              "destinationParameter": "MainTranspose"
             }
           }
         },

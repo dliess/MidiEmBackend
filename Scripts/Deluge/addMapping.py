@@ -24,7 +24,7 @@ def createMidiKnobs(sound, channelNr):
     mn = copy.deepcopy(midiKnobs)
     mr = mn.getroot()
     for midiKnob in mr.findall("midiKnob"):
-        midiKnob.attrib["channel"] = str(channelNr)
+        midiKnob.attrib["channel"] = str(channelNr - 1)
     sound.insert(0, mr)
 
 def createKitNoteMapping(sound, channelNr):
@@ -33,7 +33,7 @@ def createKitNoteMapping(sound, channelNr):
         sound.erase(el)
     eMidiInput = ET.Element('midiInput')
     eDevice = ET.SubElement(eMidiInput, 'device')
-    eMidiInput.attrib["channel"] = str(channelNr)
+    eMidiInput.attrib["channel"] = str(channelNr - 1)
     eMidiInput.attrib["note"] = "1"
     eDevice.attrib["port"] = "upstreamUSB"
     sound.insert(1, eMidiInput)
@@ -59,7 +59,7 @@ for sound in instruments.findall("sound"):
     if(synthChannelNr <= synthChannelNrMax):
         createMidiKnobs(sound, synthChannelNr)
         createInputDeviceForNoteMapping(sound)
-        sound.attrib["inputMidiChannel"] = str(synthChannelNr)
+        sound.attrib["inputMidiChannel"] = str(synthChannelNr - 1)
         synthChannelNr = synthChannelNr + 1
 
 #xmlstr = ET.tostring(tree, encoding='utf8', method='xml')

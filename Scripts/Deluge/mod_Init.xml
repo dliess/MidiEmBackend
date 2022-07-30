@@ -1,0 +1,2958 @@
+<song firmwareVersion="4.0.0" earliestCompatibleFirmware="4.0.0-beta" previewNumPads="144" preview="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF06005AA5" arrangementAutoScrollOn="0" xScroll="0" xZoom="24" yScrollSongView="-2" yScrollArrangementView="-2" xScrollArrangementView="0" xZoomArrangementView="192" timePerTimerTick="229" timerTickFraction="-1342177280" rootNote="0" inputTickMagnitude="2" swingAmount="0" swingInterval="7" affectEntire="0" activeModFunction="1" lpfMode="24dB" modFXType="flanger" modFXCurrentParam="feedback" currentFilterType="lpf">
+    <modeNotes>
+        <modeNote>0</modeNote>
+        <modeNote>2</modeNote>
+        <modeNote>4</modeNote>
+        <modeNote>5</modeNote>
+        <modeNote>7</modeNote>
+        <modeNote>9</modeNote>
+        <modeNote>11</modeNote>
+    </modeNotes>
+    <reverb roomSize="1288490496" dampening="1546188288" width="2147483647" pan="0">
+        <compressor attack="-396296049" release="1112064240" volume="-21474836" shape="-601295438" syncLevel="6" />
+    </reverb>
+    <delay pingPong="1" analog="0" syncLevel="7" />
+    <compressor syncLevel="6" attack="327244" release="936" />
+    <songParams reverbAmount="0x80000000" volume="0x3504F334" pan="0x00000000" sidechainCompressorShape="0xDC28F5B2" modFXDepth="0x00000000" modFXRate="0xE0000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x80000000">
+        <delay rate="0x00000000" feedback="0x80000000" />
+        <lpf frequency="0x7FFFFFFF" resonance="0x80000000" />
+        <hpf frequency="0x80000000" resonance="0x80000000" />
+        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+    </songParams>
+    <instruments>
+        <sound presetSlot="110" presetSubSlot="-1" presetFolder="SYNTHS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" polyphonic="poly" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none" inputMidiChannel="12">
+            <midiKnobs>
+    <midiKnob channel="12" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="12" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><inputMidiDevice port="upstreamUSB" /><osc1 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <osc2 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <lfo1 type="triangle" syncLevel="0" />
+            <lfo2 type="triangle" />
+            <unison num="1" detune="8" />
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <modKnobs>
+                <modKnob controlsParam="pan" />
+                <modKnob controlsParam="volumePostFX" />
+                <modKnob controlsParam="lpfResonance" />
+                <modKnob controlsParam="lpfFrequency" />
+                <modKnob controlsParam="env1Release" />
+                <modKnob controlsParam="env1Attack" />
+                <modKnob controlsParam="delayFeedback" />
+                <modKnob controlsParam="delayRate" />
+                <modKnob controlsParam="reverbAmount" />
+                <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                <modKnob controlsParam="lfo1Rate" />
+                <modKnob controlsParam="portamento" />
+                <modKnob controlsParam="stutterRate" />
+                <modKnob controlsParam="bitcrushAmount" />
+                <modKnob controlsParam="sampleRateReduction" />
+            </modKnobs>
+        </sound>
+        <sound presetSlot="109" presetSubSlot="-1" presetFolder="SYNTHS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" polyphonic="poly" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none" inputMidiChannel="13">
+            <midiKnobs>
+    <midiKnob channel="13" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="13" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><inputMidiDevice port="upstreamUSB" /><osc1 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <osc2 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <lfo1 type="triangle" syncLevel="0" />
+            <lfo2 type="triangle" />
+            <unison num="1" detune="8" />
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <modKnobs>
+                <modKnob controlsParam="pan" />
+                <modKnob controlsParam="volumePostFX" />
+                <modKnob controlsParam="lpfResonance" />
+                <modKnob controlsParam="lpfFrequency" />
+                <modKnob controlsParam="env1Release" />
+                <modKnob controlsParam="env1Attack" />
+                <modKnob controlsParam="delayFeedback" />
+                <modKnob controlsParam="delayRate" />
+                <modKnob controlsParam="reverbAmount" />
+                <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                <modKnob controlsParam="lfo1Rate" />
+                <modKnob controlsParam="portamento" />
+                <modKnob controlsParam="stutterRate" />
+                <modKnob controlsParam="bitcrushAmount" />
+                <modKnob controlsParam="sampleRateReduction" />
+            </modKnobs>
+        </sound>
+        <sound presetSlot="108" presetSubSlot="-1" presetFolder="SYNTHS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" polyphonic="poly" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none" inputMidiChannel="14">
+            <midiKnobs>
+    <midiKnob channel="14" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="14" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><inputMidiDevice port="upstreamUSB" /><osc1 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <osc2 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <lfo1 type="triangle" syncLevel="0" />
+            <lfo2 type="triangle" />
+            <unison num="1" detune="8" />
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <modKnobs>
+                <modKnob controlsParam="pan" />
+                <modKnob controlsParam="volumePostFX" />
+                <modKnob controlsParam="lpfResonance" />
+                <modKnob controlsParam="lpfFrequency" />
+                <modKnob controlsParam="env1Release" />
+                <modKnob controlsParam="env1Attack" />
+                <modKnob controlsParam="delayFeedback" />
+                <modKnob controlsParam="delayRate" />
+                <modKnob controlsParam="reverbAmount" />
+                <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                <modKnob controlsParam="lfo1Rate" />
+                <modKnob controlsParam="portamento" />
+                <modKnob controlsParam="stutterRate" />
+                <modKnob controlsParam="bitcrushAmount" />
+                <modKnob controlsParam="sampleRateReduction" />
+            </modKnobs>
+        </sound>
+        <sound presetSlot="107" presetSubSlot="-1" presetFolder="SYNTHS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" polyphonic="poly" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none" inputMidiChannel="15">
+            <midiKnobs>
+    <midiKnob channel="15" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="15" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><inputMidiDevice port="upstreamUSB" /><osc1 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <osc2 type="square" transpose="0" cents="0" retrigPhase="-1" />
+            <lfo1 type="triangle" syncLevel="0" />
+            <lfo2 type="triangle" />
+            <unison num="1" detune="8" />
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <modKnobs>
+                <modKnob controlsParam="pan" />
+                <modKnob controlsParam="volumePostFX" />
+                <modKnob controlsParam="lpfResonance" />
+                <modKnob controlsParam="lpfFrequency" />
+                <modKnob controlsParam="env1Release" />
+                <modKnob controlsParam="env1Attack" />
+                <modKnob controlsParam="delayFeedback" />
+                <modKnob controlsParam="delayRate" />
+                <modKnob controlsParam="reverbAmount" />
+                <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                <modKnob controlsParam="lfo1Rate" />
+                <modKnob controlsParam="portamento" />
+                <modKnob controlsParam="stutterRate" />
+                <modKnob controlsParam="bitcrushAmount" />
+                <modKnob controlsParam="sampleRateReduction" />
+            </modKnobs>
+        </sound>
+        <kit presetSlot="966" presetSubSlot="-1" presetFolder="KITS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" lpfMode="24dB" modFXType="flanger" modFXCurrentParam="feedback" currentFilterType="lpf">
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <soundSources>
+                <sound name="CR78 Kick" polyphonic="auto" voicePriority="1" sideChainSend="2147483647" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="0" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="0" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="0" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Kick/CR78 Kick.wav">
+                        <zone startSamplePos="0" endSamplePos="5673" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="Sequential Circuits Drumtraks Cabasa" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="1" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="1" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="1" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Shaker/Sequential Circuits Drumtraks Cabasa.wav">
+                        <zone startSamplePos="0" endSamplePos="4604" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="KR55 Snare" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="2" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="2" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="2" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="2" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Snare/KR55 Snare.wav">
+                        <zone startSamplePos="0" endSamplePos="9217" startLoopPos="4609" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="KR55 Tom high" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="3" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="3" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="3" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="2" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/TomH/KR55 Tom high.wav">
+                        <zone startSamplePos="0" endSamplePos="12863" startLoopPos="6432" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="KR55 Tom low" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="4" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="4" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="4" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="2" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/TomL/KR55 Tom low.wav">
+                        <zone startSamplePos="0" endSamplePos="16753" startLoopPos="8377" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="R-50 Snap" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="5" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="5" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="5" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Other/R-50 Snap.wav">
+                        <zone startSamplePos="0" endSamplePos="5653" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+            </soundSources>
+            <selectedDrumIndex>5</selectedDrumIndex>
+        </kit>
+        <kit presetName="The6" presetFolder="KITS" defaultVelocity="64" isArmedForRecording="0" activeModFunction="1" lpfMode="24dB" modFXType="flanger" modFXCurrentParam="feedback" currentFilterType="lpf">
+            <delay pingPong="1" analog="0" syncLevel="7" />
+            <compressor syncLevel="6" attack="327244" release="936" />
+            <soundSources>
+                <sound name="808 Kick distorted" polyphonic="auto" voicePriority="1" sideChainSend="2147483647" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="6" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="6" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="6" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Kick/808 Kick distorted.wav">
+                        <zone startSamplePos="0" endSamplePos="22657" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="CR78 Snare" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="7" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="7" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="7" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Snare/CR78 Snare.wav">
+                        <zone startSamplePos="0" endSamplePos="11360" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="808 Maraca" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="8" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="8" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="8" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Shaker/808 Maraca.wav">
+                        <zone startSamplePos="0" endSamplePos="11025" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="R100 Percussion" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="9" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="9" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="9" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="2" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Shaker/R100 Percussion.wav">
+                        <zone startSamplePos="0" endSamplePos="1977" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="808 Rim" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="10" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="10" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="10" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Rim/808 Rim.wav">
+                        <zone startSamplePos="0" endSamplePos="11026" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+                <sound name="CR78 Rim" polyphonic="auto" voicePriority="1" mode="subtractive" lpfMode="24dB" modFXType="none">
+                    <midiKnobs>
+    <midiKnob channel="11" ccNumber="36" relative="0" controlsParam="lpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="37" relative="0" controlsParam="lpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="31" relative="0" controlsParam="volumePostFX">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="32" relative="0" controlsParam="pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="33" relative="0" controlsParam="pitch" patchAmountFromSource="lfo1">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="34" relative="0" controlsParam="pan">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="35" relative="0" controlsParam="portamento">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="38" relative="0" controlsParam="hpfFrequency">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="39" relative="0" controlsParam="hpfResonance">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="40" relative="0" controlsParam="env1Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="41" relative="0" controlsParam="env1Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="42" relative="0" controlsParam="env1Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="43" relative="0" controlsParam="env1Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="44" relative="0" controlsParam="env2Attack">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="45" relative="0" controlsParam="env2Decay">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="46" relative="0" controlsParam="env2Sustain">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="47" relative="0" controlsParam="env2Release">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="49" relative="0" controlsParam="oscAVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="48" relative="0" controlsParam="noiseVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="50" relative="0" controlsParam="oscAPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="51" relative="0" controlsParam="oscAPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="52" relative="0" controlsParam="oscBVolume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="53" relative="0" controlsParam="oscBPitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="54" relative="0" controlsParam="oscBPhaseWidth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="55" relative="0" controlsParam="bitcrushAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="56" relative="0" controlsParam="sampleRateReduction">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="57" relative="0" controlsParam="volumePostReverbSend" patchAmountFromSource="compressor">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="58" relative="0" controlsParam="compressorShape">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="60" relative="0" controlsParam="bass">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="59" relative="0" controlsParam="bassFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="61" relative="0" controlsParam="trebleFreq">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="62" relative="0" controlsParam="treble">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="64" relative="0" controlsParam="modFXFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="63" relative="0" controlsParam="modFXOffset">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="65" relative="0" controlsParam="modFXDepth">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="66" relative="0" controlsParam="modFXRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="69" relative="0" controlsParam="reverbRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="70" relative="0" controlsParam="reverbAmount">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="67" relative="0" controlsParam="delayRate">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="68" relative="0" controlsParam="delayFeedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="71" relative="0" controlsParam="modulator1Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="72" relative="0" controlsParam="modulator1Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="73" relative="0" controlsParam="modulator1Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="74" relative="0" controlsParam="modulator2Volume">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="75" relative="0" controlsParam="modulator2Pitch">
+        <device port="upstreamUSB" />
+    </midiKnob>
+    <midiKnob channel="11" ccNumber="76" relative="0" controlsParam="modulator2Feedback">
+        <device port="upstreamUSB" />
+    </midiKnob>
+</midiKnobs><midiInput channel="11" note="1"><device port="upstreamUSB" /></midiInput><osc1 type="sample" loopMode="1" reversed="0" timeStretchEnable="0" timeStretchAmount="0" fileName="SAMPLES/DRUMS/Rim/CR78 Rim.wav">
+                        <zone startSamplePos="0" endSamplePos="2678" />
+                    </osc1>
+                    <osc2 type="sample" loopMode="0" reversed="0" timeStretchEnable="0" timeStretchAmount="0" />
+                    <lfo1 type="triangle" syncLevel="0" />
+                    <lfo2 type="triangle" />
+                    <unison num="1" detune="8" />
+                    <delay pingPong="1" analog="0" syncLevel="7" />
+                    <compressor syncLevel="6" attack="327244" release="936" />
+                    <arpeggiator mode="off" numOctaves="2" syncLevel="7" />
+                    <modKnobs>
+                        <modKnob controlsParam="pan" />
+                        <modKnob controlsParam="volumePostFX" />
+                        <modKnob controlsParam="lpfResonance" />
+                        <modKnob controlsParam="lpfFrequency" />
+                        <modKnob controlsParam="env1Release" />
+                        <modKnob controlsParam="env1Attack" />
+                        <modKnob controlsParam="delayFeedback" />
+                        <modKnob controlsParam="delayRate" />
+                        <modKnob controlsParam="reverbAmount" />
+                        <modKnob controlsParam="volumePostReverbSend" patchAmountFromSource="compressor" />
+                        <modKnob controlsParam="pitch" patchAmountFromSource="lfo1" />
+                        <modKnob controlsParam="lfo1Rate" />
+                        <modKnob controlsParam="pitch" />
+                        <modKnob controlsParam="stutterRate" />
+                        <modKnob controlsParam="bitcrushAmount" />
+                        <modKnob controlsParam="sampleRateReduction" />
+                    </modKnobs>
+                </sound>
+            </soundSources>
+            <selectedDrumIndex>5</selectedDrumIndex>
+        </kit>
+    </instruments>
+    <sections>
+        <section id="0" numRepeats="0" />
+        <section id="1" numRepeats="0" />
+        <section id="2" numRepeats="0" />
+        <section id="3" numRepeats="0" />
+        <section id="4" numRepeats="0" />
+        <section id="5" numRepeats="0" />
+        <section id="6" numRepeats="0" />
+        <section id="7" numRepeats="0" />
+        <section id="8" numRepeats="0" />
+        <section id="9" numRepeats="0" />
+        <section id="10" numRepeats="0" />
+        <section id="11" numRepeats="0" />
+    </sections>
+    <sessionClips>
+        <instrumentClip inKeyMode="1" yScroll="35" yScrollKeyboard="50" instrumentPresetSlot="110" instrumentPresetSubSlot="-1" instrumentPresetFolder="SYNTHS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="24" section="0" selected="1">
+            <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFFF" release="0x80000000" />
+                <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                <patchCables>
+                    <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                    <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                    <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                </patchCables>
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </soundParams>
+        </instrumentClip>
+        <instrumentClip inKeyMode="1" yScroll="35" yScrollKeyboard="50" instrumentPresetSlot="109" instrumentPresetSubSlot="-1" instrumentPresetFolder="SYNTHS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="55" section="0">
+            <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFFF" release="0x80000000" />
+                <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                <patchCables>
+                    <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                    <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                    <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                </patchCables>
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </soundParams>
+        </instrumentClip>
+        <instrumentClip inKeyMode="1" yScroll="35" yScrollKeyboard="50" instrumentPresetSlot="108" instrumentPresetSubSlot="-1" instrumentPresetFolder="SYNTHS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="54" section="0">
+            <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFFF" release="0x80000000" />
+                <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                <patchCables>
+                    <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                    <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                    <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                </patchCables>
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </soundParams>
+        </instrumentClip>
+        <instrumentClip inKeyMode="1" yScroll="35" yScrollKeyboard="50" instrumentPresetSlot="107" instrumentPresetSubSlot="-1" instrumentPresetFolder="SYNTHS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="9" section="0">
+            <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFFF" release="0x80000000" />
+                <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                <patchCables>
+                    <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                    <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                    <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                </patchCables>
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </soundParams>
+        </instrumentClip>
+        <instrumentClip inKeyMode="1" yScroll="0" yScrollKeyboard="50" affectEntire="0" instrumentPresetSlot="966" instrumentPresetSubSlot="-1" instrumentPresetFolder="KITS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="25" section="0">
+            <kitParams reverbAmount="0x80000000" volume="0x3504F334" pan="0x00000000" sidechainCompressorShape="0xDC28F5B2" modFXDepth="0x00000000" modFXRate="0xE0000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x80000000">
+                <delay rate="0x00000000" feedback="0x80000000" />
+                <lpf frequency="0x7FFFFFFF" resonance="0x80000000" />
+                <hpf frequency="0x80000000" resonance="0x80000000" />
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </kitParams>
+            <noteRows>
+                <noteRow colourOffset="66" drumIndex="0">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="1" drumIndex="1">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="10" drumIndex="2">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="42" drumIndex="3">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="16" drumIndex="4">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="65" drumIndex="5">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+            </noteRows>
+        </instrumentClip>
+        <instrumentClip inKeyMode="1" yScroll="0" yScrollKeyboard="50" affectEntire="0" instrumentPresetName="The6" instrumentPresetFolder="KITS" isPlaying="1" isSoloing="0" isArmedForRecording="1" length="384" colourOffset="-60" section="0">
+            <kitParams reverbAmount="0x80000000" volume="0x3504F334" pan="0x00000000" sidechainCompressorShape="0xDC28F5B2" modFXDepth="0x00000000" modFXRate="0xE0000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x80000000">
+                <delay rate="0x00000000" feedback="0x80000000" />
+                <lpf frequency="0x7FFFFFFF" resonance="0x80000000" />
+                <hpf frequency="0x80000000" resonance="0x80000000" />
+                <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+            </kitParams>
+            <noteRows>
+                <noteRow colourOffset="60" drumIndex="0">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="38" drumIndex="1">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="21" drumIndex="2">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="2" drumIndex="3">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="22" drumIndex="4">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+                <noteRow colourOffset="17" drumIndex="5">
+                    <soundParams arpeggiatorGate="0x00000000" portamento="0x80000000" compressorShape="0xDC28F5B2" oscAVolume="0x7FFFFFFF" oscAPulseWidth="0x00000000" oscAWavetablePosition="0x00000000" oscBVolume="0x80000000" oscBPulseWidth="0x00000000" oscBWavetablePosition="0x00000000" noiseVolume="0x80000000" volume="0x4CCCCCA8" pan="0x00000000" lpfFrequency="0x7FFFFFFF" lpfResonance="0x80000000" hpfFrequency="0x80000000" hpfResonance="0x80000000" lfo1Rate="0x1999997E" lfo2Rate="0x00000000" modulator1Amount="0x80000000" modulator1Feedback="0x80000000" modulator2Amount="0x80000000" modulator2Feedback="0x80000000" carrier1Feedback="0x80000000" carrier2Feedback="0x80000000" modFXRate="0x00000000" modFXDepth="0x00000000" delayRate="0x00000000" delayFeedback="0x80000000" reverbAmount="0x80000000" arpeggiatorRate="0x00000000" stutterRate="0x00000000" sampleRateReduction="0x80000000" bitCrush="0x80000000" modFXOffset="0x00000000" modFXFeedback="0x00000000">
+                        <envelope1 attack="0x80000000" decay="0xE6666654" sustain="0x7FFFFFD2" release="0x80000000" />
+                        <envelope2 attack="0xE6666654" decay="0xE6666654" sustain="0xFFFFFFE9" release="0xE6666654" />
+                        <patchCables>
+                            <patchCable source="velocity" destination="volume" amount="0x3FFFFFE8" />
+                            <patchCable source="aftertouch" destination="volume" amount="0x2A3D7094" />
+                            <patchCable source="y" destination="lpfFrequency" amount="0x19999990" />
+                        </patchCables>
+                        <equalizer bass="0x00000000" treble="0x00000000" bassFrequency="0x00000000" trebleFrequency="0x00000000" />
+                    </soundParams>
+                </noteRow>
+            </noteRows>
+        </instrumentClip>
+    </sessionClips>
+</song>
