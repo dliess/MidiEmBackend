@@ -74,7 +74,7 @@ ParameterStorageElement::updateActualValue() noexcept
       m_cachedLfoValue = m_lfo.calculateValue() * range;
       m_lfo.clearModifiers();
       m_actual += m_cachedLfoValue;
-      m_actual = util::clip(m_actual, 0.0f, range);
+      m_actual = limitValue(m_actual);
    }
    else
    {

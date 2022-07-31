@@ -28,7 +28,7 @@ inline float LFO::calculateValue() noexcept
 
    const auto fnVal = mpark::visit(
        util::overload{[t](auto&& f) { return f(t); }}, m_waveformVariant);
-   return m_actualAmplitude * fnVal;
+   return (m_actualAmplitude - 0.5f) * fnVal;
 };
 
 inline void LFO::calculateValueMods() noexcept

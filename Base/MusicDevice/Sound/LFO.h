@@ -8,8 +8,8 @@ namespace base::musicDevice::sound::lfo
 
 DECLARE_ENUM(Waveform, uint, Sine = 0, Square, Triangle, Saw, Random);
 
-constexpr float DefaultAmplitude = 0.0;
-constexpr float DefaultFrequency = 1.0;
+constexpr float DefaultAmplitude = 0.5;
+constexpr float DefaultFrequency = 0.5;
 constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
 constexpr int DefaultMultiplierExp = 0;
 constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
