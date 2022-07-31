@@ -193,12 +193,34 @@ void EventRouter::handlePressReleaseDirect(
               },
               [&mdIter, &eventDestination,
                &value](const EventDestination::Parameter& parameter) {
-                 if (value.value > 0)
+                 if(parameter.isList)
                  {
-                    const float incr =
-                        parameter.upwards ? value.value : -value.value;
-                    mdIter->second->soundHandler->incrementParameterValue(
-                        eventDestination.voiceIdx, parameter.id, incr, true);
+                  if (value.value > 0)
+                  {
+                     const float incr =
+                           parameter.upwards ? value.value : -value.value;
+                     mdIter->second->soundHandler->incrementParameterValue(
+                           eventDestination.voiceIdx, parameter.id, incr, true);
+                  }
+                 }
+                 else
+                 {
+                    if(value.value > 0)
+                    {
+                       const float actualVal = mdIter->second->soundHandler->getParameterValue(eventDestination.voiceIdx, parameter.id);
+                       if(std::fabs(actualVal - parameter.zeroVal) < std::numeric_limits<float>::epsilon())
+                       {
+                          if(parameter.valueAtPress)
+                          {
+                              mdIter->second->soundHandler->setParameterValue(eventDestination.voiceIdx, parameter.id, *parameter.valueAtPress);
+                          }
+                       }
+                       else
+                       {
+                          parameter.valueAtPress = mdIter->second->soundHandler->getParameterValue(eventDestination.voiceIdx, parameter.id);
+                          mdIter->second->soundHandler->setParameterValue(eventDestination.voiceIdx, parameter.id, parameter.zeroVal);
+                       }
+                    }
                  }
               },
               [](const EventDestination::InternalFunctionality& internalFunct) {

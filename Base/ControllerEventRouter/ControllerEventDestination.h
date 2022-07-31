@@ -32,6 +32,7 @@ struct EventDestination
       bool upwards{true};
       bool isList{false};
       int resolution {128};
+      float zeroVal {0};
       mutable int storedIncrements{0};
       mutable std::optional<float> valueAtPress{0};
    };
