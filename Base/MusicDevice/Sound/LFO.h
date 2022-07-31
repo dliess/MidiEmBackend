@@ -14,6 +14,29 @@ constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
 constexpr int DefaultMultiplierExp = 0;
 constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 
+enum class DirtyFlags {
+   Empty = 0,
+   Amplitude = 1,
+   Frequency = 2,
+   Waveform = 4,
+   MultiplierExp = 8
+};
+
+inline DirtyFlags operator|(DirtyFlags a, DirtyFlags b)
+{
+    return static_cast<DirtyFlags>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline DirtyFlags& operator|=(DirtyFlags& a, DirtyFlags b)
+{
+   a = a | b;
+   return a; 
+}
+inline int operator & (DirtyFlags a, DirtyFlags b)
+{
+   return static_cast<int>(a) & static_cast<int>(b);
+}
+
 class LFO
 {
 public:
@@ -32,6 +55,8 @@ public:
    [[nodiscard]] inline float amplitude() const noexcept;
    [[nodiscard]] inline float frequency() const noexcept;
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
+   [[nodiscard]] inline bool dirty() const noexcept;
+
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
 
@@ -84,13 +109,8 @@ private:
 
    inline void setWaveformVariant(Waveform waveform) noexcept;
    inline void clearModifiers() noexcept;
-   struct DirtyFlags {
-      bool amplitude{false};
-      bool frequency{false};
-      bool waveform{false};
-      bool multiplierExp{false};
-   };
-   DirtyFlags m_dirtyFlagsUi;
+
+   DirtyFlags m_dirtyFlagsUi{DirtyFlags::Empty};
 };
 
 } // namespace base::musicDevice::sound::lfo

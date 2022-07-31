@@ -60,7 +60,7 @@ inline std::optional<std::pair<float, float>>
 ParameterStorageElement::updateActualValue() noexcept
 {
    m_lfo.calculateValueMods();
-   if (m_lfo.getAndResetJustGotDisabled())
+   if (m_lfo.getAndResetJustGotDisabled() || m_lfo.dirty())
    {
       m_dirtyFlagRt = true;
       m_dirtyFlagUi = true;
