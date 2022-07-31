@@ -5,12 +5,13 @@
 #include "LFO.h"
 #include "Overload.h"
 #include "clip.h"
+#include "FloatEqual.h"
 
 namespace base::musicDevice::sound::lfo
 {
 inline bool LFO::enabled() const noexcept
 {
-   return (modifiedAmplitude() != 0.0) && (modifiedFrequency() != 0.0);
+   return (!util::floatEqual(modifiedAmplitude(), 0.5f)) && (modifiedFrequency() != 0.0);
 }
 
 inline float LFO::calculateValue() noexcept
@@ -28,7 +29,7 @@ inline float LFO::calculateValue() noexcept
 
    const auto fnVal = mpark::visit(
        util::overload{[t](auto&& f) { return f(t); }}, m_waveformVariant);
-   return (m_actualAmplitude - 0.5f) * fnVal;
+   return (m_actualAmplitude - 0.5f) * 2.0f * fnVal;
 };
 
 inline void LFO::calculateValueMods() noexcept
@@ -42,7 +43,7 @@ inline void LFO::calculateValueMods() noexcept
    if (m_actualAmplitude != modifiedAmplitude())
    {
       m_actualAmplitude = modifiedAmplitude();
-      if (m_actualAmplitude == 0.0)
+      if (util::floatEqual(m_actualAmplitude, 0.5f))
       {
          m_justGotDisabled = true;
       }
@@ -108,7 +109,7 @@ inline void LFO::setFrequency(float frequency) noexcept
 
 inline void LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 {
-   multiplierExp = util::clip(multiplierExp, uint32_t(1), MAX_MULTIPLIER_EXP);
+   multiplierExp = util::clip(int(multiplierExp), 0, int(MAX_MULTIPLIER_EXP));
    if (m_multiplierExp != multiplierExp)
    {
       m_multiplierExp = multiplierExp;

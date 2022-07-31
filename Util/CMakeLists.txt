@@ -13,6 +13,7 @@ set(SOURCES
 set(HEADERS
     "FdSet.h"
     "error_msg.hpp"
+    "FloatEqual.h"
 )
 
 set(TARGET_NAME Util)
