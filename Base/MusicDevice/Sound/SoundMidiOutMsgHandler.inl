@@ -170,7 +170,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
                 engineDesc.noteSettings->midi->pitchRouting->mapping
                     ? engineDesc.noteSettings->midi->pitchRouting->mapping->
                       operator[](note - noteRangeStart)
-                    : note / 127.0f;
+                    : float(note - noteRangeStart) / (noteRangeEnd - noteRangeStart + 1);
 
             sendSoundParameter(voiceIndex,
                                engineDesc.noteSettings->midi->pitchRouting

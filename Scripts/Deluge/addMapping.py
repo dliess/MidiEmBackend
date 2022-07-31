@@ -47,7 +47,7 @@ def createInputDeviceForNoteMapping(sound):
     sound.insert(1, element)
 
 instruments = song.find("instruments")
-for kit in instruments.findall("kit"):
+for kit in reversed(instruments.findall("kit")):
     ss = kit.find("soundSources")
     for sound in ss.findall("sound"):
         if(kitChannelNr <= kitChannelNrMax):
@@ -55,7 +55,7 @@ for kit in instruments.findall("kit"):
             createKitNoteMapping(sound, kitChannelNr)
             kitChannelNr = kitChannelNr + 1
 
-for sound in instruments.findall("sound"):
+for sound in reversed(instruments.findall("sound")):
     if(synthChannelNr <= synthChannelNrMax):
         createMidiKnobs(sound, synthChannelNr)
         createInputDeviceForNoteMapping(sound)

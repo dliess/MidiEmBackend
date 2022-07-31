@@ -785,8 +785,8 @@
         "from": "commonEngine",
         "noteSettings": {
           "noteRange": {
-            "from": 0,
-            "to": 128
+            "from": 20,
+            "to": 110
           },
           "midi": {
             "pitchRouting": {
