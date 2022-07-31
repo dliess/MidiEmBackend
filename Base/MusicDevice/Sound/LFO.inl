@@ -11,12 +11,11 @@ namespace base::musicDevice::sound::lfo
 {
 inline bool LFO::enabled() const noexcept
 {
-   return (!util::floatEqual(modifiedAmplitude(), 0.5f)) && (modifiedFrequency() != 0.0);
+   return (!util::floatEqual(m_actualAmplitude, 0.5f)) && (m_actualFrequency != 0.0);
 }
 
 inline float LFO::calculateValue() noexcept
 {
-   calculateValueMods();
    const auto beat   = tempo::BeatTick::instance().getBeat();
    auto deltaBeat    = beat - m_beatAtWaveStart;
    const auto period = 1.0 / (m_actualFrequency * (1 << m_actualMultiplierExp));
@@ -34,33 +33,39 @@ inline float LFO::calculateValue() noexcept
 
 inline void LFO::calculateValueMods() noexcept
 {
-   if (m_actualWaveform != modifiedWaveform())
+   const Waveform mWaveform = modifiedWaveform();
+   const float mAmplitude = modifiedAmplitude();
+   const float mFrequency = modifiedFrequency();
+   const uint32_t mMultiplierExp = modifiedMultiplierExp();
+   clearModifiers();
+
+   if (m_actualWaveform != mWaveform)
    {
-      m_actualWaveform = modifiedWaveform();
+      m_actualWaveform = mWaveform;
       setWaveformVariant(m_actualWaveform);
       m_dirtyFlagsUi.waveform = true;
    }
-   if (m_actualAmplitude != modifiedAmplitude())
+   if (m_actualAmplitude != mAmplitude)
    {
-      m_actualAmplitude = modifiedAmplitude();
+      m_actualAmplitude = mAmplitude;
       if (util::floatEqual(m_actualAmplitude, 0.5f))
       {
          m_justGotDisabled = true;
       }
       m_dirtyFlagsUi.amplitude = true;
    }
-   if (m_actualFrequency != modifiedFrequency())
+   if (m_actualFrequency != mFrequency)
    {
-      m_actualFrequency = modifiedFrequency();
+      m_actualFrequency = mFrequency;
       if (m_actualFrequency == 0.0)
       {
          m_justGotDisabled = true;
       }
       m_dirtyFlagsUi.frequency = true;
    }
-   if (m_actualMultiplierExp != modifiedMultiplierExp())
+   if (m_actualMultiplierExp != mMultiplierExp)
    {
-      m_actualMultiplierExp        = modifiedMultiplierExp();
+      m_actualMultiplierExp        = mMultiplierExp;
       m_dirtyFlagsUi.multiplierExp = true;
    }
 }

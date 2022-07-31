@@ -59,6 +59,7 @@ inline void ParameterStorageElement::applyModifier(
 inline std::optional<std::pair<float, float>>
 ParameterStorageElement::updateActualValue() noexcept
 {
+   m_lfo.calculateValueMods();
    if (m_lfo.getAndResetJustGotDisabled())
    {
       m_dirtyFlagRt = true;
@@ -75,7 +76,6 @@ ParameterStorageElement::updateActualValue() noexcept
    if (m_lfo.enabled())
    {
       m_cachedLfoValue = m_lfo.calculateValue() * range;
-      m_lfo.clearModifiers();
       m_actual += m_cachedLfoValue;
       m_actual = limitValue(m_actual);
    }

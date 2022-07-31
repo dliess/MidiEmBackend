@@ -17,6 +17,7 @@ constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 class LFO
 {
 public:
+   inline void calculateValueMods() noexcept;
    [[nodiscard]] inline bool enabled() const noexcept;
    [[nodiscard]] inline float calculateValue() noexcept;
    inline void setWaveform(Waveform waveform) noexcept;
@@ -33,7 +34,6 @@ public:
    [[nodiscard]] inline uint32_t multiplierExp() const noexcept;
    inline void reset() noexcept;
    inline bool getAndResetJustGotDisabled() noexcept;
-   inline void clearModifiers() noexcept;
 
    template<typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
    void uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw, CB_mult&& cb_mult);
@@ -83,7 +83,7 @@ private:
    [[nodiscard]] inline uint32_t modifiedMultiplierExp() const noexcept;
 
    inline void setWaveformVariant(Waveform waveform) noexcept;
-   inline void calculateValueMods() noexcept;
+   inline void clearModifiers() noexcept;
    struct DirtyFlags {
       bool amplitude{false};
       bool frequency{false};
