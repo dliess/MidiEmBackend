@@ -207,7 +207,7 @@ void ArpSequenceFactory::expandToArpSequence(int offsetNote,
       else
       {
          m_rArpSequence.push_back(
-             keepInNoteRange(offsetNote + seqNote.note - seqOffset), velocity);
+             keepInNoteRange(offsetNote + seqNote.note - seqOffset), velocity * seqNote.velocity);
       }
    }
 }
