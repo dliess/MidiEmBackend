@@ -155,11 +155,12 @@ void EventRoutes::connectWidget2Notes(const MusicDeviceId& controllerID,
                                       const MusicDeviceId& soundDevID,
                                       int voiceIdx)
 {
-   const EventIdExt from{
-       controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
-                             eventIdx, channelIdx}};
-   const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
-   insert(from, to);
+   // This makes no sense I think
+   //const EventIdExt from{
+   //    controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
+   //                          eventIdx, channelIdx}};
+   //const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
+   //insert(from, to);
 }
 
 void EventRoutes::connectWidget2Parameter(const MusicDeviceId& controllerID,
