@@ -77,13 +77,12 @@ ParameterStorageElement::updateActualValue() noexcept
    {
       m_cachedLfoValue = m_lfo.calculateValue() * range;
       m_actual += m_cachedLfoValue;
-      m_actual = limitValue(m_actual);
    }
    else
    {
       m_cachedLfoValue = 0.0;
    }
-
+   m_actual = limitValue(m_actual);
    m_dirtyFlagRt = false;
    if (m_isListIndex)
    {
