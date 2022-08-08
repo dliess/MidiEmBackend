@@ -50,25 +50,23 @@ public:
    void musicDeviceAppeared(const MusicDeviceId& mdId);
    void musicDeviceDisappeared(const MusicDeviceId& mdId);
    void connectNotes2Notes(const MusicDeviceId& controllerID, int widgetIdx,
-                             int note, int eventIdx, int channelIdx,
-                             const MusicDeviceId& soundDevID, int voiceIdx);
-   void connectNotes2Parameter(const MusicDeviceId& controllerID,
-                                 int widgetIdx, int note, int eventIdx,
-                                 int channelIdx,
-                                 const MusicDeviceId& soundDevID, int voiceIdx,
-                                 int parameterIdx,
-                                 ParameterDestination paramFunc);
+                           int note, int eventIdx, int channelIdx,
+                           const MusicDeviceId& soundDevID, int voiceIdx);
+   void connectNotes2Parameter(const MusicDeviceId& controllerID, int widgetIdx,
+                               int note, int eventIdx, int channelIdx,
+                               const MusicDeviceId& soundDevID, int voiceIdx,
+                               int parameterIdx,
+                               ParameterDestination paramFunc);
    void connectWidget2Notes(const MusicDeviceId& controllerID, int widgetIdx,
-                              int widgetCoordX, int widgetCoordY, int eventIdx,
-                              int channelIdx, const MusicDeviceId& soundDevID,
-                              int voiceIdx);
+                            int widgetCoordX, int widgetCoordY, int eventIdx,
+                            int channelIdx, const MusicDeviceId& soundDevID,
+                            int voiceIdx);
    void connectWidget2Parameter(const MusicDeviceId& controllerID,
-                                  int widgetIdx, int widgetCoordX,
-                                  int widgetCoordY, int eventIdx,
-                                  int channelIdx,
-                                  const MusicDeviceId& soundDevID, int voiceIdx,
-                                  int parameterIdx,
-                                  ParameterDestination paramFunc);
+                                int widgetIdx, int widgetCoordX,
+                                int widgetCoordY, int eventIdx, int channelIdx,
+                                const MusicDeviceId& soundDevID, int voiceIdx,
+                                int parameterIdx,
+                                ParameterDestination paramFunc);
    void eraseConnectionForNotes(const MusicDeviceId& controllerID,
                                 int widgetIdx, int note, int eventIdx,
                                 int channelIdx);
@@ -76,6 +74,11 @@ public:
                                  int widgetIdx, int widgetCoordX,
                                  int widgetCoordY, int eventIdx,
                                  int channelIdx);
+   void eraseConnectionsToDestinationNotes(const MusicDeviceId& soundDevID,
+                                           int voiceIdx);
+   void eraseConnectionsToDestinationParameter(const MusicDeviceId& soundDevID,
+                                               int voiceIdx, int parameterIdx,
+                                               ParameterDestination paramFunc);
 
    CB_SIGNAL(ConnectionLoadedNotes2Notes, const MusicDeviceId& controllerID,
              int widgetIdx, int note, int eventIdx, int channelIdx,

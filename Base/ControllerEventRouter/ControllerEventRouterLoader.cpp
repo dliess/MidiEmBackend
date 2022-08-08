@@ -199,6 +199,45 @@ void EventRoutes::eraseConnectionForWidget(const MusicDeviceId& controllerID,
    erase(from);
 }
 
+void EventRoutes::eraseConnectionsToDestinationNotes(
+    const MusicDeviceId& soundDevID, int voiceIdx)
+{
+   std::vector<EventIdExt> toErase;
+   const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
+   for(auto& e : m_data)
+   {
+      if(e.to == to)
+      {
+         toErase.push_back(e.from);
+      }
+   }
+   for(const auto& from : toErase)
+   {
+      erase(from);
+   }
+}
+
+void EventRoutes::eraseConnectionsToDestinationParameter(
+    const MusicDeviceId& soundDevID, int voiceIdx, int parameterIdx,
+    ParameterDestination paramFunc)
+{
+   std::vector<EventIdExt> toErase;
+   const EventDestinationL to{
+       soundDevID, voiceIdx,
+       EventDestination::ParameterBase{parameterIdx, paramFunc}};
+   for(auto& e : m_data)
+   {
+      if(e.to == to)
+      {
+         toErase.push_back(e.from);
+      }
+   }
+   for(const auto& from : toErase)
+   {
+      erase(from);
+   }
+}
+
 void EventRoutes::insert(const EventIdExt& from, const EventDestinationL& to)
 {
    auto it = std::find_if(m_data.begin(), m_data.end(),
