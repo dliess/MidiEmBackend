@@ -9,69 +9,74 @@
 using namespace base::instruments;
 
 InstrumentsFactory::InstrumentsFactory(
-   Instruments& rInstruments, musicDevice::Holder& rMusicDeviceHolder) noexcept
-   :
-   m_rInstruments(rInstruments)
+    Instruments& rInstruments, musicDevice::Holder& rMusicDeviceHolder) noexcept
+    :
+    m_rInstruments(rInstruments)
 {
    rMusicDeviceHolder.musicDevices.onAdded(
-      [this,
-       &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
-         add(std::move(ptr));
-         m_rInstruments.triggerChanged();
-         //spdlog::info( "m_rInstruments.triggerChanged();");
-      });
+       [this,
+        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
+          add(std::move(ptr));
+          m_rInstruments.triggerChanged();
+          // spdlog::info( "m_rInstruments.triggerChanged();");
+       });
    rMusicDeviceHolder.musicDevices.onAboutToRemove(
-      [this,
-       &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
-         remove(std::move(ptr));
-         m_rInstruments.triggerChanged();
-         //spdlog::info( "m_rInstruments.triggerChanged();");
-      });
+       [this,
+        &rMusicDeviceHolder](std::shared_ptr<musicDevice::MusicDevice> ptr) {
+          remove(std::move(ptr));
+          m_rInstruments.triggerChanged();
+          // spdlog::info( "m_rInstruments.triggerChanged();");
+       });
 }
 
 void InstrumentsFactory::fillReferencesInOtherInstruments(
-   const std::shared_ptr<musicDevice::MusicDevice>& pMusicDevice) noexcept
+    const std::shared_ptr<musicDevice::MusicDevice>& pMusicDevice) noexcept
 {
    for (auto& kitInstrument : m_rInstruments.data.kitInstruments)
    {
       kitInstrument->forEachVoice([&pMusicDevice](VoiceDescr& voiceDescr) {
          if (voiceDescr.soundDeviceId == pMusicDevice->deviceId())
          {
-            voiceDescr.pSoundDevice = pMusicDevice;
+            voiceDescr.pSoundDevice = pMusicDevice->soundHandler
+                                          ? &pMusicDevice->soundHandler.value()
+                                          : nullptr;
          }
       });
    }
    for (auto& melodicInstrument : m_rInstruments.data.melodicInstruments)
    {
       melodicInstrument->forEachVoice(
-         [&pMusicDevice](MelodicInstrumentVoice& voice) {
-            if (voice.soundDeviceId == pMusicDevice->deviceId())
-            {
-               voice.pSoundDevice = pMusicDevice;
-            }
-         });
+          [&pMusicDevice](MelodicInstrumentVoice& voice) {
+             if (voice.soundDeviceId == pMusicDevice->deviceId())
+             {
+                voice.pSoundDevice = pMusicDevice;
+             }
+          });
    }
 }
 
 void InstrumentsFactory::addDefaultInstrumentsFor(
-   const std::shared_ptr<musicDevice::MusicDevice>& pMusicDevice) noexcept
+    const std::shared_ptr<musicDevice::MusicDevice>& pMusicDevice) noexcept
 {
    switch (pMusicDevice->description()->soundSection->defaultInstrumentType)
    {
       case base::musicDevice::description::sound::Section::
-         DefaultInstrumentType::DrumKit:
+          DefaultInstrumentType::DrumKit:
       {
-         auto kitInstrument = std::make_shared<KitInstrument>(pMusicDevice->description()->productName);
+         auto kitInstrument = std::make_shared<KitInstrument>(
+             pMusicDevice->description()->productName);
          kitInstrument->markAsDefaultCreated();
          for (int i = 0;
               i < pMusicDevice->description()->soundSection->voices.size(); ++i)
          {
             CompositeSound kompositeSound;
             kompositeSound.name =
-               pMusicDevice->description()->soundSection->voices[i].name;
+                pMusicDevice->description()->soundSection->voices[i].name;
             VoiceDescr voiceDescr;
             voiceDescr.soundDeviceId = pMusicDevice->deviceId();
-            voiceDescr.pSoundDevice  = pMusicDevice;
+            voiceDescr.pSoundDevice  = pMusicDevice->soundHandler
+                                           ? &pMusicDevice->soundHandler.value()
+                                           : nullptr;
             voiceDescr.voiceIndex    = i;
             voiceDescr.noteOffset    = 0;
             kompositeSound.voices.push_back(voiceDescr);
@@ -81,7 +86,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
          break;
       }
       case base::musicDevice::description::sound::Section::
-         DefaultInstrumentType::InstrumentPerVoice:
+          DefaultInstrumentType::InstrumentPerVoice:
       {
          for (int i = 0;
               i < pMusicDevice->description()->soundSection->voices.size(); ++i)
@@ -92,41 +97,44 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             auto melodicInstrument = std::make_shared<MelodicInstrument>(name);
             melodicInstrument->markAsDefaultCreated();
             MelodicInstrumentVoice voice;
-            voice.pSoundDevice = pMusicDevice;
+            voice.pSoundDevice  = pMusicDevice;
             voice.soundDeviceId = pMusicDevice->deviceId();
-            voice.voiceIndex = i;
+            voice.voiceIndex    = i;
             melodicInstrument->addVoice(std::move(voice));
-            m_rInstruments.data.melodicInstruments.push_back(std::move(melodicInstrument));
+            m_rInstruments.data.melodicInstruments.push_back(
+                std::move(melodicInstrument));
          }
          break;
       }
       case base::musicDevice::description::sound::Section::
-         DefaultInstrumentType::OnePolyphonicInstrument:
+          DefaultInstrumentType::OnePolyphonicInstrument:
       {
-         auto melodicInstrument = std::make_shared<MelodicInstrument>(pMusicDevice->description()->productName);
+         auto melodicInstrument = std::make_shared<MelodicInstrument>(
+             pMusicDevice->description()->productName);
          melodicInstrument->markAsDefaultCreated();
          for (int i = 0;
               i < pMusicDevice->description()->soundSection->voices.size(); ++i)
          {
             MelodicInstrumentVoice voice;
-            voice.pSoundDevice = pMusicDevice;
+            voice.pSoundDevice  = pMusicDevice;
             voice.soundDeviceId = pMusicDevice->deviceId();
-            voice.voiceIndex = i;
+            voice.voiceIndex    = i;
             melodicInstrument->addVoice(std::move(voice));
          }
-         m_rInstruments.data.melodicInstruments.push_back(std::move(melodicInstrument));
+         m_rInstruments.data.melodicInstruments.push_back(
+             std::move(melodicInstrument));
          break;
       }
       default:
       {
-         spdlog::error( "INTERNAL ERROR");
+         spdlog::error("INTERNAL ERROR");
          break;
       }
    }
 }
 
 void InstrumentsFactory::add(
-   std::shared_ptr<musicDevice::MusicDevice> pMusicDevice)
+    std::shared_ptr<musicDevice::MusicDevice> pMusicDevice)
 {
    assert(pMusicDevice);
    if (!pMusicDevice->description()->soundSection)
@@ -138,7 +146,7 @@ void InstrumentsFactory::add(
 }
 
 void InstrumentsFactory::remove(
-   std::shared_ptr<musicDevice::MusicDevice> pMusicDevice)
+    std::shared_ptr<musicDevice::MusicDevice> pMusicDevice)
 {
    {
       auto it = m_rInstruments.data.kitInstruments.begin();
@@ -146,16 +154,16 @@ void InstrumentsFactory::remove(
       {
          bool isDeviceContained{false};
          (*it)->forEachVoice(
-            [&isDeviceContained, &pMusicDevice](VoiceDescr& voiceDescr) {
-               if (voiceDescr.pSoundDevice == pMusicDevice)
-               {
-                  isDeviceContained = true;
-                  voiceDescr.pSoundDevice.reset();
-               }
-            });
+             [&isDeviceContained, &pMusicDevice](VoiceDescr& voiceDescr) {
+                if (voiceDescr.pSoundDevice == &pMusicDevice->soundHandler.value())
+                {
+                   isDeviceContained       = true;
+                   voiceDescr.pSoundDevice = nullptr;
+                }
+             });
          if (isDeviceContained && (*it)->isDefaultCreated())
          {
-            spdlog::info( "Erasing");
+            spdlog::info("Erasing");
             it = m_rInstruments.data.kitInstruments.erase(it);
          }
          else
@@ -169,14 +177,14 @@ void InstrumentsFactory::remove(
       while (it != m_rInstruments.data.melodicInstruments.end())
       {
          bool isDeviceContained{false};
-         (*it)->forEachVoice(
-            [&isDeviceContained, &pMusicDevice](MelodicInstrumentVoice& voice) {
-               if (voice.pSoundDevice == pMusicDevice)
-               {
-                  isDeviceContained = true;
-                  voice.pSoundDevice.reset();
-               }
-            });
+         (*it)->forEachVoice([&isDeviceContained,
+                              &pMusicDevice](MelodicInstrumentVoice& voice) {
+            if (voice.pSoundDevice == pMusicDevice)
+            {
+               isDeviceContained = true;
+               voice.pSoundDevice.reset();
+            }
+         });
          if (isDeviceContained && (*it)->isDefaultCreated())
          {
             it = m_rInstruments.data.melodicInstruments.erase(it);

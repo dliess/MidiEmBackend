@@ -7,7 +7,7 @@ namespace base::instruments
 template<typename T>
 void KitInstrument::addSound(T&& kompositeSound) noexcept
 {
-   m_sounds.emplace_back(std::forward<T>(kompositeSound));
+   m_compositeSounds.emplace_back(std::forward<T>(kompositeSound));
 };
 
 inline std::string KitInstrument::name() const noexcept { return m_name; }
@@ -19,18 +19,18 @@ inline void KitInstrument::setName(const std::string& name) noexcept
 
 inline std::vector<CompositeSound>& KitInstrument::sounds() noexcept
 {
-   return m_sounds;
+   return m_compositeSounds;
 }
 
 inline const std::vector<CompositeSound>& KitInstrument::sounds() const noexcept
 {
-   return m_sounds;
+   return m_compositeSounds;
 }
 
 template <typename Cb>
 void KitInstrument::forEachVoice(Cb&& cb)
 {
-   for(auto& sound : m_sounds)
+   for(auto& sound : m_compositeSounds)
    {
       for(auto& voice : sound.voices)
       {

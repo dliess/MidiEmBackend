@@ -43,7 +43,7 @@ public:
 
 private:
    std::string m_name;
-   std::vector<CompositeSound> m_sounds;
+   std::vector<CompositeSound> m_compositeSounds;
 };
 
 } // namespace instruments

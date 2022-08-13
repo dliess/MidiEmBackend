@@ -8,8 +8,8 @@
 using namespace base::instruments;
 
 Instruments::Instruments(
-   musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
-   m_rMusicDeviceContainer(rMusicDeviceContainer)
+    musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
+    m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
 }
 
@@ -33,12 +33,12 @@ void Instruments::triggerChanged() noexcept
 void Instruments::createKitInstrument(std::string name) noexcept
 {
    data.kitInstruments.push_back(
-      std::make_shared<KitInstrument>(std::move(name)));
+       std::make_shared<KitInstrument>(std::move(name)));
    triggerChanged();
 }
 
 void Instruments::removeKitInstrument(
-   const util::Identifiable::UUID& instrumentId) noexcept
+    const util::Identifiable::UUID& instrumentId) noexcept
 {
    for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
         ++it)
@@ -54,12 +54,12 @@ void Instruments::removeKitInstrument(
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
    data.melodicInstruments.push_back(
-      std::move(std::make_shared<MelodicInstrument>(std::move(name))));
+       std::move(std::make_shared<MelodicInstrument>(std::move(name))));
    triggerChanged();
 }
 
 void Instruments::removeMelodicInstrument(
-   const util::Identifiable::UUID& instrumentId) noexcept
+    const util::Identifiable::UUID& instrumentId) noexcept
 {
    for (auto it = data.melodicInstruments.begin();
         it != data.melodicInstruments.end(); ++it)
@@ -74,13 +74,14 @@ void Instruments::removeMelodicInstrument(
 }
 
 void Instruments::createKitInstrumentSound(
-   const util::Identifiable::UUID& instrumentId, std::string soundName) noexcept
+    const util::Identifiable::UUID& instrumentId,
+    std::string soundName) noexcept
 {
    auto it = std::find_if(
-      data.kitInstruments.begin(), data.kitInstruments.end(),
-      [&instrumentId](const std::shared_ptr<KitInstrument>& instr) {
-         return instr->id() == instrumentId;
-      });
+       data.kitInstruments.begin(), data.kitInstruments.end(),
+       [&instrumentId](const std::shared_ptr<KitInstrument>& instr) {
+          return instr->id() == instrumentId;
+       });
    if (it != data.kitInstruments.end())
    {
       (*it)->addSound(CompositeSound(std::move(soundName)));
@@ -90,15 +91,15 @@ void Instruments::createKitInstrumentSound(
 }
 
 void Instruments::removeKitInstrumentSound(
-   const util::Identifiable::UUID& kitSoundId) noexcept
+    const util::Identifiable::UUID& kitSoundId) noexcept
 {
    for (auto& pKitInstrument : data.kitInstruments)
    {
-      auto it = std::find_if(pKitInstrument->sounds().begin(),
-                             pKitInstrument->sounds().end(),
-                             [&kitSoundId](const CompositeSound& kompositeSound) {
-                                return kompositeSound.id() == kitSoundId;
-                             });
+      auto it = std::find_if(
+          pKitInstrument->sounds().begin(), pKitInstrument->sounds().end(),
+          [&kitSoundId](const CompositeSound& kompositeSound) {
+             return kompositeSound.id() == kitSoundId;
+          });
       if (it != pKitInstrument->sounds().end())
       {
          pKitInstrument->sounds().erase(it);
@@ -109,16 +110,16 @@ void Instruments::removeKitInstrumentSound(
 }
 
 void Instruments::addVoiceToKitInstrumentSound(
-   const util::Identifiable::UUID& kitSoundId,
-   const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
+    const util::Identifiable::UUID& kitSoundId,
+    const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
 {
    for (auto& pKitInstrument : data.kitInstruments)
    {
-      auto it = std::find_if(pKitInstrument->sounds().begin(),
-                             pKitInstrument->sounds().end(),
-                             [&kitSoundId](const CompositeSound& kompositeSound) {
-                                return kompositeSound.id() == kitSoundId;
-                             });
+      auto it = std::find_if(
+          pKitInstrument->sounds().begin(), pKitInstrument->sounds().end(),
+          [&kitSoundId](const CompositeSound& kompositeSound) {
+             return kompositeSound.id() == kitSoundId;
+          });
       if (it != pKitInstrument->sounds().end())
       {
          VoiceDescr voiceDescriptor;
@@ -127,7 +128,10 @@ void Instruments::addVoiceToKitInstrumentSound(
          auto sndDevIt = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
          if (sndDevIt != m_rMusicDeviceContainer.end())
          {
-            voiceDescriptor.pSoundDevice = sndDevIt->second;
+            voiceDescriptor.pSoundDevice =
+                sndDevIt->second->soundHandler
+                    ? &sndDevIt->second->soundHandler.value()
+                    : nullptr;
          }
          it->voices.push_back(voiceDescriptor);
          triggerChanged();
@@ -137,7 +141,7 @@ void Instruments::addVoiceToKitInstrumentSound(
 }
 
 void Instruments::removeVoiceFromInstrumentSound(
-   const util::Identifiable::UUID& voiceId) noexcept
+    const util::Identifiable::UUID& voiceId) noexcept
 {
    for (auto& pKitInstrument : data.kitInstruments)
    {
@@ -155,20 +159,20 @@ void Instruments::removeVoiceFromInstrumentSound(
 }
 
 void Instruments::addVoiceToMelodicInstrument(
-   const util::Identifiable::UUID& instrumentId,
-   const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
+    const util::Identifiable::UUID& instrumentId,
+    const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
 {
    auto it = std::find_if(
-      data.melodicInstruments.begin(), data.melodicInstruments.end(),
-      [&instrumentId](const std::shared_ptr<MelodicInstrument>& instr) {
-         return instr->id() == instrumentId;
-      });
+       data.melodicInstruments.begin(), data.melodicInstruments.end(),
+       [&instrumentId](const std::shared_ptr<MelodicInstrument>& instr) {
+          return instr->id() == instrumentId;
+       });
    if (it != data.melodicInstruments.end())
    {
       MelodicInstrumentVoice voiceDescriptor;
       voiceDescriptor.soundDeviceId = soundDeviceId;
       voiceDescriptor.voiceIndex    = voiceIdx;
-      auto sndDevIt       = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
+      auto sndDevIt = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
       if (sndDevIt != m_rMusicDeviceContainer.end())
       {
          voiceDescriptor.pSoundDevice = sndDevIt->second;
@@ -178,15 +182,15 @@ void Instruments::addVoiceToMelodicInstrument(
 }
 
 void Instruments::removeVoiceFromMelodicInstrument(
-   const util::Identifiable::UUID& voiceId) noexcept
+    const util::Identifiable::UUID& voiceId) noexcept
 {
-   for(auto& pMelodicInstrument : data.melodicInstruments)
+   for (auto& pMelodicInstrument : data.melodicInstruments)
    {
-      auto it = std::find_if(
-         pMelodicInstrument->voices().begin(), pMelodicInstrument->voices().end(),
-         [&voiceId](const MelodicInstrumentVoice& voice) {
-            return voice.id() == voiceId;
-         });
+      auto it = std::find_if(pMelodicInstrument->voices().begin(),
+                             pMelodicInstrument->voices().end(),
+                             [&voiceId](const MelodicInstrumentVoice& voice) {
+                                return voice.id() == voiceId;
+                             });
       pMelodicInstrument->voices().erase(it);
    }
 }

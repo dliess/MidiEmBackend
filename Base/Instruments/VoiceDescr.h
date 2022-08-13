@@ -3,17 +3,17 @@
 
 #include "Identifiable.h"
 #include "MusicDevice.h"
-#include "MusicDeviceHolder.h"
+#include "SoundHandler.h"
 
 namespace base::instruments
 {
 
 struct VoiceDescr : public util::Identifiable
 {
+   musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    musicDevice::MusicDeviceId soundDeviceId;
-   std::shared_ptr<musicDevice::MusicDevice> pSoundDevice;
-   int voiceIndex;
-   int noteOffset;
+   int voiceIndex{0};
+   int noteOffset{0};
 };
 
 }   // namespace base::instruments
