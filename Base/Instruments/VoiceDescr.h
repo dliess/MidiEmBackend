@@ -14,7 +14,6 @@ struct VoiceDescr : public util::Identifiable
    std::shared_ptr<musicDevice::MusicDevice> pSoundDevice;
    int voiceIndex;
    int noteOffset;
-   inline void updateMusicDevicePtr(musicDevice::Holder& rMusicDeviceHolder) noexcept;
 };
 
 }   // namespace base::instruments
