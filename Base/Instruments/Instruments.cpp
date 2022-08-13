@@ -122,7 +122,7 @@ void Instruments::addVoiceToKitInstrumentSound(
           });
       if (it != pKitInstrument->sounds().end())
       {
-         VoiceDescr voiceDescriptor;
+         Voice voiceDescriptor;
          voiceDescriptor.soundDeviceId = soundDeviceId;
          voiceDescriptor.voiceIndex    = voiceIdx;
          auto sndDevIt = m_rMusicDeviceContainer.findByDeviceId(soundDeviceId);
@@ -148,8 +148,8 @@ void Instruments::removeVoiceFromInstrumentSound(
       for (auto& sound : pKitInstrument->sounds())
       {
          auto it = std::find_if(sound.voices.begin(), sound.voices.end(),
-                                [&voiceId](const VoiceDescr& voiceDescr) {
-                                   return voiceDescr.id() == voiceId;
+                                [&voiceId](const Voice& voice) {
+                                   return voice.id() == voiceId;
                                 });
          sound.voices.erase(it);
          triggerChanged();

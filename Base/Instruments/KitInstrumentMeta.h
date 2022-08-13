@@ -21,11 +21,11 @@ inline auto registerMembers<base::instruments::KitInstrument>()
 }
 
 template<>
-inline auto registerMembers<base::instruments::VoiceDescr>()
+inline auto registerMembers<base::instruments::Voice>()
 {
-   return members(member("soundDeviceId", &base::instruments::VoiceDescr::soundDeviceId),
-                  member("voiceIndex", &base::instruments::VoiceDescr::voiceIndex),
-                  member("noteOffset", &base::instruments::VoiceDescr::noteOffset));
+   return members(member("soundDeviceId", &base::instruments::Voice::soundDeviceId),
+                  member("voiceIndex", &base::instruments::Voice::voiceIndex),
+                  member("noteOffset", &base::instruments::Voice::noteOffset));
 }
 
 template<>

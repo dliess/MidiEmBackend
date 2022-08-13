@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_VOICE_DESCR_H
-#define INSTRUMENTS_VOICE_DESCR_H
+#ifndef INSTRUMENTS_INSTRUMENT_VOICE_H
+#define INSTRUMENTS_INSTRUMENT_VOICE_H
 
 #include "Identifiable.h"
 #include "MusicDevice.h"
@@ -8,7 +8,7 @@
 namespace base::instruments
 {
 
-struct VoiceDescr : public util::Identifiable
+struct Voice : public util::Identifiable
 {
    musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    musicDevice::MusicDeviceId soundDeviceId;
@@ -17,7 +17,5 @@ struct VoiceDescr : public util::Identifiable
 };
 
 }   // namespace base::instruments
-
-#include "VoiceDescr.inl"
 
 #endif

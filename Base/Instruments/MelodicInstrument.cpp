@@ -57,11 +57,11 @@ void MelodicInstrument::noteOff(int voiceIdx, int note, float velocity) noexcept
 
 void MelodicInstrument::pitchBend(float value) noexcept
 {
-   for (auto& voiceDescr : m_voices)
+   for (auto& voice : m_voices)
    {
       if (m_voices[m_currentVoiceIndex].pSoundDevice)
          m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->pitchBend(
-            voiceDescr.voiceIndex, value);
+            voice.voiceIndex, value);
    }
 }
 
@@ -75,12 +75,12 @@ void MelodicInstrument::pitchBend(int voiceIdx, float value) noexcept
 
 void MelodicInstrument::parameterChange(int parameterId, float value) noexcept
 {
-   for (auto& voiceDescr : m_voices)
+   for (auto& voice : m_voices)
    {
       if (m_voices[m_currentVoiceIndex].pSoundDevice)
          m_voices[m_currentVoiceIndex]
             .pSoundDevice->soundHandler->setParameterValue(
-               voiceDescr.voiceIndex, parameterId, value);
+               voice.voiceIndex, parameterId, value);
    }
 }
 

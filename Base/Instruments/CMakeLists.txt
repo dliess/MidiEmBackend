@@ -12,8 +12,7 @@ set(SOURCES
 set(HEADERS
    "CompositeSound.h"
    "CompositeSound.inl"
-   "VoiceDescr.h"
-   "VoiceDescr.inl"
+   "InstrumentVoice.h"
 )
 
 add_library(Instruments STATIC ${SOURCES} ${HEADERS})

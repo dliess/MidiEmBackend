@@ -34,10 +34,10 @@ void InstrumentsFactory::fillReferencesInOtherInstruments(
 {
    for (auto& kitInstrument : m_rInstruments.data.kitInstruments)
    {
-      kitInstrument->forEachVoice([&pMusicDevice](VoiceDescr& voiceDescr) {
-         if (voiceDescr.soundDeviceId == pMusicDevice->deviceId())
+      kitInstrument->forEachVoice([&pMusicDevice](Voice& voice) {
+         if (voice.soundDeviceId == pMusicDevice->deviceId())
          {
-            voiceDescr.pSoundDevice = pMusicDevice->soundHandler
+            voice.pSoundDevice = pMusicDevice->soundHandler
                                           ? &pMusicDevice->soundHandler.value()
                                           : nullptr;
          }
@@ -72,14 +72,14 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             CompositeSound kompositeSound;
             kompositeSound.name =
                 pMusicDevice->description()->soundSection->voices[i].name;
-            VoiceDescr voiceDescr;
-            voiceDescr.soundDeviceId = pMusicDevice->deviceId();
-            voiceDescr.pSoundDevice  = pMusicDevice->soundHandler
+            Voice voice;
+            voice.soundDeviceId = pMusicDevice->deviceId();
+            voice.pSoundDevice  = pMusicDevice->soundHandler
                                            ? &pMusicDevice->soundHandler.value()
                                            : nullptr;
-            voiceDescr.voiceIndex    = i;
-            voiceDescr.noteOffset    = 0;
-            kompositeSound.voices.push_back(voiceDescr);
+            voice.voiceIndex    = i;
+            voice.noteOffset    = 0;
+            kompositeSound.voices.push_back(voice);
             kitInstrument->addSound(kompositeSound);
          }
          m_rInstruments.data.kitInstruments.push_back(std::move(kitInstrument));
@@ -154,11 +154,11 @@ void InstrumentsFactory::remove(
       {
          bool isDeviceContained{false};
          (*it)->forEachVoice(
-             [&isDeviceContained, &pMusicDevice](VoiceDescr& voiceDescr) {
-                if (voiceDescr.pSoundDevice == &pMusicDevice->soundHandler.value())
+             [&isDeviceContained, &pMusicDevice](Voice& voice) {
+                if (voice.pSoundDevice == &pMusicDevice->soundHandler.value())
                 {
                    isDeviceContained       = true;
-                   voiceDescr.pSoundDevice = nullptr;
+                   voice.pSoundDevice = nullptr;
                 }
              });
          if (isDeviceContained && (*it)->isDefaultCreated())
