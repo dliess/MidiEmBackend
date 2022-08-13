@@ -66,16 +66,16 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
          for (int i = 0;
               i < pMusicDevice->description()->soundSection->voices.size(); ++i)
          {
-            KitSound kitSound;
-            kitSound.name =
+            CompositeSound kompositeSound;
+            kompositeSound.name =
                pMusicDevice->description()->soundSection->voices[i].name;
             VoiceDescr voiceDescr;
             voiceDescr.soundDeviceId = pMusicDevice->deviceId();
             voiceDescr.pSoundDevice  = pMusicDevice;
             voiceDescr.voiceIndex    = i;
             voiceDescr.noteOffset    = 0;
-            kitSound.voices.push_back(voiceDescr);
-            kitInstrument->addSound(kitSound);
+            kompositeSound.voices.push_back(voiceDescr);
+            kitInstrument->addSound(kompositeSound);
          }
          m_rInstruments.data.kitInstruments.push_back(std::move(kitInstrument));
          break;

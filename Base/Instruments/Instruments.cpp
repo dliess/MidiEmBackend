@@ -83,7 +83,7 @@ void Instruments::createKitInstrumentSound(
       });
    if (it != data.kitInstruments.end())
    {
-      (*it)->addSound(KitSound(std::move(soundName)));
+      (*it)->addSound(CompositeSound(std::move(soundName)));
       triggerChanged();
       return;
    }
@@ -96,8 +96,8 @@ void Instruments::removeKitInstrumentSound(
    {
       auto it = std::find_if(pKitInstrument->sounds().begin(),
                              pKitInstrument->sounds().end(),
-                             [&kitSoundId](const KitSound& kitSound) {
-                                return kitSound.id() == kitSoundId;
+                             [&kitSoundId](const CompositeSound& kompositeSound) {
+                                return kompositeSound.id() == kitSoundId;
                              });
       if (it != pKitInstrument->sounds().end())
       {
@@ -116,8 +116,8 @@ void Instruments::addVoiceToKitInstrumentSound(
    {
       auto it = std::find_if(pKitInstrument->sounds().begin(),
                              pKitInstrument->sounds().end(),
-                             [&kitSoundId](const KitSound& kitSound) {
-                                return kitSound.id() == kitSoundId;
+                             [&kitSoundId](const CompositeSound& kompositeSound) {
+                                return kompositeSound.id() == kitSoundId;
                              });
       if (it != pKitInstrument->sounds().end())
       {

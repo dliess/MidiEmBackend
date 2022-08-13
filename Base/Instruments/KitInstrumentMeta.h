@@ -29,9 +29,9 @@ inline auto registerMembers<base::instruments::VoiceDescr>()
 }
 
 template<>
-inline auto registerMembers<base::instruments::KitSound>()
+inline auto registerMembers<base::instruments::CompositeSound>()
 {
-   return members(member("voices", &base::instruments::KitSound::voices));
+   return members(member("voices", &base::instruments::CompositeSound::voices));
 }
 
 } // namespace meta

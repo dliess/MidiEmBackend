@@ -10,16 +10,6 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-void VoiceDescr::updateMusicDevicePtr(
-   musicDevice::Holder& rMusicDeviceHolder) noexcept
-{
-   auto iter = rMusicDeviceHolder.musicDevices.findByDeviceId(soundDeviceId);
-   if (rMusicDeviceHolder.musicDevices.end() != iter)
-   {
-      pSoundDevice = iter->second;
-   }
-}
-
 void KitInstrument::noteOn(int soundIndex, int note, float velocity) noexcept
 {
    for (auto& voice : m_sounds.at(soundIndex).voices)

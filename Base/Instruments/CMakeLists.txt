@@ -9,7 +9,14 @@ set(SOURCES
    "MelodicInstrument.cpp"
 )
 
-add_library(Instruments STATIC ${SOURCES})
+set(HEADERS
+   "CompositeSound.h"
+   "CompositeSound.inl"
+   "VoiceDescr.h"
+   "VoiceDescr.inl"
+)
+
+add_library(Instruments STATIC ${SOURCES} ${HEADERS})
 
 target_include_directories(Instruments PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
