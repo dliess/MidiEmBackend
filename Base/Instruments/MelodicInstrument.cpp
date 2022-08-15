@@ -1,97 +1,96 @@
 #include "MelodicInstrument.h"
 
 #include "MusicDeviceHolder.h"
+#include "VectorIndexInRange.h"
 
 using namespace base::instruments;
 
 MelodicInstrument::MelodicInstrument(std::string name) noexcept :
-   m_name(std::move(name))
+    m_name(std::move(name))
 {
-   for(auto& e : m_noteAllocations)
-   {
-      e = FREE;
-   }
+   for (auto& e : m_noteAllocations) { e = FREE; }
 }
 
 void MelodicInstrument::noteOn(int note, float velocity) noexcept
 {
-   if(note < 0 || note >= m_noteAllocations.size()) return;
-   if (m_noteAllocations[note] != FREE)
+   if (!util::vector_index_in_range(note, m_noteAllocations) ||
+       m_noteAllocations[note] != FREE)
+   {
       return;
+   }
    incrementVoiceIndex();
    m_noteAllocations[note] = m_currentVoiceIndex;
-   if (m_voices[m_currentVoiceIndex].pSoundDevice)
-   {
-      assert(m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler);
-      m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->noteOn(
-         m_voices[m_currentVoiceIndex].voiceIndex, note, velocity);
-//    spdlog::info( "sending.. {} {} {} {}", m_currentVoiceIndex, m_voices[m_currentVoiceIndex].voiceIndex, note, velocity);
-   }
+   std::for_each(m_voices[m_currentVoiceIndex].voices.begin(),
+                 m_voices[m_currentVoiceIndex].voices.end(),
+                 [note, velocity](Voice& voice) {
+                    if (voice.pSoundDevice)
+                    {
+                       voice.pSoundDevice->noteOn(
+                           voice.voiceIndex, note + voice.noteOffset, velocity);
+                    }
+                 });
 }
 
 void MelodicInstrument::noteOff(int note, float velocity) noexcept
 {
-   if(note < 0 || note >= m_noteAllocations.size()) return;
-   if (m_noteAllocations[note] == FREE)
+   if (!util::vector_index_in_range(note, m_noteAllocations) ||
+       m_noteAllocations[note] != FREE)
+   {
       return;
-   const auto& voice = m_voices[m_noteAllocations[note]];
-   voice.pSoundDevice->soundHandler->noteOff(voice.voiceIndex, note, velocity);
+   }
+   auto& compositeVoice = m_voices[m_noteAllocations[note]];
+   std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
+                 [note, velocity](Voice& voice) {
+                    if (voice.pSoundDevice)
+                    {
+                       voice.pSoundDevice->noteOff(
+                           voice.voiceIndex, note + voice.noteOffset, velocity);
+                    }
+                 });
    m_noteAllocations[note] = FREE;
-}
-
-void MelodicInstrument::noteOn(int voiceIdx, int note, float velocity) noexcept
-{
-   const auto voiceIndex = voiceIdx % m_voices.size();
-   if (m_voices[m_currentVoiceIndex].pSoundDevice)
-      m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->noteOn(
-         m_voices[voiceIndex].voiceIndex, note, velocity);
-}
-
-void MelodicInstrument::noteOff(int voiceIdx, int note, float velocity) noexcept
-{
-   const auto voiceIndex = voiceIdx % m_voices.size();
-   if (m_voices[m_currentVoiceIndex].pSoundDevice)
-      m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->noteOff(
-         m_voices[voiceIndex].voiceIndex, note, velocity);
 }
 
 void MelodicInstrument::pitchBend(float value) noexcept
 {
-   for (auto& voice : m_voices)
+   for (auto& compositeVoice : m_voices)
    {
-      if (m_voices[m_currentVoiceIndex].pSoundDevice)
-         m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->pitchBend(
-            voice.voiceIndex, value);
+      std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
+                    [value](Voice& voice) {
+                       if (voice.pSoundDevice)
+                       {
+                          voice.pSoundDevice->pitchBend(voice.voiceIndex,
+                                                        value);
+                       }
+                    });
    }
 }
 
-void MelodicInstrument::pitchBend(int voiceIdx, float value) noexcept
+void MelodicInstrument::setParameterValue(int compPart, int parameterId,
+                                          float value) noexcept
 {
-   const auto voiceIndex = voiceIdx % m_voices.size();
-   if (m_voices[m_currentVoiceIndex].pSoundDevice)
-      m_voices[m_currentVoiceIndex].pSoundDevice->soundHandler->pitchBend(
-         m_voices[voiceIndex].voiceIndex, value);
-}
-
-void MelodicInstrument::parameterChange(int parameterId, float value) noexcept
-{
-   for (auto& voice : m_voices)
+   for (auto& compositeVoice : m_voices)
    {
-      if (m_voices[m_currentVoiceIndex].pSoundDevice)
-         m_voices[m_currentVoiceIndex]
-            .pSoundDevice->soundHandler->setParameterValue(
-               voice.voiceIndex, parameterId, value);
+      auto& voice = compositeVoice.voices[compPart];
+      if (voice.pSoundDevice)
+      {
+         voice.pSoundDevice->setParameterValue(voice.voiceIndex, parameterId,
+                                               value);
+      }
    }
 }
 
-void MelodicInstrument::parameterChange(int voiceIdx, int parameterId,
-                                        float value) noexcept
+void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
+                                                float increment) noexcept
 {
-   const auto voiceIndex = voiceIdx % m_voices.size();
-   if (m_voices[m_currentVoiceIndex].pSoundDevice)
-      m_voices[m_currentVoiceIndex]
-         .pSoundDevice->soundHandler->setParameterValue(
-            m_voices[voiceIndex].voiceIndex, parameterId, value);
+   for (auto& compositeVoice : m_voices)
+   {
+      auto& voice = compositeVoice.voices[compPart];
+      if (voice.pSoundDevice)
+      {
+         voice.pSoundDevice->incrementParameterValue(voice.voiceIndex,
+                                                     parameterId, increment);
+      }
+   }
 }
 
 MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept

@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+#include "CompositeSound.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
 
@@ -21,8 +22,8 @@ namespace instruments
 {
 struct MelodicInstrumentVoice : public util::Identifiable
 {
-   musicDevice::MusicDeviceId soundDeviceId;
    std::shared_ptr<musicDevice::MusicDevice> pSoundDevice;
+   musicDevice::MusicDeviceId soundDeviceId;
    int voiceIndex;
 };
 
@@ -33,24 +34,15 @@ public:
    MelodicInstrument(std::string name) noexcept;
    void noteOn(int note, float velocity) noexcept;
    void noteOff(int note, float velocity) noexcept;
+   
    void pitchBend(float value) noexcept;
-   void parameterChange(int parameterId, float value) noexcept;
-
-   void noteOn(int voiceIdx, int note, float velocity) noexcept;
-   void noteOff(int voiceIdx, int note, float velocity) noexcept;
-   void pitchBend(int voiceIdx, float value) noexcept;
-   void parameterChange(int voiceIdx, int parameterId, float value) noexcept;
-
-   template<typename T>
-   void addVoice(T&& voice) noexcept;
-
-   template <typename Cb>
-   void forEachVoice(Cb&& cb);
+   void setParameterValue(int compPart, int parameterId, float value) noexcept;
+   void incrementParameterValue(int compPart, int parameterId, float increment) noexcept;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   using VoiceContainer = std::vector<MelodicInstrumentVoice>;
+   using VoiceContainer = std::vector<CompositeSound>;
    VoiceContainer& voices() noexcept;
    friend auto meta::registerMembers<MelodicInstrument>();
 

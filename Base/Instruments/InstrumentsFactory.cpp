@@ -38,19 +38,28 @@ void InstrumentsFactory::fillReferencesInOtherInstruments(
          if (voice.soundDeviceId == pMusicDevice->deviceId())
          {
             voice.pSoundDevice = pMusicDevice->soundHandler
-                                          ? &pMusicDevice->soundHandler.value()
-                                          : nullptr;
+                                     ? &pMusicDevice->soundHandler.value()
+                                     : nullptr;
          }
       });
    }
    for (auto& melodicInstrument : m_rInstruments.data.melodicInstruments)
    {
-      melodicInstrument->forEachVoice(
-          [&pMusicDevice](MelodicInstrumentVoice& voice) {
-             if (voice.soundDeviceId == pMusicDevice->deviceId())
-             {
-                voice.pSoundDevice = pMusicDevice;
-             }
+      std::for_each(
+          melodicInstrument->voices().begin(),
+          melodicInstrument->voices().end(),
+          [&pMusicDevice](CompositeSound& compositeSound) {
+             std::for_each(
+                 compositeSound.voices.begin(), compositeSound.voices.end(),
+                 [&pMusicDevice](Voice& voice) {
+                    if (voice.soundDeviceId == pMusicDevice->deviceId())
+                    {
+                       voice.pSoundDevice =
+                           pMusicDevice->soundHandler
+                               ? &pMusicDevice->soundHandler.value()
+                               : nullptr;
+                    }
+                 });
           });
    }
 }
@@ -75,8 +84,8 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             Voice voice;
             voice.soundDeviceId = pMusicDevice->deviceId();
             voice.pSoundDevice  = pMusicDevice->soundHandler
-                                           ? &pMusicDevice->soundHandler.value()
-                                           : nullptr;
+                                      ? &pMusicDevice->soundHandler.value()
+                                      : nullptr;
             voice.voiceIndex    = i;
             voice.noteOffset    = 0;
             kompositeSound.voices.push_back(voice);
@@ -100,7 +109,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             voice.pSoundDevice  = pMusicDevice;
             voice.soundDeviceId = pMusicDevice->deviceId();
             voice.voiceIndex    = i;
-            melodicInstrument->addVoice(std::move(voice));
+            melodicInstrument->voices().push_back(std::move(voice));
             m_rInstruments.data.melodicInstruments.push_back(
                 std::move(melodicInstrument));
          }
@@ -153,14 +162,13 @@ void InstrumentsFactory::remove(
       while (it != m_rInstruments.data.kitInstruments.end())
       {
          bool isDeviceContained{false};
-         (*it)->forEachVoice(
-             [&isDeviceContained, &pMusicDevice](Voice& voice) {
-                if (voice.pSoundDevice == &pMusicDevice->soundHandler.value())
-                {
-                   isDeviceContained       = true;
-                   voice.pSoundDevice = nullptr;
-                }
-             });
+         (*it)->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
+            if (voice.pSoundDevice == &pMusicDevice->soundHandler.value())
+            {
+               isDeviceContained  = true;
+               voice.pSoundDevice = nullptr;
+            }
+         });
          if (isDeviceContained && (*it)->isDefaultCreated())
          {
             spdlog::info("Erasing");

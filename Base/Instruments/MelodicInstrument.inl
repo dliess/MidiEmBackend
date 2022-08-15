@@ -6,21 +6,6 @@
 namespace base::instruments
 {
 
-template<typename T>
-void MelodicInstrument::addVoice(T&& voice) noexcept
-{
-   m_voices.emplace_back(std::forward<T>(voice));
-}
-
-template <typename Cb>
-void MelodicInstrument::forEachVoice(Cb&& cb)
-{
-   for(auto& voice : m_voices)
-   {
-      cb(voice);
-   }
-}
-
 inline void MelodicInstrument::incrementVoiceIndex() noexcept
 {
    if(m_voices.empty()) return;
