@@ -7,15 +7,6 @@ namespace meta
 {
 
 template <>
-inline auto registerMembers<base::instruments::MelodicInstrumentVoice>()
-{
-    return members(
-        member("soundDeviceId", &base::instruments::MelodicInstrumentVoice::soundDeviceId),
-        member("voiceIndex", &base::instruments::MelodicInstrumentVoice::voiceIndex)
-    );
-}
-
-template <>
 inline auto registerMembers<base::instruments::MelodicInstrument>()
 {
     return members(

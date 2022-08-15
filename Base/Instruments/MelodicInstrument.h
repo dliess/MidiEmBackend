@@ -20,12 +20,6 @@ struct MusicDevice;
 }
 namespace instruments
 {
-struct MelodicInstrumentVoice : public util::Identifiable
-{
-   std::shared_ptr<musicDevice::MusicDevice> pSoundDevice;
-   musicDevice::MusicDeviceId soundDeviceId;
-   int voiceIndex;
-};
 
 class MelodicInstrument : public Instrument
 {

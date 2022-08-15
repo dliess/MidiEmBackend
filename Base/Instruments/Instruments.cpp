@@ -169,6 +169,8 @@ void Instruments::addVoiceToMelodicInstrument(
        });
    if (it != data.melodicInstruments.end())
    {
+      CompositeSound compositeSound;
+      compositeSound.name = voiceDescr[voiceIndex].name;
       MelodicInstrumentVoice voiceDescriptor;
       voiceDescriptor.soundDeviceId = soundDeviceId;
       voiceDescriptor.voiceIndex    = voiceIdx;

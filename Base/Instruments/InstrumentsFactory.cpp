@@ -67,6 +67,7 @@ void InstrumentsFactory::fillReferencesInOtherInstruments(
 void InstrumentsFactory::addDefaultInstrumentsFor(
     const std::shared_ptr<musicDevice::MusicDevice>& pMusicDevice) noexcept
 {
+   const auto& voiceDescr = pMusicDevice->description()->soundSection->voices;
    switch (pMusicDevice->description()->soundSection->defaultInstrumentType)
    {
       case base::musicDevice::description::sound::Section::
@@ -75,18 +76,16 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
          auto kitInstrument = std::make_shared<KitInstrument>(
              pMusicDevice->description()->productName);
          kitInstrument->markAsDefaultCreated();
-         for (int i = 0;
-              i < pMusicDevice->description()->soundSection->voices.size(); ++i)
+         for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
          {
             CompositeSound kompositeSound;
-            kompositeSound.name =
-                pMusicDevice->description()->soundSection->voices[i].name;
+            kompositeSound.name = voiceDescr[voiceIndex].name;
             Voice voice;
             voice.soundDeviceId = pMusicDevice->deviceId();
             voice.pSoundDevice  = pMusicDevice->soundHandler
                                       ? &pMusicDevice->soundHandler.value()
                                       : nullptr;
-            voice.voiceIndex    = i;
+            voice.voiceIndex    = voiceIndex;
             voice.noteOffset    = 0;
             kompositeSound.voices.push_back(voice);
             kitInstrument->addSound(kompositeSound);
@@ -97,19 +96,26 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
       case base::musicDevice::description::sound::Section::
           DefaultInstrumentType::InstrumentPerVoice:
       {
-         for (int i = 0;
-              i < pMusicDevice->description()->soundSection->voices.size(); ++i)
+         for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
          {
             std::string name = pMusicDevice->description()->productName;
-            if (pMusicDevice->description()->soundSection->voices.size() > 1)
-               name = name + " - " + std::to_string(i + 1);
+            if (voiceDescr.size() > 1)
+            {
+               name = name + " - " + std::to_string(voiceIndex + 1);
+            }
             auto melodicInstrument = std::make_shared<MelodicInstrument>(name);
             melodicInstrument->markAsDefaultCreated();
-            MelodicInstrumentVoice voice;
-            voice.pSoundDevice  = pMusicDevice;
+            CompositeSound compositeSound;
+            compositeSound.name = voiceDescr[voiceIndex].name;
+            Voice voice;
+            voice.pSoundDevice  = pMusicDevice->soundHandler
+                                      ? &pMusicDevice->soundHandler.value()
+                                      : nullptr;
             voice.soundDeviceId = pMusicDevice->deviceId();
-            voice.voiceIndex    = i;
-            melodicInstrument->voices().push_back(std::move(voice));
+            voice.voiceIndex    = voiceIndex;
+            voice.noteOffset    = 0;
+            compositeSound.voices.push_back(voice);
+            melodicInstrument->voices().push_back(compositeSound);
             m_rInstruments.data.melodicInstruments.push_back(
                 std::move(melodicInstrument));
          }
@@ -121,14 +127,19 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
          auto melodicInstrument = std::make_shared<MelodicInstrument>(
              pMusicDevice->description()->productName);
          melodicInstrument->markAsDefaultCreated();
-         for (int i = 0;
-              i < pMusicDevice->description()->soundSection->voices.size(); ++i)
+         for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
          {
-            MelodicInstrumentVoice voice;
-            voice.pSoundDevice  = pMusicDevice;
+            CompositeSound compositeSound;
+            compositeSound.name = voiceDescr[voiceIndex].name;
+            Voice voice;
+            voice.pSoundDevice  = pMusicDevice->soundHandler
+                                      ? &pMusicDevice->soundHandler.value()
+                                      : nullptr;
             voice.soundDeviceId = pMusicDevice->deviceId();
-            voice.voiceIndex    = i;
-            melodicInstrument->addVoice(std::move(voice));
+            voice.voiceIndex    = voiceIndex;
+            voice.noteOffset    = 0;
+            compositeSound.voices.push_back(voice);
+            melodicInstrument->voices().push_back(compositeSound);
          }
          m_rInstruments.data.melodicInstruments.push_back(
              std::move(melodicInstrument));
@@ -185,6 +196,9 @@ void InstrumentsFactory::remove(
       while (it != m_rInstruments.data.melodicInstruments.end())
       {
          bool isDeviceContained{false};
+         std::for_each((*it)->begin(), (*it)->end(), [](const CompositeSound& compositeSound){
+
+         });
          (*it)->forEachVoice([&isDeviceContained,
                               &pMusicDevice](MelodicInstrumentVoice& voice) {
             if (voice.pSoundDevice == pMusicDevice)
