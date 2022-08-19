@@ -93,7 +93,7 @@ void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
    auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
    if (iter != m_rInstruments.data.melodicInstruments.end())
    {
-      iter->get()->noteOn(note, velocity);
+      iter->noteOn(note, velocity);
       return;
    }
 }
@@ -107,7 +107,7 @@ void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
    auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
    if (iter != m_rInstruments.data.melodicInstruments.end())
    {
-      iter->get()->noteOff(note, velocity);
+      iter->noteOff(note, velocity);
       return;
    }
 }
@@ -122,7 +122,7 @@ void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
    auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
    if (iter != m_rInstruments.data.kitInstruments.end())
    {
-      iter->get()->noteOn(soundIndex, note, velocity);
+      iter->noteOn(soundIndex, note, velocity);
       return;
    }
 }
@@ -137,7 +137,7 @@ void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
    auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
    if (iter != m_rInstruments.data.kitInstruments.end())
    {
-      iter->get()->noteOff(soundIndex, note, velocity);
+      iter->noteOff(soundIndex, note, velocity);
       return;
    }
 }

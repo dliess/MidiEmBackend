@@ -20,36 +20,36 @@ class MusicDeviceContainer;
 namespace instruments
 {
 
-struct KitInstruments : public std::vector<std::shared_ptr<KitInstrument>>
+struct KitInstruments : public std::vector<KitInstrument>
 {
-   using Super = std::vector<std::shared_ptr<KitInstrument>>;
+   using Super = std::vector<KitInstrument>;
    KitInstruments() = default;
    KitInstruments(const Super& rhs) : Super(rhs) {}
    Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->get()->id() == uuid) return iter;
+         if(iter->id() == uuid) return iter;
       return Super::end();
    }
    Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const{
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->get()->id() == uuid) return iter;
+         if(iter->id() == uuid) return iter;
       return Super::end();
    }
 };
 
-struct MelodicInstruments : public std::vector<std::shared_ptr<MelodicInstrument>>
+struct MelodicInstruments : public std::vector<MelodicInstrument>
 {
-   using Super = std::vector<std::shared_ptr<MelodicInstrument>>;
+   using Super = std::vector<MelodicInstrument>;
    MelodicInstruments() = default;
    MelodicInstruments(const Super& rhs) : Super(rhs) {}
    Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->get()->id() == uuid) return iter;
+         if(iter->id() == uuid) return iter;
       return Super::end();
    }
    Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const{
       for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->get()->id() == uuid) return iter;
+         if(iter->id() == uuid) return iter;
       return Super::end();
    }
 };

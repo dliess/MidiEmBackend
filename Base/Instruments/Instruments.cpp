@@ -32,8 +32,7 @@ void Instruments::triggerChanged() noexcept
 
 void Instruments::createKitInstrument(std::string name) noexcept
 {
-   data.kitInstruments.push_back(
-       std::make_shared<KitInstrument>(std::move(name)));
+   data.kitInstruments.emplace_back(std::move(name));
    triggerChanged();
 }
 
@@ -43,7 +42,7 @@ void Instruments::removeKitInstrument(
    for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
         ++it)
    {
-      if ((*it)->id() == instrumentId)
+      if (it->id() == instrumentId)
       {
          data.kitInstruments.erase(it);
          triggerChanged();
@@ -53,8 +52,7 @@ void Instruments::removeKitInstrument(
 
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
-   data.melodicInstruments.push_back(
-       std::move(std::make_shared<MelodicInstrument>(std::move(name))));
+   data.melodicInstruments.emplace_back(std::move(name));
    triggerChanged();
 }
 
@@ -64,7 +62,7 @@ void Instruments::removeMelodicInstrument(
    for (auto it = data.melodicInstruments.begin();
         it != data.melodicInstruments.end(); ++it)
    {
-      if ((*it)->id() == instrumentId)
+      if (it->id() == instrumentId)
       {
          data.melodicInstruments.erase(it);
          triggerChanged();
@@ -79,12 +77,12 @@ void Instruments::createKitInstrumentSound(
 {
    auto it = std::find_if(
        data.kitInstruments.begin(), data.kitInstruments.end(),
-       [&instrumentId](const std::shared_ptr<KitInstrument>& instr) {
-          return instr->id() == instrumentId;
+       [&instrumentId](const KitInstrument& instr) {
+          return instr.id() == instrumentId;
        });
    if (it != data.kitInstruments.end())
    {
-      (*it)->addSound(CompositeSound(std::move(soundName)));
+      it->addSound(CompositeSound(std::move(soundName)));
       triggerChanged();
       return;
    }
@@ -93,16 +91,16 @@ void Instruments::createKitInstrumentSound(
 void Instruments::removeKitInstrumentSound(
     const util::Identifiable::UUID& kitSoundId) noexcept
 {
-   for (auto& pKitInstrument : data.kitInstruments)
+   for (auto& rKitInstrument : data.kitInstruments)
    {
       auto it = std::find_if(
-          pKitInstrument->sounds().begin(), pKitInstrument->sounds().end(),
+          rKitInstrument.sounds().begin(), rKitInstrument.sounds().end(),
           [&kitSoundId](const CompositeSound& kompositeSound) {
              return kompositeSound.id() == kitSoundId;
           });
-      if (it != pKitInstrument->sounds().end())
+      if (it != rKitInstrument.sounds().end())
       {
-         pKitInstrument->sounds().erase(it);
+         rKitInstrument.sounds().erase(it);
          triggerChanged();
          return;
       }
@@ -113,14 +111,14 @@ void Instruments::addVoiceToKitInstrumentSound(
     const util::Identifiable::UUID& kitSoundId,
     const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
 {
-   for (auto& pKitInstrument : data.kitInstruments)
+   for (auto& rKitInstrument : data.kitInstruments)
    {
       auto it = std::find_if(
-          pKitInstrument->sounds().begin(), pKitInstrument->sounds().end(),
+          rKitInstrument.sounds().begin(), rKitInstrument.sounds().end(),
           [&kitSoundId](const CompositeSound& kompositeSound) {
              return kompositeSound.id() == kitSoundId;
           });
-      if (it != pKitInstrument->sounds().end())
+      if (it != rKitInstrument.sounds().end())
       {
          Voice voiceDescriptor;
          voiceDescriptor.soundDeviceId = soundDeviceId;
@@ -143,9 +141,9 @@ void Instruments::addVoiceToKitInstrumentSound(
 void Instruments::removeVoiceFromInstrumentSound(
     const util::Identifiable::UUID& voiceId) noexcept
 {
-   for (auto& pKitInstrument : data.kitInstruments)
+   for (auto& rKitInstrument : data.kitInstruments)
    {
-      for (auto& sound : pKitInstrument->sounds())
+      for (auto& sound : rKitInstrument.sounds())
       {
          auto it = std::find_if(sound.voices.begin(), sound.voices.end(),
                                 [&voiceId](const Voice& voice) {
