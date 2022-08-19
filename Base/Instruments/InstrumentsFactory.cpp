@@ -196,9 +196,22 @@ void InstrumentsFactory::remove(
       while (it != m_rInstruments.data.melodicInstruments.end())
       {
          bool isDeviceContained{false};
-         std::for_each((*it)->begin(), (*it)->end(), [](const CompositeSound& compositeSound){
-
-         });
+         std::for_each((*it)->voices().begin(), (*it)->voices().end(),
+                       [&isDeviceContained,
+                        &pMusicDevice](CompositeSound& compositeSound) {
+                          std::for_each(
+                              compositeSound.voices.begin(),
+                              compositeSound.voices.end(),
+                              [&isDeviceContained, &pMusicDevice](Voice& voice) {
+                                 if (voice.pSoundDevice ==
+                                     &pMusicDevice->soundHandler.value())
+                                 {
+                                    isDeviceContained = true;
+                                    voice.pSoundDevice = nullptr;
+                                 }
+                              });
+                       });
+         /*
          (*it)->forEachVoice([&isDeviceContained,
                               &pMusicDevice](MelodicInstrumentVoice& voice) {
             if (voice.pSoundDevice == pMusicDevice)
@@ -215,6 +228,7 @@ void InstrumentsFactory::remove(
          {
             ++it;
          }
+         */
       }
    }
 }

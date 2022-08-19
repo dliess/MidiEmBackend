@@ -162,6 +162,7 @@ void Instruments::addVoiceToMelodicInstrument(
     const util::Identifiable::UUID& instrumentId,
     const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
 {
+   /*
    auto it = std::find_if(
        data.melodicInstruments.begin(), data.melodicInstruments.end(),
        [&instrumentId](const std::shared_ptr<MelodicInstrument>& instr) {
@@ -170,7 +171,7 @@ void Instruments::addVoiceToMelodicInstrument(
    if (it != data.melodicInstruments.end())
    {
       CompositeSound compositeSound;
-      compositeSound.name = voiceDescr[voiceIndex].name;
+      compositeSound.name = "TODO";
       MelodicInstrumentVoice voiceDescriptor;
       voiceDescriptor.soundDeviceId = soundDeviceId;
       voiceDescriptor.voiceIndex    = voiceIdx;
@@ -181,11 +182,13 @@ void Instruments::addVoiceToMelodicInstrument(
       }
       triggerChanged();
    }
+   */
 }
 
 void Instruments::removeVoiceFromMelodicInstrument(
     const util::Identifiable::UUID& voiceId) noexcept
 {
+   /*
    for (auto& pMelodicInstrument : data.melodicInstruments)
    {
       auto it = std::find_if(pMelodicInstrument->voices().begin(),
@@ -195,4 +198,5 @@ void Instruments::removeVoiceFromMelodicInstrument(
                              });
       pMelodicInstrument->voices().erase(it);
    }
+   */
 }
