@@ -561,7 +561,7 @@
           {
             "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "component" : "Amp",
             "source": {
               "midi": {
@@ -944,7 +944,7 @@
           {
             "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "component" : "Amp",
             "source": {
               "midi": {
@@ -1015,7 +1015,7 @@
           {
             "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "component" : "Amp",
             "source": {
               "midi": {
@@ -1157,7 +1157,7 @@
           {
             "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "component" : "Amp",
             "source": {
               "midi": {
@@ -1228,7 +1228,7 @@
           {
             "name": "Sound",
             "description": "",
-            "type": "continous",
+            "type": "list",
             "component" : "Amp",
             "source": {
               "midi": {
