@@ -89,20 +89,9 @@ struct Instruments : public utils::Settings<Instruments>
    void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
 
-   void createKitInstrumentSound(const util::Identifiable::UUID& instrumentId,
-                                 std::string soundName) noexcept;
-   void removeKitInstrumentSound(
-       const util::Identifiable::UUID& kitSoundId) noexcept;
-
-   void addVoiceToKitInstrumentSound(
-       const util::Identifiable::UUID& kitSoundId,
-       const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept;
-
    void createNewSlotInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
-   void removeVoiceFromMelodicInstrument(
-       const util::Identifiable::UUID& voiceId) noexcept;
 
    void addVoiceToMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
