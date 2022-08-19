@@ -27,8 +27,7 @@ public:
        ::capnzero::Int16 voiceIdx) override;
    void removeVoiceFromMelodicInstrumentSlot(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
+       ::capnzero::Int16 compositeIdx) override;
    void removeSlotFromMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
        ::capnzero::Int16 slotIdx) override;
@@ -50,8 +49,7 @@ public:
        ::capnzero::Int16 voiceIdx) override;
    void removeVoiceFromKitInstrumentSlot(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
+       ::capnzero::Int16 compositeIdx) override;
    void removeSlotFromKitInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
        ::capnzero::Int16 slotIdx) override;

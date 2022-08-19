@@ -209,16 +209,7 @@ void InstrumentsFactory::remove(
                        }
                     });
              });
-         /*
-         (*it)->forEachVoice([&isDeviceContained,
-                              &pMusicDevice](MelodicInstrumentVoice& voice) {
-            if (voice.pSoundDevice == pMusicDevice)
-            {
-               isDeviceContained = true;
-               voice.pSoundDevice.reset();
-            }
-         });
-         if (isDeviceContained && (*it)->isDefaultCreated())
+         if (isDeviceContained && it->isDefaultCreated())
          {
             it = m_rInstruments.data.melodicInstruments.erase(it);
          }
@@ -226,7 +217,6 @@ void InstrumentsFactory::remove(
          {
             ++it;
          }
-         */
       }
    }
 }

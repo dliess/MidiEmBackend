@@ -19,37 +19,44 @@ class MusicDeviceContainer;
 
 namespace instruments
 {
-
 struct KitInstruments : public std::vector<KitInstrument>
 {
-   using Super = std::vector<KitInstrument>;
+   using Super      = std::vector<KitInstrument>;
    KitInstruments() = default;
    KitInstruments(const Super& rhs) : Super(rhs) {}
-   Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
-      for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->id() == uuid) return iter;
+   Super::iterator findByUUID(const util::Identifiable::UUID& uuid)
+   {
+      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
+         if (iter->id() == uuid)
+            return iter;
       return Super::end();
    }
-   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const{
-      for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->id() == uuid) return iter;
+   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const
+   {
+      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
+         if (iter->id() == uuid)
+            return iter;
       return Super::end();
    }
 };
 
 struct MelodicInstruments : public std::vector<MelodicInstrument>
 {
-   using Super = std::vector<MelodicInstrument>;
+   using Super          = std::vector<MelodicInstrument>;
    MelodicInstruments() = default;
    MelodicInstruments(const Super& rhs) : Super(rhs) {}
-   Super::iterator findByUUID(const util::Identifiable::UUID& uuid){
-      for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->id() == uuid) return iter;
+   Super::iterator findByUUID(const util::Identifiable::UUID& uuid)
+   {
+      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
+         if (iter->id() == uuid)
+            return iter;
       return Super::end();
    }
-   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const{
-      for(auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if(iter->id() == uuid) return iter;
+   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const
+   {
+      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
+         if (iter->id() == uuid)
+            return iter;
       return Super::end();
    }
 };
@@ -57,7 +64,7 @@ struct MelodicInstruments : public std::vector<MelodicInstrument>
 struct Instruments : public utils::Settings<Instruments>
 {
    Instruments(
-      musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
+       musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
    struct Data
    {
       KitInstruments kitInstruments;
@@ -76,36 +83,46 @@ struct Instruments : public utils::Settings<Instruments>
 
    void createKitInstrument(std::string name) noexcept;
    void removeKitInstrument(
-      const util::Identifiable::UUID& instrumentId) noexcept;
+       const util::Identifiable::UUID& instrumentId) noexcept;
 
    void createMelodicInstrument(std::string name) noexcept;
    void removeMelodicInstrument(
-      const util::Identifiable::UUID& instrumentId) noexcept;
+       const util::Identifiable::UUID& instrumentId) noexcept;
 
    void createKitInstrumentSound(const util::Identifiable::UUID& instrumentId,
                                  std::string soundName) noexcept;
    void removeKitInstrumentSound(
-      const util::Identifiable::UUID& kitSoundId) noexcept;
+       const util::Identifiable::UUID& kitSoundId) noexcept;
 
-   void addVoiceToKitInstrumentSound(const util::Identifiable::UUID& kitSoundId,
-                                     const musicDevice::MusicDeviceId& soundDeviceId,
-                                     int voiceIdx) noexcept;
-   void removeVoiceFromInstrumentSound(
-      const util::Identifiable::UUID& voiceId) noexcept;
+   void addVoiceToKitInstrumentSound(
+       const util::Identifiable::UUID& kitSoundId,
+       const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept;
 
    void createNewSlotInMelodicInstrument(
-      const util::Identifiable::UUID& instrumentUuid,
-      const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& instrumentUuid,
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
    void removeVoiceFromMelodicInstrument(
-      const util::Identifiable::UUID& voiceId) noexcept;
+       const util::Identifiable::UUID& voiceId) noexcept;
+
+   void addVoiceToMelodicInstrumentSlot(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+   void removeVoiceFromMelodicInstrumentSlot(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       int compositeIdx) noexcept;
+   void removeSlotFromMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
+   void setNoteOffsetInMelodicInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       int compositeIdx, int noteOffset) noexcept;
 
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    std::vector<Cb> m_subscribers;
 };
 
-} // namespace instruments
-} // namespace base
+}   // namespace instruments
+}   // namespace base
 
 #include "InstrumentsMeta.h"
 
