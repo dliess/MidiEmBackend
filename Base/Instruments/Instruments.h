@@ -116,6 +116,21 @@ struct Instruments : public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx, int noteOffset) noexcept;
 
+   void createNewSlotInKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid,
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+   void addVoiceToKitInstrumentSlot(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+   void removeVoiceFromKitInstrumentSlot(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       int compositeIdx) noexcept;
+   void removeSlotFromKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
+   void setNoteOffsetInKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       int compositeIdx, int noteOffset) noexcept;
+
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    std::vector<Cb> m_subscribers;
