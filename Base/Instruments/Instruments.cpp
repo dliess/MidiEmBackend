@@ -158,14 +158,14 @@ void Instruments::removeVoiceFromInstrumentSound(
    }
 }
 
-void Instruments::addVoiceToMelodicInstrument(
-    const util::Identifiable::UUID& instrumentId,
-    const musicDevice::MusicDeviceId& soundDeviceId, int voiceIdx) noexcept
+void Instruments::createNewSlotInMelodicInstrument(
+    const util::Identifiable::UUID& instrumentUuid,
+    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
    /*
-   auto it = std::find_if(
+   auto instrumentIt = std::find_if(
        data.melodicInstruments.begin(), data.melodicInstruments.end(),
-       [&instrumentId](const std::shared_ptr<MelodicInstrument>& instr) {
+       [&instrumentUuid](const std::shared_ptr<MelodicInstrument>& instr) {
           return instr->id() == instrumentId;
        });
    if (it != data.melodicInstruments.end())
