@@ -33,7 +33,10 @@ public:
        ::capnzero::Int16 slotIdx) override;
    void setNoteOffsetInMelodicInstrumentVoice(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 noteOffset) override;
+       ::capnzero::Int16 compositeIdx, ::capnzero::Int16 noteOffset) override;
+   void setCompositeNameInMelodicInstrument(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+       const ::capnzero::TextView& name) override;
 
    void createKitInstrument(const ::capnzero::TextView& name) override;
    void removeKitInstrument(
@@ -55,7 +58,11 @@ public:
        ::capnzero::Int16 slotIdx) override;
    void setNoteOffsetInKitInstrumentVoice(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 noteOffset) override;
+       ::capnzero::Int16 compositeIdx, ::capnzero::Int16 noteOffset) override;
+   void setCompositeNameInKitInstrument(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+       const ::capnzero::TextView& name) override;
+
 
    void melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
                       ::capnzero::Int16 note,

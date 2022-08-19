@@ -115,6 +115,9 @@ struct Instruments : public utils::Settings<Instruments>
    void setNoteOffsetInMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx, int noteOffset) noexcept;
+   void setCompositeNameInMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const std::string name) noexcept;
 
    void createNewSlotInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
@@ -130,6 +133,9 @@ struct Instruments : public utils::Settings<Instruments>
    void setNoteOffsetInKitInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx, int noteOffset) noexcept;
+   void setCompositeNameInKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const std::string& name) noexcept;
 
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;

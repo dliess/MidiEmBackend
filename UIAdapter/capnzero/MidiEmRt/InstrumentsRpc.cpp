@@ -81,6 +81,17 @@ void InstrumentsRpc::setNoteOffsetInMelodicInstrumentVoice(
        instrumentUuid_, slotIdx, compositeIdx, noteOffset);
 }
 
+void InstrumentsRpc::setCompositeNameInMelodicInstrument(
+    const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+    const ::capnzero::TextView& name)
+{
+   util::Identifiable::UUID instrumentUuid_;
+   std::copy(instrumentUuid.begin(), instrumentUuid.end(),
+             instrumentUuid_.begin());
+   m_rInstruments.setCompositeNameInMelodicInstrument(instrumentUuid_, slotIdx,
+                                                      std::string(name));
+}
+
 void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView& name)
 {
    m_rInstruments.createKitInstrument(std::string(name));
@@ -149,6 +160,17 @@ void InstrumentsRpc::setNoteOffsetInKitInstrumentVoice(
              instrumentUuid_.begin());
    m_rInstruments.setNoteOffsetInKitInstrumentVoice(instrumentUuid_, slotIdx,
                                                     compositeIdx, noteOffset);
+}
+
+void InstrumentsRpc::setCompositeNameInKitInstrument(
+    const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+    const ::capnzero::TextView& name)
+{
+   util::Identifiable::UUID instrumentUuid_;
+   std::copy(instrumentUuid.begin(), instrumentUuid.end(),
+             instrumentUuid_.begin());
+   m_rInstruments.setCompositeNameInKitInstrument(instrumentUuid_, slotIdx,
+                                                  std::string(name));
 }
 
 void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
