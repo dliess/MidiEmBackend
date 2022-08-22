@@ -65,7 +65,11 @@ MusicDeviceId MusicDevice::deviceId() const noexcept { return m_deviceId; }
 void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
                              uint8_t midiVoiceOffset) noexcept
 {
-   assert(pMidiInput);
+   if(!pMidiInput)
+   {
+      spdlog::info("Device {} has no midi IN", m_deviceId.deviceName);
+      return;
+   }
    if (soundHandler)
    {
       soundHandler->initMidiInHandler(pMidiInput, midiVoiceOffset);
@@ -79,7 +83,11 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
 void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
                               uint8_t midiVoiceOffset) noexcept
 {
-   assert(pMidiOutput);
+   if(!pMidiOutput)
+   {
+      spdlog::info("Device {} has no midi OUT", m_deviceId.deviceName);
+      return;
+   }
    if (soundHandler)
    {
       soundHandler->initMidiOutHandler(pMidiOutput, midiVoiceOffset);
