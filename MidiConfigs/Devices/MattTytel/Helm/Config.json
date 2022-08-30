@@ -378,7 +378,6 @@
             "name": "Cutoff",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterCutoff",
             "source": {
               "midi": {
                 "id": {
@@ -392,7 +391,6 @@
             "name": "Resonance",
             "type": "continous",
             "component": "Filter",
-            "role": "FilterResonance",
             "source": {
               "midi": {
                 "id": {
@@ -489,7 +487,7 @@
             "type": "continous",
             "component": "AmpEnv",
             "role": "Release",
-            "source": {64
+            "source": {
               "midi": {
                 "id": {
                   ".type": "MidiControlChange",
