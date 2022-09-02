@@ -133,6 +133,22 @@ void InstrumentsRpc::addVoiceToKitInstrumentSlot(
    m_rInstruments.addVoiceToKitInstrumentSlot(instrumentUuid_, slotIdx,
                                               soundDeviceUuid_, voiceIdx);
 }
+void InstrumentsRpc::moveKitInstrumentSlotVoice(
+    const ::capnzero::SpanCL<16>& srcInstrumentUuid,
+    ::capnzero::Int16 srcSlotIdx, ::capnzero::Int16 srcCompositeIdx,
+    const ::capnzero::SpanCL<16>& dstInstrumentUuid,
+    ::capnzero::Int16 dstSlotIdx)
+{
+   util::Identifiable::UUID srcInstrumentUuid_;
+   std::copy(srcInstrumentUuid.begin(), srcInstrumentUuid.end(),
+             srcInstrumentUuid_.begin());
+   util::Identifiable::UUID dstInstrumentUuid_;
+   std::copy(dstInstrumentUuid.begin(), dstInstrumentUuid.end(),
+             dstInstrumentUuid_.begin());
+   m_rInstruments.moveKitInstrumentSlotVoice(srcInstrumentUuid_, srcSlotIdx,
+                                             srcCompositeIdx,
+                                             dstInstrumentUuid_, dstSlotIdx);
+}
 void InstrumentsRpc::removeVoiceFromKitInstrumentSlot(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
     ::capnzero::Int16 compositeIdx)

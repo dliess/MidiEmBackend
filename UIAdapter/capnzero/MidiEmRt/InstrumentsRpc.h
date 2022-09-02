@@ -50,6 +50,11 @@ public:
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
        const ::capnzero::SpanCL<16>& soundDeviceUuid,
        ::capnzero::Int16 voiceIdx) override;
+   void moveKitInstrumentSlotVoice(const ::capnzero::SpanCL<16>& srcInstrumentUuid,
+                                   ::capnzero::Int16 srcSlotIdx,
+                                   ::capnzero::Int16 srcCompositeIdx,
+                                   const ::capnzero::SpanCL<16>& dstInstrumentUuid,
+                                   ::capnzero::Int16 dstSlotIdx) override;
    void removeVoiceFromKitInstrumentSlot(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
        ::capnzero::Int16 compositeIdx) override;

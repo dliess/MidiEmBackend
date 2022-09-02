@@ -114,6 +114,10 @@ struct Instruments : public utils::Settings<Instruments>
    void addVoiceToKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+    void moveKitInstrumentSlotVoice(
+        const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
+        int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
+        int dstSlotIdx) noexcept;
    void removeVoiceFromKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx) noexcept;

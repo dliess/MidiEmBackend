@@ -34,7 +34,7 @@ void MelodicInstrument::noteOn(int note, float velocity) noexcept
 void MelodicInstrument::noteOff(int note, float velocity) noexcept
 {
    if (!util::vector_index_in_range(note, m_noteAllocations) ||
-       m_noteAllocations[note] != FREE)
+       m_noteAllocations[note] == FREE)
    {
       return;
    }
