@@ -5,9 +5,9 @@ namespace base::instruments
 {
 
 template<typename T>
-void KitInstrument::addSound(T&& kompositeSound) noexcept
+void KitInstrument::addSound(int padIdx, T&& kompositeSound) noexcept
 {
-   m_compositeSounds.emplace_back(std::forward<T>(kompositeSound));
+   m_compositeSounds[padIdx] = std::forward<T>(kompositeSound);
 };
 
 inline std::string KitInstrument::name() const noexcept { return m_name; }

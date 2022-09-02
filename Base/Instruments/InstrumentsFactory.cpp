@@ -86,7 +86,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             voice.voiceIndex    = voiceIndex;
             voice.noteOffset    = 0;
             kompositeSound.voices.push_back(voice);
-            kitInstrument.addSound(kompositeSound);
+            kitInstrument.addSound(voiceIndex, kompositeSound);
          }
          m_rInstruments.data.kitInstruments.push_back(std::move(kitInstrument));
          break;

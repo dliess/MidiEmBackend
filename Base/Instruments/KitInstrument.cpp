@@ -5,7 +5,8 @@
 using namespace base::instruments;
 
 KitInstrument::KitInstrument(std::string name) noexcept :
-    m_name(std::move(name))
+    m_name(std::move(name)),
+    m_compositeSounds(16)
 {
 }
 

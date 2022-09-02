@@ -174,6 +174,7 @@ void Instruments::createNewSlotInKitInstrument(
    auto musicDeviceIt = m_rMusicDeviceContainer.find(soundDeviceUuid);
    if (musicDeviceIt == m_rMusicDeviceContainer.end())
    {
+      spdlog::error("Could not find md: {}", util::uuid2Str(soundDeviceUuid));
       return;
    }
    auto& sh = musicDeviceIt->second->soundHandler;
@@ -197,10 +198,15 @@ void Instruments::addVoiceToKitInstrumentSlot(
    auto musicDeviceIt = m_rMusicDeviceContainer.find(soundDeviceUuid);
    if (musicDeviceIt == m_rMusicDeviceContainer.end())
    {
+      spdlog::error("Could not find md: {}", util::uuid2Str(soundDeviceUuid));
       return;
    }
    auto& sh           = musicDeviceIt->second->soundHandler;
    if (!sh)
+   {
+      return;
+   }
+   if(instrumentIt->sounds().operator[](slotIdx).voices.size() >= MAX_VOICES_IN_SLOT)
    {
       return;
    }
@@ -216,10 +222,6 @@ void Instruments::removeVoiceFromKitInstrumentSlot(
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto& voices = instrumentIt->sounds().operator[](slotIdx).voices;
    voices.erase(voices.begin() + compositeIdx);
-   if(voices.size() == 0)
-   {
-      instrumentIt->sounds().erase(instrumentIt->sounds().begin() + slotIdx);
-   }
    triggerChanged();
 }
 

@@ -129,6 +129,7 @@ struct Instruments : public utils::Settings<Instruments>
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    std::vector<Cb> m_subscribers;
+   static constexpr int MAX_VOICES_IN_SLOT = 4;
 };
 
 }   // namespace instruments

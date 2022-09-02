@@ -29,7 +29,7 @@ public:
    void noteOn(int soundIndex, int note, float velocity) noexcept;
    void noteOff(int soundIndex, int note, float velocity) noexcept;
    template<typename T>
-   void addSound(T&& kompositeSound) noexcept;
+   void addSound(int padIdx, T&& kompositeSound) noexcept;
 
    inline std::string name() const noexcept;
    inline void setName(const std::string& name) noexcept;
