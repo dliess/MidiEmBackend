@@ -68,6 +68,15 @@ void Instruments::removeKitInstrument(
    triggerChanged();
 }
 
+void Instruments::renameKitInstrument(
+      const util::Identifiable::UUID& instrumentId,
+      std::string name) noexcept
+{
+   GET_KIT_INSTR_OR_RETURN(instrumentId);
+   instrumentIt->setName(std::move(name));
+   triggerChanged();
+}
+
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
    data.melodicInstruments.emplace_back(std::move(name));
@@ -79,6 +88,15 @@ void Instruments::removeMelodicInstrument(
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentId);
    data.melodicInstruments.erase(instrumentIt);
+   triggerChanged();
+}
+
+void Instruments::renameMelodicInstrument(
+      const util::Identifiable::UUID& instrumentId,
+      std::string name) noexcept
+{
+   GET_MELODIC_INSTR_OR_RETURN(instrumentId);
+   instrumentIt->setName(std::move(name));
    triggerChanged();
 }
 

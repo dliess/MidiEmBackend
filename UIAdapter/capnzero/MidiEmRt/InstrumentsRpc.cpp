@@ -21,6 +21,14 @@ void InstrumentsRpc::removeMelodicInstrument(const ::capnzero::SpanCL<16>& uuid)
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
    m_rInstruments.removeMelodicInstrument(uuid_);
 }
+void InstrumentsRpc::renameMelodicInstrument(const ::capnzero::SpanCL<16>& instrumentUUID,
+                                             const ::capnzero::TextView& name)
+{
+   util::Identifiable::UUID instrumentUUID_;
+   std::copy(instrumentUUID.begin(), instrumentUUID.end(),
+             instrumentUUID_.begin());
+   m_rInstruments.renameMelodicInstrument(instrumentUUID_, std::string(name));
+}
 
 void InstrumentsRpc::createNewSlotInMelodicInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid,
@@ -104,6 +112,15 @@ void InstrumentsRpc::removeKitInstrument(
    std::copy(instrumentUUID.begin(), instrumentUUID.end(),
              instrumentUUID_.begin());
    m_rInstruments.removeKitInstrument(instrumentUUID_);
+}
+
+void InstrumentsRpc::renameKitInstrument(const ::capnzero::SpanCL<16>& instrumentUUID,
+                                             const ::capnzero::TextView& name)
+{
+   util::Identifiable::UUID instrumentUUID_;
+   std::copy(instrumentUUID.begin(), instrumentUUID.end(),
+             instrumentUUID_.begin());
+   m_rInstruments.renameKitInstrument(instrumentUUID_, std::string(name));
 }
 
 void InstrumentsRpc::createNewSlotInKitInstrument(
