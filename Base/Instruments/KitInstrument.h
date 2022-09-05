@@ -26,6 +26,8 @@ class KitInstrument : public Instrument
 public:
    KitInstrument() = default;
    KitInstrument(std::string name) noexcept;
+   void noteOn(int note, float velocity) noexcept override;
+   void noteOff(int note, float velocity) noexcept override;
    void noteOn(int soundIndex, int note, float velocity) noexcept;
    void noteOff(int soundIndex, int note, float velocity) noexcept;
    template<typename T>
@@ -44,6 +46,7 @@ public:
 private:
    std::string m_name;
    std::vector<CompositeSound> m_compositeSounds;
+   std::optional<int> toSoundIndex(int note) const noexcept;
 };
 
 } // namespace instruments

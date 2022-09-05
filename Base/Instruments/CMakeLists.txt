@@ -13,13 +13,16 @@ set(HEADERS
    "CompositeSound.h"
    "CompositeSound.inl"
    "InstrumentVoice.h"
+   "INotePlayer.h"
 )
 
-add_library(Instruments STATIC ${SOURCES} ${HEADERS})
+set(TARGET_NAME "Instruments")
 
-target_include_directories(Instruments PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(Instruments
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(${TARGET_NAME}
    PUBLIC  MusicDevice
    PRIVATE MIDI::usbmidi
    PRIVATE spdlog::spdlog

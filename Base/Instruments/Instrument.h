@@ -2,10 +2,10 @@
 #define BASE_INSTRUMENT_H
 
 #include "Identifiable.h"
-
+#include "NotePlayer.h"
 namespace base::instruments
 {
-class Instrument : public util::Identifiable
+class Instrument : public util::Identifiable, public INotePlayer
 {
 public:
    void markAsDefaultCreated() noexcept { m_isDefaultCreated = true; };

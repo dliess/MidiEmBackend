@@ -10,6 +10,24 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
+void KitInstrument::noteOn(int note, float velocity) noexcept
+{
+   auto si = toSoundIndex(note);
+   if(si)
+   {
+      noteOn(*si, 64, velocity);
+   }
+}
+
+void KitInstrument::noteOff(int note, float velocity) noexcept
+{
+   auto si = toSoundIndex(note);
+   if(si)
+   {
+      noteOff(*si, 64, velocity);
+   }
+}
+
 void KitInstrument::noteOn(int soundIndex, int note, float velocity) noexcept
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
@@ -32,4 +50,14 @@ void KitInstrument::noteOff(int soundIndex, int note, float velocity) noexcept
                                      velocity);
       }
    }
+}
+
+std::optional<int> KitInstrument::toSoundIndex(int note) const noexcept
+{
+   const int noteAdjusted = note - 64;
+   if(0 <= noteAdjusted && noteAdjusted < m_compositeSounds.size())
+   {
+      return noteAdjusted;
+   }
+   return std::nullopt;
 }

@@ -26,8 +26,8 @@ class MelodicInstrument : public Instrument
 public:
    MelodicInstrument() = default;
    MelodicInstrument(std::string name) noexcept;
-   void noteOn(int note, float velocity) noexcept;
-   void noteOff(int note, float velocity) noexcept;
+   void noteOn(int note, float velocity) noexcept override;
+   void noteOff(int note, float velocity) noexcept override;
    
    void pitchBend(float value) noexcept;
    void setParameterValue(int compPart, int parameterId, float value) noexcept;

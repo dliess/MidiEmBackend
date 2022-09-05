@@ -1,6 +1,8 @@
 add_subdirectory(AbletonLinkWrapper)
 add_subdirectory(Arpeggiator)
 add_subdirectory(Tempo)
+add_subdirectory(Session)
+add_subdirectory(Sequencer)
 add_subdirectory(Instruments)
 #add_subdirectory(Mapping)
 add_subdirectory(MidiFriends)
