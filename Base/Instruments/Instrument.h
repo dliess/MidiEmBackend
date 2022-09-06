@@ -2,7 +2,7 @@
 #define BASE_INSTRUMENT_H
 
 #include "Identifiable.h"
-#include "NotePlayer.h"
+#include "INotePlayer.h"
 namespace base::instruments
 {
 class Instrument : public util::Identifiable, public INotePlayer

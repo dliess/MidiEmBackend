@@ -16,8 +16,8 @@ namespace base::session
 struct Track : public util::Identifiable
 {
     std::string name;
-    Instrument* instrument{nullptr};
-    std::vector<Clip>;
+    instruments::Instrument* instrument{nullptr};
+    std::vector<Clip> clips;
 };
 
 }   // namespace session
