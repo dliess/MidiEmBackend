@@ -8,7 +8,7 @@ using Beat = double;
 
 struct TimedEvent 
 {
-    Beat timestamp{0.0};
+    Beat beatstamp{0.0};
 };
 
 }   // namespace base::sequencer

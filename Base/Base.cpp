@@ -231,6 +231,7 @@ void base::Base::loopFn()
       transportControl.update();
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
+      tracks.update();
       base::musicDevice::ModifiersApplyer(parameterSceneContainer,
                                           musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();

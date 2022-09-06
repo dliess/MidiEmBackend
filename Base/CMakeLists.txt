@@ -37,6 +37,7 @@ target_link_libraries(Base
    PUBLIC  Transport
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper
+   PUBLIC  Session
    PRIVATE spdlog::spdlog
    PRIVATE MIDI::usbmidi
    PRIVATE TimeMeasure::TimeMeasure

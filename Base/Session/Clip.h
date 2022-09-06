@@ -12,9 +12,10 @@ struct Clip
 {
     std::string name;
     sequencer::Beat startTime;
+    sequencer::Beat prevCheckTime;
     sequencer::Beat sequenceLength;
-    std::set<sequencer::NoteEvent>      m_noteEvents;
-    std::set<sequencer::ParameterEvent> m_parameterEvents;
+    std::set<sequencer::NoteEvent, sequencer::NoteEventCompare>           noteEvents;
+    std::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare> parameterEvents;
 };
 
 }   // namespace base::session

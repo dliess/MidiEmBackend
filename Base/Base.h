@@ -16,6 +16,7 @@
 #include "ParameterSceneContainer.h"
 #include "ThreadHelpers.h"
 #include "TransportControl.h"
+#include "Tracks.h"
 
 namespace base
 {
@@ -36,6 +37,7 @@ public:
    midifriends::Router midiRouter;
    musicDevice::controller::EventRouter controllerEventRouter;
    musicDevice::sound::ParameterSceneContainer parameterSceneContainer;
+   session::Tracks tracks;
    void start();
    void waitForEnd();
 

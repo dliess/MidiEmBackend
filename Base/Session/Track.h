@@ -5,6 +5,7 @@
 #include "Clip.h"
 #include "Identifiable.h"
 #include <vector>
+#include <optional>
 
 namespace base::instruments {
     class Instrument;
@@ -17,6 +18,7 @@ struct Track : public util::Identifiable
 {
     std::string name;
     instruments::Instrument* instrument{nullptr};
+    std::optional<int> activeClip;
     std::vector<Clip> clips;
 };
 

@@ -12,6 +12,14 @@ struct ParameterEvent : public TimedEvent
     float value{0.0};
 };
 
+struct ParameterEventCompare
+{
+    bool operator()(const ParameterEvent& lhs, const ParameterEvent& rhs) const
+    {
+        return lhs.beatstamp < rhs.beatstamp;
+    }
+};
+
 }   // namespace base::sequencer
 
 #endif
