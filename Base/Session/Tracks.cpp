@@ -1,22 +1,44 @@
 #include "Tracks.h"
-#include "BeatTick.h"
+
 #include <math.h> /* fmod */
+
+#include "BeatTick.h"
 
 using namespace base::session;
 
-
 void Tracks::update()
 {
-    for(auto& track : tracks)
-    {
-        if(track.activeClip)
-        {
-            auto& clip = track.clips[track.activeClip.value()];
-            sequencer::Beat delta = tempo::BeatTick::instance().getBeat() - clip.startTime;
-            delta = std::fmod(delta, clip.sequenceLength);
-            const auto itStart = clip.noteEvents.upper_bound(sequencer::NoteEvent{delta});
-            const auto itEnd = clip.noteEvents.lower_bound(sequencer::NoteEvent{clip.prevCheckTime});
-
-        }
-    }
+   for (auto& track : tracks)
+   {
+      if (track.activeClip)
+      {
+         auto& clip = track.clips[track.activeClip.value()];
+         sequencer::Beat clipBeat =
+             tempo::BeatTick::instance().getBeat() - clip.startTime;
+         clipBeat = std::fmod(clipBeat, clip.sequenceLength);
+         clip.noteEvents.forNoteEvents(
+             clip.prevClipBeat, clipBeat,
+             [&track](const sequencer::NoteEvent& noteEvent) {
+                if (track.instrument)
+                {
+                   switch (noteEvent.type)
+                   {
+                      case sequencer::NoteEvent::Event::On:
+                      {
+                         track.instrument->noteOn(noteEvent.note,
+                                                  noteEvent.velocity);
+                         break;
+                      }
+                      case sequencer::NoteEvent::Event::Off:
+                      {
+                         track.instrument->noteOff(noteEvent.note,
+                                                   noteEvent.velocity);
+                         break;
+                      }
+                   }
+                }
+             });
+         clip.prevClipBeat = clipBeat;
+      }
+   }
 }
