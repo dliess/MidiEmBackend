@@ -32,6 +32,11 @@ namespace base::musicDevice::sound
 class ParameterSceneContainer;
 }
 
+namespace base::session
+{
+struct Tracks;
+}
+
 namespace uiadapter::capnzero
 {
 class RtServer : public ::capnzero::MidiEmRt::MidiEmRtServer
@@ -46,7 +51,8 @@ public:
             base::midifriends::Router& rMidiRouter,
             base::musicDevice::controller::EventRouter& rCtrlEventRouter,
             base::musicDevice::sound::ParameterSceneContainer&
-                rParameterSceneContainer);
+                rParameterSceneContainer,
+            base::session::Tracks& rTracks);
    using Super    = ::capnzero::MidiEmRt::MidiEmRtServer;
    using WaitMode = Super::WaitMode;
 };

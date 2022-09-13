@@ -33,7 +33,8 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
                    base::midifriends::Router &rMidiRouter,
                    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
                    base::musicDevice::sound::ParameterSceneContainer
-                       &rParameterSceneContainer) :
+                       &rParameterSceneContainer,
+                   base::session::Tracks& rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<InstrumentsRpc>(rInstruments),
@@ -50,7 +51,7 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
         std::make_unique<MidiRoutingRpc>(rMidiRouter),
         std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter,
                                                    rMDHolder.musicDevices),
-        std::make_unique<SessionRpc>())
+        std::make_unique<SessionRpc>(rTracks))
 {
    /*
   Super::signals().registerAbletonLinkEnabledChangedSubscrCb(

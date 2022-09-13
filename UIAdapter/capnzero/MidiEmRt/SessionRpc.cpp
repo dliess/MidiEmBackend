@@ -1,6 +1,11 @@
 #include "SessionRpc.h"
+#include "Tracks.h"
 
 using namespace uiadapter::capnzero;
+
+SessionRpc::SessionRpc(base::session::Tracks& rTracks) :
+    m_rTracks(rTracks)
+{}
 
 void SessionRpc::pushBackTrack(const ::capnzero::TextView& name) {}
 void SessionRpc::addTrack(const ::capnzero::TextView& name,

@@ -3,11 +3,17 @@
 
 #include "MidiEmRtSessionRpcIf.h"
 
+namespace base::session
+{
+struct Tracks;
+}
+
 namespace uiadapter::capnzero
 {
 class SessionRpc : public ::capnzero::MidiEmRt::SessionRpcIf
 {
 public:
+   SessionRpc(base::session::Tracks& rTracks);
    void pushBackTrack(const ::capnzero::TextView& name) override;
    void addTrack(const ::capnzero::TextView& name,
                  ::capnzero::Int16 position) override;
@@ -53,6 +59,8 @@ public:
                  const ::capnzero::SpanCL<16>& slot) override;
    void startClipRow(const ::capnzero::SpanCL<16>& row) override;
    void stopClipRow(const ::capnzero::SpanCL<16>& row) override;
+private:
+   base::session::Tracks& m_rTracks;
 };
 
 }   // namespace uiadapter::capnzero
