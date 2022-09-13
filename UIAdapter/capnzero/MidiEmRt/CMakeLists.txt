@@ -10,6 +10,7 @@ set(SOURCES
     "ControllerDevicesRpc.cpp"
     "ControllerEventRouterRpc.cpp"
     "ParameterSceneRpc.cpp"
+    "SessionRpc.cpp"
 )
 
 set(HEADERS
@@ -24,6 +25,7 @@ set(HEADERS
     "ControllerDevicesRpc.h"
     "ControllerEventRouterRpc.h"
     "ParameterSceneRpc.h"
+    "SessionRpc.h"
 )
 
 set(TARGET_NAME capnzero-rt-server)
