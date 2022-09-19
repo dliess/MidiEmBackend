@@ -16,6 +16,7 @@ namespace base::session
 
 struct Track : public util::Identifiable
 {
+    Track(std::string name) noexcept;
     std::string name;
     instruments::Instrument* instrument{nullptr};
     std::optional<int> activeClip;

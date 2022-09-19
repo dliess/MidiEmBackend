@@ -42,3 +42,13 @@ void Tracks::update()
       }
    }
 }
+
+void Tracks::pushBackTrack(std::string name)
+{
+   tracks.emplace_back(std::move(name));
+}
+
+void Tracks::addTrack(std::string name, int position)
+{
+   tracks.insert();
+}

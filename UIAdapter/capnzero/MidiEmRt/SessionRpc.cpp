@@ -7,11 +7,17 @@ SessionRpc::SessionRpc(base::session::Tracks& rTracks) :
     m_rTracks(rTracks)
 {}
 
-void SessionRpc::pushBackTrack(const ::capnzero::TextView& name) {}
+void SessionRpc::pushBackTrack(const ::capnzero::TextView& name) 
+{
+    m_rTracks.pushBackTrack(std::string(name));
+}
+
 void SessionRpc::addTrack(const ::capnzero::TextView& name,
                           ::capnzero::Int16 position)
 {
+    m_rTracks.addTrack(std::string(name), position);
 }
+
 void SessionRpc::duplicateTrack(const ::capnzero::SpanCL<16>& trackUuid) {}
 void SessionRpc::removeTrack(const ::capnzero::SpanCL<16>& trackUuid) {}
 void SessionRpc::renameTrack(const ::capnzero::SpanCL<16>& trackUuid,
