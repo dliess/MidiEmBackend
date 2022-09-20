@@ -37,12 +37,14 @@ Instruments::Instruments(
 {
 }
 
+/*
 Instruments::Settings Instruments::getSettings() const noexcept { return data; }
 
 void Instruments::setSettings(const Settings& settings) noexcept
 {
    data = settings;
 }
+*/
 
 void Instruments::registerForDataChange(Cb cb) noexcept
 {
@@ -119,7 +121,7 @@ void Instruments::createNewSlotInMelodicInstrument(
    CompositeSound compositeSound(ss->voices[voiceIdx].name);
    compositeSound.voices.push_back(
        Voice{&sh.value(), musicDeviceIt->second->deviceId(), voiceIdx, 0});
-   instrumentIt->voices().push_back(compositeSound);
+   instrumentIt->voices().push_back(std::move(compositeSound));
    triggerChanged();
 }
 
@@ -204,7 +206,7 @@ void Instruments::createNewSlotInKitInstrument(
    CompositeSound compositeSound(ss->voices[voiceIdx].name);
    compositeSound.voices.push_back(
        Voice{&sh.value(), musicDeviceIt->second->deviceId(), voiceIdx, 0});
-   instrumentIt->sounds().push_back(compositeSound);
+   instrumentIt->sounds().push_back(std::move(compositeSound));
    triggerChanged();
 }
 
@@ -239,12 +241,12 @@ void Instruments::moveKitInstrumentSlotVoice(
     int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
     int dstSlotIdx) noexcept
 {
-   KitInstruments::Super::iterator srcInstrumentIt;
+   KitInstruments::iterator srcInstrumentIt;
    {
       GET_KIT_INSTR_OR_RETURN(srcInstrumentUuid);
       srcInstrumentIt = instrumentIt;
    }
-   KitInstruments::Super::iterator dstInstrumentIt;
+   KitInstruments::iterator dstInstrumentIt;
    {
       GET_KIT_INSTR_OR_RETURN(dstInstrumentUuid);
       dstInstrumentIt = instrumentIt;

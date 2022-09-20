@@ -16,8 +16,8 @@ class Identifiable
 {
 protected:
    inline Identifiable() noexcept;
-   inline Identifiable(const Identifiable& other) noexcept;
-   inline Identifiable& operator=(const Identifiable& other) noexcept;
+   inline Identifiable(const Identifiable& other) noexcept = delete;
+   inline Identifiable& operator=(const Identifiable& other) noexcept = delete;
    inline Identifiable(Identifiable&& other) noexcept = default;
    inline Identifiable& operator=(Identifiable&& other) noexcept = default;
 public:

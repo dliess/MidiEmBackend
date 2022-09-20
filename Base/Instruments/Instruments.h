@@ -19,64 +19,27 @@ class MusicDeviceContainer;
 
 namespace instruments
 {
-struct KitInstruments : public std::vector<KitInstrument>
-{
-   using Super      = std::vector<KitInstrument>;
-   KitInstruments() = default;
-   KitInstruments(const Super& rhs) : Super(rhs) {}
-   Super::iterator findByUUID(const util::Identifiable::UUID& uuid)
-   {
-      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if (iter->id() == uuid)
-            return iter;
-      return Super::end();
-   }
-   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const
-   {
-      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if (iter->id() == uuid)
-            return iter;
-      return Super::end();
-   }
-};
 
-struct MelodicInstruments : public std::vector<MelodicInstrument>
-{
-   using Super          = std::vector<MelodicInstrument>;
-   MelodicInstruments() = default;
-   MelodicInstruments(const Super& rhs) : Super(rhs) {}
-   Super::iterator findByUUID(const util::Identifiable::UUID& uuid)
-   {
-      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if (iter->id() == uuid)
-            return iter;
-      return Super::end();
-   }
-   Super::const_iterator findByUUID(const util::Identifiable::UUID& uuid) const
-   {
-      for (auto iter = Super::begin(); iter != Super::end(); ++iter)
-         if (iter->id() == uuid)
-            return iter;
-      return Super::end();
-   }
-};
+using KitInstruments = std::vector<KitInstrument>;
+using MelodicInstruments = std::vector<MelodicInstrument>;
 
-struct Instruments : public utils::Settings<Instruments>
+struct Instruments //: public utils::Settings<Instruments>
 {
    Instruments(
        musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
    struct Data
    {
-      KitInstruments kitInstruments;
+      KitInstruments     kitInstruments;
       MelodicInstruments melodicInstruments;
    };
    Data data;
+   /*
    // ============== Settings ===============
    using Settings = Data;
    Settings getSettings() const noexcept;
    void setSettings(const Settings& settings) noexcept;
    // =======================================
-
+    */
    using Cb = std::function<void(void)>;
    void registerForDataChange(Cb cb) noexcept;
    void triggerChanged() noexcept;

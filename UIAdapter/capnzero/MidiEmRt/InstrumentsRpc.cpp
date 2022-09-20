@@ -212,7 +212,9 @@ void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
+   auto iter = std::find_if(m_rInstruments.data.melodicInstruments.begin(), 
+                            m_rInstruments.data.melodicInstruments.end(), 
+                            [&uuid_](const MelodicInstrument& mi){ return uuid_ == mi.id(); });
    if (iter != m_rInstruments.data.melodicInstruments.end())
    {
       iter->noteOn(note, velocity);
@@ -226,7 +228,9 @@ void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rInstruments.data.melodicInstruments.findByUUID(uuid_);
+   auto iter = std::find_if(m_rInstruments.data.melodicInstruments.begin(), 
+                            m_rInstruments.data.melodicInstruments.end(), 
+                            [&uuid_](const MelodicInstrument& mi){ return uuid_ == mi.id(); });
    if (iter != m_rInstruments.data.melodicInstruments.end())
    {
       iter->noteOff(note, velocity);
@@ -241,7 +245,9 @@ void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
+   auto iter = std::find_if(m_rInstruments.data.kitInstruments.begin(), 
+                            m_rInstruments.data.kitInstruments.end(), 
+                            [&uuid_](const KitInstrument& mi){ return uuid_ == mi.id(); });
    if (iter != m_rInstruments.data.kitInstruments.end())
    {
       iter->noteOn(soundIndex, note, velocity);
@@ -256,7 +262,9 @@ void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
 {
    util::Identifiable::UUID uuid_;
    std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = m_rInstruments.data.kitInstruments.findByUUID(uuid_);
+   auto iter = std::find_if(m_rInstruments.data.kitInstruments.begin(), 
+                            m_rInstruments.data.kitInstruments.end(), 
+                            [&uuid_](const KitInstrument& mi){ return uuid_ == mi.id(); });
    if (iter != m_rInstruments.data.kitInstruments.end())
    {
       iter->noteOff(soundIndex, note, velocity);

@@ -113,7 +113,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             voice.voiceIndex    = voiceIndex;
             voice.noteOffset    = 0;
             compositeSound.voices.push_back(voice);
-            melodicInstrument.voices().push_back(compositeSound);
+            melodicInstrument.voices().push_back(std::move(compositeSound));
             m_rInstruments.data.melodicInstruments.push_back(
                 std::move(melodicInstrument));
          }
@@ -137,7 +137,7 @@ void InstrumentsFactory::addDefaultInstrumentsFor(
             voice.voiceIndex    = voiceIndex;
             voice.noteOffset    = 0;
             compositeSound.voices.push_back(voice);
-            melodicInstrument.voices().push_back(compositeSound);
+            melodicInstrument.voices().push_back(std::move(compositeSound));
          }
          m_rInstruments.data.melodicInstruments.push_back(
              std::move(melodicInstrument));

@@ -50,5 +50,5 @@ void Tracks::pushBackTrack(std::string name)
 
 void Tracks::addTrack(std::string name, int position)
 {
-   tracks.insert();
+   //tracks.insert();
 }

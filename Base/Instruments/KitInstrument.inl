@@ -7,7 +7,7 @@ namespace base::instruments
 template<typename T>
 void KitInstrument::addSound(int padIdx, T&& kompositeSound) noexcept
 {
-   m_compositeSounds[padIdx] = std::forward<T>(kompositeSound);
+   m_compositeSounds[padIdx] = std::move(kompositeSound);
 };
 
 inline std::string KitInstrument::name() const noexcept { return m_name; }

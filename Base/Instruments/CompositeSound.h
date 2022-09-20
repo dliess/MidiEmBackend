@@ -8,10 +8,14 @@
 namespace base::instruments
 {
 
-struct CompositeSound : public util::Identifiable
+struct CompositeSound //: public util::Identifiable
 {
    inline CompositeSound() noexcept = default;
    inline CompositeSound(std::string name) noexcept;
+   CompositeSound(const CompositeSound& rhs) noexcept = default;
+   CompositeSound& operator=(const CompositeSound& rhs) noexcept = default;
+   CompositeSound(CompositeSound&& rhs) noexcept = default;
+   CompositeSound& operator=(CompositeSound&& rhs) noexcept = default;
    std::string name;
    //   static constexpr int NUM_MAX_VOICES_PER_KIT_VOICE = 4;
    //   using Voices = std::array<Voice, NUM_MAX_VOICES_PER_KIT_VOICE>;

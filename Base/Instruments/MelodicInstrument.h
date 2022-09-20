@@ -26,6 +26,11 @@ class MelodicInstrument : public Instrument
 public:
    MelodicInstrument() = default;
    MelodicInstrument(std::string name) noexcept;
+   MelodicInstrument(const MelodicInstrument&) noexcept = delete;
+   MelodicInstrument& operator=(const MelodicInstrument&) noexcept = delete;
+   MelodicInstrument(MelodicInstrument&&) noexcept = default;
+   MelodicInstrument& operator=(MelodicInstrument&&) noexcept = default;
+
    void noteOn(int note, float velocity) noexcept override;
    void noteOff(int note, float velocity) noexcept override;
    
