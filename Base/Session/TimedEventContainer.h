@@ -9,6 +9,8 @@ namespace base::session
 template <typename Container>
 struct TimedEventContainer : public Container
 {
+   using Container::Container; // inherit all contructors
+   using allocator_type = typename Container::allocator_type;
    template <typename Cb>
    void forNoteEvents(sequencer::Beat fromBeat, sequencer::Beat toBeat, Cb&& cb)
    {

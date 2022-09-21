@@ -6,6 +6,10 @@
 
 using namespace base::session;
 
+Tracks::Tracks() :
+   m_memoryPool("SessionTracks"),
+   tracks(&m_memoryPool.pool()) {}
+
 void Tracks::update()
 {
    for (auto& track : tracks)

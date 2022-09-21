@@ -6,7 +6,9 @@
 #include "Identifiable.h"
 #include <vector>
 #include <optional>
-
+#include <string_view>
+#include <memory_resource>
+#include <cstddef> // std::byte
 namespace base::instruments {
     class Instrument;
 }
@@ -16,11 +18,14 @@ namespace base::session
 
 struct Track : public util::Identifiable
 {
-    Track(std::string name) noexcept;
-    std::string name;
+    using allocator_type = std::pmr::polymorphic_allocator<std::byte>;
+    explicit Track(std::string_view name, const allocator_type& alloc = {}) noexcept;
+    Track(const Track& rhs, const allocator_type& alloc) noexcept = delete;
+    Track(Track&& rhs, const allocator_type& alloc) noexcept;
+    std::pmr::string name;
     instruments::Instrument* instrument{nullptr};
     std::optional<int> activeClip;
-    std::vector<Clip> clips;
+    std::pmr::vector<Clip> clips;
 };
 
 }   // namespace session

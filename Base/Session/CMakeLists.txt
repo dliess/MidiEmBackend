@@ -3,6 +3,7 @@ set(TARGET_NAME "Session")
 set(SOURCES
     "Track.cpp"
     "Tracks.cpp"
+    "Clip.cpp"
 )
 
 set(HEADERS
