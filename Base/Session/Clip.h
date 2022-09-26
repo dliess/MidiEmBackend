@@ -23,9 +23,6 @@ struct Clip
     sequencer::Beat sequenceLength;
     TimedEventContainer<std::pmr::set<sequencer::NoteEvent, sequencer::NoteEventCompare>>           noteEvents;
     TimedEventContainer<std::pmr::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare>> parameterEvents;
-
-    template<typename Container, typename Cb>
-    void forNoteEvents(const Container& container, Cb&& cb);
 };
 
 }   // namespace base::session

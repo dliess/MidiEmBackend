@@ -3,7 +3,7 @@
 
 #include "Track.h"
 #include <vector>
-#include <string>
+#include <string_view>
 #include "stack_mempool.h"
 
 namespace base::session
@@ -16,8 +16,8 @@ private:
 public:
     Tracks();
     void update();
-    void pushBackTrack(std::string name);
-    void addTrack(std::string name, int position);
+    void pushBackTrack(std::string_view name);
+    void addTrack(std::string_view name, int position);
     std::pmr::vector<Track> tracks;
 };
 

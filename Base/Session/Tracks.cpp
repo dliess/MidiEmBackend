@@ -47,12 +47,13 @@ void Tracks::update()
    }
 }
 
-void Tracks::pushBackTrack(std::string name)
+void Tracks::pushBackTrack(std::string_view name)
 {
-   tracks.emplace_back(std::move(name));
+   tracks.emplace_back(name);
 }
 
-void Tracks::addTrack(std::string name, int position)
+void Tracks::addTrack(std::string_view name, int position)
 {
-   //tracks.insert();
+   const auto it = std::next(tracks.begin(), position);
+   tracks.emplace(it, name);
 }
