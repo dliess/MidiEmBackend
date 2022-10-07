@@ -387,7 +387,7 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::initCache() noexcept
          const auto& event = widget.events[eventId];
          mpark::visit(
              midi::overload{
-                 [=](const description::controller::EventNativeNote& evt){
+                 [this, widgetId, eventId](const description::controller::EventNativeNote& evt){
                        m_nativeNoteMode = true;
                        m_map[midi::MidiMsgId<midi::NoteOn>{-1}] =
                            EventId{widgetId, mpark::monostate(), eventId};

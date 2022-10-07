@@ -6,6 +6,7 @@
 #include <array>
 #include <cstdint>
 #include <string>
+#include <span>
 
 #include "arrayCount.h"
 
@@ -22,6 +23,7 @@ protected:
    inline Identifiable& operator=(Identifiable&& other) noexcept = default;
 public:
    using UUID = std::array<uint8_t, util::array_count_v<uuid_t>>;
+   using UUIDView = std::span<const uint8_t, util::array_count_v<uuid_t>>;
    inline const UUID &id() const noexcept;
 protected:
    UUID m_uuid;

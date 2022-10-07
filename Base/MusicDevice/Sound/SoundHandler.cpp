@@ -447,16 +447,16 @@ void SoundHandler::triggerUICallbacks() noexcept
          emitSoundDevParamChanged(voiceIdx, paramIdx, changedValues->first,
                                   changedValues->second);
          element.lfo().uiAsksForChanges(
-             [=](float value) {
+             [=, this](float value) {
                 emitLFOAmplitudeChanged(voiceIdx, paramIdx, value);
              },
-             [=](float value) {
+             [=, this](float value) {
                 emitLFOFrequencyChanged(voiceIdx, paramIdx, value);
              },
-             [=](lfo::Waveform value) {
+             [=, this](lfo::Waveform value) {
                 emitLFOWaveformChanged(voiceIdx, paramIdx, value);
              },
-             [=](uint32_t value) {
+             [=, this](uint32_t value) {
                 emitLFOMultiplierExpChanged(voiceIdx, paramIdx, value);
              });
       }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 set(CMAKE_DEBUG_POSTFIX _g)
 
 project(NomidiBackend LANGUAGES CXX)
@@ -50,8 +50,10 @@ CPMFindPackage(
   #VERSION 3.10.5 bleeding edge in repo
   #VERSION 3.10.2
   # hardknott:
-  VERSION 3.9.1 
+  VERSION 3.9.1
   #VERSION 3.7.0 dunfell
+  OPTIONS
+    "JSON_BuildTests OFF"
 )
 if(nlohmann_json_ADDED)
   add_library(nlohmann_json::nlohmann_json ALIAS nlohmann_json)
@@ -80,7 +82,7 @@ endif()
 CPMFindPackage(
   NAME MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG 33847baf49f6eefa9adce64368706da5e3fe20e8
+  GIT_TAG 3e3a4871805581d388c5e5ba8567085b5423208b
 )
 if(MidiEmCapnZero_ADDED)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader ALIAS midiem-capnzero-loader)

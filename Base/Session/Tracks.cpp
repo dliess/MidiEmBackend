@@ -57,3 +57,8 @@ void Tracks::addTrack(std::string_view name, int position)
    const auto it = std::next(tracks.begin(), position);
    tracks.emplace(it, name);
 }
+
+void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
+{
+
+}

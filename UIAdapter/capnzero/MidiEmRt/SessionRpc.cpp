@@ -20,7 +20,7 @@ void SessionRpc::addTrack(const ::capnzero::TextView& name,
 
 void SessionRpc::duplicateTrack(const ::capnzero::SpanCL<16>& trackUuid)
 {
-    //m_rTracks.duplicateTrack(trackUuid);
+    m_rTracks.duplicateTrack(trackUuid);
 }
 
 void SessionRpc::removeTrack(const ::capnzero::SpanCL<16>& trackUuid) {}

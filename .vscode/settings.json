@@ -87,7 +87,8 @@
         "strstream": "cpp",
         "coroutine": "cpp",
         "source_location": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "span": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }
