@@ -15,7 +15,7 @@ struct Clip
 {
     using allocator_type = std::pmr::polymorphic_allocator<std::byte>;
     explicit Clip(const allocator_type& alloc) noexcept;
-    Clip(const Clip& other, const allocator_type& alloc) = delete;
+    Clip(const Clip& other, const allocator_type& alloc);
     Clip(Clip&& other, const allocator_type& alloc) noexcept;
     std::pmr::string name;
     sequencer::Beat startTime;

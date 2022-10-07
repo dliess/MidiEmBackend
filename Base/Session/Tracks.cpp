@@ -60,5 +60,13 @@ void Tracks::addTrack(std::string_view name, int position)
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
 {
-
+   auto it = std::find_if(tracks.begin(), tracks.end(), [&uuid](const Track& track){
+      return track.idView() == uuid;
+   });
+   if(it == tracks.end())
+   {
+      spdlog::error("Could not find track with UUID {}", util::uuid2Str(uuid));
+      return;
+   }
+   tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
 }
