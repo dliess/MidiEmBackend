@@ -14,15 +14,24 @@ struct Tracks
 {
 private:
     util::StackMempool<32768> m_memoryPool;
+    template<typename CB>
+    void withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb);
 public:
     Tracks();
     void update();
     void pushBackTrack(std::string_view name);
     void addTrack(std::string_view name, int position);
     void duplicateTrack(util::Identifiable::UUIDView uuid);
+    void removeTrack(util::Identifiable::UUIDView uuid);
+    void renameTrack(util::Identifiable::UUIDView uuid, std::string_view name);
+    void moveTrack(util::Identifiable::UUIDView uuid, int afterPosition);
+    template<typename CB>
+    void withTrack(util::Identifiable::UUIDView uuid, CB&& cb);
     std::pmr::vector<Track> tracks;
 };
 
 }   // namespace session
+
+#include "Tracks.inl"
 
 #endif

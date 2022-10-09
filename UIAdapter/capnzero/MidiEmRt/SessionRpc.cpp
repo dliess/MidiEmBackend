@@ -23,19 +23,29 @@ void SessionRpc::duplicateTrack(const ::capnzero::SpanCL<16>& trackUuid)
     m_rTracks.duplicateTrack(trackUuid);
 }
 
-void SessionRpc::removeTrack(const ::capnzero::SpanCL<16>& trackUuid) {}
+void SessionRpc::removeTrack(const ::capnzero::SpanCL<16>& trackUuid)
+{
+    m_rTracks.removeTrack(trackUuid);
+}
 void SessionRpc::renameTrack(const ::capnzero::SpanCL<16>& trackUuid,
                              const ::capnzero::TextView& name)
 {
+    m_rTracks.renameTrack(trackUuid, name);
 }
-void SessionRpc::moveTrack(const ::capnzero::SpanCL<16>& track1Uuid,
+void SessionRpc::moveTrack(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 afterPosition)
 {
+    m_rTracks.moveTrack(trackUuid, afterPosition);
 }
-void SessionRpc::toggleTrackMute(const ::capnzero::SpanCL<16>& track1Uuid) {}
+
+void SessionRpc::toggleTrackMute(const ::capnzero::SpanCL<16>& trackUuid)
+{
+    m_rTracks.withTrack(trackUuid, [](auto& track){track.toggleMute();});
+}
 void SessionRpc::createClip(const ::capnzero::SpanCL<16>& trackUuid,
                             const ::capnzero::SpanCL<16>& slot)
 {
+    m_rTracks.withTrack(trackUuid, [](auto& track){track.createClip();});
 }
 void SessionRpc::duplicateClip(const ::capnzero::SpanCL<16>& trackUuid,
                                const ::capnzero::SpanCL<16>& slot)

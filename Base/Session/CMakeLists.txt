@@ -9,6 +9,7 @@ set(SOURCES
 set(HEADERS
     "Track.h"
     "Tracks.h"
+    "Tracks.inl"
     "Clip.h"
 )
 

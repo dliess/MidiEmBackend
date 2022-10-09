@@ -21,9 +21,9 @@ public:
    void removeTrack(const ::capnzero::SpanCL<16>& trackUuid) override;
    void renameTrack(const ::capnzero::SpanCL<16>& trackUuid,
                     const ::capnzero::TextView& name) override;
-   void moveTrack(const ::capnzero::SpanCL<16>& track1Uuid,
+   void moveTrack(const ::capnzero::SpanCL<16>& trackUuid,
                   ::capnzero::Int16 afterPosition) override;
-   void toggleTrackMute(const ::capnzero::SpanCL<16>& track1Uuid) override;
+   void toggleTrackMute(const ::capnzero::SpanCL<16>& trackUuid) override;
    void createClip(const ::capnzero::SpanCL<16>& trackUuid,
                    const ::capnzero::SpanCL<16>& slot) override;
    void duplicateClip(const ::capnzero::SpanCL<16>& trackUuid,

@@ -1,7 +1,4 @@
 #include "Tracks.h"
-
-#include <math.h> /* fmod */
-
 #include "BeatTick.h"
 
 using namespace base::session;
@@ -14,36 +11,7 @@ void Tracks::update()
 {
    for (auto& track : tracks)
    {
-      if (track.activeClip)
-      {
-         auto& clip = track.clips[track.activeClip.value()];
-         sequencer::Beat clipBeat =
-             tempo::BeatTick::instance().getBeat() - clip.startTime;
-         clipBeat = std::fmod(clipBeat, clip.sequenceLength);
-         clip.noteEvents.forNoteEvents(
-             clip.prevClipBeat, clipBeat,
-             [&track](const sequencer::NoteEvent& noteEvent) {
-                if (track.instrument)
-                {
-                   switch (noteEvent.type)
-                   {
-                      case sequencer::NoteEvent::Event::On:
-                      {
-                         track.instrument->noteOn(noteEvent.note,
-                                                  noteEvent.velocity);
-                         break;
-                      }
-                      case sequencer::NoteEvent::Event::Off:
-                      {
-                         track.instrument->noteOff(noteEvent.note,
-                                                   noteEvent.velocity);
-                         break;
-                      }
-                   }
-                }
-             });
-         clip.prevClipBeat = clipBeat;
-      }
+      track.update();
    }
 }
 
@@ -60,13 +28,31 @@ void Tracks::addTrack(std::string_view name, int position)
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
 {
-   auto it = std::find_if(tracks.begin(), tracks.end(), [&uuid](const Track& track){
-      return track.idView() == uuid;
+   withTrackIter(uuid, [this](auto it){
+      tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
    });
-   if(it == tracks.end())
-   {
-      spdlog::error("Could not find track with UUID {}", util::uuid2Str(uuid));
-      return;
-   }
-   tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
 }
+
+void Tracks::removeTrack(util::Identifiable::UUIDView uuid)
+{
+   withTrackIter(uuid, [this](auto it){
+      tracks.erase(it);
+   });
+}
+
+void Tracks::renameTrack(util::Identifiable::UUIDView uuid, std::string_view name)
+{
+   withTrackIter(uuid, [this, name](auto it){
+      it->name = name;
+   });
+}
+
+void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
+{
+   withTrackIter(uuid, [this, afterPosition](auto it){
+      Track track(std::move(*it));
+      tracks.erase(it);
+      tracks.insert(std::next(tracks.begin(), afterPosition), std::move(track));
+   });
+}
+

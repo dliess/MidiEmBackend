@@ -4,6 +4,9 @@
         "compilers": {
           "C": "/usr/bin/x86_64-linux-gnu-gcc-10",
           "CXX": "/usr/bin/x86_64-linux-gnu-g++-10"
+        },
+        "preferredGenerator": {
+          "name": "Unix Makefiles"
         }
     }
 ]
