@@ -49,11 +49,3 @@ void session::Track::toggleMute() noexcept
 {
    // TODO
 }
-
-void session::Track::createClip(int row)
-{
-    if(!clips[row])
-    {
-        clips[row] = util::pmr::make_unique<Clip>(clips.get_allocator());
-    }
-}

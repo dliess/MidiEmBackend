@@ -26,7 +26,9 @@ struct Track : public util::Identifiable
     Track(Track&& rhs, const allocator_type& alloc) noexcept;
     void update();
     void toggleMute() noexcept;
-    void createClip(int row);
+    inline void createClip(int row);
+    inline void createClip(int row, const Clip& clip);
+    inline void deleteClip(int row);
     std::pmr::string name;
     instruments::Instrument* instrument{nullptr};
     std::optional<int> activeClip;
@@ -37,5 +39,7 @@ private:
 };
 
 }   // namespace session
+
+#include "Track.inl"
 
 #endif

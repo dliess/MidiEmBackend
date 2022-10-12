@@ -52,23 +52,42 @@ void SessionRpc::copyClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                 const ::capnzero::SpanCL<16>& destTryckUuid,
                 ::capnzero::Int16 destRow)
 {
-
+    m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack){
+        if(srcTrack.clips[srcRow])
+        {
+            m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack){
+                destTrack.createClip(destRow, *srcTrack.clips[srcRow]);
+            });
+        }
+    });
 }
 void SessionRpc::moveClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                 ::capnzero::Int16 srcRow,
                 const ::capnzero::SpanCL<16>& destTryckUuid,
                 ::capnzero::Int16 destRow)
 {
-
+    m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack){
+        if(srcTrack.clips[srcRow])
+        {
+            m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack){
+                destTrack.createClip(destRow, *srcTrack.clips[srcRow]);
+            });
+            srcTrack.deleteClip(srcRow);
+        }
+    });
 }
 void SessionRpc::deleteClip(const ::capnzero::SpanCL<16>& trackUuid,
                             ::capnzero::Int16 row)
 {
+    m_rTracks.withTrack(trackUuid, [row](auto& track){ track.deleteClip(row); });  
 }
 void SessionRpc::renameClip(const ::capnzero::SpanCL<16>& trackUuid,
                             ::capnzero::Int16 row,
                             const ::capnzero::TextView& name)
 {
+    m_rTracks.withClip(trackUuid, row, [&name](auto& clip){
+        clip.name = name;
+    });  
 }
 void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row,

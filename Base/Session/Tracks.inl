@@ -26,5 +26,15 @@ void Tracks::withTrack(util::Identifiable::UUIDView uuid, CB&& cb)
    });
 }
 
+template<typename CB>
+void Tracks::withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb)
+{
+   withTrack(uuid, [&cb, row](auto& track){
+      if(track.clips[row]) {
+         std::forward<CB>(cb)(*track.clips[row]);
+      }
+   });
+}
+
 }   // namespace base::session
 #endif

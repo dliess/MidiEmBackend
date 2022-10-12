@@ -27,6 +27,8 @@ public:
     void moveTrack(util::Identifiable::UUIDView uuid, int afterPosition);
     template<typename CB>
     void withTrack(util::Identifiable::UUIDView uuid, CB&& cb);
+    template<typename CB>
+    void withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb);
     std::pmr::vector<Track> tracks;
 };
 
