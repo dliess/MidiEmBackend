@@ -45,7 +45,7 @@ void SessionRpc::toggleTrackMute(const ::capnzero::SpanCL<16>& trackUuid)
 void SessionRpc::createClip(const ::capnzero::SpanCL<16>& trackUuid,
                             const ::capnzero::SpanCL<16>& slot)
 {
-    m_rTracks.withTrack(trackUuid, [](auto& track){track.createClip();});
+    m_rTracks.withTrack(trackUuid, [](auto& track){/*track.createClip();*/});
 }
 void SessionRpc::duplicateClip(const ::capnzero::SpanCL<16>& trackUuid,
                                const ::capnzero::SpanCL<16>& slot)

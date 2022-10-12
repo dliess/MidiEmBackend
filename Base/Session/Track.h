@@ -6,6 +6,8 @@
 #include "Identifiable.h"
 #include <vector>
 #include <optional>
+#include <memory>
+#include "Memory.h"
 #include <string_view>
 #include <memory_resource>
 #include <cstddef> // std::byte
@@ -27,7 +29,8 @@ struct Track : public util::Identifiable
     std::pmr::string name;
     instruments::Instrument* instrument{nullptr};
     std::optional<int> activeClip;
-    std::pmr::vector<Clip> clips;
+    std::pmr::vector<util::pmr::unique_ptr<Clip>> clips;
+    //std::pmr::vector<Clip*> clips;
 private:   
     Track(const Track& rhs, const allocator_type& alloc);
 };

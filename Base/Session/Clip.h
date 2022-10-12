@@ -7,6 +7,7 @@
 #include "TimedEventContainer.h"
 #include <memory_resource>
 #include <cstddef> // std::byte
+#include "Instrument.h"
 
 namespace base::session
 {
@@ -17,6 +18,7 @@ struct Clip
     explicit Clip(const allocator_type& alloc) noexcept;
     Clip(const Clip& other, const allocator_type& alloc);
     Clip(Clip&& other, const allocator_type& alloc) noexcept;
+    void update(instruments::Instrument* instrument);
     std::pmr::string name;
     sequencer::Beat startTime;
     sequencer::Beat prevClipBeat;

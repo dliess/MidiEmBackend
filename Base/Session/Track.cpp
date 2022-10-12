@@ -1,6 +1,4 @@
 #include "Track.h"
-#include "BeatTick.h"
-#include <math.h> /* fmod */
 
 using namespace base;
 
@@ -11,8 +9,18 @@ session::Track::Track(std::string_view name,
 }
 
 session::Track::Track(const Track& rhs, const allocator_type& alloc) :
-    name(rhs.name, alloc), clips(rhs.clips, alloc)
+    name(rhs.name, alloc)
 {
+    clips.resize(rhs.clips.size());
+    for(int i = 0; i < rhs.clips.size(); ++i)
+    {
+        if(rhs.clips[i])
+        {
+            Clip clip = *rhs.clips[i];
+            util::pmr::Allocator newAllocator(alloc.resource());
+            clips[i] = util::pmr::make_unique(clip, newAllocator);
+        }
+    }
 }
 
 session::Track::Track(Track&& rhs, const allocator_type& alloc) noexcept :
@@ -31,32 +39,10 @@ void session::Track::update()
    if (activeClip)
    {
       auto& clip = clips[activeClip.value()];
-      sequencer::Beat clipBeat =
-          tempo::BeatTick::instance().getBeat() - clip.startTime;
-      clipBeat = std::fmod(clipBeat, clip.sequenceLength);
-      clip.noteEvents.forNoteEvents(
-          clip.prevClipBeat, clipBeat,
-          [this](const sequencer::NoteEvent& noteEvent) {
-             if (instrument)
-             {
-                switch (noteEvent.type)
-                {
-                   case sequencer::NoteEvent::Event::On:
-                   {
-                      instrument->noteOn(noteEvent.note,
-                                               noteEvent.velocity);
-                      break;
-                   }
-                   case sequencer::NoteEvent::Event::Off:
-                   {
-                      instrument->noteOff(noteEvent.note,
-                                                noteEvent.velocity);
-                      break;
-                   }
-                }
-             }
-          });
-      clip.prevClipBeat = clipBeat;
+      if (clip)
+      {
+          clip->update(instrument);
+      }
    }
 }
 
