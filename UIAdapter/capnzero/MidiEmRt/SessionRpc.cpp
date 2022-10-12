@@ -43,59 +43,63 @@ void SessionRpc::toggleTrackMute(const ::capnzero::SpanCL<16>& trackUuid)
     m_rTracks.withTrack(trackUuid, [](auto& track){track.toggleMute();});
 }
 void SessionRpc::createClip(const ::capnzero::SpanCL<16>& trackUuid,
-                            const ::capnzero::SpanCL<16>& slot)
+                            ::capnzero::Int16 row)
 {
-    m_rTracks.withTrack(trackUuid, [slot](auto& track){ track.createClip(slot); });
+    m_rTracks.withTrack(trackUuid, [row](auto& track){ track.createClip(row); });
 }
-void SessionRpc::duplicateClip(const ::capnzero::SpanCL<16>& trackUuid,
-                               const ::capnzero::SpanCL<16>& slot)
+void SessionRpc::copyClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
+                ::capnzero::Int16 srcRow,
+                const ::capnzero::SpanCL<16>& destTryckUuid,
+                ::capnzero::Int16 destRow)
 {
+
+}
+void SessionRpc::moveClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
+                ::capnzero::Int16 srcRow,
+                const ::capnzero::SpanCL<16>& destTryckUuid,
+                ::capnzero::Int16 destRow)
+{
+
 }
 void SessionRpc::deleteClip(const ::capnzero::SpanCL<16>& trackUuid,
-                            const ::capnzero::SpanCL<16>& slot)
+                            ::capnzero::Int16 row)
 {
 }
 void SessionRpc::renameClip(const ::capnzero::SpanCL<16>& trackUuid,
-                            const ::capnzero::SpanCL<16>& slot,
+                            ::capnzero::Int16 row,
                             const ::capnzero::TextView& name)
 {
 }
 void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
-                               const ::capnzero::SpanCL<16>& slot,
+                               ::capnzero::Int16 row,
                                ::capnzero::Float32 beat,
                                const ::capnzero::SpanCL<16>& note,
                                ::capnzero::Float32 velocity)
 {
 }
 void SessionRpc::changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
-                                    const ::capnzero::SpanCL<16>& slot,
+                                    ::capnzero::Int16 row,
                                     ::capnzero::Float32 beat,
                                     const ::capnzero::SpanCL<16>& note,
                                     ::capnzero::Float32 velocity)
 {
 }
 void SessionRpc::removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
-                                    const ::capnzero::SpanCL<16>& slot,
+                                    ::capnzero::Int16 row,
                                     ::capnzero::Float32 beat,
                                     const ::capnzero::SpanCL<16>& note)
 {
 }
 void SessionRpc::removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
-                                        const ::capnzero::SpanCL<16>& slot)
-{
-}
-void SessionRpc::moveClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
-                          const ::capnzero::SpanCL<16>& srcSlot,
-                          const ::capnzero::SpanCL<16>& destTrackUuid,
-                          const ::capnzero::SpanCL<16>& destSlot)
+                                        ::capnzero::Int16 row)
 {
 }
 void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
-                           const ::capnzero::SpanCL<16>& slot)
+                           ::capnzero::Int16 row)
 {
 }
 void SessionRpc::stopClip(const ::capnzero::SpanCL<16>& trackUuid,
-                          const ::capnzero::SpanCL<16>& slot)
+                          ::capnzero::Int16 row)
 {
 }
 void SessionRpc::startClipRow(const ::capnzero::SpanCL<16>& row) {}

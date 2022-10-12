@@ -17,8 +17,7 @@ session::Track::Track(const Track& rhs, const allocator_type& alloc) :
         if(rhs.clips[i])
         {
             Clip clip = *rhs.clips[i];
-            util::pmr::Allocator newAllocator(alloc.resource());
-            clips[i] = util::pmr::make_unique(clip, newAllocator);
+            clips[i] = util::pmr::make_unique(clip, alloc);
         }
     }
 }
@@ -53,5 +52,8 @@ void session::Track::toggleMute() noexcept
 
 void session::Track::createClip(int row)
 {
-
+    if(!clips[row])
+    {
+        clips[row] = util::pmr::make_unique<Clip>(clips.get_allocator());
+    }
 }
