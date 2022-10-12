@@ -50,3 +50,8 @@ void session::Track::toggleMute() noexcept
 {
    // TODO
 }
+
+void session::Track::createClip(int row)
+{
+
+}
