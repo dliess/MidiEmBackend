@@ -19,6 +19,8 @@ struct Clip
     Clip(const Clip& other, const allocator_type& alloc);
     Clip(Clip&& other, const allocator_type& alloc) noexcept;
     void update(instruments::Instrument* instrument);
+    inline void setName(std::string_view nameV);
+    inline void addNote(Beat beat, int note, float velocity);
     std::pmr::string name;
     sequencer::Beat startTime;
     sequencer::Beat prevClipBeat;
@@ -28,5 +30,7 @@ struct Clip
 };
 
 }   // namespace base::session
+
+#include "Clip.inl"
 
 #endif

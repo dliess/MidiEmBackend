@@ -86,7 +86,7 @@ void SessionRpc::renameClip(const ::capnzero::SpanCL<16>& trackUuid,
                             const ::capnzero::TextView& name)
 {
     m_rTracks.withClip(trackUuid, row, [&name](auto& clip){
-        clip.name = name;
+        clip.setName(name);
     });  
 }
 void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
@@ -95,6 +95,9 @@ void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                                const ::capnzero::SpanCL<16>& note,
                                ::capnzero::Float32 velocity)
 {
+    m_rTracks.withClip(trackUuid, row, [&](auto& clip){
+        clip.addNote(beat, note, velocity);
+    });  
 }
 void SessionRpc::changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
                                     ::capnzero::Int16 row,

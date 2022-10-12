@@ -8,9 +8,11 @@ set(SOURCES
 
 set(HEADERS
     "Track.h"
+    "Track.inl"
     "Tracks.h"
     "Tracks.inl"
     "Clip.h"
+    "Clip.inl"
 )
 
 add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
