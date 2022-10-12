@@ -92,7 +92,7 @@ void SessionRpc::renameClip(const ::capnzero::SpanCL<16>& trackUuid,
 void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row,
                                ::capnzero::Float32 beat,
-                               const ::capnzero::SpanCL<16>& note,
+                               ::capnzero::Int16 note,
                                ::capnzero::Float32 velocity)
 {
     m_rTracks.withClip(trackUuid, row, [&](auto& clip){
