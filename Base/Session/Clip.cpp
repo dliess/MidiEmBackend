@@ -7,34 +7,46 @@
 using namespace base;
 
 session::Clip::Clip(const allocator_type& alloc) noexcept :
-    name(alloc), noteEvents(alloc), parameterEvents(alloc), m_activeNotes(alloc)
+    name(alloc), m_noteEvents(alloc), m_parameterEvents(alloc), m_activeNotes(alloc)
 {
 }
 
 session::Clip::Clip(Clip&& other, const allocator_type& alloc) noexcept :
     name(std::move(other.name), alloc),
-    noteEvents(std::move(other.noteEvents), alloc),
-    parameterEvents(std::move(other.parameterEvents), alloc),
+    m_noteEvents(std::move(other.m_noteEvents), alloc),
+    m_parameterEvents(std::move(other.m_parameterEvents), alloc),
     m_activeNotes(std::move(other.m_activeNotes), alloc)
 {
 }
 
 session::Clip::Clip(const Clip& other, const allocator_type& alloc) :
     name(other.name, alloc),
-    noteEvents(other.noteEvents, alloc),
-    parameterEvents(other.parameterEvents, alloc),
+    m_noteEvents(other.m_noteEvents, alloc),
+    m_parameterEvents(other.m_parameterEvents, alloc),
     m_activeNotes(alloc)
 {
 }
 
 void session::Clip::update(instruments::Instrument* instrument)
 {
-   sequencer::Beat clipBeat = tempo::BeatTick::instance().getBeat() - startTime;
-   clipBeat                 = std::fmod(clipBeat, sequenceLength);
+   /* TODO
+   switch(m_state)
+   {
+      case State::Stopped: break;
+      case State::QueuedFroStart:
+      {
+
+         break;
+      }
+      case State::Started: break;
+   }
+   */
+   sequencer::Beat clipBeat = tempo::BeatTick::instance().getBeat() - m_startBeat;
+   clipBeat                 = std::fmod(clipBeat, m_sequenceLength);
    for (auto it = m_activeNotes.begin(); it != m_activeNotes.end();)
    {
       const auto endStamp =
-          std::fmod(((*it)->beatstamp + (*it)->duration), sequenceLength);
+          std::fmod(((*it)->beatstamp + (*it)->duration), m_sequenceLength);
       if (clipBeat >= endStamp)
       {
          if (instrument)
@@ -48,8 +60,8 @@ void session::Clip::update(instruments::Instrument* instrument)
          ++it;
       }
    }
-   noteEvents.forNoteEvents(
-       prevClipBeat, clipBeat,
+   m_noteEvents.forNoteEvents(
+       m_prevClipBeat, clipBeat,
        [this, instrument](const auto& noteEventIt) {
           if (instrument)
           {
@@ -57,15 +69,25 @@ void session::Clip::update(instruments::Instrument* instrument)
           }
           m_activeNotes.push_back(&noteEventIt->second);
        });
-   prevClipBeat = clipBeat;
+   m_prevClipBeat = clipBeat;
 }
 
 void session::Clip::start()
 {
-
+   switch(m_state)
+   {
+      case State::Stopped: m_state = State::QueuedFroStart; break;
+      case State::QueuedFroStart: break;
+      case State::Started: break;
+   }
 }
 
 void session::Clip::stop()
 {
-   
+   switch(m_state)
+   {
+      case State::Stopped: break;
+      case State::QueuedFroStart: m_state = State::Stopped; break;
+      case State::Started: break;
+   }
 }

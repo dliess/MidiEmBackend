@@ -137,7 +137,7 @@ void SessionRpc::stopClip(const ::capnzero::SpanCL<16>& trackUuid,
       clip.stop();
    });
 }
-void SessionRpc::startClipRow(c::capnzero::Int16 row)
+void SessionRpc::startClipRow(::capnzero::Int16 row)
 {
     m_rTracks.startClipRow(row);
 }
