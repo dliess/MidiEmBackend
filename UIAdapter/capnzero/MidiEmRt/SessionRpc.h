@@ -44,20 +44,18 @@ public:
                       ::capnzero::Float32 length, ::capnzero::Int16 note,
                       ::capnzero::Float32 velocity) override;
    void changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
-                           ::capnzero::Int16 row, ::capnzero::Float32 beat,
-                           const ::capnzero::SpanCL<16>& note,
+                           ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
                            ::capnzero::Float32 velocity) override;
    void removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
-                           ::capnzero::Int16 row, ::capnzero::Float32 beat,
-                           const ::capnzero::SpanCL<16>& note) override;
+                           ::capnzero::Int16 row, ::capnzero::UInt32 noteId) override;
    void removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row) override;
    void startClip(const ::capnzero::SpanCL<16>& trackUuid,
                   ::capnzero::Int16 row) override;
    void stopClip(const ::capnzero::SpanCL<16>& trackUuid,
                  ::capnzero::Int16 row) override;
-   void startClipRow(const ::capnzero::SpanCL<16>& row) override;
-   void stopClipRow(const ::capnzero::SpanCL<16>& row) override;
+   void startClipRow(::capnzero::Int16 row) override;
+   void stopClipRow(::capnzero::Int16 row) override;
 
 private:
    base::session::Tracks& m_rTracks;

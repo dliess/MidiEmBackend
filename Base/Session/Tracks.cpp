@@ -56,3 +56,20 @@ void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
    });
 }
 
+void Tracks::startClipRow(int row)
+{
+   for(auto& track : tracks) {
+      if(track.clips[row]) {
+         track.clips[row]->start();
+      }
+   }
+}
+
+void Tracks::stopClipRow(int row)
+{
+   for(auto& track : tracks) {
+      if(track.clips[row]) {
+         track.clips[row]->stop();
+      }
+   }
+}

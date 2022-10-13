@@ -13,15 +13,6 @@ struct NoteEvent : public TimedEvent
     Beat duration{0};
 };
 
-struct NoteEventCompare
-{
-    bool operator()(const NoteEvent& lhs, const NoteEvent& rhs) const
-    {
-        return lhs.beatstamp < rhs.beatstamp;
-    }
-};
-
-
 }   // namespace base::sequencer
 
 #endif

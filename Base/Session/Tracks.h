@@ -29,6 +29,8 @@ public:
     void withTrack(util::Identifiable::UUIDView uuid, CB&& cb);
     template<typename CB>
     void withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb);
+    void startClipRow(int row);
+    void stopClipRow(int row);
     std::pmr::vector<Track> tracks;
 };
 

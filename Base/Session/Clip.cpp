@@ -50,12 +50,22 @@ void session::Clip::update(instruments::Instrument* instrument)
    }
    noteEvents.forNoteEvents(
        prevClipBeat, clipBeat,
-       [this, instrument](const sequencer::NoteEvent& noteEvent) {
+       [this, instrument](const auto& noteEventIt) {
           if (instrument)
           {
-             instrument->noteOn(noteEvent.note, noteEvent.velocity);
+             instrument->noteOn(noteEventIt->second.note, noteEventIt->second.velocity);
           }
-          m_activeNotes.push_back(&noteEvent);
+          m_activeNotes.push_back(&noteEventIt->second);
        });
    prevClipBeat = clipBeat;
+}
+
+void session::Clip::start()
+{
+
+}
+
+void session::Clip::stop()
+{
+   
 }
