@@ -53,10 +53,10 @@ void SessionRpc::copyClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                           ::capnzero::Int16 destRow)
 {
    m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack) {
-      if (srcTrack.clips[srcRow])
+      if (srcTrack.clip(srcRow))
       {
          m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
-            destTrack.createClip(destRow, *srcTrack.clips[srcRow]);
+            destTrack.createClip(destRow, *srcTrack.clip(srcRow));
          });
       }
    });
@@ -67,10 +67,10 @@ void SessionRpc::moveClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                           ::capnzero::Int16 destRow)
 {
    m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack) {
-      if (srcTrack.clips[srcRow])
+      if (srcTrack.clip(srcRow))
       {
          m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
-            destTrack.createClip(destRow, *srcTrack.clips[srcRow]);
+            destTrack.createClip(destRow, *srcTrack.clip(srcRow));
          });
          srcTrack.deleteClip(srcRow);
       }

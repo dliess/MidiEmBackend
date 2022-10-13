@@ -7,10 +7,10 @@ namespace base::session
 template<typename CB>
 void Tracks::withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb)
 {
-   auto it = std::find_if(tracks.begin(), tracks.end(), [&uuid](const Track& track){
+   auto it = std::find_if(m_tracks.begin(), m_tracks.end(), [&uuid](const Track& track){
       return track.idView() == uuid;
    });
-   if(it == tracks.end())
+   if(it == m_tracks.end())
    {
       spdlog::error("Could not find track with UUID {}", util::uuid2Str(uuid));
       return;
@@ -30,8 +30,8 @@ template<typename CB>
 void Tracks::withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb)
 {
    withTrack(uuid, [&cb, row](auto& track){
-      if(track.clips[row]) {
-         std::forward<CB>(cb)(*track.clips[row]);
+      if(track.clip(row)) {
+         std::forward<CB>(cb)(*track.clip(row));
       }
    });
 }

@@ -5,11 +5,11 @@ using namespace base::session;
 
 Tracks::Tracks() :
    m_memoryPool("SessionTracks"),
-   tracks(&m_memoryPool.pool()) {}
+   m_tracks(&m_memoryPool.pool()) {}
 
 void Tracks::update()
 {
-   for (auto& track : tracks)
+   for (auto& track : m_tracks)
    {
       track.update();
    }
@@ -17,33 +17,33 @@ void Tracks::update()
 
 void Tracks::pushBackTrack(std::string_view name)
 {
-   tracks.emplace_back(name);
+   m_tracks.emplace_back(name);
 }
 
 void Tracks::addTrack(std::string_view name, int position)
 {
-   const auto it = std::next(tracks.begin(), position);
-   tracks.emplace(it, name);
+   const auto it = std::next(m_tracks.begin(), position);
+   m_tracks.emplace(it, name);
 }
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
 {
    withTrackIter(uuid, [this](auto it){
-      tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
+      m_tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
    });
 }
 
 void Tracks::removeTrack(util::Identifiable::UUIDView uuid)
 {
    withTrackIter(uuid, [this](auto it){
-      tracks.erase(it);
+      m_tracks.erase(it);
    });
 }
 
 void Tracks::renameTrack(util::Identifiable::UUIDView uuid, std::string_view name)
 {
    withTrackIter(uuid, [this, name](auto it){
-      it->name = name;
+      it->setName(name);
    });
 }
 
@@ -51,25 +51,25 @@ void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
 {
    withTrackIter(uuid, [this, afterPosition](auto it){
       Track track(std::move(*it));
-      tracks.erase(it);
-      tracks.insert(std::next(tracks.begin(), afterPosition), std::move(track));
+      m_tracks.erase(it);
+      m_tracks.insert(std::next(m_tracks.begin(), afterPosition), std::move(track));
    });
 }
 
 void Tracks::startClipRow(int row)
 {
-   for(auto& track : tracks) {
-      if(track.clips[row]) {
-         track.clips[row]->start();
+   for(auto& track : m_tracks) {
+      if(track.clip(row)) {
+         track.clip(row)->start();
       }
    }
 }
 
 void Tracks::stopClipRow(int row)
 {
-   for(auto& track : tracks) {
-      if(track.clips[row]) {
-         track.clips[row]->stop();
+   for(auto& track : m_tracks) {
+      if(track.clip(row)) {
+         track.clip(row)->stop();
       }
    }
 }

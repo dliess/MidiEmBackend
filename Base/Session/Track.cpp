@@ -4,26 +4,26 @@ using namespace base;
 
 session::Track::Track(std::string_view name,
                       const allocator_type& alloc) noexcept :
-    name(name, alloc), clips(NumClips, alloc)
+    m_name(name, alloc), m_clips(NumClips, alloc)
 {
 }
 
 session::Track::Track(const Track& rhs, const allocator_type& alloc) :
-    name(rhs.name, alloc)
+    m_name(rhs.m_name, alloc)
 {
-    clips.resize(rhs.clips.size());
-    for(int i = 0; i < rhs.clips.size(); ++i)
+    m_clips.resize(rhs.m_clips.size());
+    for(int i = 0; i < rhs.m_clips.size(); ++i)
     {
-        if(rhs.clips[i])
+        if(rhs.m_clips[i])
         {
-            Clip clip = *rhs.clips[i];
-            clips[i] = util::pmr::make_unique(clip, alloc);
+            Clip clip = *rhs.m_clips[i];
+            m_clips[i] = util::pmr::make_unique(clip, alloc);
         }
     }
 }
 
 session::Track::Track(Track&& rhs, const allocator_type& alloc) noexcept :
-    name(std::move(rhs.name), alloc), clips(std::move(rhs.clips), alloc)
+    m_name(std::move(rhs.m_name), alloc), m_clips(std::move(rhs.m_clips), alloc)
 {
 }
 
@@ -35,12 +35,12 @@ session::Track session::Track::duplicate(
 
 void session::Track::update()
 {
-   if (activeClip)
+   if (m_activeClip)
    {
-      auto& clip = clips[activeClip.value()];
+      auto& clip = m_clips[m_activeClip.value()];
       if (clip)
       {
-          clip->update(instrument);
+          clip->update(m_instrument);
       }
    }
 }

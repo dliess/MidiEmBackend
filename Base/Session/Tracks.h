@@ -10,12 +10,8 @@
 namespace base::session
 {
 
-struct Tracks
+class Tracks
 {
-private:
-    util::StackMempool<32768> m_memoryPool;
-    template<typename CB>
-    void withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb);
 public:
     Tracks();
     void update();
@@ -31,7 +27,11 @@ public:
     void withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb);
     void startClipRow(int row);
     void stopClipRow(int row);
-    std::pmr::vector<Track> tracks;
+private:
+    util::StackMempool<32768> m_memoryPool;
+    template<typename CB>
+    void withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb);
+    std::pmr::vector<Track> m_tracks;
 };
 
 }   // namespace session
