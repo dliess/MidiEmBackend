@@ -4,7 +4,7 @@ using namespace base;
 
 session::Track::Track(std::string_view name,
                       const allocator_type& alloc) noexcept :
-    name(name, alloc), clips(alloc)
+    name(name, alloc), clips(NumClips, alloc)
 {
 }
 

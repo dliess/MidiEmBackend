@@ -2,6 +2,8 @@
 #define BASE_SESSION_CLIP_H
 
 #include <set>
+#include <vector>
+#include <list>
 #include "NoteEvent.h"
 #include "ParameterEvent.h"
 #include "TimedEventContainer.h"
@@ -25,8 +27,10 @@ struct Clip
     sequencer::Beat startTime;
     sequencer::Beat prevClipBeat;
     sequencer::Beat sequenceLength;
-    TimedEventContainer<std::pmr::set<sequencer::NoteEvent, sequencer::NoteEventCompare>>           noteEvents;
+    using NoteContainer = TimedEventContainer<std::pmr::set<sequencer::NoteEvent, sequencer::NoteEventCompare>>;
+    NoteContainer noteEvents;
     TimedEventContainer<std::pmr::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare>> parameterEvents;
+    std::pmr::list<const sequencer::NoteEvent*> m_activeNotes;
 };
 
 }   // namespace base::session

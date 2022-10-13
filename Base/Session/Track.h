@@ -32,8 +32,8 @@ struct Track : public util::Identifiable
     std::pmr::string name;
     instruments::Instrument* instrument{nullptr};
     std::optional<int> activeClip;
+    static constexpr size_t NumClips = 64;
     std::pmr::vector<util::pmr::unique_ptr<Clip>> clips;
-    //std::pmr::vector<Clip*> clips;
 private:   
     Track(const Track& rhs, const allocator_type& alloc);
 };

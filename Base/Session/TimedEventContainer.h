@@ -11,6 +11,8 @@ struct TimedEventContainer : public Container
 {
    using Container::Container; // inherit all contructors
    using allocator_type = typename Container::allocator_type;
+   using iterator = typename Container::iterator;
+   using const_iterator = typename Container::const_iterator;
    template <typename Cb>
    void forNoteEvents(sequencer::Beat fromBeat, sequencer::Beat toBeat, Cb&& cb)
    {

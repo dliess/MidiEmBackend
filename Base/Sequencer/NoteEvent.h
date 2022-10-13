@@ -8,14 +8,9 @@ namespace base::sequencer
 
 struct NoteEvent : public TimedEvent
 {
-    enum class Event {
-        On,
-        Off
-    };
-    Event type{Event::Off};
     int note{0};
     float velocity{0.0};
-    NoteEvent* otherside{nullptr};
+    Beat duration{0};
 };
 
 struct NoteEventCompare
