@@ -15,6 +15,7 @@ struct NoteEvent : public TimedEvent
     Event type{Event::Off};
     int note{0};
     float velocity{0.0};
+    NoteEvent* otherside{nullptr};
 };
 
 struct NoteEventCompare

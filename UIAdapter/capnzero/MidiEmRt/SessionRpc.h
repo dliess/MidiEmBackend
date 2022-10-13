@@ -41,7 +41,7 @@ public:
                    const ::capnzero::TextView& name) override;
    void addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                       ::capnzero::Int16 row, ::capnzero::Float32 beat,
-                      ::capnzero::Int16 note,
+                      ::capnzero::Float32 length, ::capnzero::Int16 note,
                       ::capnzero::Float32 velocity) override;
    void changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row, ::capnzero::Float32 beat,

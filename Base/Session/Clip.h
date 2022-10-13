@@ -20,7 +20,7 @@ struct Clip
     Clip(Clip&& other, const allocator_type& alloc) noexcept;
     void update(instruments::Instrument* instrument);
     inline void setName(std::string_view nameV);
-    inline void addNote(sequencer::Beat beat, int note, float velocity);
+    inline void addNote(sequencer::Beat beat, sequencer::Beat length, int note, float velocity);
     std::pmr::string name;
     sequencer::Beat startTime;
     sequencer::Beat prevClipBeat;
