@@ -52,10 +52,8 @@ public:
                                ::capnzero::Int16 row) override;
    void startClip(const ::capnzero::SpanCL<16>& trackUuid,
                   ::capnzero::Int16 row) override;
-   void stopClip(const ::capnzero::SpanCL<16>& trackUuid,
-                 ::capnzero::Int16 row) override;
+   void stopTrack(const ::capnzero::SpanCL<16>& trackUuid) override;
    void startClipRow(::capnzero::Int16 row) override;
-   void stopClipRow(::capnzero::Int16 row) override;
 
 private:
    base::session::Tracks& m_rTracks;

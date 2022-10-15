@@ -62,10 +62,3 @@ void Tracks::startClipRow(int row)
       track.startClip(row);
    }
 }
-
-void Tracks::stopClipRow(int row)
-{
-   for(auto& track : m_tracks) {
-      track.stopClip(row);
-   }
-}

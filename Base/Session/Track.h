@@ -32,7 +32,7 @@ public:
     inline void createClip(int row, const Clip& clip);
     inline void deleteClip(int row);
     inline void startClip(int row);
-    inline void stopClip(int row);
+    inline void stopClip();
     inline Clip* clip(int row) noexcept;
     inline const Clip* clip(int row) const noexcept;
 private:

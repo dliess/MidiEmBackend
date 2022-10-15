@@ -38,15 +38,23 @@ void session::Track::deleteClip(int row)
 
 inline void session::Track::startClip(int row)
 {
-   if(m_toStartClipIdx.value() != row)
+   row = m_clips[row] ? row : StopperIdx;
+   if(m_startedClipIdx)
+   {
+      if(m_startedClipIdx.value() != row)
+      {
+         m_toStartClipIdx = row;
+      }
+   }
+   else
    {
       m_toStartClipIdx = row;
    }
 }
 
-inline void session::Track::stopClip(int row)
+inline void session::Track::stopClip()
 {
-   m_toStartClipIdx = StopperIdx; // TODO
+   m_toStartClipIdx = StopperIdx;
 }
 
 inline session::Clip* session::Track::clip(int row) noexcept

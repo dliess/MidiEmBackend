@@ -26,7 +26,6 @@ public:
     template<typename CB>
     void withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb);
     void startClipRow(int row);
-    void stopClipRow(int row);
 private:
     util::StackMempool<32768> m_memoryPool;
     template<typename CB>

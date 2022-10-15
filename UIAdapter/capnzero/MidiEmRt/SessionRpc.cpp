@@ -130,18 +130,13 @@ void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
       track.startClip(row);
    });
 }
-void SessionRpc::stopClip(const ::capnzero::SpanCL<16>& trackUuid,
-                          ::capnzero::Int16 row)
+void SessionRpc::stopTrack(const ::capnzero::SpanCL<16>& trackUuid)
 {
    m_rTracks.withTrack(trackUuid, [&](auto& track) {
-      track.stopClip(row);
+      track.stopClip();
    });
 }
 void SessionRpc::startClipRow(::capnzero::Int16 row)
 {
     m_rTracks.startClipRow(row);
-}
-void SessionRpc::stopClipRow(::capnzero::Int16 row)
-{
-    m_rTracks.stopClipRow(row);
 }
