@@ -16,7 +16,9 @@ public:
    BeatTick(BeatTick&&) noexcept        = delete;
    BeatTick& operator=(BeatTick&&) noexcept = delete;
    static inline BeatTick& instance() noexcept;
+   inline double getPrevBeat() const noexcept;
    inline double getBeat() const noexcept;
+   inline double getInBeatPos() const noexcept;
    std::pair<double, std::chrono::microseconds> nextTick() noexcept;
    void incBpm(double increment) noexcept;
    void setBpm(double value) noexcept;

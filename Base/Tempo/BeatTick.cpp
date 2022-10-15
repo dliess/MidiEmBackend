@@ -7,6 +7,10 @@ using namespace base::tempo;
 
 std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
 {
+   if(m_prevTickBeats)
+   {
+      m_prevTickBeats = m_beat;
+   }
    std::chrono::microseconds deltaTUs{0};
    if (m_abletonLink.isEnabled())
    {
@@ -47,9 +51,7 @@ std::pair<double, std::chrono::microseconds> BeatTick::nextTick() noexcept
    {
       m_prevTickBeats = m_beat;
    }
-   const auto tmp = m_prevTickBeats.value();
-   m_prevTickBeats = m_beat;
-   return std::make_pair(m_beat - tmp, deltaTUs);
+   return std::make_pair(m_beat - m_prevTickBeats.value(), deltaTUs);
 }
 
 void BeatTick::incBpm(double increment) noexcept

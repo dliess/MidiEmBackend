@@ -29,14 +29,8 @@ public:
     inline void removeNote(sequencer::NoteId noteId);
     inline void removeAllNotes();
     void start();
-    void stop();
+    void stop(instruments::Instrument* instrument);
 private:
-    enum class State {
-        Stopped, 
-        QueuedFroStart, 
-        Started
-    };
-    State m_state{State::Stopped};
     std::pmr::string name;
     sequencer::Beat m_startBeat;
     sequencer::Beat m_prevClipBeat;

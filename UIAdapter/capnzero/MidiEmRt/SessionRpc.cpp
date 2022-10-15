@@ -126,15 +126,15 @@ void SessionRpc::removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
 void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
-      clip.start();
+   m_rTracks.withTrack(trackUuid, [&](auto& track) {
+      track.startClip(row);
    });
 }
 void SessionRpc::stopClip(const ::capnzero::SpanCL<16>& trackUuid,
                           ::capnzero::Int16 row)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
-      clip.stop();
+   m_rTracks.withTrack(trackUuid, [&](auto& track) {
+      track.stopClip(row);
    });
 }
 void SessionRpc::startClipRow(::capnzero::Int16 row)

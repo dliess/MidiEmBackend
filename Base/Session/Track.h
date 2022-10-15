@@ -31,15 +31,19 @@ public:
     inline void createClip(int row);
     inline void createClip(int row, const Clip& clip);
     inline void deleteClip(int row);
+    inline void startClip(int row);
+    inline void stopClip(int row);
     inline Clip* clip(int row) noexcept;
     inline const Clip* clip(int row) const noexcept;
 private:
     Track(const Track& rhs, const allocator_type& alloc);
     std::pmr::string m_name;
-    instruments::Instrument* m_instrument{nullptr};
-    std::optional<int> m_activeClip;
     static constexpr size_t NumClips = 64;
     std::pmr::vector<util::pmr::unique_ptr<Clip>> m_clips;
+    instruments::Instrument* m_instrument{nullptr};
+    static constexpr int StopperIdx = -1;
+    std::optional<int> m_startedClipIdx;
+    std::optional<int> m_toStartClipIdx;
 };
 
 }   // namespace session

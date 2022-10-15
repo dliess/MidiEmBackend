@@ -1,4 +1,5 @@
 #include "Track.h"
+#include "BeatTick.h"
 
 using namespace base;
 
@@ -11,15 +12,15 @@ session::Track::Track(std::string_view name,
 session::Track::Track(const Track& rhs, const allocator_type& alloc) :
     m_name(rhs.m_name, alloc)
 {
-    m_clips.resize(rhs.m_clips.size());
-    for(int i = 0; i < rhs.m_clips.size(); ++i)
-    {
-        if(rhs.m_clips[i])
-        {
-            Clip clip = *rhs.m_clips[i];
-            m_clips[i] = util::pmr::make_unique(clip, alloc);
-        }
-    }
+   m_clips.resize(rhs.m_clips.size());
+   for (int i = 0; i < rhs.m_clips.size(); ++i)
+   {
+      if (rhs.m_clips[i])
+      {
+         Clip clip  = *rhs.m_clips[i];
+         m_clips[i] = util::pmr::make_unique(clip, alloc);
+      }
+   }
 }
 
 session::Track::Track(Track&& rhs, const allocator_type& alloc) noexcept :
@@ -35,13 +36,31 @@ session::Track session::Track::duplicate(
 
 void session::Track::update()
 {
-   if (m_activeClip)
+   if (m_toStartClipIdx)
    {
-      auto& clip = m_clips[m_activeClip.value()];
-      if (clip)
+      static constexpr double Threshold = 0.1;
+      const double inBeatPos = tempo::BeatTick::instance().getInBeatPos();
+      if (inBeatPos < Threshold)
       {
-          clip->update(m_instrument);
+         if (m_startedClipIdx)
+         {
+            m_clips[m_startedClipIdx.value()]->stop(m_instrument);
+         }
+         if (StopperIdx != m_toStartClipIdx.value())
+         {
+            m_clips[m_toStartClipIdx.value()]->start();
+            m_startedClipIdx = m_toStartClipIdx;
+         }
+         else
+         {
+            m_startedClipIdx.reset();
+         }
+         m_toStartClipIdx.reset();
       }
+   }
+   if (m_startedClipIdx)
+   {
+      m_clips[m_startedClipIdx.value()]->update(m_instrument);
    }
 }
 

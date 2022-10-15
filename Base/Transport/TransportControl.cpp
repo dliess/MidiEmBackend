@@ -92,7 +92,7 @@ void TransportControl::update()
    {
       static constexpr double Threshold = 0.1;
       const auto beat = tempo::BeatTick::instance().getBeat();
-      const double rest = beat - static_cast<int>(beat);
+      const double rest = beat - static_cast<long>(beat);
       if(rest < Threshold)
       {
          startNow();

@@ -59,17 +59,13 @@ void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
 void Tracks::startClipRow(int row)
 {
    for(auto& track : m_tracks) {
-      if(track.clip(row)) {
-         track.clip(row)->start();
-      }
+      track.startClip(row);
    }
 }
 
 void Tracks::stopClipRow(int row)
 {
    for(auto& track : m_tracks) {
-      if(track.clip(row)) {
-         track.clip(row)->stop();
-      }
+      track.stopClip(row);
    }
 }
