@@ -2,7 +2,7 @@
 #include "MusicDeviceHolder.h"
 #include <spdlog/spdlog.h>
 
-using namespace base::musicDevice;
+using namespace base;
 
 TransportControl::TransportControl(
   musicDevice::Holder& rMusicDeviceHolder) noexcept :

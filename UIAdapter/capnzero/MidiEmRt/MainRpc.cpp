@@ -7,7 +7,7 @@ using namespace uiadapter::capnzero;
 MainRpc::MainRpc(RtServer::Signals &rSignals,
                  base::instruments::Instruments &rInstruments,
                  base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
-                 base::musicDevice::TransportControl &rTransportControl,
+                 base::TransportControl &rTransportControl,
                  base::AbletonLinkWrapper &rAbletonLinkWrapper,
                  base::midifriends::Router &rMidiRouter,
                  base::musicDevice::controller::EventRouter &rCtrlEventRouter,

@@ -3,7 +3,7 @@
 
 #include "MidiEmRtTransportControlRpcIf.h"
 
-namespace base::musicDevice
+namespace base
 {
 class TransportControl;
 }
@@ -13,7 +13,7 @@ namespace uiadapter::capnzero
 class TransportControlRpc : public ::capnzero::MidiEmRt::TransportControlRpcIf
 {
 public:
-   TransportControlRpc(base::musicDevice::TransportControl& rTransportControl);
+   TransportControlRpc(base::TransportControl& rTransportControl);
    void toggleEnabled(const ::capnzero::SpanCL<16>& uuid) override;
 	void setStarted(::capnzero::Bool start) override;
 	void toggleStarted() override;
@@ -21,7 +21,7 @@ public:
    void toggleQuantizedStart() override;
 
 private:
-   base::musicDevice::TransportControl& m_rTransportControl;
+   base::TransportControl& m_rTransportControl;
 };
 
 }   // namespace uiadapter::capnzero

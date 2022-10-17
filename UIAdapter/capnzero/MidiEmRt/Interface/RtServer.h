@@ -11,7 +11,7 @@ namespace base::musicDevice
 {
 struct Holder;
 }
-namespace base::musicDevice
+namespace base
 {
 class TransportControl;
 }
@@ -46,7 +46,7 @@ public:
             const std::string& signalBindAddr,
             base::instruments::Instruments& rInstruments,
             base::musicDevice::Holder& rMusicDeviceHolder,
-            base::musicDevice::TransportControl& rTransportControl,
+            base::TransportControl& rTransportControl,
             base::AbletonLinkWrapper& rAbletonLinkWrapper,
             base::midifriends::Router& rMidiRouter,
             base::musicDevice::controller::EventRouter& rCtrlEventRouter,

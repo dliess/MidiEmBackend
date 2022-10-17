@@ -11,6 +11,10 @@
 namespace base::musicDevice
 {
 struct Holder;
+}
+
+namespace base 
+{
 class TransportControl
 {
 public:
@@ -39,5 +43,5 @@ private:
    void startNow();
 };
 
-}   // namespace base::musicDevice
+}   // namespace base
 #endif

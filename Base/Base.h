@@ -31,7 +31,7 @@ public:
    ~Base() noexcept;
    musicDevice::Holder musicDeviceHolder;
    musicDevice::factory::Factory musicDeviceFactory;
-   musicDevice::TransportControl transportControl;
+   TransportControl transportControl;
    instruments::Instruments instruments;
    instruments::InstrumentsFactory instrumentsFactory;
    midifriends::Router midiRouter;

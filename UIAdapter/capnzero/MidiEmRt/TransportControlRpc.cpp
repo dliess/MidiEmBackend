@@ -5,7 +5,7 @@
 using namespace uiadapter::capnzero;
 
 TransportControlRpc::TransportControlRpc(
-    base::musicDevice::TransportControl& rTransportControl) :
+    base::TransportControl& rTransportControl) :
     m_rTransportControl(rTransportControl)
 {
 }

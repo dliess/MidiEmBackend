@@ -19,7 +19,7 @@ public:
    MainRpc(RtServer::Signals &rSignals,
            base::instruments::Instruments &rInstruments,
            base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
-           base::musicDevice::TransportControl &rTransportControl,
+           base::TransportControl &rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router &rMidiRouter,
            base::musicDevice::controller::EventRouter &rCtrlEventRouter,
@@ -30,7 +30,7 @@ private:
    RtServer::Signals &m_rSignals;
    base::instruments::Instruments &m_rInstruments;
    base::musicDevice::MusicDeviceContainer &m_rMusicDeviceContainer;
-   base::musicDevice::TransportControl &m_rTransportControl;
+   base::TransportControl &m_rTransportControl;
    base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
    base::midifriends::Router &m_rMidiRouter;
    base::musicDevice::controller::EventRouter &m_rCtrlEventRouter;
