@@ -19,6 +19,8 @@ public:
    inline double getPrevBeat() const noexcept;
    inline double getBeat() const noexcept;
    inline double getInBeatPos() const noexcept;
+   inline double getLocalBeat() const noexcept;
+   inline double getLocalInBeatPos() const noexcept;
    std::pair<double, std::chrono::microseconds> nextTick() noexcept;
    void incBpm(double increment) noexcept;
    void setBpm(double value) noexcept;
@@ -26,11 +28,15 @@ public:
    double getBpmNudged() const noexcept;
    inline AbletonLinkWrapper& abletonLink() noexcept;
 
+   inline void localStart() noexcept;
+   inline void localStop() noexcept;
+
    CB_SIGNAL(BpmNudgedChanged, double);
 
 private:
    BeatTick() = default;
    double m_beat{0.0};
+   double m_localBeatOffset{0.0};
    double m_bpm{120.0};
    double m_nudge{0.0};
    std::optional<std::chrono::microseconds> m_lastAbletonLinkSampleTimePointUs;

@@ -34,33 +34,49 @@ session::Track session::Track::duplicate(
    return Track(*this, alloc);
 }
 
+void session::Track::resetActiveClip()
+{
+   if(m_activeClipIdx)
+   {
+      m_clips[m_activeClipIdx.value()]->reset();
+   }
+}
+
+void session::Track::stop()
+{
+   if(m_activeClipIdx)
+   {
+      m_clips[m_activeClipIdx.value()]->stop(m_instrument);
+   }
+}
+
 void session::Track::update()
 {
    if (m_toStartClipIdx)
    {
       static constexpr double Threshold = 0.1;
-      const double inBeatPos = tempo::BeatTick::instance().getInBeatPos();
+      const double inBeatPos = tempo::BeatTick::instance().getLocalInBeatPos();
       if (inBeatPos < Threshold)
       {
-         if (m_startedClipIdx)
+         if (m_activeClipIdx)
          {
-            m_clips[m_startedClipIdx.value()]->stop(m_instrument);
+            m_clips[m_activeClipIdx.value()]->stop(m_instrument);
          }
          if (StopperIdx != m_toStartClipIdx.value())
          {
-            m_clips[m_toStartClipIdx.value()]->start();
-            m_startedClipIdx = m_toStartClipIdx;
+            m_clips[m_toStartClipIdx.value()]->reset();
+            m_activeClipIdx = m_toStartClipIdx;
          }
          else
          {
-            m_startedClipIdx.reset();
+            m_activeClipIdx.reset();
          }
          m_toStartClipIdx.reset();
       }
    }
-   if (m_startedClipIdx)
+   if (m_activeClipIdx)
    {
-      m_clips[m_startedClipIdx.value()]->update(m_instrument);
+      m_clips[m_activeClipIdx.value()]->update(m_instrument);
    }
 }
 

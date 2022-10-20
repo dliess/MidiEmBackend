@@ -28,7 +28,7 @@ public:
     inline void setNoteVelocity(sequencer::NoteId noteId, float velocity);
     inline void removeNote(sequencer::NoteId noteId);
     inline void removeAllNotes();
-    void start();
+    void reset();
     void stop(instruments::Instrument* instrument);
 private:
     std::pmr::string name;

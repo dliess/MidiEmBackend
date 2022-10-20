@@ -14,6 +14,8 @@ class Tracks
 {
 public:
     Tracks();
+    void start();
+    void stop();
     void update();
     void pushBackTrack(std::string_view name);
     void addTrack(std::string_view name, int position);
@@ -31,6 +33,7 @@ private:
     template<typename CB>
     void withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb);
     std::pmr::vector<Track> m_tracks;
+    bool m_started{false};
 };
 
 }   // namespace session

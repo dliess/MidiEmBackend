@@ -25,8 +25,8 @@ inline void session::Track::deleteClip(int row)
 {
    if (m_toStartClipIdx && m_toStartClipIdx.value() == row)
       m_toStartClipIdx.reset();
-   if (m_startedClipIdx && m_startedClipIdx.value() == row)
-      m_startedClipIdx.reset();
+   if (m_activeClipIdx && m_activeClipIdx.value() == row)
+      m_activeClipIdx.reset();
    if (m_clips[row])
    {
       m_clips[row]->stop(m_instrument);
@@ -37,9 +37,9 @@ inline void session::Track::deleteClip(int row)
 inline void session::Track::startClip(int row)
 {
    row = m_clips[row] ? row : StopperIdx;
-   if (m_startedClipIdx)
+   if (m_activeClipIdx)
    {
-      if (m_startedClipIdx.value() != row)
+      if (m_activeClipIdx.value() != row)
       {
          m_toStartClipIdx = row;
       }

@@ -24,6 +24,16 @@ inline double base::tempo::BeatTick::getInBeatPos() const noexcept
    return m_beat - static_cast<long>(m_beat);
 }
 
+inline double base::tempo::BeatTick::getLocalBeat() const noexcept
+{
+   return m_beat - m_localBeatOffset;
+}
+
+inline double base::tempo::BeatTick::getLocalInBeatPos() const noexcept
+{
+   return getLocalBeat() - static_cast<long>(getLocalBeat());
+}
+
 inline double base::tempo::BeatTick::getBpmNudged() const noexcept
 {
    return m_bpm + m_nudge;
@@ -33,5 +43,15 @@ inline base::AbletonLinkWrapper& base::tempo::BeatTick::abletonLink() noexcept
 { 
    return m_abletonLink;
 };
+
+inline void base::tempo::BeatTick::localStart() noexcept
+{
+   m_localBeatOffset = m_beat;
+}
+
+inline void base::tempo::BeatTick::localStop() noexcept
+{
+   m_localBeatOffset = 0.0;
+}
 
 #endif

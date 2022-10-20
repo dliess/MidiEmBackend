@@ -46,6 +46,7 @@ void TransportControl::stop() noexcept
 {
    if(!m_started) return;
    m_started = false;
+   tempo::BeatTick::instance().localStop();
    for(auto& md : m_rMusicDeviceHolder.musicDevices)
    {
       if(md.second->sequencer)
@@ -109,6 +110,7 @@ void TransportControl::startNow()
 {
    m_started = true;
    m_startRequested = false;
+   tempo::BeatTick::instance().localStart();
    for(auto& md : m_rMusicDeviceHolder.musicDevices)
    {
       if(md.second->sequencer)

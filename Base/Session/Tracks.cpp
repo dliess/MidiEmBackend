@@ -7,8 +7,30 @@ Tracks::Tracks() :
    m_memoryPool("SessionTracks"),
    m_tracks(&m_memoryPool.pool()) {}
 
+void Tracks::start()
+{
+   if(!m_started)
+   {
+      m_started = true;
+      for (auto& track : m_tracks)
+      {
+         track.resetActiveClip();
+      }
+   }
+}
+
+void Tracks::stop()
+{
+   m_started = false;
+   for (auto& track : m_tracks)
+   {
+      track.stop();
+   }
+}
+
 void Tracks::update()
 {
+   if(!m_started) return;
    for (auto& track : m_tracks)
    {
       track.update();

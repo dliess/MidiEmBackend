@@ -33,7 +33,7 @@ session::Clip::Clip(const Clip& other, const allocator_type& alloc) :
 void session::Clip::update(instruments::Instrument* instrument)
 {
    sequencer::Beat clipBeat =
-       tempo::BeatTick::instance().getBeat() - m_startBeat;
+       tempo::BeatTick::instance().getLocalBeat() - m_startBeat;
    clipBeat = std::fmod(clipBeat, m_sequenceLength);
    for (auto it = m_activeNotes.begin(); it != m_activeNotes.end();)
    {
@@ -64,9 +64,9 @@ void session::Clip::update(instruments::Instrument* instrument)
    m_prevClipBeat = clipBeat;
 }
 
-void session::Clip::start()
+void session::Clip::reset()
 {
-   m_startBeat = static_cast<long>(tempo::BeatTick::instance().getBeat());
+   m_startBeat = static_cast<long>(tempo::BeatTick::instance().getLocalBeat());
    m_prevClipBeat = m_startBeat;
 }
 

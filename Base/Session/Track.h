@@ -25,6 +25,8 @@ public:
     explicit Track(std::string_view name, const allocator_type& alloc = {}) noexcept;
     Track duplicate(const allocator_type& alloc) const noexcept;
     Track(Track&& rhs, const allocator_type& alloc) noexcept;
+    void resetActiveClip();
+    void stop();
     void update();
     inline void setName(std::string_view name);
     void toggleMute() noexcept;
@@ -42,7 +44,7 @@ private:
     std::pmr::vector<util::pmr::unique_ptr<Clip>> m_clips;
     instruments::Instrument* m_instrument{nullptr};
     static constexpr int StopperIdx = -1;
-    std::optional<int> m_startedClipIdx;
+    std::optional<int> m_activeClipIdx;
     std::optional<int> m_toStartClipIdx;
 };
 
