@@ -39,13 +39,15 @@ void Tracks::update()
 
 void Tracks::pushBackTrack(std::string_view name)
 {
-   m_tracks.emplace_back(name);
+   const auto& track = m_tracks.emplace_back(name);
+   emitTrackAdded(track.idView(), name, m_tracks.size());
 }
 
 void Tracks::addTrack(std::string_view name, int position)
 {
    const auto it = std::next(m_tracks.begin(), position);
-   m_tracks.emplace(it, name);
+   const auto insertIt = m_tracks.emplace(it, name);
+   emitTrackAdded(insertIt->idView(), name, position);
 }
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)

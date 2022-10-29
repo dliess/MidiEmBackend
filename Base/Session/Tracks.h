@@ -6,6 +6,7 @@
 #include <vector>
 #include <string_view>
 #include "stack_mempool.h"
+#include "CallbackSignal.h"
 
 namespace base::session
 {
@@ -28,6 +29,9 @@ public:
     template<typename CB>
     void withClip(util::Identifiable::UUIDView uuid, int row, CB&& cb);
     void startClipRow(int row);
+
+    CB_SIGNAL(TrackAdded, util::Identifiable::UUIDView, std::string_view, int);
+
 private:
     util::StackMempool<32768> m_memoryPool;
     template<typename CB>

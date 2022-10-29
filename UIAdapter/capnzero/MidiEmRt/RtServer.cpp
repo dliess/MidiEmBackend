@@ -15,33 +15,33 @@
 #include "MusicDeviceHolder.h"
 #include "ParameterSceneContainer.h"
 #include "ParameterSceneRpc.h"
+#include "SessionRpc.h"
 #include "SoundDevicesRpc.h"
 #include "TempoRpc.h"
 #include "TransportControl.h"
 #include "TransportControlRpc.h"
-#include "SessionRpc.h"
 
 using namespace uiadapter::capnzero;
 using ::capnzero::MidiEmRt::MidiEmRtServer;
 
-RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
-                   const std::string &signalBindAddr,
-                   base::instruments::Instruments &rInstruments,
-                   base::musicDevice::Holder &rMDHolder,
-                   base::TransportControl &rTransportControl,
-                   base::AbletonLinkWrapper &rAbletonLinkWrapper,
-                   base::midifriends::Router &rMidiRouter,
-                   base::musicDevice::controller::EventRouter &rCtrlEventRouter,
-                   base::musicDevice::sound::ParameterSceneContainer
-                       &rParameterSceneContainer,
-                   base::session::Tracks& rTracks) :
+RtServer::RtServer(
+    zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
+    const std::string &signalBindAddr,
+    base::instruments::Instruments &rInstruments,
+    base::musicDevice::Holder &rMDHolder,
+    base::TransportControl &rTransportControl,
+    base::AbletonLinkWrapper &rAbletonLinkWrapper,
+    base::midifriends::Router &rMidiRouter,
+    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
+    base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
+    base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<InstrumentsRpc>(rInstruments),
-        std::make_unique<MainRpc>(signals(), rInstruments,
-                                  rMDHolder.musicDevices, rTransportControl,
-                                  rAbletonLinkWrapper, rMidiRouter,
-                                  rCtrlEventRouter, rParameterSceneContainer),
+        std::make_unique<MainRpc>(
+            signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
+            rAbletonLinkWrapper, rMidiRouter, rCtrlEventRouter,
+            rParameterSceneContainer, rTracks),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
         std::make_unique<ControllerDevicesRpc>(),
@@ -419,4 +419,11 @@ RtServer::RtServer(zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
               static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
                   paramCoord.parameterPart));
        });
+
+   rTracks.onTrackAdded([this](util::Identifiable::UUIDView uuid,
+                               std::string_view name, int position) {
+      signals().Session__trackAdded(
+          *reinterpret_cast<const util::Identifiable::UUID*>(uuid.data()),
+          std::string(name));
+   });
 }

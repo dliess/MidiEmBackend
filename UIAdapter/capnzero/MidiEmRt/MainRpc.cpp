@@ -1,18 +1,19 @@
 #include "MainRpc.h"
+
 #include "JsonCast.h"   // meta::serialize
 #include "MusicDeviceDescription.h"
 
 using namespace uiadapter::capnzero;
 
-MainRpc::MainRpc(RtServer::Signals &rSignals,
-                 base::instruments::Instruments &rInstruments,
-                 base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
-                 base::TransportControl &rTransportControl,
-                 base::AbletonLinkWrapper &rAbletonLinkWrapper,
-                 base::midifriends::Router &rMidiRouter,
-                 base::musicDevice::controller::EventRouter &rCtrlEventRouter,
-                 base::musicDevice::sound::ParameterSceneContainer
-                     &rParameterSceneContainer) :
+MainRpc::MainRpc(
+    RtServer::Signals &rSignals, base::instruments::Instruments &rInstruments,
+    base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
+    base::TransportControl &rTransportControl,
+    base::AbletonLinkWrapper &rAbletonLinkWrapper,
+    base::midifriends::Router &rMidiRouter,
+    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
+    base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
+    base::session::Tracks &rTracks) :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
@@ -20,7 +21,8 @@ MainRpc::MainRpc(RtServer::Signals &rSignals,
     m_rAbletonLinkWrapper(rAbletonLinkWrapper),
     m_rMidiRouter(rMidiRouter),
     m_rCtrlEventRouter(rCtrlEventRouter),
-    m_rParameterSceneContainer(rParameterSceneContainer)
+    m_rParameterSceneContainer(rParameterSceneContainer),
+    m_rTracks(rTracks)
 {
 }
 
