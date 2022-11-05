@@ -1,4 +1,5 @@
 #include "Track.h"
+
 #include "BeatTick.h"
 
 using namespace base;
@@ -36,7 +37,7 @@ session::Track session::Track::duplicate(
 
 void session::Track::resetActiveClip()
 {
-   if(m_activeClipIdx)
+   if (m_activeClipIdx)
    {
       m_clips[m_activeClipIdx.value()]->reset();
    }
@@ -44,7 +45,7 @@ void session::Track::resetActiveClip()
 
 void session::Track::stop()
 {
-   if(m_activeClipIdx)
+   if (m_activeClipIdx)
    {
       m_clips[m_activeClipIdx.value()]->stop(m_instrument);
    }
@@ -83,4 +84,24 @@ void session::Track::update()
 void session::Track::toggleMute() noexcept
 {
    // TODO
+}
+
+void session::Track::registerCbs(int row)
+{
+   m_clips[row]->onNameChanged(
+       [this, row](std::string_view name) { emitClipNameChanged(row, name); });
+   m_clips[row]->onNoteAdded(
+       [this, row](sequencer::NoteId noteId, sequencer::Beat start,
+                   sequencer::Beat length, int note, float velocity) {
+          emitClipNoteAdded(row, noteId, start, length, note, velocity);
+       });
+   m_clips[row]->onNoteVelocityChanged(
+       [this, row](sequencer::NoteId noteId, float velocity) {
+          emitClipNoteVelocityChanged(row, noteId, velocity);
+       });
+   m_clips[row]->onNoteRemoved([this, row](sequencer::NoteId noteId) {
+      emitClipNoteRemoved(row, noteId);
+   });
+   m_clips[row]->onAllNotesRemoved(
+       [this, row]() { emitClipAllNotesRemoved(row); });
 }

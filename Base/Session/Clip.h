@@ -11,6 +11,7 @@
 #include <memory_resource>
 #include <cstddef> // std::byte
 #include "Instrument.h"
+#include "CallbackSignal.h"
 
 namespace base::session
 {
@@ -30,6 +31,13 @@ public:
     inline void removeAllNotes();
     void reset();
     void stop(instruments::Instrument* instrument);
+
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteVelocityChanged, sequencer::NoteId, float);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteRemoved, sequencer::NoteId);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(AllNotesRemoved);
+
 private:
     std::pmr::string name;
     sequencer::Beat m_startBeat;

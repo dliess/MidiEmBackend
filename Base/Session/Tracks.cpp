@@ -39,8 +39,12 @@ void Tracks::update()
 
 void Tracks::pushBackTrack(std::string_view name)
 {
-   const auto& track = m_tracks.emplace_back(name);
+   auto& track = m_tracks.emplace_back(name);
    emitTrackAdded(track.idView(), name, m_tracks.size());
+   track.onNameChanged([this, &track](std::string_view){
+      emitTrackNameChanged(track.idView(), track.name());
+   });
+   // TODO ...
 }
 
 void Tracks::addTrack(std::string_view name, int position)
@@ -52,15 +56,17 @@ void Tracks::addTrack(std::string_view name, int position)
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
 {
-   withTrackIter(uuid, [this](auto it){
+   withTrackIter(uuid, [this, &uuid](auto it){
       m_tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
+      emitTrackDuplicated(uuid);
    });
 }
 
 void Tracks::removeTrack(util::Identifiable::UUIDView uuid)
 {
-   withTrackIter(uuid, [this](auto it){
+   withTrackIter(uuid, [this, &uuid](auto it){
       m_tracks.erase(it);
+      emitTrackRemoved(uuid);
    });
 }
 

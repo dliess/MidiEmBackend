@@ -36,6 +36,17 @@ public:
     CB_SIGNAL(TrackMoved, util::Identifiable::UUIDView, int);
     CB_SIGNAL(TrackMuted, util::Identifiable::UUIDView, bool);
 
+    CB_SIGNAL(TrackNameChanged, util::Identifiable::UUIDView, std::string_view);
+    CB_SIGNAL(TrackClipCreated, util::Identifiable::UUIDView, int);
+    CB_SIGNAL(TrackClipDeleted, util::Identifiable::UUIDView, int);
+    CB_SIGNAL(TrackClipStartedChanged, util::Identifiable::UUIDView, int, bool);
+
+    CB_SIGNAL(ClipNameChanged, util::Identifiable::UUIDView, int, std::string_view);
+    CB_SIGNAL(ClipNoteAdded, util::Identifiable::UUIDView, int, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
+    CB_SIGNAL(ClipNoteVelocityChanged, util::Identifiable::UUIDView, int, sequencer::NoteId, float);
+    CB_SIGNAL(ClipNoteRemoved,  util::Identifiable::UUIDView, int, sequencer::NoteId);
+    CB_SIGNAL(ClipAllNotesRemoved, util::Identifiable::UUIDView, int);
+
 private:
     util::StackMempool<32768> m_memoryPool;
     template<typename CB>
