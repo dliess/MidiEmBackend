@@ -31,6 +31,10 @@ public:
     void startClipRow(int row);
 
     CB_SIGNAL(TrackAdded, util::Identifiable::UUIDView, std::string_view, int);
+    CB_SIGNAL(TrackRemoved, util::Identifiable::UUIDView);
+    CB_SIGNAL(TrackDuplicated, util::Identifiable::UUIDView);
+    CB_SIGNAL(TrackMoved, util::Identifiable::UUIDView, int);
+    CB_SIGNAL(TrackMuted, util::Identifiable::UUIDView, bool);
 
 private:
     util::StackMempool<32768> m_memoryPool;
