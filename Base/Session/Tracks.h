@@ -32,7 +32,7 @@ public:
 
     CB_SIGNAL(TrackAdded, util::Identifiable::UUIDView, std::string_view, int);
     CB_SIGNAL(TrackRemoved, util::Identifiable::UUIDView);
-    CB_SIGNAL(TrackDuplicated, util::Identifiable::UUIDView);
+    CB_SIGNAL(TrackDuplicated, util::Identifiable::UUIDView, util::Identifiable::UUIDView);
     CB_SIGNAL(TrackMoved, util::Identifiable::UUIDView, int);
     CB_SIGNAL(TrackMuted, util::Identifiable::UUIDView, bool);
 
@@ -41,11 +41,11 @@ public:
     CB_SIGNAL(TrackClipDeleted, util::Identifiable::UUIDView, int);
     CB_SIGNAL(TrackClipStartedChanged, util::Identifiable::UUIDView, int, bool);
 
-    CB_SIGNAL(ClipNameChanged, util::Identifiable::UUIDView, int, std::string_view);
-    CB_SIGNAL(ClipNoteAdded, util::Identifiable::UUIDView, int, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
-    CB_SIGNAL(ClipNoteVelocityChanged, util::Identifiable::UUIDView, int, sequencer::NoteId, float);
-    CB_SIGNAL(ClipNoteRemoved,  util::Identifiable::UUIDView, int, sequencer::NoteId);
-    CB_SIGNAL(ClipAllNotesRemoved, util::Identifiable::UUIDView, int);
+    CB_SIGNAL(TrackClipNameChanged, util::Identifiable::UUIDView, int, std::string_view);
+    CB_SIGNAL(TrackClipNoteAdded, util::Identifiable::UUIDView, int, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
+    CB_SIGNAL(TrackClipNoteVelocityChanged, util::Identifiable::UUIDView, int, sequencer::NoteId, float);
+    CB_SIGNAL(TrackClipNoteRemoved,  util::Identifiable::UUIDView, int, sequencer::NoteId);
+    CB_SIGNAL(TrackClipAllNotesRemoved, util::Identifiable::UUIDView, int);
 
 private:
     util::StackMempool<32768> m_memoryPool;
@@ -53,6 +53,7 @@ private:
     void withTrackIter(util::Identifiable::UUIDView uuid, CB&& cb);
     std::pmr::vector<Track> m_tracks;
     bool m_started{false};
+    void registerCbs(Track& track);
 };
 
 }   // namespace session
