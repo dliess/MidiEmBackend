@@ -423,7 +423,54 @@ RtServer::RtServer(
    rTracks.onTrackAdded([this](util::Identifiable::UUIDView uuid,
                                std::string_view name, int position) {
       signals().Session__trackAdded(
-          *reinterpret_cast<const util::Identifiable::UUID*>(uuid.data()),
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
           std::string(name));
    });
+   rTracks.onTrackRemoved([this](util::Identifiable::UUIDView uuid) {
+      signals().Session__trackRemoved(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()));
+   });
+   rTracks.onTrackDuplicated(
+       [this](util::Identifiable::UUIDView uuidOriginal,
+              util::Identifiable::UUIDView uuidDuplicate) {
+          signals().Session__trackDuplicated(
+              *reinterpret_cast<const util::Identifiable::UUID *>(
+                  uuidOriginal.data()),
+              *reinterpret_cast<const util::Identifiable::UUID *>(
+                  uuidDuplicate.data()));
+       });
+   rTracks.onTrackMoved([this](util::Identifiable::UUIDView uuid, int dest) {
+
+   });
+   rTracks.onTrackMuted([this](util::Identifiable::UUIDView uuid, bool muted) {
+
+   });
+
+   rTracks.onTrackNameChanged(
+       [this](util::Identifiable::UUIDView uuid, std::string_view name) {
+
+       });
+   rTracks.onTrackClipCreated(
+       [this](util::Identifiable::UUIDView uuid, int row) {
+
+       });
+   rTracks.onTrackClipDeleted(
+       [this](util::Identifiable::UUIDView uuid, int row) {
+
+       });
+   rTracks.onTrackClipStartedChanged(
+       [this](util::Identifiable::UUIDView uuid, int row, bool started) {
+
+       });
+
+   rTracks.onTrackClipNameChanged([this](util::Identifiable::UUIDView uuid,
+                                         int row, std::string_view name) {
+
+   });
+   rTracks.onTrackClipNoteAdded(
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::NoteId noteId, base::sequencer::Beat startBeat,
+              base::sequencer::Beat length, int note, float velocity) {
+
+       });
 }
