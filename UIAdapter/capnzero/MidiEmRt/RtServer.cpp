@@ -440,37 +440,85 @@ RtServer::RtServer(
                   uuidDuplicate.data()));
        });
    rTracks.onTrackMoved([this](util::Identifiable::UUIDView uuid, int dest) {
-
+      signals().Session__trackMoved(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+          dest);
    });
    rTracks.onTrackMuted([this](util::Identifiable::UUIDView uuid, bool muted) {
-
+      signals().Session__trackMuted(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+          muted);
    });
 
    rTracks.onTrackNameChanged(
        [this](util::Identifiable::UUIDView uuid, std::string_view name) {
-
+          signals().Session__trackNameChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              std::string(name));
        });
-   rTracks.onTrackClipCreated(
-       [this](util::Identifiable::UUIDView uuid, int row) {
-
-       });
+   rTracks.onTrackClipCreated([this, &rTracks](
+                                  util::Identifiable::UUIDView uuid, int row) {
+      std::string clipName;
+      rTracks.withClip(
+          uuid, row, [&clipName](const auto &clip) { clipName = clip.name(); });
+      signals().Session__clipAdded(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          clipName);
+   });
    rTracks.onTrackClipDeleted(
        [this](util::Identifiable::UUIDView uuid, int row) {
-
+          signals().Session__clipRemoved(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row);
        });
-   rTracks.onTrackClipStartedChanged(
-       [this](util::Identifiable::UUIDView uuid, int row, bool started) {
-
-       });
+   rTracks.onTrackClipStartedChanged([this](util::Identifiable::UUIDView uuid,
+                                            int row, bool started) {
+      if (started)
+      {
+         signals().Session__clipStarted(
+             *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+             row);
+      }
+      else
+      {
+         signals().Session__clipStopped(
+             *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+             row);
+      }
+   });
 
    rTracks.onTrackClipNameChanged([this](util::Identifiable::UUIDView uuid,
                                          int row, std::string_view name) {
-
+      signals().Session__clipRenamed(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          std::string(name));
    });
    rTracks.onTrackClipNoteAdded(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::NoteId noteId, base::sequencer::Beat startBeat,
               base::sequencer::Beat length, int note, float velocity) {
-
+          signals().Session__clipNoteAdded(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, noteId, startBeat, length, note, velocity);
+       });
+   rTracks.onTrackClipNoteVelocityChanged(
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::NoteId noteId, float velocity) {
+          signals().Session__clipNoteVelocityChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, noteId, velocity);
+       });
+   rTracks.onTrackClipNoteRemoved([this](util::Identifiable::UUIDView uuid,
+                                         int row,
+                                         base::sequencer::NoteId noteId) {
+      signals().Session__clipNoteRemoved(
+          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          noteId);
+   });
+   rTracks.onTrackClipAllNotesRemoved(
+       [this](util::Identifiable::UUIDView uuid, int row) {
+          signals().Session__clipAllNotesRemoved(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row);
        });
 }

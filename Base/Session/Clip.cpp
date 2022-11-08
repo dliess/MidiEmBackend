@@ -7,7 +7,7 @@
 using namespace base;
 
 session::Clip::Clip(const allocator_type& alloc) noexcept :
-    name(alloc),
+    m_name(alloc),
     m_noteEvents(alloc),
     m_parameterEvents(alloc),
     m_activeNotes(alloc)
@@ -15,7 +15,7 @@ session::Clip::Clip(const allocator_type& alloc) noexcept :
 }
 
 session::Clip::Clip(Clip&& other, const allocator_type& alloc) noexcept :
-    name(std::move(other.name), alloc),
+    m_name(std::move(other.m_name), alloc),
     m_noteEvents(std::move(other.m_noteEvents), alloc),
     m_parameterEvents(std::move(other.m_parameterEvents), alloc),
     m_activeNotes(std::move(other.m_activeNotes), alloc)
@@ -23,7 +23,7 @@ session::Clip::Clip(Clip&& other, const allocator_type& alloc) noexcept :
 }
 
 session::Clip::Clip(const Clip& other, const allocator_type& alloc) :
-    name(other.name, alloc),
+    m_name(other.m_name, alloc),
     m_noteEvents(other.m_noteEvents, alloc),
     m_parameterEvents(other.m_parameterEvents, alloc),
     m_activeNotes(alloc)

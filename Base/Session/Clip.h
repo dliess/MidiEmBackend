@@ -25,6 +25,7 @@ public:
     Clip(Clip&& other, const allocator_type& alloc) noexcept;
     void update(instruments::Instrument* instrument);
     inline void setName(std::string_view nameV);
+    inline std::string_view name() const;
     inline void addNote(sequencer::Beat beat, sequencer::Beat length, int note, float velocity);
     inline void setNoteVelocity(sequencer::NoteId noteId, float velocity);
     inline void removeNote(sequencer::NoteId noteId);
@@ -39,7 +40,7 @@ public:
     CB_SIGNAL_SINGLE_SUBSCRIBER(AllNotesRemoved);
 
 private:
-    std::pmr::string name;
+    std::pmr::string m_name;
     sequencer::Beat m_startBeat;
     sequencer::Beat m_prevClipBeat;
     sequencer::Beat m_sequenceLength;

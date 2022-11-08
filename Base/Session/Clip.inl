@@ -7,8 +7,13 @@ namespace base::session
 {
 inline void Clip::setName(std::string_view nameV)
 {
-   name = nameV;
-   emitNameChanged(name);
+   m_name = nameV;
+   emitNameChanged(m_name);
+}
+
+inline std::string_view Clip::name() const
+{
+   return m_name;
 }
 
 inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
