@@ -54,6 +54,12 @@ inline bool operator==(const util::Identifiable::UUIDView& lhs,
    return std::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
+inline bool operator!=(const util::Identifiable::UUIDView& lhs,
+                       const util::Identifiable::UUIDView& rhs) noexcept
+{
+   return !(lhs == rhs);
+}
+
 namespace std
 {
 template <>   //

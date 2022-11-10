@@ -1,6 +1,8 @@
 #ifndef BASE_SESSION_TRACK_INL
 #define BASE_SESSION_TRACK_INL
 
+#include "Instrument.h"
+
 namespace base
 {
 inline void session::Track::setName(std::string_view name)
@@ -71,9 +73,16 @@ inline const session::Clip* session::Track::clip(int row) const noexcept
    return m_clips[row].get();
 }
 
-inline std::string_view session::Track::name() const
+inline std::string_view session::Track::name() const { return m_name; }
+
+inline void session::Track::setInstrument(
+    instruments::Instrument& instrument)
 {
-   return m_name;
+   if(!m_instrument || (m_instrument->idView() != instrument.idView()))
+   {
+      m_instrument = &instrument;
+      emitInstrumentChanged(instrument.idView());
+   }
 }
 
 }   // namespace base

@@ -4,19 +4,38 @@
 
 using namespace uiadapter::capnzero;
 
-SessionRpc::SessionRpc(base::session::Tracks& rTracks) : m_rTracks(rTracks)
-{
-}
+SessionRpc::SessionRpc(base::session::Tracks& rTracks) : m_rTracks(rTracks) {}
 
 void SessionRpc::pushBackTrack(const ::capnzero::TextView& name)
 {
    m_rTracks.pushBackTrack(name);
 }
 
+void SessionRpc::pushBackTrackWithInstrument(
+    const ::capnzero::TextView& name,
+    const ::capnzero::SpanCL<16>& instrumentUuid)
+{
+   m_rTracks.pushBackTrack(name, instrumentUuid);
+}
+
 void SessionRpc::addTrack(const ::capnzero::TextView& name,
                           ::capnzero::Int16 position)
 {
    m_rTracks.addTrack(name, position);
+}
+
+void SessionRpc::addTrackWithInstrument(
+    const ::capnzero::TextView& name, ::capnzero::Int16 position,
+    const ::capnzero::SpanCL<16>& instrumentUuid)
+{
+   m_rTracks.addTrack(name, position, instrumentUuid);
+}
+
+void SessionRpc::changeTrackInstrument(
+    const ::capnzero::SpanCL<16>& trackUuid,
+    const ::capnzero::SpanCL<16>& instrumentUuid)
+{
+   m_rTracks.setTrackInstrument(trackUuid, instrumentUuid);
 }
 
 void SessionRpc::duplicateTrack(const ::capnzero::SpanCL<16>& trackUuid)
@@ -114,31 +133,25 @@ void SessionRpc::removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                     ::capnzero::Int16 row,
                                     ::capnzero::UInt32 noteId)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
-      clip.removeNote(noteId);
-   });
+   m_rTracks.withClip(trackUuid, row,
+                      [&](auto& clip) { clip.removeNote(noteId); });
 }
 void SessionRpc::removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                         ::capnzero::Int16 row)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
-      clip.removeAllNotes();
-   });
+   m_rTracks.withClip(trackUuid, row,
+                      [&](auto& clip) { clip.removeAllNotes(); });
 }
 void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row)
 {
-   m_rTracks.withTrack(trackUuid, [&](auto& track) {
-      track.startClip(row);
-   });
+   m_rTracks.withTrack(trackUuid, [&](auto& track) { track.startClip(row); });
 }
 void SessionRpc::stopTrack(const ::capnzero::SpanCL<16>& trackUuid)
 {
-   m_rTracks.withTrack(trackUuid, [&](auto& track) {
-      track.stopClip();
-   });
+   m_rTracks.withTrack(trackUuid, [&](auto& track) { track.stopClip(); });
 }
 void SessionRpc::startClipRow(::capnzero::Int16 row)
 {
-    m_rTracks.startClipRow(row);
+   m_rTracks.startClipRow(row);
 }

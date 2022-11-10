@@ -50,7 +50,8 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     instruments(musicDeviceHolder.musicDevices),
     instrumentsFactory(instruments, musicDeviceHolder),
     midiRouter(musicDeviceHolder.midiHolder),
-    controllerEventRouter(musicDeviceHolder.musicDevices)
+    controllerEventRouter(musicDeviceHolder.musicDevices),
+    tracks(instruments)
 {
    //m_zmqContext.set(zmq::ctxopt::io_threads, 1);
    m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);

@@ -1,11 +1,16 @@
 #include "Tracks.h"
 
 #include "BeatTick.h"
+#include "Instruments.h"
 
 using namespace base::session;
 
-Tracks::Tracks() : m_memoryPool("SessionTracks"), m_tracks(&m_memoryPool.pool())
+Tracks::Tracks(instruments::Instruments& rInstruments) :
+    m_rInstruments(rInstruments),
+    m_memoryPool("SessionTracks"),
+    m_tracks(&m_memoryPool.pool())
 {
+   m_tracks.reserve(8);
 }
 
 void Tracks::start()
@@ -30,25 +35,50 @@ void Tracks::update()
    for (auto& track : m_tracks) { track.update(); }
 }
 
-void Tracks::pushBackTrack(std::string_view name)
+Track& Tracks::pushBackTrack(std::string_view name)
 {
    auto& track = m_tracks.emplace_back(name);
    registerCbs(track);
    emitTrackAdded(track.idView(), name, m_tracks.size());
+   return track;
 }
 
-void Tracks::addTrack(std::string_view name, int position)
+void Tracks::pushBackTrack(std::string_view name,
+                           util::Identifiable::UUIDView instrumentUuid)
+{
+   auto& track = pushBackTrack(name);
+   auto instr  = m_rInstruments.getInstrumentByUuid(instrumentUuid);
+   if (instr)
+   {
+      track.setInstrument(*instr);
+   }
+}
+
+Track& Tracks::addTrack(std::string_view name, int position)
 {
    const auto it       = std::next(m_tracks.begin(), position);
    const auto insertIt = m_tracks.emplace(it, name);
    registerCbs(*insertIt);
    emitTrackAdded(insertIt->idView(), name, position);
+   return *insertIt;
+}
+
+void Tracks::addTrack(std::string_view name, int position,
+                      util::Identifiable::UUIDView instrumentUuid)
+{
+   auto& track = addTrack(name, position);
+   auto instr  = m_rInstruments.getInstrumentByUuid(instrumentUuid);
+   if (instr)
+   {
+      track.setInstrument(*instr);
+   }
 }
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
 {
    withTrackIter(uuid, [this, &uuid](auto it) {
-      auto iter = m_tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
+      auto iter =
+          m_tracks.insert(std::next(it), it->duplicate(&m_memoryPool.pool()));
       registerCbs(*iter);
       emitTrackDuplicated(uuid, iter->idView());
    });
@@ -68,6 +98,18 @@ void Tracks::renameTrack(util::Identifiable::UUIDView uuid,
    withTrackIter(uuid, [this, name](auto it) { it->setName(name); });
 }
 
+void Tracks::setTrackInstrument(util::Identifiable::UUIDView trackUuid,
+                                util::Identifiable::UUIDView instrumentUuid)
+{
+   auto instr = m_rInstruments.getInstrumentByUuid(instrumentUuid);
+   if (instr)
+   {
+      withTrackIter(trackUuid, [instr](auto it) {
+         it->setInstrument(*instr);
+      });
+   }
+}
+
 void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
 {
    withTrackIter(uuid, [this, afterPosition](auto it) {
@@ -85,9 +127,13 @@ void Tracks::startClipRow(int row)
 
 void Tracks::registerCbs(Track& track)
 {
-   track.onNameChanged([this, &track](std::string_view) {
-      emitTrackNameChanged(track.idView(), track.name());
+   track.onNameChanged([this, &track](std::string_view name) {
+      emitTrackNameChanged(track.idView(), name);
    });
+   track.onInstrumentChanged(
+       [this, &track](util::Identifiable::UUIDView instrumentUuid) {
+          emitTrackInstrumentChanged(track.idView(), instrumentUuid);
+       });
    track.onClipCreated(
        [this, &track](int row) { emitTrackClipCreated(track.idView(), row); });
    track.onClipDeleted(

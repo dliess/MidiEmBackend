@@ -15,8 +15,17 @@ class SessionRpc : public ::capnzero::MidiEmRt::SessionRpcIf
 public:
    SessionRpc(base::session::Tracks& rTracks);
    void pushBackTrack(const ::capnzero::TextView& name) override;
+   void pushBackTrackWithInstrument(
+       const ::capnzero::TextView& name,
+       const ::capnzero::SpanCL<16>& instrumentUuid) override;
    void addTrack(const ::capnzero::TextView& name,
                  ::capnzero::Int16 position) override;
+   void addTrackWithInstrument(
+       const ::capnzero::TextView& name, ::capnzero::Int16 position,
+       const ::capnzero::SpanCL<16>& instrumentUuid) override;
+   void changeTrackInstrument(
+       const ::capnzero::SpanCL<16>& trackUuid,
+       const ::capnzero::SpanCL<16>& instrumentUuid) override;
    void duplicateTrack(const ::capnzero::SpanCL<16>& trackUuid) override;
    void removeTrack(const ::capnzero::SpanCL<16>& trackUuid) override;
    void renameTrack(const ::capnzero::SpanCL<16>& trackUuid,
@@ -47,7 +56,8 @@ public:
                            ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
                            ::capnzero::Float32 velocity) override;
    void removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
-                           ::capnzero::Int16 row, ::capnzero::UInt32 noteId) override;
+                           ::capnzero::Int16 row,
+                           ::capnzero::UInt32 noteId) override;
    void removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row) override;
    void startClip(const ::capnzero::SpanCL<16>& trackUuid,

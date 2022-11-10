@@ -40,8 +40,10 @@ public:
     inline Clip* clip(int row) noexcept;
     inline const Clip* clip(int row) const noexcept;
     inline std::string_view name() const;
+    inline void setInstrument(instruments::Instrument& instrument);
 
     CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(InstrumentChanged, util::Identifiable::UUIDView);
     CB_SIGNAL_SINGLE_SUBSCRIBER(ClipCreated, int);
     CB_SIGNAL_SINGLE_SUBSCRIBER(ClipDeleted, int);
     CB_SIGNAL_SINGLE_SUBSCRIBER(ClipStartedChanged, int, bool);

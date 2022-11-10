@@ -99,6 +99,8 @@ struct Instruments //: public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
+    [[nodiscard]] Instrument* getInstrumentByUuid(util::Identifiable::UUIDView) noexcept;
+
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    std::vector<Cb> m_subscribers;

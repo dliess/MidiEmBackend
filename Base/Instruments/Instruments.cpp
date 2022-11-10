@@ -71,8 +71,7 @@ void Instruments::removeKitInstrument(
 }
 
 void Instruments::renameKitInstrument(
-      const util::Identifiable::UUID& instrumentId,
-      std::string name) noexcept
+    const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentId);
    instrumentIt->setName(std::move(name));
@@ -94,8 +93,7 @@ void Instruments::removeMelodicInstrument(
 }
 
 void Instruments::renameMelodicInstrument(
-      const util::Identifiable::UUID& instrumentId,
-      std::string name) noexcept
+    const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentId);
    instrumentIt->setName(std::move(name));
@@ -251,9 +249,11 @@ void Instruments::moveKitInstrumentSlotVoice(
       GET_KIT_INSTR_OR_RETURN(dstInstrumentUuid);
       dstInstrumentIt = instrumentIt;
    }
-   const auto& srcVoice = srcInstrumentIt->sounds().operator[](srcSlotIdx).voices[srcCompositeIdx];
+   const auto& srcVoice =
+       srcInstrumentIt->sounds().operator[](srcSlotIdx).voices[srcCompositeIdx];
    dstInstrumentIt->sounds().operator[](dstSlotIdx).voices.push_back(srcVoice);
-   removeVoiceFromKitInstrumentSlot(srcInstrumentUuid, srcSlotIdx, srcCompositeIdx);
+   removeVoiceFromKitInstrumentSlot(srcInstrumentUuid, srcSlotIdx,
+                                    srcCompositeIdx);
 }
 
 void Instruments::removeVoiceFromKitInstrumentSlot(
@@ -291,4 +291,28 @@ void Instruments::setCompositeNameInKitInstrument(
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->sounds().operator[](slotIdx).name = name;
    triggerChanged();
+}
+
+template<typename Container>
+auto elementWithUuid(Container& container, util::Identifiable::UUIDView uuidView) {
+   return 
+       std::find_if(container.begin(), container.end(),
+                    [uuidView](const auto& element) {
+                        return element.idView() == uuidView;
+                    });
+}
+
+Instrument* Instruments::getInstrumentByUuid(util::Identifiable::UUIDView uuid) noexcept
+{
+   auto it1 = elementWithUuid(data.kitInstruments, uuid);
+   if(it1 != data.kitInstruments.end())
+   {
+      return &(*it1);
+   }
+   auto it2 = elementWithUuid(data.melodicInstruments, uuid);
+   if(it2 != data.melodicInstruments.end())
+   {
+      return &(*it2);
+   }
+   return nullptr;
 }

@@ -456,6 +456,12 @@ RtServer::RtServer(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               std::string(name));
        });
+   rTracks.onTrackInstrumentChanged(
+       [this](util::Identifiable::UUIDView trackUuid, util::Identifiable::UUIDView instrumentUuid) {
+          signals().Session__trackInstrumentChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(trackUuid.data()),
+              *reinterpret_cast<const util::Identifiable::UUID *>(instrumentUuid.data()));
+       });
    rTracks.onTrackClipCreated([this, &rTracks](
                                   util::Identifiable::UUIDView uuid, int row) {
       std::string clipName;
