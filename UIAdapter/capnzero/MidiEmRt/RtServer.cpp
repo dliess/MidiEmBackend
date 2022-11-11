@@ -514,6 +514,20 @@ RtServer::RtServer(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               row, noteId, velocity);
        });
+   rTracks.onTrackClipNoteLengthChanged(
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::NoteId noteId, base::sequencer::Beat length) {
+          signals().Session__clipNoteLengthChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, noteId, length);
+       });
+   rTracks.onTrackClipNoteStartBeatChanged(
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::NoteId noteId, base::sequencer::Beat startBeat) {
+          signals().Session__clipNoteStartBeatChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, noteId, startBeat);
+       });
    rTracks.onTrackClipNoteRemoved([this](util::Identifiable::UUIDView uuid,
                                          int row,
                                          base::sequencer::NoteId noteId) {

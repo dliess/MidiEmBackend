@@ -152,6 +152,16 @@ void Tracks::registerCbs(Track& track)
           emitTrackClipNoteVelocityChanged(track.idView(), row, noteId,
                                            velocity);
        });
+   track.onClipNoteLengthChanged(
+       [this, &track](int row, sequencer::NoteId noteId, sequencer::Beat length) {
+          emitTrackClipNoteLengthChanged(track.idView(), row, noteId,
+                                           length);
+       });
+   track.onClipNoteStartBeatChanged(
+       [this, &track](int row, sequencer::NoteId noteId, sequencer::Beat startBeat) {
+          emitTrackClipNoteStartBeatChanged(track.idView(), row, noteId,
+                                           startBeat);
+       });
    track.onClipNoteRemoved([this, &track](int row, sequencer::NoteId noteId) {
       emitTrackClipNoteRemoved(track.idView(), row, noteId);
    });

@@ -42,6 +42,30 @@ inline void Clip::setNoteVelocity(sequencer::NoteId noteId, float velocity)
    }
 }
 
+inline void Clip::setNoteLength(sequencer::NoteId noteId, sequencer::Beat length)
+{
+   auto it = std::find_if(
+       m_noteEvents.begin(), m_noteEvents.end(),
+       [noteId](const auto& pair) { return pair.second.id == noteId; });
+   if (it != m_noteEvents.end())
+   {
+      it->second.duration = length;
+      emitNoteLengthChanged(noteId, length);
+   }
+}
+
+inline void Clip::setNoteStartBeat(sequencer::NoteId noteId, sequencer::Beat startBeat)
+{
+   auto it = std::find_if(
+       m_noteEvents.begin(), m_noteEvents.end(),
+       [noteId](const auto& pair) { return pair.second.id == noteId; });
+   if (it != m_noteEvents.end())
+   {
+      it->second.beatstamp = startBeat;
+      emitNoteStartBeatChanged(noteId, startBeat);
+   }
+}
+
 inline void Clip::removeNote(sequencer::NoteId noteId)
 {
    auto it = std::find_if(

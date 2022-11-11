@@ -99,6 +99,14 @@ void session::Track::registerCbs(int row)
        [this, row](sequencer::NoteId noteId, float velocity) {
           emitClipNoteVelocityChanged(row, noteId, velocity);
        });
+   m_clips[row]->onNoteLengthChanged(
+       [this, row](sequencer::NoteId noteId, sequencer::Beat length) {
+          emitClipNoteLengthChanged(row, noteId, length);
+       });
+   m_clips[row]->onNoteStartBeatChanged(
+       [this, row](sequencer::NoteId noteId, sequencer::Beat startBeat) {
+          emitClipNoteStartBeatChanged(row, noteId, startBeat);
+       });
    m_clips[row]->onNoteRemoved([this, row](sequencer::NoteId noteId) {
       emitClipNoteRemoved(row, noteId);
    });

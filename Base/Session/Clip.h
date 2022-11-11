@@ -28,6 +28,8 @@ public:
     inline std::string_view name() const;
     inline void addNote(sequencer::Beat beat, sequencer::Beat length, int note, float velocity);
     inline void setNoteVelocity(sequencer::NoteId noteId, float velocity);
+    inline void setNoteLength(sequencer::NoteId noteId, sequencer::Beat length);
+    inline void setNoteStartBeat(sequencer::NoteId noteId, sequencer::Beat startBeat);
     inline void removeNote(sequencer::NoteId noteId);
     inline void removeAllNotes();
     void reset();
@@ -36,6 +38,8 @@ public:
     CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteVelocityChanged, sequencer::NoteId, float);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteLengthChanged, sequencer::NoteId, sequencer::Beat);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteStartBeatChanged, sequencer::NoteId, sequencer::Beat);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteRemoved, sequencer::NoteId);
     CB_SIGNAL_SINGLE_SUBSCRIBER(AllNotesRemoved);
 

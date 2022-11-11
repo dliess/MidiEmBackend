@@ -55,6 +55,12 @@ public:
    void changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
                            ::capnzero::Float32 velocity) override;
+   void changeNoteLength(const ::capnzero::SpanCL<16>& trackUuid,
+                           ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
+                           ::capnzero::Float32 length) override;
+   void changeNoteStartBeat(const ::capnzero::SpanCL<16>& trackUuid,
+                           ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
+                           ::capnzero::Float32 startBeat) override;
    void removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row,
                            ::capnzero::UInt32 noteId) override;

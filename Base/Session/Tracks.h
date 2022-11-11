@@ -61,6 +61,10 @@ public:
              sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
    CB_SIGNAL(TrackClipNoteVelocityChanged, util::Identifiable::UUIDView, int,
              sequencer::NoteId, float);
+   CB_SIGNAL(TrackClipNoteLengthChanged, util::Identifiable::UUIDView, int,
+             sequencer::NoteId, sequencer::Beat);
+   CB_SIGNAL(TrackClipNoteStartBeatChanged, util::Identifiable::UUIDView, int,
+             sequencer::NoteId, sequencer::Beat);
    CB_SIGNAL(TrackClipNoteRemoved, util::Identifiable::UUIDView, int,
              sequencer::NoteId);
    CB_SIGNAL(TrackClipAllNotesRemoved, util::Identifiable::UUIDView, int);

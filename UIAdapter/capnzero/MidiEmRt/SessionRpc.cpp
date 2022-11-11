@@ -129,6 +129,23 @@ void SessionRpc::changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
       clip.setNoteVelocity(noteId, velocity);
    });
 }
+void SessionRpc::changeNoteLength(const ::capnzero::SpanCL<16>& trackUuid,
+                        ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
+                        ::capnzero::Float32 length)
+{
+   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
+      clip.setNoteLength(noteId, length);
+   });
+}
+void SessionRpc::changeNoteStartBeat(const ::capnzero::SpanCL<16>& trackUuid,
+                        ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
+                        ::capnzero::Float32 startBeat)
+{
+   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
+      clip.setNoteStartBeat(noteId, startBeat);
+   });
+}
+
 void SessionRpc::removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                     ::capnzero::Int16 row,
                                     ::capnzero::UInt32 noteId)
