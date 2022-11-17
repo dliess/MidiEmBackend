@@ -11,10 +11,7 @@ inline void Clip::setName(std::string_view nameV)
    emitNameChanged(m_name);
 }
 
-inline std::string_view Clip::name() const
-{
-   return m_name;
-}
+inline std::string_view Clip::name() const { return m_name; }
 
 inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
                           int note, float velocity)
@@ -25,8 +22,8 @@ inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
        sequencer::NoteEvent{++m_lastId, beatToInsert, note, velocity, length}));
    if (success)
    {
-      emitNoteAdded(it->second.id, it->second.beatstamp, it->second.note,
-                    it->second.velocity, it->second.duration);
+      emitNoteAdded(it->second.id, it->second.beatstamp, it->second.duration,
+                    it->second.note, it->second.velocity);
    }
 }
 
@@ -42,7 +39,8 @@ inline void Clip::setNoteVelocity(sequencer::NoteId noteId, float velocity)
    }
 }
 
-inline void Clip::setNoteLength(sequencer::NoteId noteId, sequencer::Beat length)
+inline void Clip::setNoteLength(sequencer::NoteId noteId,
+                                sequencer::Beat length)
 {
    auto it = std::find_if(
        m_noteEvents.begin(), m_noteEvents.end(),
@@ -54,7 +52,8 @@ inline void Clip::setNoteLength(sequencer::NoteId noteId, sequencer::Beat length
    }
 }
 
-inline void Clip::setNoteStartBeat(sequencer::NoteId noteId, sequencer::Beat startBeat)
+inline void Clip::setNoteStartBeat(sequencer::NoteId noteId,
+                                   sequencer::Beat startBeat)
 {
    auto it = std::find_if(
        m_noteEvents.begin(), m_noteEvents.end(),
@@ -82,6 +81,15 @@ inline void Clip::removeAllNotes()
 {
    m_noteEvents.clear();
    emitAllNotesRemoved();
+}
+
+inline void Clip::setSequenceLength(sequencer::Beat seqLen)
+{
+   if (m_sequenceLength != seqLen)
+   {
+      m_sequenceLength = seqLen;
+      emitSequenceLengthChanged(m_sequenceLength);
+   }
 }
 
 }   // namespace base::session

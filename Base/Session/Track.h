@@ -60,6 +60,7 @@ public:
                                sequencer::Beat);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipNoteRemoved, int, sequencer::NoteId);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipAllNotesRemoved, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ClipSequenceLengthChanged, int, sequencer::Beat);
 
 private:
    Track(const Track& rhs, const allocator_type& alloc);

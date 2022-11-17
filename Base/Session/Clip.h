@@ -34,6 +34,7 @@ public:
     inline void removeAllNotes();
     void reset();
     void stop(instruments::Instrument* instrument);
+    void setSequenceLength(sequencer::Beat);
 
     CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
@@ -42,12 +43,13 @@ public:
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteStartBeatChanged, sequencer::NoteId, sequencer::Beat);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteRemoved, sequencer::NoteId);
     CB_SIGNAL_SINGLE_SUBSCRIBER(AllNotesRemoved);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(SequenceLengthChanged, sequencer::Beat);
 
 private:
     std::pmr::string m_name;
     sequencer::Beat m_startBeat;
     sequencer::Beat m_prevClipBeat;
-    sequencer::Beat m_sequenceLength;
+    sequencer::Beat m_sequenceLength{4};
     using NoteContainer = TimedEventContainer<std::pmr::map<sequencer::Beat, sequencer::NoteEvent>>;
     NoteContainer m_noteEvents;
     TimedEventContainer<std::pmr::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare>> m_parameterEvents;

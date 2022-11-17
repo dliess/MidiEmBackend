@@ -112,4 +112,7 @@ void session::Track::registerCbs(int row)
    });
    m_clips[row]->onAllNotesRemoved(
        [this, row]() { emitClipAllNotesRemoved(row); });
+   m_clips[row]->onSequenceLengthChanged([this, row](sequencer::Beat seqLen) {
+      emitClipSequenceLengthChanged(row, seqLen);
+   });
 }

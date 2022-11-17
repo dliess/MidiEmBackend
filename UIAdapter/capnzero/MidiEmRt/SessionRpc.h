@@ -66,6 +66,8 @@ public:
                            ::capnzero::UInt32 noteId) override;
    void removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row) override;
+   void changeSequenceLength(const ::capnzero::SpanCL<16>& trackUuid,
+                               ::capnzero::Int16 row, ::capnzero::Float32 sequenceLength) override;
    void startClip(const ::capnzero::SpanCL<16>& trackUuid,
                   ::capnzero::Int16 row) override;
    void stopTrack(const ::capnzero::SpanCL<16>& trackUuid) override;

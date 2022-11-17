@@ -68,6 +68,7 @@ public:
    CB_SIGNAL(TrackClipNoteRemoved, util::Identifiable::UUIDView, int,
              sequencer::NoteId);
    CB_SIGNAL(TrackClipAllNotesRemoved, util::Identifiable::UUIDView, int);
+   CB_SIGNAL(TrackClipSequenceLengthChanged, util::Identifiable::UUIDView, int, sequencer::Beat);
 
 private:
    instruments::Instruments& m_rInstruments;

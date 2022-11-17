@@ -159,6 +159,14 @@ void SessionRpc::removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
    m_rTracks.withClip(trackUuid, row,
                       [&](auto& clip) { clip.removeAllNotes(); });
 }
+
+void SessionRpc::changeSequenceLength(const ::capnzero::SpanCL<16>& trackUuid,
+                              ::capnzero::Int16 row, ::capnzero::Float32 sequenceLength)
+{
+   m_rTracks.withClip(trackUuid, row,
+                      [&](auto& clip) { clip.setSequenceLength(sequenceLength); });
+}
+
 void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row)
 {

@@ -168,4 +168,7 @@ void Tracks::registerCbs(Track& track)
    track.onClipAllNotesRemoved([this, &track](int row) {
       emitTrackClipAllNotesRemoved(track.idView(), row);
    });
+   track.onClipSequenceLengthChanged([this, &track](int row, sequencer::Beat seqLen) {
+      emitTrackClipSequenceLengthChanged(track.idView(), row, seqLen);
+   });
 }

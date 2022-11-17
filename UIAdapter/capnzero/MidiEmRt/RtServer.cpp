@@ -541,4 +541,10 @@ RtServer::RtServer(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               row);
        });
+   rTracks.onTrackClipSequenceLengthChanged(
+       [this](util::Identifiable::UUIDView uuid, int row, base::sequencer::Beat seqLen) {
+          signals().Session__clipSequenceLengthChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, seqLen);
+       });
 }
