@@ -17,14 +17,11 @@ inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
                           int note, float velocity)
 {
    const auto beatToInsert = std::fmod(beat, m_sequenceLength);
-   auto [it, success]      = m_noteEvents.insert(std::make_pair(
+   auto it                 = m_noteEvents.insert(std::make_pair(
        beatToInsert,
        sequencer::NoteEvent{++m_lastId, beatToInsert, note, velocity, length}));
-   if (success)
-   {
-      emitNoteAdded(it->second.id, it->second.beatstamp, it->second.duration,
-                    it->second.note, it->second.velocity);
-   }
+   emitNoteAdded(it->second.id, it->second.beatstamp, it->second.duration,
+                 it->second.note, it->second.velocity);
 }
 
 inline void Clip::setNoteVelocity(sequencer::NoteId noteId, float velocity)

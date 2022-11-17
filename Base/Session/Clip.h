@@ -50,7 +50,7 @@ private:
     sequencer::Beat m_startBeat;
     sequencer::Beat m_prevClipBeat;
     sequencer::Beat m_sequenceLength{4};
-    using NoteContainer = TimedEventContainer<std::pmr::map<sequencer::Beat, sequencer::NoteEvent>>;
+    using NoteContainer = TimedEventContainer<std::pmr::multimap<sequencer::Beat, sequencer::NoteEvent>>;
     NoteContainer m_noteEvents;
     TimedEventContainer<std::pmr::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare>> m_parameterEvents;
     std::pmr::list<const sequencer::NoteEvent*> m_activeNotes;
