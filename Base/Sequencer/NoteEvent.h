@@ -15,4 +15,6 @@ struct NoteEvent : public TimedEvent
 
 }   // namespace base::sequencer
 
+#include "NoteEventMeta.h"
+
 #endif

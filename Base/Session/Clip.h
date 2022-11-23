@@ -12,6 +12,7 @@
 #include <cstddef> // std::byte
 #include "Instrument.h"
 #include "CallbackSignal.h"
+#include <nlohmann/json.hpp>
 
 namespace base::session
 {
@@ -35,6 +36,7 @@ public:
     void reset();
     void stop(instruments::Instrument* instrument);
     void setSequenceLength(sequencer::Beat);
+    inline sequencer::Beat getSequenceLength() const noexcept;
 
     CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);
@@ -55,10 +57,13 @@ private:
     TimedEventContainer<std::pmr::set<sequencer::ParameterEvent, sequencer::ParameterEventCompare>> m_parameterEvents;
     std::pmr::list<const sequencer::NoteEvent*> m_activeNotes;
     sequencer::NoteId m_lastId{0};
+
+    friend void to_json(nlohmann::json& j, const Clip& p);
 };
 
 }   // namespace base::session
 
 #include "Clip.inl"
+#include "ClipMeta.h"
 
 #endif

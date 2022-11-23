@@ -77,5 +77,6 @@ private:
 }   // namespace base::session
 
 #include "Track.inl"
+#include "TrackMeta.h"
 
 #endif

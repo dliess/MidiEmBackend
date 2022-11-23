@@ -89,6 +89,13 @@ inline void Clip::setSequenceLength(sequencer::Beat seqLen)
    }
 }
 
+inline 
+sequencer::Beat Clip::getSequenceLength() const noexcept
+{
+   return m_sequenceLength;
+}
+
+
 }   // namespace base::session
 
 #endif
