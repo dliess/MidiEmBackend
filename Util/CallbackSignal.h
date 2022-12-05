@@ -33,7 +33,7 @@ public:                    \
     using cbName##Cb = std::function<void(__VA_ARGS__)>; \
     void on##cbName(cbName##Cb cb) { m_##cbName = std::move(cb); } \
 protected: \
-    template<class ...Types> void emit##cbName(Types&&... args) { m_##cbName(std::forward<Types>(args)...); } \
+    template<class ...Types> void emit##cbName(Types&&... args) { if(m_##cbName) m_##cbName(std::forward<Types>(args)...); } \
 private: \
     cbName##Cb m_##cbName; \
 public:

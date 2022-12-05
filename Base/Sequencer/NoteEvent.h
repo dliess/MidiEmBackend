@@ -10,7 +10,7 @@ struct NoteEvent : public TimedEvent
 {
     int note{0};
     float velocity{0.0};
-    Beat duration{0};
+    Beat length{0};
 };
 
 }   // namespace base::sequencer

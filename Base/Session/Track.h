@@ -72,6 +72,8 @@ private:
    std::optional<int> m_activeClipIdx;
    std::optional<int> m_toStartClipIdx;
    void registerCbs(int row);
+
+    friend void to_json(nlohmann::json& j, const Track& track);   
 };
 
 }   // namespace base::session

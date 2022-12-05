@@ -78,10 +78,13 @@ private:
    std::pmr::vector<Track> m_tracks;
    bool m_started{false};
    void registerCbs(Track& track);
+
+   friend void to_json(nlohmann::json& j, const Tracks& track);
 };
 
 }   // namespace base::session
 
 #include "Tracks.inl"
+#include "TracksMeta.h"
 
 #endif

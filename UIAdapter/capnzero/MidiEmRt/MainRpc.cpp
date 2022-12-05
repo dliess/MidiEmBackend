@@ -99,4 +99,5 @@ void MainRpc::reEmitSignals()
    m_rMidiRouter.retriggerCallbacks();
    m_rParameterSceneContainer.retriggerCallbacks();
    m_rCtrlEventRouter.retriggerCallbacks();
+   m_rSignals.Session__tracksChanged(nlohmann::json(m_rTracks).dump());
 }

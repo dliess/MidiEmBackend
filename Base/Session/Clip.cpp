@@ -38,7 +38,7 @@ void session::Clip::update(instruments::Instrument* instrument)
    for (auto it = m_activeNotes.begin(); it != m_activeNotes.end();)
    {
       const auto endStamp =
-          std::fmod(((*it)->beatstamp + (*it)->duration), m_sequenceLength);
+          std::fmod(((*it)->beatstamp + (*it)->length), m_sequenceLength);
       if (clipBeat >= endStamp)
       {
          if (instrument)

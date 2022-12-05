@@ -11,12 +11,13 @@ namespace base::session
 
 inline
 void to_json(nlohmann::json& j, const Clip& p) {
-    j = nlohmann::json{{"name", p.m_name}, {"sequenceLength", p.m_sequenceLength}};
-    j["noteEvents"] = nlohmann::json::array();
+    j["name"] = p.m_name;
+    j["sequenceLength"] = p.m_sequenceLength;
+    j["sequence"] = nlohmann::json::array();
     for(auto& it : p.m_noteEvents)
     {
         auto jN = meta::serialize(it.second);
-        j["noteEvents"].push_back(jN);
+        j["sequence"].push_back(jN);
     }
 }
 

@@ -20,7 +20,7 @@ inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
    auto it                 = m_noteEvents.insert(std::make_pair(
        beatToInsert,
        sequencer::NoteEvent{++m_lastId, beatToInsert, note, velocity, length}));
-   emitNoteAdded(it->second.id, it->second.beatstamp, it->second.duration,
+   emitNoteAdded(it->second.id, it->second.beatstamp, it->second.length,
                  it->second.note, it->second.velocity);
 }
 
@@ -44,7 +44,7 @@ inline void Clip::setNoteLength(sequencer::NoteId noteId,
        [noteId](const auto& pair) { return pair.second.id == noteId; });
    if (it != m_noteEvents.end())
    {
-      it->second.duration = length;
+      it->second.length = length;
       emitNoteLengthChanged(noteId, length);
    }
 }
