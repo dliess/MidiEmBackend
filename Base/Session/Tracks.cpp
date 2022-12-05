@@ -35,6 +35,21 @@ void Tracks::update()
    for (auto& track : m_tracks) { track.update(); }
 }
 
+void Tracks::updateActiveClipBeatsUI()
+{
+   if (!m_started)
+      return;
+   for (auto& track : m_tracks)
+   {
+      if (track.startedClipIdx())
+      {
+         emitTrackClipActualBeatChanged(
+             track.idView(), *track.startedClipIdx(),
+             track.clip(*track.startedClipIdx())->getPrevClipBeat());
+      }
+   }
+}
+
 Track& Tracks::pushBackTrack(std::string_view name)
 {
    auto& track = m_tracks.emplace_back(name);
@@ -104,9 +119,7 @@ void Tracks::setTrackInstrument(util::Identifiable::UUIDView trackUuid,
    auto instr = m_rInstruments.getInstrumentByUuid(instrumentUuid);
    if (instr)
    {
-      withTrackIter(trackUuid, [instr](auto it) {
-         it->setInstrument(*instr);
-      });
+      withTrackIter(trackUuid, [instr](auto it) { it->setInstrument(*instr); });
    }
 }
 
@@ -138,6 +151,12 @@ void Tracks::registerCbs(Track& track)
        [this, &track](int row) { emitTrackClipCreated(track.idView(), row); });
    track.onClipDeleted(
        [this, &track](int row) { emitTrackClipDeleted(track.idView(), row); });
+   track.onClipStartedChanged([this, &track](int row, bool start) {
+      emitTrackClipStartedChanged(track.idView(), row, start);
+   });
+   track.onClipAboutToStart([this, &track](int row) {
+      emitTrackClipAboutToStart(track.idView(), row);
+   });
    track.onClipNameChanged([this, &track](int row, std::string_view name) {
       emitTrackClipNameChanged(track.idView(), row, name);
    });
@@ -152,23 +171,24 @@ void Tracks::registerCbs(Track& track)
           emitTrackClipNoteVelocityChanged(track.idView(), row, noteId,
                                            velocity);
        });
-   track.onClipNoteLengthChanged(
-       [this, &track](int row, sequencer::NoteId noteId, sequencer::Beat length) {
-          emitTrackClipNoteLengthChanged(track.idView(), row, noteId,
-                                           length);
-       });
-   track.onClipNoteStartBeatChanged(
-       [this, &track](int row, sequencer::NoteId noteId, sequencer::Beat startBeat) {
-          emitTrackClipNoteStartBeatChanged(track.idView(), row, noteId,
-                                           startBeat);
-       });
+   track.onClipNoteLengthChanged([this, &track](int row,
+                                                sequencer::NoteId noteId,
+                                                sequencer::Beat length) {
+      emitTrackClipNoteLengthChanged(track.idView(), row, noteId, length);
+   });
+   track.onClipNoteStartBeatChanged([this, &track](int row,
+                                                   sequencer::NoteId noteId,
+                                                   sequencer::Beat startBeat) {
+      emitTrackClipNoteStartBeatChanged(track.idView(), row, noteId, startBeat);
+   });
    track.onClipNoteRemoved([this, &track](int row, sequencer::NoteId noteId) {
       emitTrackClipNoteRemoved(track.idView(), row, noteId);
    });
    track.onClipAllNotesRemoved([this, &track](int row) {
       emitTrackClipAllNotesRemoved(track.idView(), row);
    });
-   track.onClipSequenceLengthChanged([this, &track](int row, sequencer::Beat seqLen) {
-      emitTrackClipSequenceLengthChanged(track.idView(), row, seqLen);
-   });
+   track.onClipSequenceLengthChanged(
+       [this, &track](int row, sequencer::Beat seqLen) {
+          emitTrackClipSequenceLengthChanged(track.idView(), row, seqLen);
+       });
 }

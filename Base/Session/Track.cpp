@@ -67,10 +67,12 @@ void session::Track::update()
          {
             m_clips[m_toStartClipIdx.value()]->reset();
             m_activeClipIdx = m_toStartClipIdx;
+            emitClipStartedChanged(*m_activeClipIdx, true);
          }
          else
          {
             m_activeClipIdx.reset();
+            emitClipStartedChanged(*m_activeClipIdx, false);
          }
          m_toStartClipIdx.reset();
       }

@@ -37,6 +37,7 @@ public:
     void stop(instruments::Instrument* instrument);
     void setSequenceLength(sequencer::Beat);
     inline sequencer::Beat getSequenceLength() const noexcept;
+    [[nodiscard]] inline sequencer::Beat getPrevClipBeat() const noexcept;
 
     CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
     CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat, sequencer::Beat, int, float);

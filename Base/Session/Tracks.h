@@ -23,6 +23,7 @@ public:
    void start();
    void stop();
    void update();
+   void updateActiveClipBeatsUI();
    Track& pushBackTrack(std::string_view name);
    void pushBackTrack(std::string_view name,
                       util::Identifiable::UUIDView instrumentUuid);
@@ -54,6 +55,7 @@ public:
    CB_SIGNAL(TrackClipCreated, util::Identifiable::UUIDView, int);
    CB_SIGNAL(TrackClipDeleted, util::Identifiable::UUIDView, int);
    CB_SIGNAL(TrackClipStartedChanged, util::Identifiable::UUIDView, int, bool);
+   CB_SIGNAL(TrackClipAboutToStart, util::Identifiable::UUIDView, int);
 
    CB_SIGNAL(TrackClipNameChanged, util::Identifiable::UUIDView, int,
              std::string_view);
@@ -69,7 +71,7 @@ public:
              sequencer::NoteId);
    CB_SIGNAL(TrackClipAllNotesRemoved, util::Identifiable::UUIDView, int);
    CB_SIGNAL(TrackClipSequenceLengthChanged, util::Identifiable::UUIDView, int, sequencer::Beat);
-
+   CB_SIGNAL(TrackClipActualBeatChanged, util::Identifiable::UUIDView, int, sequencer::Beat);
 private:
    instruments::Instruments& m_rInstruments;
    util::StackMempool<320768> m_memoryPool;

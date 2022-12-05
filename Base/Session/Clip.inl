@@ -95,6 +95,12 @@ sequencer::Beat Clip::getSequenceLength() const noexcept
    return m_sequenceLength;
 }
 
+inline
+sequencer::Beat Clip::getPrevClipBeat() const noexcept
+{
+   return m_prevClipBeat;
+}
+
 
 }   // namespace base::session
 

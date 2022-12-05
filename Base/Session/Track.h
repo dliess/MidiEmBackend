@@ -40,6 +40,7 @@ public:
    inline void stopClip();
    inline Clip* clip(int row) noexcept;
    inline const Clip* clip(int row) const noexcept;
+   inline std::optional<int> startedClipIdx() const noexcept;
    inline std::string_view name() const;
    inline void setInstrument(instruments::Instrument& instrument);
 
@@ -48,6 +49,7 @@ public:
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipCreated, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipDeleted, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipStartedChanged, int, bool);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ClipAboutToStart, int);
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipNameChanged, int, std::string_view);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipNoteAdded, int, sequencer::NoteId,

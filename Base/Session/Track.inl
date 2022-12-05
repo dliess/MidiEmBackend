@@ -53,11 +53,13 @@ inline void session::Track::startClip(int row)
       if (m_activeClipIdx.value() != row)
       {
          m_toStartClipIdx = row;
+         emitClipAboutToStart(row);
       }
    }
    else
    {
       m_toStartClipIdx = row;
+      emitClipAboutToStart(row);
    }
 }
 
@@ -83,6 +85,11 @@ inline void session::Track::setInstrument(
       m_instrument = &instrument;
       emitInstrumentChanged(instrument.idView());
    }
+}
+
+inline std::optional<int> session::Track::startedClipIdx() const noexcept
+{
+   return m_activeClipIdx;
 }
 
 }   // namespace base

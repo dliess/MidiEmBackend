@@ -457,10 +457,13 @@ RtServer::RtServer(
               std::string(name));
        });
    rTracks.onTrackInstrumentChanged(
-       [this](util::Identifiable::UUIDView trackUuid, util::Identifiable::UUIDView instrumentUuid) {
+       [this](util::Identifiable::UUIDView trackUuid,
+              util::Identifiable::UUIDView instrumentUuid) {
           signals().Session__trackInstrumentChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(trackUuid.data()),
-              *reinterpret_cast<const util::Identifiable::UUID *>(instrumentUuid.data()));
+              *reinterpret_cast<const util::Identifiable::UUID *>(
+                  trackUuid.data()),
+              *reinterpret_cast<const util::Identifiable::UUID *>(
+                  instrumentUuid.data()));
        });
    rTracks.onTrackClipCreated([this, &rTracks](
                                   util::Identifiable::UUIDView uuid, int row) {
@@ -492,7 +495,12 @@ RtServer::RtServer(
              row);
       }
    });
-
+   rTracks.onTrackClipAboutToStart(
+       [this](util::Identifiable::UUIDView uuid, int row) {
+          signals().Session__clipaboutToStart(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row);
+       });
    rTracks.onTrackClipNameChanged([this](util::Identifiable::UUIDView uuid,
                                          int row, std::string_view name) {
       signals().Session__clipRenamed(
@@ -542,9 +550,17 @@ RtServer::RtServer(
               row);
        });
    rTracks.onTrackClipSequenceLengthChanged(
-       [this](util::Identifiable::UUIDView uuid, int row, base::sequencer::Beat seqLen) {
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::Beat seqLen) {
           signals().Session__clipSequenceLengthChanged(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               row, seqLen);
+       });
+   rTracks.onTrackClipActualBeatChanged(
+       [this](util::Identifiable::UUIDView uuid, int row,
+              base::sequencer::Beat beat) {
+          signals().Session__clipActualBeatChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              row, beat);
        });
 }

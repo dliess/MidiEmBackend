@@ -173,6 +173,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
       musicDeviceHolder.musicDevices.updateMDParameterUI();
+      tracks.updateActiveClipBeatsUI();
    });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {
       rtServer.processNextRequestAllNonBlock();
