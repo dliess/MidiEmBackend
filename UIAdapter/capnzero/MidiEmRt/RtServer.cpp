@@ -497,7 +497,7 @@ RtServer::RtServer(
    });
    rTracks.onTrackClipAboutToStart(
        [this](util::Identifiable::UUIDView uuid, int row) {
-          signals().Session__clipaboutToStart(
+          signals().Session__clipAboutToStart(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               row);
        });
