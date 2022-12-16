@@ -484,22 +484,22 @@ RtServer::RtServer(
                                             int row, bool started) {
       if (started)
       {
-         signals().Session__clipStarted(
+         signals().Session__clipStateChanged(
              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
-             row);
+             row, ::capnzero::MidiEmRt::SessionClipState::RUNNING);
       }
       else
       {
-         signals().Session__clipStopped(
+         signals().Session__clipStateChanged(
              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
-             row);
+             row, ::capnzero::MidiEmRt::SessionClipState::STOPPED);
       }
    });
    rTracks.onTrackClipAboutToStart(
        [this](util::Identifiable::UUIDView uuid, int row) {
-          signals().Session__clipAboutToStart(
+          signals().Session__clipStateChanged(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
-              row);
+              row, ::capnzero::MidiEmRt::SessionClipState::ABOUT_TO_RUN);
        });
    rTracks.onTrackClipNameChanged([this](util::Identifiable::UUIDView uuid,
                                          int row, std::string_view name) {
