@@ -62,6 +62,7 @@ void session::Track::update()
          if (m_activeClipIdx)
          {
             m_clips[m_activeClipIdx.value()]->stop(m_instrument);
+            emitClipStartedChanged(*m_activeClipIdx, false);
          }
          if (StopperIdx != m_toStartClipIdx.value())
          {
