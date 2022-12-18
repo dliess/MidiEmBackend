@@ -39,7 +39,11 @@ void session::Clip::update(instruments::Instrument* instrument)
    {
       const auto endStamp =
           std::fmod(((*it)->beatstamp + (*it)->length), m_sequenceLength);
-      if (clipBeat >= endStamp)
+      const bool noteOverflow = (*it)->beatstamp > endStamp;
+      const bool turnNoteOff =
+          noteOverflow ? (endStamp < clipBeat && clipBeat < (*it)->beatstamp)
+                       : (clipBeat >= endStamp);
+      if (turnNoteOff)
       {
          if (instrument)
          {
