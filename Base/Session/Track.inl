@@ -82,6 +82,10 @@ inline void session::Track::setInstrument(
 {
    if(!m_instrument || (m_instrument->idView() != instrument.idView()))
    {
+      if(m_instrument && m_activeClipIdx)
+      {
+         m_clips[*m_activeClipIdx]->stop(m_instrument);
+      }
       m_instrument = &instrument;
       emitInstrumentChanged(instrument.idView());
    }
