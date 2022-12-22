@@ -96,6 +96,23 @@ inline std::optional<int> session::Track::startedClipIdx() const noexcept
    return m_activeClipIdx;
 }
 
+inline void session::Track::noteOn(int note, float velocity) noexcept
+{
+   if(m_instrument) 
+   {
+      m_instrument->noteOn(note, velocity);
+   }
+}
+
+inline void session::Track::noteOff(int note, float velocity) noexcept
+{
+   if(m_instrument) 
+   {
+      m_instrument->noteOff(note, velocity);
+   }
+}
+
+
 }   // namespace base
 
 #endif

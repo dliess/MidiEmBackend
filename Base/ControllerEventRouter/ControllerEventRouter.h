@@ -7,7 +7,9 @@
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
 #include "CallbackSignal.h"
-
+namespace base::session {
+   class Tracks;
+}
 namespace base::musicDevice
 {
 class MusicDeviceContainer;
@@ -17,10 +19,11 @@ namespace controller
 class EventRouter
 {
 public:
-   EventRouter(MusicDeviceContainer& rMusicDeviceContainer);
+   EventRouter(session::Tracks& rTracks, MusicDeviceContainer& rMusicDeviceContainer);
    void createConnection(const EventIdExt& from, const EventDestination& to) noexcept;
    void removeConnection(const EventIdExt& eventIdExt) noexcept;
 private:
+   session::Tracks& m_rTracks;
    MusicDeviceContainer& m_rMusicDeviceContainer;
    std::unordered_map<EventIdExt, EventDestination> m_map;
    void handlePressReleaseType(const EventIdExt& event,

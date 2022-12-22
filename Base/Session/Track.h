@@ -44,6 +44,10 @@ public:
    inline std::string_view name() const;
    inline void setInstrument(instruments::Instrument& instrument);
 
+   inline void noteOn(int note, float velocity) noexcept;
+   inline void noteOff(int note, float velocity) noexcept;
+
+
    CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
    CB_SIGNAL_SINGLE_SUBSCRIBER(InstrumentChanged, util::Identifiable::UUIDView);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ClipCreated, int);

@@ -1,11 +1,13 @@
 #include "ControllerEventRouter.h"
 
 #include "ControllerHandler.h"
+#include "Tracks.h"
 #include "MusicDeviceContainer.h"
 
 using namespace base::musicDevice::controller;
 
-EventRouter::EventRouter(MusicDeviceContainer& rMusicDeviceContainer) :
+EventRouter::EventRouter(session::Tracks& rTracks, MusicDeviceContainer& rMusicDeviceContainer) :
+    m_rTracks(rTracks),
     m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
    m_rMusicDeviceContainer.onControllerDevEventOccured(
@@ -234,6 +236,16 @@ void EventRouter::sendNoteOnOff(int note,
                                 const EventDestination& eventDestination,
                                 const PressReleaseType& value) noexcept
 {
+   m_rTracks.withTrack(eventDestination.uuid, [&value, note, this](auto& track){
+      if (value.value > 0)
+      {
+         track.noteOn(note, value.value);
+      }
+      else
+      {
+         track.noteOff(note, value.value);
+      }
+   });
    const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
