@@ -210,21 +210,16 @@ void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
                                     const EventDestination::Note& note,
                                     const PressReleaseType& value) noexcept
 {
-   auto it = std::find_if(
-       m_rInstruments.data.kitInstruments.begin(),
-       m_rInstruments.data.kitInstruments.end(),
-       [&drumKit](const auto& instr) { return instr.id() == drumKit.uuid; });
-   if(it != m_rInstruments.data.kitInstruments.end())
-   {
+   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr){
       if (value.value > 0)
       {
-         it->noteOn(drumKit.voiceIdx, note.value, value.value);
+         kitInstr.noteOn(drumKit.voiceIdx, note.value, value.value);
       }
       else
       {
-         it->noteOff(drumKit.voiceIdx, note.value, -value.value);
+         kitInstr.noteOff(drumKit.voiceIdx, note.value, -value.value);
       } 
-   }
+   });
 }
 
 void EventRouter::setParameterOnDrumKit(
@@ -232,13 +227,19 @@ void EventRouter::setParameterOnDrumKit(
     const EventDestination::Parameter& parameter,
     const PressReleaseType& value) noexcept
 {
+   m_rInstruments.withKitInstrument(drumKit.uuid, [](auto& kitInstr){
+      //TODO
+   });
 }
 
 void EventRouter::setParameterOnMelodic(
-    const EventDestination::Melodic& melodixc,
+    const EventDestination::Melodic& melodic,
     const EventDestination::Parameter& parameter,
     const PressReleaseType& value) noexcept
 {
+   m_rInstruments.withMelodicInstrument(melodic.uuid, [](auto& melodicInstr){
+      //TODO
+   });
 }
 
 void EventRouter::playNoteOnMusicDevice(

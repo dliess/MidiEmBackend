@@ -101,6 +101,11 @@ struct Instruments //: public utils::Settings<Instruments>
 
     [[nodiscard]] Instrument* getInstrumentByUuid(util::Identifiable::UUIDView) noexcept;
 
+    template<class CB>
+    void withKitInstrument(util::Identifiable::UUIDView uuid, CB&& cb);
+    template<class CB>
+    void withMelodicInstrument(util::Identifiable::UUIDView uuid, CB&& cb);
+
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;
    std::vector<Cb> m_subscribers;
@@ -110,6 +115,7 @@ private:
 }   // namespace instruments
 }   // namespace base
 
+#include "Instruments.inl"
 #include "InstrumentsMeta.h"
 
 #endif
