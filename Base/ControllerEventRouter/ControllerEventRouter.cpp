@@ -364,14 +364,22 @@ void EventRouter::handleWidgetCoordPressRelease(
     const WidgetCoord& widgetCoord, const EventDestination& eventDestination,
     const PressReleaseType& value) noexcept
 {
-   /*
-      mpark::visit(util::overload{
-                       [](EventDestination::DrumKit& drumKit) {},
-                       [](EventDestination::Melodic& drumKit) {},
-                       [](EventDestination::MusicDevice& drumKit) {},
-                   },
-                   eventDestination.endpoint);
-   */
+   mpark::visit(
+       util::overload{
+           [](EventDestination::DrumKit& drumKit) {
+              mpark::visit(
+                  util::overload{
+                      [&, this](const EventDestination::Note& note) {
+                         // TODO
+                      },
+                      [](const EventDestination::Parameter& parameter) {
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](EventDestination::Melodic& melodic) {},
+           [](EventDestination::MusicDevice& musicDevice) {}, [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::handleNotePressRelease(
