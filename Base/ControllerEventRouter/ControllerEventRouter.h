@@ -4,12 +4,19 @@
 //#include <map>
 #include <unordered_map>
 
+#include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
-#include "CallbackSignal.h"
-namespace base::session {
-   class Tracks;
+namespace base::session
+{
+class Tracks;
 }
+
+namespace base::instruments
+{
+struct Instruments;
+}
+
 namespace base::musicDevice
 {
 class MusicDeviceContainer;
@@ -19,11 +26,16 @@ namespace controller
 class EventRouter
 {
 public:
-   EventRouter(session::Tracks& rTracks, MusicDeviceContainer& rMusicDeviceContainer);
-   void createConnection(const EventIdExt& from, const EventDestination& to) noexcept;
+   EventRouter(session::Tracks& rTracks,
+               instruments::Instruments& rInstruments,
+               MusicDeviceContainer& rMusicDeviceContainer);
+   void createConnection(const EventIdExt& from,
+                         const EventDestination& to) noexcept;
    void removeConnection(const EventIdExt& eventIdExt) noexcept;
+
 private:
    session::Tracks& m_rTracks;
+   instruments::Instruments& m_rInstruments;
    MusicDeviceContainer& m_rMusicDeviceContainer;
    std::unordered_map<EventIdExt, EventDestination> m_map;
    void handlePressReleaseType(const EventIdExt& event,
@@ -35,29 +47,54 @@ private:
    void handleRelativeValueType(const EventIdExt& event,
                                 const RelativeValueType& value) noexcept;
 
-   void handlePressReleaseDirect(const EventDestination& eventDestination,
-                                 const PressReleaseType& value) noexcept;
-   void sendNoteOnOff(int note, const EventDestination& eventDestination,
-                      const PressReleaseType& value) noexcept;
+   void handlePressRelease(const EventDestination& eventDestination,
+                           const PressReleaseType& value) noexcept;
+   void handleWidgetCoordPressRelease(const WidgetCoord& widgetCoord,
+                                      const EventDestination& eventDestination,
+                                      const PressReleaseType& value) noexcept;
+   void handleNotePressRelease(int note,
+                               const EventDestination& eventDestination,
+                               const PressReleaseType& value) noexcept;
 
-   void handleContinousValueDirect(const EventDestination& eventDestination,
-                                   const ContinousValueType& value) noexcept;
+   void handleContinousValue(const EventDestination& eventDestination,
+                             const ContinousValueType& value) noexcept;
    void sendMPEContinousValue(int note,
                               const EventDestination& eventDestination,
                               const ContinousValueType& value) noexcept;
-   void handleRelativeValueDirect(const EventDestination& eventDestination,
-                                   const RelativeValueType& value) noexcept;
-   void sendMPERelativeValue(int note,
+   void sendMPEIncrementValue(int note,
                               const EventDestination& eventDestination,
-                              const RelativeValueType& value) noexcept;
-   void handleIncrementDirect(const EventDestination& eventDestination,
-                              const IncrementType& increment) noexcept;
+                              const IncrementType& value) noexcept;
+
+   void handleRelativeValue(const EventDestination& eventDestination,
+                            const RelativeValueType& value) noexcept;
+   void sendMPERelativeValue(int note, const EventDestination& eventDestination,
+                             const RelativeValueType& value) noexcept;
+   void handleIncrement(const EventDestination& eventDestination,
+                        const IncrementType& increment) noexcept;
+
+   void playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
+                          const EventDestination::Note& note,
+                          const PressReleaseType& value) noexcept;
+   void setParameterOnDrumKit(const EventDestination::DrumKit& drumKit,
+                              const EventDestination::Parameter& parameter,
+                              const PressReleaseType& value) noexcept;
+   void setParameterOnMelodic(const EventDestination::Melodic& melodixc,
+                              const EventDestination::Parameter& parameter,
+                              const PressReleaseType& value) noexcept;
+   void playNoteOnMusicDevice(const EventDestination::MusicDevice& musicDevice,
+                          const EventDestination::Note& note,
+                          const PressReleaseType& value) noexcept;
+   void setParameterOnMusicDevice(const EventDestination::MusicDevice& musicDevice,
+                              const EventDestination::Parameter& parameter,
+                              const PressReleaseType& value) noexcept;
 
    CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
    CB_SIGNAL(GotErased, const EventIdExt&);
 
    void printMap() const noexcept;
    void retriggerCallbacks();
+
+   static constexpr int ANY = -1;
 };
 
 }   // namespace controller

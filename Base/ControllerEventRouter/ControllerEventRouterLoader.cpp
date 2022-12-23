@@ -48,7 +48,7 @@ void EventRoutes::emitEntry(const MapEntry& e)
                              e.to.voiceIdx);
                       },
                   },
-                  e.to.endpoint);
+                  e.to.controlType);
            },
            [&e, this](const Note& note) {
               mpark::visit(
@@ -74,7 +74,7 @@ void EventRoutes::emitEntry(const MapEntry& e)
                              e.to.mdId, e.to.voiceIdx);
                       },
                   },
-                  e.to.endpoint);
+                  e.to.controlType);
            },
            [](auto&&) {}},
        e.from.eventId.widgetCoord);

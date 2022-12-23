@@ -331,7 +331,7 @@ RtServer::RtServer(
                             spdlog::error("Unhandled path in "
                                           "controller-event-connection");
                          }},
-                     to.endpoint);
+                     to.controlType);
               },
               [&](const base::musicDevice::controller::Note &note) {
                  mpark::visit(
@@ -361,7 +361,7 @@ RtServer::RtServer(
                             spdlog::error("Unhandled path in "
                                           "controller-event-connection");
                          }},
-                     to.endpoint);
+                     to.controlType);
               },
           },
           from.eventId.widgetCoord);

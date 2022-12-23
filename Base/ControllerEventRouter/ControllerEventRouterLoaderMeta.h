@@ -52,7 +52,7 @@ inline auto registerMembers<base::musicDevice::controller::loader::EventDestinat
    return members(
       member("mdId", &base::musicDevice::controller::loader::EventDestinationL::mdId),
       member("voiceIdx", &base::musicDevice::controller::loader::EventDestinationL::voiceIdx),
-      member("endpoint", &base::musicDevice::controller::loader::EventDestinationL::endpoint));
+      member("controlType", &base::musicDevice::controller::loader::EventDestinationL::controlType));
 }
 
 template<>

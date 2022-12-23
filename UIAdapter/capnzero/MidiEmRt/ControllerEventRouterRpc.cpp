@@ -28,7 +28,7 @@ void ControllerEventRouterRpc::connectNotes2Notes(
 
    from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
    to.voiceIdx  = voiceIdx;
-   to.endpoint  = controller::EventDestination::Note{64};   // TODO
+   to.controlType  = controller::EventDestination::Note{64};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
 }
 
@@ -51,7 +51,7 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
       const auto& paramDescr =
           it->second->description()->soundSection->parameterDescr(voiceIdx,
                                                                   parameterIdx);
-      to.endpoint = controller::EventDestination::Parameter{
+      to.controlType = controller::EventDestination::Parameter{
           parameterIdx,
           static_cast<controller::ParameterDestination>(paramFunc), true,
           paramDescr.type == description::sound::Parameter::Type::List,
@@ -80,7 +80,7 @@ void ControllerEventRouterRpc::connectWidget2Notes(
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
    to.voiceIdx = voiceIdx;
-   to.endpoint = controller::EventDestination::Note{65};   // TODO
+   to.controlType = controller::EventDestination::Note{65};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
 }
 
@@ -106,7 +106,7 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
       const auto& paramDescr =
           it->second->description()->soundSection->parameterDescr(voiceIdx,
                                                                   parameterIdx);
-      to.endpoint = controller::EventDestination::Parameter{
+      to.controlType = controller::EventDestination::Parameter{
           parameterIdx,
           static_cast<controller::ParameterDestination>(paramFunc), true,
           paramDescr.type == description::sound::Parameter::Type::List,

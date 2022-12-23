@@ -15,7 +15,7 @@ TEST(TestSerializations, test)
    controller::loader::EventDestinationL to;
    to.mdId = MusicDeviceId("type", "port");
    to.voiceIdx = 2;
-   to.endpoint = controller::EventDestination::ParameterBase{5, controller::ParameterDestination::LFOWaveform};
+   to.controlType = controller::EventDestination::ParameterBase{5, controller::ParameterDestination::LFOWaveform};
    const auto k = meta::serialize(to);
 
    const auto l = meta::serialize(controller::loader::EventRoutes::MapEntry{from, to});

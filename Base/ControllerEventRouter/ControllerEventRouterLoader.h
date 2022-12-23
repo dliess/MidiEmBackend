@@ -30,16 +30,16 @@ struct EventDestinationL
 {
    MusicDeviceId mdId;
    int voiceIdx;
-   using Endpoint = mpark::variant<mpark::monostate, EventDestination::Note,
+   using ControlType = mpark::variant<mpark::monostate, EventDestination::Note,
                                    EventDestination::ParameterBase>;
-   Endpoint endpoint;
+   ControlType controlType;
 };
 
 inline bool operator==(const EventDestinationL& lhs,
                        const EventDestinationL& rhs)
 {
    return lhs.mdId == rhs.mdId && lhs.voiceIdx == rhs.voiceIdx &&
-          lhs.endpoint == rhs.endpoint;
+          lhs.controlType == rhs.controlType;
 }
 
 class EventRoutes
