@@ -65,9 +65,34 @@ void MelodicInstrument::pitchBend(float value) noexcept
    }
 }
 
+void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
+                                                float increment,
+                                                bool rr) noexcept
+{
+   // TODO: this is faulty
+   for (auto& compositeVoice : m_voices)
+   {
+      auto& voice = compositeVoice.voices[compPart];
+      if (voice.pSoundDevice)
+      {
+         voice.pSoundDevice->incrementParameterValue(
+             voice.voiceIndex, parameterId, increment, rr);
+      }
+   }
+}
+
+float MelodicInstrument::getParameterValue(
+    int compPart, int parameterIdx,
+    musicDevice::sound::ParameterPart parameterPart) const noexcept
+{
+   return 0;
+   // TODO
+}
+
 void MelodicInstrument::setParameterValue(int compPart, int parameterId,
                                           float value) noexcept
 {
+   // TODO: this is faulty
    for (auto& compositeVoice : m_voices)
    {
       auto& voice = compositeVoice.voices[compPart];
@@ -75,20 +100,6 @@ void MelodicInstrument::setParameterValue(int compPart, int parameterId,
       {
          voice.pSoundDevice->setParameterValue(voice.voiceIndex, parameterId,
                                                value);
-      }
-   }
-}
-
-void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
-                                                float increment) noexcept
-{
-   for (auto& compositeVoice : m_voices)
-   {
-      auto& voice = compositeVoice.voices[compPart];
-      if (voice.pSoundDevice)
-      {
-         voice.pSoundDevice->incrementParameterValue(voice.voiceIndex,
-                                                     parameterId, increment);
       }
    }
 }

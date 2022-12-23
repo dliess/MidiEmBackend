@@ -51,6 +51,43 @@ void EventRouter::removeConnection(const EventIdExt& eventIdExt) noexcept
    emitGotErased(eventIdExt);
 }
 
+template <typename Dev, typename... MDCoords>
+void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  const PressReleaseType& value, MDCoords... mdCoords)
+{
+   if (parameter.isList)
+   {
+      if (value.value > 0)
+      {
+         const float incr = parameter.upwards ? value.value : -value.value;
+         dev.incrementParameterValue(mdCoords..., parameter.id, incr, true);
+      }
+   }
+   else
+   {
+      if (value.value > 0)
+      {
+         const float actualVal =
+             dev.getParameterValue(mdCoords..., parameter.id);
+         if (std::fabs(actualVal - parameter.zeroVal) <
+             std::numeric_limits<float>::epsilon())
+         {
+            if (parameter.valueAtPress)
+            {
+               dev.setParameterValue(mdCoords..., parameter.id,
+                                     *parameter.valueAtPress);
+            }
+         }
+         else
+         {
+            parameter.valueAtPress =
+                dev.getParameterValue(mdCoords..., parameter.id);
+            dev.setParameterValue(mdCoords..., parameter.id, parameter.zeroVal);
+         }
+      }
+   }
+}
+
 void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                                          const PressReleaseType& value) noexcept
 {
@@ -210,7 +247,7 @@ void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
                                     const EventDestination::Note& note,
                                     const PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr){
+   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
       if (value.value > 0)
       {
          kitInstr.noteOn(drumKit.voiceIdx, note.value, value.value);
@@ -218,7 +255,7 @@ void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
       else
       {
          kitInstr.noteOff(drumKit.voiceIdx, note.value, -value.value);
-      } 
+      }
    });
 }
 
@@ -227,8 +264,9 @@ void EventRouter::setParameterOnDrumKit(
     const EventDestination::Parameter& parameter,
     const PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrument(drumKit.uuid, [](auto& kitInstr){
-      //TODO
+   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
+      setParameter(kitInstr, parameter, value, drumKit.voiceIdx,
+                   drumKit.componentIdx);
    });
 }
 
@@ -237,8 +275,8 @@ void EventRouter::setParameterOnMelodic(
     const EventDestination::Parameter& parameter,
     const PressReleaseType& value) noexcept
 {
-   m_rInstruments.withMelodicInstrument(melodic.uuid, [](auto& melodicInstr){
-      //TODO
+   m_rInstruments.withMelodicInstrument(melodic.uuid, [&](auto& melodicInstr) {
+      setParameter(melodicInstr, parameter, value, melodic.componentIdx);
    });
 }
 
@@ -271,42 +309,8 @@ void EventRouter::setParameterOnMusicDevice(
    const auto mdIter = m_rMusicDeviceContainer.find(musicDevice.uuid);
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
-      if (parameter.isList)
-      {
-         if (value.value > 0)
-         {
-            const float incr = parameter.upwards ? value.value : -value.value;
-            mdIter->second->soundHandler->incrementParameterValue(
-                musicDevice.voiceIdx, parameter.id, incr, true);
-         }
-      }
-      else
-      {
-         if (value.value > 0)
-         {
-            const float actualVal =
-                mdIter->second->soundHandler->getParameterValue(
-                    musicDevice.voiceIdx, parameter.id);
-            if (std::fabs(actualVal - parameter.zeroVal) <
-                std::numeric_limits<float>::epsilon())
-            {
-               if (parameter.valueAtPress)
-               {
-                  mdIter->second->soundHandler->setParameterValue(
-                      musicDevice.voiceIdx, parameter.id,
-                      *parameter.valueAtPress);
-               }
-            }
-            else
-            {
-               parameter.valueAtPress =
-                   mdIter->second->soundHandler->getParameterValue(
-                       musicDevice.voiceIdx, parameter.id);
-               mdIter->second->soundHandler->setParameterValue(
-                   musicDevice.voiceIdx, parameter.id, parameter.zeroVal);
-            }
-         }
-      }
+      setParameter(*mdIter->second->soundHandler, parameter, value,
+                   musicDevice.voiceIdx);
    }
 }
 

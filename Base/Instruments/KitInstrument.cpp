@@ -5,15 +5,14 @@
 using namespace base::instruments;
 
 KitInstrument::KitInstrument(std::string name) noexcept :
-    m_name(std::move(name)),
-    m_compositeSounds(16)
+    m_name(std::move(name)), m_compositeSounds(16)
 {
 }
 
 void KitInstrument::noteOn(int note, float velocity) noexcept
 {
    auto si = toSoundIndex(note);
-   if(si)
+   if (si)
    {
       noteOn(*si, 64, velocity);
    }
@@ -22,7 +21,7 @@ void KitInstrument::noteOn(int note, float velocity) noexcept
 void KitInstrument::noteOff(int note, float velocity) noexcept
 {
    auto si = toSoundIndex(note);
-   if(si)
+   if (si)
    {
       noteOff(*si, 64, velocity);
    }
@@ -52,10 +51,31 @@ void KitInstrument::noteOff(int soundIndex, int note, float velocity) noexcept
    }
 }
 
+void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
+                                            int parameterIdx, float increment,
+                                            bool roundRobin) noexcept
+{
+   // TODO
+}
+
+float KitInstrument::getParameterValue(
+    int soundIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterPart parameterPart) const noexcept
+{
+   // TODO
+   return 0;
+}
+
+void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
+                                      int parameterIdx, float value) noexcept
+{
+   // TODO
+}
+
 std::optional<int> KitInstrument::toSoundIndex(int note) const noexcept
 {
    const int noteAdjusted = note - 64;
-   if(0 <= noteAdjusted && noteAdjusted < m_compositeSounds.size())
+   if (0 <= noteAdjusted && noteAdjusted < m_compositeSounds.size())
    {
       return noteAdjusted;
    }
