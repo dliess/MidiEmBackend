@@ -4,11 +4,11 @@
 | :---               |    :----:                      |          :---:                                  | :---: |
 | W - Press-Release  | wcoord --(voiceId)-> drumvoice | wcoord --(voiceId, compId, paramId)-> drumparam | handlePressRelease |
 | W - Absolute       |    X                           | wcoord --(voiceId, compId, paramId)-> drumparam | handleContinousValue |
-| W - Relative       |    X                           | wcoord --(voiceId, compId, paramId)-> drumparam |
+| W - Relative       |    X                           | wcoord --(voiceId, compId, paramId)-> drumparam | handleRelativeValue |
 | W - Incremental    |    X                           | wcoord --(voiceId, compId, paramId)-> drumparam | handleIncrement |
 | N - Press-Release  | note --(voiceId)-> drumvoice   | note --(voiceId, compId, paramId)-> drumparam   | handlePressRelease |
 | N - Absolute       |    X                           | note --(voiceId, compId, paramId)-> drumparam   | handleContinousValue |
-| N - Relative       |    X                           | note --(voiceId, compId, paramId)-> drumparam   |
+| N - Relative       |    X                           | note --(voiceId, compId, paramId)-> drumparam   | handleRelativeValue |
 | N - Incremental    |    X                           | note --(voiceId, compId, paramId)-> drumparam   | handleIncrement |
 | AW - Press-Release | wcoord -> drumvoice            |      X                                          | handleAnyWidgetCoordPressRelease |
 | AW - Absolute      |    X                           |      X                                          | X |
@@ -25,11 +25,11 @@
 | :---               |    :----:      |          :---:                            | :---: |
 | W - Press-Release  | X              | wcoord --(compId, paramId)-> MKparam      | handlePressRelease |
 | W - Absolute       |    X           | wcoord --(compId, paramId)-> MKparam      | handleContinousValue |
-| W - Relative       |    X           | wcoord --(compId, paramId)-> MKparam      |
+| W - Relative       |    X           | wcoord --(compId, paramId)-> MKparam      | handleRelativeValue |
 | W - Incremental    |    X           | wcoord --(compId, paramId)-> MKparam      | handleIncrement |
 | N - Press-Release  | X              | note --(compId, paramId)-> MKparam        | handlePressRelease |
 | N - Absolute       |    X           | note --(compId, paramId)-> MKparam        | handleContinousValue |
-| N - Relative       |    X           | note --(compId, paramId)-> MKparam        |
+| N - Relative       |    X           | note --(compId, paramId)-> MKparam        | handleRelativeValue |
 | N - Incremental    |    X           | note --(compId, paramId)-> MKparam        | handleIncrement |
 | AW - Press-Release | X              |      X                                    | handleAnyWidgetCoordPressRelease |
 | AW - Absolute      |     X          |      X                                    | X |
@@ -37,8 +37,8 @@
 | AW - Incremental   |     X          |      X                                    | X |
 | AN - Press-Release | note -> MKNote |    X                                      | handleAnyNotePressRelease |
 | AN - Absolute      |      X         | note --(compId, paramId)-> MKparamPerNote | sendMPEContinousValue |
-| AN - Relative      |      X         | note --(compId, paramId)-> MKparamPerNote |  |
-| AN - Incremental   |      X         | note --(compId, paramId)-> MKparamPerNote |  |
+| AN - Relative      |      X         | note --(compId, paramId)-> MKparamPerNote | sendMPERelativeValue |
+| AN - Incremental   |      X         | note --(compId, paramId)-> MKparamPerNote | sendMPEIncrementValue |
 
 
 
@@ -46,11 +46,11 @@
 | :---               |    :----:                                    |          :---:                      | :---: |
 | W - Press-Release  | wcoord --(voiceId)-> play-defaultpitch-voice | wcoord --(voiceId, paramId)-> param | handlePressRelease |
 | W - Absolute       |    X                                         | wcoord --(voiceId, paramId)-> param | handleContinousValue |
-| W - Relative       |    X                                         | wcoord --(voiceId, paramId)-> param |
+| W - Relative       |    X                                         | wcoord --(voiceId, paramId)-> param | handleRelativeValue |
 | W - Incremental    |    X                                         | wcoord --(voiceId, paramId)-> param | handleIncrement |
 | N - Press-Release  | note --(voiceId)-> play-defaultpitch-voice   | note --(voiceId, paramId)-> param   | handlePressRelease |
 | N - Absolute       |    X                                         | note --(voiceId, paramId)-> param   | handleContinousValue |
-| N - Relative       |    X                                         | note --(voiceId, paramId)-> param   |
+| N - Relative       |    X                                         | note --(voiceId, paramId)-> param   | handleRelativeValue |
 | N - Incremental    |    X                                         | note --(voiceId, paramId)-> param   | handleIncrement |
 | AW - Press-Release |     X                                        |      X                              | handleAnyWidgetCoordPressRelease |
 | AW - Absolute      |     X                                        |      X                              | X |
