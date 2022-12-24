@@ -44,6 +44,9 @@ public:
    
    inline size_t size() const noexcept;
 
+   template<typename CB>
+   void withSoundHandler(const util::Identifiable::UUID& uuid, CB&& cb);
+
    CB_SIGNAL(AboutToAdd, const MusicDevice&);
    CB_SIGNAL(Added, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(AboutToRemove, std::shared_ptr<MusicDevice>);

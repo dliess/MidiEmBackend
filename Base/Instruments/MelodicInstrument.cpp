@@ -81,12 +81,28 @@ void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
    }
 }
 
+void MelodicInstrument::incrementParameterValue(int note, int compPart,
+                                                int parameterId,
+                                                float increment,
+                                                bool rr) noexcept
+{
+   // TODO: MPR
+}
+
 float MelodicInstrument::getParameterValue(
     int compPart, int parameterIdx,
     musicDevice::sound::ParameterPart parameterPart) const noexcept
 {
    return 0;
    // TODO
+}
+
+float MelodicInstrument::getParameterValue(
+    int note, int compPart, int parameterIdx,
+    musicDevice::sound::ParameterPart parameterPart) const noexcept
+{
+   return 0;
+   // TODO MPE
 }
 
 void MelodicInstrument::setParameterValue(int compPart, int parameterId,
@@ -102,6 +118,30 @@ void MelodicInstrument::setParameterValue(int compPart, int parameterId,
                                                value);
       }
    }
+}
+
+void MelodicInstrument::setParameterValue(int note, int compPart,
+                                          int parameterId, float value) noexcept
+{
+   // TODO: this is the MPE version
+}
+
+float MelodicInstrument::normalizePercentageValue(
+    int compPart, int parameterId,
+    musicDevice::sound::ParameterPart parameterPart,
+    float percentageValue) const noexcept
+{
+   // TODO
+   return 0;
+}
+
+float MelodicInstrument::normalizePercentageValue(
+    int note, int compPart, int parameterId,
+    musicDevice::sound::ParameterPart parameterPart,
+    float percentageValue) const noexcept
+{
+   // TODO MPE
+   return 0;
 }
 
 MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept

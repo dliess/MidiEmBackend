@@ -36,11 +36,27 @@ public:
    void pitchBend(float value) noexcept;
    void incrementParameterValue(int compPart, int parameterId, float increment,
                                 bool roundRobin = false) noexcept;
+   void incrementParameterValue(int note, int compPart, int parameterId, float increment,
+                                bool roundRobin = false) noexcept;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
            musicDevice::sound::ParameterPart::Commanded) const noexcept;
+   [[nodiscard]] float getParameterValue(
+       int note, int compPart, int parameterIdx,
+       musicDevice::sound::ParameterPart parameterPart =
+           musicDevice::sound::ParameterPart::Commanded) const noexcept;
    void setParameterValue(int compPart, int parameterId, float value) noexcept;
+   void setParameterValue(int note, int compPart, int parameterId,
+                          float value) noexcept;
+   [[nodiscard]] float normalizePercentageValue(
+       int compPart, int parameterId,
+       musicDevice::sound::ParameterPart parameterPart,
+       float percentageValue) const noexcept;
+   [[nodiscard]] float normalizePercentageValue(
+       int note, int compPart, int parameterId,
+       musicDevice::sound::ParameterPart parameterPart,
+       float percentageValue) const noexcept;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;

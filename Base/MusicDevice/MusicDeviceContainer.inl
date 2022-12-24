@@ -8,76 +8,99 @@
 
 namespace base::musicDevice
 {
-
 inline MusicDeviceContainer::MusicDeviceContainer() : Super()
 {
-   onAdded([this](const std::shared_ptr<MusicDevice>& ptr){
-      if(ptr->soundHandler)
+   onAdded([this](const std::shared_ptr<MusicDevice>& ptr) {
+      if (ptr->soundHandler)
       {
-         const auto uuid = ptr->id();
+         const auto uuid                   = ptr->id();
          const std::string musicDeviceName = ptr->deviceId().deviceName;
-         ptr->soundHandler->onSoundDevParamChanged([this, uuid](int voiceId, int paramId, float commanded, float actual){
+         ptr->soundHandler->onSoundDevParamChanged([this, uuid](int voiceId,
+                                                                int paramId,
+                                                                float commanded,
+                                                                float actual) {
             emitSoundDevParamChanged(uuid, voiceId, paramId, commanded, actual);
          });
-         ptr->soundHandler->onLFOWaveformChanged([this, uuid](int voiceId, int paramId, sound::lfo::Waveform waveform){
-            emitLFOWaveformChanged(uuid, voiceId, paramId, waveform);
-         });
-         ptr->soundHandler->onLFOAmplitudeChanged([this, uuid](int voiceId, int paramId, float amplitude){
-            emitLFOAmplitudeChanged(uuid, voiceId, paramId, amplitude);
-         });
-         ptr->soundHandler->onLFOFrequencyChanged([this, uuid](int voiceId, int paramId, float frequency){
-            emitLFOFrequencyChanged(uuid, voiceId, paramId, frequency);
-         });
-         ptr->soundHandler->onLFOMultiplierExpChanged([this, uuid](int voiceId, int paramId, uint32_t multiplierExp){
-            emitLFOMultiplierExpChanged(uuid, voiceId, paramId, multiplierExp);
-         });
-         ptr->soundHandler->presetHandler().onPresetChanged([this, musicDeviceName](int engineIdx, const std::string& presetName){
-            emitEnginePresetChanged(musicDeviceName, engineIdx, presetName);
-         });
-         ptr->soundHandler->onActualPresetChanged([this, uuid](int voiceIdx, const std::string& presetName){
-            emitActualPresetChanged(uuid, voiceIdx, presetName);
-         });
+         ptr->soundHandler->onLFOWaveformChanged(
+             [this, uuid](int voiceId, int paramId,
+                          sound::lfo::Waveform waveform) {
+                emitLFOWaveformChanged(uuid, voiceId, paramId, waveform);
+             });
+         ptr->soundHandler->onLFOAmplitudeChanged(
+             [this, uuid](int voiceId, int paramId, float amplitude) {
+                emitLFOAmplitudeChanged(uuid, voiceId, paramId, amplitude);
+             });
+         ptr->soundHandler->onLFOFrequencyChanged(
+             [this, uuid](int voiceId, int paramId, float frequency) {
+                emitLFOFrequencyChanged(uuid, voiceId, paramId, frequency);
+             });
+         ptr->soundHandler->onLFOMultiplierExpChanged(
+             [this, uuid](int voiceId, int paramId, uint32_t multiplierExp) {
+                emitLFOMultiplierExpChanged(uuid, voiceId, paramId,
+                                            multiplierExp);
+             });
+         ptr->soundHandler->presetHandler().onPresetChanged(
+             [this, musicDeviceName](int engineIdx,
+                                     const std::string& presetName) {
+                emitEnginePresetChanged(musicDeviceName, engineIdx, presetName);
+             });
+         ptr->soundHandler->onActualPresetChanged(
+             [this, uuid](int voiceIdx, const std::string& presetName) {
+                emitActualPresetChanged(uuid, voiceIdx, presetName);
+             });
          assert(ptr->soundHandler->arpeggiators().size());
-         for(int voiceIdx = 0; voiceIdx < ptr->soundHandler->arpeggiators().size(); ++voiceIdx)
+         for (int voiceIdx = 0;
+              voiceIdx < ptr->soundHandler->arpeggiators().size(); ++voiceIdx)
          {
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onBypassChanged([this, uuid, voiceIdx](bool on){
-               emitArpBypassChanged(uuid, voiceIdx, on);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeTypeChanged([this, uuid, voiceIdx](base::arp::RangeType type){
-               emitArpRangeTypeChanged(uuid, voiceIdx, type);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeChanged([this, uuid, voiceIdx](int range){
-               emitArpRangeChanged(uuid, voiceIdx, range);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onGateFillChanged([this, uuid, voiceIdx](float value){
-               emitArpGateFillChanged(uuid, voiceIdx, value);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onStepLengthChanged([this, uuid, voiceIdx](float value){
-               emitArpStepLengthChanged(uuid, voiceIdx, value);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onAlgorithmChanged([this, uuid, voiceIdx](base::arp::Algorithm algorithm){
-               emitArpAlgorithmChanged(uuid, voiceIdx, algorithm);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onHoldNotesChanged([this, uuid, voiceIdx](bool on){
-               emitArpHoldNotesChanged(uuid, voiceIdx, on);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onFeedModeChanged([this, uuid, voiceIdx](base::arp::FeedMode feedMode){
-               emitArpFeedModeChanged(uuid, voiceIdx, feedMode);
-            });
-            ptr->soundHandler->arpeggiators().at(voiceIdx).onSeqSizeChanged([this, uuid, voiceIdx](int seqSize){
-               emitArpSeqSizeChanged(uuid, voiceIdx, seqSize);
-            });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onBypassChanged(
+                [this, uuid, voiceIdx](bool on) {
+                   emitArpBypassChanged(uuid, voiceIdx, on);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeTypeChanged(
+                [this, uuid, voiceIdx](base::arp::RangeType type) {
+                   emitArpRangeTypeChanged(uuid, voiceIdx, type);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeChanged(
+                [this, uuid, voiceIdx](int range) {
+                   emitArpRangeChanged(uuid, voiceIdx, range);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onGateFillChanged(
+                [this, uuid, voiceIdx](float value) {
+                   emitArpGateFillChanged(uuid, voiceIdx, value);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onStepLengthChanged(
+                [this, uuid, voiceIdx](float value) {
+                   emitArpStepLengthChanged(uuid, voiceIdx, value);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onAlgorithmChanged(
+                [this, uuid, voiceIdx](base::arp::Algorithm algorithm) {
+                   emitArpAlgorithmChanged(uuid, voiceIdx, algorithm);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onHoldNotesChanged(
+                [this, uuid, voiceIdx](bool on) {
+                   emitArpHoldNotesChanged(uuid, voiceIdx, on);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onFeedModeChanged(
+                [this, uuid, voiceIdx](base::arp::FeedMode feedMode) {
+                   emitArpFeedModeChanged(uuid, voiceIdx, feedMode);
+                });
+            ptr->soundHandler->arpeggiators().at(voiceIdx).onSeqSizeChanged(
+                [this, uuid, voiceIdx](int seqSize) {
+                   emitArpSeqSizeChanged(uuid, voiceIdx, seqSize);
+                });
          }
       }
-      if(ptr->controllerHandler)
+      if (ptr->controllerHandler)
       {
          const auto uuid = ptr->id();
-         ptr->controllerHandler->onEventReceived([this, uuid](const controller::Event& event) {
-            emitControllerDevEventOccured(uuid, event);
-         });
-         ptr->controllerHandler->onEventReceivedUI([this, uuid](const controller::Event& event) {
-            emitControllerDevEventOccuredUI(uuid, event);
-         });
+         ptr->controllerHandler->onEventReceived(
+             [this, uuid](const controller::Event& event) {
+                emitControllerDevEventOccured(uuid, event);
+             });
+         ptr->controllerHandler->onEventReceivedUI(
+             [this, uuid](const controller::Event& event) {
+                emitControllerDevEventOccuredUI(uuid, event);
+             });
       }
    });
 }
@@ -116,7 +139,7 @@ inline MusicDeviceContainer::iterator MusicDeviceContainer::begin() noexcept
 }
 
 inline MusicDeviceContainer::const_iterator MusicDeviceContainer::begin()
-   const noexcept
+    const noexcept
 {
    return Super::begin();
 }
@@ -127,28 +150,29 @@ inline MusicDeviceContainer::iterator MusicDeviceContainer::end() noexcept
 }
 
 inline MusicDeviceContainer::const_iterator MusicDeviceContainer::end()
-   const noexcept
+    const noexcept
 {
    return Super::end();
 }
 
 inline MusicDeviceContainer::iterator MusicDeviceContainer::find(
-   const MusicDeviceContainer::key_type& key) noexcept
+    const MusicDeviceContainer::key_type& key) noexcept
 {
    return Super::find(key);
 }
 
 inline MusicDeviceContainer::const_iterator MusicDeviceContainer::find(
-   const MusicDeviceContainer::key_type& key) const noexcept
+    const MusicDeviceContainer::key_type& key) const noexcept
 {
    return Super::find(key);
 }
 
-inline MusicDeviceContainer::const_iterator MusicDeviceContainer::findByDeviceId(const MusicDeviceId& mdId) const noexcept
+inline MusicDeviceContainer::const_iterator
+MusicDeviceContainer::findByDeviceId(const MusicDeviceId& mdId) const noexcept
 {
-   for(auto iter = Super::begin(); iter != Super::end(); ++iter)
+   for (auto iter = Super::begin(); iter != Super::end(); ++iter)
    {
-      if(iter->second.get()->deviceId() == mdId)
+      if (iter->second.get()->deviceId() == mdId)
       {
          return iter;
       }
@@ -156,11 +180,12 @@ inline MusicDeviceContainer::const_iterator MusicDeviceContainer::findByDeviceId
    return Super::end();
 }
 
-inline MusicDeviceContainer::iterator MusicDeviceContainer::findByDeviceId(const MusicDeviceId& mdId) noexcept
+inline MusicDeviceContainer::iterator MusicDeviceContainer::findByDeviceId(
+    const MusicDeviceId& mdId) noexcept
 {
-   for(auto iter = Super::begin(); iter != Super::end(); ++iter)
+   for (auto iter = Super::begin(); iter != Super::end(); ++iter)
    {
-      if(iter->second.get()->deviceId() == mdId)
+      if (iter->second.get()->deviceId() == mdId)
       {
          return iter;
       }
@@ -178,25 +203,26 @@ MusicDeviceContainer::insert(const value_type& val)
 }
 
 inline MusicDeviceContainer::size_type MusicDeviceContainer::erase(
-   const key_type& k)
+    const key_type& k)
 {
    auto it = find(k);
-   if(it != end())
+   if (it != end())
    {
       emitAboutToRemove(it->second);
    }
    return Super::erase(k);
 }
 
-inline MusicDeviceContainer::size_type MusicDeviceContainer::eraseByDeviceId(const MusicDeviceId& mdId)
+inline MusicDeviceContainer::size_type MusicDeviceContainer::eraseByDeviceId(
+    const MusicDeviceId& mdId)
 {
    auto it = findByDeviceId(mdId);
-   if(it != end())
+   if (it != end())
    {
       emitAboutToRemove(it->second);
       return Super::erase(it->first);
    }
-   return 0; // Number of elements removed
+   return 0;   // Number of elements removed
 }
 
 inline size_t MusicDeviceContainer::size() const noexcept
@@ -204,6 +230,17 @@ inline size_t MusicDeviceContainer::size() const noexcept
    return Super::size();
 }
 
-} // namespace base::musicDevice
+template <typename CB>
+void MusicDeviceContainer::withSoundHandler(const util::Identifiable::UUID& uuid,
+                                            CB&& cb)
+{
+   auto mdIter = find(uuid);
+   if (mdIter != end() && mdIter->second->soundHandler)
+   {
+      cb(*mdIter->second->soundHandler);
+   }
+}
+
+}   // namespace base::musicDevice
 
 #endif

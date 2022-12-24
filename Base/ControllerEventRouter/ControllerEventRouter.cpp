@@ -102,6 +102,58 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    }
 }
 
+template <typename Dev, typename... MDCoords>
+void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  const ContinousValueType& value, MDCoords... mdCoords)
+{
+   const float val = dev.normalizePercentageValue(
+       mdCoords..., parameter.id,
+       base::musicDevice::sound::ParameterPart::Commanded, value.value);
+   const float actualVal = dev.getParameterValue(mdCoords..., parameter.id);
+   const float diff      = std::fabs(actualVal - val);
+   if ((diff != 0) && (diff < 0.02 || diff >= 1.0))
+   {
+      dev.setParameterValue(mdCoords..., parameter.id, val);
+   }
+}
+
+template <typename Dev, typename... MDCoords>
+void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  const IncrementType& increment, MDCoords... mdCoords)
+{
+   float incr = 0;
+   if (parameter.isList)
+   {
+      const int accIncr          = increment.value + parameter.storedIncrements;
+      const int incrForOneStep   = increment.resolution / 12;
+      incr                       = accIncr / incrForOneStep;
+      parameter.storedIncrements = accIncr % incrForOneStep;
+   }
+   else
+   {   // TODO: highres mode
+      incr = float(increment.value) / float(increment.resolution);
+   }
+   dev.incrementParameterValue(mdCoords..., parameter.id, incr, false);
+}
+
+template <typename Dev, typename... MDCoords>
+void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  const RelativeValueType& value, MDCoords... mdCoords)
+{
+   float valueToSet = value.value;
+   if (!parameter.valueAtPress)
+   {
+      parameter.valueAtPress.emplace<float>(
+          dev.getParameterValue(mdCoords..., parameter.id));
+   }
+   valueToSet += parameter.valueAtPress.value();
+   dev.setParameterValue(mdCoords..., parameter.id, valueToSet);
+   if (0 == value.value)
+   {
+      parameter.valueAtPress = std::nullopt;
+   }
+}
+
 void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                                          const PressReleaseType& value) noexcept
 {
@@ -291,12 +343,11 @@ void EventRouter::playNoteOnMusicDevice(
     const EventDestination::MusicDevice& musicDevice,
     const EventDestination::Note& note, const PressReleaseType& value) noexcept
 {
-   const auto mdIter = m_rMusicDeviceContainer.find(musicDevice.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      playNoteOnOff(*mdIter->second->soundHandler, note.value, value.value,
-                    musicDevice.voiceIdx);
-   }
+   m_rMusicDeviceContainer.withSoundHandler(
+       musicDevice.uuid, [&](auto& soundHandler) {
+          playNoteOnOff(soundHandler, note.value, value.value,
+                        musicDevice.voiceIdx);
+       });
 }
 
 void EventRouter::setParameterOnMusicDevice(
@@ -305,12 +356,10 @@ void EventRouter::setParameterOnMusicDevice(
     const PressReleaseType& value) noexcept
 
 {
-   const auto mdIter = m_rMusicDeviceContainer.find(musicDevice.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      setParameter(*mdIter->second->soundHandler, parameter, value,
-                   musicDevice.voiceIdx);
-   }
+   m_rMusicDeviceContainer.withSoundHandler(
+       musicDevice.uuid, [&](auto& soundHandler) {
+          setParameter(soundHandler, parameter, value, musicDevice.voiceIdx);
+       });
 }
 
 void EventRouter::handlePressRelease(const EventDestination& eventDestination,
@@ -437,13 +486,11 @@ void EventRouter::handleAnyNotePressRelease(
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
-                         const auto mdIter =
-                             m_rMusicDeviceContainer.find(musicDevice.uuid);
-                         if (mdIter != m_rMusicDeviceContainer.end() &&
-                             mdIter->second->soundHandler)
-                         {
-                           playNoteOnOff(*mdIter->second->soundHandler, note, value.value, musicDevice.voiceIdx);
-                         }
+                         m_rMusicDeviceContainer.withSoundHandler(
+                             musicDevice.uuid, [&](auto& soundaHandler) {
+                                playNoteOnOff(soundaHandler, note, value.value,
+                                              musicDevice.voiceIdx);
+                             });
                       },
                       [](const EventDestination::Parameter& parameter) {},
                       [](auto&&) {}},
@@ -456,194 +503,233 @@ void EventRouter::handleAnyNotePressRelease(
 void EventRouter::handleContinousValue(const EventDestination& eventDestination,
                                        const ContinousValueType& value) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      mpark::visit(
-          util::overload{
-              [&mdIter, &eventDestination,
-               &value](const EventDestination::Parameter& parameter) {
-                 const float val =
-                     mdIter->second->soundHandler->normalizePercentageValue(
-                         eventDestination.voiceIdx, parameter.id,
-                         sound::ParameterPart::Commanded, value.value);
-                 const float actualVal =
-                     mdIter->second->soundHandler->getParameterValue(
-                         eventDestination.voiceIdx, parameter.id);
-                 const float diff = std::fabs(actualVal - val);
-                 if ((diff != 0) && (diff < 0.02 || diff >= 1.0))
-                 {
-                    mdIter->second->soundHandler->setParameterValue(
-                        eventDestination.voiceIdx, parameter.id, val);
-                 }
-              },
-              [](auto&&) { assert(false); }},
-          eventDestination.controlType);
-   }
-   */
+   mpark::visit(
+       util::overload{
+           [&, this](EventDestination::DrumKit& drumKit) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withKitInstrument(
+                             drumKit.uuid, [&](auto& kitInstr) {
+                                setParameter(kitInstr, parameter, value,
+                                             drumKit.voiceIdx,
+                                             drumKit.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, value,
+                                             melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::MusicDevice& musicDevice) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rMusicDeviceContainer.withSoundHandler(
+                             musicDevice.uuid, [&](auto& soundHandler) {
+                                setParameter(soundHandler, parameter, value,
+                                             musicDevice.voiceIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::sendMPEContinousValue(
     int note, const EventDestination& eventDestination,
     const ContinousValueType& value) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      mpark::visit(
-          util::overload{[&mdIter, &note, &value](
-                             const EventDestination::Parameter& parameter) {
-                            // TODO:
-                            //
-   mdIter->second->soundHandler->setMPEParameterValue(
-                            //     note, parameter.id, value.value);
-                         },
-                         [](auto&&) { assert(false); }},
-          eventDestination.controlType);
-   }
-   */
-}
-
-void EventRouter::sendMPEIncrementValue(
-    int note, const EventDestination& eventDestination,
-    const IncrementType& value) noexcept
-{
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-                */
+   mpark::visit(
+       util::overload{
+           [](EventDestination::DrumKit&) {},
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, value,
+                                             note, melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](EventDestination::MusicDevice&) {}, [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::handleIncrement(const EventDestination& eventDestination,
                                   const IncrementType& increment) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
+   mpark::visit(
+       util::overload{
+           [&, this](EventDestination::DrumKit& drumKit) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withKitInstrument(
+                             drumKit.uuid, [&](auto& kitInstr) {
+                                setParameter(kitInstr, parameter, increment,
+                                             drumKit.voiceIdx,
+                                             drumKit.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, increment,
+                                             melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::MusicDevice& musicDevice) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rMusicDeviceContainer.withSoundHandler(
+                             musicDevice.uuid, [&](auto& soundHandler) {
+                                setParameter(soundHandler, parameter, increment,
+                                             musicDevice.voiceIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](auto&&) {}},
+       eventDestination.endpoint);
+}
 
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      mpark::visit(
-          util::overload{
-              [&mdIter, &eventDestination,
-               &increment](const EventDestination::Parameter& parameter) {
-                 float incr = 0;
-                 if (parameter.isList)
-                 {
-                    const int accIncr =
-                        increment.value + parameter.storedIncrements;
-                    const int incrForOneStep   = increment.resolution / 12;
-                    incr                       = accIncr / incrForOneStep;
-                    parameter.storedIncrements = accIncr % incrForOneStep;
-                 }
-                 else
-                 {   // TODO: highres mode
-                    incr = float(increment.value) / float(increment.resolution);
-                 }
-                 mdIter->second->soundHandler->incrementParameterValue(
-                     eventDestination.voiceIdx, parameter.id, incr);
-              },
-              [&increment](const EventDestination::Note& note) {
-                 note.value += increment.value;
-              },
-              [](auto&& e) { assert(false); }},
-          eventDestination.controlType);
-   }
-   */
+void EventRouter::sendMPEIncrementValue(
+    int note, const EventDestination& eventDestination,
+    const IncrementType& increment) noexcept
+{
+   mpark::visit(
+       util::overload{
+           [&, this](EventDestination::DrumKit&) {},
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, increment,
+                                             note, melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::MusicDevice& musicDevice) {},
+           [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::handleRelativeValue(const EventDestination& eventDestination,
                                       const RelativeValueType& value) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      mpark::visit(
-          util::overload{
-              [&mdIter, &eventDestination,
-               &value](const EventDestination::Parameter& parameter) {
-                 float valueToSet = value.value;
-                 if (!parameter.valueAtPress)
-                 {
-                    parameter.valueAtPress.emplace<float>(
-                        mdIter->second->soundHandler->getParameterValue(
-                            eventDestination.voiceIdx, parameter.id));
-                 }
-                 valueToSet += parameter.valueAtPress.value();
-                 mdIter->second->soundHandler->setParameterValue(
-                     eventDestination.voiceIdx, parameter.id, valueToSet);
-                 if (0 == value.value)
-                 {
-                    parameter.valueAtPress = std::nullopt;
-                 }
-              },
-              [](auto&&) { assert(false); }},
-          eventDestination.controlType);
-   }
-   */
+   mpark::visit(
+       util::overload{
+           [&, this](EventDestination::DrumKit& drumKit) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withKitInstrument(
+                             drumKit.uuid, [&](auto& kitInstr) {
+                                setParameter(kitInstr, parameter, value,
+                                             drumKit.voiceIdx,
+                                             drumKit.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, value,
+                                             melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::MusicDevice& musicDevice) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rMusicDeviceContainer.withSoundHandler(
+                             musicDevice.uuid, [&](auto& soundHandler) {
+                                setParameter(soundHandler, parameter, value,
+                                             musicDevice.voiceIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::sendMPERelativeValue(int note,
                                        const EventDestination& eventDestination,
                                        const RelativeValueType& value) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-
-   // TODO !!!
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      mpark::visit(
-          util::overload{[&mdIter, &note, &value](
-                             const EventDestination::Parameter& parameter) {
-                            // TODO:
-                            //
-   mdIter->second->soundHandler->setMPEParameterValue(
-                            //     note, parameter.id, value.value);
-                         },
-                         [](auto&&) { assert(false); }},
-          eventDestination.controlType);
-   }
-   */
+   mpark::visit(
+       util::overload{
+           [](EventDestination::DrumKit&) {},
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [](const EventDestination::Note&) {},
+                      [&, this](const EventDestination::Parameter& parameter) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                setParameter(melodicInstr, parameter, value,
+                                             note, melodic.componentIdx);
+                             });
+                      },
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](EventDestination::MusicDevice&) {}, [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::printMap() const noexcept
