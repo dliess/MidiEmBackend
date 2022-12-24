@@ -26,8 +26,7 @@ namespace controller
 class EventRouter
 {
 public:
-   EventRouter(session::Tracks& rTracks,
-               instruments::Instruments& rInstruments,
+   EventRouter(session::Tracks& rTracks, instruments::Instruments& rInstruments,
                MusicDeviceContainer& rMusicDeviceContainer);
    void createConnection(const EventIdExt& from,
                          const EventDestination& to) noexcept;
@@ -49,10 +48,10 @@ private:
 
    void handlePressRelease(const EventDestination& eventDestination,
                            const PressReleaseType& value) noexcept;
-   void handleWidgetCoordPressRelease(const WidgetCoord& widgetCoord,
+   void handleAnyWidgetCoordPressRelease(const WidgetCoord& widgetCoord,
                                       const EventDestination& eventDestination,
                                       const PressReleaseType& value) noexcept;
-   void handleNotePressRelease(int note,
+   void handleAnyNotePressRelease(int note,
                                const EventDestination& eventDestination,
                                const PressReleaseType& value) noexcept;
 
@@ -82,11 +81,15 @@ private:
                               const EventDestination::Parameter& parameter,
                               const PressReleaseType& value) noexcept;
    void playNoteOnMusicDevice(const EventDestination::MusicDevice& musicDevice,
-                          const EventDestination::Note& note,
-                          const PressReleaseType& value) noexcept;
-   void setParameterOnMusicDevice(const EventDestination::MusicDevice& musicDevice,
-                              const EventDestination::Parameter& parameter,
+                              const EventDestination::Note& note,
                               const PressReleaseType& value) noexcept;
+   void setParameterOnMusicDevice(
+       const EventDestination::MusicDevice& musicDevice,
+       const EventDestination::Parameter& parameter,
+       const PressReleaseType& value) noexcept;
+   void playLayoutMappedDrumKit(const WidgetCoord& widgetCoord,
+                                EventDestination::DrumKit& drumKit,
+                                const PressReleaseType& value) noexcept;
 
    CB_SIGNAL(GotConnected, const EventIdExt&, const EventDestination&);
    CB_SIGNAL(GotErased, const EventIdExt&);

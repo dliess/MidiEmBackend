@@ -51,6 +51,20 @@ void EventRouter::removeConnection(const EventIdExt& eventIdExt) noexcept
    emitGotErased(eventIdExt);
 }
 
+template <typename Dev, typename... DevCoord>
+void playNoteOnOff(Dev& dev, int note, float velocity,
+                   const DevCoord&... devCoord)
+{
+   if (velocity > 0)
+   {
+      dev.noteOn(devCoord..., note, velocity);
+   }
+   else
+   {
+      dev.noteOff(devCoord..., note, -velocity);
+   }
+}
+
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const PressReleaseType& value, MDCoords... mdCoords)
@@ -107,8 +121,8 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
-                    handleWidgetCoordPressRelease(widgetCoord,
-                                                  destIter2->second, value);
+                    handleAnyWidgetCoordPressRelease(widgetCoord,
+                                                     destIter2->second, value);
                  }
               }
            },
@@ -125,8 +139,8 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
-                    handleNotePressRelease(note.number, destIter2->second,
-                                           value);
+                    handleAnyNotePressRelease(note.number, destIter2->second,
+                                              value);
                  }
               }
            },
@@ -248,14 +262,7 @@ void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
                                     const PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
-      if (value.value > 0)
-      {
-         kitInstr.noteOn(drumKit.voiceIdx, note.value, value.value);
-      }
-      else
-      {
-         kitInstr.noteOff(drumKit.voiceIdx, note.value, -value.value);
-      }
+      playNoteOnOff(kitInstr, note.value, value.value, drumKit.voiceIdx);
    });
 }
 
@@ -287,16 +294,8 @@ void EventRouter::playNoteOnMusicDevice(
    const auto mdIter = m_rMusicDeviceContainer.find(musicDevice.uuid);
    if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
    {
-      if (value.value > 0)
-      {
-         mdIter->second->soundHandler->noteOn(musicDevice.voiceIdx, note.value,
-                                              value.value);
-      }
-      else
-      {
-         mdIter->second->soundHandler->noteOff(musicDevice.voiceIdx, note.value,
-                                               -value.value);
-      }
+      playNoteOnOff(*mdIter->second->soundHandler, note.value, value.value,
+                    musicDevice.voiceIdx);
    }
 }
 
@@ -360,20 +359,29 @@ void EventRouter::handlePressRelease(const EventDestination& eventDestination,
        eventDestination.endpoint);
 }
 
-void EventRouter::handleWidgetCoordPressRelease(
+void EventRouter::playLayoutMappedDrumKit(
+    const WidgetCoord& widgetCoord, EventDestination::DrumKit& drumKit,
+    const PressReleaseType& value) noexcept
+{
+   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
+      playNoteOnOff(kitInstr, 64, value.value,
+                    widgetCoord.row * 8 + widgetCoord.col);
+   });
+}
+
+void EventRouter::handleAnyWidgetCoordPressRelease(
     const WidgetCoord& widgetCoord, const EventDestination& eventDestination,
     const PressReleaseType& value) noexcept
 {
    mpark::visit(
        util::overload{
-           [](EventDestination::DrumKit& drumKit) {
+           [&, this](EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& note) {
-                         // TODO
+                         playLayoutMappedDrumKit(widgetCoord, drumKit, value);
                       },
-                      [](const EventDestination::Parameter& parameter) {
-                      },
+                      [](const EventDestination::Parameter& parameter) {},
                       [](auto&&) {}},
                   eventDestination.controlType);
            },
@@ -382,44 +390,67 @@ void EventRouter::handleWidgetCoordPressRelease(
        eventDestination.endpoint);
 }
 
-void EventRouter::handleNotePressRelease(
+void EventRouter::handleAnyNotePressRelease(
     int note, const EventDestination& eventDestination,
     const PressReleaseType& value) noexcept
 {
-   /*
-   mpark::visit(util::overload{
-                    [](EventDestination::DrumKit& drumKit) {},
-                    [](EventDestination::Melodic& drumKit) {},
-                    [](EventDestination::MusicDevice& drumKit) {},
-                },
-                eventDestination.endpoint);
-
-   m_rTracks.withTrack(eventDestination.uuid,
-                       [&value, note, this](auto& track) {
-                          if (value.value > 0)
-                          {
-                             track.noteOn(note, value.value);
-                          }
-                          else
-                          {
-                             track.noteOff(note, value.value);
-                          }
-                       });
-   const auto mdIter = m_rMusicDeviceContainer.find(eventDestination.uuid);
-   if (mdIter != m_rMusicDeviceContainer.end() && mdIter->second->soundHandler)
-   {
-      if (value.value > 0)
-      {
-         mdIter->second->soundHandler->noteOn(eventDestination.voiceIdx, note,
-                                              value.value);
-      }
-      else
-      {
-         mdIter->second->soundHandler->noteOff(eventDestination.voiceIdx, note,
-                                               -value.value);
-      }
-   }
-   */
+   mpark::visit(
+       util::overload{
+           [&, this](EventDestination::DrumKit& drumKit) {
+              mpark::visit(
+                  util::overload{
+                      [&, this](const EventDestination::Note& dstNote) {
+                         if (drumKit.voiceIdx == ANY)
+                         {
+                            m_rInstruments.withKitInstrument(
+                                drumKit.uuid, [&](auto& kitInstr) {
+                                   playNoteOnOff(kitInstr, note, value.value);
+                                });
+                         }
+                         else
+                         {
+                            m_rInstruments.withKitInstrument(
+                                drumKit.uuid, [&](auto& kitInstr) {
+                                   playNoteOnOff(kitInstr, note, value.value,
+                                                 drumKit.voiceIdx);
+                                });
+                         }
+                      },
+                      [](const EventDestination::Parameter& parameter) {},
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::Melodic& melodic) {
+              mpark::visit(
+                  util::overload{
+                      [&, this](const EventDestination::Note& dstNote) {
+                         m_rInstruments.withMelodicInstrument(
+                             melodic.uuid, [&](auto& melodicInstr) {
+                                playNoteOnOff(melodicInstr, note, value.value);
+                             });
+                      },
+                      [](const EventDestination::Parameter& parameter) {},
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [&, this](EventDestination::MusicDevice& musicDevice) {
+              mpark::visit(
+                  util::overload{
+                      [&, this](const EventDestination::Note& dstNote) {
+                         const auto mdIter =
+                             m_rMusicDeviceContainer.find(musicDevice.uuid);
+                         if (mdIter != m_rMusicDeviceContainer.end() &&
+                             mdIter->second->soundHandler)
+                         {
+                           playNoteOnOff(*mdIter->second->soundHandler, note, value.value, musicDevice.voiceIdx);
+                         }
+                      },
+                      [](const EventDestination::Parameter& parameter) {},
+                      [](auto&&) {}},
+                  eventDestination.controlType);
+           },
+           [](auto&&) {}},
+       eventDestination.endpoint);
 }
 
 void EventRouter::handleContinousValue(const EventDestination& eventDestination,
