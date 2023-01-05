@@ -19,27 +19,23 @@ struct EventDestination
       util::Identifiable::UUID uuid;
       int voiceIdx;
       int componentIdx;
-      //auto operator<=>(const DrumKit&) const = default;
+      // auto operator<=>(const DrumKit&) const = default;
    };
    struct Melodic
    {
       util::Identifiable::UUID uuid;
       int componentIdx;
-      //auto operator<=>(const Melodic&) const = default;
+      // auto operator<=>(const Melodic&) const = default;
    };
    struct MusicDevice
    {
       util::Identifiable::UUID uuid;
       int voiceIdx;
-      //auto operator<=>(const MusicDevice&) const = default;
+      // auto operator<=>(const MusicDevice&) const = default;
    };
    using Endpoint = mpark::variant<DrumKit, Melodic, MusicDevice>;
 
    // ControlType
-   enum class InternalFunctionality
-   {
-      None = 0
-   };
    struct Note
    {
       mutable int value;
@@ -59,8 +55,7 @@ struct EventDestination
       mutable int storedIncrements{0};
       mutable std::optional<float> valueAtPress{0};
    };
-   using ControlType =
-       mpark::variant<mpark::monostate, Note, Parameter, InternalFunctionality>;
+   using ControlType = mpark::variant<Note, Parameter>;
 
    Endpoint endpoint;
    ControlType controlType;

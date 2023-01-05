@@ -1,5 +1,6 @@
 set(SOURCES
-   "UT_TestSerializations.cpp"
+   "UT_ControllerEventRouterLoader.cpp"
+   "UT_ControllerEventRouter.cpp"
 )
 
 set(TARGET_NAME "ControllerEvtRouterTests")
