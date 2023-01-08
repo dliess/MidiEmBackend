@@ -7,10 +7,6 @@
 #include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
-namespace base::session
-{
-class Tracks;
-}
 
 namespace base::instruments
 {
@@ -23,18 +19,19 @@ class MusicDeviceContainer;
 
 namespace controller
 {
+
+template<class Instruments, class MusicDeviceContainer>
 class EventRouter
 {
 public:
-   EventRouter(session::Tracks& rTracks, instruments::Instruments& rInstruments,
+   EventRouter(Instruments& rInstruments,
                MusicDeviceContainer& rMusicDeviceContainer);
    void createConnection(const EventIdExt& from,
                          const EventDestination& to) noexcept;
    void removeConnection(const EventIdExt& eventIdExt) noexcept;
 
 private:
-   session::Tracks& m_rTracks;
-   instruments::Instruments& m_rInstruments;
+   Instruments& m_rInstruments;
    MusicDeviceContainer& m_rMusicDeviceContainer;
    std::unordered_map<EventIdExt, EventDestination> m_map;
    void handlePressReleaseType(const EventIdExt& event,
@@ -102,4 +99,6 @@ private:
 
 }   // namespace controller
 }   // namespace base::musicDevice
+
+#include "ControllerEventRouter.tcc"
 #endif

@@ -1,12 +1,12 @@
 set(TARGET_NAME "MusicDeviceControllerEventRouter")
 
 set(SOURCES
-    "ControllerEventRouter.cpp"
     "ControllerEventRouterLoader.cpp" 
 )
 
 set(HEADERS
     "ControllerEventRouter.h"
+    "ControllerEventRouter.tcc"
     "ControllerEventRouterLoader.h"
     "ControllerEventRouterLoaderMeta.h"
     "ControllerEventDestination.h"

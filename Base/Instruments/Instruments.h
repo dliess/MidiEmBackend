@@ -20,6 +20,19 @@ class MusicDeviceContainer;
 namespace instruments
 {
 
+struct InstrumentsRef 
+{
+    template<class Instruments>
+    InstrumentsRef(Instruments& instruments) {
+
+    }
+
+
+private:
+    void* m_pInstruments;
+    
+};
+
 using KitInstruments = std::vector<KitInstrument>;
 using MelodicInstruments = std::vector<MelodicInstrument>;
 
