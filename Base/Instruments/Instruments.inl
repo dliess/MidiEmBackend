@@ -1,31 +1,21 @@
+#include "Identifiable.h"
 #include "Instruments.h"
 
-namespace base::instruments {
-
-template<class CB>
-void Instruments::withKitInstrument(util::Identifiable::UUIDView uuid, CB&& cb)
+namespace base::instruments
 {
-   auto it = std::find_if(
-       data.kitInstruments.begin(),
-       data.kitInstruments.end(),
-       [&uuid](const auto& instr) { return instr.id() == uuid; });
-   if(it != data.kitInstruments.end())
-   {
-      cb(*it);
-   }
-}
-
-template<class CB>
-void Instruments::withMelodicInstrument(util::Identifiable::UUIDView uuid, CB&& cb)
+inline void Instruments::withKitInstrument(
+    util::Identifiable::UUIDView uuid,
+    util::function_ref<void(KitInstrument&)> cb)
 {
-   auto it = std::find_if(
-       data.melodicInstruments.begin(),
-       data.melodicInstruments.end(),
-       [&uuid](const auto& instr) { return instr.id() == uuid; });
-   if(it != data.melodicInstruments.end())
-   {
-      cb(*it);
-   }
+   util::withUuid(data.kitInstruments.begin(), data.kitInstruments.end(), uuid,
+                  cb);
 }
 
+inline void Instruments::withMelodicInstrument(
+    util::Identifiable::UUIDView uuid,
+    util::function_ref<void(MelodicInstrument&)> cb)
+{
+   util::withUuid(data.melodicInstruments.begin(),
+                  data.melodicInstruments.end(), uuid, cb);
 }
+}   // namespace base::instruments

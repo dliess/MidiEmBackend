@@ -1,12 +1,12 @@
 set(TARGET_NAME "MusicDeviceControllerEventRouter")
 
 set(SOURCES
-    "ControllerEventRouterLoader.cpp" 
+    "ControllerEventRouterLoader.cpp"
+    "ControllerEventRouter.cpp"
 )
 
 set(HEADERS
     "ControllerEventRouter.h"
-    "ControllerEventRouter.tcc"
     "ControllerEventRouterLoader.h"
     "ControllerEventRouterLoaderMeta.h"
     "ControllerEventDestination.h"
@@ -21,6 +21,7 @@ target_link_libraries(${TARGET_NAME}
     PUBLIC MusicDeviceController
     PUBLIC MusicDeviceCommon
     PUBLIC Util
+    PUBLIC Instruments
 )
 
 if(NOMIDI_BACKEND_BUILD_TESTS)

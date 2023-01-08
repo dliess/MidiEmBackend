@@ -42,6 +42,9 @@ find_package(spdlog 1.8.1 CONFIG REQUIRED)
 
 if(${NOMIDI_BACKEND_BUILD_TESTS})
   find_package(GTest REQUIRED)
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+  find_package(GMock REQUIRED)
+  include_directories(${GMOCK_INCLUDE_DIRS}) 
 endif()
 
 CPMFindPackage(

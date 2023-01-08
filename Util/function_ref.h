@@ -1,10 +1,11 @@
 #ifndef __UTIL__FUNCTION_REF__
 #define __UTIL__FUNCTION_REF__
 
-namespace util
-{
 #include <concepts>
 #include <functional>
+
+namespace util
+{
 
 template <class F> class function_ref;
 

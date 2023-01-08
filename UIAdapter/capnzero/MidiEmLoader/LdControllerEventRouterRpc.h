@@ -27,7 +27,8 @@ public:
                            ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
                            ::capnzero::Int16 eventIdx,
                            ::capnzero::Int16 channelIdx,
-                           const ::capnzero::SpanCL<16>& soundDevUUID,
+                           ::capnzero::ControllerEventRouteDestination dest,
+                           const ::capnzero::SpanCL<16>& destUUID,
                            ::capnzero::Int16 voiceIdx) override;
    void connectNotes2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,

@@ -9,6 +9,7 @@
 #include "MelodicInstrument.h"
 #include "Meta.h"
 #include "Settings_old.h"
+#include "function_ref.h"
 
 namespace base
 {
@@ -20,29 +21,16 @@ class MusicDeviceContainer;
 namespace instruments
 {
 
-struct InstrumentsRef 
-{
-    template<class Instruments>
-    InstrumentsRef(Instruments& instruments) {
-
-    }
-
-
-private:
-    void* m_pInstruments;
-    
-};
-
-using KitInstruments = std::vector<KitInstrument>;
+using KitInstruments     = std::vector<KitInstrument>;
 using MelodicInstruments = std::vector<MelodicInstrument>;
 
-struct Instruments //: public utils::Settings<Instruments>
+struct Instruments   //: public utils::Settings<Instruments>
 {
    Instruments(
        musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept;
    struct Data
    {
-      KitInstruments     kitInstruments;
+      KitInstruments kitInstruments;
       MelodicInstruments melodicInstruments;
    };
    Data data;
@@ -60,16 +48,14 @@ struct Instruments //: public utils::Settings<Instruments>
    void createKitInstrument(std::string name) noexcept;
    void removeKitInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
-   void renameKitInstrument(
-       const util::Identifiable::UUID& instrumentId,
-       std::string name) noexcept;
+   void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
+                            std::string name) noexcept;
 
    void createMelodicInstrument(std::string name) noexcept;
    void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
-   void renameMelodicInstrument(
-       const util::Identifiable::UUID& instrumentId,
-       std::string name) noexcept;
+   void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
+                                std::string name) noexcept;
 
    void createNewSlotInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
@@ -96,10 +82,10 @@ struct Instruments //: public utils::Settings<Instruments>
    void addVoiceToKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
-    void moveKitInstrumentSlotVoice(
-        const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
-        int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
-        int dstSlotIdx) noexcept;
+   void moveKitInstrumentSlotVoice(
+       const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
+       int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
+       int dstSlotIdx) noexcept;
    void removeVoiceFromKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx) noexcept;
@@ -112,12 +98,14 @@ struct Instruments //: public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
-    [[nodiscard]] Instrument* getInstrumentByUuid(util::Identifiable::UUIDView) noexcept;
+   [[nodiscard]] Instrument* getInstrumentByUuid(
+       util::Identifiable::UUIDView) noexcept;
 
-    template<class CB>
-    void withKitInstrument(util::Identifiable::UUIDView uuid, CB&& cb);
-    template<class CB>
-    void withMelodicInstrument(util::Identifiable::UUIDView uuid, CB&& cb);
+   inline void withKitInstrument(util::Identifiable::UUIDView uuid,
+                                 util::function_ref<void(KitInstrument&)> cb);
+   inline void withMelodicInstrument(
+       util::Identifiable::UUIDView uuid,
+       util::function_ref<void(MelodicInstrument&)> cb);
 
 private:
    musicDevice::MusicDeviceContainer& m_rMusicDeviceContainer;

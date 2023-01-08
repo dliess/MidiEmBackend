@@ -18,6 +18,9 @@ set(SOURCES
 
 set(HEADERS
    "ModifiersApplyer.h"
+   "MusicDeviceContainer.h"
+   "MusicDeviceContainer.inl"
+   "MusicDeviceContainerRef.h"
 )
 
 add_library(MusicDevice STATIC ${SOURCES})

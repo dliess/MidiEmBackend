@@ -51,7 +51,7 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     instrumentsFactory(instruments, musicDeviceHolder),
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
-    controllerEventRouter(musicDeviceHolder.musicDevices)
+    controllerEventRouter(musicDeviceHolder.musicDevices, instruments)
 {
    //m_zmqContext.set(zmq::ctxopt::io_threads, 1);
    m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);
@@ -64,6 +64,10 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
          tracks.stop();
       }
    });
+   musicDeviceHolder.musicDevices.onControllerDevEventOccured([this](
+       const util::Identifiable::UUID uuid, const controller::Event& event){
+         controllerEventRouter.onControllerDevEventOccured(uuid, event);
+       });
 }
 
 base::Base::~Base() noexcept = default;

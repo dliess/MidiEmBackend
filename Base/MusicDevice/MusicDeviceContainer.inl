@@ -230,9 +230,9 @@ inline size_t MusicDeviceContainer::size() const noexcept
    return Super::size();
 }
 
-template <typename CB>
-void MusicDeviceContainer::withSoundHandler(const util::Identifiable::UUID& uuid,
-                                            CB&& cb)
+inline void MusicDeviceContainer::withSoundHandler(
+    const util::Identifiable::UUID& uuid,
+    util::function_ref<void(sound::SoundHandler&)> cb)
 {
    auto mdIter = find(uuid);
    if (mdIter != end() && mdIter->second->soundHandler)

@@ -14,6 +14,7 @@ set(HEADERS
     "FdSet.h"
     "error_msg.hpp"
     "FloatEqual.h"
+    "function_ref.h"
 )
 
 set(TARGET_NAME Util)

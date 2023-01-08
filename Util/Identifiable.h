@@ -19,7 +19,7 @@ protected:
    inline Identifiable() noexcept;
    inline Identifiable(const Identifiable& other) noexcept;
    inline Identifiable& operator=(const Identifiable& other) noexcept;
-   inline Identifiable(Identifiable&& other) noexcept                 = default;
+   inline Identifiable(Identifiable&& other) noexcept = default;
    inline Identifiable& operator=(Identifiable&& other) noexcept = default;
 
 public:
@@ -34,6 +34,18 @@ protected:
 
 inline std::string uuid2Str(const Identifiable::UUID& uuid);
 inline std::string uuid2Str(Identifiable::UUIDView uuid);
+
+template <class Iterator, class Callable>
+void withUuid(Iterator beginIt, Iterator endIt, Identifiable::UUIDView uuid,
+              Callable&& cb)
+{
+   auto it = std::find_if(beginIt, endIt,
+                          [&uuid](const auto& e) { return e.id() == uuid; });
+   if (it != endIt)
+   {
+      cb(*it);
+   }
+}
 
 }   // namespace util
 
