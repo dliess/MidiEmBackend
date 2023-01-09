@@ -47,6 +47,27 @@ void withUuid(Iterator beginIt, Iterator endIt, Identifiable::UUIDView uuid,
    }
 }
 
+struct IdentifiableHash
+{
+   using is_transparent = void;
+   [[nodiscard]] size_t operator()(
+       const Identifiable::UUID& uuid) const noexcept
+   {
+      return uuid[0] + uuid[7] + uuid[15];
+   }
+   [[nodiscard]] size_t operator()(Identifiable::UUIDView uuid) const noexcept
+   {
+      return uuid[0] + uuid[7] + uuid[15];
+   }
+};
+
+inline auto deepCopy(Identifiable::UUIDView uuidView)
+{
+   Identifiable::UUID ret;
+   std::copy(uuidView.begin(), uuidView.end(), ret.begin());
+   return ret;
+}
+
 }   // namespace util
 
 inline bool operator<(const util::Identifiable::UUID& lhs,
@@ -60,6 +81,8 @@ inline bool operator<(const util::Identifiable::UUID& lhs,
    return false;
 }
 
+namespace std
+{
 inline bool operator==(const util::Identifiable::UUIDView& lhs,
                        const util::Identifiable::UUIDView& rhs) noexcept
 {
@@ -71,17 +94,6 @@ inline bool operator!=(const util::Identifiable::UUIDView& lhs,
 {
    return !(lhs == rhs);
 }
-
-namespace std
-{
-template <>   //
-struct hash<util::Identifiable::UUID>
-{
-   size_t operator()(const util::Identifiable::UUID& uuid) const noexcept
-   {
-      return uuid[0] + uuid[7] + uuid[15];
-   }
-};
 }   // namespace std
 
 #include "Identifiable.inl"

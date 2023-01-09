@@ -118,7 +118,7 @@ template <> struct hash<base::musicDevice::controller::EventIdExt>
    std::size_t operator()(
        const base::musicDevice::controller::EventIdExt& event) const
    {
-      return std::hash<util::Identifiable::UUID>{}(event.uuid) ^
+      return util::IdentifiableHash{}(event.uuid) ^
              std::hash<base::musicDevice::controller::EventId>{}(event.eventId);
    }
 };

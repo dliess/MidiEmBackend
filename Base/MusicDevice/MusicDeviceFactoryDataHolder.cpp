@@ -71,12 +71,14 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
 }
 
 const description::Description* factory::DataHolder::getDescription(
-      const util::Identifiable::UUID& uuid) const noexcept
+    util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto pMdId = musicDeviceId(uuid);
-   if(!pMdId) return nullptr;
+   if (!pMdId)
+      return nullptr;
    const auto itDescr = m_descriptionCache.find(pMdId->deviceName);
-   if(itDescr == m_descriptionCache.end()) return nullptr;
+   if (itDescr == m_descriptionCache.end())
+      return nullptr;
    return itDescr->second.get();
 }
 
@@ -189,9 +191,9 @@ void factory::DataHolder::reEmitSignals()
 }
 
 const MusicDeviceId* factory::DataHolder::musicDeviceId(
-    const util::Identifiable::UUID& uuid) const noexcept
+    util::Identifiable::UUIDView uuid) const noexcept
 {
-   const auto it = m_uuidToDevIdMap.find(uuid);
+   const auto it = m_uuidToDevIdMap.find(util::deepCopy(uuid));
    if (it == m_uuidToDevIdMap.end())
    {
       return nullptr;
@@ -205,18 +207,18 @@ const util::Identifiable::UUID* factory::DataHolder::getUUIDByMdId(
    const auto it = std::find_if(
        m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
        [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
-         return e.second == mdId;
+          return e.second == mdId;
        });
-   if(it == m_uuidToDevIdMap.end())
+   if (it == m_uuidToDevIdMap.end())
    {
       const auto it2 = std::find_if(
-         m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
-         [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
-            MusicDeviceId mdId2 = mdId;
-            mdId2.portName = MusicDeviceId::ANY_PORT;
-            return e.second == mdId2;
-         });
-      if(it2 == m_uuidToDevIdMap.end())
+          m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
+          [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
+             MusicDeviceId mdId2 = mdId;
+             mdId2.portName      = MusicDeviceId::ANY_PORT;
+             return e.second == mdId2;
+          });
+      if (it2 == m_uuidToDevIdMap.end())
       {
          return nullptr;
       }

@@ -26,19 +26,21 @@ struct DataHolder
    std::shared_ptr<description::Description> getDescription(
        const MusicDeviceName& deviceName) noexcept;
    const description::Description* getDescription(
-       const util::Identifiable::UUID& uuid) const noexcept;
+       util::Identifiable::UUIDView uuid) const noexcept;
 
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
        const MusicDeviceName& deviceName) noexcept;
 
-   const MusicDeviceId* musicDeviceId(const util::Identifiable::UUID& uuid) const noexcept; 
-   const util::Identifiable::UUID* getUUIDByMdId(const MusicDeviceId& mdId) const noexcept;
+   const MusicDeviceId* musicDeviceId(
+       util::Identifiable::UUIDView uuid) const noexcept;
+   const util::Identifiable::UUID* getUUIDByMdId(
+       const MusicDeviceId& mdId) const noexcept;
 
    void addUuid2MdId(const util::Identifiable::UUID& uuid,
                      const MusicDeviceId& mdId) noexcept;
    void removeEntryForUuid(const util::Identifiable::UUID& uuid) noexcept;
 
-   //using ActualPresetNames = util::VectorPlusOne<std::string>;
+   // using ActualPresetNames = util::VectorPlusOne<std::string>;
    using ActualPresetNames = std::vector<std::string>;
    std::shared_ptr<ActualPresetNames> getActualDevicePresetNames(
        const MusicDeviceId& id) noexcept;
@@ -48,7 +50,8 @@ struct DataHolder
    CB_SIGNAL(PresetUpdated, const sound::preset::Id&, sound::preset::Category,
              sound::preset::Genre);
    CB_SIGNAL(PresetRemoved, const sound::preset::Id&);
-   CB_SIGNAL(ActualPresetNameChanged, const util::Identifiable::UUID&, int, const std::string&);
+   CB_SIGNAL(ActualPresetNameChanged, const util::Identifiable::UUID&, int,
+             const std::string&);
 
    void reEmitSignals();
 
@@ -60,7 +63,9 @@ private:
    std::unordered_map<MusicDeviceName,
                       std::shared_ptr<sound::preset::DevicePresets>>
        m_presetCache;
-   std::unordered_map<util::Identifiable::UUID, MusicDeviceId> m_uuidToDevIdMap;
+   std::unordered_map<util::Identifiable::UUID, MusicDeviceId,
+                      util::IdentifiableHash, std::equal_to<>>
+       m_uuidToDevIdMap;
    std::unordered_map<MusicDeviceId, std::shared_ptr<ActualPresetNames>>
        m_actualPresetNames;
 };

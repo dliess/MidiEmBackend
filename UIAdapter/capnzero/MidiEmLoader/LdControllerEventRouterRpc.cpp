@@ -17,39 +17,34 @@ LdControllerEventRouterRpc::LdControllerEventRouterRpc(
 void LdControllerEventRouterRpc::connectNotes2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx)
+    ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerUUID)
    {
       spdlog::error("No mdId found for uuid");
       return;
    }
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
-   const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
-   if (!pSoundDevUUID)
+   const auto pSoundDevID = m_rMDFactory.dataHolder().musicDeviceId(destUUID);
+   if (!pSoundDevID)
    {
       spdlog::error("No mdId found for uuid");
       return;
    }
-   if (note >= 0 && isMelodic(_soundDevUUID))
+   if (note >= 0 && isMelodic(destUUID))
    {
       note = -1;
    }
    m_rEventRoutes.connectNotes2Notes(*pControllerUUID, widgetIdx, note,
-                                     eventIdx, channelIdx, *pSoundDevUUID,
+                                     eventIdx, channelIdx, *pSoundDevID,
                                      voiceIdx);
 }
 
 bool LdControllerEventRouterRpc::isMelodic(
-    const util::Identifiable::UUID& uuid) const noexcept
+    util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto pDescr = m_rMDFactory.dataHolder().getDescription(uuid);
    if (pDescr)
@@ -67,24 +62,20 @@ bool LdControllerEventRouterRpc::isMelodic(
 void LdControllerEventRouterRpc::connectNotes2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::Int16 paramFunc)
+    ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerUUID)
    {
       spdlog::error("No mdId found for uuid");
       return;
    }
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
-   const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
+   const auto pSoundDevUUID = m_rMDFactory.dataHolder().musicDeviceId(destUUID);
    if (!pSoundDevUUID)
    {
       spdlog::error("No mdId found for uuid");
@@ -100,22 +91,18 @@ void LdControllerEventRouterRpc::connectWidget2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx)
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerUUID)
    {
       spdlog::error("No mdId found for uuid");
       return;
    }
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
    const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
    if (!pSoundDevUUID)
    {
       spdlog::error("No mdId found for uuid");
@@ -130,23 +117,20 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 parameterIdx, ::capnzero::Int16 paramFunc)
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerUUID)
    {
       spdlog::error("No mdId found for uuid");
       return;
    }
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
    const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
    if (!pSoundDevUUID)
    {
       spdlog::error("No mdId found for uuid");
@@ -163,11 +147,8 @@ void LdControllerEventRouterRpc::eraseConnectionForNotes(
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
     ::capnzero::Int16 channelIdx)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerUUID)
    {
       spdlog::error("No mdId found for uuid");
@@ -182,11 +163,8 @@ void LdControllerEventRouterRpc::eraseConnectionForWidget(
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
 {
-   util::Identifiable::UUID _controllerUUID;
-   std::copy(controllerUUID.begin(), controllerUUID.end(),
-             _controllerUUID.begin());
    const auto pControllerMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(_controllerUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
    if (!pControllerMDID)
    {
       spdlog::error("No mdId found for uuid");
@@ -198,12 +176,11 @@ void LdControllerEventRouterRpc::eraseConnectionForWidget(
 }
 
 void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx)
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
    const auto pSoundDevMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
    if (!pSoundDevMDID)
    {
       spdlog::error("No mdId found for uuid");
@@ -213,13 +190,13 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
 }
 
 void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 parameterIdx, ::capnzero::Int16 paramFunc)
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
 {
-   util::Identifiable::UUID _soundDevUUID;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), _soundDevUUID.begin());
    const auto pSoundDevMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(_soundDevUUID);
+       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
    if (!pSoundDevMDID)
    {
       spdlog::error("No mdId found for uuid");

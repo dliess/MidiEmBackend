@@ -15,12 +15,14 @@ namespace base::musicDevice
 {
 class MusicDeviceContainer
     : private std::unordered_map<util::Identifiable::UUID,
-                                 std::shared_ptr<MusicDevice>>
+                                 std::shared_ptr<MusicDevice>,
+                                 util::IdentifiableHash, std::equal_to<>>
 //: public util::KeyValueVector<MusicDeviceId, std::shared_ptr<MusicDevice>>
 {
 public:
    using Super = std::unordered_map<util::Identifiable::UUID,
-                                    std::shared_ptr<MusicDevice>>;
+                                    std::shared_ptr<MusicDevice>,
+                                    util::IdentifiableHash, std::equal_to<>>;
    inline MusicDeviceContainer();
    inline void updateSoundParameterActualValues();
    inline void updateMDParameterUI();

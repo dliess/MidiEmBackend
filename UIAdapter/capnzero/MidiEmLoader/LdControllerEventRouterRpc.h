@@ -23,34 +23,38 @@ public:
        base::musicDevice::factory::Factory& rMDFactory,
        base::musicDevice::controller::loader::EventRoutes&
            rEventRoutes) noexcept;
-   void connectNotes2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
-                           ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
-                           ::capnzero::Int16 eventIdx,
-                           ::capnzero::Int16 channelIdx,
-                           ::capnzero::ControllerEventRouteDestination dest,
-                           const ::capnzero::SpanCL<16>& destUUID,
-                           ::capnzero::Int16 voiceIdx) override;
+   void connectNotes2Notes(
+       const ::capnzero::SpanCL<16>& controllerUUID,
+       ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
+       ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID,
+       ::capnzero::Int16 voiceIdx) override;
    void connectNotes2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-       const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 parameterIdx, ::capnzero::Int16 paramFunc) override;
-   void connectWidget2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
-                            ::capnzero::Int16 widgetIdx,
-                            ::capnzero::Int16 widgetCoordX,
-                            ::capnzero::Int16 widgetCoordY,
-                            ::capnzero::Int16 eventIdx,
-                            ::capnzero::Int16 channelIdx,
-                            const ::capnzero::SpanCL<16>& soundDevUUID,
-                            ::capnzero::Int16 voiceIdx) override;
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
+   void connectWidget2Notes(
+       const ::capnzero::SpanCL<16>& controllerUUID,
+       ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
+       ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
+       ::capnzero::Int16 channelIdx,
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID,
+       ::capnzero::Int16 voiceIdx) override;
    void connectWidget2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
        ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
-       ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-       ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::Int16 paramFunc) override;
+       ::capnzero::Int16 channelIdx,
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
 
    void eraseConnectionForNotes(const ::capnzero::SpanCL<16>& controllerUUID,
                                 ::capnzero::Int16 widgetIdx,
@@ -65,14 +69,17 @@ public:
                                  ::capnzero::Int16 channelIdx) override;
 
    void eraseConnectionsToDestinationNotes(
-       const ::capnzero::SpanCL<16>& soundDevUUID,
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID,
        ::capnzero::Int16 voiceIdx) override;
    void eraseConnectionsToDestinationParameter(
-       const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 parameterIdx, ::capnzero::Int16 paramFunc) override;
+       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
 
    [[nodiscard]] bool isMelodic(
-       const util::Identifiable::UUID& uuid) const noexcept;
+       util::Identifiable::UUIDView uuid) const noexcept;
 
 private:
    base::musicDevice::factory::Factory& m_rMDFactory;

@@ -4,8 +4,6 @@
 #include "Mock/Mock_MusicDeviceContainer.h"
 #include "ControllerEventRouter.h"
 
-using namespace base::musicDevice;
-
 TEST(TestControllerEventRouter, test)
 {
    base::instruments::mock::MockInstruments instrumentsMOCK;

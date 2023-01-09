@@ -15,28 +15,52 @@ ControllerEventRouterRpc::ControllerEventRouterRpc(
 {
 }
 
+inline controller::EventDestination::Endpoint toEndpoint(
+    ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
+{
+   switch (dest)
+   {
+      case ::capnzero::MidiEmRt::ControllerEventRouteDestination::DRUM_KIT:
+      {
+         return controller::EventDestination::DrumKit{util::deepCopy(destUUID),
+                                                      voiceIdx};
+      }
+      case ::capnzero::MidiEmRt::ControllerEventRouteDestination::MELODIC:
+      {
+         return controller::EventDestination::Melodic{util::deepCopy(destUUID),
+                                                      voiceIdx};
+      }
+      case ::capnzero::MidiEmRt::ControllerEventRouteDestination::MUSIC_DEVICE:
+      {
+         return controller::EventDestination::MusicDevice{
+             util::deepCopy(destUUID), voiceIdx};
+      }
+   }
+}
+
 void ControllerEventRouterRpc::connectNotes2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx)
+    ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   controller::EventDestination to;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-
-   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
-   to.voiceIdx  = voiceIdx;
-   to.controlType  = controller::EventDestination::Note{64};   // TODO
-   m_rCtrlEventRouter.createConnection(from, to);
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
+       controller::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
+                                    controller::EventDestination::Note{-1}});
 }
 
 void ControllerEventRouterRpc::connectNotes2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& soundDevUUID,
-    ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
    controller::EventIdExt from;
@@ -53,10 +77,14 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
                                                                   parameterIdx);
       to.controlType = controller::EventDestination::Parameter{
           parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc), true,
+          static_cast<controller::ParameterDestination>(paramFunc),
+          true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution(),
-          paramDescr.type == description::sound::Parameter::Type::ContinousBipolar ? 0.5f : 0.0f};
+          paramDescr.type ==
+                  description::sound::Parameter::Type::ContinousBipolar
+              ? 0.5f
+              : 0.0f};
       m_rCtrlEventRouter.createConnection(from, to);
    }
    else
@@ -70,7 +98,8 @@ void ControllerEventRouterRpc::connectWidget2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx)
+    ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
@@ -79,7 +108,7 @@ void ControllerEventRouterRpc::connectWidget2Notes(
                    eventIdx, channelIdx};
    controller::EventDestination to;
    std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx = voiceIdx;
+   to.voiceIdx    = voiceIdx;
    to.controlType = controller::EventDestination::Note{65};   // TODO
    m_rCtrlEventRouter.createConnection(from, to);
 }
@@ -88,7 +117,8 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    const ::capnzero::SpanCL<16>& soundDevUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
@@ -108,10 +138,14 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
                                                                   parameterIdx);
       to.controlType = controller::EventDestination::Parameter{
           parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc), true,
+          static_cast<controller::ParameterDestination>(paramFunc),
+          true,
           paramDescr.type == description::sound::Parameter::Type::List,
           paramDescr.getSourceResolution(),
-          paramDescr.type == description::sound::Parameter::Type::ContinousBipolar ? 0.5f : 0.0f};
+          paramDescr.type ==
+                  description::sound::Parameter::Type::ContinousBipolar
+              ? 0.5f
+              : 0.0f};
       m_rCtrlEventRouter.createConnection(from, to);
    }
    else
@@ -129,7 +163,7 @@ void ControllerEventRouterRpc::eraseConnectionForNotes(
    controller::EventIdExt from;
    std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
    from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
-    m_rCtrlEventRouter.removeConnection(from);
+   m_rCtrlEventRouter.removeConnection(from);
 }
 
 void ControllerEventRouterRpc::eraseConnectionForWidget(
@@ -142,5 +176,5 @@ void ControllerEventRouterRpc::eraseConnectionForWidget(
    from.eventId = {widgetIdx,
                    controller::WidgetCoord{widgetCoordY, widgetCoordX},
                    eventIdx, channelIdx};
-    m_rCtrlEventRouter.removeConnection(from);
+   m_rCtrlEventRouter.removeConnection(from);
 }

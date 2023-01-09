@@ -2,6 +2,7 @@ set(SOURCES
     "UT_itc.cpp"
     "UT_2DMatrixCheck.cpp"
     "UT_FixedSizeVector.cpp"
+    "UT_Identifiable.cpp"
     "UT_KeyValueVector.cpp"
     "UT_JsonParseOptionals.cpp"
     "UT_JsonParseVariants.cpp"
