@@ -49,6 +49,18 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
    if (auto param =
            mpark::get_if<EventDestination::Parameter>(&destination.controlType))
    {
+      auto desc = parameterDescription(destination.endpoint, param->id);
+      if (!desc)
+      {
+         spdlog::error("Error getting parameter description");
+         return;
+      }
+      param->isList = (desc->type == description::sound::Parameter::Type::List);
+      param->resolution = desc->getSourceResolution();
+      param->zeroVal =
+          (desc->type == description::sound::Parameter::Type::ContinousBipolar
+               ? 0.5f
+               : 0.0f);
       // fillParamCache(m_rMusicDeviceContainer, destination.endpoint *param);
    }
    m_map[from] = destination;
