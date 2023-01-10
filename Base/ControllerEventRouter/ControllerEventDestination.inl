@@ -3,13 +3,13 @@
 
 #include "ControllerEventDestination.h"
 
-namespace base::musicDevice::controller
+namespace base::eventRouter
 {
 
 inline bool operator==(const EventDestination::Note& lhs,
                        const EventDestination::Note& rhs)
 {
-   return lhs.value == rhs.value;
+   return lhs.pitch == rhs.pitch;
 }
 
 inline bool operator==(const EventDestination::ParameterBase& lhs,

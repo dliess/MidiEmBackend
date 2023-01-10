@@ -3,26 +3,26 @@
 #include "ControllerHandler.h"
 #include "MusicDeviceContainer.h"
 
-using namespace base::musicDevice::controller::loader;
+using namespace base::eventRouter;
 
-const std::string EventRoutes::CONFIG_SECTION = "ControllerEventRoutes";
+const std::string loader::EventRoutes::CONFIG_SECTION = "ControllerEventRoutes";
 
-EventRoutes::EventRoutes() :
+loader::EventRoutes::EventRoutes() :
     m_settings("ControllerEventRoutes", "ControllerEventRoutes.json")
 {
 }
 
-void EventRoutes::loadFromFile()
+void loader::EventRoutes::loadFromFile()
 {
    m_data = m_settings.load<decltype(m_data)>(CONFIG_SECTION);
    for (const auto& e : m_data) { emitEntry(e); }
 }
 
-void EventRoutes::emitEntry(const MapEntry& e)
+void loader::EventRoutes::emitEntry(const MapEntry& e)
 {
    mpark::visit(
        util::overload{
-           [&e, this](const WidgetCoord& wc) {
+           [&e, this](const musicDevice::controller::WidgetCoord& wc) {
               mpark::visit(
                   util::overload{
                       [&e, &wc, this](const EventDestination::Note& note) {
@@ -50,7 +50,7 @@ void EventRoutes::emitEntry(const MapEntry& e)
                   },
                   e.to.controlType);
            },
-           [&e, this](const Note& note) {
+           [&e, this](const musicDevice::controller::Note& note) {
               mpark::visit(
                   util::overload{
                       [&e, note, this](const EventDestination::Note& destNote) {
@@ -80,15 +80,15 @@ void EventRoutes::emitEntry(const MapEntry& e)
        e.from.eventId.widgetCoord);
 }
 
-void EventRoutes::emitEntryGotDisabled(const MapEntry& e)
+void loader::EventRoutes::emitEntryGotDisabled(const MapEntry& e)
 {
    mpark::visit(util::overload{
-                    [&e, this](const WidgetCoord& wc) {
+                    [&e, this](const musicDevice::controller::WidgetCoord& wc) {
                        emitConnectionUnloadedWidget(
                            e.from.mdId, e.from.eventId.widgetId, wc.col, wc.row,
                            e.from.eventId.eventId, e.from.eventId.channelId);
                     },
-                    [&e, this](const Note& note) {
+                    [&e, this](const musicDevice::controller::Note& note) {
                        emitConnectionUnloadedNotes(
                            e.from.mdId, e.from.eventId.widgetId, note.number,
                            e.from.eventId.eventId, e.from.eventId.channelId);
@@ -97,10 +97,10 @@ void EventRoutes::emitEntryGotDisabled(const MapEntry& e)
                 e.from.eventId.widgetCoord);
 }
 
-void EventRoutes::musicDeviceAppeared(const MusicDeviceId& mdId)
+void loader::EventRoutes::musicDeviceAppeared(const musicDevice::MusicDeviceId& mdId)
 {
-   MusicDeviceId _mdID = mdId;
-   _mdID.portName      = MusicDeviceId::ANY_PORT;
+   musicDevice::MusicDeviceId _mdID = mdId;
+   _mdID.portName                   = musicDevice::MusicDeviceId::ANY_PORT;
    for (const auto& e : m_data)
    {
       if (e.from.mdId == _mdID || e.to.mdId == _mdID)
@@ -110,7 +110,7 @@ void EventRoutes::musicDeviceAppeared(const MusicDeviceId& mdId)
    }
 }
 
-void EventRoutes::musicDeviceDisappeared(const MusicDeviceId& mdId)
+void loader::EventRoutes::musicDeviceDisappeared(const musicDevice::MusicDeviceId& mdId)
 {
    for (const auto& e : m_data)
    {
@@ -121,57 +121,27 @@ void EventRoutes::musicDeviceDisappeared(const MusicDeviceId& mdId)
    }
 }
 
-void EventRoutes::connectNotes2Notes(const MusicDeviceId& controllerID,
-                                     int widgetIdx, int note, int eventIdx,
-                                     int channelIdx,
-                                     const MusicDeviceId& soundDevID,
-                                     int voiceIdx)
+void loader::EventRoutes::connectNotes2Notes(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx, int note,
+    int eventIdx, int channelIdx, const musicDevice::MusicDeviceId& soundDevID,
+    int voiceIdx)
 {
    const EventIdExt from{controllerID,
-                         EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
-   const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
-   insert(from, to);
-}
-
-void EventRoutes::connectNotes2Parameter(const MusicDeviceId& controllerID,
-                                         int widgetIdx, int note, int eventIdx,
-                                         int channelIdx,
-                                         const MusicDeviceId& soundDevID,
-                                         int voiceIdx, int parameterIdx,
-                                         ParameterDestination paramFunc)
-{
-   const EventIdExt from{controllerID,
-                         EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
-   const EventDestinationL to{
-       soundDevID, voiceIdx,
-       EventDestination::ParameterBase{parameterIdx, paramFunc}};
-   insert(from, to);
-}
-
-void EventRoutes::connectWidget2Notes(const MusicDeviceId& controllerID,
-                                      int widgetIdx, int widgetCoordX,
-                                      int widgetCoordY, int eventIdx,
-                                      int channelIdx,
-                                      const MusicDeviceId& soundDevID,
-                                      int voiceIdx)
-{
-   const EventIdExt from{
-       controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
+                         musicDevice::controller::EventId{
+                             widgetIdx, musicDevice::controller::Note{note},
                              eventIdx, channelIdx}};
    const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
    insert(from, to);
 }
 
-void EventRoutes::connectWidget2Parameter(const MusicDeviceId& controllerID,
-                                          int widgetIdx, int widgetCoordX,
-                                          int widgetCoordY, int eventIdx,
-                                          int channelIdx,
-                                          const MusicDeviceId& soundDevID,
-                                          int voiceIdx, int parameterIdx,
-                                          ParameterDestination paramFunc)
+void loader::EventRoutes::connectNotes2Parameter(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx, int note,
+    int eventIdx, int channelIdx, const musicDevice::MusicDeviceId& soundDevID,
+    int voiceIdx, int parameterIdx, ParameterDestination paramFunc)
 {
-   const EventIdExt from{
-       controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
+   const EventIdExt from{controllerID,
+                         musicDevice::controller::EventId{
+                             widgetIdx, musicDevice::controller::Note{note},
                              eventIdx, channelIdx}};
    const EventDestinationL to{
        soundDevID, voiceIdx,
@@ -179,66 +149,92 @@ void EventRoutes::connectWidget2Parameter(const MusicDeviceId& controllerID,
    insert(from, to);
 }
 
-void EventRoutes::eraseConnectionForNotes(const MusicDeviceId& controllerID,
-                                          int widgetIdx, int note, int eventIdx,
-                                          int channelIdx)
+void loader::EventRoutes::connectWidget2Notes(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx,
+    int widgetCoordX, int widgetCoordY, int eventIdx, int channelIdx,
+    const musicDevice::MusicDeviceId& soundDevID, int voiceIdx)
 {
-   const EventIdExt from{controllerID,
-                         EventId{widgetIdx, Note{note}, eventIdx, channelIdx}};
+   const EventIdExt from{controllerID, musicDevice::controller::EventId{
+                                           widgetIdx,
+                                           musicDevice::controller::WidgetCoord{
+                                               widgetCoordY, widgetCoordX},
+                                           eventIdx, channelIdx}};
+   const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
+   insert(from, to);
+}
+
+void loader::EventRoutes::connectWidget2Parameter(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx,
+    int widgetCoordX, int widgetCoordY, int eventIdx, int channelIdx,
+    const musicDevice::MusicDeviceId& soundDevID, int voiceIdx,
+    int parameterIdx, ParameterDestination paramFunc)
+{
+   const EventIdExt from{controllerID, musicDevice::controller::EventId{
+                                           widgetIdx,
+                                           musicDevice::controller::WidgetCoord{
+                                               widgetCoordY, widgetCoordX},
+                                           eventIdx, channelIdx}};
+   const EventDestinationL to{
+       soundDevID, voiceIdx,
+       EventDestination::ParameterBase{parameterIdx, paramFunc}};
+   insert(from, to);
+}
+
+void loader::EventRoutes::eraseConnectionForNotes(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx, int note,
+    int eventIdx, int channelIdx)
+{
+   const EventIdExt from{
+       controllerID, musicDevice::controller::EventId{widgetIdx, musicDevice::controller::Note{note},
+                                                      eventIdx, channelIdx}};
    erase(from);
 }
 
-void EventRoutes::eraseConnectionForWidget(const MusicDeviceId& controllerID,
-                                           int widgetIdx, int widgetCoordX,
-                                           int widgetCoordY, int eventIdx,
-                                           int channelIdx)
+void loader::EventRoutes::eraseConnectionForWidget(
+    const musicDevice::MusicDeviceId& controllerID, int widgetIdx,
+    int widgetCoordX, int widgetCoordY, int eventIdx, int channelIdx)
 {
-   const EventIdExt from{
-       controllerID, EventId{widgetIdx, WidgetCoord{widgetCoordY, widgetCoordX},
+   const EventIdExt from{controllerID,
+                         musicDevice::controller::EventId{
+                             widgetIdx, musicDevice::controller::WidgetCoord{widgetCoordY, widgetCoordX},
                              eventIdx, channelIdx}};
    erase(from);
 }
 
-void EventRoutes::eraseConnectionsToDestinationNotes(
-    const MusicDeviceId& soundDevID, int voiceIdx)
+void loader::EventRoutes::eraseConnectionsToDestinationNotes(
+    const musicDevice::MusicDeviceId& soundDevID, int voiceIdx)
 {
    std::vector<EventIdExt> toErase;
    const EventDestinationL to{soundDevID, voiceIdx, mpark::monostate()};
-   for(auto& e : m_data)
+   for (auto& e : m_data)
    {
-      if(e.to == to)
+      if (e.to == to)
       {
          toErase.push_back(e.from);
       }
    }
-   for(const auto& from : toErase)
-   {
-      erase(from);
-   }
+   for (const auto& from : toErase) { erase(from); }
 }
 
-void EventRoutes::eraseConnectionsToDestinationParameter(
-    const MusicDeviceId& soundDevID, int voiceIdx, int parameterIdx,
-    ParameterDestination paramFunc)
+void loader::EventRoutes::eraseConnectionsToDestinationParameter(
+    const musicDevice::MusicDeviceId& soundDevID, int voiceIdx,
+    int parameterIdx, ParameterDestination paramFunc)
 {
    std::vector<EventIdExt> toErase;
    const EventDestinationL to{
        soundDevID, voiceIdx,
        EventDestination::ParameterBase{parameterIdx, paramFunc}};
-   for(auto& e : m_data)
+   for (auto& e : m_data)
    {
-      if(e.to == to)
+      if (e.to == to)
       {
          toErase.push_back(e.from);
       }
    }
-   for(const auto& from : toErase)
-   {
-      erase(from);
-   }
+   for (const auto& from : toErase) { erase(from); }
 }
 
-void EventRoutes::insert(const EventIdExt& from, const EventDestinationL& to)
+void loader::EventRoutes::insert(const EventIdExt& from, const EventDestinationL& to)
 {
    auto it = std::find_if(m_data.begin(), m_data.end(),
                           [&from, &to](const MapEntry& e) {
@@ -261,7 +257,7 @@ void EventRoutes::insert(const EventIdExt& from, const EventDestinationL& to)
    m_settings.save(CONFIG_SECTION, m_data);
 }
 
-void EventRoutes::erase(const EventIdExt& from)
+void loader::EventRoutes::erase(const EventIdExt& from)
 {
    auto it =
        std::find_if(m_data.begin(), m_data.end(),

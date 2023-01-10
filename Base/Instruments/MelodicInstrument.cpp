@@ -2,6 +2,7 @@
 
 #include "MusicDeviceHolder.h"
 #include "VectorIndexInRange.h"
+#include "SoundSection.h"
 
 using namespace base::instruments;
 
@@ -142,6 +143,13 @@ float MelodicInstrument::normalizePercentageValue(
 {
    // TODO MPE
    return 0;
+}
+
+const base::musicDevice::description::sound::Parameter*
+   MelodicInstrument::parameterDescription(int compPart, int parameterIdx) const
+{
+   return nullptr;
+   // TODO
 }
 
 MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept

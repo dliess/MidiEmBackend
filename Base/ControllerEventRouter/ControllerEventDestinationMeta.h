@@ -1,22 +1,22 @@
-#ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_META_H
-#define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_META_H
+#ifndef BASE_EVENT_ROUTE_EVENT_DESTINATION_META_H
+#define BASE_EVENT_ROUTE_EVENT_DESTINATION_META_H
 
 #include "JsonCast.h"
 
 template <>
-inline void to_json<base::musicDevice::controller::ParameterDestination>(
+inline void to_json<base::eventRouter::ParameterDestination>(
     nlohmann::json& j,
-    const base::musicDevice::controller::ParameterDestination& obj)
+    const base::eventRouter::ParameterDestination& obj)
 {
    j = ~obj;
 }
 
 template <>
-inline void from_json<base::musicDevice::controller::ParameterDestination>(
+inline void from_json<base::eventRouter::ParameterDestination>(
     const nlohmann::json& j,
-    base::musicDevice::controller::ParameterDestination& obj)
+    base::eventRouter::ParameterDestination& obj)
 {
-   obj = base::musicDevice::controller::create_ParameterDestination(j.get<std::string>());
+   obj = base::eventRouter::create_ParameterDestination(j.get<std::string>());
 }
 
 #endif

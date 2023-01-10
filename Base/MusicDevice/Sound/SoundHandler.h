@@ -58,6 +58,8 @@ public:
    [[nodiscard]] float normalizePercentageValue(
        int voiceId, int parameterId, ParameterPart parameterPart,
        float percentageValue) const noexcept;
+   [[nodiscard]] const description::sound::Parameter*
+   parameterDescription(int voiceIdx, int parameterIdx) const;
    void incrementParameterValue(int voiceId, int parameterId, float increment,
                                 bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;

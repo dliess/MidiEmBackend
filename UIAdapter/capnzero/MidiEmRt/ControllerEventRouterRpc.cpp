@@ -1,7 +1,6 @@
 #include "ControllerEventRouterRpc.h"
 
 #include "ControllerEventRouter.h"
-#include "MusicDeviceContainer.h"
 #include "MusicDeviceDescription.h"
 
 using namespace uiadapter::capnzero;
@@ -10,21 +9,22 @@ using namespace base::musicDevice;
 ControllerEventRouterRpc::ControllerEventRouterRpc(
     controller::EventRouter& rCtrlEventRouter,
     base::musicDevice::MusicDeviceContainer& rMusicDeviceContainer) noexcept :
-    m_rCtrlEventRouter(rCtrlEventRouter),
-    m_rMusicDeviceContainer(rMusicDeviceContainer)
+    m_rCtrlEventRouter(rCtrlEventRouter)
 {
 }
 
-inline controller::EventDestination::Endpoint toEndpoint(
+controller::EventDestination::Endpoint toEndpoint(
     ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx =
+        controller::EventDestination::DrumKit::NOT_SET)
 {
    switch (dest)
    {
       case ::capnzero::MidiEmRt::ControllerEventRouteDestination::DRUM_KIT:
       {
          return controller::EventDestination::DrumKit{util::deepCopy(destUUID),
-                                                      voiceIdx};
+                                                      voiceIdx, componentIdx};
       }
       case ::capnzero::MidiEmRt::ControllerEventRouteDestination::MELODIC:
       {
@@ -51,7 +51,7 @@ void ControllerEventRouterRpc::connectNotes2Notes(
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
        controller::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
-                                    controller::EventDestination::Note{-1}});
+                                    controller::EventDestination::Note{}});
 }
 
 void ControllerEventRouterRpc::connectNotes2Parameter(
@@ -60,15 +60,19 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
     ::capnzero::Int16 channelIdx,
     ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 parameterIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
-   controller::EventDestination to;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx   = voiceIdx;
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
+       controller::EventDestination{
+           toEndpoint(dest, destUUID, voiceIdx, componentIdx),
+           controller::EventDestination::Parameter{
+               parameterIdx,
+               static_cast<controller::ParameterDestination>(paramFunc)}});
+   /*
    const auto it = m_rMusicDeviceContainer.find(to.uuid);
    if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
    {
@@ -92,6 +96,7 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
       spdlog::error("Could not find destination uuid {} in music devices",
                     util::uuid2Str(to.uuid));
    }
+   */
 }
 
 void ControllerEventRouterRpc::connectWidget2Notes(
@@ -101,16 +106,13 @@ void ControllerEventRouterRpc::connectWidget2Notes(
     ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx,
-                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
-                   eventIdx, channelIdx};
-   controller::EventDestination to;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx    = voiceIdx;
-   to.controlType = controller::EventDestination::Note{65};   // TODO
-   m_rCtrlEventRouter.createConnection(from, to);
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+            eventIdx, channelIdx}},
+       controller::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
+                                    controller::EventDestination::Note{}});
 }
 
 void ControllerEventRouterRpc::connectWidget2Parameter(
@@ -119,40 +121,45 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
     ::capnzero::MidiEmRt::ControllerEventRouteDestination dest,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 parameterIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmRt::SDParameterDestination paramFunc)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx,
-                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
-                   eventIdx, channelIdx};
-   controller::EventDestination to;
-   std::copy(soundDevUUID.begin(), soundDevUUID.end(), to.uuid.begin());
-   to.voiceIdx   = voiceIdx;
-   const auto it = m_rMusicDeviceContainer.find(to.uuid);
-   if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
-   {
-      const auto& paramDescr =
-          it->second->description()->soundSection->parameterDescr(voiceIdx,
-                                                                  parameterIdx);
-      to.controlType = controller::EventDestination::Parameter{
-          parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc),
-          true,
-          paramDescr.type == description::sound::Parameter::Type::List,
-          paramDescr.getSourceResolution(),
-          paramDescr.type ==
-                  description::sound::Parameter::Type::ContinousBipolar
-              ? 0.5f
-              : 0.0f};
-      m_rCtrlEventRouter.createConnection(from, to);
-   }
-   else
-   {
-      spdlog::error("Could not find destination uuid {} in music devices",
-                    util::uuid2Str(to.uuid));
-   }
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+            eventIdx, channelIdx}},
+       controller::EventDestination{
+           toEndpoint(dest, destUUID, voiceIdx, componentIdx),
+           controller::EventDestination::Parameter{
+               parameterIdx,
+               static_cast<controller::ParameterDestination>(paramFunc)}});
+
+   /*
+  const auto it = m_rMusicDeviceContainer.find(to.uuid);
+  if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
+  {
+     const auto& paramDescr =
+         it->second->description()->soundSection->parameterDescr(voiceIdx,
+                                                                 parameterIdx);
+     to.controlType = controller::EventDestination::Parameter{
+         parameterIdx,
+         static_cast<controller::ParameterDestination>(paramFunc),
+         true,
+         paramDescr.type == description::sound::Parameter::Type::List,
+         paramDescr.getSourceResolution(),
+         paramDescr.type ==
+                 description::sound::Parameter::Type::ContinousBipolar
+             ? 0.5f
+             : 0.0f};
+     m_rCtrlEventRouter.createConnection(from, to);
+  }
+  else
+  {
+     spdlog::error("Could not find destination uuid {} in music devices",
+                   util::uuid2Str(to.uuid));
+  }
+  */
 }
 
 void ControllerEventRouterRpc::eraseConnectionForNotes(
@@ -160,10 +167,9 @@ void ControllerEventRouterRpc::eraseConnectionForNotes(
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
     ::capnzero::Int16 channelIdx)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx, controller::Note{note}, eventIdx, channelIdx};
-   m_rCtrlEventRouter.removeConnection(from);
+   m_rCtrlEventRouter.removeConnection(controller::EventIdExt{
+       util::deepCopy(controllerUUID),
+       {widgetIdx, controller::Note{note}, eventIdx, channelIdx}});
 }
 
 void ControllerEventRouterRpc::eraseConnectionForWidget(
@@ -171,10 +177,8 @@ void ControllerEventRouterRpc::eraseConnectionForWidget(
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
 {
-   controller::EventIdExt from;
-   std::copy(controllerUUID.begin(), controllerUUID.end(), from.uuid.begin());
-   from.eventId = {widgetIdx,
-                   controller::WidgetCoord{widgetCoordY, widgetCoordX},
-                   eventIdx, channelIdx};
-   m_rCtrlEventRouter.removeConnection(from);
+   m_rCtrlEventRouter.removeConnection(controller::EventIdExt{
+       util::deepCopy(controllerUUID),
+       {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+        eventIdx, channelIdx}});
 }

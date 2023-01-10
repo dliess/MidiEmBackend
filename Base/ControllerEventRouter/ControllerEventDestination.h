@@ -7,7 +7,7 @@
 #include "EnumReflect.h"
 #include "Identifiable.h"
 
-namespace base::musicDevice::controller
+namespace base::eventRouter
 {
 DECLARE_ENUM(ParameterDestination, uint, Parameter, LFOWaveform, LFOAmplitude,
              LFOFrequency, LFOMultiplier);
@@ -16,9 +16,10 @@ struct EventDestination
    // Endpoint
    struct DrumKit
    {
+      static constexpr int NOT_SET = -2;
       util::Identifiable::UUID uuid;
       int voiceIdx;
-      int componentIdx;
+      int componentIdx{NOT_SET};
       // auto operator<=>(const DrumKit&) const = default;
    };
    struct Melodic
@@ -38,7 +39,8 @@ struct EventDestination
    // ControlType
    struct Note
    {
-      mutable int value;
+      static constexpr int DefaultPitch = 64;
+      mutable int pitch {DefaultPitch};
    };
    struct ParameterBase
    {

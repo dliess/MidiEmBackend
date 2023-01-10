@@ -81,6 +81,12 @@ float KitInstrument::normalizePercentageValue(
    return 0;
 }
 
+const base::musicDevice::description::sound::Parameter* KitInstrument::parameterDescription(
+       int soundIdx, int componentIdx, int parameterIdx) const
+{
+
+}
+
 std::optional<int> KitInstrument::toSoundIndex(int note) const noexcept
 {
    const int noteAdjusted = note - 64;

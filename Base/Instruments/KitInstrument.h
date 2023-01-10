@@ -47,6 +47,9 @@ public:
        musicDevice::sound::ParameterPart parameterPart,
        float percentageValue) const noexcept;
 
+   [[nodiscard]] const musicDevice::description::sound::Parameter*
+   parameterDescription(int soundIdx, int componentIdx, int parameterIdx) const;
+
    template <typename T> void addSound(int padIdx, T&& kompositeSound) noexcept;
 
    inline std::string name() const noexcept;

@@ -57,6 +57,8 @@ public:
        int note, int compPart, int parameterId,
        musicDevice::sound::ParameterPart parameterPart,
        float percentageValue) const noexcept;
+   [[nodiscard]] const musicDevice::description::sound::Parameter*
+   parameterDescription(int compPart, int parameterIdx) const;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;

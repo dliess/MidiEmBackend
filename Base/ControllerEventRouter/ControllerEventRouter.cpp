@@ -5,7 +5,14 @@
 #include "MelodicInstrument.h"
 #include "SoundHandler.h"
 
-using namespace base::musicDevice::controller;
+using namespace base::eventRouter;
+using namespace base::musicDevice;
+
+void fillParamCache(MusicDeviceContainerRef rMusicDeviceContainer,
+                    EventDestination::Parameter& parameter)
+{
+   // rMusicDeviceContainer.withSoundHandler(parameter.);
+}
 
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
                          MusicDeviceContainerRef rMusicDeviceContainer) :
@@ -16,32 +23,40 @@ EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
 void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID uuid, const controller::Event& event)
 {
-   const EventIdExt eventIdExt{uuid, event.id};
+   const controller::EventIdExt eventIdExt{uuid, event.id};
    mpark::visit(
-       util::overload{[this, &eventIdExt](const PressReleaseType& value) {
-                         handlePressReleaseType(eventIdExt, value);
-                      },
-                      [this, &eventIdExt](const ContinousValueType& value) {
-                         handleContinousValueType(eventIdExt, value);
-                      },
-                      [this, &eventIdExt](const IncrementType& value) {
-                         handleIncrementType(eventIdExt, value);
-                      },
-                      [this, &eventIdExt](const RelativeValueType& value) {
-                         handleRelativeValueType(eventIdExt, value);
-                      },
-                      [this](auto&&) {}},
+       util::overload{
+           [this, &eventIdExt](const controller::PressReleaseType& value) {
+              handlePressReleaseType(eventIdExt, value);
+           },
+           [this, &eventIdExt](const controller::ContinousValueType& value) {
+              handleContinousValueType(eventIdExt, value);
+           },
+           [this, &eventIdExt](const controller::IncrementType& value) {
+              handleIncrementType(eventIdExt, value);
+           },
+           [this, &eventIdExt](const controller::RelativeValueType& value) {
+              handleRelativeValueType(eventIdExt, value);
+           },
+           [this](auto&&) {}},
        event.value);
 }
 
-void EventRouter::createConnection(const EventIdExt& from,
+void EventRouter::createConnection(const controller::EventIdExt& from,
                                    const EventDestination& to) noexcept
 {
-   m_map[from] = to;
-   emitGotConnected(from, to);
+   EventDestination destination = to;
+   if (auto param =
+           mpark::get_if<EventDestination::Parameter>(&destination.controlType))
+   {
+      // fillParamCache(m_rMusicDeviceContainer, destination.endpoint *param);
+   }
+   m_map[from] = destination;
+   emitGotConnected(from, destination);
 }
 
-void EventRouter::removeConnection(const EventIdExt& eventIdExt) noexcept
+void EventRouter::removeConnection(
+    const controller::EventIdExt& eventIdExt) noexcept
 {
    auto it = m_map.find(eventIdExt);
    m_map.erase(it);
@@ -66,7 +81,8 @@ void playNoteOnOff(Dev& dev, int note, float velocity,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
-                  const PressReleaseType& value, MDCoords... mdCoords)
+                  const controller::PressReleaseType& value,
+                  MDCoords... mdCoords)
 {
    if (parameter.isList)
    {
@@ -103,7 +119,8 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
-                  const ContinousValueType& value, MDCoords... mdCoords)
+                  const controller::ContinousValueType& value,
+                  MDCoords... mdCoords)
 {
    const float val = dev.normalizePercentageValue(
        mdCoords..., parameter.id,
@@ -118,7 +135,8 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
-                  const IncrementType& increment, MDCoords... mdCoords)
+                  const controller::IncrementType& increment,
+                  MDCoords... mdCoords)
 {
    float incr = 0;
    if (parameter.isList)
@@ -137,7 +155,8 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
-                  const RelativeValueType& value, MDCoords... mdCoords)
+                  const controller::RelativeValueType& value,
+                  MDCoords... mdCoords)
 {
    float valueToSet = value.value;
    if (!parameter.valueAtPress)
@@ -154,12 +173,14 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 }
 }   // namespace detail
 
-void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
-                                         const PressReleaseType& value) noexcept
+void EventRouter::handlePressReleaseType(
+    const controller::EventIdExt& eventIdExt,
+    const controller::PressReleaseType& value) noexcept
 {
    mpark::visit(
        util::overload{
-           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+           [this, &eventIdExt,
+            &value](const controller::WidgetCoord& widgetCoord) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -167,9 +188,9 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
               }
               else
               {
-                 EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<WidgetCoord>(ANY,
-                                                                       ANY);
+                 controller::EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord
+                     .emplace<controller::WidgetCoord>(ANY, ANY);
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
@@ -178,7 +199,7 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
                  }
               }
            },
-           [this, &eventIdExt, &value](const Note& note) {
+           [this, &eventIdExt, &value](const controller::Note& note) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -186,8 +207,9 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
               }
               else
               {
-                 EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{ANY});
+                 controller::EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+                     ANY);
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
@@ -201,11 +223,13 @@ void EventRouter::handlePressReleaseType(const EventIdExt& eventIdExt,
 }
 
 void EventRouter::handleContinousValueType(
-    const EventIdExt& eventIdExt, const ContinousValueType& value) noexcept
+    const controller::EventIdExt& eventIdExt,
+    const controller::ContinousValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
-           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+           [this, &eventIdExt,
+            &value](const controller::WidgetCoord& widgetCoord) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -220,7 +244,7 @@ void EventRouter::handleContinousValueType(
               }
               */
            },
-           [this, &eventIdExt, &value](const Note& note) {
+           [this, &eventIdExt, &value](const controller::Note& note) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -228,8 +252,9 @@ void EventRouter::handleContinousValueType(
               }
               else
               {
-                 EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{ANY});
+                 controller::EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+                     ANY);
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
@@ -242,19 +267,21 @@ void EventRouter::handleContinousValueType(
        eventIdExt.eventId.widgetCoord);
 }
 
-void EventRouter::handleIncrementType(const EventIdExt& eventIdExt,
-                                    const IncrementType& value) noexcept
+void EventRouter::handleIncrementType(
+    const controller::EventIdExt& eventIdExt,
+    const controller::IncrementType& value) noexcept
 {
    mpark::visit(
        util::overload{
-           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+           [this, &eventIdExt,
+            &value](const controller::WidgetCoord& widgetCoord) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
                  handleIncrement(destIter->second, value);
               }
            },
-           [this, &eventIdExt, &value](const Note& note) {
+           [this, &eventIdExt, &value](const controller::Note& note) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -262,8 +289,9 @@ void EventRouter::handleIncrementType(const EventIdExt& eventIdExt,
               }
               else
               {
-                 EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{ANY});
+                 controller::EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+                     ANY);
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
@@ -276,19 +304,21 @@ void EventRouter::handleIncrementType(const EventIdExt& eventIdExt,
        eventIdExt.eventId.widgetCoord);
 }
 
-void EventRouter::handleRelativeValueType(const EventIdExt& eventIdExt,
-                                        const RelativeValueType& value) noexcept
+void EventRouter::handleRelativeValueType(
+    const controller::EventIdExt& eventIdExt,
+    const controller::RelativeValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
-           [this, &eventIdExt, &value](const WidgetCoord& widgetCoord) {
+           [this, &eventIdExt,
+            &value](const controller::WidgetCoord& widgetCoord) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
                  handleRelativeValue(destIter->second, value);
               }
            },
-           [this, &eventIdExt, &value](const Note& note) {
+           [this, &eventIdExt, &value](const controller::Note& note) {
               const auto destIter = m_map.find(eventIdExt);
               if (destIter != m_map.end())
               {
@@ -296,8 +326,9 @@ void EventRouter::handleRelativeValueType(const EventIdExt& eventIdExt,
               }
               else
               {
-                 EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<Note>(Note{ANY});
+                 controller::EventIdExt melodicEvent = eventIdExt;
+                 melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+                     ANY);
                  const auto destIter2 = m_map.find(melodicEvent);
                  if (destIter2 != m_map.end())
                  {
@@ -309,12 +340,13 @@ void EventRouter::handleRelativeValueType(const EventIdExt& eventIdExt,
        eventIdExt.eventId.widgetCoord);
 }
 
-void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
-                                  const EventDestination::Note& note,
-                                  const PressReleaseType& value) noexcept
+void EventRouter::playNoteOnDrumKit(
+    const EventDestination::DrumKit& drumKit,
+    const EventDestination::Note& note,
+    const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
-      detail::playNoteOnOff(kitInstr, note.value, value.value,
+      detail::playNoteOnOff(kitInstr, note.pitch, value.value,
                             drumKit.voiceIdx);
    });
 }
@@ -322,7 +354,7 @@ void EventRouter::playNoteOnDrumKit(const EventDestination::DrumKit& drumKit,
 void EventRouter::setParameterOnDrumKit(
     const EventDestination::DrumKit& drumKit,
     const EventDestination::Parameter& parameter,
-    const PressReleaseType& value) noexcept
+    const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
       detail::setParameter(kitInstr, parameter, value, drumKit.voiceIdx,
@@ -333,7 +365,7 @@ void EventRouter::setParameterOnDrumKit(
 void EventRouter::setParameterOnMelodic(
     const EventDestination::Melodic& melodic,
     const EventDestination::Parameter& parameter,
-    const PressReleaseType& value) noexcept
+    const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withMelodicInstrument(melodic.uuid, [&](auto& melodicInstr) {
       detail::setParameter(melodicInstr, parameter, value,
@@ -343,19 +375,20 @@ void EventRouter::setParameterOnMelodic(
 
 void EventRouter::playNoteOnMusicDevice(
     const EventDestination::MusicDevice& musicDevice,
-    const EventDestination::Note& note, const PressReleaseType& value) noexcept
+    const EventDestination::Note& note,
+    const controller::PressReleaseType& value) noexcept
 {
    m_rMusicDeviceContainer.withSoundHandler(
        musicDevice.uuid, [&](auto& soundHandler) {
-          detail::playNoteOnOff(soundHandler, note.value, value.value,
-                        musicDevice.voiceIdx);
+          detail::playNoteOnOff(soundHandler, note.pitch, value.value,
+                                musicDevice.voiceIdx);
        });
 }
 
 void EventRouter::setParameterOnMusicDevice(
     const EventDestination::MusicDevice& musicDevice,
     const EventDestination::Parameter& parameter,
-    const PressReleaseType& value) noexcept
+    const controller::PressReleaseType& value) noexcept
 
 {
    m_rMusicDeviceContainer.withSoundHandler(
@@ -365,8 +398,9 @@ void EventRouter::setParameterOnMusicDevice(
        });
 }
 
-void EventRouter::handlePressRelease(const EventDestination& eventDestination,
-                                   const PressReleaseType& value) noexcept
+void EventRouter::handlePressRelease(
+    const EventDestination& eventDestination,
+    const controller::PressReleaseType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -412,18 +446,20 @@ void EventRouter::handlePressRelease(const EventDestination& eventDestination,
 }
 
 void EventRouter::playLayoutMappedDrumKit(
-    const WidgetCoord& widgetCoord, EventDestination::DrumKit& drumKit,
-    const PressReleaseType& value) noexcept
+    const controller::WidgetCoord& widgetCoord,
+    EventDestination::DrumKit& drumKit,
+    const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
       detail::playNoteOnOff(kitInstr, 64, value.value,
-                    widgetCoord.row * 8 + widgetCoord.col);
+                            widgetCoord.row * 8 + widgetCoord.col);
    });
 }
 
 void EventRouter::handleAnyWidgetCoordPressRelease(
-    const WidgetCoord& widgetCoord, const EventDestination& eventDestination,
-    const PressReleaseType& value) noexcept
+    const controller::WidgetCoord& widgetCoord,
+    const EventDestination& eventDestination,
+    const controller::PressReleaseType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -444,7 +480,7 @@ void EventRouter::handleAnyWidgetCoordPressRelease(
 
 void EventRouter::handleAnyNotePressRelease(
     int note, const EventDestination& eventDestination,
-    const PressReleaseType& value) noexcept
+    const controller::PressReleaseType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -456,15 +492,17 @@ void EventRouter::handleAnyNotePressRelease(
                          {
                             m_rInstruments.withKitInstrument(
                                 drumKit.uuid, [&](auto& kitInstr) {
-                                   detail::playNoteOnOff(kitInstr, note, value.value);
+                                   detail::playNoteOnOff(kitInstr, note,
+                                                         value.value);
                                 });
                          }
                          else
                          {
                             m_rInstruments.withKitInstrument(
                                 drumKit.uuid, [&](auto& kitInstr) {
-                                   detail::playNoteOnOff(kitInstr, note, value.value,
-                                                 drumKit.voiceIdx);
+                                   detail::playNoteOnOff(kitInstr, note,
+                                                         value.value,
+                                                         drumKit.voiceIdx);
                                 });
                          }
                       },
@@ -478,7 +516,8 @@ void EventRouter::handleAnyNotePressRelease(
                       [&, this](const EventDestination::Note& dstNote) {
                          m_rInstruments.withMelodicInstrument(
                              melodic.uuid, [&](auto& melodicInstr) {
-                                detail::playNoteOnOff(melodicInstr, note, value.value);
+                                detail::playNoteOnOff(melodicInstr, note,
+                                                      value.value);
                              });
                       },
                       [](const EventDestination::Parameter& parameter) {},
@@ -491,8 +530,9 @@ void EventRouter::handleAnyNotePressRelease(
                       [&, this](const EventDestination::Note& dstNote) {
                          m_rMusicDeviceContainer.withSoundHandler(
                              musicDevice.uuid, [&](auto& soundaHandler) {
-                                detail::playNoteOnOff(soundaHandler, note, value.value,
-                                              musicDevice.voiceIdx);
+                                detail::playNoteOnOff(soundaHandler, note,
+                                                      value.value,
+                                                      musicDevice.voiceIdx);
                              });
                       },
                       [](const EventDestination::Parameter& parameter) {},
@@ -503,8 +543,9 @@ void EventRouter::handleAnyNotePressRelease(
        eventDestination.endpoint);
 }
 
-void EventRouter::handleContinousValue(const EventDestination& eventDestination,
-                                       const ContinousValueType& value) noexcept
+void EventRouter::handleContinousValue(
+    const EventDestination& eventDestination,
+    const controller::ContinousValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -559,7 +600,7 @@ void EventRouter::handleContinousValue(const EventDestination& eventDestination,
 
 void EventRouter::sendMPEContinousValue(
     int note, const EventDestination& eventDestination,
-    const ContinousValueType& value) noexcept
+    const controller::ContinousValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -583,8 +624,9 @@ void EventRouter::sendMPEContinousValue(
        eventDestination.endpoint);
 }
 
-void EventRouter::handleIncrement(const EventDestination& eventDestination,
-                                  const IncrementType& increment) noexcept
+void EventRouter::handleIncrement(
+    const EventDestination& eventDestination,
+    const controller::IncrementType& increment) noexcept
 {
    mpark::visit(
        util::overload{
@@ -639,7 +681,7 @@ void EventRouter::handleIncrement(const EventDestination& eventDestination,
 
 void EventRouter::sendMPEIncrementValue(
     int note, const EventDestination& eventDestination,
-    const IncrementType& increment) noexcept
+    const controller::IncrementType& increment) noexcept
 {
    mpark::visit(
        util::overload{
@@ -664,8 +706,9 @@ void EventRouter::sendMPEIncrementValue(
        eventDestination.endpoint);
 }
 
-void EventRouter::handleRelativeValue(const EventDestination& eventDestination,
-                                      const RelativeValueType& value) noexcept
+void EventRouter::handleRelativeValue(
+    const EventDestination& eventDestination,
+    const controller::RelativeValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -718,9 +761,9 @@ void EventRouter::handleRelativeValue(const EventDestination& eventDestination,
        eventDestination.endpoint);
 }
 
-void EventRouter::sendMPERelativeValue(int note,
-                                       const EventDestination& eventDestination,
-                                       const RelativeValueType& value) noexcept
+void EventRouter::sendMPERelativeValue(
+    int note, const EventDestination& eventDestination,
+    const controller::RelativeValueType& value) noexcept
 {
    mpark::visit(
        util::overload{
@@ -755,4 +798,35 @@ void EventRouter::printMap() const noexcept
 void EventRouter::retriggerCallbacks()
 {
    for (auto& e : m_map) { emitGotConnected(e.first, e.second); }
+}
+
+const description::sound::Parameter* EventRouter::parameterDescription(
+    const EventDestination::Endpoint& endpoint, int paramIdx)
+{
+   const description::sound::Parameter* ret{nullptr};
+   mpark::visit(util::overload{[&](EventDestination::DrumKit& drumKit) {
+                                  m_rInstruments.withKitInstrument(
+                                      drumKit.uuid, [&](const auto& instr) {
+                                         ret = instr.parameterDescription(
+                                             drumKit.voiceIdx,
+                                             drumKit.componentIdx, paramIdx);
+                                      });
+                               },
+                               [&](EventDestination::Melodic& melodic) {
+                                  m_rInstruments.withMelodicInstrument(
+                                      melodic.uuid, [&](const auto& instr) {
+                                         ret = instr.parameterDescription(
+                                             melodic.componentIdx, paramIdx);
+                                      });
+                               },
+                               [&](EventDestination::MusicDevice& musicDevice) {
+                                  m_rMusicDeviceContainer.withSoundHandler(
+                                      musicDevice.uuid, [&](const auto& sd) {
+                                         ret = sd.parameterDescription(
+                                             musicDevice.voiceIdx, paramIdx);
+                                      });
+                               },
+                               [](auto&&) {}},
+                endpoint);
+   return ret;
 }
