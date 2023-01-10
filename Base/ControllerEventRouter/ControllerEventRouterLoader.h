@@ -31,7 +31,7 @@ struct EventDestinationL
    musicDevice::MusicDeviceId mdId;
    int voiceIdx;
    using ControlType =
-       mpark::variant<mpark::monostate, EventDestination::Note, EventDestination::ParameterBase>;
+       mpark::variant<mpark::monostate, EventDestination::Note, EventDestination::Parameter>;
    ControlType controlType;
 };
 

@@ -55,9 +55,9 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
          spdlog::error("Error getting parameter description");
          return;
       }
-      param->isList = (desc->type == description::sound::Parameter::Type::List);
-      param->resolution = desc->getSourceResolution();
-      param->zeroVal =
+      param->descriptionCache.isList = (desc->type == description::sound::Parameter::Type::List);
+      param->descriptionCache.resolution = desc->getSourceResolution();
+      param->descriptionCache.zeroVal =
           (desc->type == description::sound::Parameter::Type::ContinousBipolar
                ? 0.5f
                : 0.0f);
@@ -96,11 +96,11 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::PressReleaseType& value,
                   MDCoords... mdCoords)
 {
-   if (parameter.isList)
+   if (parameter.descriptionCache.isList)
    {
       if (value.value > 0)
       {
-         const float incr = parameter.upwards ? value.value : -value.value;
+         const float incr = parameter.cache.upwards ? value.value : -value.value;
          dev.incrementParameterValue(mdCoords..., parameter.id, incr, true);
       }
    }
@@ -110,20 +110,20 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       {
          const float actualVal =
              dev.getParameterValue(mdCoords..., parameter.id);
-         if (std::fabs(actualVal - parameter.zeroVal) <
+         if (std::fabs(actualVal - parameter.descriptionCache.zeroVal) <
              std::numeric_limits<float>::epsilon())
          {
-            if (parameter.valueAtPress)
+            if (parameter.cache.valueAtPress)
             {
                dev.setParameterValue(mdCoords..., parameter.id,
-                                     *parameter.valueAtPress);
+                                     *parameter.cache.valueAtPress);
             }
          }
          else
          {
-            parameter.valueAtPress =
+            parameter.cache.valueAtPress =
                 dev.getParameterValue(mdCoords..., parameter.id);
-            dev.setParameterValue(mdCoords..., parameter.id, parameter.zeroVal);
+            dev.setParameterValue(mdCoords..., parameter.id, parameter.descriptionCache.zeroVal);
          }
       }
    }
@@ -151,12 +151,12 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   MDCoords... mdCoords)
 {
    float incr = 0;
-   if (parameter.isList)
+   if (parameter.descriptionCache.isList)
    {
-      const int accIncr          = increment.value + parameter.storedIncrements;
+      const int accIncr          = increment.value + parameter.cache.storedIncrements;
       const int incrForOneStep   = increment.resolution / 12;
       incr                       = accIncr / incrForOneStep;
-      parameter.storedIncrements = accIncr % incrForOneStep;
+      parameter.cache.storedIncrements = accIncr % incrForOneStep;
    }
    else
    {   // TODO: highres mode
@@ -171,16 +171,16 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   MDCoords... mdCoords)
 {
    float valueToSet = value.value;
-   if (!parameter.valueAtPress)
+   if (!parameter.cache.valueAtPress)
    {
-      parameter.valueAtPress.emplace<float>(
+      parameter.cache.valueAtPress.emplace<float>(
           dev.getParameterValue(mdCoords..., parameter.id));
    }
-   valueToSet += parameter.valueAtPress.value();
+   valueToSet += parameter.cache.valueAtPress.value();
    dev.setParameterValue(mdCoords..., parameter.id, valueToSet);
    if (0 == value.value)
    {
-      parameter.valueAtPress = std::nullopt;
+      parameter.cache.valueAtPress = std::nullopt;
    }
 }
 }   // namespace detail

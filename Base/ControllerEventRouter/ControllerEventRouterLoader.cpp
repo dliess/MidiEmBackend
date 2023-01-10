@@ -33,7 +33,7 @@ void loader::EventRoutes::emitEntry(const MapEntry& e)
                              e.to.voiceIdx);
                       },
                       [&e, &wc,
-                       this](const EventDestination::ParameterBase& param) {
+                       this](const EventDestination::Parameter& param) {
                          emitConnectionLoadedWidget2Parameter(
                              e.from.mdId, e.from.eventId.widgetId, wc.col,
                              wc.row, e.from.eventId.eventId,
@@ -60,7 +60,7 @@ void loader::EventRoutes::emitEntry(const MapEntry& e)
                              e.to.mdId, e.to.voiceIdx);
                       },
                       [&e, note,
-                       this](const EventDestination::ParameterBase& param) {
+                       this](const EventDestination::Parameter& param) {
                          emitConnectionLoadedNotes2Parameter(
                              e.from.mdId, e.from.eventId.widgetId, note.number,
                              e.from.eventId.eventId, e.from.eventId.channelId,
@@ -145,7 +145,7 @@ void loader::EventRoutes::connectNotes2Parameter(
                              eventIdx, channelIdx}};
    const EventDestinationL to{
        soundDevID, voiceIdx,
-       EventDestination::ParameterBase{parameterIdx, paramFunc}};
+       EventDestination::Parameter{parameterIdx, paramFunc}};
    insert(from, to);
 }
 
@@ -176,7 +176,7 @@ void loader::EventRoutes::connectWidget2Parameter(
                                            eventIdx, channelIdx}};
    const EventDestinationL to{
        soundDevID, voiceIdx,
-       EventDestination::ParameterBase{parameterIdx, paramFunc}};
+       EventDestination::Parameter{parameterIdx, paramFunc}};
    insert(from, to);
 }
 
@@ -223,7 +223,7 @@ void loader::EventRoutes::eraseConnectionsToDestinationParameter(
    std::vector<EventIdExt> toErase;
    const EventDestinationL to{
        soundDevID, voiceIdx,
-       EventDestination::ParameterBase{parameterIdx, paramFunc}};
+       EventDestination::Parameter{parameterIdx, paramFunc}};
    for (auto& e : m_data)
    {
       if (e.to == to)

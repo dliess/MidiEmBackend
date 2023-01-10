@@ -72,31 +72,6 @@ void ControllerEventRouterRpc::connectNotes2Parameter(
            controller::EventDestination::Parameter{
                parameterIdx,
                static_cast<controller::ParameterDestination>(paramFunc)}});
-   /*
-   const auto it = m_rMusicDeviceContainer.find(to.uuid);
-   if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
-   {
-      const auto& paramDescr =
-          it->second->description()->soundSection->parameterDescr(voiceIdx,
-                                                                  parameterIdx);
-      to.controlType = controller::EventDestination::Parameter{
-          parameterIdx,
-          static_cast<controller::ParameterDestination>(paramFunc),
-          true,
-          paramDescr.type == description::sound::Parameter::Type::List,
-          paramDescr.getSourceResolution(),
-          paramDescr.type ==
-                  description::sound::Parameter::Type::ContinousBipolar
-              ? 0.5f
-              : 0.0f};
-      m_rCtrlEventRouter.createConnection(from, to);
-   }
-   else
-   {
-      spdlog::error("Could not find destination uuid {} in music devices",
-                    util::uuid2Str(to.uuid));
-   }
-   */
 }
 
 void ControllerEventRouterRpc::connectWidget2Notes(
@@ -134,32 +109,6 @@ void ControllerEventRouterRpc::connectWidget2Parameter(
            controller::EventDestination::Parameter{
                parameterIdx,
                static_cast<controller::ParameterDestination>(paramFunc)}});
-
-   /*
-  const auto it = m_rMusicDeviceContainer.find(to.uuid);
-  if (it != m_rMusicDeviceContainer.end() && it->second->soundHandler)
-  {
-     const auto& paramDescr =
-         it->second->description()->soundSection->parameterDescr(voiceIdx,
-                                                                 parameterIdx);
-     to.controlType = controller::EventDestination::Parameter{
-         parameterIdx,
-         static_cast<controller::ParameterDestination>(paramFunc),
-         true,
-         paramDescr.type == description::sound::Parameter::Type::List,
-         paramDescr.getSourceResolution(),
-         paramDescr.type ==
-                 description::sound::Parameter::Type::ContinousBipolar
-             ? 0.5f
-             : 0.0f};
-     m_rCtrlEventRouter.createConnection(from, to);
-  }
-  else
-  {
-     spdlog::error("Could not find destination uuid {} in music devices",
-                   util::uuid2Str(to.uuid));
-  }
-  */
 }
 
 void ControllerEventRouterRpc::eraseConnectionForNotes(

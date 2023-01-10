@@ -33,15 +33,15 @@ inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Note>(int i
 }
 
 template<>
-inline auto registerMembers<base::eventRouter::EventDestination::ParameterBase>()
+inline auto registerMembers<base::eventRouter::EventDestination::Parameter>()
 {
    return members(
-      member("id", &base::eventRouter::EventDestination::ParameterBase::id),
-      member("parameterDestination", &base::eventRouter::EventDestination::ParameterBase::parameterDestination));
+      member("id", &base::eventRouter::EventDestination::Parameter::id),
+      member("parameterDestination", &base::eventRouter::EventDestination::Parameter::parameterDestination));
 }
 
 template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::ParameterBase>(int i) noexcept
+inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Parameter>(int i) noexcept
 {
    return "Parameter";
 }
