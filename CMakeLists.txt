@@ -85,7 +85,7 @@ endif()
 CPMFindPackage(
   NAME MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG 4d3273631cfdcd5e056bd6c0987c0d2fabbbc1c4
+  GIT_TAG b9fc04ef6fe4f042c9bdc689617b07089e1225c5
 )
 if(MidiEmCapnZero_ADDED)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader ALIAS midiem-capnzero-loader)

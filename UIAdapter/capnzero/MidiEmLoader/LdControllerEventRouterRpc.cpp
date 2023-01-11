@@ -1,16 +1,44 @@
 #include "LdControllerEventRouterRpc.h"
 
-#include "ControllerEventRouterLoader.h"
+#include "ControllerEventRouter.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;
+using namespace base;
 using namespace base::musicDevice;
+
+eventRouter::EventDestination::Endpoint toEndpoint(
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx =
+        eventRouter::EventDestination::DrumKit::NOT_SET)
+{
+   switch (dest)
+   {
+      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::DRUM_KIT:
+      {
+         return eventRouter::EventDestination::DrumKit{util::deepCopy(destUUID),
+                                                       voiceIdx, componentIdx};
+      }
+      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::MELODIC:
+      {
+         return eventRouter::EventDestination::Melodic{util::deepCopy(destUUID),
+                                                       voiceIdx};
+      }
+      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::
+          MUSIC_DEVICE:
+      {
+         return eventRouter::EventDestination::MusicDevice{
+             util::deepCopy(destUUID), voiceIdx};
+      }
+   }
+}
 
 LdControllerEventRouterRpc::LdControllerEventRouterRpc(
     base::musicDevice::factory::Factory& rMDFactory,
-    base::musicDevice::controller::loader::EventRoutes& rEventRoutes) noexcept :
-    m_rMDFactory(rMDFactory), m_rEventRoutes(rEventRoutes)
+    base::eventRouter::EventRouter& rCtrlEventRouter) noexcept :
+    m_rMDFactory(rMDFactory), m_rCtrlEventRouter(rCtrlEventRouter)
 {
 }
 
@@ -21,26 +49,113 @@ void LdControllerEventRouterRpc::connectNotes2Notes(
     ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
-   const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   const auto pSoundDevID = m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   if (note >= 0 && isMelodic(destUUID))
-   {
-      note = -1;
-   }
-   m_rEventRoutes.connectNotes2Notes(*pControllerUUID, widgetIdx, note,
-                                     eventIdx, channelIdx, *pSoundDevID,
-                                     voiceIdx);
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
+       eventRouter::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
+                                     eventRouter::EventDestination::Note{}});
+}
+
+void LdControllerEventRouterRpc::connectNotes2Parameter(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
+    ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+{
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
+       eventRouter::EventDestination{
+           toEndpoint(dest, destUUID, voiceIdx, componentIdx),
+           eventRouter::EventDestination::Parameter{
+               parameterIdx,
+               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
+}
+
+void LdControllerEventRouterRpc::connectWidget2Notes(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
+{
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+            eventIdx, channelIdx}},
+       eventRouter::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
+                                     eventRouter::EventDestination::Note{}});
+}
+
+void LdControllerEventRouterRpc::connectWidget2Parameter(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+{
+   m_rCtrlEventRouter.createConnection(
+       controller::EventIdExt{
+           util::deepCopy(controllerUUID),
+           {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+            eventIdx, channelIdx}},
+       eventRouter::EventDestination{
+           toEndpoint(dest, destUUID, voiceIdx, componentIdx),
+           eventRouter::EventDestination::Parameter{
+               parameterIdx,
+               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
+}
+
+void LdControllerEventRouterRpc::eraseConnectionForNotes(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
+    ::capnzero::Int16 channelIdx)
+{
+   m_rCtrlEventRouter.removeConnection(controller::EventIdExt{
+       util::deepCopy(controllerUUID),
+       {widgetIdx, controller::Note{note}, eventIdx, channelIdx}});
+}
+
+void LdControllerEventRouterRpc::eraseConnectionForWidget(
+    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
+    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
+    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
+{
+   m_rCtrlEventRouter.removeConnection(controller::EventIdExt{
+       util::deepCopy(controllerUUID),
+       {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
+        eventIdx, channelIdx}});
+}
+
+void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
+{
+   m_rCtrlEventRouter.removeConnectionToDestination(
+       eventRouter::EventDestination{toEndpoint(dest, destUUID, voiceIdx),
+                                     eventRouter::EventDestination::Note{}});
+}
+
+void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
+    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
+    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
+    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+{
+   m_rCtrlEventRouter.removeConnectionToDestination(
+       eventRouter::EventDestination{
+           toEndpoint(dest, destUUID, voiceIdx, componentIdx),
+           eventRouter::EventDestination::Parameter{
+               parameterIdx,
+               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
 }
 
 bool LdControllerEventRouterRpc::isMelodic(
@@ -57,152 +172,4 @@ bool LdControllerEventRouterRpc::isMelodic(
                      DefaultInstrumentType::OnePolyphonicInstrument;
    }
    return false;
-}
-
-void LdControllerEventRouterRpc::connectNotes2Parameter(
-    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
-    ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
-{
-   const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   const auto pSoundDevUUID = m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.connectNotes2Parameter(
-       *pControllerUUID, widgetIdx, note, eventIdx, channelIdx, *pSoundDevUUID,
-       voiceIdx, parameterIdx,
-       static_cast<controller::ParameterDestination>(paramFunc));
-}
-
-void LdControllerEventRouterRpc::connectWidget2Notes(
-    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
-    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
-    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
-{
-   const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.connectWidget2Notes(*pControllerUUID, widgetIdx, widgetCoordX,
-                                      widgetCoordY, eventIdx, channelIdx,
-                                      *pSoundDevUUID, voiceIdx);
-}
-
-void LdControllerEventRouterRpc::connectWidget2Parameter(
-    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
-    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
-    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
-{
-   const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   const auto pSoundDevUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.connectWidget2Parameter(
-       *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY, eventIdx,
-       channelIdx, *pSoundDevUUID, voiceIdx, parameterIdx,
-       static_cast<controller::ParameterDestination>(paramFunc));
-}
-
-void LdControllerEventRouterRpc::eraseConnectionForNotes(
-    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
-    ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx)
-{
-   const auto pControllerUUID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerUUID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.eraseConnectionForNotes(*pControllerUUID, widgetIdx, note,
-                                          eventIdx, channelIdx);
-}
-
-void LdControllerEventRouterRpc::eraseConnectionForWidget(
-    const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
-    ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
-    ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx)
-{
-   const auto pControllerMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(controllerUUID);
-   if (!pControllerMDID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.eraseConnectionForWidget(*pControllerMDID, widgetIdx,
-                                           widgetCoordX, widgetCoordY, eventIdx,
-                                           channelIdx);
-}
-
-void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
-{
-   const auto pSoundDevMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevMDID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.eraseConnectionsToDestinationNotes(*pSoundDevMDID, voiceIdx);
-}
-
-void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
-    const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
-{
-   const auto pSoundDevMDID =
-       m_rMDFactory.dataHolder().musicDeviceId(destUUID);
-   if (!pSoundDevMDID)
-   {
-      spdlog::error("No mdId found for uuid");
-      return;
-   }
-   m_rEventRoutes.eraseConnectionsToDestinationParameter(
-       *pSoundDevMDID, voiceIdx, parameterIdx,
-       static_cast<controller::ParameterDestination>(paramFunc));
 }

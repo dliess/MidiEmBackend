@@ -8,7 +8,6 @@ set(SOURCES
     "TempoRpc.cpp"
     "TransportControlRpc.cpp"
     "ControllerDevicesRpc.cpp"
-    "ControllerEventRouterRpc.cpp"
     "ParameterSceneRpc.cpp"
     "SessionRpc.cpp"
 )
@@ -23,7 +22,6 @@ set(HEADERS
     "TempoRpc.h"
     "TransportControlRpc.h"
     "ControllerDevicesRpc.h"
-    "ControllerEventRouterRpc.h"
     "ParameterSceneRpc.h"
     "SessionRpc.h"
 )

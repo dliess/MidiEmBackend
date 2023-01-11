@@ -4,7 +4,6 @@
 #include "AbletonLinkWrapper.h"
 #include "ControllerDevicesRpc.h"
 #include "ControllerEventRouter.h"
-#include "ControllerEventRouterRpc.h"
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
 #include "JsonCast.h"   // meta::serialize
@@ -49,8 +48,6 @@ RtServer::RtServer(
         std::make_unique<TransportControlRpc>(rTransportControl),
         std::make_unique<AbletonLinkRpc>(rAbletonLinkWrapper),
         std::make_unique<MidiRoutingRpc>(rMidiRouter),
-        std::make_unique<ControllerEventRouterRpc>(rCtrlEventRouter,
-                                                   rMDHolder.musicDevices),
         std::make_unique<SessionRpc>(rTracks))
 {
    /*

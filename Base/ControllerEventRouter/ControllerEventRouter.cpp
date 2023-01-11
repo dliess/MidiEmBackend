@@ -67,6 +67,11 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
    emitGotConnected(from, destination);
 }
 
+void EventRouter::removeConnectionToDestination(const EventDestination& to) noexcept
+{
+   // TODO
+}
+
 void EventRouter::removeConnection(
     const controller::EventIdExt& eventIdExt) noexcept
 {

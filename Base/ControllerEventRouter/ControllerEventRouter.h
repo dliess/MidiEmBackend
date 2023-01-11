@@ -31,6 +31,7 @@ public:
    void createConnection(const musicDevice::controller::EventIdExt& from,
                          const EventDestination& to) noexcept;
    void removeConnection(const musicDevice::controller::EventIdExt& eventIdExt) noexcept;
+   void removeConnectionToDestination(const EventDestination& to) noexcept;
 
    void onControllerDevEventOccured(const util::Identifiable::UUID uuid,
                                     const musicDevice::controller::Event& event);

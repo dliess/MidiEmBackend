@@ -1,46 +1,16 @@
 #ifndef BASE_EVENT_ROUTE_EVENT_ROUTER_LOADER_H
 #define BASE_EVENT_ROUTE_EVENT_ROUTER_LOADER_H
 
-#include <unordered_map>
+#include <vector>
 
 #include "CallbackSignal.h"
-#include "ControllerEventDestination.h"
+#include "ControllerEventDestinationLoader.h"
 #include "ControllerEvents.h"
 #include "MusicDeviceId.h"
 #include "Settings.h"
 
-namespace base::musicDevice
-{
-class MusicDeviceContainer;
-}
 namespace base::eventRouter::loader
 {
-struct EventIdExt
-{
-   musicDevice::MusicDeviceId mdId;
-   musicDevice::controller::EventId eventId;
-};
-
-inline bool operator==(const EventIdExt& lhs, const EventIdExt& rhs)
-{
-   return lhs.mdId == rhs.mdId && lhs.eventId == rhs.eventId;
-}
-
-struct EventDestinationL
-{
-   musicDevice::MusicDeviceId mdId;
-   int voiceIdx;
-   using ControlType =
-       mpark::variant<mpark::monostate, EventDestination::Note, EventDestination::Parameter>;
-   ControlType controlType;
-};
-
-inline bool operator==(const EventDestinationL& lhs,
-                       const EventDestinationL& rhs)
-{
-   return lhs.mdId == rhs.mdId && lhs.voiceIdx == rhs.voiceIdx &&
-          lhs.controlType == rhs.controlType;
-}
 
 class EventRoutes
 {

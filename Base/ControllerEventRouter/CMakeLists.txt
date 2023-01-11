@@ -11,6 +11,7 @@ set(HEADERS
     "ControllerEventRouterLoaderMeta.h"
     "ControllerEventDestination.h"
     "ControllerEventDestination.inl"
+    "ControllerEventDestinationLoader.h"
 )
 
 add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
