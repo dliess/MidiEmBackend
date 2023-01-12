@@ -50,7 +50,7 @@ public:
    inline size_t size() const noexcept;
 
    inline void withSoundHandler(
-       const util::Identifiable::UUID& uuid,
+       util::Identifiable::UUIDView uuid,
        util::function_ref<void(sound::SoundHandler&)> cb);
 
    CB_SIGNAL(AboutToAdd, const MusicDevice&);

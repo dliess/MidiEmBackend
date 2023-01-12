@@ -231,10 +231,10 @@ inline size_t MusicDeviceContainer::size() const noexcept
 }
 
 inline void MusicDeviceContainer::withSoundHandler(
-    const util::Identifiable::UUID& uuid,
+    util::Identifiable::UUIDView uuid,
     util::function_ref<void(sound::SoundHandler&)> cb)
 {
-   auto mdIter = find(uuid);
+   auto mdIter = find(util::deepCopy(uuid));
    if (mdIter != end() && mdIter->second->soundHandler)
    {
       cb(*mdIter->second->soundHandler);
