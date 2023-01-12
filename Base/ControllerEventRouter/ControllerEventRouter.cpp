@@ -20,6 +20,13 @@ EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
 {
 }
 
+void EventRouter::loadFromFile()
+{
+   // TODO
+   //m_data = m_settings.load<decltype(m_data)>(CONFIG_SECTION);
+   //for (const auto& e : m_data) { emitEntry(e); }
+}
+
 void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID uuid, const controller::Event& event)
 {

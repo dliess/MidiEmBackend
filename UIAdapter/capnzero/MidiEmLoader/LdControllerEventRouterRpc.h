@@ -4,10 +4,6 @@
 #include "Identifiable.h"
 #include "MidiEmLoaderControllerEventRouterRpcIf.h"
 
-namespace base::musicDevice::factory
-{
-class Factory;
-}
 namespace base::eventRouter
 {
 class EventRouter;
@@ -20,7 +16,6 @@ class LdControllerEventRouterRpc
 {
 public:
    LdControllerEventRouterRpc(
-       base::musicDevice::factory::Factory& rMDFactory,
        base::eventRouter::EventRouter& rCtrlEventRouter) noexcept;
    void connectNotes2Notes(
        const ::capnzero::SpanCL<16>& controllerUUID,
@@ -77,11 +72,7 @@ public:
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
 
-   [[nodiscard]] bool isMelodic(
-       util::Identifiable::UUIDView uuid) const noexcept;
-
 private:
-   base::musicDevice::factory::Factory& m_rMDFactory;
    base::eventRouter::EventRouter& m_rCtrlEventRouter;
 };
 

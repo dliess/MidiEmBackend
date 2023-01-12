@@ -2,7 +2,6 @@
 
 #include "ControllerEventRouter.h"
 #include "MusicDeviceDescription.h"
-#include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;
 using namespace base;
@@ -32,13 +31,17 @@ eventRouter::EventDestination::Endpoint toEndpoint(
          return eventRouter::EventDestination::MusicDevice{
              util::deepCopy(destUUID), voiceIdx};
       }
+      default:
+      {
+         assert(false);
+         return eventRouter::EventDestination::DrumKit{};
+      }
    }
 }
 
 LdControllerEventRouterRpc::LdControllerEventRouterRpc(
-    base::musicDevice::factory::Factory& rMDFactory,
     base::eventRouter::EventRouter& rCtrlEventRouter) noexcept :
-    m_rMDFactory(rMDFactory), m_rCtrlEventRouter(rCtrlEventRouter)
+    m_rCtrlEventRouter(rCtrlEventRouter)
 {
 }
 
@@ -156,20 +159,4 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});
-}
-
-bool LdControllerEventRouterRpc::isMelodic(
-    util::Identifiable::UUIDView uuid) const noexcept
-{
-   const auto pDescr = m_rMDFactory.dataHolder().getDescription(uuid);
-   if (pDescr)
-   {
-      return pDescr->soundSection->defaultInstrumentType ==
-                 base::musicDevice::description::sound::Section::
-                     DefaultInstrumentType::InstrumentPerVoice ||
-             pDescr->soundSection->defaultInstrumentType ==
-                 base::musicDevice::description::sound::Section::
-                     DefaultInstrumentType::OnePolyphonicInstrument;
-   }
-   return false;
 }

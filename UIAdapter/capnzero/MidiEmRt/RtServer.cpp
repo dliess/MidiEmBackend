@@ -31,7 +31,7 @@ RtServer::RtServer(
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
-    base::musicDevice::controller::EventRouter &rCtrlEventRouter,
+    base::eventRouter::EventRouter &rCtrlEventRouter,
     base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
@@ -284,109 +284,6 @@ RtServer::RtServer(
               source.toStr(), dest.toStr(), sourceChannel, destChannel,
               enabled);
        });
-
-   rCtrlEventRouter.onGotConnected([this](const base::musicDevice::controller::
-                                              EventIdExt &from,
-                                          const base::musicDevice::controller::
-                                              EventDestination &to) {
-      mpark::visit(
-          util::overload{
-              [this](
-                  const mpark::monostate
-                      &) { /* TODO */
-                           spdlog::error(
-                               "Unhandled path in controller-event-connection");
-              },
-              [&](const base::musicDevice::controller::WidgetCoord
-                      &widgetCoord) {
-                 mpark::visit(
-                     util::overload{
-                         [&](const base::musicDevice::controller::
-                                 EventDestination::Note &note) {
-                            signals()
-                                .ControllerEventRouter__connectedWidget2Notes(
-                                    from.uuid, from.eventId.widgetId,
-                                    widgetCoord.col, widgetCoord.row,
-                                    from.eventId.eventId,
-                                    from.eventId.channelId, to.uuid,
-                                    to.voiceIdx);
-                         },
-                         [&](const base::musicDevice::controller::
-                                 EventDestination::Parameter &parameter) {
-                            signals()
-                                .ControllerEventRouter__connectedWidget2Parameter(
-                                    from.uuid, from.eventId.widgetId,
-                                    widgetCoord.col, widgetCoord.row,
-                                    from.eventId.eventId,
-                                    from.eventId.channelId, to.uuid,
-                                    to.voiceIdx, parameter.id,
-                                    static_cast<int>(
-                                        ::capnzero::MidiEmRt::
-                                            SDParameterDestination::PARAMETER));
-                         },
-                         [](auto &&) {
-                            spdlog::error("Unhandled path in "
-                                          "controller-event-connection");
-                         }},
-                     to.controlType);
-              },
-              [&](const base::musicDevice::controller::Note &note) {
-                 mpark::visit(
-                     util::overload{
-                         [&](const base::musicDevice::controller::
-                                 EventDestination::Note &) {
-                            signals()
-                                .ControllerEventRouter__connectedNotes2Notes(
-                                    from.uuid, from.eventId.widgetId,
-                                    note.number, from.eventId.eventId,
-                                    from.eventId.channelId, to.uuid,
-                                    to.voiceIdx);
-                         },
-                         [&](const base::musicDevice::controller::
-                                 EventDestination::Parameter &parameter) {
-                            signals()
-                                .ControllerEventRouter__connectedNotes2Parameter(
-                                    from.uuid, from.eventId.widgetId,
-                                    note.number, from.eventId.eventId,
-                                    from.eventId.channelId, to.uuid,
-                                    to.voiceIdx, parameter.id,
-                                    static_cast<int>(
-                                        ::capnzero::MidiEmRt::
-                                            SDParameterDestination::PARAMETER));
-                         },
-                         [](auto &&) {
-                            spdlog::error("Unhandled path in "
-                                          "controller-event-connection");
-                         }},
-                     to.controlType);
-              },
-          },
-          from.eventId.widgetCoord);
-   });
-   rCtrlEventRouter.onGotErased([this](const base::musicDevice::controller::
-                                           EventIdExt &from) {
-      mpark::visit(
-          util::overload{
-              [](const mpark::monostate
-                     &) { /* TODO */
-                          spdlog::error(
-                              "Unhandled path in controller-event-connection");
-              },
-              [&](const base::musicDevice::controller::WidgetCoord
-                      &widgetCoord) {
-                 signals().ControllerEventRouter__erasedConnectionForWidget(
-                     from.uuid, from.eventId.widgetId, widgetCoord.col,
-                     widgetCoord.row, from.eventId.eventId,
-                     from.eventId.channelId);
-              },
-              [&](const base::musicDevice::controller::Note &note) {
-                 signals().ControllerEventRouter__erasedConnectionForNotes(
-                     from.uuid, from.eventId.widgetId, note.number,
-                     from.eventId.eventId, from.eventId.channelId);
-              },
-          },
-          from.eventId.widgetCoord);
-   });
 
    rParameterSceneContainer.onSceneNameChanged(
        [this](int sceneIdx, const std::string &name) {

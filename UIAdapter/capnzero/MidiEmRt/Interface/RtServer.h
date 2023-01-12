@@ -23,7 +23,7 @@ namespace base::midifriends
 {
 class Router;
 }
-namespace base::musicDevice::controller
+namespace base::eventRouter
 {
 class EventRouter;
 }
@@ -49,7 +49,7 @@ public:
             base::TransportControl& rTransportControl,
             base::AbletonLinkWrapper& rAbletonLinkWrapper,
             base::midifriends::Router& rMidiRouter,
-            base::musicDevice::controller::EventRouter& rCtrlEventRouter,
+            base::eventRouter::EventRouter& rCtrlEventRouter,
             base::musicDevice::sound::ParameterSceneContainer&
                 rParameterSceneContainer,
             base::session::Tracks& rTracks);

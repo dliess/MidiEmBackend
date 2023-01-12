@@ -9,12 +9,10 @@ using namespace base::musicDevice;
 RtClient::RtClient(
     zmq::context_t& rZmqContext, const std::string& rtServerRpcAddr,
     const std::string& rtServerSignalAddr, LoaderServer::Signals& rSignals,
-    base::musicDevice::factory::Factory& rMDFactory,
-    base::musicDevice::controller::loader::EventRoutes& rEventRoutes) :
+    base::musicDevice::factory::Factory& rMDFactory) :
     ::capnzero::MidiEmRt::MidiEmRtClientRpc(rZmqContext, rtServerRpcAddr),
     ::capnzero::MidiEmRt::MidiEmRtClientSignals(rZmqContext,
-                                                rtServerSignalAddr),
-    m_rEventRoutes(rEventRoutes)
+                                                rtServerSignalAddr)
 {
    onSoundDevicesPresetChanged(
        [this, &rMDFactory](const ::capnzero::TextView& deviceName,
@@ -35,7 +33,7 @@ RtClient::RtClient(
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           const MusicDeviceId mdId{std::string(type), std::string(port)};
           rMDFactory.dataHolder().addUuid2MdId(uuidData, mdId);
-          m_rEventRoutes.musicDeviceAppeared(mdId);
+          // TODO m_rEventRoutes.musicDeviceAppeared(mdId);
        });
    onMusicDevicesDeviceRemoved(
        [&rMDFactory, &rSignals, this](const ::capnzero::SpanCL<16>& uuid) {
@@ -45,7 +43,7 @@ RtClient::RtClient(
           const auto pMdId = rMDFactory.dataHolder().musicDeviceId(uuidData);
           if (pMdId)
           {
-             m_rEventRoutes.musicDeviceDisappeared(*pMdId);
+            // TODO m_rEventRoutes.musicDeviceDisappeared(*pMdId);
           }
        });
 
@@ -55,98 +53,4 @@ RtClient::RtClient(
    onAbletonLinkOffsetTimeUsChanged([](::capnzero::Int32 val) {
       // TODO: save it to file and load
    });
-
-   m_rEventRoutes.onConnectionLoadedNotes2Notes(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int note, int eventIdx, int channelIdx,
-                           const MusicDeviceId& soundDevID, int voiceIdx) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          const auto psoundDevUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
-          if (pControllerUUID != nullptr && psoundDevUUID != nullptr)
-          {
-             ControllerEventRouter__connectNotes2Notes(
-                 *pControllerUUID, widgetIdx, note, eventIdx, channelIdx,
-                 *psoundDevUUID, voiceIdx);
-          }
-       });
-   m_rEventRoutes.onConnectionLoadedNotes2Parameter(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int note, int eventIdx, int channelIdx,
-                           const MusicDeviceId& soundDevID, int voiceIdx,
-                           int parameterIdx,
-                           controller::ParameterDestination paramFunc) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          const auto psoundDevUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
-          if (pControllerUUID != nullptr && psoundDevUUID != nullptr)
-          {
-             ControllerEventRouter__connectNotes2Parameter(
-                 *pControllerUUID, widgetIdx, note, eventIdx, channelIdx,
-                 *psoundDevUUID, voiceIdx, parameterIdx,
-                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
-                     paramFunc));
-          }
-       });
-   m_rEventRoutes.onConnectionLoadedWidget2Notes(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int widgetCoordX, int widgetCoordY, int eventIdx,
-                           int channelIdx, const MusicDeviceId& soundDevID,
-                           int voiceIdx) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          const auto psoundDevUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
-          if (pControllerUUID != nullptr && psoundDevUUID != nullptr)
-          {
-             ControllerEventRouter__connectWidget2Notes(
-                 *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY,
-                 eventIdx, channelIdx, *psoundDevUUID, voiceIdx);
-          }
-       });
-   m_rEventRoutes.onConnectionLoadedWidget2Parameter(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int widgetCoordX, int widgetCoordY, int eventIdx,
-                           int channelIdx, const MusicDeviceId& soundDevID,
-                           int voiceIdx, int parameterIdx,
-                           controller::ParameterDestination paramFunc) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          const auto psoundDevUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(soundDevID);
-          if (pControllerUUID != nullptr && psoundDevUUID != nullptr)
-          {
-             ControllerEventRouter__connectWidget2Parameter(
-                 *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY,
-                 eventIdx, channelIdx, *psoundDevUUID, voiceIdx, parameterIdx,
-                 static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
-                     paramFunc));
-          }
-       });
-   m_rEventRoutes.onConnectionUnloadedNotes(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int note, int eventIdx, int channelIdx) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          if (pControllerUUID != nullptr)
-          {
-             ControllerEventRouter__eraseConnectionForNotes(
-                 *pControllerUUID, widgetIdx, note, eventIdx, channelIdx);
-          }
-       });
-   m_rEventRoutes.onConnectionUnloadedWidget(
-       [this, &rMDFactory](const MusicDeviceId& controllerID, int widgetIdx,
-                           int widgetCoordX, int widgetCoordY, int eventIdx,
-                           int channelIdx) {
-          const auto pControllerUUID =
-              rMDFactory.dataHolder().getUUIDByMdId(controllerID);
-          if (pControllerUUID != nullptr)
-          {
-             ControllerEventRouter__eraseConnectionForWidget(
-                 *pControllerUUID, widgetIdx, widgetCoordX, widgetCoordY,
-                 eventIdx, channelIdx);
-          }
-       });
 }

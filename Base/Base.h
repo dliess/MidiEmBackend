@@ -36,7 +36,7 @@ public:
    instruments::InstrumentsFactory instrumentsFactory;
    midifriends::Router midiRouter;
    session::Tracks tracks;
-   musicDevice::controller::EventRouter controllerEventRouter;
+   eventRouter::EventRouter controllerEventRouter;
    musicDevice::sound::ParameterSceneContainer parameterSceneContainer;
    void start();
    void waitForEnd();

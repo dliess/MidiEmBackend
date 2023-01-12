@@ -3,7 +3,7 @@
 
 #include "MidiEmLoader_Server.h"
 
-namespace base::musicDevice::controller::loader { class EventRoutes; };
+namespace base::eventRouter { class EventRouter; };
 namespace base::musicDevice::factory
 {
 class Factory;
@@ -18,7 +18,7 @@ public:
                const std::string& rpcBindAddr,
                const std::string& signalBindAddr,
                 base::musicDevice::factory::Factory& rMDFactory,
-                base::musicDevice::controller::loader::EventRoutes& rEventRoutes);
+                base::eventRouter::EventRouter &rCtrlEventRouter);
    using Super    = ::capnzero::MidiEmLoader::MidiEmLoaderServer;
    using WaitMode = Super::WaitMode;
 };

@@ -51,7 +51,7 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     instrumentsFactory(instruments, musicDeviceHolder),
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
-    controllerEventRouter(musicDeviceHolder.musicDevices, instruments)
+    controllerEventRouter(instruments, musicDeviceHolder.musicDevices)
 {
    //m_zmqContext.set(zmq::ctxopt::io_threads, 1);
    m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);
@@ -65,7 +65,7 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
       }
    });
    musicDeviceHolder.musicDevices.onControllerDevEventOccured([this](
-       const util::Identifiable::UUID uuid, const controller::Event& event){
+       const util::Identifiable::UUID uuid, const musicDevice::controller::Event& event){
          controllerEventRouter.onControllerDevEventOccured(uuid, event);
        });
 }
@@ -191,15 +191,14 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
 
 void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
-   base::musicDevice::controller::loader::EventRoutes eventRoutes;
    uiadapter::capnzero::LoaderServer loaderServer(
        m_zmqContext, m_loaderRpcBindAddr, m_loaderSignalBindAddr,
-       musicDeviceFactory, eventRoutes);
+       musicDeviceFactory, controllerEventRouter);
    uiadapter::capnzero::RtClient rtClient(
        m_zmqContext,
        util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
        util::replaceAsteriskToLocalhost(m_rtSignalBindAddr),
-       loaderServer.signals(), musicDeviceFactory, eventRoutes);
+       loaderServer.signals(), musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
@@ -221,7 +220,7 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
       rtClient.handleIncomingSignalAllNonBlock();
    });
    try {
-      eventRoutes.loadFromFile();
+      controllerEventRouter.loadFromFile();
    } catch(const std::exception& e) {
       spdlog::error("Exception at loading ControllerEventRoutes: {}", e.what());
    }
