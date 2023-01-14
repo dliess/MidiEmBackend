@@ -10,16 +10,6 @@
 #include "MusicDeviceDescription.h"
 #include "DoubleBuffer.h"
 
-namespace base::instruments
-{
-struct Instruments;
-}
-
-namespace base::musicDevice
-{
-class MusicDeviceContainer;
-}
-
 namespace base::eventRouter
 {
 
@@ -30,17 +20,16 @@ class EventRouterRt
 public:
    EventRouterRt(const MapType& rMap,
                 instruments::InstrumentsRef rInstruments,
-               musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
+                musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
 
    void onControllerDevEventOccured(
        const util::Identifiable::UUID uuid,
        const musicDevice::controller::Event& event);
 
 private:
-   const MapType& rMap,
+   const MapType& m_rMap;
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
-   using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
    util::DoubleBuffer<MapType> m_map;
    void handlePressReleaseType(
        const musicDevice::controller::EventIdExt& event,
@@ -110,15 +99,6 @@ private:
        const musicDevice::controller::WidgetCoord& widgetCoord,
        EventDestination::DrumKit& drumKit,
        const musicDevice::controller::PressReleaseType& value) noexcept;
-
-   const musicDevice::description::sound::Parameter* parameterDescription(
-       const EventDestination::Endpoint& endpoint, int paramIdx);
-
-   CB_SIGNAL(GotConnected, const musicDevice::controller::EventIdExt&,
-             const EventDestination&);
-   CB_SIGNAL(GotErased, const musicDevice::controller::EventIdExt&);
-
-   void printMap() const noexcept;
 
    static constexpr int ANY = -1;
 };
