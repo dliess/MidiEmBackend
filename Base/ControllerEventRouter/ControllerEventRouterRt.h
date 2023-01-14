@@ -1,10 +1,8 @@
-#ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
-#define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
+#ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_RT_H
+#define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_RT_H
 
-//#include <map>
 #include <unordered_map>
 
-#include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
 #include "InstrumentsRef.h"
@@ -24,28 +22,22 @@ class MusicDeviceContainer;
 
 namespace base::eventRouter
 {
-class EventRouter
+
+using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
+
+class EventRouterRt
 {
 public:
-   EventRouter(instruments::InstrumentsRef rInstruments,
+   EventRouterRt(const MapType& rMap,
+                instruments::InstrumentsRef rInstruments,
                musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
-   void createConnection(const musicDevice::controller::EventIdExt& from,
-                         const EventDestination& to) noexcept;
-   void removeConnection(
-       const musicDevice::controller::EventIdExt& eventIdExt) noexcept;
-   void removeConnectionToDestination(const EventDestination& to) noexcept;
 
    void onControllerDevEventOccured(
        const util::Identifiable::UUID uuid,
        const musicDevice::controller::Event& event);
 
-   // void musicDeviceAppeared(const musicDevice::MusicDeviceId& mdId);
-   // void musicDeviceDisappeared(const musicDevice::MusicDeviceId& mdId);
-   void retriggerCallbacks();
-
-   void loadFromFile();
-
 private:
+   const MapType& rMap,
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
    using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;

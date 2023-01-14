@@ -15,6 +15,7 @@ set(HEADERS
     "error_msg.hpp"
     "FloatEqual.h"
     "function_ref.h"
+    "DoubleBuffer.h"
 )
 
 set(TARGET_NAME Util)
