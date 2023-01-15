@@ -15,10 +15,25 @@ namespace base::eventRouter
 
 using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
 
+struct ParameterCacheKey
+{
+    musicDevice::controller::EventIdExt eventId;
+    EventDestination eventDestination;
+};
+struct ParameterCache
+{
+    bool upwards{true};
+    int storedIncrements{0};
+    std::optional<float> valueAtPress{0};
+};
+
+using ParameterCacheMap = std::unordered_map<ParameterCacheKey, ParameterCache>;
+
 class EventRouterRt
 {
 public:
    EventRouterRt(const MapType& rMap,
+                ParameterCacheMap& rParameterCacheMap,
                 instruments::InstrumentsRef rInstruments,
                 musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
 
@@ -28,6 +43,7 @@ public:
 
 private:
    const MapType& m_rMap;
+   ParameterCacheMap& m_rParameterCacheMap;
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
    util::DoubleBuffer<MapType> m_map;

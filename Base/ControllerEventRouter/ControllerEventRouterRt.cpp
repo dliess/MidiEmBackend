@@ -9,9 +9,11 @@ using namespace base::eventRouter;
 using namespace base::musicDevice;
 
 EventRouterRt::EventRouterRt(const MapType& rMap,
+                             ParameterCacheMap& rParameterCacheMap,
                              instruments::InstrumentsRef rInstruments,
                              MusicDeviceContainerRef rMusicDeviceContainer) :
     m_rMap(rMap),
+    m_rParameterCacheMap(rParameterCacheMap),
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer)
 {
@@ -65,7 +67,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       if (value.value > 0)
       {
          const float incr =
-             parameter.cache.upwards ? value.value : -value.value;
+             m_rParameterCacheMap.upwards ? value.value : -value.value;
          dev.incrementParameterValue(mdCoords..., parameter.id, incr, true);
       }
    }

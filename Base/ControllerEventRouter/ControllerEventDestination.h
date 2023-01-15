@@ -52,12 +52,6 @@ struct EventDestination
          int resolution{128};
          float zeroVal{0};
       } descriptionCache;
-      struct Cache
-      {
-         bool upwards{true};
-         mutable int storedIncrements{0};
-         mutable std::optional<float> valueAtPress{0};
-      } cache;
    };
    using ControlType = mpark::variant<Note, Parameter>;
 
