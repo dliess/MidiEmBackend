@@ -19,8 +19,8 @@ EventRouterRt::EventRouterRt(const MapType& rMap,
 {
 }
 
-void EventRouterRt::onControllerDevEventOccured(
-    const util::Identifiable::UUID uuid, const controller::Event& event)
+void EventRouterRt::operator()(const util::Identifiable::UUID uuid,
+                               const controller::Event& event)
 {
    const controller::EventIdExt eventIdExt{uuid, event.id};
    mpark::visit(
@@ -59,6 +59,7 @@ void playNoteOnOff(Dev& dev, int note, float velocity,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  ParameterCache& parameterCache,
                   const controller::PressReleaseType& value,
                   MDCoords... mdCoords)
 {
@@ -67,7 +68,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       if (value.value > 0)
       {
          const float incr =
-             m_rParameterCacheMap.upwards ? value.value : -value.value;
+             parameter.descriptionCache.upwards ? value.value : -value.value;
          dev.incrementParameterValue(mdCoords..., parameter.id, incr, true);
       }
    }
@@ -80,15 +81,15 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
          if (std::fabs(actualVal - parameter.descriptionCache.zeroVal) <
              std::numeric_limits<float>::epsilon())
          {
-            if (parameter.cache.valueAtPress)
+            if (parameterCache.valueAtPress)
             {
                dev.setParameterValue(mdCoords..., parameter.id,
-                                     *parameter.cache.valueAtPress);
+                                     *parameterCache.valueAtPress);
             }
          }
          else
          {
-            parameter.cache.valueAtPress =
+            parameterCache.valueAtPress =
                 dev.getParameterValue(mdCoords..., parameter.id);
             dev.setParameterValue(mdCoords..., parameter.id,
                                   parameter.descriptionCache.zeroVal);
@@ -115,16 +116,17 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  ParameterCache& parameterCache,
                   const controller::IncrementType& increment,
                   MDCoords... mdCoords)
 {
    float incr = 0;
    if (parameter.descriptionCache.isList)
    {
-      const int accIncr = increment.value + parameter.cache.storedIncrements;
-      const int incrForOneStep         = increment.resolution / 12;
-      incr                             = accIncr / incrForOneStep;
-      parameter.cache.storedIncrements = accIncr % incrForOneStep;
+      const int accIncr = increment.value + parameterCache.storedIncrements;
+      const int incrForOneStep        = increment.resolution / 12;
+      incr                            = accIncr / incrForOneStep;
+      parameterCache.storedIncrements = accIncr % incrForOneStep;
    }
    else
    {   // TODO: highres mode
@@ -135,20 +137,21 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  ParameterCache& parameterCache,
                   const controller::RelativeValueType& value,
                   MDCoords... mdCoords)
 {
    float valueToSet = value.value;
-   if (!parameter.cache.valueAtPress)
+   if (!parameterCache.valueAtPress)
    {
-      parameter.cache.valueAtPress.emplace<float>(
+      parameterCache.valueAtPress.emplace<float>(
           dev.getParameterValue(mdCoords..., parameter.id));
    }
-   valueToSet += parameter.cache.valueAtPress.value();
+   valueToSet += parameterCache.valueAtPress.value();
    dev.setParameterValue(mdCoords..., parameter.id, valueToSet);
    if (0 == value.value)
    {
-      parameter.cache.valueAtPress = std::nullopt;
+      parameterCache.valueAtPress = std::nullopt;
    }
 }
 }   // namespace detail
@@ -161,7 +164,7 @@ void EventRouterRt::handlePressReleaseType(
        util::overload{
            [this, &eventIdExt,
             &value](const controller::WidgetCoord& widgetCoord) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handlePressRelease(destIter->second, value);
@@ -171,7 +174,7 @@ void EventRouterRt::handlePressReleaseType(
                  controller::EventIdExt melodicEvent = eventIdExt;
                  melodicEvent.eventId.widgetCoord
                      .emplace<controller::WidgetCoord>(ANY, ANY);
-                 const auto destIter2 = m_rMap.find(melodicEvent);
+                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
                  if (destIter2 != m_rMap.end())
                  {
                     handleAnyWidgetCoordPressRelease(widgetCoord,
@@ -180,7 +183,7 @@ void EventRouterRt::handlePressReleaseType(
               }
            },
            [this, &eventIdExt, &value](const controller::Note& note) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handlePressRelease(destIter->second, value);
@@ -190,7 +193,7 @@ void EventRouterRt::handlePressReleaseType(
                  controller::EventIdExt melodicEvent = eventIdExt;
                  melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
                      ANY);
-                 const auto destIter2 = m_rMap.find(melodicEvent);
+                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
                  if (destIter2 != m_rMap.end())
                  {
                     handleAnyNotePressRelease(note.number, destIter2->second,
@@ -210,7 +213,7 @@ void EventRouterRt::handleContinousValueType(
        util::overload{
            [this, &eventIdExt,
             &value](const controller::WidgetCoord& widgetCoord) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleContinousValue(destIter->second, value);
@@ -225,7 +228,7 @@ void EventRouterRt::handleContinousValueType(
               */
            },
            [this, &eventIdExt, &value](const controller::Note& note) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleContinousValue(destIter->second, value);
@@ -235,7 +238,7 @@ void EventRouterRt::handleContinousValueType(
                  controller::EventIdExt melodicEvent = eventIdExt;
                  melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
                      ANY);
-                 const auto destIter2 = m_rMap.find(melodicEvent);
+                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
                  if (destIter2 != m_rMap.end())
                  {
                     sendMPEContinousValue(note.number, destIter2->second,
@@ -255,14 +258,14 @@ void EventRouterRt::handleIncrementType(
        util::overload{
            [this, &eventIdExt,
             &value](const controller::WidgetCoord& widgetCoord) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleIncrement(destIter->second, value);
               }
            },
            [this, &eventIdExt, &value](const controller::Note& note) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleIncrement(destIter->second, value);
@@ -272,7 +275,7 @@ void EventRouterRt::handleIncrementType(
                  controller::EventIdExt melodicEvent = eventIdExt;
                  melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
                      ANY);
-                 const auto destIter2 = m_rMap.find(melodicEvent);
+                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
                  if (destIter2 != m_rMap.end())
                  {
                     sendMPEIncrementValue(note.number, destIter2->second,
@@ -292,14 +295,14 @@ void EventRouterRt::handleRelativeValueType(
        util::overload{
            [this, &eventIdExt,
             &value](const controller::WidgetCoord& widgetCoord) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleRelativeValue(destIter->second, value);
               }
            },
            [this, &eventIdExt, &value](const controller::Note& note) {
-              const auto destIter = m_rMap.find(eventIdExt);
+              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
               if (destIter != m_rMap.end())
               {
                  handleRelativeValue(destIter->second, value);
@@ -309,7 +312,7 @@ void EventRouterRt::handleRelativeValueType(
                  controller::EventIdExt melodicEvent = eventIdExt;
                  melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
                      ANY);
-                 const auto destIter2 = m_rMap.find(melodicEvent);
+                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
                  if (destIter2 != m_rMap.end())
                  {
                     sendMPERelativeValue(note.number, destIter2->second, value);
@@ -337,8 +340,8 @@ void EventRouterRt::setParameterOnDrumKit(
     const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
-      detail::setParameter(kitInstr, parameter, value, drumKit.voiceIdx,
-                           drumKit.componentIdx);
+      detail::setParameter(kitInstr, parameter, parameterCacheEntry(), value,
+                           drumKit.voiceIdx, drumKit.componentIdx);
    });
 }
 
@@ -348,8 +351,8 @@ void EventRouterRt::setParameterOnMelodic(
     const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withMelodicInstrument(melodic.uuid, [&](auto& melodicInstr) {
-      detail::setParameter(melodicInstr, parameter, value,
-                           melodic.componentIdx);
+      detail::setParameter(melodicInstr, parameter, parameterCacheEntry(),
+                           value, melodic.componentIdx);
    });
 }
 
@@ -373,8 +376,8 @@ void EventRouterRt::setParameterOnMusicDevice(
 {
    m_rMusicDeviceContainer.withSoundHandler(
        musicDevice.uuid, [&](auto& soundHandler) {
-          detail::setParameter(soundHandler, parameter, value,
-                               musicDevice.voiceIdx);
+          detail::setParameter(soundHandler, parameter, parameterCacheEntry(),
+                               value, musicDevice.voiceIdx);
        });
 }
 
@@ -618,8 +621,9 @@ void EventRouterRt::handleIncrement(
                          m_rInstruments.withKitInstrument(
                              drumKit.uuid, [&](auto& kitInstr) {
                                 detail::setParameter(
-                                    kitInstr, parameter, increment,
-                                    drumKit.voiceIdx, drumKit.componentIdx);
+                                    kitInstr, parameter, parameterCacheEntry(),
+                                    increment, drumKit.voiceIdx,
+                                    drumKit.componentIdx);
                              });
                       },
                       [](auto&&) {}},
@@ -633,6 +637,7 @@ void EventRouterRt::handleIncrement(
                          m_rInstruments.withMelodicInstrument(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
+                                                     parameterCacheEntry(),
                                                      increment,
                                                      melodic.componentIdx);
                              });
@@ -648,6 +653,7 @@ void EventRouterRt::handleIncrement(
                          m_rMusicDeviceContainer.withSoundHandler(
                              musicDevice.uuid, [&](auto& soundHandler) {
                                 detail::setParameter(soundHandler, parameter,
+                                                     parameterCacheEntry(),
                                                      increment,
                                                      musicDevice.voiceIdx);
                              });
@@ -674,6 +680,7 @@ void EventRouterRt::sendMPEIncrementValue(
                          m_rInstruments.withMelodicInstrument(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
+                                                     parameterCacheEntry(),
                                                      increment, note,
                                                      melodic.componentIdx);
                              });
@@ -699,8 +706,9 @@ void EventRouterRt::handleRelativeValue(
                       [&, this](const EventDestination::Parameter& parameter) {
                          m_rInstruments.withKitInstrument(
                              drumKit.uuid, [&](auto& kitInstr) {
-                                detail::setParameter(kitInstr, parameter, value,
-                                                     drumKit.voiceIdx,
+                                detail::setParameter(kitInstr, parameter,
+                                                     parameterCacheEntry(),
+                                                     value, drumKit.voiceIdx,
                                                      drumKit.componentIdx);
                              });
                       },
@@ -715,6 +723,7 @@ void EventRouterRt::handleRelativeValue(
                          m_rInstruments.withMelodicInstrument(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
+                                                     parameterCacheEntry(),
                                                      value,
                                                      melodic.componentIdx);
                              });
@@ -730,6 +739,7 @@ void EventRouterRt::handleRelativeValue(
                          m_rMusicDeviceContainer.withSoundHandler(
                              musicDevice.uuid, [&](auto& soundHandler) {
                                 detail::setParameter(soundHandler, parameter,
+                                                     parameterCacheEntry(),
                                                      value,
                                                      musicDevice.voiceIdx);
                              });
@@ -756,6 +766,7 @@ void EventRouterRt::sendMPERelativeValue(
                          m_rInstruments.withMelodicInstrument(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
+                                                     parameterCacheEntry(),
                                                      value, note,
                                                      melodic.componentIdx);
                              });
@@ -765,4 +776,11 @@ void EventRouterRt::sendMPERelativeValue(
            },
            [](EventDestination::MusicDevice&) {}, [](auto&&) {}},
        eventDestination.endpoint);
+}
+
+ParameterCache& EventRouterRt::parameterCacheEntry()
+{
+   assert(m_actIter != m_rMap.end());
+   return m_rParameterCacheMap.at(
+       ParameterCacheKey{m_actIter->first, m_actIter->second});
 }

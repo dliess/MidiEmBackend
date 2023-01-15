@@ -1,6 +1,5 @@
 #include "ControllerEventRouter.h"
 
-#include "ControllerEventRouterRt.h"
 #include "ControllerHandler.h"
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
@@ -32,8 +31,8 @@ void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID& uuid, const controller::Event& event)
 {
    m_map.withRtLocked([this, &uuid, &event](const auto& map) {
-      EventRouterRt(map, m_rInstruments, m_rMusicDeviceContainer)
-          .onControllerDevEventOccured(uuid, event);
+      EventRouterRt(map, m_parameterCacheMap, m_rInstruments,
+                    m_rMusicDeviceContainer)(uuid, event);
    });
 }
 

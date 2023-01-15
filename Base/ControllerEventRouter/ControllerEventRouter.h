@@ -1,9 +1,9 @@
 #ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
 #define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
 
-//#include <map>
 #include <unordered_map>
 
+#include "ControllerEventRouterRt.h"
 #include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
@@ -41,6 +41,7 @@ private:
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
    using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
    util::DoubleBuffer<MapType> m_map;
+   ParameterCacheMap m_parameterCacheMap;
 
    const musicDevice::description::sound::Parameter* parameterDescription(
        const EventDestination::Endpoint& endpoint, int paramIdx);

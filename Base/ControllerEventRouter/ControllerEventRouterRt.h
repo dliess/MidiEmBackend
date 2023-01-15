@@ -5,26 +5,25 @@
 
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
+#include "DoubleBuffer.h"
 #include "InstrumentsRef.h"
 #include "MusicDeviceContainerRef.h"
 #include "MusicDeviceDescription.h"
-#include "DoubleBuffer.h"
 
 namespace base::eventRouter
 {
-
-using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
+using MapType =
+    std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
 
 struct ParameterCacheKey
 {
-    musicDevice::controller::EventIdExt eventId;
-    EventDestination eventDestination;
+   musicDevice::controller::EventIdExt eventId;
+   EventDestination eventDestination;
 };
 struct ParameterCache
 {
-    bool upwards{true};
-    int storedIncrements{0};
-    std::optional<float> valueAtPress{0};
+   int storedIncrements{0};
+   std::optional<float> valueAtPress{0};
 };
 
 using ParameterCacheMap = std::unordered_map<ParameterCacheKey, ParameterCache>;
@@ -32,21 +31,19 @@ using ParameterCacheMap = std::unordered_map<ParameterCacheKey, ParameterCache>;
 class EventRouterRt
 {
 public:
-   EventRouterRt(const MapType& rMap,
-                ParameterCacheMap& rParameterCacheMap,
-                instruments::InstrumentsRef rInstruments,
-                musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
+   EventRouterRt(const MapType& rMap, ParameterCacheMap& rParameterCacheMap,
+                 instruments::InstrumentsRef rInstruments,
+                 musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
 
-   void onControllerDevEventOccured(
-       const util::Identifiable::UUID uuid,
-       const musicDevice::controller::Event& event);
+   void operator()(const util::Identifiable::UUID uuid,
+                   const musicDevice::controller::Event& event);
 
 private:
    const MapType& m_rMap;
    ParameterCacheMap& m_rParameterCacheMap;
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
-   util::DoubleBuffer<MapType> m_map;
+   MapType::const_iterator m_actIter;
    void handlePressReleaseType(
        const musicDevice::controller::EventIdExt& event,
        const musicDevice::controller::PressReleaseType& value) noexcept;
@@ -116,9 +113,13 @@ private:
        EventDestination::DrumKit& drumKit,
        const musicDevice::controller::PressReleaseType& value) noexcept;
 
+   ParameterCache& parameterCacheEntry();
+
    static constexpr int ANY = -1;
 };
 
 }   // namespace base::eventRouter
+
+#include "ControllerEventRouterRtHash.h"
 
 #endif

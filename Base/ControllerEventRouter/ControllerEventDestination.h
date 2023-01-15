@@ -20,19 +20,19 @@ struct EventDestination
       util::Identifiable::UUID uuid;
       int voiceIdx;
       int componentIdx{NOT_SET};
-      // auto operator<=>(const DrumKit&) const = default;
+      auto operator<=>(const DrumKit&) const = default;
    };
    struct Melodic
    {
       util::Identifiable::UUID uuid;
       int componentIdx;
-      // auto operator<=>(const Melodic&) const = default;
+      auto operator<=>(const Melodic&) const = default;
    };
    struct MusicDevice
    {
       util::Identifiable::UUID uuid;
       int voiceIdx;
-      // auto operator<=>(const MusicDevice&) const = default;
+      auto operator<=>(const MusicDevice&) const = default;
    };
    using Endpoint = mpark::variant<DrumKit, Melodic, MusicDevice>;
 
@@ -41,6 +41,7 @@ struct EventDestination
    {
       static constexpr int DefaultPitch = 64;
       mutable int pitch {DefaultPitch};
+      auto operator<=>(const Note&) const = default;
    };
    struct Parameter
    {
@@ -51,6 +52,7 @@ struct EventDestination
          bool isList{false};
          int resolution{128};
          float zeroVal{0};
+         bool upwards{true};
       } descriptionCache;
    };
    using ControlType = mpark::variant<Note, Parameter>;
@@ -61,6 +63,7 @@ struct EventDestination
 
 }   // namespace base::musicDevice::controller
 
+#include "ControllerEventDestinationHash.h"
 #include "ControllerEventDestination.inl"
 #include "ControllerEventDestinationMeta.h"
 
