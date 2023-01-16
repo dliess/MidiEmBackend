@@ -1,5 +1,5 @@
 set(SOURCES
-   "UT_ControllerEventRouterLoader.cpp"
+   "UT_ControllerEventDestination.cpp"
    "UT_ControllerEventRouter.cpp"
 )
 

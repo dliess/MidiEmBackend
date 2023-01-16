@@ -90,6 +90,4 @@ private:
 
 }   // namespace base::eventRouter
 
-#include "ControllerEventRouterLoaderMeta.h"
-
 #endif
