@@ -1,6 +1,5 @@
 #include "RtClient.h"
 
-#include "ControllerEventRouterLoader.h"
 #include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;

@@ -15,7 +15,6 @@
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
 #include "ReplaceAsteriskToLocalhost.h"
-#include "ControllerEventRouterLoader.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"

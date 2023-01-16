@@ -1,20 +1,18 @@
 set(TARGET_NAME "MusicDeviceControllerEventRouter")
 
 set(SOURCES
-    "ControllerEventRouterLoader.cpp"
     "ControllerEventRouter.cpp"
     "ControllerEventRouterRt.cpp"
 )
 
 set(HEADERS
+    "ControllerEventDestination.h"
+    "ControllerEventDestination.inl"
+    "ControllerEventDestinationHash.h"
+    "ControllerEventDestinationMeta.h"
     "ControllerEventRouter.h"
     "ControllerEventRouterRt.h"
-    "ControllerEventRouterLoader.h"
-    "ControllerEventRouterLoaderMeta.h"
-    "ControllerEventDestination.h"
-    "ControllerEventDestinationHash.h"
-    "ControllerEventDestination.inl"
-    "ControllerEventDestinationLoader.h"
+    "ControllerEventRouterRtHash.h"
 )
 
 add_library(${TARGET_NAME} STATIC ${SOURCES} ${HEADERS})
