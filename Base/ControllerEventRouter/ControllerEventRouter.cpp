@@ -8,12 +8,6 @@
 using namespace base::eventRouter;
 using namespace base::musicDevice;
 
-void fillParamCache(MusicDeviceContainerRef rMusicDeviceContainer,
-                    EventDestination::Parameter& parameter)
-{
-   // rMusicDeviceContainer.withSoundHandler(parameter.);
-}
-
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
                          MusicDeviceContainerRef rMusicDeviceContainer) :
     m_rInstruments(rInstruments), m_rMusicDeviceContainer(rMusicDeviceContainer)
@@ -56,7 +50,6 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
           (desc->type == description::sound::Parameter::Type::ContinousBipolar
                ? 0.5f
                : 0.0f);
-      // fillParamCache(m_rMusicDeviceContainer, destination.endpoint *param);
    }
    m_map.withNonRtLocked([&](auto& map) { map[from] = destination; });
    emitGotConnected(from, destination);
