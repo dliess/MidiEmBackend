@@ -231,14 +231,25 @@ inline size_t MusicDeviceContainer::size() const noexcept
 }
 
 inline void MusicDeviceContainer::withSoundHandler(
-    util::Identifiable::UUIDView uuid,
+    const musicDevice::MusicDeviceId& mdId,
     util::function_ref<void(sound::SoundHandler&)> cb)
 {
-   auto mdIter = find(util::deepCopy(uuid));
+   auto mdIter = findByDeviceId(mdId);
    if (mdIter != end() && mdIter->second->soundHandler)
    {
       cb(*mdIter->second->soundHandler);
    }
+}
+
+inline MusicDeviceId MusicDeviceContainer::uuid2mdId(
+    util::Identifiable::UUIDView uuid) const noexcept
+{
+   auto it = find(util::deepCopy(uuid));
+   if (it != end())
+   {
+      return it->second->deviceId();
+   }
+   return {};
 }
 
 }   // namespace base::musicDevice

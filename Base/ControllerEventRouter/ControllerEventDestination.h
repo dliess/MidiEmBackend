@@ -6,6 +6,7 @@
 
 #include "EnumReflect.h"
 #include "Identifiable.h"
+#include "MusicDeviceId.h"
 
 namespace base::eventRouter
 {
@@ -30,7 +31,7 @@ struct EventDestination
    };
    struct MusicDevice
    {
-      util::Identifiable::UUID uuid;
+      musicDevice::MusicDeviceId mdid;
       int voiceIdx;
       auto operator<=>(const MusicDevice&) const = default;
    };

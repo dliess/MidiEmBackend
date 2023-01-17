@@ -23,7 +23,7 @@ template <> struct hash<base::eventRouter::EventDestination::Endpoint>
                       std::hash<int>{}(melodic.componentIdx) << 16;
             },
             [](const base::eventRouter::EventDestination::MusicDevice musicDevice) -> std::size_t {
-               return util::IdentifiableHash{}(musicDevice.uuid) ^
+               return std::hash<std::string>{}(musicDevice.mdid.toStr()) ^
                       std::hash<int>{}(musicDevice.voiceIdx) << 16;
             }
          }, endpoint

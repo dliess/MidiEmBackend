@@ -50,8 +50,10 @@ public:
    inline size_t size() const noexcept;
 
    inline void withSoundHandler(
-       util::Identifiable::UUIDView uuid,
+       const musicDevice::MusicDeviceId& mdId,
        util::function_ref<void(sound::SoundHandler&)> cb);
+
+   inline MusicDeviceId uuid2mdId(util::Identifiable::UUIDView uuid) const noexcept;
 
    CB_SIGNAL(AboutToAdd, const MusicDevice&);
    CB_SIGNAL(Added, std::shared_ptr<MusicDevice>);

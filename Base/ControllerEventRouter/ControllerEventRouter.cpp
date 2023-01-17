@@ -110,7 +110,7 @@ const description::sound::Parameter* EventRouter::parameterDescription(
                                },
                                [&](EventDestination::MusicDevice& musicDevice) {
                                   m_rMusicDeviceContainer.withSoundHandler(
-                                      musicDevice.uuid, [&](const auto& sd) {
+                                      musicDevice.mdid, [&](const auto& sd) {
                                          ret = sd.parameterDescription(
                                              musicDevice.voiceIdx, paramIdx);
                                       });

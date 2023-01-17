@@ -58,7 +58,7 @@ template<>
 inline auto registerMembers<base::eventRouter::EventDestination::MusicDevice>()
 {
    return members(
-      member("uuid", &base::eventRouter::EventDestination::MusicDevice::uuid),
+      member("mdid", &base::eventRouter::EventDestination::MusicDevice::mdid),
       member("voiceIdx", &base::eventRouter::EventDestination::MusicDevice::voiceIdx));
 }
 template<>

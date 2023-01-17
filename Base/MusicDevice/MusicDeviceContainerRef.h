@@ -1,7 +1,7 @@
 #ifndef MUSIC_DEVICE_CONTAINER_REF_H
 #define MUSIC_DEVICE_CONTAINER_REF_H
 
-#include "Identifiable.h"
+#include "MusicDeviceId.h"
 #include "function_ref.h"
 
 namespace base::musicDevice::sound { class SoundHandler; }
@@ -15,24 +15,24 @@ public:
    MusicDeviceContainerRef(MusicDeviceContainer& mdc) :
        m_pTypeErasedObj(std::addressof(mdc)),
        m_vtable({
-           [](void* obj, util::Identifiable::UUIDView uuid,
+           [](void* obj, const musicDevice::MusicDeviceId& mdId,
               util::function_ref<void(sound::SoundHandler&)> cb) {
-              static_cast<MusicDeviceContainer*>(obj)->withSoundHandler(uuid,
+              static_cast<MusicDeviceContainer*>(obj)->withSoundHandler(mdId,
                                                                         cb);
            }
        })
    {
    }
-   void withSoundHandler(util::Identifiable::UUIDView uuid,
+   void withSoundHandler(const musicDevice::MusicDeviceId& mdId,
                          util::function_ref<void(sound::SoundHandler&)> cb)
    {
-      m_vtable.fn_withSoundHandler(m_pTypeErasedObj, uuid, cb);
+      m_vtable.fn_withSoundHandler(m_pTypeErasedObj, mdId, cb);
    }
 
 private:
    void* m_pTypeErasedObj{nullptr};
    struct VTable {
-   void (*fn_withSoundHandler)(void* obj, util::Identifiable::UUIDView,
+   void (*fn_withSoundHandler)(void* obj, const musicDevice::MusicDeviceId&,
                                util::function_ref<void(sound::SoundHandler&)>) =
        nullptr;
    };

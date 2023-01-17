@@ -362,7 +362,7 @@ void EventRouterRt::playNoteOnMusicDevice(
     const controller::PressReleaseType& value) noexcept
 {
    m_rMusicDeviceContainer.withSoundHandler(
-       musicDevice.uuid, [&](auto& soundHandler) {
+       musicDevice.mdid, [&](auto& soundHandler) {
           detail::playNoteOnOff(soundHandler, note.pitch, value.value,
                                 musicDevice.voiceIdx);
        });
@@ -375,7 +375,7 @@ void EventRouterRt::setParameterOnMusicDevice(
 
 {
    m_rMusicDeviceContainer.withSoundHandler(
-       musicDevice.uuid, [&](auto& soundHandler) {
+       musicDevice.mdid, [&](auto& soundHandler) {
           detail::setParameter(soundHandler, parameter, parameterCacheEntry(),
                                value, musicDevice.voiceIdx);
        });
@@ -512,7 +512,7 @@ void EventRouterRt::handleAnyNotePressRelease(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
                          m_rMusicDeviceContainer.withSoundHandler(
-                             musicDevice.uuid, [&](auto& soundaHandler) {
+                             musicDevice.mdid, [&](auto& soundaHandler) {
                                 detail::playNoteOnOff(soundaHandler, note,
                                                       value.value,
                                                       musicDevice.voiceIdx);
@@ -568,7 +568,7 @@ void EventRouterRt::handleContinousValue(
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
                          m_rMusicDeviceContainer.withSoundHandler(
-                             musicDevice.uuid, [&](auto& soundHandler) {
+                             musicDevice.mdid, [&](auto& soundHandler) {
                                 detail::setParameter(soundHandler, parameter,
                                                      value,
                                                      musicDevice.voiceIdx);
@@ -651,7 +651,7 @@ void EventRouterRt::handleIncrement(
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
                          m_rMusicDeviceContainer.withSoundHandler(
-                             musicDevice.uuid, [&](auto& soundHandler) {
+                             musicDevice.mdid, [&](auto& soundHandler) {
                                 detail::setParameter(soundHandler, parameter,
                                                      parameterCacheEntry(),
                                                      increment,
@@ -737,7 +737,7 @@ void EventRouterRt::handleRelativeValue(
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
                          m_rMusicDeviceContainer.withSoundHandler(
-                             musicDevice.uuid, [&](auto& soundHandler) {
+                             musicDevice.mdid, [&](auto& soundHandler) {
                                 detail::setParameter(soundHandler, parameter,
                                                      parameterCacheEntry(),
                                                      value,
