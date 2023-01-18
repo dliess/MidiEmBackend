@@ -9,6 +9,7 @@
 using namespace uiadapter::capnzero;
 
 auto unpackEndpoint(
+    const base::musicDevice::factory::DataHolder &rMDFDataHolder,
     const base::eventRouter::EventDestination::Endpoint &endpoint)
 {
    using RetType =
@@ -29,11 +30,12 @@ auto unpackEndpoint(
                                  ControllerEventRouteDestination::MELODIC,
                              melodic.uuid, 0, melodic.componentIdx};
            },
-           [](const base::eventRouter::EventDestination::MusicDevice
-                  &musicDevice) -> RetType {
+           [&](const base::eventRouter::EventDestination::MusicDevice
+                   &musicDevice) -> RetType {
               return RetType{::capnzero::MidiEmLoader::
                                  ControllerEventRouteDestination::MUSIC_DEVICE,
-                             musicDevice.uuid, musicDevice.voiceIdx, 0};
+                             *rMDFDataHolder.getUUIDByMdId(musicDevice.mdid),
+                             musicDevice.voiceIdx, 0};
            }},
        endpoint);
 }
@@ -46,14 +48,16 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
     ::capnzero::MidiEmLoader::MidiEmLoaderServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<LoaderRpc>(signals(), rMDFactory),
-        std::make_unique<LdControllerEventRouterRpc>(rCtrlEventRouter))
+        std::make_unique<LdControllerEventRouterRpc>(rCtrlEventRouter,
+                                                     rMDFactory.dataHolder()))
 {
-   rCtrlEventRouter.onGotConnected([this](
+   rCtrlEventRouter.onGotConnected([this, &rMDFactory](
                                        const base::musicDevice::controller::
                                            EventIdExt &from,
                                        const base::eventRouter::EventDestination
                                            &to) {
-      auto [e_type, e_uuid, e_voiceIdx, e_comIdx] = unpackEndpoint(to.endpoint);
+      auto [e_type, e_uuid, e_voiceIdx, e_comIdx] =
+          unpackEndpoint(rMDFactory.dataHolder(), to.endpoint);
       mpark::visit(
           util::overload{
               [](const mpark::monostate

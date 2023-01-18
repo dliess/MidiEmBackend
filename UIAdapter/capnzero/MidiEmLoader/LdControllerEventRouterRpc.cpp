@@ -2,14 +2,14 @@
 
 #include "ControllerEventRouter.h"
 #include "MusicDeviceDescription.h"
-#include "MusicDeviceContainer.h"
+#include "MusicDeviceFactoryDataHolder.h"
 
 using namespace uiadapter::capnzero;
 using namespace base;
 using namespace base::musicDevice;
 
 eventRouter::EventDestination::Endpoint toEndpoint(
-    musicDevice::MusicDeviceContainer& rMdContainer,
+    const base::musicDevice::factory::DataHolder &rMDFDataHolder,
     ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx = eventRouter::EventDestination::DrumKit::NOT_SET)
@@ -30,7 +30,7 @@ eventRouter::EventDestination::Endpoint toEndpoint(
           MUSIC_DEVICE:
       {
          return eventRouter::EventDestination::MusicDevice{
-             rMdContainer.uuid2mdId(util::deepCopy(destUUID)), voiceIdx};
+             *rMDFDataHolder.getMdIdByUUID(destUUID), voiceIdx};
       }
       default:
       {
@@ -42,8 +42,8 @@ eventRouter::EventDestination::Endpoint toEndpoint(
 
 LdControllerEventRouterRpc::LdControllerEventRouterRpc(
     base::eventRouter::EventRouter& rCtrlEventRouter,
-    base::musicDevice::MusicDeviceContainer& rMdContainer) noexcept :
-    m_rCtrlEventRouter(rCtrlEventRouter), m_rMdContainer(rMdContainer)
+    base::musicDevice::factory::DataHolder &rMDFDataHolder) noexcept :
+    m_rCtrlEventRouter(rCtrlEventRouter), m_rMDFDataHolder(rMDFDataHolder)
 {
 }
 
@@ -58,7 +58,7 @@ void LdControllerEventRouterRpc::connectNotes2Notes(
        controller::EventIdExt{
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
-       eventRouter::EventDestination{toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx),
+       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
                                      eventRouter::EventDestination::Note{}});
 }
 
@@ -76,7 +76,7 @@ void LdControllerEventRouterRpc::connectNotes2Parameter(
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
        eventRouter::EventDestination{
-           toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});
@@ -94,7 +94,7 @@ void LdControllerEventRouterRpc::connectWidget2Notes(
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
             eventIdx, channelIdx}},
-       eventRouter::EventDestination{toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx),
+       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
                                      eventRouter::EventDestination::Note{}});
 }
 
@@ -113,7 +113,7 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
            {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
             eventIdx, channelIdx}},
        eventRouter::EventDestination{
-           toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});
@@ -145,7 +145,7 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
    m_rCtrlEventRouter.removeConnectionToDestination(
-       eventRouter::EventDestination{toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx),
+       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
                                      eventRouter::EventDestination::Note{}});
 }
 
@@ -157,7 +157,7 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
 {
    m_rCtrlEventRouter.removeConnectionToDestination(
        eventRouter::EventDestination{
-           toEndpoint(m_rMdContainer, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});

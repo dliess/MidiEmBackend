@@ -39,7 +39,7 @@ RtClient::RtClient(
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           rMDFactory.dataHolder().removeEntryForUuid(uuidData);
-          const auto pMdId = rMDFactory.dataHolder().musicDeviceId(uuidData);
+          const auto pMdId = rMDFactory.dataHolder().getMdIdByUUID(uuidData);
           if (pMdId)
           {
             // TODO m_rEventRoutes.musicDeviceDisappeared(*pMdId);

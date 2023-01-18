@@ -73,7 +73,7 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
 const description::Description* factory::DataHolder::getDescription(
     util::Identifiable::UUIDView uuid) const noexcept
 {
-   const auto pMdId = musicDeviceId(uuid);
+   const auto pMdId = getMdIdByUUID(uuid);
    if (!pMdId)
       return nullptr;
    const auto itDescr = m_descriptionCache.find(pMdId->deviceName);
@@ -190,7 +190,7 @@ void factory::DataHolder::reEmitSignals()
    */
 }
 
-const MusicDeviceId* factory::DataHolder::musicDeviceId(
+const MusicDeviceId* factory::DataHolder::getMdIdByUUID(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto it = m_uuidToDevIdMap.find(util::deepCopy(uuid));

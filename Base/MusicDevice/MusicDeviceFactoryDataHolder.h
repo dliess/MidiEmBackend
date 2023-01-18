@@ -31,7 +31,7 @@ struct DataHolder
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
        const MusicDeviceName& deviceName) noexcept;
 
-   const MusicDeviceId* musicDeviceId(
+   const MusicDeviceId* getMdIdByUUID(
        util::Identifiable::UUIDView uuid) const noexcept;
    const util::Identifiable::UUID* getUUIDByMdId(
        const MusicDeviceId& mdId) const noexcept;
