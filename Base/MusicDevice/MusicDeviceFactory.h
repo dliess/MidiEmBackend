@@ -13,7 +13,6 @@
 #include "MusicDeviceLoader.h"
 #include "PresetFetcher.h"
 #include "RtMidiAdaptTypes.h"
-#include "itcQueue.h"
 #include "MusicDeviceInserter.h"
 
 namespace base::musicDevice
@@ -36,8 +35,6 @@ class Factory
 public:
    Factory(Holder& rMusicDeviceHolder, const std::string& resourceRootDir);
 
-   void invokeInserterQueueActions();
-
    std::string getAllDevicesAsJson() const;
    void loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
                                const MusicDeviceName& deviceName,
@@ -53,7 +50,7 @@ private:
    Loader m_loader;
    std::unordered_map<MusicDeviceId, sound::PresetFetcher>
        m_soundPresetFetchers;
-   util::itc::Queue m_actionQueue;
+   
    void fillActionQueueForMidiIn(
        const MusicDeviceId& deviceId,
        std::shared_ptr<MusicDevice::MidiInput> pMidiIn);

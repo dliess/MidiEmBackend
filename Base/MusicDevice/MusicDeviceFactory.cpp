@@ -13,7 +13,6 @@
 #include "UsbMidiIn.h"
 #include "UsbMidiOut.h"
 #include "UsbMidiPortNotifier.h"
-#include "itcActionSender.h"
 
 #define IGNORED_DEVICES "RtMidi", "Ableton Push 2"
 
@@ -189,20 +188,14 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                                        devOnUsbPort.getUsbPortName());
 
           m_soundPresetFetchers.erase(deviceId);
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(EraseFromDevices(), deviceId);
-
+          m_musicDeviceInserter.EraseFromDevices(deviceId);
           m_loader.forEachDeviceInChain(
               deviceId, [this](const MusicDeviceId& nextDeviceId,
                                uint8_t midiVoiceOffset) {
-                 util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-                     .push(EraseFromDevices(), nextDeviceId);
+                 m_musicDeviceInserter.EraseFromDevices(nextDeviceId);
               });
-
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(EraseFromMidiInHolder(),
-                    MidiHolder::Id(devOnUsbPort.getMidiPort(),
-                                   devOnUsbPort.getUsbPortName()));
+          m_musicDeviceInserter.EraseFromMidiInHolder(MidiHolder::Id(
+              devOnUsbPort.getMidiPort(), devOnUsbPort.getUsbPortName()));
        },
        {{}, {IGNORED_DEVICES}, false});
 
@@ -215,19 +208,15 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
           m_soundPresetFetchers.erase(deviceId);
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(EraseFromDevices(), deviceId);
+          m_musicDeviceInserter.EraseFromDevices(deviceId);
 
           m_loader.forEachDeviceInChain(
               deviceId, [this](const MusicDeviceId& nextDeviceId,
                                uint8_t midiVoiceOffset) {
-                 util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-                     .push(EraseFromDevices(), nextDeviceId);
+                 m_musicDeviceInserter.EraseFromDevices(nextDeviceId);
               });
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(EraseFromMidiOutHolder(),
-                    MidiHolder::Id(devOnUsbPort.getMidiPort(),
-                                   devOnUsbPort.getUsbPortName()));
+          m_musicDeviceInserter.EraseFromMidiOutHolder(MidiHolder::Id(
+              devOnUsbPort.getMidiPort(), devOnUsbPort.getUsbPortName()));
        },
        {{}, {IGNORED_DEVICES}, false});
 }
@@ -271,8 +260,6 @@ void Factory::createVirtualMidiDevices() noexcept
    }
 }
 
-void Factory::invokeInserterQueueActions() { m_actionQueue.popCallAll(); }
-
 std::string Factory::getAllDevicesAsJson() const
 {
    return m_loader.getAllDevicesAsJson();
@@ -287,14 +274,13 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
    m_loader.forLastDeviceInChain(
        chainRoot, [this, &chainRoot](const MusicDeviceId& lastDeviceId,
                                      uint8_t midiVoiceOffset) {
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(HandleDeviceInsertChained(), lastDeviceId,
-                    m_rHolder.midiHolder.getMidiIn(chainRoot),
-                    m_rHolder.midiHolder.getMidiOut(chainRoot),
-                    m_dataHolder.getDescription(lastDeviceId.deviceName()),
-                    m_dataHolder.getDevicePresets(lastDeviceId.deviceName()),
-                    m_dataHolder.getActualDevicePresetNames(lastDeviceId),
-                    midiVoiceOffset);
+          m_musicDeviceInserter.HandleDeviceInsertChained(
+              lastDeviceId, m_rHolder.midiHolder.getMidiIn(chainRoot),
+              m_rHolder.midiHolder.getMidiOut(chainRoot),
+              m_dataHolder.getDescription(lastDeviceId.deviceName()),
+              m_dataHolder.getDevicePresets(lastDeviceId.deviceName()),
+              m_dataHolder.getActualDevicePresetNames(lastDeviceId),
+              midiVoiceOffset);
        });
 }
 
@@ -303,8 +289,7 @@ void Factory::removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot)
    m_loader.forLastDeviceInChain(
        chainRoot,
        [this](const MusicDeviceId& lastDeviceId, uint8_t midiVoiceOffset) {
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(EraseFromDevices(), lastDeviceId);
+          m_musicDeviceInserter.EraseFromDevices(lastDeviceId);
        });
    m_loader.removeDeviceFromEndOf(chainRoot);
 }
@@ -313,19 +298,18 @@ void Factory::fillActionQueueForMidiIn(
     const MusicDeviceId& deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn)
 {
-   util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-       .push(HandleMidiInInsert(), deviceId, pMidiIn,
-             m_dataHolder.getDescription(deviceId.deviceName()),
-             m_dataHolder.getDevicePresets(deviceId.deviceName()),
-             m_dataHolder.getActualDevicePresetNames(deviceId));
+   m_musicDeviceInserter.HandleMidiInInsert(
+       deviceId, pMidiIn, m_dataHolder.getDescription(deviceId.deviceName()),
+       m_dataHolder.getDevicePresets(deviceId.deviceName()),
+       m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forFirstDeviceInChain(
        deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
                                  uint8_t midiVoiceOffset) {
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
-                    m_dataHolder.getDescription(nextDeviceId.deviceName()),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
-                    m_dataHolder.getActualDevicePresetNames(nextDeviceId));
+          m_musicDeviceInserter.HandleMidiInInsertChained(
+              nextDeviceId, pMidiIn,
+              m_dataHolder.getDescription(nextDeviceId.deviceName()),
+              m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
+              m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }
 
@@ -333,18 +317,17 @@ void Factory::fillActionQueueForMidiOut(
     const MusicDeviceId& deviceId,
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
 {
-   util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-       .push(HandleMidiOutInsert(), deviceId, pMidiOut,
-             m_dataHolder.getDescription(deviceId.deviceName()),
-             m_dataHolder.getDevicePresets(deviceId.deviceName()),
-             m_dataHolder.getActualDevicePresetNames(deviceId));
+   m_musicDeviceInserter.HandleMidiOutInsert(
+       deviceId, pMidiOut, m_dataHolder.getDescription(deviceId.deviceName()),
+       m_dataHolder.getDevicePresets(deviceId.deviceName()),
+       m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forEachDeviceInChain(
        deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
                                   uint8_t midiVoiceOffset) {
-          util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
-              .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
-                    m_dataHolder.getDescription(nextDeviceId.deviceName()),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
-                    m_dataHolder.getActualDevicePresetNames(nextDeviceId));
+          m_musicDeviceInserter.HandleMidiOutInsertChained(
+              nextDeviceId, pMidiOut,
+              m_dataHolder.getDescription(nextDeviceId.deviceName()),
+              m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
+              m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }

@@ -2,6 +2,7 @@
 
 #include "MusicDeviceFactoryDataHolder.h"
 #include "MusicDeviceHolder.h"
+#include "itcActionSender.h"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::factory;
@@ -36,8 +37,8 @@ bool MusicDeviceInserter::findOrCreateDevice(
              deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
              std::move(pPresets), std::move(pActualPresetNames));
          m_rDataHolder.addUuid2MdId(pMusicDevice->id(), deviceId);
-
-         insertMDandMidiToMdWithUUID(std::move(pMusicDevice), std::move(pMidiIn), std::move(pMidiOut));
+         insertMDandMidiToMdWithUUID(std::move(pMusicDevice),
+                                     std::move(pMidiIn), std::move(pMidiOut));
       }
       catch (std::exception& e)
       {
@@ -69,7 +70,7 @@ void MusicDeviceInserter::addMidiToMdWithUUID(
 void MusicDeviceInserter::insertMDandMidiToMdWithUUID(
     std::shared_ptr<MusicDevice> pMusicDevice,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
-    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut, int midiVoiceOffset)
 {
    // NOTE: Important to insert it first to trigger cb-signals in right
    // order
@@ -77,11 +78,11 @@ void MusicDeviceInserter::insertMDandMidiToMdWithUUID(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
    if (pMidiIn)
    {
-      pMusicDevice->initMidiIn(std::move(pMidiIn));
+      pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
    }
    if (pMidiOut)
    {
-      pMusicDevice->initMidiOut(std::move(pMidiOut));
+      pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
    }
 }
 
@@ -99,8 +100,7 @@ std::shared_ptr<MusicDevice> MusicDeviceInserter::createMusicDevice(
    return std::move(pMusicDevice);
 }
 
-void MusicDeviceInserter::action(
-    HandleMidiInInsert, MusicDeviceId deviceId,
+void MusicDeviceInserter::HandleMidiInInsert(MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
@@ -113,11 +113,12 @@ void MusicDeviceInserter::action(
    {
       return;
    }
-   m_rRtDataHolder.midiHolder.addMidiIn(pMidiIn);
+   util::itc::ActionSender(m_actionQueue, *this)
+       .push(AddToMidiInHolder(), std::move(pMidiIn));
 }
 
-void MusicDeviceInserter::action(
-    HandleMidiOutInsert, MusicDeviceId deviceId,
+void MusicDeviceInserter::HandleMidiOutInsert(
+    MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
@@ -130,11 +131,12 @@ void MusicDeviceInserter::action(
    {
       return;
    }
-   m_rRtDataHolder.midiHolder.addMidiOut(pMidiOut);
+   util::itc::ActionSender(m_actionQueue, *this)
+       .push(AddToMidiOutHolder(), std::move(pMidiOut));
 }
 
-void MusicDeviceInserter::action(
-    HandleMidiInInsertChained, MusicDeviceId deviceId,
+void MusicDeviceInserter::HandleMidiInInsertChained(
+    MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
@@ -145,8 +147,8 @@ void MusicDeviceInserter::action(
                       nullptr);
 }
 
-void MusicDeviceInserter::action(
-    HandleMidiOutInsertChained, MusicDeviceId deviceId,
+void MusicDeviceInserter::HandleMidiOutInsertChained(
+    MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
@@ -157,10 +159,42 @@ void MusicDeviceInserter::action(
                       std::move(pMidiOut));
 }
 
+void MusicDeviceInserter::EraseFromDevices(
+                                 const MusicDeviceId& deviceId)
+{
+    // TODO: also in loader
+   util::itc::ActionSender(m_actionQueue, *this)
+       .push(EraseFromDevices(), deviceId);
+}
+
+void MusicDeviceInserter::EraseFromMidiInHolder(const MidiHolder::Id& holderId)
+{
+   util::itc::ActionSender(m_actionQueue, *this)
+       .push(EraseFromMidiInHolder(), holderId);
+}
+
+void MusicDeviceInserter::EraseFromMidiOutHolder(const MidiHolder::Id& holderId)
+{
+   util::itc::ActionSender(m_actionQueue, *this)
+       .push(EraseFromMidiOutHolder(), holderId);
+}
+
 void MusicDeviceInserter::action(EraseFromDevices,
                                  const MusicDeviceId& deviceId)
 {
    m_rRtDataHolder.musicDevices.eraseByDeviceId(deviceId);
+}
+
+void MusicDeviceInserter::action(AddToMidiInHolder,
+                                 std::shared_ptr<MusicDevice::MidiInput> pMidiIn)
+{
+    m_rRtDataHolder.midiHolder.addMidiIn(std::move(pMidiIn));
+}
+
+void MusicDeviceInserter::action(AddToMidiOutHolder,
+                                 std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
+{
+    m_rRtDataHolder.midiHolder.addMidiOut(std::move(pMidiOut));
 }
 
 void MusicDeviceInserter::action(EraseFromMidiInHolder,
@@ -189,8 +223,8 @@ MusicDeviceId MusicDeviceInserter::getMidiDevIdFrom(
    return MusicDeviceId();
 }
 
-void MusicDeviceInserter::action(
-    HandleDeviceInsertChained, MusicDeviceId deviceId,
+void MusicDeviceInserter::HandleDeviceInsertChained(
+    MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
     std::shared_ptr<description::Description> pDescr,
@@ -201,8 +235,9 @@ void MusicDeviceInserter::action(
    auto pMusicDevice = createMusicDevice(
        deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
-   pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
-   pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
-   m_rRtDataHolder.musicDevices.insert(
-       std::make_pair(pMusicDevice->id(), pMusicDevice));
+   m_rDataHolder.addUuid2MdId(pMusicDevice->id(), deviceId);
+   insertMDandMidiToMdWithUUID(std::move(pMusicDevice), std::move(pMidiIn),
+                               std::move(pMidiOut), midiVoiceOffset);
 }
+
+void MusicDeviceInserter::invokeInserterQueueActions() { m_actionQueue.popCallAll(); }
