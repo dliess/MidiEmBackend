@@ -14,6 +14,7 @@ set(SOURCES
    "MusicDeviceFactory.cpp"
    "MusicDeviceSequencer.cpp"
    "MusicDeviceFactoryDataHolder.cpp"
+   "MusicDeviceInserter.cpp"
 )
 
 set(HEADERS
@@ -21,6 +22,7 @@ set(HEADERS
    "MusicDeviceContainer.h"
    "MusicDeviceContainer.inl"
    "MusicDeviceContainerRef.h"
+   "MusicDeviceInserter.h"
 )
 
 add_library(MusicDevice STATIC ${SOURCES})

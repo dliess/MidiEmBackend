@@ -11,6 +11,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
 #include "VectorPlusOne.h"
+#include "MusicDevice.h"
 
 namespace base::musicDevice::factory
 {
@@ -45,6 +46,8 @@ struct DataHolder
    std::shared_ptr<ActualPresetNames> getActualDevicePresetNames(
        const MusicDeviceId& id) noexcept;
 
+   CB_SIGNAL(MusicDeviceAdded, MusicDevice*);
+   CB_SIGNAL(MusicDeviceAboutToRemove, MusicDevice*);
    CB_SIGNAL(DescriptionAdded, const std::string&,
              const description::Description&);
    CB_SIGNAL(PresetUpdated, const sound::preset::Id&, sound::preset::Category,
