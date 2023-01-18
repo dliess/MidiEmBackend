@@ -228,7 +228,11 @@ const util::Identifiable::UUID* factory::DataHolder::getUUIDByMdId(
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
                                        const MusicDeviceId& mdId) noexcept
 {
-   m_uuidToDevIdMap.emplace(uuid, mdId);
+   auto [iter, success] = m_uuidToDevIdMap.emplace(uuid, mdId);
+   if(success)
+   {
+      emitMusicDeviceAdded(iter->second);
+   }
 }
 
 void factory::DataHolder::removeEntryForUuid(

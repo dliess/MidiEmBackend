@@ -25,36 +25,36 @@ class MusicDeviceInserter
 public:
    MusicDeviceInserter(Holder& rRtDataHolder, DataHolder& rDataHolder,
                        const std::string& resourceRootDir) noexcept;
-   void HandleMidiInInsert(
+   void handleMidiInInsert(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
        std::shared_ptr<factory::DataHolder::ActualPresetNames>
            pActualPresetNames);
-   void HandleMidiOutInsert(
+   void handleMidiOutInsert(
        MusicDeviceId deviceId,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
        std::shared_ptr<factory::DataHolder::ActualPresetNames>
            pActualPresetNames);
-   void HandleMidiInInsertChained(
+   void handleMidiInInsertChained(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
        std::shared_ptr<factory::DataHolder::ActualPresetNames>
            pActualPresetNames);
-   void HandleMidiOutInsertChained(
+   void handleMidiOutInsertChained(
        MusicDeviceId deviceId,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
        std::shared_ptr<factory::DataHolder::ActualPresetNames>
            pActualPresetNames);
-   void EraseFromDevices(const MusicDeviceId& deviceId);
-   void EraseFromMidiInHolder(const MidiHolder::Id& holderId);
-   void EraseFromMidiOutHolder(const MidiHolder::Id& holderId);
-   void HandleDeviceInsertChained(
+   void eraseFromDevices(const MusicDeviceId& deviceId);
+   void eraseFromMidiInHolder(const MidiHolder::Id& holderId);
+   void eraseFromMidiOutHolder(const MidiHolder::Id& holderId);
+   void handleDeviceInsertChained(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
@@ -63,7 +63,7 @@ public:
            pActualPresetNames,
        uint8_t midiVoiceOffset);
 
-    void invokeInserterQueueActions();
+    void invokeQueueActions();
 
 private:
    struct HandleMidiInInsert

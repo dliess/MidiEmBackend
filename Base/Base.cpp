@@ -247,6 +247,6 @@ void base::Base::loopFn()
                                           musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
-   musicDeviceFactory.invokeInserterQueueActions();
+   musicDeviceFactory.musicDeviceInserter().invokeQueueActions();
    MeasurerTenthMs<1>::instance().sample();
 }

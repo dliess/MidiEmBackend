@@ -44,6 +44,7 @@ public:
    inline DataHolder& dataHolder() noexcept;
    void createVirtualMidiDevices() noexcept;
 
+    MusicDeviceInserter& musicDeviceInserter() { return m_musicDeviceInserter; }
 private:
    Holder& m_rHolder;
    DataHolder m_dataHolder;
