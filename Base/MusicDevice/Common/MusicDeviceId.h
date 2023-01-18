@@ -20,12 +20,11 @@ inline std::pair<std::string, std::string> splitDeviceName(const MusicDeviceName
 
 struct MusicDeviceId
 {
-    MusicDeviceName deviceName;
-    std::string portName;
+public:
     inline static const std::string ANY_PORT = "";
     MusicDeviceId() noexcept = default;
     MusicDeviceId(std::string deviceName, std::string portName) noexcept:
-        deviceName(std::move(deviceName)), portName(std::move(portName)) 
+        m_deviceName(std::move(deviceName)), m_portName(std::move(portName)) 
     {}
     MusicDeviceId(const MusicDeviceId&) = default;
     MusicDeviceId& operator=(const MusicDeviceId&) = default;
@@ -35,18 +34,24 @@ struct MusicDeviceId
         auto n = deviceIdStr.find("@");
         if(n == std::string::npos)
         {
-            deviceName = deviceIdStr;
+            m_deviceName = deviceIdStr;
             return;
         }
-        deviceName = deviceIdStr.substr(0, n);
-        portName = deviceIdStr.substr(n+1);
+        m_deviceName = deviceIdStr.substr(0, n);
+        m_portName = deviceIdStr.substr(n+1);
     }
     bool operator==(const MusicDeviceId& rhs) const noexcept
     {
-        return (deviceName == rhs.deviceName) && 
-               (portName.empty() || rhs.portName.empty() || portName == rhs.portName); 
+        return (m_deviceName == rhs.m_deviceName) && 
+               (m_portName.empty() || rhs.m_portName.empty() || m_portName == rhs.m_portName);
     }
-    std::string toStr() const noexcept { return deviceName + "@" + portName; }
+    std::string toStr() const noexcept { return m_deviceName + "@" + m_portName; }
+    const MusicDeviceName& deviceName() const noexcept { return  m_deviceName; }
+    const std::string& portName() const noexcept { return m_portName; }
+    friend auto meta::registerMembers<MusicDeviceId>();
+private:
+    MusicDeviceName m_deviceName;
+    std::string m_portName;
 };
 
 } // namespace base::musicDevice

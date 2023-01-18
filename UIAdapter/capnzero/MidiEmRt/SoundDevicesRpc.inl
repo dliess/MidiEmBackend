@@ -29,7 +29,7 @@ void SoundDevicesRpc::withSoundHandlerDo(const ::capnzero::SpanCL<16>& uuid,
       else
       {
          spdlog::error("{} is not a sound-device",
-                       iter->second->deviceId().deviceName);
+                       iter->second->deviceId().deviceName());
       }
    }
    else

@@ -32,8 +32,8 @@ void MainRpc::reEmitSignals()
    for (auto &it : m_rMusicDeviceContainer)
    {
       const auto uuid        = it.second.get()->id();
-      const auto &deviceName = it.second.get()->deviceId().deviceName;
-      const auto &portName   = it.second.get()->deviceId().portName;
+      const auto &deviceName = it.second.get()->deviceId().deviceName();
+      const auto &portName   = it.second.get()->deviceId().portName();
       const auto mediumId    = it.second.get()->mediumId();
       const auto midiVoiceOffset =
           it.second.get()->soundHandler

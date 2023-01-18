@@ -66,7 +66,7 @@ RtServer::RtServer(
 
    rMDHolder.musicDevices.onAboutToAdd(
        [this](const base::musicDevice::MusicDevice &md) {
-          const auto &deviceName  = md.deviceId().deviceName;
+          const auto &deviceName  = md.deviceId().deviceName();
           const auto &description = *md.description();
           const auto &mediumId    = md.mediumId();
           const auto midiVoiceOffset =
@@ -74,7 +74,7 @@ RtServer::RtServer(
           signals().MusicDevices__musicDeviceDescriptionAdded(
               deviceName, meta::serialize(description).dump().c_str());
           signals().MusicDevices__deviceAdded(
-              md.id(), md.deviceId().deviceName, md.deviceId().portName,
+              md.id(), md.deviceId().deviceName(), md.deviceId().portName(),
               mediumId.toStr(), midiVoiceOffset);
        });
 

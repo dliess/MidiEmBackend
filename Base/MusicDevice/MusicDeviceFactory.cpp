@@ -65,7 +65,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
-          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = m_soundPresetFetchers.find(deviceId);
@@ -90,11 +90,11 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     [this, deviceId](int engineIdx,
                                      const std::string& presetName,
                                      sound::preset::Preset&& preset) {
-                       m_dataHolder.getDevicePresets(deviceId.deviceName)
+                       m_dataHolder.getDevicePresets(deviceId.deviceName())
                            ->savePreset(engineIdx, presetName,
                                         std::move(preset));
                        m_dataHolder.soundDevicesPresetChanged(sound::preset::Id(
-                           {deviceId.deviceName, engineIdx, presetName}));
+                           {deviceId.deviceName(), engineIdx, presetName}));
                     });
              }
           }
@@ -139,7 +139,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           m_loader.markAsUsed(Loader::Direction::OUT, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
-          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = m_soundPresetFetchers.find(deviceId);
@@ -164,11 +164,11 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     [this, deviceId](int engineIdx,
                                      const std::string& presetName,
                                      sound::preset::Preset&& preset) {
-                       m_dataHolder.getDevicePresets(deviceId.deviceName)
+                       m_dataHolder.getDevicePresets(deviceId.deviceName())
                            ->savePreset(engineIdx, presetName,
                                         std::move(preset));
                        m_dataHolder.soundDevicesPresetChanged(sound::preset::Id(
-                           {deviceId.deviceName, engineIdx, presetName}));
+                           {deviceId.deviceName(), engineIdx, presetName}));
                     });
              }
           }
@@ -267,7 +267,7 @@ void Factory::createVirtualMidiDevices() noexcept
       const MusicDeviceId deviceId(
           pMidiOut->medium().getDevicePortName(),
           pMidiOut->medium().getHostConnectorPortName());
-      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
       fillActionQueueForMidiOut(deviceId, std::move(pMidiOut));
    }
 }
@@ -292,8 +292,8 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
               .push(HandleDeviceInsertChained(), lastDeviceId,
                     m_rHolder.midiHolder.getMidiIn(chainRoot),
                     m_rHolder.midiHolder.getMidiOut(chainRoot),
-                    m_dataHolder.getDescription(lastDeviceId.deviceName),
-                    m_dataHolder.getDevicePresets(lastDeviceId.deviceName),
+                    m_dataHolder.getDescription(lastDeviceId.deviceName()),
+                    m_dataHolder.getDevicePresets(lastDeviceId.deviceName()),
                     m_dataHolder.getActualDevicePresetNames(lastDeviceId),
                     midiVoiceOffset);
        });
@@ -388,16 +388,16 @@ void Factory::fillActionQueueForMidiIn(
 {
    util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
        .push(HandleMidiInInsert(), deviceId, pMidiIn,
-             m_dataHolder.getDescription(deviceId.deviceName),
-             m_dataHolder.getDevicePresets(deviceId.deviceName),
+             m_dataHolder.getDescription(deviceId.deviceName()),
+             m_dataHolder.getDevicePresets(deviceId.deviceName()),
              m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forFirstDeviceInChain(
        deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
                                  uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(HandleMidiInInsertChained(), nextDeviceId, pMidiIn,
-                    m_dataHolder.getDescription(nextDeviceId.deviceName),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName),
+                    m_dataHolder.getDescription(nextDeviceId.deviceName()),
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
                     m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }
@@ -408,16 +408,16 @@ void Factory::fillActionQueueForMidiOut(
 {
    util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
        .push(HandleMidiOutInsert(), deviceId, pMidiOut,
-             m_dataHolder.getDescription(deviceId.deviceName),
-             m_dataHolder.getDevicePresets(deviceId.deviceName),
+             m_dataHolder.getDescription(deviceId.deviceName()),
+             m_dataHolder.getDevicePresets(deviceId.deviceName()),
              m_dataHolder.getActualDevicePresetNames(deviceId));
    m_loader.forEachDeviceInChain(
        deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
                                   uint8_t midiVoiceOffset) {
           util::itc::ActionSender(m_actionQueue, m_musicDeviceInserter)
               .push(HandleMidiOutInsertChained(), nextDeviceId, pMidiOut,
-                    m_dataHolder.getDescription(nextDeviceId.deviceName),
-                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName),
+                    m_dataHolder.getDescription(nextDeviceId.deviceName()),
+                    m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
                     m_dataHolder.getActualDevicePresetNames(nextDeviceId));
        });
 }

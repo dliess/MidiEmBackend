@@ -14,8 +14,8 @@ template <>
 inline auto registerMembers<base::musicDevice::MusicDeviceId>()
 {
    return members(
-      member("deviceName", &base::musicDevice::MusicDeviceId::deviceName),
-      member("portName",   &base::musicDevice::MusicDeviceId::portName)
+      member("deviceName", &base::musicDevice::MusicDeviceId::m_deviceName),
+      member("portName",   &base::musicDevice::MusicDeviceId::m_portName)
    );
 }
 
@@ -29,7 +29,7 @@ namespace std
     size_t operator()(const base::musicDevice::MusicDeviceId& rMusicDevice) const noexcept
     {
         hash<string> hasher;
-        return hasher(rMusicDevice.deviceName) ^ hasher(rMusicDevice.portName);
+        return hasher(rMusicDevice.deviceName()) ^ hasher(rMusicDevice.portName());
     }
   };
 } // namespace std

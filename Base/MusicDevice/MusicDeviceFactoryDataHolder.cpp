@@ -76,7 +76,7 @@ const description::Description* factory::DataHolder::getDescription(
    const auto pMdId = getMdIdByUUID(uuid);
    if (!pMdId)
       return nullptr;
-   const auto itDescr = m_descriptionCache.find(pMdId->deviceName);
+   const auto itDescr = m_descriptionCache.find(pMdId->deviceName());
    if (itDescr == m_descriptionCache.end())
       return nullptr;
    return itDescr->second.get();
@@ -122,7 +122,7 @@ factory::DataHolder::getActualDevicePresetNames(
    auto it = m_actualPresetNames.find(id);
    if (it == m_actualPresetNames.end())
    {
-      auto descrPtr = getDescription(id.deviceName);
+      auto descrPtr = getDescription(id.deviceName());
       if (!descrPtr || !descrPtr->soundSection)
       {
          return nullptr;
@@ -214,9 +214,7 @@ const util::Identifiable::UUID* factory::DataHolder::getUUIDByMdId(
       const auto it2 = std::find_if(
           m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
           [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
-             MusicDeviceId mdId2 = mdId;
-             mdId2.portName      = MusicDeviceId::ANY_PORT;
-             return e.second == mdId2;
+             return e.second == MusicDeviceId{mdId.deviceName(), MusicDeviceId::ANY_PORT};
           });
       if (it2 == m_uuidToDevIdMap.end())
       {

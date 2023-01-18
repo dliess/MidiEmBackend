@@ -14,7 +14,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
       if (ptr->soundHandler)
       {
          const auto uuid                   = ptr->id();
-         const std::string musicDeviceName = ptr->deviceId().deviceName;
+         const std::string musicDeviceName = ptr->deviceId().deviceName();
          ptr->soundHandler->onSoundDevParamChanged([this, uuid](int voiceId,
                                                                 int paramId,
                                                                 float commanded,

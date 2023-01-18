@@ -25,14 +25,14 @@ MusicDevice::MusicDevice(
 {
    if (m_pDescr->soundSection)
    {
-      soundHandler.emplace(deviceId.deviceName, *m_pDescr->soundSection,
+      soundHandler.emplace(deviceId.deviceName(), *m_pDescr->soundSection,
                            std::move(soundPresets),
                            std::move(pActualPresetNames));
    }
 
    if (m_pDescr->controllerSection)
    {
-      controllerHandler.emplace(deviceId.deviceName, m_pluginHandler,
+      controllerHandler.emplace(deviceId.deviceName(), m_pluginHandler,
                                 *m_pDescr->controllerSection);
    }
 
@@ -67,7 +67,7 @@ void MusicDevice::initMidiIn(std::shared_ptr<MidiInput> pMidiInput,
 {
    if(!pMidiInput)
    {
-      spdlog::info("Device {} has no midi IN", m_deviceId.deviceName);
+      spdlog::info("Device {} has no midi IN", m_deviceId.deviceName());
       return;
    }
    if (soundHandler)
@@ -85,7 +85,7 @@ void MusicDevice::initMidiOut(std::shared_ptr<MidiOutput> pMidiOutput,
 {
    if(!pMidiOutput)
    {
-      spdlog::info("Device {} has no midi OUT", m_deviceId.deviceName);
+      spdlog::info("Device {} has no midi OUT", m_deviceId.deviceName());
       return;
    }
    if (soundHandler)
