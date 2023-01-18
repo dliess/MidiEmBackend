@@ -24,14 +24,14 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
     m_rHolder(rHolder),
     m_dataHolder(resourceRootDir),
     m_loader(resourceRootDir),
-    m_musicDeviceInserter(rHolder, resourceRootDir)
+    m_musicDeviceInserter(rHolder, m_dataHolder, resourceRootDir)
 {
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
           if (devOnUsbPort.getMidiPort().rfind("Midi Through", 0) == 0)
           {
-            return;
+             return;
           }
           spdlog::info("--> input added: {}", devOnUsbPort.getMidiPort());
           auto pMidiIn =
@@ -254,8 +254,7 @@ void Factory::createVirtualMidiDevices() noexcept
    */
    {
       const std::string virtMidiOutPortName = "nomidi-virt";
-      spdlog::info("-->Virtual Midi Output added: {}",
-                   virtMidiOutPortName);
+      spdlog::info("-->Virtual Midi Output added: {}", virtMidiOutPortName);
       auto pMidiOut =
           createVirtualMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(
               virtMidiOutPortName);

@@ -1,16 +1,21 @@
 #include "MusicDeviceInserter.h"
+
+#include "MusicDeviceFactoryDataHolder.h"
 #include "MusicDeviceHolder.h"
 
 using namespace base::musicDevice;
 using namespace base::musicDevice::factory;
 
 MusicDeviceInserter::MusicDeviceInserter(
-    Holder& rHolder, const std::string& resourceRootDir) noexcept :
-    m_rHolder(rHolder), m_resourceRootDir(resourceRootDir)
+    Holder& rRtDataHolder, DataHolder& rDataHolder,
+    const std::string& resourceRootDir) noexcept :
+    m_rRtDataHolder(rRtDataHolder),
+    m_rDataHolder(rDataHolder),
+    m_resourceRootDir(resourceRootDir)
 {
 }
 
-std::shared_ptr<MusicDevice> MusicDeviceInserter::findOrCreateDevice(
+bool MusicDeviceInserter::findOrCreateDevice(
     const MusicDeviceId& deviceId,
     std::shared_ptr<description::Description> pDescr,
     std::shared_ptr<sound::preset::DevicePresets> pPresets,
@@ -18,48 +23,66 @@ std::shared_ptr<MusicDevice> MusicDeviceInserter::findOrCreateDevice(
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut) noexcept
 {
-   std::shared_ptr<MusicDevice> pMusicDevice;
-   auto itCntrlDev = m_rHolder.musicDevices.findByDeviceId(deviceId);
-   if (itCntrlDev != m_rHolder.musicDevices.end())
+   const auto uuid = m_rDataHolder.getUUIDByMdId(deviceId);
+   if (uuid)
    {
-      pMusicDevice = itCntrlDev->second;
-      if (pMidiIn)
-      {
-         pMusicDevice->initMidiIn(std::move(pMidiIn));
-      }
-      if (pMidiOut)
-      {
-         pMusicDevice->initMidiOut(std::move(pMidiOut));
-      }
+      addMidiToMdWithUUID(*uuid, std::move(pMidiIn), std::move(pMidiOut));
    }
    else
    {
       try
       {
-         pMusicDevice = createMusicDevice(
+         std::shared_ptr<MusicDevice> pMusicDevice = createMusicDevice(
              deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
              std::move(pPresets), std::move(pActualPresetNames));
-         // NOTE: Important to insert it first to trigger cb-signals in right
-         // order
-         m_rHolder.musicDevices.insert(
-             std::make_pair(pMusicDevice->id(), pMusicDevice));
-         if (pMidiIn)
-         {
-            pMusicDevice->initMidiIn(std::move(pMidiIn));
-         }
-         if (pMidiOut)
-         {
-            pMusicDevice->initMidiOut(std::move(pMidiOut));
-         }
+         m_rDataHolder.addUuid2MdId(pMusicDevice->id(), deviceId);
+
+         insertMDandMidiToMdWithUUID(std::move(pMusicDevice), std::move(pMidiIn), std::move(pMidiOut));
       }
       catch (std::exception& e)
       {
          spdlog::error("Failed to add midi input medium'{}' {}",
                        deviceId.toStr(), e.what());
-         return nullptr;
+         return false;
       }
    }
-   return pMusicDevice;
+   return true;
+}
+
+void MusicDeviceInserter::addMidiToMdWithUUID(
+    const util::Identifiable::UUID& uuid,
+    std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
+{
+   auto itCntrlDev = m_rRtDataHolder.musicDevices.find(uuid);
+   assert(itCntrlDev != m_rRtDataHolder.musicDevices.end());
+   if (pMidiIn)
+   {
+      itCntrlDev->second->initMidiIn(std::move(pMidiIn));
+   }
+   if (pMidiOut)
+   {
+      itCntrlDev->second->initMidiOut(std::move(pMidiOut));
+   }
+}
+
+void MusicDeviceInserter::insertMDandMidiToMdWithUUID(
+    std::shared_ptr<MusicDevice> pMusicDevice,
+    std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
+    std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
+{
+   // NOTE: Important to insert it first to trigger cb-signals in right
+   // order
+   m_rRtDataHolder.musicDevices.insert(
+       std::make_pair(pMusicDevice->id(), pMusicDevice));
+   if (pMidiIn)
+   {
+      pMusicDevice->initMidiIn(std::move(pMidiIn));
+   }
+   if (pMidiOut)
+   {
+      pMusicDevice->initMidiOut(std::move(pMidiOut));
+   }
 }
 
 std::shared_ptr<MusicDevice> MusicDeviceInserter::createMusicDevice(
@@ -76,7 +99,6 @@ std::shared_ptr<MusicDevice> MusicDeviceInserter::createMusicDevice(
    return std::move(pMusicDevice);
 }
 
-
 void MusicDeviceInserter::action(
     HandleMidiInInsert, MusicDeviceId deviceId,
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
@@ -91,7 +113,7 @@ void MusicDeviceInserter::action(
    {
       return;
    }
-   m_rHolder.midiHolder.addMidiIn(pMidiIn);
+   m_rRtDataHolder.midiHolder.addMidiIn(pMidiIn);
 }
 
 void MusicDeviceInserter::action(
@@ -108,7 +130,7 @@ void MusicDeviceInserter::action(
    {
       return;
    }
-   m_rHolder.midiHolder.addMidiOut(pMidiOut);
+   m_rRtDataHolder.midiHolder.addMidiOut(pMidiOut);
 }
 
 void MusicDeviceInserter::action(
@@ -136,21 +158,21 @@ void MusicDeviceInserter::action(
 }
 
 void MusicDeviceInserter::action(EraseFromDevices,
-                                          const MusicDeviceId& deviceId)
+                                 const MusicDeviceId& deviceId)
 {
-   m_rHolder.musicDevices.eraseByDeviceId(deviceId);
+   m_rRtDataHolder.musicDevices.eraseByDeviceId(deviceId);
 }
 
 void MusicDeviceInserter::action(EraseFromMidiInHolder,
-                                          const MidiHolder::Id& holderId)
+                                 const MidiHolder::Id& holderId)
 {
-   m_rHolder.midiHolder.removeMidiIn(holderId);
+   m_rRtDataHolder.midiHolder.removeMidiIn(holderId);
 }
 
 void MusicDeviceInserter::action(EraseFromMidiOutHolder,
-                                          const MidiHolder::Id& holderId)
+                                 const MidiHolder::Id& holderId)
 {
-   m_rHolder.midiHolder.removeMidiOut(holderId);
+   m_rRtDataHolder.midiHolder.removeMidiOut(holderId);
 }
 
 MusicDeviceId MusicDeviceInserter::getMidiDevIdFrom(
@@ -181,6 +203,6 @@ void MusicDeviceInserter::action(
        std::move(pPresets), std::move(pActualPresetNames));
    pMusicDevice->initMidiIn(std::move(pMidiIn), midiVoiceOffset);
    pMusicDevice->initMidiOut(std::move(pMidiOut), midiVoiceOffset);
-   m_rHolder.musicDevices.insert(
+   m_rRtDataHolder.musicDevices.insert(
        std::make_pair(pMusicDevice->id(), pMusicDevice));
 }
