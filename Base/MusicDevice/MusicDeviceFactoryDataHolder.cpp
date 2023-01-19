@@ -236,5 +236,6 @@ void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
 void factory::DataHolder::removeEntryForUuid(
     const util::Identifiable::UUID& uuid) noexcept
 {
+   emitMusicDeviceAboutToRemove(uuid);
    m_musicDevices.erase(uuid);
 }
