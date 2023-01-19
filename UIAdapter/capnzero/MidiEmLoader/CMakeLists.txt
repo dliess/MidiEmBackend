@@ -3,6 +3,7 @@ set(SOURCES
     "LoaderRpc.cpp"
     "RtClient.cpp"
     "LdControllerEventRouterRpc.cpp"
+    "InstrumentsRpc.cpp"
 )
 
 set(HEADERS
@@ -10,6 +11,7 @@ set(HEADERS
     "Interface/RtClient.h"
     "LoaderRpc.h"
     "LdControllerEventRouterRpc.h"
+    "InstrumentsRpc.h"
 )
 
 set(TARGET_NAME capnzero-loader-server)
