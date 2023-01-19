@@ -4,7 +4,7 @@ endif()
 
 set(SOURCES
    "Instruments.cpp"
-   "InstrumentsFactory.cpp"
+   "InstrumentsMDChangeHandler.cpp"
    "KitInstrument.cpp"
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"

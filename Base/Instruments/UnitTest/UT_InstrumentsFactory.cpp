@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "InstrumentsFactory.h"
+#include "InstrumentsMDChangeHandler.h"
 #include "Instruments.h"
 #include "MusicDeviceHolder.h"
 
@@ -10,5 +10,5 @@ TEST(InstrumentsFactoryTest, test)
 {
    base::musicDevice::Holder musicDeviceHolder;
    Instruments instruments(musicDeviceHolder.musicDevices);
-   InstrumentsFactory instrumentsFactory(instruments, musicDeviceHolder);
+   InstrumentsMDChangeHandler instrumentsFactory(instruments, musicDeviceHolder);
 }

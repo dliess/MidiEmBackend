@@ -8,7 +8,7 @@
 
 #include "ControllerEventRouter.h"
 #include "Instruments.h"
-#include "InstrumentsFactory.h"
+#include "InstrumentsMDChangeHandler.h"
 #include "KitInstrument.h"
 #include "MidiRouter.h"
 #include "MusicDeviceFactory.h"
@@ -33,7 +33,7 @@ public:
    musicDevice::factory::Factory musicDeviceFactory;
    TransportControl transportControl;
    instruments::Instruments instruments;
-   instruments::InstrumentsFactory instrumentsFactory;
+   instruments::InstrumentsMDChangeHandler instrumentsFactory;
    midifriends::Router midiRouter;
    session::Tracks tracks;
    eventRouter::EventRouter controllerEventRouter;
