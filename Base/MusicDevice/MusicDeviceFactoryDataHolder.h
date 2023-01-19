@@ -8,10 +8,10 @@
 #include "CallbackSignal.h"
 #include "DevicePresets.h"
 #include "Identifiable.h"
+#include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
 #include "VectorPlusOne.h"
-#include "MusicDevice.h"
 
 namespace base::musicDevice::factory
 {
@@ -36,6 +36,9 @@ struct DataHolder
        util::Identifiable::UUIDView uuid) const noexcept;
    std::optional<util::Identifiable::UUID> getUUIDByMdId(
        const MusicDeviceId& mdId) const noexcept;
+
+   MusicDevice* getMusicDeviceByUUID(
+       util::Identifiable::UUIDView uuid) const noexcept;
 
    void addUuid2MdId(const util::Identifiable::UUID& uuid,
                      MusicDevice* md) noexcept;

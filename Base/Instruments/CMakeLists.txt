@@ -7,6 +7,7 @@ set(SOURCES
    "InstrumentsFactory.cpp"
    "KitInstrument.cpp"
    "MelodicInstrument.cpp"
+   "InstrumentsModifier.cpp"
 )
 
 set(HEADERS
@@ -16,6 +17,7 @@ set(HEADERS
    "INotePlayer.h"
    "Instruments.h"
    "InstrumentsRef.h"
+   "InstrumentsModifier.h"
 )
 
 set(TARGET_NAME "Instruments")

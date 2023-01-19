@@ -223,6 +223,17 @@ std::optional<util::Identifiable::UUID> factory::DataHolder::getUUIDByMdId(
    return it->first;
 }
 
+MusicDevice* factory::DataHolder::getMusicDeviceByUUID(
+    util::Identifiable::UUIDView uuid) const noexcept
+{
+   const auto it = m_musicDevices.find(util::deepCopy(uuid));
+   if (it == m_musicDevices.end())
+   {
+      return nullptr;
+   }
+   return it->second;
+}
+
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
                                        MusicDevice* md) noexcept
 {

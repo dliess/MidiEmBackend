@@ -1,43 +1,16 @@
-#ifndef INSTRUMENTS_H
-#define INSTRUMENTS_H
-
-#include <functional>
-#include <vector>
+#ifndef INSTRUMENTS_MODIFIER_H
+#define INSTRUMENTS_MODIFIER_H
 
 #include "InstrumentsData.h"
-#include "Identifiable.h"
-#include "KitInstrument.h"
-#include "MelodicInstrument.h"
-#include "Meta.h"
-#include "Settings_old.h"
-#include "function_ref.h"
-#include "DoubleBuffer.h"
+#include "MusicDeviceFactoryDataHolder.h"
 
-namespace base
+namespace base::instruments
 {
-namespace base::musicDevice::factory
+struct InstrumentsModifier
 {
-class DataHolder;
-}
-
-namespace instruments
-{
-
-struct Instruments   //: public utils::Settings<Instruments>
-{
-   Instruments(
+   InstrumentsModifier(
+       Data& rData,
        base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
-   util::DoubleBuffer<Data> data;
-   /*
-   // ============== Settings ===============
-   using Settings = Data;
-   Settings getSettings() const noexcept;
-   void setSettings(const Settings& settings) noexcept;
-   // =======================================
-    */
-   using Cb = std::function<void(void)>;
-   void registerForDataChange(Cb cb) noexcept;
-   void triggerChanged() noexcept;
 
    void createKitInstrument(std::string name) noexcept;
    void removeKitInstrument(
@@ -92,23 +65,11 @@ struct Instruments   //: public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
-   [[nodiscard]] Instrument* getInstrumentByUuid(
-       util::Identifiable::UUIDView) noexcept;
-
-   inline void withKitInstrument(util::Identifiable::UUIDView uuid,
-                                 util::function_ref<void(KitInstrument&)> cb);
-   inline void withMelodicInstrument(
-       util::Identifiable::UUIDView uuid,
-       util::function_ref<void(MelodicInstrument&)> cb);
-
 private:
+   Data& m_rData;
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
-   std::vector<Cb> m_subscribers;
+   static constexpr int MAX_VOICES_IN_SLOT = 4;
 };
 
-}   // namespace instruments
-}   // namespace base
-
-#include "Instruments.inl"
-
+}   // namespace base::instruments
 #endif
