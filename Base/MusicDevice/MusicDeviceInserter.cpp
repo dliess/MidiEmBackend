@@ -36,7 +36,7 @@ bool MusicDeviceInserter::findOrCreateDevice(
          std::shared_ptr<MusicDevice> pMusicDevice = createMusicDevice(
              deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
              std::move(pPresets), std::move(pActualPresetNames));
-         m_rDataHolder.addUuid2MdId(pMusicDevice->id(), deviceId);
+         m_rDataHolder.addUuid2MdId(pMusicDevice->id(), pMusicDevice.get());
          insertMDandMidiToMdWithUUID(std::move(pMusicDevice),
                                      std::move(pMidiIn), std::move(pMidiOut));
       }
@@ -195,7 +195,7 @@ void MusicDeviceInserter::handleDeviceInsertChained(
    auto pMusicDevice = createMusicDevice(
        deviceId, getMidiDevIdFrom(pMidiIn, pMidiOut), std::move(pDescr),
        std::move(pPresets), std::move(pActualPresetNames));
-   m_rDataHolder.addUuid2MdId(pMusicDevice->id(), deviceId);
+   m_rDataHolder.addUuid2MdId(pMusicDevice->id(), pMusicDevice.get());
    insertMDandMidiToMdWithUUID(std::move(pMusicDevice), std::move(pMidiIn),
                                std::move(pMidiOut), midiVoiceOffset);
 }

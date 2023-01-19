@@ -33,19 +33,19 @@ void factory::DataHolder::soundDeviceActualPresetNameChanged(
     const util::Identifiable::UUID& uuid, int voiceIdx,
     const std::string& newPresetName) noexcept
 {
-   const auto uuidIt = m_uuidToDevIdMap.find(uuid);
-   if (uuidIt == m_uuidToDevIdMap.end())
+   const auto uuidIt = m_musicDevices.find(uuid);
+   if (uuidIt == m_musicDevices.end())
    {
       return;
    }
-   const auto it = m_actualPresetNames.find(uuidIt->second);
+   const auto it = m_actualPresetNames.find(uuidIt->second->deviceId());
    if (it == m_actualPresetNames.end())
    {
       return;
    }
    it->second->at(voiceIdx + 1) = newPresetName;
    util::Settings settings("EnginePresets", "ActualPresets.json");
-   settings.save(uuidIt->second.toStr(), *it->second.get());
+   settings.save(uuidIt->second->deviceId().toStr(), *it->second.get());
    emitActualPresetNameChanged(uuid, voiceIdx, newPresetName);
 }
 
@@ -172,7 +172,7 @@ void factory::DataHolder::reEmitSignals()
           });
    }
    /* TODO: for now, not here, but from rt-thread because of race confdition of
-   signals for(const auto& entries : m_uuidToDevIdMap)
+   signals for(const auto& entries : m_musicDevices)
    {
       const auto it = m_actualPresetNames.find(entries.second);
       if(it != m_actualPresetNames.end())
@@ -190,46 +190,44 @@ void factory::DataHolder::reEmitSignals()
    */
 }
 
-const MusicDeviceId* factory::DataHolder::getMdIdByUUID(
+std::optional<MusicDeviceId> factory::DataHolder::getMdIdByUUID(
     util::Identifiable::UUIDView uuid) const noexcept
 {
-   const auto it = m_uuidToDevIdMap.find(util::deepCopy(uuid));
-   if (it == m_uuidToDevIdMap.end())
+   const auto it = m_musicDevices.find(util::deepCopy(uuid));
+   if (it == m_musicDevices.end())
    {
-      return nullptr;
+      return std::nullopt;
    }
-   return &it->second;
+   return it->second->deviceId();
 }
 
-const util::Identifiable::UUID* factory::DataHolder::getUUIDByMdId(
+std::optional<util::Identifiable::UUID> factory::DataHolder::getUUIDByMdId(
     const MusicDeviceId& mdId) const noexcept
 {
    const auto it = std::find_if(
-       m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
-       [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
-          return e.second == mdId;
-       });
-   if (it == m_uuidToDevIdMap.end())
+       m_musicDevices.begin(), m_musicDevices.end(),
+       [&mdId](const auto& e) { return e.second->deviceId() == mdId; });
+   if (it == m_musicDevices.end())
    {
       const auto it2 = std::find_if(
-          m_uuidToDevIdMap.begin(), m_uuidToDevIdMap.end(),
-          [&mdId](const std::pair<util::Identifiable::UUID, MusicDeviceId>& e) {
-             return e.second == MusicDeviceId{mdId.deviceName(), MusicDeviceId::ANY_PORT};
+          m_musicDevices.begin(), m_musicDevices.end(), [&mdId](const auto& e) {
+             return e.second->deviceId() ==
+                    MusicDeviceId{mdId.deviceName(), MusicDeviceId::ANY_PORT};
           });
-      if (it2 == m_uuidToDevIdMap.end())
+      if (it2 == m_musicDevices.end())
       {
-         return nullptr;
+         return std::nullopt;
       }
-      return &it2->first;
+      return it2->first;
    }
-   return &it->first;
+   return it->first;
 }
 
 void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
-                                       const MusicDeviceId& mdId) noexcept
+                                       MusicDevice* md) noexcept
 {
-   auto [iter, success] = m_uuidToDevIdMap.emplace(uuid, mdId);
-   if(success)
+   auto [iter, success] = m_musicDevices.emplace(uuid, md);
+   if (success)
    {
       emitMusicDeviceAdded(iter->second);
    }
@@ -238,5 +236,5 @@ void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
 void factory::DataHolder::removeEntryForUuid(
     const util::Identifiable::UUID& uuid) noexcept
 {
-   m_uuidToDevIdMap.erase(uuid);
+   m_musicDevices.erase(uuid);
 }

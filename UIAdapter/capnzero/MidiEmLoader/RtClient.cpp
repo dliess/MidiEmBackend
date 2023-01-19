@@ -28,11 +28,13 @@ RtClient::RtClient(
                                       const ::capnzero::TextView& port,
                                       const ::capnzero::TextView& mediumId,
                                       ::capnzero::Int16 midiVoiceOffset) {
+         /*
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
           const MusicDeviceId mdId{std::string(type), std::string(port)};
-          rMDFactory.dataHolder().addUuid2MdId(uuidData, mdId);
+          //rMDFactory.dataHolder().addUuid2MdId(uuidData, mdId);
           // TODO m_rEventRoutes.musicDeviceAppeared(mdId);
+          */
        });
    onMusicDevicesDeviceRemoved(
        [&rMDFactory, &rSignals, this](const ::capnzero::SpanCL<16>& uuid) {
