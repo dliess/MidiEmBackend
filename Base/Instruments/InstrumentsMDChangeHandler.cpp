@@ -3,31 +3,16 @@
 #include "InstrumentsData.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
-#include "MusicDeviceFactoryDataHolder.h"
 #include "MusicDeviceId.h"
 
 using namespace base::instruments;
 
 InstrumentsMDChangeHandler::InstrumentsMDChangeHandler(
-    Data& rData,
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
+    Data& rData) noexcept :
     m_rData(rData)
 {
-   /*
-   rFactoryDataHolder.onMusicDeviceAdded(
-       [this](auto md) {
-          add(std::move(md));
-          m_rData.triggerChanged();
-          // spdlog::info( "m_rData.triggerChanged();");
-       });
-   rFactoryDataHolder.musicDevices.onAboutToRemove(
-       [this](std::shared_ptr<musicDevice::MusicDevice> ptr) {
-          remove(std::move(ptr));
-          m_rData.triggerChanged();
-          // spdlog::info( "m_rData.triggerChanged();");
-       });
-   */
 }
+
 void InstrumentsMDChangeHandler::fillReferences(
     musicDevice::MusicDevice* pMusicDevice) noexcept
 {

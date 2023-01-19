@@ -1,6 +1,6 @@
 set(SOURCES
    "UT_Instruments.cpp"
-   "UT_InstrumentsFactory.cpp"
+   "UT_InstrumentsMDChangeHandler.cpp"
    "UT_KitInstrument.cpp"
    "UT_MelodicInstrument.cpp"
 )

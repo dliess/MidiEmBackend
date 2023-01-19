@@ -47,7 +47,6 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     musicDeviceFactory(musicDeviceHolder, configDir),
     transportControl(musicDeviceHolder),
     instruments(musicDeviceHolder.musicDevices),
-    instrumentsFactory(instruments, musicDeviceHolder),
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
     controllerEventRouter(instruments, musicDeviceHolder.musicDevices)

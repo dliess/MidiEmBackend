@@ -33,7 +33,6 @@ public:
    musicDevice::factory::Factory musicDeviceFactory;
    TransportControl transportControl;
    instruments::Instruments instruments;
-   instruments::InstrumentsMDChangeHandler instrumentsFactory;
    midifriends::Router midiRouter;
    session::Tracks tracks;
    eventRouter::EventRouter controllerEventRouter;

@@ -50,7 +50,7 @@ struct DataHolder
        const MusicDeviceId& id) noexcept;
 
    CB_SIGNAL(MusicDeviceAdded, MusicDevice*);
-   CB_SIGNAL(MusicDeviceAboutToRemove, util::Identifiable::UUIDView);
+   CB_SIGNAL(MusicDeviceAboutToRemove, MusicDevice*);
    CB_SIGNAL(DescriptionAdded, const std::string&,
              const description::Description&);
    CB_SIGNAL(PresetUpdated, const sound::preset::Id&, sound::preset::Category,

@@ -57,7 +57,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
                    emitArpBypassChanged(uuid, voiceIdx, on);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeTypeChanged(
-                [this, uuid, voiceIdx](base::arp::RangeType type) {
+                [this, uuid, voiceIdx](::base::arp::RangeType type) {
                    emitArpRangeTypeChanged(uuid, voiceIdx, type);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onRangeChanged(
@@ -73,7 +73,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
                    emitArpStepLengthChanged(uuid, voiceIdx, value);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onAlgorithmChanged(
-                [this, uuid, voiceIdx](base::arp::Algorithm algorithm) {
+                [this, uuid, voiceIdx](::base::arp::Algorithm algorithm) {
                    emitArpAlgorithmChanged(uuid, voiceIdx, algorithm);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onHoldNotesChanged(
@@ -81,7 +81,7 @@ inline MusicDeviceContainer::MusicDeviceContainer() : Super()
                    emitArpHoldNotesChanged(uuid, voiceIdx, on);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onFeedModeChanged(
-                [this, uuid, voiceIdx](base::arp::FeedMode feedMode) {
+                [this, uuid, voiceIdx](::base::arp::FeedMode feedMode) {
                    emitArpFeedModeChanged(uuid, voiceIdx, feedMode);
                 });
             ptr->soundHandler->arpeggiators().at(voiceIdx).onSeqSizeChanged(

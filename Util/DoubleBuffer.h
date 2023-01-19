@@ -24,6 +24,8 @@ public:
       }
       cb(m_data[nonRtIndex()]);
    }
+   Data& nonRt() { return m_data[nonRtIndex()]; }
+   const Data& nonRt() const { return m_data[nonRtIndex()]; }
 
 private:
    int m_rtIndex{0};

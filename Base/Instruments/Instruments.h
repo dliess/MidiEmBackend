@@ -13,20 +13,17 @@
 #include "function_ref.h"
 #include "DoubleBuffer.h"
 
-namespace base
-{
-namespace base::musicDevice::factory
-{
-class DataHolder;
-}
+// clang-format off
+namespace base::musicDevice::factory { class DataHolder; }
+// clang-format on
 
-namespace instruments
+namespace base::instruments
 {
 
 struct Instruments   //: public utils::Settings<Instruments>
 {
    Instruments(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+       musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
    util::DoubleBuffer<Data> data;
    /*
    // ============== Settings ===============
@@ -96,18 +93,17 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView) noexcept;
 
    inline void withKitInstrument(util::Identifiable::UUIDView uuid,
-                                 util::function_ref<void(KitInstrument&)> cb);
+                                 util::function_ref<void(const KitInstrument&)> cb);
    inline void withMelodicInstrument(
        util::Identifiable::UUIDView uuid,
-       util::function_ref<void(MelodicInstrument&)> cb);
+       util::function_ref<void(const MelodicInstrument&)> cb);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    std::vector<Cb> m_subscribers;
 };
 
-}   // namespace instruments
-}   // namespace base
+}   // namespace base::instruments
 
 #include "Instruments.inl"
 

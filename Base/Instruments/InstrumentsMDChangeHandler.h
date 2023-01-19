@@ -2,7 +2,6 @@
 #define INSTRUMENTS_MD_CHANGE_HANDLER_H
 
 // clang-format off
-namespace base::musicDevice::factory { class DataHolder; }
 namespace base::musicDevice { class MusicDevice; }
 // clang-format on
 namespace base::instruments
@@ -13,8 +12,7 @@ class InstrumentsMDChangeHandler
 {
 public:
    InstrumentsMDChangeHandler(
-       Data& rData,
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+       Data& rData) noexcept;
    void add(musicDevice::MusicDevice* pMusicDevice);
    void remove(musicDevice::MusicDevice* pMusicDevice);
 
@@ -36,7 +34,6 @@ private:
    void addDefaultInstrumentsForDrumKit(musicDevice::MusicDevice* pMusicDevice);
    void addDefaultInstrumentsForInstrumentPerVoice(musicDevice::MusicDevice* pMusicDevice);
    void addDefaultInstrumentsForOnePolyphonicInstrument(musicDevice::MusicDevice* pMusicDevice);
-
 };
 
 }   // namespace base::instruments
