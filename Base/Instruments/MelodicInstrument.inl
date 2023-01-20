@@ -6,14 +6,18 @@
 namespace base::instruments
 {
 
-inline void MelodicInstrument::incrementVoiceIndex() noexcept
+inline void MelodicInstrument::RtData::incrementVoiceIndex() noexcept
 {
-   if(m_voices.empty()) return;
-   ++m_currentVoiceIndex;
-   if(m_currentVoiceIndex == m_voices.size())
+   ++currentVoiceIndex;
+   if(currentVoiceIndex == m_voices.size())
    {
-      m_currentVoiceIndex = 0;
+      currentVoiceIndex = 0;
    }
+}
+
+inline int MelodicInstrument::RtData::currentVoiceIndex() const noexcept
+{
+   return m_currentVoiceIndex;
 }
 
 } // namespace base::instruments

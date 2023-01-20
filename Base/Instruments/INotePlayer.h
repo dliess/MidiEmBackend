@@ -7,8 +7,8 @@ class INotePlayer
 {
 public:
    virtual ~INotePlayer(){};
-   virtual void noteOn(int note, float velocity) noexcept  = 0;
-   virtual void noteOff(int note, float velocity) noexcept = 0;
+   virtual void noteOn(int note, float velocity) const noexcept  = 0;
+   virtual void noteOff(int note, float velocity) const noexcept = 0;
 };
 
 }   // namespace base::instruments

@@ -9,20 +9,23 @@ using namespace base::instruments;
 MelodicInstrument::MelodicInstrument(std::string name) noexcept :
     m_name(std::move(name))
 {
-   for (auto& e : m_noteAllocations) { e = FREE; }
+   for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
 
-void MelodicInstrument::noteOn(int note, float velocity) noexcept
+void MelodicInstrument::noteOn(int note, float velocity) const noexcept
 {
-   if (!util::vector_index_in_range(note, m_noteAllocations) ||
-       m_noteAllocations[note] != FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] != RtData::FREE)
    {
       return;
    }
-   incrementVoiceIndex();
-   m_noteAllocations[note] = m_currentVoiceIndex;
-   std::for_each(m_voices[m_currentVoiceIndex].voices.begin(),
-                 m_voices[m_currentVoiceIndex].voices.end(),
+   if(!m_voices.empty())
+   {
+      m_pRtData->incrementVoiceIndex();
+   }
+   m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
+   std::for_each(m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
+                 m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
                  [note, velocity](Voice& voice) {
                     if (voice.pSoundDevice)
                     {
@@ -32,14 +35,14 @@ void MelodicInstrument::noteOn(int note, float velocity) noexcept
                  });
 }
 
-void MelodicInstrument::noteOff(int note, float velocity) noexcept
+void MelodicInstrument::noteOff(int note, float velocity) const noexcept
 {
-   if (!util::vector_index_in_range(note, m_noteAllocations) ||
-       m_noteAllocations[note] == FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       return;
    }
-   auto& compositeVoice = m_voices[m_noteAllocations[note]];
+   auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
    std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
                  [note, velocity](Voice& voice) {
                     if (voice.pSoundDevice)
@@ -48,10 +51,10 @@ void MelodicInstrument::noteOff(int note, float velocity) noexcept
                            voice.voiceIndex, note + voice.noteOffset, velocity);
                     }
                  });
-   m_noteAllocations[note] = FREE;
+   m_pRtData->noteAllocations[note] = RtData::FREE;
 }
 
-void MelodicInstrument::pitchBend(float value) noexcept
+void MelodicInstrument::pitchBend(float value) const noexcept
 {
    for (auto& compositeVoice : m_voices)
    {
@@ -68,7 +71,7 @@ void MelodicInstrument::pitchBend(float value) noexcept
 
 void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
                                                 float increment,
-                                                bool rr) noexcept
+                                                bool rr) const noexcept
 {
    // TODO: this is faulty
    for (auto& compositeVoice : m_voices)
@@ -85,7 +88,7 @@ void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
 void MelodicInstrument::incrementParameterValue(int note, int compPart,
                                                 int parameterId,
                                                 float increment,
-                                                bool rr) noexcept
+                                                bool rr) const noexcept
 {
    // TODO: MPR
 }
@@ -107,7 +110,7 @@ float MelodicInstrument::getParameterValue(
 }
 
 void MelodicInstrument::setParameterValue(int compPart, int parameterId,
-                                          float value) noexcept
+                                          float value) const noexcept
 {
    // TODO: this is faulty
    for (auto& compositeVoice : m_voices)
@@ -122,7 +125,7 @@ void MelodicInstrument::setParameterValue(int compPart, int parameterId,
 }
 
 void MelodicInstrument::setParameterValue(int note, int compPart,
-                                          int parameterId, float value) noexcept
+                                          int parameterId, float value) const noexcept
 {
    // TODO: this is the MPE version
 }

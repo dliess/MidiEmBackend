@@ -29,19 +29,19 @@ public:
    KitInstrument& operator=(const KitInstrument& rhs) noexcept = delete;
    KitInstrument(KitInstrument&& rhs) noexcept                 = default;
    KitInstrument& operator=(KitInstrument&& rhs) noexcept = default;
-   void noteOn(int note, float velocity) noexcept override;
-   void noteOff(int note, float velocity) noexcept override;
-   void noteOn(int soundIndex, int note, float velocity) noexcept;
-   void noteOff(int soundIndex, int note, float velocity) noexcept;
+   void noteOn(int note, float velocity) const noexcept override;
+   void noteOff(int note, float velocity) const noexcept override;
+   void noteOn(int soundIndex, int note, float velocity) const noexcept;
+   void noteOff(int soundIndex, int note, float velocity) const noexcept;
    void incrementParameterValue(int soundIdx, int componentIdx,
                                 int parameterIdx, float increment,
-                                bool roundRobin = false) noexcept;
+                                bool roundRobin = false) const noexcept;
    [[nodiscard]] float getParameterValue(
        int soundIdx, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
            musicDevice::sound::ParameterPart::Commanded) const noexcept;
    void setParameterValue(int soundIdx, int componentIdx, int parameterIdx,
-                          float value) noexcept;
+                          float value) const noexcept;
    [[nodiscard]] float normalizePercentageValue(
        int soundIdx, int componentIdx, int parameterId,
        musicDevice::sound::ParameterPart parameterPart,

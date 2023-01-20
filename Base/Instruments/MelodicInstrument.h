@@ -30,14 +30,15 @@ public:
    MelodicInstrument(MelodicInstrument&&) noexcept                 = default;
    MelodicInstrument& operator=(MelodicInstrument&&) noexcept = default;
 
-   void noteOn(int note, float velocity) noexcept override;
-   void noteOff(int note, float velocity) noexcept override;
+   void noteOn(int note, float velocity) const noexcept override;
+   void noteOff(int note, float velocity) const noexcept override;
 
-   void pitchBend(float value) noexcept;
+   void pitchBend(float value) const noexcept;
    void incrementParameterValue(int compPart, int parameterId, float increment,
-                                bool roundRobin = false) noexcept;
-   void incrementParameterValue(int note, int compPart, int parameterId, float increment,
-                                bool roundRobin = false) noexcept;
+                                bool roundRobin = false) const noexcept;
+   void incrementParameterValue(int note, int compPart, int parameterId,
+                                float increment,
+                                bool roundRobin = false) const noexcept;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
@@ -46,9 +47,10 @@ public:
        int note, int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
            musicDevice::sound::ParameterPart::Commanded) const noexcept;
-   void setParameterValue(int compPart, int parameterId, float value) noexcept;
+   void setParameterValue(int compPart, int parameterId,
+                          float value) const noexcept;
    void setParameterValue(int note, int compPart, int parameterId,
-                          float value) noexcept;
+                          float value) const noexcept;
    [[nodiscard]] float normalizePercentageValue(
        int compPart, int parameterId,
        musicDevice::sound::ParameterPart parameterPart,
@@ -67,17 +69,21 @@ public:
    VoiceContainer& voices() noexcept;
    friend auto meta::registerMembers<MelodicInstrument>();
 
+   struct RtData
+   {
+      static constexpr int NUM_NOTES = 128;
+      static constexpr int FREE      = -1;
+      std::array<int, NUM_NOTES> noteAllocations;
+      inline void incrementVoiceIndex() const noexcept;
+      [[nodiscard]] inline int currentVoiceIndex() const noexcept;
+    private:
+      int m_currentVoiceIndex{-1};
+   };
+
 private:
    VoiceContainer m_voices;
    std::string m_name;
-   int m_currentVoiceIndex{-1};
-
-   static constexpr int NUM_NOTES = 128;
-   static constexpr int FREE      = -1;
-
-   std::array<int, NUM_NOTES> m_noteAllocations;
-
-   inline void incrementVoiceIndex() noexcept;
+   std::shared_ptr<RtData> m_pRtData;
 };
 
 }   // namespace instruments

@@ -9,7 +9,7 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-void KitInstrument::noteOn(int note, float velocity) noexcept
+void KitInstrument::noteOn(int note, float velocity) const noexcept
 {
    auto si = toSoundIndex(note);
    if (si)
@@ -18,7 +18,7 @@ void KitInstrument::noteOn(int note, float velocity) noexcept
    }
 }
 
-void KitInstrument::noteOff(int note, float velocity) noexcept
+void KitInstrument::noteOff(int note, float velocity) const noexcept
 {
    auto si = toSoundIndex(note);
    if (si)
@@ -27,7 +27,7 @@ void KitInstrument::noteOff(int note, float velocity) noexcept
    }
 }
 
-void KitInstrument::noteOn(int soundIndex, int note, float velocity) noexcept
+void KitInstrument::noteOn(int soundIndex, int note, float velocity) const noexcept
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -39,7 +39,7 @@ void KitInstrument::noteOn(int soundIndex, int note, float velocity) noexcept
    }
 }
 
-void KitInstrument::noteOff(int soundIndex, int note, float velocity) noexcept
+void KitInstrument::noteOff(int soundIndex, int note, float velocity) const noexcept
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -53,7 +53,7 @@ void KitInstrument::noteOff(int soundIndex, int note, float velocity) noexcept
 
 void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
                                             int parameterIdx, float increment,
-                                            bool roundRobin) noexcept
+                                            bool roundRobin) const noexcept
 {
    // TODO
 }
@@ -67,7 +67,7 @@ float KitInstrument::getParameterValue(
 }
 
 void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
-                                      int parameterIdx, float value) noexcept
+                                      int parameterIdx, float value) const noexcept
 {
    // TODO
 }
