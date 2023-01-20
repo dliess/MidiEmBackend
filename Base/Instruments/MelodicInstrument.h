@@ -24,7 +24,7 @@ class MelodicInstrument : public Instrument
 {
 public:
    MelodicInstrument() = default;
-   MelodicInstrument(std::string name) noexcept;
+   MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
    MelodicInstrument(const MelodicInstrument&) noexcept = delete;
    MelodicInstrument& operator=(const MelodicInstrument&) noexcept = delete;
    MelodicInstrument(MelodicInstrument&&) noexcept                 = default;

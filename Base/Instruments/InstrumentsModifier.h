@@ -18,7 +18,9 @@ struct InstrumentsModifier
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name) noexcept;
 
-   void createMelodicInstrument(std::string name) noexcept;
+   void createMelodicInstrument(
+       std::string name,
+       std::shared_ptr<MelodicInstrument::RtData> rtData) noexcept;
    void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,

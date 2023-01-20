@@ -52,9 +52,11 @@ void InstrumentsModifier::renameKitInstrument(
    instrumentIt->setName(std::move(name));
 }
 
-void InstrumentsModifier::createMelodicInstrument(std::string name) noexcept
+void InstrumentsModifier::createMelodicInstrument(
+    std::string name,
+    std::shared_ptr<MelodicInstrument::RtData> rtData) noexcept
 {
-   m_rData.melodicInstruments.emplace_back(std::move(name));
+   m_rData.melodicInstruments.emplace_back(std::move(name), rtData);
 }
 
 void InstrumentsModifier::removeMelodicInstrument(

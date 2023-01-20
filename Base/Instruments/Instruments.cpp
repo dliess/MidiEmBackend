@@ -10,21 +10,17 @@
 #include "SoundSection.h"
 
 using namespace base::instruments;
-
+ 
 Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
    rFactoryDataHolder.onMusicDeviceAdded([this](auto md) {
-      data.withNonRtLocked([this, &md](auto& nonRtData) {
-         InstrumentsMDChangeHandler(nonRtData).add(md);
-      });
+      InstrumentsMDChangeHandler(m_doubleBufferedData).add(md);
       triggerChanged();
    });
    rFactoryDataHolder.onMusicDeviceAboutToRemove([this](auto md) {
-      data.withNonRtLocked([this, &md](auto& nonRtData) {
-         InstrumentsMDChangeHandler(nonRtData).remove(md);
-      });
+      InstrumentsMDChangeHandler(m_doubleBufferedData).remove(md);
       triggerChanged();
    });
 }
@@ -41,7 +37,7 @@ void Instruments::triggerChanged() noexcept
 
 void Instruments::createKitInstrument(std::string name) noexcept
 {
-   data.withNonRtLocked([this, &name](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &name](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .createKitInstrument(std::move(name));
    });
@@ -51,7 +47,7 @@ void Instruments::createKitInstrument(std::string name) noexcept
 void Instruments::removeKitInstrument(
     const util::Identifiable::UUID& instrumentId) noexcept
 {
-   data.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeKitInstrument(instrumentId);
    });
@@ -61,7 +57,7 @@ void Instruments::removeKitInstrument(
 void Instruments::renameKitInstrument(
     const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
-   data.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .renameKitInstrument(instrumentId, std::move(name));
    });
@@ -70,9 +66,10 @@ void Instruments::renameKitInstrument(
 
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
-   data.withNonRtLocked([this, &name](auto& nonRtData) {
+   auto rtData = std::make_shared<MelodicInstrument::RtData>();
+   m_doubleBufferedData.withNonRtLocked([this, &name, &rtData](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .createMelodicInstrument(std::move(name));
+          .createMelodicInstrument(std::move(name), rtData);
    });
    triggerChanged();
 }
@@ -80,7 +77,7 @@ void Instruments::createMelodicInstrument(std::string name) noexcept
 void Instruments::removeMelodicInstrument(
     const util::Identifiable::UUID& instrumentId) noexcept
 {
-   data.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeMelodicInstrument(instrumentId);
    });
@@ -90,7 +87,7 @@ void Instruments::removeMelodicInstrument(
 void Instruments::renameMelodicInstrument(
     const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
-   data.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .renameMelodicInstrument(instrumentId, std::move(name));
    });
@@ -101,7 +98,7 @@ void Instruments::createNewSlotInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   data.withNonRtLocked(
+   m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, &soundDeviceUuid, voiceIdx](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .createNewSlotInMelodicInstrument(instrumentUuid, soundDeviceUuid,
@@ -114,7 +111,7 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   data.withNonRtLocked([this, &instrumentUuid, slotIdx, &soundDeviceUuid,
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx, &soundDeviceUuid,
                          voiceIdx](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .addVoiceToMelodicInstrumentSlot(instrumentUuid, slotIdx,
@@ -127,7 +124,7 @@ void Instruments::removeVoiceFromMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx) noexcept
 {
-   data.withNonRtLocked(
+   m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, slotIdx, compositeIdx](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .removeVoiceFromMelodicInstrumentSlot(instrumentUuid, slotIdx,
@@ -139,7 +136,7 @@ void Instruments::removeVoiceFromMelodicInstrumentSlot(
 void Instruments::removeSlotFromMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept
 {
-   data.withNonRtLocked([this, &instrumentUuid, slotIdx](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeSlotFromMelodicInstrument(instrumentUuid, slotIdx);
    });
@@ -150,7 +147,7 @@ void Instruments::setNoteOffsetInMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx, int noteOffset) noexcept
 {
-   data.withNonRtLocked(
+   m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, slotIdx, compositeIdx, noteOffset](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .setNoteOffsetInMelodicInstrumentVoice(instrumentUuid, slotIdx,
@@ -163,7 +160,7 @@ void Instruments::setCompositeNameInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const std::string name) noexcept
 {
-   data.withNonRtLocked([this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx,
                                                std::move(name));
@@ -175,7 +172,7 @@ void Instruments::createNewSlotInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   data.withNonRtLocked(
+   m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, soundDeviceUuid, voiceIdx](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .createNewSlotInKitInstrument(instrumentUuid, soundDeviceUuid,
@@ -188,7 +185,7 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   data.withNonRtLocked(
+   m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, slotIdx, soundDeviceUuid, voiceIdx](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .addVoiceToKitInstrumentSlot(instrumentUuid, slotIdx,
@@ -202,7 +199,7 @@ void Instruments::moveKitInstrumentSlotVoice(
     int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
     int dstSlotIdx) noexcept
 {
-   data.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .moveKitInstrumentSlotVoice(srcInstrumentUuid, srcSlotIdx,
                                       srcCompositeIdx, dstInstrumentUuid,
@@ -215,7 +212,7 @@ void Instruments::removeVoiceFromKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx) noexcept
 {
-   data.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeVoiceFromKitInstrumentSlot(instrumentUuid, slotIdx,
                                             compositeIdx);
@@ -226,7 +223,7 @@ void Instruments::removeVoiceFromKitInstrumentSlot(
 void Instruments::removeSlotFromKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept
 {
-   data.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeSlotFromKitInstrument(instrumentUuid, slotIdx);
    });
@@ -237,7 +234,7 @@ void Instruments::setNoteOffsetInKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx, int noteOffset) noexcept
 {
-   data.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .setNoteOffsetInKitInstrumentVoice(instrumentUuid, slotIdx,
                                              compositeIdx, noteOffset);
@@ -249,7 +246,7 @@ void Instruments::setCompositeNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const std::string& name) noexcept
 {
-   data.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .setCompositeNameInKitInstrument(instrumentUuid, slotIdx,
                                            std::move(name));
@@ -270,13 +267,13 @@ auto elementWithUuid(Container& container,
 Instrument* Instruments::getInstrumentByUuid(
     util::Identifiable::UUIDView uuid) noexcept
 {
-   auto it1 = elementWithUuid(data.nonRt().kitInstruments, uuid);
-   if (it1 != data.nonRt().kitInstruments.end())
+   auto it1 = elementWithUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
+   if (it1 != m_doubleBufferedData.nonRt().kitInstruments.end())
    {
       return &(*it1);
    }
-   auto it2 = elementWithUuid(data.nonRt().melodicInstruments, uuid);
-   if (it2 != data.nonRt().melodicInstruments.end())
+   auto it2 = elementWithUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
+   if (it2 != m_doubleBufferedData.nonRt().melodicInstruments.end())
    {
       return &(*it2);
    }

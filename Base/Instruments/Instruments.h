@@ -24,7 +24,6 @@ struct Instruments   //: public utils::Settings<Instruments>
 {
    Instruments(
        musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
-   util::DoubleBuffer<Data> data;
    /*
    // ============== Settings ===============
    using Settings = Data;
@@ -106,6 +105,7 @@ struct Instruments   //: public utils::Settings<Instruments>
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   util::DoubleBuffer<Data> m_doubleBufferedData;
    std::vector<Cb> m_subscribers;
 };
 

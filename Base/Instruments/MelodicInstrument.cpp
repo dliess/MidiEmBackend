@@ -1,13 +1,15 @@
 #include "MelodicInstrument.h"
 
 #include "MusicDeviceHolder.h"
-#include "VectorIndexInRange.h"
 #include "SoundSection.h"
+#include "VectorIndexInRange.h"
 
 using namespace base::instruments;
 
-MelodicInstrument::MelodicInstrument(std::string name) noexcept :
-    m_name(std::move(name))
+MelodicInstrument::MelodicInstrument(std::string name,
+                                     std::shared_ptr<RtData> rtData) noexcept :
+    m_name(std::move(name)),
+    m_pRtData(std::move<rtData>)
 {
    for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
@@ -19,7 +21,7 @@ void MelodicInstrument::noteOn(int note, float velocity) const noexcept
    {
       return;
    }
-   if(!m_voices.empty())
+   if (!m_voices.empty())
    {
       m_pRtData->incrementVoiceIndex();
    }
@@ -125,7 +127,8 @@ void MelodicInstrument::setParameterValue(int compPart, int parameterId,
 }
 
 void MelodicInstrument::setParameterValue(int note, int compPart,
-                                          int parameterId, float value) const noexcept
+                                          int parameterId,
+                                          float value) const noexcept
 {
    // TODO: this is the MPE version
 }
@@ -149,7 +152,7 @@ float MelodicInstrument::normalizePercentageValue(
 }
 
 const base::musicDevice::description::sound::Parameter*
-   MelodicInstrument::parameterDescription(int compPart, int parameterIdx) const
+MelodicInstrument::parameterDescription(int compPart, int parameterIdx) const
 {
    return nullptr;
    // TODO
