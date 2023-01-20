@@ -7,7 +7,7 @@ inline void Instruments::withKitInstrument(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(KitInstrument&)> cb)
 {
-   data.withRtLocked([&uuid, &cb](const auto& rtData) {
+   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
       //util::withUuid(rtData.kitInstruments.begin(), rtData.kitInstruments.end(),
       //               uuid, cb);
    });
@@ -17,7 +17,7 @@ inline void Instruments::withMelodicInstrument(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(MelodicInstrument&)> cb)
 {
-   data.withRtLocked([&uuid, &cb](const auto& rtData) {
+   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
       //util::withUuid(rtData.melodicInstruments.begin(),
       //               rtData.melodicInstruments.end(), uuid, cb);
    });
@@ -27,7 +27,7 @@ inline void Instruments::withKitInstrument(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(const KitInstrument&)> cb)
 {
-   data.withRtLocked([&uuid, &cb](const auto& rtData) {
+   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
       //util::withUuid(rtData.kitInstruments.cbegin(), rtData.kitInstruments.cend(),
       //               uuid, cb);
    });
@@ -37,7 +37,7 @@ inline void Instruments::withMelodicInstrument(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(const MelodicInstrument&)> cb)
 {
-   data.withRtLocked([&uuid, &cb](const auto& rtData) {
+   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
       //util::withUuid(rtData.melodicInstruments.cbegin(),
       //               rtData.melodicInstruments.cend(), uuid, cb);
    });

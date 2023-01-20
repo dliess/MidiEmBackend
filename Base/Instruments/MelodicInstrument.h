@@ -23,6 +23,17 @@ namespace instruments
 class MelodicInstrument : public Instrument
 {
 public:
+   struct RtData
+   {
+      static constexpr int NUM_NOTES = 128;
+      static constexpr int FREE      = -1;
+      std::array<int, NUM_NOTES> noteAllocations;
+      inline void incrementVoiceIndex(int maxSize) noexcept;
+      [[nodiscard]] inline int currentVoiceIndex() const noexcept;
+    private:
+      int m_currentVoiceIndex{-1};
+   };
+
    MelodicInstrument() = default;
    MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
    MelodicInstrument(const MelodicInstrument&) noexcept = delete;
@@ -68,17 +79,6 @@ public:
    using VoiceContainer = std::vector<CompositeSound>;
    VoiceContainer& voices() noexcept;
    friend auto meta::registerMembers<MelodicInstrument>();
-
-   struct RtData
-   {
-      static constexpr int NUM_NOTES = 128;
-      static constexpr int FREE      = -1;
-      std::array<int, NUM_NOTES> noteAllocations;
-      inline void incrementVoiceIndex() const noexcept;
-      [[nodiscard]] inline int currentVoiceIndex() const noexcept;
-    private:
-      int m_currentVoiceIndex{-1};
-   };
 
 private:
    VoiceContainer m_voices;

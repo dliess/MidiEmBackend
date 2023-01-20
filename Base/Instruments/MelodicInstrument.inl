@@ -6,12 +6,12 @@
 namespace base::instruments
 {
 
-inline void MelodicInstrument::RtData::incrementVoiceIndex() noexcept
+inline void MelodicInstrument::RtData::incrementVoiceIndex(int maxSize) noexcept
 {
-   ++currentVoiceIndex;
-   if(currentVoiceIndex == m_voices.size())
+   ++m_currentVoiceIndex;
+   if(m_currentVoiceIndex == maxSize)
    {
-      currentVoiceIndex = 0;
+      m_currentVoiceIndex = 0;
    }
 }
 

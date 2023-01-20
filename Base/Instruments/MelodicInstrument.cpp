@@ -9,7 +9,7 @@ using namespace base::instruments;
 MelodicInstrument::MelodicInstrument(std::string name,
                                      std::shared_ptr<RtData> rtData) noexcept :
     m_name(std::move(name)),
-    m_pRtData(std::move<rtData>)
+    m_pRtData(std::move(rtData))
 {
    for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
@@ -23,7 +23,7 @@ void MelodicInstrument::noteOn(int note, float velocity) const noexcept
    }
    if (!m_voices.empty())
    {
-      m_pRtData->incrementVoiceIndex();
+      m_pRtData->incrementVoiceIndex(m_voices.size());
    }
    m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    std::for_each(m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
