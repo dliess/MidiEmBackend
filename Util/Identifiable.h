@@ -17,11 +17,6 @@ class Identifiable
 {
 protected:
    inline Identifiable() noexcept;
-   inline Identifiable(const Identifiable& other) noexcept;
-   inline Identifiable& operator=(const Identifiable& other) noexcept;
-   inline Identifiable(Identifiable&& other) noexcept = default;
-   inline Identifiable& operator=(Identifiable&& other) noexcept = default;
-
 public:
    using UUID     = std::array<uint8_t, util::array_count_v<uuid_t>>;
    using UUIDView = std::span<const uint8_t, util::array_count_v<uuid_t>>;

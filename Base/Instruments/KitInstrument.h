@@ -25,10 +25,6 @@ class KitInstrument : public Instrument
 public:
    KitInstrument() = default;
    KitInstrument(std::string name) noexcept;
-   KitInstrument(const KitInstrument& rhs) noexcept = delete;
-   KitInstrument& operator=(const KitInstrument& rhs) noexcept = delete;
-   KitInstrument(KitInstrument&& rhs) noexcept                 = default;
-   KitInstrument& operator=(KitInstrument&& rhs) noexcept = default;
    void noteOn(int note, float velocity) const noexcept override;
    void noteOff(int note, float velocity) const noexcept override;
    void noteOn(int soundIndex, int note, float velocity) const noexcept;

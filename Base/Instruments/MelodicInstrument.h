@@ -36,10 +36,6 @@ public:
 
    MelodicInstrument() = default;
    MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
-   MelodicInstrument(const MelodicInstrument&) noexcept = delete;
-   MelodicInstrument& operator=(const MelodicInstrument&) noexcept = delete;
-   MelodicInstrument(MelodicInstrument&&) noexcept                 = default;
-   MelodicInstrument& operator=(MelodicInstrument&&) noexcept = default;
 
    void noteOn(int note, float velocity) const noexcept override;
    void noteOff(int note, float velocity) const noexcept override;

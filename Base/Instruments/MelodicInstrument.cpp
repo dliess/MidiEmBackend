@@ -28,7 +28,7 @@ void MelodicInstrument::noteOn(int note, float velocity) const noexcept
    m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    std::for_each(m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
                  m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
-                 [note, velocity](Voice& voice) {
+                 [note, velocity](const Voice& voice) {
                     if (voice.pSoundDevice)
                     {
                        voice.pSoundDevice->noteOn(
@@ -46,7 +46,7 @@ void MelodicInstrument::noteOff(int note, float velocity) const noexcept
    }
    auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
    std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
-                 [note, velocity](Voice& voice) {
+                 [note, velocity](const Voice& voice) {
                     if (voice.pSoundDevice)
                     {
                        voice.pSoundDevice->noteOff(
@@ -61,7 +61,7 @@ void MelodicInstrument::pitchBend(float value) const noexcept
    for (auto& compositeVoice : m_voices)
    {
       std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
-                    [value](Voice& voice) {
+                    [value](const Voice& voice) {
                        if (voice.pSoundDevice)
                        {
                           voice.pSoundDevice->pitchBend(voice.voiceIndex,

@@ -4,6 +4,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
 
+using namespace base;
 using namespace base::instruments;
 
 namespace detail
@@ -173,7 +174,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
       kitInstrument.addSound(voiceIndex, kompositeSound);
    }
    m_rDoubleBufferedData.withNonRtLocked(
-       [this, &kitInstrument, &melodicRtData](auto& nonRtData) {
+       [this, &kitInstrument](auto& nonRtData) {
           nonRtData.kitInstruments.push_back(kitInstrument);
        });
 }
