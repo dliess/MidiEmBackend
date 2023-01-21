@@ -3,27 +3,6 @@
 
 namespace base::instruments
 {
-/*
-inline void Instruments::withKitInstrument(
-    util::Identifiable::UUIDView uuid,
-    util::function_ref<void(KitInstrument&)> cb)
-{
-   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
-      //util::withUuid(rtData.kitInstruments.begin(), rtData.kitInstruments.end(),
-      //               uuid, cb);
-   });
-}
-
-inline void Instruments::withMelodicInstrument(
-    util::Identifiable::UUIDView uuid,
-    util::function_ref<void(MelodicInstrument&)> cb)
-{
-   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
-      //util::withUuid(rtData.melodicInstruments.begin(),
-      //               rtData.melodicInstruments.end(), uuid, cb);
-   });
-}
-*/
 
 inline void Instruments::withKitInstrument(
     util::Identifiable::UUIDView uuid,
