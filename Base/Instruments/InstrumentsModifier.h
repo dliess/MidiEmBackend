@@ -12,15 +12,13 @@ struct InstrumentsModifier
        Data& rData,
        base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
 
-   void createKitInstrument(std::string name) noexcept;
+   void insertKitInstrument(KitInstrument kitInstrument) noexcept;
    void removeKitInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name) noexcept;
 
-   void createMelodicInstrument(
-       std::string name,
-       std::shared_ptr<MelodicInstrument::RtData> rtData) noexcept;
+   void insertMelodicInstrument(MelodicInstrument melodicInstrument) noexcept;
    void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,

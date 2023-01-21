@@ -37,9 +37,10 @@ void Instruments::triggerChanged() noexcept
 
 void Instruments::createKitInstrument(std::string name) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &name](auto& nonRtData) {
+   KitInstrument kitInstrument(name);
+   m_doubleBufferedData.withNonRtLocked([this, &kitInstrument](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .createKitInstrument(std::move(name));
+          .insertKitInstrument(kitInstrument);
    });
    triggerChanged();
 }
@@ -66,10 +67,10 @@ void Instruments::renameKitInstrument(
 
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
-   auto rtData = std::make_shared<MelodicInstrument::RtData>();
-   m_doubleBufferedData.withNonRtLocked([this, &name, &rtData](auto& nonRtData) {
+   MelodicInstrument melodicInstrument(name, std::make_shared<MelodicInstrument::RtData>());
+   m_doubleBufferedData.withNonRtLocked([this, &melodicInstrument](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .createMelodicInstrument(std::move(name), rtData);
+          .insertMelodicInstrument(melodicInstrument);
    });
    triggerChanged();
 }

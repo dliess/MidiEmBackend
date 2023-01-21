@@ -33,9 +33,10 @@ InstrumentsModifier::InstrumentsModifier(
 {
 }
 
-void InstrumentsModifier::createKitInstrument(std::string name) noexcept
+void InstrumentsModifier::insertKitInstrument(
+    KitInstrument kitInstrument) noexcept
 {
-   m_rData.kitInstruments.emplace_back(std::move(name));
+   m_rData.kitInstruments.push_back(std::move(kitInstrument));
 }
 
 void InstrumentsModifier::removeKitInstrument(
@@ -52,11 +53,10 @@ void InstrumentsModifier::renameKitInstrument(
    instrumentIt->setName(std::move(name));
 }
 
-void InstrumentsModifier::createMelodicInstrument(
-    std::string name,
-    std::shared_ptr<MelodicInstrument::RtData> rtData) noexcept
+void InstrumentsModifier::insertMelodicInstrument(
+    MelodicInstrument melodicInstrument) noexcept
 {
-   m_rData.melodicInstruments.emplace_back(std::move(name), rtData);
+   m_rData.melodicInstruments.push_back(std::move(melodicInstrument));
 }
 
 void InstrumentsModifier::removeMelodicInstrument(
