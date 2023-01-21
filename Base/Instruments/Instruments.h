@@ -88,15 +88,19 @@ struct Instruments   //: public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
+    std::string serializeKitInstruments() const;
+    std::string serializeMelodicInstruments() const;
+
    [[nodiscard]] Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView) noexcept;
 
+/*
    inline void withKitInstrument(util::Identifiable::UUIDView uuid,
                                  util::function_ref<void(KitInstrument&)> cb);
    inline void withMelodicInstrument(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(MelodicInstrument&)> cb);
-
+*/
    inline void withKitInstrument(util::Identifiable::UUIDView uuid,
                                  util::function_ref<void(const KitInstrument&)> cb);
    inline void withMelodicInstrument(

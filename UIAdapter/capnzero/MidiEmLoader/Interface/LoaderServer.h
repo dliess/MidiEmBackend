@@ -3,11 +3,11 @@
 
 #include "MidiEmLoader_Server.h"
 
-namespace base::eventRouter { class EventRouter; };
-namespace base::musicDevice::factory
-{
-class Factory;
-}
+// clang-format off
+namespace base::eventRouter { class EventRouter; }
+namespace base::instruments { class Instruments; }
+namespace base::musicDevice::factory { class Factory; }
+// clang-format on
 
 namespace uiadapter::capnzero
 {
@@ -18,6 +18,7 @@ public:
                const std::string& rpcBindAddr,
                const std::string& signalBindAddr,
                 base::musicDevice::factory::Factory& rMDFactory,
+                base::instruments::Instruments &rInstruments,
                 base::eventRouter::EventRouter &rCtrlEventRouter);
    using Super    = ::capnzero::MidiEmLoader::MidiEmLoaderServer;
    using WaitMode = Super::WaitMode;

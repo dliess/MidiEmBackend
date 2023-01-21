@@ -14,32 +14,18 @@ void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                    ::capnzero::Int16 note,
                                    ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = std::find_if(m_rInstruments.data.melodicInstruments.begin(), 
-                            m_rInstruments.data.melodicInstruments.end(), 
-                            [&uuid_](const MelodicInstrument& mi){ return uuid_ == mi.id(); });
-   if (iter != m_rInstruments.data.melodicInstruments.end())
-   {
-      iter->noteOn(note, velocity);
-      return;
-   }
+   m_rInstruments.withMelodicInstrument(uuid, [&](const MelodicInstrument& mi){
+      mi.noteOn(note, velocity);
+   });
 }
 
 void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                     ::capnzero::Int16 note,
                                     ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = std::find_if(m_rInstruments.data.melodicInstruments.begin(), 
-                            m_rInstruments.data.melodicInstruments.end(), 
-                            [&uuid_](const MelodicInstrument& mi){ return uuid_ == mi.id(); });
-   if (iter != m_rInstruments.data.melodicInstruments.end())
-   {
-      iter->noteOff(note, velocity);
-      return;
-   }
+   m_rInstruments.withMelodicInstrument(uuid, [&](const MelodicInstrument& mi){
+      mi.noteOff(note, velocity);
+   });
 }
 
 void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
@@ -47,16 +33,9 @@ void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                ::capnzero::Int16 note,
                                ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = std::find_if(m_rInstruments.data.kitInstruments.begin(), 
-                            m_rInstruments.data.kitInstruments.end(), 
-                            [&uuid_](const KitInstrument& mi){ return uuid_ == mi.id(); });
-   if (iter != m_rInstruments.data.kitInstruments.end())
-   {
-      iter->noteOn(soundIndex, note, velocity);
-      return;
-   }
+   m_rInstruments.withKitInstrument(uuid, [&](const KitInstrument& ki){
+      ki.noteOn(soundIndex, note, velocity);
+   });
 }
 
 void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
@@ -64,14 +43,7 @@ void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                 ::capnzero::Int16 note,
                                 ::capnzero::Float32 velocity)
 {
-   util::Identifiable::UUID uuid_;
-   std::copy(uuid.begin(), uuid.end(), uuid_.begin());
-   auto iter = std::find_if(m_rInstruments.data.kitInstruments.begin(), 
-                            m_rInstruments.data.kitInstruments.end(), 
-                            [&uuid_](const KitInstrument& mi){ return uuid_ == mi.id(); });
-   if (iter != m_rInstruments.data.kitInstruments.end())
-   {
-      iter->noteOff(soundIndex, note, velocity);
-      return;
-   }
+   m_rInstruments.withKitInstrument(uuid, [&](const KitInstrument& ki){
+      ki.noteOff(soundIndex, note, velocity);
+   });
 }

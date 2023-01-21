@@ -3,6 +3,7 @@
 
 namespace base::instruments
 {
+/*
 inline void Instruments::withKitInstrument(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(KitInstrument&)> cb)
@@ -22,6 +23,7 @@ inline void Instruments::withMelodicInstrument(
       //               rtData.melodicInstruments.end(), uuid, cb);
    });
 }
+*/
 
 inline void Instruments::withKitInstrument(
     util::Identifiable::UUIDView uuid,

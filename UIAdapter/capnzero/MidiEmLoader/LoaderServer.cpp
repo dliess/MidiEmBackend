@@ -3,8 +3,10 @@
 #include "ControllerEventRouter.h"
 #include "JsonCast.h"   // meta::serialize
 #include "LdControllerEventRouterRpc.h"
+#include "InstrumentsRpc.h"
 #include "LoaderRpc.h"
 #include "MusicDeviceFactory.h"
+#include "Instruments.h"
 
 using namespace uiadapter::capnzero;
 
@@ -44,10 +46,12 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                            const std::string &rpcBindAddr,
                            const std::string &signalBindAddr,
                            base::musicDevice::factory::Factory &rMDFactory,
+                           base::instruments::Instruments &rInstruments,
                            base::eventRouter::EventRouter &rCtrlEventRouter) :
     ::capnzero::MidiEmLoader::MidiEmLoaderServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
-        std::make_unique<LoaderRpc>(signals(), rMDFactory),
+        std::make_unique<LoaderRpc>(signals(), rInstruments, rMDFactory),
+        std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<LdControllerEventRouterRpc>(rCtrlEventRouter,
                                                      rMDFactory.dataHolder()))
 {

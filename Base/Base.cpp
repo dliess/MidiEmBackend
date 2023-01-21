@@ -10,11 +10,11 @@
 #include "FdSet.h"
 #include "LoaderServer.h"
 #include "ModifiersApplyer.h"
+#include "ReplaceAsteriskToLocalhost.h"
 #include "RtClient.h"
 #include "RtServer.h"
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
-#include "ReplaceAsteriskToLocalhost.h"
 
 // ----- Time measuring -----
 #include "CyclicDataOutputterThread.h"
@@ -46,25 +46,29 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     musicDeviceHolder(),
     musicDeviceFactory(musicDeviceHolder, configDir),
     transportControl(musicDeviceHolder),
-    instruments(musicDeviceHolder.musicDevices),
+    instruments(musicDeviceFactory.dataHolder()),
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
     controllerEventRouter(instruments, musicDeviceHolder.musicDevices)
 {
-   //m_zmqContext.set(zmq::ctxopt::io_threads, 1);
+   // m_zmqContext.set(zmq::ctxopt::io_threads, 1);
    m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);
-   //m_zmqContext.set(zmq::ctxopt::thread_sched_policy, 4);
-   //m_zmqContext.set(zmq::ctxopt::thread_priority, 1);
-   transportControl.onStartedChanged([this](bool started){
-      if(started) {
+   // m_zmqContext.set(zmq::ctxopt::thread_sched_policy, 4);
+   // m_zmqContext.set(zmq::ctxopt::thread_priority, 1);
+   transportControl.onStartedChanged([this](bool started) {
+      if (started)
+      {
          tracks.start();
-      } else {
+      }
+      else
+      {
          tracks.stop();
       }
    });
-   musicDeviceHolder.musicDevices.onControllerDevEventOccured([this](
-       const util::Identifiable::UUID uuid, const musicDevice::controller::Event& event){
-         controllerEventRouter.onControllerDevEventOccured(uuid, event);
+   musicDeviceHolder.musicDevices.onControllerDevEventOccured(
+       [this](const util::Identifiable::UUID uuid,
+              const musicDevice::controller::Event &event) {
+          controllerEventRouter.onControllerDevEventOccured(uuid, event);
        });
 }
 
@@ -191,10 +195,9 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
 {
    uiadapter::capnzero::LoaderServer loaderServer(
        m_zmqContext, m_loaderRpcBindAddr, m_loaderSignalBindAddr,
-       musicDeviceFactory, controllerEventRouter);
+       musicDeviceFactory, instruments, controllerEventRouter);
    uiadapter::capnzero::RtClient rtClient(
-       m_zmqContext,
-       util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
+       m_zmqContext, util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
        util::replaceAsteriskToLocalhost(m_rtSignalBindAddr),
        loaderServer.signals(), musicDeviceFactory);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
@@ -217,9 +220,12 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
    fdSet.AddFd(rtClient.getFd(), [&rtClient](int fd) {
       rtClient.handleIncomingSignalAllNonBlock();
    });
-   try {
+   try
+   {
       controllerEventRouter.loadFromFile();
-   } catch(const std::exception& e) {
+   }
+   catch (const std::exception &e)
+   {
       spdlog::error("Exception at loading ControllerEventRoutes: {}", e.what());
    }
    while (!terminateRequest) { fdSet.Select(); }

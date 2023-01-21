@@ -36,11 +36,11 @@ RtServer::RtServer(
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
-        std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<MainRpc>(
-            signals(), rInstruments, rMDHolder.musicDevices, rTransportControl,
+            signals(), rMDHolder.musicDevices, rTransportControl,
             rAbletonLinkWrapper, rMidiRouter, rCtrlEventRouter,
             rParameterSceneContainer, rTracks),
+        std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
         std::make_unique<ControllerDevicesRpc>(),
@@ -56,14 +56,6 @@ RtServer::RtServer(
           signals.AbletonLink__enabledChanged(rAbletonLinkWrapper.isEnabled());
       });
    */
-
-   rInstruments.registerForDataChange([this, &rInstruments]() {
-      Super::signals().Instruments__kitInstrumentsChanged(
-          meta::serialize(rInstruments.data.kitInstruments).dump().c_str());
-      Super::signals().Instruments__melodicInstrumentsChanged(
-          meta::serialize(rInstruments.data.melodicInstruments).dump().c_str());
-   });
-
    rMDHolder.musicDevices.onAboutToAdd(
        [this](const base::musicDevice::MusicDevice &md) {
           const auto &deviceName  = md.deviceId().deviceName();

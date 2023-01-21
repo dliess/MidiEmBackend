@@ -1,7 +1,6 @@
 #ifndef RT_MAIN_RPC_H
 #define RT_MAIN_RPC_H
 
-#include "Instruments.h"
 #include "MidiEmRtRpcIf.h"
 #include "MidiRouter.h"
 #include "MusicDeviceContainer.h"
@@ -18,7 +17,6 @@ class MainRpc : public ::capnzero::MidiEmRt::RpcIf
 {
 public:
    MainRpc(RtServer::Signals &rSignals,
-           base::instruments::Instruments &rInstruments,
            base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
            base::TransportControl &rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
@@ -30,7 +28,6 @@ public:
 
 private:
    RtServer::Signals &m_rSignals;
-   base::instruments::Instruments &m_rInstruments;
    base::musicDevice::MusicDeviceContainer &m_rMusicDeviceContainer;
    base::TransportControl &m_rTransportControl;
    base::AbletonLinkWrapper& m_rAbletonLinkWrapper;

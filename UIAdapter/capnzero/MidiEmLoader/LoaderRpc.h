@@ -4,17 +4,18 @@
 #include "MidiEmLoaderRpcIf.h"
 #include "LoaderServer.h"
 
-namespace base::musicDevice::factory
-{
-class Factory;
-}
 
+// clang-format off
+namespace base::musicDevice::factory { class Factory; }
+namespace base::instruments { class Instruments; }
+// clang-format on
 namespace uiadapter::capnzero
 {
 class LoaderRpc : public ::capnzero::MidiEmLoader::RpcIf
 {
 public:
    LoaderRpc(LoaderServer::Signals& rSignals,
+             base::instruments::Instruments &rInstruments,
              base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept;
    void reEmitSignals() override;
    void loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,
@@ -26,6 +27,7 @@ public:
 
 private:
    LoaderServer::Signals& m_rSignals;
+   base::instruments::Instruments &m_rInstruments;
    base::musicDevice::factory::Factory& m_rMusicDevicFactory;
 };
 

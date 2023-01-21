@@ -10,7 +10,7 @@
 #include "SoundSection.h"
 
 using namespace base::instruments;
- 
+
 Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder)
@@ -38,10 +38,11 @@ void Instruments::triggerChanged() noexcept
 void Instruments::createKitInstrument(std::string name) noexcept
 {
    KitInstrument kitInstrument(name);
-   m_doubleBufferedData.withNonRtLocked([this, &kitInstrument](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .insertKitInstrument(kitInstrument);
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &kitInstrument](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .insertKitInstrument(kitInstrument);
+       });
    triggerChanged();
 }
 
@@ -58,20 +59,23 @@ void Instruments::removeKitInstrument(
 void Instruments::renameKitInstrument(
     const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .renameKitInstrument(instrumentId, std::move(name));
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentId, &name](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .renameKitInstrument(instrumentId, std::move(name));
+       });
    triggerChanged();
 }
 
 void Instruments::createMelodicInstrument(std::string name) noexcept
 {
-   MelodicInstrument melodicInstrument(name, std::make_shared<MelodicInstrument::RtData>());
-   m_doubleBufferedData.withNonRtLocked([this, &melodicInstrument](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .insertMelodicInstrument(melodicInstrument);
-   });
+   MelodicInstrument melodicInstrument(
+       name, std::make_shared<MelodicInstrument::RtData>());
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &melodicInstrument](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .insertMelodicInstrument(melodicInstrument);
+       });
    triggerChanged();
 }
 
@@ -88,10 +92,11 @@ void Instruments::removeMelodicInstrument(
 void Instruments::renameMelodicInstrument(
     const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentId, &name](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .renameMelodicInstrument(instrumentId, std::move(name));
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentId, &name](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .renameMelodicInstrument(instrumentId, std::move(name));
+       });
    triggerChanged();
 }
 
@@ -112,8 +117,9 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx, &soundDeviceUuid,
-                         voiceIdx](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
+                                         &soundDeviceUuid,
+                                         voiceIdx](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .addVoiceToMelodicInstrumentSlot(instrumentUuid, slotIdx,
                                            soundDeviceUuid, voiceIdx);
@@ -137,10 +143,11 @@ void Instruments::removeVoiceFromMelodicInstrumentSlot(
 void Instruments::removeSlotFromMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .removeSlotFromMelodicInstrument(instrumentUuid, slotIdx);
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentUuid, slotIdx](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .removeSlotFromMelodicInstrument(instrumentUuid, slotIdx);
+       });
    triggerChanged();
 }
 
@@ -148,12 +155,13 @@ void Instruments::setNoteOffsetInMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx, int noteOffset) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, slotIdx, compositeIdx, noteOffset](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .setNoteOffsetInMelodicInstrumentVoice(instrumentUuid, slotIdx,
-                                                     compositeIdx, noteOffset);
-       });
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
+                                         compositeIdx,
+                                         noteOffset](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setNoteOffsetInMelodicInstrumentVoice(instrumentUuid, slotIdx,
+                                                 compositeIdx, noteOffset);
+   });
    triggerChanged();
 }
 
@@ -161,11 +169,12 @@ void Instruments::setCompositeNameInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const std::string name) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx,
-                                               std::move(name));
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx,
+                                                   std::move(name));
+       });
    triggerChanged();
 }
 
@@ -186,12 +195,13 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, slotIdx, soundDeviceUuid, voiceIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .addVoiceToKitInstrumentSlot(instrumentUuid, slotIdx,
-                                           soundDeviceUuid, voiceIdx);
-       });
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
+                                         soundDeviceUuid,
+                                         voiceIdx](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .addVoiceToKitInstrumentSlot(instrumentUuid, slotIdx, soundDeviceUuid,
+                                       voiceIdx);
+   });
    triggerChanged();
 }
 
@@ -268,15 +278,31 @@ auto elementWithUuid(Container& container,
 Instrument* Instruments::getInstrumentByUuid(
     util::Identifiable::UUIDView uuid) noexcept
 {
-   auto it1 = elementWithUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
+   auto it1 =
+       elementWithUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
    if (it1 != m_doubleBufferedData.nonRt().kitInstruments.end())
    {
       return &(*it1);
    }
-   auto it2 = elementWithUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
+   auto it2 =
+       elementWithUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
    if (it2 != m_doubleBufferedData.nonRt().melodicInstruments.end())
    {
       return &(*it2);
    }
    return nullptr;
+}
+
+std::string Instruments::serializeKitInstruments() const
+{
+   return meta::serialize(m_doubleBufferedData.nonRt().kitInstruments)
+       .dump()
+       .c_str();
+}
+
+std::string Instruments::serializeMelodicInstruments() const
+{
+   return meta::serialize(m_doubleBufferedData.nonRt().melodicInstruments)
+       .dump()
+       .c_str();
 }

@@ -9,7 +9,7 @@ namespace base::instruments
 
 struct Voice
 {
-   mutable musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
+   musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    musicDevice::MusicDeviceId soundDeviceId;
    int voiceIndex{0};
    int noteOffset{0};

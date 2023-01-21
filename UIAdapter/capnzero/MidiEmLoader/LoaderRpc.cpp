@@ -1,6 +1,7 @@
 #include "LoaderRpc.h"
 
 #include "DevicePresets.h"
+#include "Instruments.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactory.h"
 
@@ -9,8 +10,11 @@ using namespace base::musicDevice;
 
 LoaderRpc::LoaderRpc(
     LoaderServer::Signals& rSignals,
+    base::instruments::Instruments& rInstruments,
     base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept :
-    m_rSignals(rSignals), m_rMusicDevicFactory(rMusicDevicFactory)
+    m_rSignals(rSignals),
+    m_rInstruments(rInstruments),
+    m_rMusicDevicFactory(rMusicDevicFactory)
 {
    m_rMusicDevicFactory.dataHolder().onPresetUpdated(
        [this](const sound::preset::Id& id, sound::preset::Category category,
@@ -23,12 +27,23 @@ LoaderRpc::LoaderRpc(
           m_rSignals.Presets__presetRemoved(id.musicDeviceName, id.engineIdx,
                                             id.presetName);
        });
+   m_rInstruments.registerForDataChange([this]() {
+      m_rSignals.Instruments__kitInstrumentsChanged(
+          m_rInstruments.serializeKitInstruments());
+      m_rSignals.Instruments__melodicInstrumentsChanged(
+          m_rInstruments.serializeMelodicInstruments());
+   });
 }
 
 void LoaderRpc::reEmitSignals()
 {
    m_rMusicDevicFactory.dataHolder().reEmitSignals();
-   m_rSignals.allMusicDevicesChanged(m_rMusicDevicFactory.getAllDevicesAsJson());
+   m_rSignals.allMusicDevicesChanged(
+       m_rMusicDevicFactory.getAllDevicesAsJson());
+   m_rSignals.Instruments__kitInstrumentsChanged(
+       m_rInstruments.serializeKitInstruments());
+   m_rSignals.Instruments__melodicInstrumentsChanged(
+       m_rInstruments.serializeMelodicInstruments());
 }
 
 void LoaderRpc::loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,

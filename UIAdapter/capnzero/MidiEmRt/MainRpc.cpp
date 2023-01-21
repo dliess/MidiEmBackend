@@ -6,7 +6,7 @@
 using namespace uiadapter::capnzero;
 
 MainRpc::MainRpc(
-    RtServer::Signals &rSignals, base::instruments::Instruments &rInstruments,
+    RtServer::Signals &rSignals,
     base::musicDevice::MusicDeviceContainer &rMusicDeviceContainer,
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
@@ -15,7 +15,6 @@ MainRpc::MainRpc(
     base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
     base::session::Tracks &rTracks) :
     m_rSignals(rSignals),
-    m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
     m_rTransportControl(rTransportControl),
     m_rAbletonLinkWrapper(rAbletonLinkWrapper),
@@ -90,10 +89,6 @@ void MainRpc::reEmitSignals()
    }
    m_rSignals.Tempo__bpmChanged(
        base::tempo::BeatTick::instance().getBpmNudged());
-   m_rSignals.Instruments__kitInstrumentsChanged(
-       meta::serialize(m_rInstruments.data.kitInstruments).dump().c_str());
-   m_rSignals.Instruments__melodicInstrumentsChanged(
-       meta::serialize(m_rInstruments.data.melodicInstruments).dump().c_str());
    m_rTransportControl.retriggerCallbacks();
    m_rAbletonLinkWrapper.retriggerCallbacks();
    m_rMidiRouter.retriggerCallbacks();
