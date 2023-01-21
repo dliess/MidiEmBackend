@@ -94,9 +94,9 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView) noexcept;
 
-   inline void withKitInstrument(util::Identifiable::UUIDView uuid,
+   inline void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
                                  util::function_ref<void(const KitInstrument&)> cb);
-   inline void withMelodicInstrument(
+   inline void withMelodicInstrumentRt(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
 

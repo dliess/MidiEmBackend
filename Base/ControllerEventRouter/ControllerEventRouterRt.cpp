@@ -328,7 +328,7 @@ void EventRouterRt::playNoteOnDrumKit(
     const EventDestination::Note& note,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
       detail::playNoteOnOff(kitInstr, note.pitch, value.value,
                             drumKit.voiceIdx);
    });
@@ -339,7 +339,7 @@ void EventRouterRt::setParameterOnDrumKit(
     const EventDestination::Parameter& parameter,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
       detail::setParameter(kitInstr, parameter, parameterCacheEntry(), value,
                            drumKit.voiceIdx, drumKit.componentIdx);
    });
@@ -350,7 +350,7 @@ void EventRouterRt::setParameterOnMelodic(
     const EventDestination::Parameter& parameter,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withMelodicInstrument(melodic.uuid, [&](auto& melodicInstr) {
+   m_rInstruments.withMelodicInstrumentRt(melodic.uuid, [&](auto& melodicInstr) {
       detail::setParameter(melodicInstr, parameter, parameterCacheEntry(),
                            value, melodic.componentIdx);
    });
@@ -433,7 +433,7 @@ void EventRouterRt::playLayoutMappedDrumKit(
     EventDestination::DrumKit& drumKit,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrument(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
       detail::playNoteOnOff(kitInstr, 64, value.value,
                             widgetCoord.row * 8 + widgetCoord.col);
    });
@@ -473,7 +473,7 @@ void EventRouterRt::handleAnyNotePressRelease(
                       [&, this](const EventDestination::Note& dstNote) {
                          if (drumKit.voiceIdx == ANY)
                          {
-                            m_rInstruments.withKitInstrument(
+                            m_rInstruments.withKitInstrumentRt(
                                 drumKit.uuid, [&](auto& kitInstr) {
                                    detail::playNoteOnOff(kitInstr, note,
                                                          value.value);
@@ -481,7 +481,7 @@ void EventRouterRt::handleAnyNotePressRelease(
                          }
                          else
                          {
-                            m_rInstruments.withKitInstrument(
+                            m_rInstruments.withKitInstrumentRt(
                                 drumKit.uuid, [&](auto& kitInstr) {
                                    detail::playNoteOnOff(kitInstr, note,
                                                          value.value,
@@ -497,7 +497,7 @@ void EventRouterRt::handleAnyNotePressRelease(
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::playNoteOnOff(melodicInstr, note,
                                                       value.value);
@@ -537,7 +537,7 @@ void EventRouterRt::handleContinousValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withKitInstrument(
+                         m_rInstruments.withKitInstrumentRt(
                              drumKit.uuid, [&](auto& kitInstr) {
                                 detail::setParameter(kitInstr, parameter, value,
                                                      drumKit.voiceIdx,
@@ -552,7 +552,7 @@ void EventRouterRt::handleContinousValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      value,
@@ -593,7 +593,7 @@ void EventRouterRt::sendMPEContinousValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      value, note,
@@ -618,7 +618,7 @@ void EventRouterRt::handleIncrement(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withKitInstrument(
+                         m_rInstruments.withKitInstrumentRt(
                              drumKit.uuid, [&](auto& kitInstr) {
                                 detail::setParameter(
                                     kitInstr, parameter, parameterCacheEntry(),
@@ -634,7 +634,7 @@ void EventRouterRt::handleIncrement(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      parameterCacheEntry(),
@@ -677,7 +677,7 @@ void EventRouterRt::sendMPEIncrementValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      parameterCacheEntry(),
@@ -704,7 +704,7 @@ void EventRouterRt::handleRelativeValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withKitInstrument(
+                         m_rInstruments.withKitInstrumentRt(
                              drumKit.uuid, [&](auto& kitInstr) {
                                 detail::setParameter(kitInstr, parameter,
                                                      parameterCacheEntry(),
@@ -720,7 +720,7 @@ void EventRouterRt::handleRelativeValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      parameterCacheEntry(),
@@ -763,7 +763,7 @@ void EventRouterRt::sendMPERelativeValue(
                   util::overload{
                       [](const EventDestination::Note&) {},
                       [&, this](const EventDestination::Parameter& parameter) {
-                         m_rInstruments.withMelodicInstrument(
+                         m_rInstruments.withMelodicInstrumentRt(
                              melodic.uuid, [&](auto& melodicInstr) {
                                 detail::setParameter(melodicInstr, parameter,
                                                      parameterCacheEntry(),

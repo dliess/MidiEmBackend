@@ -4,7 +4,7 @@
 namespace base::instruments
 {
 
-inline void Instruments::withKitInstrument(
+inline void Instruments::withKitInstrumentRt(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(const KitInstrument&)> cb)
 {
@@ -14,7 +14,7 @@ inline void Instruments::withKitInstrument(
    });
 }
 
-inline void Instruments::withMelodicInstrument(
+inline void Instruments::withMelodicInstrumentRt(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(const MelodicInstrument&)> cb)
 {

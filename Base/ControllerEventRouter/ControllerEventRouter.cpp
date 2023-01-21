@@ -94,7 +94,7 @@ const description::sound::Parameter* EventRouter::parameterDescription(
 {
    const description::sound::Parameter* ret{nullptr};
    mpark::visit(util::overload{[&](EventDestination::DrumKit& drumKit) {
-                                  m_rInstruments.withKitInstrument(
+                                  m_rInstruments.withKitInstrumentRt(
                                       drumKit.uuid, [&](const auto& instr) {
                                          ret = instr.parameterDescription(
                                              drumKit.voiceIdx,
@@ -102,7 +102,7 @@ const description::sound::Parameter* EventRouter::parameterDescription(
                                       });
                                },
                                [&](EventDestination::Melodic& melodic) {
-                                  m_rInstruments.withMelodicInstrument(
+                                  m_rInstruments.withMelodicInstrumentRt(
                                       melodic.uuid, [&](const auto& instr) {
                                          ret = instr.parameterDescription(
                                              melodic.componentIdx, paramIdx);
