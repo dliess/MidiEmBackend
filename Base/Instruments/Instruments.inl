@@ -9,8 +9,8 @@ inline void Instruments::withKitInstrument(
     util::function_ref<void(const KitInstrument&)> cb)
 {
    m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
-      //util::withUuid(rtData.kitInstruments.cbegin(), rtData.kitInstruments.cend(),
-      //               uuid, cb);
+      util::withUuid(rtData.kitInstruments.cbegin(), rtData.kitInstruments.cend(),
+                     uuid, cb);
    });
 }
 
@@ -19,8 +19,8 @@ inline void Instruments::withMelodicInstrument(
     util::function_ref<void(const MelodicInstrument&)> cb)
 {
    m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
-      //util::withUuid(rtData.melodicInstruments.cbegin(),
-      //               rtData.melodicInstruments.cend(), uuid, cb);
+      util::withUuid(rtData.melodicInstruments.cbegin(),
+                     rtData.melodicInstruments.cend(), uuid, cb);
    });
 }
 }   // namespace base::instruments
