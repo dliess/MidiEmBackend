@@ -11,12 +11,8 @@
 #include "CallbackSignal.h"
 #include "Clip.h"
 #include "Identifiable.h"
-#include "Instrument.h"
+#include "InstrumentsRef.h"
 #include "Memory.h"
-namespace base::instruments
-{
-class Instrument;
-}
 
 namespace base::session
 {

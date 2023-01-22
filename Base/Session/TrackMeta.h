@@ -13,9 +13,9 @@ inline void to_json(nlohmann::json& j, const Track& track)
 {
    j["uuid"] = track.idView();
    j["name"] = track.m_name;
-   if (track.m_instrument)
+   if (track.m_instrumentUUID)
    {
-      j["instrumentUuid"] = track.m_instrument->idView();
+      j["instrumentUuid"] = track.m_instrumentUUID.value();
    }
    if (track.m_activeClipIdx)
    {

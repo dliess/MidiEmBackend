@@ -14,7 +14,7 @@ session::Track::Track(std::string_view name,
 }
 
 session::Track::Track(const Track& rhs, const allocator_type& alloc) :
-    m_name(rhs.m_name, alloc)
+    m_name(rhs.m_name, alloc), m_instrumentsRef(rhs.m_instrumentsRef)
 {
    m_clips.resize(rhs.m_clips.size());
    for (int i = 0; i < rhs.m_clips.size(); ++i)
@@ -28,7 +28,9 @@ session::Track::Track(const Track& rhs, const allocator_type& alloc) :
 }
 
 session::Track::Track(Track&& rhs, const allocator_type& alloc) noexcept :
-    m_name(std::move(rhs.m_name), alloc), m_clips(std::move(rhs.m_clips), alloc)
+    m_name(std::move(rhs.m_name), alloc),
+    m_clips(std::move(rhs.m_clips), alloc),
+    m_instrumentsRef(std::move(rhs.m_instrumentsRef))
 {
 }
 
@@ -48,9 +50,12 @@ void session::Track::resetActiveClip()
 
 void session::Track::stop()
 {
-   if (m_activeClipIdx)
+   if (m_activeClipIdx && m_instrumentUUID)
    {
-      m_clips[m_activeClipIdx.value()]->stop(m_instrument);
+      m_instrumentsRef.withInstrumentRt(
+          *m_instrumentUUID, [this](const instruments::Instrument& instrument) {
+             m_clips[m_activeClipIdx.value()]->stop(&instrument);
+          });
    }
 }
 
@@ -64,7 +69,14 @@ void session::Track::update()
       {
          if (m_activeClipIdx)
          {
-            m_clips[m_activeClipIdx.value()]->stop(m_instrument);
+            if (m_instrumentUUID)
+            {
+               m_instrumentsRef.withInstrumentRt(
+                   *m_instrumentUUID,
+                   [this](const instruments::Instrument& instrument) {
+                      m_clips[m_activeClipIdx.value()]->stop(&instrument);
+                   });
+            }
             emitClipStartedChanged(*m_activeClipIdx, false);
          }
          if (StopperIdx != m_toStartClipIdx.value())
@@ -83,9 +95,10 @@ void session::Track::update()
    }
    if (m_activeClipIdx)
    {
-      m_instrumentsRef.withInstrumentRt(m_instrumentUUID, [this](const Instrument& instrument){
-         m_clips[m_activeClipIdx.value()]->update(&instrument);
-      });
+      m_instrumentsRef.withInstrumentRt(
+          m_instrumentUUID, [this](const instruments::Instrument& instrument) {
+             m_clips[m_activeClipIdx.value()]->update(&instrument);
+          });
    }
 }
 

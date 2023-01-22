@@ -24,7 +24,7 @@ public:
    explicit Clip(const allocator_type& alloc) noexcept;
    Clip(const Clip& other, const allocator_type& alloc);
    Clip(Clip&& other, const allocator_type& alloc) noexcept;
-    void update(instruments::Instrument* instrument);
+   void update(const instruments::Instrument* instrument);
    inline void setName(std::string_view nameV);
    inline std::string_view name() const;
    inline void addNote(sequencer::Beat beat, sequencer::Beat length, int note,
@@ -36,7 +36,7 @@ public:
    inline void removeNote(sequencer::NoteId noteId);
    inline void removeAllNotes();
    void reset();
-   void stop(instruments::Instrument* instrument);
+   void stop(const instruments::Instrument* instrument);
    void setSequenceLength(sequencer::Beat);
    inline sequencer::Beat getSequenceLength() const noexcept;
    [[nodiscard]] inline sequencer::Beat getPrevClipBeat() const noexcept;

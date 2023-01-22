@@ -39,7 +39,14 @@ inline void session::Track::deleteClip(int row)
       m_activeClipIdx.reset();
    if (m_clips[row])
    {
-      m_clips[row]->stop(m_instrument);
+      if (m_instrumentUUID)
+      {
+         m_instrumentsRef.withInstrumentRt(
+             *m_instrumentUUID,
+             [this, row](const instruments::Instrument& instrument) {
+                m_clips[row]->stop(&instrument);
+             });
+      }
       m_clips[row].reset();
       emitClipDeleted(row);
    }
@@ -84,9 +91,13 @@ inline void session::Track::setInstrumentUUID(
    {
       if (m_instrumentUUID && m_activeClipIdx)
       {
-         m_clips[*m_activeClipIdx]->stop(m_instrumentUUID);
+         m_instrumentsRef.withInstrumentRt(
+             *m_instrumentUUID,
+             [this](const instruments::Instrument& instrument) {
+                m_clips[*m_activeClipIdx]->stop(&instrument);
+             });
       }
-      m_instrumentUUID = instrumentUUID;
+      m_instrumentUUID = util::deepCopy(instrumentUUID);
       emitInstrumentChanged(m_instrumentUUID);
    }
 }
