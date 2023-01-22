@@ -61,7 +61,7 @@ void session::Clip::update(instruments::Instrument* instrument)
           if (instrument)
           {
              instrument->noteOn(noteEventIt->second.note,
-                                noteEventIt->second.velocity);
+                           noteEventIt->second.velocity);
           }
           m_activeNotes.push_back(&noteEventIt->second);
        });

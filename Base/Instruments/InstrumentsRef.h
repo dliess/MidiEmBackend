@@ -16,6 +16,10 @@ public:
    InstrumentsRef(Instruments& instruments) :
        m_pTypeErasedObj(std::addressof(instruments)),
        m_vtable({[](void* obj, util::Identifiable::UUIDView uuid,
+                    util::function_ref<void(const Instrument&)> cb) {
+                    static_cast<Instruments*>(obj)->withInstrumentRt(uuid, cb);
+                 },
+                 [](void* obj, util::Identifiable::UUIDView uuid,
                     util::function_ref<void(const KitInstrument&)> cb) {
                     static_cast<Instruments*>(obj)->withKitInstrumentRt(uuid, cb);
                  },
@@ -25,6 +29,11 @@ public:
                                                                           cb);
                  }})
    {
+   }
+   void withInstrumentRt(util::Identifiable::UUIDView uuid,
+                        util::function_ref<void(const Instrument&)> cb)
+   {
+      m_vtable.fn_withInstrument(m_pTypeErasedObj, uuid, cb);
    }
    void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
                           util::function_ref<void(const KitInstrument&)> cb)
@@ -41,6 +50,9 @@ private:
    void* m_pTypeErasedObj{nullptr};
    struct VTable
    {
+      void (*fn_withInstrument)(void* obj, util::Identifiable::UUIDView,
+                                   util::function_ref<void(const Instrument&)>) =
+          nullptr;
       void (*fn_withKitInstrument)(void* obj, util::Identifiable::UUIDView,
                                    util::function_ref<void(const KitInstrument&)>) =
           nullptr;

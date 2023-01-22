@@ -77,17 +77,17 @@ inline const session::Clip* session::Track::clip(int row) const noexcept
 
 inline std::string_view session::Track::name() const { return m_name; }
 
-inline void session::Track::setInstrument(
-    instruments::Instrument& instrument)
+inline void session::Track::setInstrumentUUID(
+    util::Identifiable::UUIDView instrumentUUID)
 {
-   if(!m_instrument || (m_instrument->idView() != instrument.idView()))
+   if (!m_instrumentUUID || (m_instrumentUUID != instrumentUUID))
    {
-      if(m_instrument && m_activeClipIdx)
+      if (m_instrumentUUID && m_activeClipIdx)
       {
-         m_clips[*m_activeClipIdx]->stop(m_instrument);
+         m_clips[*m_activeClipIdx]->stop(m_instrumentUUID);
       }
-      m_instrument = &instrument;
-      emitInstrumentChanged(instrument.idView());
+      m_instrumentUUID = instrumentUUID;
+      emitInstrumentChanged(m_instrumentUUID);
    }
 }
 
@@ -96,9 +96,10 @@ inline std::optional<int> session::Track::startedClipIdx() const noexcept
    return m_activeClipIdx;
 }
 
+/*
 inline void session::Track::noteOn(int note, float velocity) noexcept
 {
-   if(m_instrument) 
+   if (m_instrumentUUID)
    {
       m_instrument->noteOn(note, velocity);
    }
@@ -106,13 +107,12 @@ inline void session::Track::noteOn(int note, float velocity) noexcept
 
 inline void session::Track::noteOff(int note, float velocity) noexcept
 {
-   if(m_instrument) 
+   if (m_instrument)
    {
       m_instrument->noteOff(note, velocity);
    }
 }
-
-
+*/
 }   // namespace base
 
 #endif

@@ -91,9 +91,11 @@ struct Instruments   //: public utils::Settings<Instruments>
     std::string serializeKitInstruments() const;
     std::string serializeMelodicInstruments() const;
 
-   [[nodiscard]] Instrument* getInstrumentByUuid(
+   [[nodiscard]] const Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView) noexcept;
 
+   inline void withInstrumentRt(util::Identifiable::UUIDView uuid,
+                                 util::function_ref<void(const Instrument&)> cb);
    inline void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
                                  util::function_ref<void(const KitInstrument&)> cb);
    inline void withMelodicInstrumentRt(

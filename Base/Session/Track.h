@@ -25,6 +25,7 @@ class Track : public util::Identifiable
 public:
    using allocator_type = std::pmr::polymorphic_allocator<std::byte>;
    explicit Track(std::string_view name,
+                  instruments::InstrumentsRef instrumentsRef,
                   const allocator_type& alloc = {}) noexcept;
    Track duplicate(const allocator_type& alloc) const noexcept;
    Track(Track&& rhs, const allocator_type& alloc) noexcept;
@@ -42,11 +43,12 @@ public:
    inline const Clip* clip(int row) const noexcept;
    inline std::optional<int> startedClipIdx() const noexcept;
    inline std::string_view name() const;
-   inline void setInstrument(instruments::Instrument& instrument);
+   inline void setInstrumentUUID(util::Identifiable::UUIDView instrumentUUID);
 
-   inline void noteOn(int note, float velocity) noexcept;
-   inline void noteOff(int note, float velocity) noexcept;
-
+   /* TODO: do we need this?
+      inline void noteOn(int note, float velocity) noexcept;
+      inline void noteOff(int note, float velocity) noexcept;
+   */
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
    CB_SIGNAL_SINGLE_SUBSCRIBER(InstrumentChanged, util::Identifiable::UUIDView);
@@ -73,13 +75,14 @@ private:
    std::pmr::string m_name;
    static constexpr size_t NumClips = 64;
    std::pmr::vector<util::pmr::unique_ptr<Clip>> m_clips;
-   instruments::Instrument* m_instrument{nullptr};
+   instruments::InstrumentsRef m_instrumentsRef;
+   std::optional<util::Identifiable::UUID> m_instrumentUUID;
    static constexpr int StopperIdx = -1;
    std::optional<int> m_activeClipIdx;
    std::optional<int> m_toStartClipIdx;
    void registerCbs(int row);
 
-    friend void to_json(nlohmann::json& j, const Track& track);   
+   friend void to_json(nlohmann::json& j, const Track& track);
 };
 
 }   // namespace base::session

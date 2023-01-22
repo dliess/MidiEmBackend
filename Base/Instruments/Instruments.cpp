@@ -275,7 +275,7 @@ auto elementWithUuid(Container& container,
                        });
 }
 
-Instrument* Instruments::getInstrumentByUuid(
+const Instrument* Instruments::getInstrumentByUuid(
     util::Identifiable::UUIDView uuid) noexcept
 {
    auto it1 =

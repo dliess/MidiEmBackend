@@ -5,8 +5,11 @@
 using namespace base;
 
 session::Track::Track(std::string_view name,
+                      instruments::InstrumentsRef instrumentsRef,
                       const allocator_type& alloc) noexcept :
-    m_name(name, alloc), m_clips(NumClips, alloc)
+    m_name(name, alloc),
+    m_clips(NumClips, alloc),
+    m_instrumentsRef(instrumentsRef)
 {
 }
 
@@ -80,7 +83,9 @@ void session::Track::update()
    }
    if (m_activeClipIdx)
    {
-      m_clips[m_activeClipIdx.value()]->update(m_instrument);
+      m_instrumentsRef.withInstrumentRt(m_instrumentUUID, [this](const Instrument& instrument){
+         m_clips[m_activeClipIdx.value()]->update(&instrument);
+      });
    }
 }
 

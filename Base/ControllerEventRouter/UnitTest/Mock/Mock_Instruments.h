@@ -12,6 +12,7 @@ namespace base::instruments::mock
 class MockInstruments
 {
 public:
+   MOCK_METHOD(void, withInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const Instrument&)>));
    MOCK_METHOD(void, withKitInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const KitInstrument&)>));
    MOCK_METHOD(void, withMelodicInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const MelodicInstrument&)>));
 };

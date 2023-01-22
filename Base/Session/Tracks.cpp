@@ -62,11 +62,7 @@ void Tracks::pushBackTrack(std::string_view name,
                            util::Identifiable::UUIDView instrumentUuid)
 {
    auto& track = pushBackTrack(name);
-   auto instr  = m_rInstruments.getInstrumentByUuid(instrumentUuid);
-   if (instr)
-   {
-      track.setInstrument(*instr);
-   }
+   track.setInstrumentUUID(instrumentUuid);
 }
 
 Track& Tracks::addTrack(std::string_view name, int position)
@@ -82,11 +78,7 @@ void Tracks::addTrack(std::string_view name, int position,
                       util::Identifiable::UUIDView instrumentUuid)
 {
    auto& track = addTrack(name, position);
-   auto instr  = m_rInstruments.getInstrumentByUuid(instrumentUuid);
-   if (instr)
-   {
-      track.setInstrument(*instr);
-   }
+   track.setInstrumentUUID(instrumentUuid);
 }
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
@@ -116,11 +108,9 @@ void Tracks::renameTrack(util::Identifiable::UUIDView uuid,
 void Tracks::setTrackInstrument(util::Identifiable::UUIDView trackUuid,
                                 util::Identifiable::UUIDView instrumentUuid)
 {
-   auto instr = m_rInstruments.getInstrumentByUuid(instrumentUuid);
-   if (instr)
-   {
-      withTrackIter(trackUuid, [instr](auto it) { it->setInstrument(*instr); });
-   }
+   withTrackIter(trackUuid, [instrumentUuid](auto it) {
+      it->setInstrumentUUID(instrumentUuid);
+   });
 }
 
 void Tracks::moveTrack(util::Identifiable::UUIDView uuid, int afterPosition)
