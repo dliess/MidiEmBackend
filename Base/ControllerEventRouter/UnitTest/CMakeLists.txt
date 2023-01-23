@@ -11,6 +11,7 @@ target_link_libraries(${TARGET_NAME}
    GTest::Main
    ${GMOCK_LIBRARIES}
    MusicDeviceControllerEventRouter
+   InstrumentsMock
    Instruments
 )
 

@@ -7,8 +7,11 @@ set(TARGET_NAME "SessionTests")
 add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    Session
+   InstrumentsMock
+   Instruments
    GTest::GTest
-   GTest::Main 
+   ${GMOCK_LIBRARIES}
+   GTest::Main
    pthread
 )
 

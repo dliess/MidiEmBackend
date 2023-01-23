@@ -98,7 +98,7 @@ inline void session::Track::setInstrumentUUID(
              });
       }
       m_instrumentUUID = util::deepCopy(instrumentUUID);
-      emitInstrumentChanged(m_instrumentUUID);
+      emitInstrumentChanged(*m_instrumentUUID);
    }
 }
 

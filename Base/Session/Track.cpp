@@ -96,7 +96,7 @@ void session::Track::update()
    if (m_activeClipIdx)
    {
       m_instrumentsRef.withInstrumentRt(
-          m_instrumentUUID, [this](const instruments::Instrument& instrument) {
+          *m_instrumentUUID, [this](const instruments::Instrument& instrument) {
              m_clips[m_activeClipIdx.value()]->update(&instrument);
           });
    }

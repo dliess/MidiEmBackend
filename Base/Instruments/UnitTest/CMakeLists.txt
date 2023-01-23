@@ -1,3 +1,5 @@
+add_subdirectory(Mock)
+
 set(SOURCES
    "UT_Instruments.cpp"
    "UT_InstrumentsMDChangeHandler.cpp"

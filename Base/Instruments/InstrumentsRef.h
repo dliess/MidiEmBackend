@@ -9,6 +9,8 @@ namespace base::instruments
 class MelodicInstrument;
 class KitInstrument;
 
+class Instrument;
+
 class InstrumentsRef
 {
 public:

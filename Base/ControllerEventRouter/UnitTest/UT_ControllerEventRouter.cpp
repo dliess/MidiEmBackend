@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Mock/Mock_Instruments.h"
-#include "Mock/Mock_MusicDeviceContainer.h"
+#include "Mock_Instruments.h"
+#include "Mock_MusicDeviceContainer.h"
 #include "ControllerEventRouter.h"
 
 TEST(TestControllerEventRouter, test)

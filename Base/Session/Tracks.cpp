@@ -52,7 +52,7 @@ void Tracks::updateActiveClipBeatsUI()
 
 Track& Tracks::pushBackTrack(std::string_view name)
 {
-   auto& track = m_tracks.emplace_back(name);
+   auto& track = m_tracks.emplace_back(name, m_rInstruments);
    registerCbs(track);
    emitTrackAdded(track.idView(), name, m_tracks.size());
    return track;
@@ -68,7 +68,7 @@ void Tracks::pushBackTrack(std::string_view name,
 Track& Tracks::addTrack(std::string_view name, int position)
 {
    const auto it       = std::next(m_tracks.begin(), position);
-   const auto insertIt = m_tracks.emplace(it, name);
+   const auto insertIt = m_tracks.emplace(it, name, m_rInstruments);
    registerCbs(*insertIt);
    emitTrackAdded(insertIt->idView(), name, position);
    return *insertIt;
