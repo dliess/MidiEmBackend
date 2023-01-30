@@ -7,7 +7,7 @@
 
 #include "MusicDeviceId.h"
 #include "EnumReflect.h"
-#include "LFO.h"
+#include "ParameterData.h"
 
 namespace base::musicDevice::sound::preset
 {
@@ -27,19 +27,6 @@ DECLARE_ENUM(Genre, uint, None, Classic, DBBreaks, House, Industrial, Jazz,
 DECLARE_ENUM(Category, uint, None, Arp, Bass, Bell, Classic, Drum, Keyboard,
              Lead, Movement, Pad, Poly, SFX, String, User, Voc);
 
-struct LFOData
-{
-   float amplitude{lfo::DefaultAmplitude};
-   float frequency{lfo::DefaultFrequency};
-   lfo::Waveform waveform{lfo::DefaultWaveform};
-   int multiplierExp{lfo::DefaultMultiplierExp};
-};
-
-struct ParameterData
-{
-   float commanded{0.0};
-   LFOData lfoData;
-};
 
 struct Preset
 {

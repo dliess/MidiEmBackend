@@ -33,6 +33,7 @@ void KitInstrument::noteOn(int soundIndex, int note, float velocity) const noexc
    {
       if (voice.pSoundDevice)
       {
+         //if(voice.pSoundDevice->)
          voice.pSoundDevice->noteOn(voice.voiceIndex, note + voice.noteOffset,
                                     velocity);
       }

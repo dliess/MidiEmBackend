@@ -21,6 +21,11 @@ set(HEADERS
    "SoundParameterStorage.inl"
    "SoundParameterStorageElement.h"
    "SoundParameterStorageElement.inl"
+   "LFO.h"
+   "LFO.inl"
+   "LFOData.h"
+   "LFODataMeta.h"
+   "ParameterData.h"
 )
 
 set(TARGET_NAME "MusicDeviceSound")

@@ -2,17 +2,9 @@
 #define BASE_MODULATION_LFO
 
 #include <mpark/variant.hpp>
-#include "EnumReflect.h"
+#include "LFOData.h"
 namespace base::musicDevice::sound::lfo
 {
-
-DECLARE_ENUM(Waveform, uint, Sine = 0, Square, Triangle, Saw, Random);
-
-constexpr float DefaultAmplitude = 0.5;
-constexpr float DefaultFrequency = 0.5;
-constexpr lfo::Waveform DefaultWaveform = lfo::Waveform::Sine;
-constexpr int DefaultMultiplierExp = 0;
-constexpr uint32_t MAX_MULTIPLIER_EXP = 7;
 
 enum class DirtyFlags {
    Empty = 0,
@@ -116,6 +108,5 @@ private:
 } // namespace base::musicDevice::sound::lfo
 
 #include "LFO.inl"
-#include "LFOMeta.h"
 
 #endif

@@ -16,6 +16,7 @@ set(HEADERS
     "FloatEqual.h"
     "function_ref.h"
     "DoubleBuffer.h"
+    "Round1000.h"
 )
 
 set(TARGET_NAME Util)
