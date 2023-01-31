@@ -18,7 +18,10 @@ public:
    constexpr function_ref<R(Args...)> &operator      =(
        const function_ref<R(Args...)> &rhs) noexcept = default;
 
-   template <typename F>
+   template <typename F,
+            std::enable_if_t<
+                !std::is_same<std::decay_t<F>, function_ref>::value &&
+                std::is_invocable_r<R, F &&, Args...>::value> * = nullptr>
    requires std::invocable<F &, Args...> constexpr function_ref(F &&f) noexcept
        :
        m_typeErasedFnObj(const_cast<void *>(
