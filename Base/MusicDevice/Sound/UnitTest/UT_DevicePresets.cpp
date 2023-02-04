@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
 #include "DevicePresets.h"
 
+/*
 inline
-bool operator==(const base::musicDevice::sound::preset::LFOData& lhs, 
-                const base::musicDevice::sound::preset::LFOData& rhs)
+bool operator==(const base::musicDevice::sound::LFOData& lhs, 
+                const base::musicDevice::sound::LFOData& rhs)
 {
    return lhs.amplitude == rhs.amplitude &&
           lhs.frequency == rhs.frequency &&
@@ -12,14 +13,15 @@ bool operator==(const base::musicDevice::sound::preset::LFOData& lhs,
 }
 
 inline
-bool operator==(const base::musicDevice::sound::preset::ParameterData& lhs, 
-                const base::musicDevice::sound::preset::ParameterData& rhs)
+bool operator==(const base::musicDevice::sound::ParameterData& lhs, 
+                const base::musicDevice::sound::ParameterData& rhs)
 {
    return lhs.commanded == rhs.commanded &&
           lhs.lfoData == rhs.lfoData;
 }
-
+*/
 using namespace base::musicDevice::sound;
+using namespace base::musicDevice::sound::lfo;
 using namespace base::musicDevice::sound::preset;
 
 TEST(DevicePresetSerializationTest, serialize)

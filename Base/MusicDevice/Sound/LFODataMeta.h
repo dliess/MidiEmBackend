@@ -1,8 +1,17 @@
-#ifndef BASE_LFO_DATA_META
-#define BASE_LFO_DATA_META
+#ifndef BASE_SOUND_LFO_DATA_META
+#define BASE_SOUND_LFO_DATA_META
 
 #include "JsonCast.h"
 #include "Round1000.h"
+
+namespace base::musicDevice::sound
+{
+#include "JsonCastNamespaceFix.h"
+}
+namespace base::musicDevice::sound::lfo
+{
+#include "JsonCastNamespaceFix.h"
+}
 
 template <>
 inline void to_json<base::musicDevice::sound::lfo::Waveform>(

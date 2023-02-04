@@ -9,5 +9,5 @@ TEST(SoundPresetHandlerTest, test)
 {
    description::sound::Section soundSection;
    sound::ParameterStorage soundParameterStorage(soundSection);
-   sound::preset::PresetHandler soundPresetHandler(soundSection, soundParameterStorage, nullptr);
+   sound::preset::PresetHandler soundPresetHandler(soundSection, soundParameterStorage, nullptr, nullptr);
 }
