@@ -117,9 +117,13 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   auto paramCache = std::make_shared<Voice::ParameterCache>(
-       InstrumentsModifier::createParameterCache(m_rFactoryDataHolder,
-                                                 soundDeviceUuid));
+   auto paramCache = InstrumentsModifier::createParameterCache(
+       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+   if (!paramCache)
+   {
+      spdlog::error("Could not create parameter cache");
+      return;
+   }
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -198,9 +202,13 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
-   auto paramCache = std::make_shared<Voice::ParameterCache>(
-       InstrumentsModifier::createParameterCache(m_rFactoryDataHolder,
-                                                 soundDeviceUuid));
+   auto paramCache = InstrumentsModifier::createParameterCache(
+       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+   if (!paramCache)
+   {
+      spdlog::error("Could not create parameter cache");
+      return;
+   }
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
                                          soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {

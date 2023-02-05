@@ -232,14 +232,24 @@ void InstrumentsModifier::setCompositeNameInKitInstrument(
    instrumentIt->sounds().operator[](slotIdx).name = name;
 }
 
-Voice::ParameterCache InstrumentsModifier::createParameterCache(
+std::shared_ptr<Voice::ParameterCache> InstrumentsModifier::createParameterCache(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-    const util::Identifiable::UUID& soundDeviceUuid)
+    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto md = rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
-   if (md && md->soundHandler)
+   auto descr = rFactoryDataHolder.getDescription(soundDeviceUuid);
+   if (descr && descr->soundSection)
    {
-      //md->soundHandler->
+      const auto engine = descr->soundSection->engineBase(voiceIdx);
+      if (engine)
+      {
+         auto paramCache = std::make_shared<Voice::ParameterCache>(engine->parameters.size());
+         for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
+         {
+            paramCache->at(paramIdx).commanded =
+                descr->soundSection->getInitialValueFor(voiceIdx, paramIdx);
+         }
+         return paramCache;
+      }
    }
-   return {};
+   return nullptr;
 }
