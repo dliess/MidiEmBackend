@@ -61,7 +61,6 @@ private:
    std::string m_name;
    std::vector<CompositeSound> m_compositeSounds;
    std::optional<int> toSoundIndex(int note) const noexcept;
-   std::shared_ptr<ParameterCache> m_parameterCache;
 };
 
 }   // namespace instruments

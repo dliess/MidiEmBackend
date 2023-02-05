@@ -83,22 +83,24 @@ void InstrumentsModifier::createNewSlotInMelodicInstrument(
    {
       CompositeSound compositeSound(
           md->description()->soundSection->voices[voiceIdx].name);
-      compositeSound.voices.push_back(
-          Voice{&md->soundHandler.value(), md->deviceId(), voiceIdx, 0});
+      compositeSound.voices.push_back(Voice{&md->soundHandler.value(), nullptr,
+                                            md->deviceId(), voiceIdx, 0});
       instrumentIt->voices().push_back(std::move(compositeSound));
    }
 }
 
 void InstrumentsModifier::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
+    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
    if (md && md->soundHandler)
    {
       instrumentIt->voices().operator[](slotIdx).voices.push_back(
-          Voice{&md->soundHandler.value(), md->deviceId(), voiceIdx, 0});
+          Voice{&md->soundHandler.value(), std::move(parameterCache),
+                md->deviceId(), voiceIdx, 0});
    }
 }
 
@@ -149,15 +151,16 @@ void InstrumentsModifier::createNewSlotInKitInstrument(
    {
       CompositeSound compositeSound(
           md->description()->soundSection->voices[voiceIdx].name);
-      compositeSound.voices.push_back(
-          Voice{&md->soundHandler.value(), md->deviceId(), voiceIdx, 0});
+      compositeSound.voices.push_back(Voice{&md->soundHandler.value(), nullptr,
+                                            md->deviceId(), voiceIdx, 0});
       instrumentIt->sounds().push_back(std::move(compositeSound));
    }
 }
 
 void InstrumentsModifier::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
+    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
@@ -169,7 +172,8 @@ void InstrumentsModifier::addVoiceToKitInstrumentSlot(
          return;
       }
       instrumentIt->sounds().operator[](slotIdx).voices.push_back(
-          Voice{&md->soundHandler.value(), md->deviceId(), voiceIdx, 0});
+          Voice{&md->soundHandler.value(), std::move(parameterCache),
+                md->deviceId(), voiceIdx, 0});
    }
 }
 
@@ -226,4 +230,16 @@ void InstrumentsModifier::setCompositeNameInKitInstrument(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->sounds().operator[](slotIdx).name = name;
+}
+
+Voice::ParameterCache InstrumentsModifier::createParameterCache(
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    const util::Identifiable::UUID& soundDeviceUuid)
+{
+   auto md = rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
+   if (md && md->soundHandler)
+   {
+      //md->soundHandler->
+   }
+   return {};
 }

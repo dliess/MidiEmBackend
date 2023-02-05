@@ -117,12 +117,15 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
+   auto paramCache = std::make_shared<Voice::ParameterCache>(
+       InstrumentsModifier::createParameterCache(m_rFactoryDataHolder,
+                                                 soundDeviceUuid));
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
-                                         &soundDeviceUuid,
-                                         voiceIdx](auto& nonRtData) {
+                                         &soundDeviceUuid, voiceIdx,
+                                         &paramCache](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .addVoiceToMelodicInstrumentSlot(instrumentUuid, slotIdx,
-                                           soundDeviceUuid, voiceIdx);
+          .addVoiceToMelodicInstrumentSlot(
+              instrumentUuid, slotIdx, soundDeviceUuid, voiceIdx, paramCache);
    });
    triggerChanged();
 }
@@ -195,12 +198,15 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept
 {
+   auto paramCache = std::make_shared<Voice::ParameterCache>(
+       InstrumentsModifier::createParameterCache(m_rFactoryDataHolder,
+                                                 soundDeviceUuid));
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
-                                         soundDeviceUuid,
-                                         voiceIdx](auto& nonRtData) {
+                                         soundDeviceUuid, voiceIdx,
+                                         &paramCache](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .addVoiceToKitInstrumentSlot(instrumentUuid, slotIdx, soundDeviceUuid,
-                                       voiceIdx);
+                                       voiceIdx, paramCache);
    });
    triggerChanged();
 }

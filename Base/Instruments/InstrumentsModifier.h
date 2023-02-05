@@ -30,7 +30,8 @@ struct InstrumentsModifier
 
    void addVoiceToMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
    void removeVoiceFromMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        int compositeIdx) noexcept;
@@ -48,7 +49,8 @@ struct InstrumentsModifier
        const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
    void addVoiceToKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
    void moveKitInstrumentSlotVoice(
        const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
        int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
@@ -64,6 +66,11 @@ struct InstrumentsModifier
    void setCompositeNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
+
+   static Voice::ParameterCache
+   createParameterCache(
+       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       const util::Identifiable::UUID& soundDeviceUuid);
 
 private:
    Data& m_rData;
