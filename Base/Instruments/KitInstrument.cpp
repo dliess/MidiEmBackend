@@ -9,7 +9,7 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-void KitInstrument::noteOn(int note, float velocity) const noexcept
+void KitInstrument::noteOn(int note, float velocity) const
 {
    auto si = toSoundIndex(note);
    if (si)
@@ -18,7 +18,7 @@ void KitInstrument::noteOn(int note, float velocity) const noexcept
    }
 }
 
-void KitInstrument::noteOff(int note, float velocity) const noexcept
+void KitInstrument::noteOff(int note, float velocity) const
 {
    auto si = toSoundIndex(note);
    if (si)
@@ -28,7 +28,7 @@ void KitInstrument::noteOff(int note, float velocity) const noexcept
 }
 
 void KitInstrument::noteOn(int soundIndex, int note,
-                           float velocity) const noexcept
+                           float velocity) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -37,7 +37,7 @@ void KitInstrument::noteOn(int soundIndex, int note,
 }
 
 void KitInstrument::noteOff(int soundIndex, int note,
-                            float velocity) const noexcept
+                            float velocity) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -47,7 +47,7 @@ void KitInstrument::noteOff(int soundIndex, int note,
 
 void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
                                             int parameterIdx, float increment,
-                                            bool roundRobin) const noexcept
+                                            bool roundRobin) const
 {
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
       voice.incrementParameterValue(parameterIdx, increment, roundRobin);
@@ -56,7 +56,7 @@ void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
 
 float KitInstrument::getParameterValue(
     int soundIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const noexcept
+    musicDevice::sound::ParameterPart parameterPart) const
 {
    float ret = 0.0;
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
@@ -67,7 +67,7 @@ float KitInstrument::getParameterValue(
 
 void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
                                       int parameterIdx,
-                                      float value) const noexcept
+                                      float value) const
 {
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
       voice.setParameterValue(parameterIdx, value);
@@ -77,7 +77,7 @@ void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
 float KitInstrument::normalizePercentageValue(
     int soundIdx, int componentIdx, int parameterId,
     musicDevice::sound::ParameterPart parameterPart,
-    float percentageValue) const noexcept
+    float percentageValue) const
 {
    float ret = 0.0;
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
@@ -91,11 +91,14 @@ const base::musicDevice::description::sound::Parameter*
 KitInstrument::parameterDescription(int soundIdx, int componentIdx,
                                     int parameterIdx) const
 {
-   // TODO
-   return nullptr;
+   const base::musicDevice::description::sound::Parameter* ret{nullptr};
+   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
+      ret = voice.parameterDescription(parameterIdx);
+   });
+   return ret;
 }
 
-std::optional<int> KitInstrument::toSoundIndex(int note) const noexcept
+std::optional<int> KitInstrument::toSoundIndex(int note) const
 {
    const int noteAdjusted = note - 64;
    if (0 <= noteAdjusted && noteAdjusted < m_compositeSounds.size())

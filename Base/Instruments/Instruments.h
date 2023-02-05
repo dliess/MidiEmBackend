@@ -32,67 +32,67 @@ struct Instruments   //: public utils::Settings<Instruments>
    // =======================================
     */
    using Cb = std::function<void(void)>;
-   void registerForDataChange(Cb cb) noexcept;
-   void triggerChanged() noexcept;
+   void registerForDataChange(Cb cb);
+   void triggerChanged();
 
-   void createKitInstrument(std::string name) noexcept;
+   void createKitInstrument(std::string name);
    void removeKitInstrument(
-       const util::Identifiable::UUID& instrumentId) noexcept;
+       const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
-                            std::string name) noexcept;
+                            std::string name);
 
-   void createMelodicInstrument(std::string name) noexcept;
+   void createMelodicInstrument(std::string name);
    void removeMelodicInstrument(
-       const util::Identifiable::UUID& instrumentId) noexcept;
+       const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
-                                std::string name) noexcept;
+                                std::string name);
 
    void createNewSlotInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
 
    void addVoiceToMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
    void removeVoiceFromMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx) noexcept;
+       int compositeIdx);
    void removeSlotFromMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx);
    void setNoteOffsetInMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset) noexcept;
+       int compositeIdx, int noteOffset);
    void setCompositeNameInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const std::string name) noexcept;
+       const std::string name);
 
    void createNewSlotInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
    void addVoiceToKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
    void moveKitInstrumentSlotVoice(
        const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
        int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
-       int dstSlotIdx) noexcept;
+       int dstSlotIdx);
    void removeVoiceFromKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx) noexcept;
+       int compositeIdx);
    void removeSlotFromKitInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
+       const util::Identifiable::UUID& instrumentUuid, int slotIdx);
    void setNoteOffsetInKitInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset) noexcept;
+       int compositeIdx, int noteOffset);
    void setCompositeNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const std::string& name) noexcept;
+       const std::string& name);
 
     std::string serializeKitInstruments() const;
     std::string serializeMelodicInstruments() const;
 
    [[nodiscard]] const Instrument* getInstrumentByUuid(
-       util::Identifiable::UUIDView) noexcept;
+       util::Identifiable::UUIDView);
 
    inline void withInstrumentRt(util::Identifiable::UUIDView uuid,
                                  util::function_ref<void(const Instrument&)> cb);

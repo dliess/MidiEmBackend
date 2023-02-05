@@ -161,8 +161,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      CompositeSound kompositeSound;
-      kompositeSound.name = voiceDescr[voiceIndex].name;
+      CompositeSound kompositeSound(voiceDescr[voiceIndex].name);
       Voice voice;
       voice.soundDeviceId = pMusicDevice->deviceId();
       voice.pSoundDevice  = pMusicDevice->soundHandler
@@ -193,8 +192,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
       MelodicInstrument melodicInstrument(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
-      CompositeSound compositeSound;
-      compositeSound.name = voiceDescr[voiceIndex].name;
+      CompositeSound compositeSound(voiceDescr[voiceIndex].name);
       Voice voice;
       voice.pSoundDevice  = pMusicDevice->soundHandler
                                 ? &pMusicDevice->soundHandler.value()
@@ -223,8 +221,7 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      CompositeSound compositeSound;
-      compositeSound.name = voiceDescr[voiceIndex].name;
+      CompositeSound compositeSound(voiceDescr[voiceIndex].name);
       Voice voice;
       voice.pSoundDevice  = pMusicDevice->soundHandler
                                 ? &pMusicDevice->soundHandler.value()

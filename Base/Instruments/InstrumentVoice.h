@@ -28,6 +28,9 @@ Voice(musicDevice::sound::SoundHandler& sh,
        int parameterId, musicDevice::sound::ParameterPart parameterPart,
        float percentageValue) const;
 
+   const musicDevice::description::sound::Parameter* parameterDescription(
+       int parameterIdx) const;
+
    musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
    std::shared_ptr<ParameterCache> pParameterCache;

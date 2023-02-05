@@ -185,10 +185,18 @@ float SoundHandler::normalizePercentageValue(
 {
    const auto range = getParameterRange(voiceId, parameterId, parameterPart);
    const auto& pd   = m_rSoundSection.parameterDescr(voiceId, parameterId);
-   if (pd.type == description::sound::Parameter::Type::List) {
+   if (pd.type == description::sound::Parameter::Type::List)
+   {
       return static_cast<int>(range * percentageValue);
    }
    return range * percentageValue;
+}
+
+const base::musicDevice::description::sound::Parameter* SoundHandler::parameterDescription(
+    int voiceIdx, int parameterIdx) const
+{
+   // TODO
+   return &m_rSoundSection.parameterDescr(voiceIdx, parameterIdx);
 }
 
 float SoundHandler::getParameterRange(int voiceId, int parameterId,

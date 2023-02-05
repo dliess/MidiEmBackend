@@ -37,35 +37,35 @@ public:
    MelodicInstrument() = default;
    MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
 
-   void noteOn(int note, float velocity) const noexcept override;
-   void noteOff(int note, float velocity) const noexcept override;
+   void noteOn(int note, float velocity) const override;
+   void noteOff(int note, float velocity) const override;
 
-   void pitchBend(float value) const noexcept;
+   void pitchBend(float value) const;
    void incrementParameterValue(int compPart, int parameterId, float increment,
-                                bool roundRobin = false) const noexcept;
+                                bool roundRobin = false) const;
    void incrementParameterValue(int note, int compPart, int parameterId,
                                 float increment,
-                                bool roundRobin = false) const noexcept;
+                                bool roundRobin = false) const;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
-           musicDevice::sound::ParameterPart::Commanded) const noexcept;
+           musicDevice::sound::ParameterPart::Commanded) const;
    [[nodiscard]] float getParameterValue(
        int note, int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
-           musicDevice::sound::ParameterPart::Commanded) const noexcept;
+           musicDevice::sound::ParameterPart::Commanded) const;
    void setParameterValue(int compPart, int parameterId,
-                          float value) const noexcept;
+                          float value) const;
    void setParameterValue(int note, int compPart, int parameterId,
-                          float value) const noexcept;
+                          float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int compPart, int parameterId,
        musicDevice::sound::ParameterPart parameterPart,
-       float percentageValue) const noexcept;
+       float percentageValue) const;
    [[nodiscard]] float normalizePercentageValue(
        int note, int compPart, int parameterId,
        musicDevice::sound::ParameterPart parameterPart,
-       float percentageValue) const noexcept;
+       float percentageValue) const;
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int compPart, int parameterIdx) const;
 

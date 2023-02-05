@@ -1,5 +1,6 @@
 #include "InstrumentVoice.h"
 
+using namespace base;
 using namespace base::instruments;
 
 /*
@@ -93,6 +94,16 @@ float Voice::normalizePercentageValue(
    }
    return 0.0;   // TODO: return optional or inspect id pSoundDevice can be of
                  // type util::non_null
+}
+
+const musicDevice::description::sound::Parameter* Voice::parameterDescription(
+    int parameterIdx) const
+{
+   if (pSoundDevice)
+   {
+      return pSoundDevice->parameterDescription(voiceIndex, parameterIdx);
+   }
+   return nullptr;
 }
 
 void Voice::refreshParameters() const

@@ -13,7 +13,7 @@ MelodicInstrument::MelodicInstrument(std::string name,
    for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
 
-void MelodicInstrument::noteOn(int note, float velocity) const noexcept
+void MelodicInstrument::noteOn(int note, float velocity) const
 {
    if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] != RtData::FREE)
@@ -31,7 +31,7 @@ void MelodicInstrument::noteOn(int note, float velocity) const noexcept
        [note, velocity](const Voice& voice) { voice.noteOn(note, velocity); });
 }
 
-void MelodicInstrument::noteOff(int note, float velocity) const noexcept
+void MelodicInstrument::noteOff(int note, float velocity) const
 {
    if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] == RtData::FREE)
@@ -39,14 +39,13 @@ void MelodicInstrument::noteOff(int note, float velocity) const noexcept
       return;
    }
    auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
-   std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
-                 [note, velocity](const Voice& voice) {
-                    voice.noteOff(note, velocity);
-                 });
+   std::for_each(
+       compositeVoice.voices.begin(), compositeVoice.voices.end(),
+       [note, velocity](const Voice& voice) { voice.noteOff(note, velocity); });
    m_pRtData->noteAllocations[note] = RtData::FREE;
 }
 
-void MelodicInstrument::pitchBend(float value) const noexcept
+void MelodicInstrument::pitchBend(float value) const
 {
    for (auto& compositeVoice : m_voices)
    {
@@ -62,90 +61,96 @@ void MelodicInstrument::pitchBend(float value) const noexcept
 }
 
 void MelodicInstrument::incrementParameterValue(int compPart, int parameterId,
-                                                float increment,
-                                                bool rr) const noexcept
+                                                float increment, bool rr) const
 {
-   // TODO: this is faulty
    for (auto& compositeVoice : m_voices)
    {
-      auto& voice = compositeVoice.voices[compPart];
-      if (voice.pSoundDevice)
+      if (util::vector_index_in_range(compPart, compositeVoice.voices))
       {
-         voice.pSoundDevice->incrementParameterValue(
-             voice.voiceIndex, parameterId, increment, rr);
+         auto& voice = compositeVoice.voices[compPart];
+         voice.incrementParameterValue(parameterId, increment, rr);
       }
    }
 }
 
 void MelodicInstrument::incrementParameterValue(int note, int compPart,
                                                 int parameterId,
-                                                float increment,
-                                                bool rr) const noexcept
+                                                float increment, bool rr) const
 {
-   // TODO: MPR
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      return;
+   }
+   const auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
+   if (util::vector_index_in_range(compPart, compositeVoice.voices))
+   {
+      compositeVoice.voices[compPart].incrementParameterValue(parameterId,
+                                                              increment, rr);
+   }
 }
 
 float MelodicInstrument::getParameterValue(
     int compPart, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const noexcept
+    musicDevice::sound::ParameterPart parameterPart) const
 {
-   return 0;
-   // TODO
+   return m_voices.at(0).voices.at(compPart).getParameterValue(parameterIdx,
+                                                               parameterPart);
 }
 
 float MelodicInstrument::getParameterValue(
     int note, int compPart, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const noexcept
+    musicDevice::sound::ParameterPart parameterPart) const
 {
-   return 0;
-   // TODO MPE
+   return m_voices.at(m_pRtData->noteAllocations.at(note))
+       .voices.at(compPart)
+       .getParameterValue(parameterIdx, parameterPart);
 }
 
 void MelodicInstrument::setParameterValue(int compPart, int parameterId,
-                                          float value) const noexcept
+                                          float value) const
 {
-   // TODO: this is faulty
    for (auto& compositeVoice : m_voices)
    {
-      auto& voice = compositeVoice.voices[compPart];
-      if (voice.pSoundDevice)
+      if (util::vector_index_in_range(compPart, compositeVoice.voices))
       {
-         voice.pSoundDevice->setParameterValue(voice.voiceIndex, parameterId,
-                                               value);
+         auto& voice = compositeVoice.voices[compPart];
+         voice.setParameterValue(parameterId, value);
       }
    }
 }
 
 void MelodicInstrument::setParameterValue(int note, int compPart,
-                                          int parameterId,
-                                          float value) const noexcept
+                                          int parameterId, float value) const
 {
-   // TODO: this is the MPE version
+   m_voices.at(m_pRtData->noteAllocations.at(note))
+       .voices.at(compPart)
+       .setParameterValue(parameterId, value);
 }
 
 float MelodicInstrument::normalizePercentageValue(
     int compPart, int parameterId,
     musicDevice::sound::ParameterPart parameterPart,
-    float percentageValue) const noexcept
+    float percentageValue) const
 {
-   // TODO
-   return 0;
+   return m_voices.at(0).voices.at(compPart).normalizePercentageValue(
+       parameterId, parameterPart, percentageValue);
 }
 
 float MelodicInstrument::normalizePercentageValue(
     int note, int compPart, int parameterId,
     musicDevice::sound::ParameterPart parameterPart,
-    float percentageValue) const noexcept
+    float percentageValue) const
 {
-   // TODO MPE
-   return 0;
+   return m_voices.at(m_pRtData->noteAllocations.at(note))
+       .voices.at(compPart)
+       .normalizePercentageValue(parameterId, parameterPart, percentageValue);
 }
 
 const base::musicDevice::description::sound::Parameter*
 MelodicInstrument::parameterDescription(int compPart, int parameterIdx) const
 {
-   return nullptr;
-   // TODO
+   return m_voices.at(0).voices.at(compPart).parameterDescription(parameterIdx);
 }
 
 MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept
