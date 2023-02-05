@@ -3,8 +3,7 @@
 
 namespace base::instruments
 {
-
-template<typename T>
+template <typename T>
 void KitInstrument::addSound(int padIdx, T&& kompositeSound) noexcept
 {
    m_compositeSounds[padIdx] = std::move(kompositeSound);
@@ -27,19 +26,25 @@ inline const std::vector<CompositeSound>& KitInstrument::sounds() const noexcept
    return m_compositeSounds;
 }
 
-template <typename Cb>
-void KitInstrument::forEachVoice(Cb&& cb)
+template <typename Cb> void KitInstrument::forEachVoice(Cb&& cb)
 {
-   for(auto& sound : m_compositeSounds)
+   for (auto& sound : m_compositeSounds)
    {
-      for(auto& voice : sound.voices)
-      {
-         cb(voice);
-      }
+      for (auto& voice : sound.voices) { cb(voice); }
    }
 }
 
+inline bool KitInstrument::withVoice(int soundIdx, int componentIdx,
+                        util::function_ref<void(const Voice&)> cb) const
+{
+   try {
+      cb(m_compositeSounds.at(soundIdx).voices.at(componentIdx));
+      return true;
+   } catch(...){
+      return false;
+   }
+}
 
-} // namespace base::instruments
+}   // namespace base::instruments
 
 #endif

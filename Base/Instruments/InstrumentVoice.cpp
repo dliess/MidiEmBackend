@@ -37,6 +37,64 @@ void Voice::noteOff(int note, float velocity) const
    }
 }
 
+void Voice::incrementParameterValue(int parameterIdx, float increment,
+                                    bool roundRobin) const
+{
+   if (pSoundDevice)
+   {
+      pSoundDevice->incrementParameterValue(voiceIndex, parameterIdx, increment,
+                                            roundRobin);
+      pParameterCache->at(parameterIdx).commanded =
+          pSoundDevice->getParameterValue(voiceIndex, parameterIdx);
+   }
+}
+
+float Voice::getParameterValue(
+    int parameterIdx, musicDevice::sound::ParameterPart parameterPart) const
+{
+   if (pSoundDevice && pParameterCache)
+   {
+      switch (parameterPart)
+      {
+         case musicDevice::sound::ParameterPart::Commanded:
+            return pParameterCache->at(parameterIdx).commanded;
+         case musicDevice::sound::ParameterPart::LfoAmplitude:
+            return pParameterCache->at(parameterIdx).lfoData.amplitude;
+         case musicDevice::sound::ParameterPart::LfoFrequency:
+            return pParameterCache->at(parameterIdx).lfoData.frequency;
+         case musicDevice::sound::ParameterPart::LfoMultiplierExp:
+            return pParameterCache->at(parameterIdx).lfoData.multiplierExp;
+         case musicDevice::sound::ParameterPart::LfoWaveform:
+            return static_cast<int>(
+                pParameterCache->at(parameterIdx).lfoData.waveform);
+      }
+   }
+   return 0.0;   // TODO: return optional or inspect id pSoundDevice can be of
+                 // type util::non_null
+}
+
+void Voice::setParameterValue(int parameterIdx, float value) const
+{
+   if (pSoundDevice)
+   {
+      pSoundDevice->setParameterValue(voiceIndex, parameterIdx, value);
+      pParameterCache->at(parameterIdx).commanded = value;
+   }
+}
+
+float Voice::normalizePercentageValue(
+    int parameterId, musicDevice::sound::ParameterPart parameterPart,
+    float percentageValue) const
+{
+   if (pSoundDevice)
+   {
+      return pSoundDevice->normalizePercentageValue(
+          voiceIndex, parameterId, parameterPart, percentageValue);
+   }
+   return 0.0;   // TODO: return optional or inspect id pSoundDevice can be of
+                 // type util::non_null
+}
+
 void Voice::refreshParameters() const
 {
    if (!pParameterCache || !pSoundDevice)

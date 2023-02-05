@@ -9,6 +9,7 @@
 #include "CompositeSound.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
+#include "function_ref.h"
 
 namespace base
 {
@@ -61,6 +62,8 @@ private:
    std::string m_name;
    std::vector<CompositeSound> m_compositeSounds;
    std::optional<int> toSoundIndex(int note) const noexcept;
+   inline bool withVoice(int soundIdx, int componentIdx,
+                         util::function_ref<void(const Voice&)> cb) const;
 };
 
 }   // namespace instruments

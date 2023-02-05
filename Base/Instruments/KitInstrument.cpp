@@ -27,28 +27,21 @@ void KitInstrument::noteOff(int note, float velocity) const noexcept
    }
 }
 
-void KitInstrument::noteOn(int soundIndex, int note, float velocity) const noexcept
+void KitInstrument::noteOn(int soundIndex, int note,
+                           float velocity) const noexcept
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
-      if (voice.pSoundDevice)
-      {
-         //if(voice.pSoundDevice->)
-         voice.pSoundDevice->noteOn(voice.voiceIndex, note + voice.noteOffset,
-                                    velocity);
-      }
+      voice.noteOn(note, velocity);
    }
 }
 
-void KitInstrument::noteOff(int soundIndex, int note, float velocity) const noexcept
+void KitInstrument::noteOff(int soundIndex, int note,
+                            float velocity) const noexcept
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
-      if (voice.pSoundDevice)
-      {
-         voice.pSoundDevice->noteOff(voice.voiceIndex, note + voice.noteOffset,
-                                     velocity);
-      }
+      voice.noteOff(note, velocity);
    }
 }
 
@@ -56,34 +49,47 @@ void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
                                             int parameterIdx, float increment,
                                             bool roundRobin) const noexcept
 {
-   // TODO
+   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
+      voice.incrementParameterValue(parameterIdx, increment, roundRobin);
+   });
 }
 
 float KitInstrument::getParameterValue(
     int soundIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterPart parameterPart) const noexcept
 {
-   // TODO
-   return 0;
+   float ret = 0.0;
+   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
+      ret = voice.getParameterValue(parameterIdx, parameterPart);
+   });
+   return ret;
 }
 
 void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
-                                      int parameterIdx, float value) const noexcept
+                                      int parameterIdx,
+                                      float value) const noexcept
 {
-   // TODO
+   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
+      voice.setParameterValue(parameterIdx, value);
+   });
 }
 
 float KitInstrument::normalizePercentageValue(
-       int soundIdx, int componentIdx, int parameterId,
-       musicDevice::sound::ParameterPart parameterPart,
-       float percentageValue) const noexcept
+    int soundIdx, int componentIdx, int parameterId,
+    musicDevice::sound::ParameterPart parameterPart,
+    float percentageValue) const noexcept
 {
-   // TODO
-   return 0;
+   float ret = 0.0;
+   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
+      ret = voice.normalizePercentageValue(parameterId, parameterPart,
+                                           percentageValue);
+   });
+   return ret;
 }
 
-const base::musicDevice::description::sound::Parameter* KitInstrument::parameterDescription(
-       int soundIdx, int componentIdx, int parameterIdx) const
+const base::musicDevice::description::sound::Parameter*
+KitInstrument::parameterDescription(int soundIdx, int componentIdx,
+                                    int parameterIdx) const
 {
    // TODO
    return nullptr;
