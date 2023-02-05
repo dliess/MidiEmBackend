@@ -8,6 +8,7 @@ set(SOURCES
    "KitInstrument.cpp"
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"
+   "InstrumentVoice.cpp"
 )
 
 set(HEADERS

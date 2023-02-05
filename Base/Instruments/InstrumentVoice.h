@@ -17,12 +17,16 @@ struct Voice
          util::Identifiable::UUIDView uuid,
          int voiceIdx, int noteOffset);
          */
+   void noteOn(int note, float velocity) const;
+   void noteOff(int note, float velocity) const;
    musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
    std::shared_ptr<ParameterCache> pParameterCache;
    musicDevice::MusicDeviceId soundDeviceId;
    int voiceIndex{0};
    int noteOffset{0};
+private:
+   void refreshParameters() const;
 };
 
 }   // namespace base::instruments

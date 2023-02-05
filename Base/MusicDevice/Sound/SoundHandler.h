@@ -116,6 +116,7 @@ public:
    CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
+   void* lastplayerId{nullptr};
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;

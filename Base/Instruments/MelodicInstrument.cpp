@@ -8,8 +8,7 @@ using namespace base::instruments;
 
 MelodicInstrument::MelodicInstrument(std::string name,
                                      std::shared_ptr<RtData> rtData) noexcept :
-    m_name(std::move(name)),
-    m_pRtData(std::move(rtData))
+    m_name(std::move(name)), m_pRtData(std::move(rtData))
 {
    for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
@@ -26,15 +25,10 @@ void MelodicInstrument::noteOn(int note, float velocity) const noexcept
       m_pRtData->incrementVoiceIndex(m_voices.size());
    }
    m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   std::for_each(m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
-                 m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
-                 [note, velocity](const Voice& voice) {
-                    if (voice.pSoundDevice)
-                    {
-                       voice.pSoundDevice->noteOn(
-                           voice.voiceIndex, note + voice.noteOffset, velocity);
-                    }
-                 });
+   std::for_each(
+       m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
+       m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
+       [note, velocity](const Voice& voice) { voice.noteOn(note, velocity); });
 }
 
 void MelodicInstrument::noteOff(int note, float velocity) const noexcept
@@ -47,11 +41,7 @@ void MelodicInstrument::noteOff(int note, float velocity) const noexcept
    auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
    std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
                  [note, velocity](const Voice& voice) {
-                    if (voice.pSoundDevice)
-                    {
-                       voice.pSoundDevice->noteOff(
-                           voice.voiceIndex, note + voice.noteOffset, velocity);
-                    }
+                    voice.noteOff(note, velocity);
                  });
    m_pRtData->noteAllocations[note] = RtData::FREE;
 }
