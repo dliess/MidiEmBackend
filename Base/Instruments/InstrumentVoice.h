@@ -31,6 +31,9 @@ Voice(musicDevice::sound::SoundHandler& sh,
    const musicDevice::description::sound::Parameter* parameterDescription(
        int parameterIdx) const;
 
+    friend auto meta::registerMembers<Voice>();
+
+private:
    musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
    std::shared_ptr<ParameterCache> pParameterCache;

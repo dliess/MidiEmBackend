@@ -49,6 +49,10 @@ void MelodicInstrument::pitchBend(float value) const
 {
    for (auto& compositeVoice : m_voices)
    {
+      for(const Voice& voice : compositeVoice.voices)
+      {
+         
+      }
       std::for_each(compositeVoice.voices.begin(), compositeVoice.voices.end(),
                     [value](const Voice& voice) {
                        if (voice.pSoundDevice)
