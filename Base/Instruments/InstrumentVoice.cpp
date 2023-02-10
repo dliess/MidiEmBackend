@@ -8,7 +8,7 @@ Voice::Voice(musicDevice::sound::SoundHandler& sh,
              util::Identifiable::UUIDView uuid, int voiceIdx, int noteOffset) :
     pSoundDevice(&sh),
     pParameterCache(),
-    soundDeviceId(uuid),
+    m_soundDeviceId(uuid),
     voiceIndex(voiceIdx),
     noteOffset(noteOffset)
 {
@@ -35,6 +35,14 @@ void Voice::noteOff(int note, float velocity) const
    if (pSoundDevice)
    {
       pSoundDevice->noteOff(voiceIndex, note + noteOffset, velocity);
+   }
+}
+
+void Voice::pitchBend(float value) const
+{
+   if (pSoundDevice)
+   {
+      pSoundDevice->pitchBend(voiceIndex, value);
    }
 }
 

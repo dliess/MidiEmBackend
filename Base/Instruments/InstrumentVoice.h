@@ -17,8 +17,19 @@ Voice(musicDevice::sound::SoundHandler& sh,
       util::Identifiable::UUIDView uuid,
       int voiceIdx, int noteOffset);
       */
+   const musicDevice::MusicDeviceId& soundDeviceId() const
+   {
+      return m_soundDeviceId;
+   }
+   void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
+   {
+      pSoundDevice = ptr;
+   }
+
    void noteOn(int note, float velocity) const;
    void noteOff(int note, float velocity) const;
+   void pitchBend(float value) const;
+
    void incrementParameterValue(int parameterIdx, float increment,
                                 bool roundRobin) const;
    [[nodiscard]] float getParameterValue(
@@ -31,13 +42,13 @@ Voice(musicDevice::sound::SoundHandler& sh,
    const musicDevice::description::sound::Parameter* parameterDescription(
        int parameterIdx) const;
 
-    friend auto meta::registerMembers<Voice>();
+   friend auto meta::registerMembers<Voice>();
 
 private:
    musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
    std::shared_ptr<ParameterCache> pParameterCache;
-   musicDevice::MusicDeviceId soundDeviceId;
+   musicDevice::MusicDeviceId m_soundDeviceId;
    int voiceIndex{0};
    int noteOffset{0};
 

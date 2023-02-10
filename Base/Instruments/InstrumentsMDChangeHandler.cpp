@@ -15,11 +15,11 @@ void fillReferencesKitInstruments(
    for (auto& kitInstrument : rData.kitInstruments)
    {
       kitInstrument.forEachVoice([&pMusicDevice](Voice& voice) {
-         if (voice.soundDeviceId == pMusicDevice->deviceId())
+         if (voice.soundDeviceId() == pMusicDevice->deviceId())
          {
-            voice.pSoundDevice = pMusicDevice->soundHandler
-                                     ? &pMusicDevice->soundHandler.value()
-                                     : nullptr;
+            voice.setSoundDevicePtr(pMusicDevice->soundHandler
+                                        ? &pMusicDevice->soundHandler.value()
+                                        : nullptr);
          }
       });
    }
@@ -36,12 +36,12 @@ void fillReferencesMelodicInstruments(
              std::for_each(
                  compositeSound.voices.begin(), compositeSound.voices.end(),
                  [&pMusicDevice](Voice& voice) {
-                    if (voice.soundDeviceId == pMusicDevice->deviceId())
+                    if (voice.soundDeviceId() == pMusicDevice->deviceId())
                     {
-                       voice.pSoundDevice =
+                       voice.setSoundDevicePtr(
                            pMusicDevice->soundHandler
                                ? &pMusicDevice->soundHandler.value()
-                               : nullptr;
+                               : nullptr);
                     }
                  });
           });
@@ -55,10 +55,10 @@ void removeKitInstruments(Data rData, musicDevice::MusicDevice* pMusicDevice)
    {
       bool isDeviceContained{false};
       it->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
-         if (voice.pSoundDevice == &pMusicDevice->soundHandler.value())
+         if (voice.setSoundDevicePtr(&pMusicDevice->soundHandler.value()))
          {
             isDeviceContained  = true;
-            voice.pSoundDevice = nullptr;
+            voice.setSoundDevicePtr(nullptr);
          }
       });
       if (isDeviceContained && it->isDefaultCreated())
@@ -86,11 +86,11 @@ void removeMelodicInstruments(Data& rData,
              std::for_each(compositeSound.voices.begin(),
                            compositeSound.voices.end(),
                            [&isDeviceContained, &pMusicDevice](Voice& voice) {
-                              if (voice.pSoundDevice ==
+                              if (voice.pSoundDevice() ==
                                   &pMusicDevice->soundHandler.value())
                               {
                                  isDeviceContained  = true;
-                                 voice.pSoundDevice = nullptr;
+                                 voice.setSoundDevicePtr(nullptr);
                               }
                            });
           });
