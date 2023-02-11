@@ -174,9 +174,9 @@ void InstrumentsModifier::addVoiceToKitInstrumentSlot(
       {
          return;
       }
-      instrumentIt->sounds().operator[](slotIdx).voices.push_back(
-          Voice{&md->soundHandler.value(), std::move(parameterCache),
-                md->deviceId(), voiceIdx, 0});
+      instrumentIt->sounds().operator[](slotIdx).voices.emplace_back(
+          &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
+          voiceIdx, 0);
    }
 }
 
