@@ -15,6 +15,7 @@ set(HEADERS
    "CompositeSound.h"
    "CompositeSound.inl"
    "InstrumentVoice.h"
+   "InstrumentVoice.inl"
    "INotePlayer.h"
    "Instruments.h"
    "InstrumentsRef.h"

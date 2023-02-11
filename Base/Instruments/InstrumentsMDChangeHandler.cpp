@@ -55,9 +55,9 @@ void removeKitInstruments(Data rData, musicDevice::MusicDevice* pMusicDevice)
    {
       bool isDeviceContained{false};
       it->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
-         if (voice.setSoundDevicePtr(&pMusicDevice->soundHandler.value()))
+         if (voice.pSoundDevice() == &pMusicDevice->soundHandler.value())
          {
-            isDeviceContained  = true;
+            isDeviceContained = true;
             voice.setSoundDevicePtr(nullptr);
          }
       });
@@ -89,7 +89,7 @@ void removeMelodicInstruments(Data& rData,
                               if (voice.pSoundDevice() ==
                                   &pMusicDevice->soundHandler.value())
                               {
-                                 isDeviceContained  = true;
+                                 isDeviceContained = true;
                                  voice.setSoundDevicePtr(nullptr);
                               }
                            });
@@ -162,14 +162,11 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
       CompositeSound kompositeSound(voiceDescr[voiceIndex].name);
-      Voice voice;
-      voice.soundDeviceId = pMusicDevice->deviceId();
-      voice.pSoundDevice  = pMusicDevice->soundHandler
-                                ? &pMusicDevice->soundHandler.value()
-                                : nullptr;
-      voice.voiceIndex    = voiceIndex;
-      voice.noteOffset    = 0;
-      kompositeSound.voices.push_back(voice);
+      kompositeSound.voices.emplace_back(
+          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
+                                     : nullptr,
+          nullptr,   // TODO
+          pMusicDevice->deviceId(), voiceIndex, 0);
       kitInstrument.addSound(voiceIndex, kompositeSound);
    }
    m_rDoubleBufferedData.withNonRtLocked(
@@ -193,14 +190,11 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
       CompositeSound compositeSound(voiceDescr[voiceIndex].name);
-      Voice voice;
-      voice.pSoundDevice  = pMusicDevice->soundHandler
-                                ? &pMusicDevice->soundHandler.value()
-                                : nullptr;
-      voice.soundDeviceId = pMusicDevice->deviceId();
-      voice.voiceIndex    = voiceIndex;
-      voice.noteOffset    = 0;
-      compositeSound.voices.push_back(voice);
+      compositeSound.voices.emplace_back(
+          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
+                                     : nullptr,
+          nullptr,   // TODO
+          pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(compositeSound));
 
       m_rDoubleBufferedData.withNonRtLocked(
@@ -222,14 +216,11 @@ void InstrumentsMDChangeHandler::
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
       CompositeSound compositeSound(voiceDescr[voiceIndex].name);
-      Voice voice;
-      voice.pSoundDevice  = pMusicDevice->soundHandler
-                                ? &pMusicDevice->soundHandler.value()
-                                : nullptr;
-      voice.soundDeviceId = pMusicDevice->deviceId();
-      voice.voiceIndex    = voiceIndex;
-      voice.noteOffset    = 0;
-      compositeSound.voices.push_back(voice);
+      compositeSound.voices.emplace_back(
+          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
+                                     : nullptr,
+          nullptr,   // TODO
+          pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(compositeSound));
    }
    m_rDoubleBufferedData.withNonRtLocked(

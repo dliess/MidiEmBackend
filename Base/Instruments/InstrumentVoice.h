@@ -10,22 +10,18 @@
 
 namespace base::instruments
 {
-struct Voice
+class Voice
 {
-   /*
-Voice(musicDevice::sound::SoundHandler& sh,
-      util::Identifiable::UUIDView uuid,
-      int voiceIdx, int noteOffset);
-      */
-   const musicDevice::MusicDeviceId& soundDeviceId() const
-   {
-      return m_soundDeviceId;
-   }
-   void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
-   {
-      pSoundDevice = ptr;
-   }
-
+public:
+   using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
+   inline explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,
+                std::shared_ptr<ParameterCache> pParameterCache,
+                musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,
+                int noteOffset) noexcept;
+   [[nodiscard]] inline const musicDevice::MusicDeviceId& soundDeviceId() const;
+   [[nodiscard]] inline const musicDevice::sound::SoundHandler* pSoundDevice() const;
+   inline void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
+   inline void setNoteOffset(int noteOffset);
    void noteOn(int note, float velocity) const;
    void noteOff(int note, float velocity) const;
    void pitchBend(float value) const;
@@ -45,17 +41,18 @@ Voice(musicDevice::sound::SoundHandler& sh,
    friend auto meta::registerMembers<Voice>();
 
 private:
-   musicDevice::sound::SoundHandler* pSoundDevice{nullptr};
-   using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
-   std::shared_ptr<ParameterCache> pParameterCache;
+   musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
+   std::shared_ptr<ParameterCache> m_pParameterCache;
    musicDevice::MusicDeviceId m_soundDeviceId;
-   int voiceIndex{0};
-   int noteOffset{0};
+   int m_voiceIndex{0};
+   int m_noteOffset{0};
 
 private:
    void refreshParameters() const;
 };
 
 }   // namespace base::instruments
+
+#include "InstrumentVoice.inl"
 
 #endif

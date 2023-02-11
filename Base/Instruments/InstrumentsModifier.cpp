@@ -129,8 +129,11 @@ void InstrumentsModifier::setNoteOffsetInMelodicInstrumentVoice(
     int compositeIdx, int noteOffset) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().operator[](slotIdx).voices[compositeIdx].noteOffset =
-       noteOffset;
+   instrumentIt->voices()
+       .
+       operator[](slotIdx)
+       .voices[compositeIdx]
+       .setNoteOffset(noteOffset);
 }
 
 void InstrumentsModifier::setCompositeNameInMelodicInstrument(
@@ -220,8 +223,11 @@ void InstrumentsModifier::setNoteOffsetInKitInstrumentVoice(
     int compositeIdx, int noteOffset) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->sounds().operator[](slotIdx).voices[compositeIdx].noteOffset =
-       noteOffset;
+   instrumentIt->sounds()
+       .
+       operator[](slotIdx)
+       .voices[compositeIdx]
+       .setNoteOffset(noteOffset);
 }
 
 void InstrumentsModifier::setCompositeNameInKitInstrument(
@@ -232,7 +238,8 @@ void InstrumentsModifier::setCompositeNameInKitInstrument(
    instrumentIt->sounds().operator[](slotIdx).name = name;
 }
 
-std::shared_ptr<Voice::ParameterCache> InstrumentsModifier::createParameterCache(
+std::shared_ptr<Voice::ParameterCache>
+InstrumentsModifier::createParameterCache(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
@@ -242,7 +249,8 @@ std::shared_ptr<Voice::ParameterCache> InstrumentsModifier::createParameterCache
       const auto engine = descr->soundSection->engineBase(voiceIdx);
       if (engine)
       {
-         auto paramCache = std::make_shared<Voice::ParameterCache>(engine->parameters.size());
+         auto paramCache =
+             std::make_shared<Voice::ParameterCache>(engine->parameters.size());
          for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
          {
             paramCache->at(paramIdx).commanded =

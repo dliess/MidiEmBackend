@@ -24,8 +24,8 @@ template<>
 inline auto registerMembers<base::instruments::Voice>()
 {
    return members(member("soundDeviceId", &base::instruments::Voice::soundDeviceId),
-                  member("voiceIndex", &base::instruments::Voice::voiceIndex),
-                  member("noteOffset", &base::instruments::Voice::noteOffset));
+                  member("voiceIndex", &base::instruments::Voice::m_voiceIndex),
+                  member("noteOffset", &base::instruments::Voice::m_noteOffset));
 }
 
 template<>
