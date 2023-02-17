@@ -48,7 +48,7 @@ void Voice::incrementParameterValue(int parameterIdx, float increment,
 float Voice::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterPart parameterPart) const
 {
-   if (m_pSoundDevice && m_pParameterCache)
+   if (m_pSoundDevice)
    {
       switch (parameterPart)
       {

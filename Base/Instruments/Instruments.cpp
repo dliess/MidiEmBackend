@@ -25,10 +25,7 @@ Instruments::Instruments(
    });
 }
 
-void Instruments::registerForDataChange(Cb cb)
-{
-   m_subscribers.push_back(cb);
-}
+void Instruments::registerForDataChange(Cb cb) { m_subscribers.push_back(cb); }
 
 void Instruments::triggerChanged()
 {
@@ -104,12 +101,15 @@ void Instruments::createNewSlotInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, &soundDeviceUuid, voiceIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .createNewSlotInMelodicInstrument(instrumentUuid, soundDeviceUuid,
-                                                voiceIdx);
-       });
+   auto paramCache = InstrumentsModifier::createParameterCache(
+       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
+                                         &soundDeviceUuid, voiceIdx,
+                                         &paramCache](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .createNewSlotInMelodicInstrument(instrumentUuid, soundDeviceUuid,
+                                            voiceIdx, paramCache);
+   });
    triggerChanged();
 }
 
@@ -189,12 +189,20 @@ void Instruments::createNewSlotInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, soundDeviceUuid, voiceIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .createNewSlotInKitInstrument(instrumentUuid, soundDeviceUuid,
-                                            voiceIdx);
-       });
+   auto paramCache = InstrumentsModifier::createParameterCache(
+       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+   if (!paramCache)
+   {
+      spdlog::error("Could not create parameter cache");
+      return;
+   }
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, soundDeviceUuid,
+                                         voiceIdx,
+                                         &paramCache](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .createNewSlotInKitInstrument(instrumentUuid, soundDeviceUuid,
+                                        voiceIdx, paramCache);
+   });
    triggerChanged();
 }
 

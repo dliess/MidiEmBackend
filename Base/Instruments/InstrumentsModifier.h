@@ -26,7 +26,8 @@ struct InstrumentsModifier
 
    void createNewSlotInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
 
    void addVoiceToMelodicInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
@@ -46,7 +47,8 @@ struct InstrumentsModifier
 
    void createNewSlotInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
+       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
    void addVoiceToKitInstrumentSlot(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,

@@ -161,6 +161,16 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
+      /*
+      auto paramCache = InstrumentsModifier::createParameterCache(
+          m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+      if (!paramCache)
+      {
+         spdlog::error("Could not create parameter cache");
+         continue;
+      }
+      */
+
       CompositeSound kompositeSound(voiceDescr[voiceIndex].name);
       kompositeSound.voices.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()

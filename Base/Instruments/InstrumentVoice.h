@@ -7,7 +7,6 @@
 #include "MusicDevice.h"
 #include "ParameterData.h"
 #include "SoundHandler.h"
-#include "gsl/pointers.h"
 
 namespace base::instruments
 {

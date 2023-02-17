@@ -15,6 +15,7 @@ inline Voice::Voice(musicDevice::sound::SoundHandler* pSoundDevice,
     m_voiceIndex(voiceIndex),
     m_noteOffset(noteOffset)
 {
+   assert(m_pParameterCache);
 }
 
 inline const musicDevice::MusicDeviceId& Voice::soundDeviceId() const
