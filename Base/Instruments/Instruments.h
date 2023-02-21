@@ -4,14 +4,14 @@
 #include <functional>
 #include <vector>
 
-#include "InstrumentsData.h"
+#include "DoubleBuffer.h"
 #include "Identifiable.h"
+#include "InstrumentsData.h"
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 #include "Meta.h"
 #include "Settings_old.h"
 #include "function_ref.h"
-#include "DoubleBuffer.h"
 
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
@@ -19,11 +19,9 @@ namespace base::musicDevice::factory { class DataHolder; }
 
 namespace base::instruments
 {
-
 struct Instruments   //: public utils::Settings<Instruments>
 {
-   Instruments(
-       musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   Instruments(musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
    /*
    // ============== Settings ===============
    using Settings = Data;
@@ -36,14 +34,14 @@ struct Instruments   //: public utils::Settings<Instruments>
    void triggerChanged();
 
    void createKitInstrument(std::string name);
-   void removeKitInstrument(
-       const util::Identifiable::UUID& instrumentId);
+   void insertKitInstrument(const KitInstrument& kitInstrument);
+   void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name);
 
    void createMelodicInstrument(std::string name);
-   void removeMelodicInstrument(
-       const util::Identifiable::UUID& instrumentId);
+   void insertMelodicInstrument(const MelodicInstrument& melodicInstrument);
+   void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 std::string name);
 
@@ -88,19 +86,22 @@ struct Instruments   //: public utils::Settings<Instruments>
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name);
 
-    std::string serializeKitInstruments() const;
-    std::string serializeMelodicInstruments() const;
+   std::string serializeKitInstruments() const;
+   std::string serializeMelodicInstruments() const;
 
    [[nodiscard]] const Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView);
 
    inline void withInstrumentRt(util::Identifiable::UUIDView uuid,
-                                 util::function_ref<void(const Instrument&)> cb);
-   inline void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
-                                 util::function_ref<void(const KitInstrument&)> cb);
+                                util::function_ref<void(const Instrument&)> cb);
+   inline void withKitInstrumentRt(
+       util::Identifiable::UUIDView uuid,
+       util::function_ref<void(const KitInstrument&)> cb);
    inline void withMelodicInstrumentRt(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
+
+   void fillReferences(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;

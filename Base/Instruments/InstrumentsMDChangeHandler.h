@@ -1,7 +1,6 @@
 #ifndef INSTRUMENTS_MD_CHANGE_HANDLER_H
 #define INSTRUMENTS_MD_CHANGE_HANDLER_H
 
-#include "DoubleBuffer.h"
 #include "InstrumentsData.h"
 
 // clang-format off
@@ -9,6 +8,7 @@ namespace base::musicDevice { class MusicDevice; }
 // clang-format on
 namespace base::instruments
 {
+class Instruments;
 class InstrumentsMDChangeHandler
 {
 public:
@@ -18,8 +18,6 @@ public:
 
 private:
    Instruments& m_rInstruments;
-
-   void fillReferences(musicDevice::MusicDevice* pMusicDevice) noexcept;
 
    void addDefaultInstrumentsFor(
        musicDevice::MusicDevice* pMusicDevice) noexcept;

@@ -9,18 +9,62 @@
 #include "MusicDeviceFactoryDataHolder.h"
 #include "SoundSection.h"
 
+using namespace base;
 using namespace base::instruments;
+
+namespace detail
+{
+void fillReferencesKitInstruments(
+    Data& rData, musicDevice::MusicDevice* pMusicDevice) noexcept
+{
+   for (auto& kitInstrument : rData.kitInstruments)
+   {
+      kitInstrument.forEachVoice([&pMusicDevice](Voice& voice) {
+         if (voice.soundDeviceId() == pMusicDevice->deviceId())
+         {
+            voice.setSoundDevicePtr(pMusicDevice->soundHandler
+                                        ? &pMusicDevice->soundHandler.value()
+                                        : nullptr);
+         }
+      });
+   }
+}
+
+void fillReferencesMelodicInstruments(
+    Data& rData, musicDevice::MusicDevice* pMusicDevice) noexcept
+{
+   for (auto& melodicInstrument : rData.melodicInstruments)
+   {
+      std::for_each(
+          melodicInstrument.voices().begin(), melodicInstrument.voices().end(),
+          [&pMusicDevice](CompositeSound& compositeSound) {
+             std::for_each(
+                 compositeSound.voices.begin(), compositeSound.voices.end(),
+                 [&pMusicDevice](Voice& voice) {
+                    if (voice.soundDeviceId() == pMusicDevice->deviceId())
+                    {
+                       voice.setSoundDevicePtr(
+                           pMusicDevice->soundHandler
+                               ? &pMusicDevice->soundHandler.value()
+                               : nullptr);
+                    }
+                 });
+          });
+   }
+}
+
+}   // namespace detail
 
 Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
    rFactoryDataHolder.onMusicDeviceAdded([this](auto md) {
-      InstrumentsMDChangeHandler(m_doubleBufferedData).add(md);
+      InstrumentsMDChangeHandler(*this).add(md);
       triggerChanged();
    });
    rFactoryDataHolder.onMusicDeviceAboutToRemove([this](auto md) {
-      InstrumentsMDChangeHandler(m_doubleBufferedData).remove(md);
+      InstrumentsMDChangeHandler(*this).remove(md);
       triggerChanged();
    });
 }
@@ -39,6 +83,15 @@ void Instruments::createKitInstrument(std::string name)
        [this, &kitInstrument](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .insertKitInstrument(kitInstrument);
+       });
+   triggerChanged();
+}
+
+void Instruments::insertKitInstrument(const KitInstrument& kitInstrument)
+{
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &kitInstrument](auto& nonRtData) {
+          nonRtData.kitInstruments.push_back(kitInstrument);
        });
    triggerChanged();
 }
@@ -72,6 +125,16 @@ void Instruments::createMelodicInstrument(std::string name)
        [this, &melodicInstrument](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .insertMelodicInstrument(melodicInstrument);
+       });
+   triggerChanged();
+}
+
+void Instruments::insertMelodicInstrument(
+    const MelodicInstrument& melodicInstrument)
+{
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &melodicInstrument](auto& nonRtData) {
+          nonRtData.melodicInstruments.push_back(melodicInstrument);
        });
    triggerChanged();
 }
@@ -327,4 +390,12 @@ std::string Instruments::serializeMelodicInstruments() const
    return meta::serialize(m_doubleBufferedData.nonRt().melodicInstruments)
        .dump()
        .c_str();
+}
+
+void Instruments::fillReferences(musicDevice::MusicDevice* pMusicDevice)
+{
+   m_doubleBufferedData.withNonRtLocked([this, pMusicDevice](auto& nonRtData) {
+      detail::fillReferencesKitInstruments(nonRtData, pMusicDevice);
+      detail::fillReferencesMelodicInstruments(nonRtData, pMusicDevice);
+   });
 }
