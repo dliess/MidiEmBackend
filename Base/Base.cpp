@@ -8,6 +8,7 @@
 
 #include "BeatTick.h"
 #include "FdSet.h"
+#include "InstrumentsMDChangeHandler.h"
 #include "LoaderServer.h"
 #include "ModifiersApplyer.h"
 #include "ReplaceAsteriskToLocalhost.h"
@@ -70,6 +71,12 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
               const musicDevice::controller::Event &event) {
           controllerEventRouter.onControllerDevEventOccured(uuid, event);
        });
+   musicDeviceFactory.dataHolder().onMusicDeviceAdded([this](auto md) {
+      instruments::InstrumentsMDChangeHandler(instruments).add(md);
+   });
+   musicDeviceFactory.dataHolder().onMusicDeviceAboutToRemove([this](auto md) {
+      instruments::InstrumentsMDChangeHandler(instruments).remove(md);
+   });
 }
 
 base::Base::~Base() noexcept = default;

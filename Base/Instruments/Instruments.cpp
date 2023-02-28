@@ -2,7 +2,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "InstrumentsMDChangeHandler.h"
 #include "InstrumentsMDRefSetter.h"
 #include "InstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
@@ -17,14 +16,6 @@ Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
-   rFactoryDataHolder.onMusicDeviceAdded([this](auto md) {
-      InstrumentsMDChangeHandler(*this).add(md);
-      triggerChanged();
-   });
-   rFactoryDataHolder.onMusicDeviceAboutToRemove([this](auto md) {
-      InstrumentsMDChangeHandler(*this).remove(md);
-      triggerChanged();
-   });
 }
 
 void Instruments::registerForDataChange(Cb cb) { m_subscribers.push_back(cb); }
@@ -358,6 +349,7 @@ void Instruments::fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
       InstrumentsMDRefSetter(nonRtData).fillReferencesMelodicInstruments(
           pMusicDevice);
    });
+   triggerChanged();
 }
 
 void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
@@ -366,4 +358,5 @@ void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
       InstrumentsMDRefSetter(nonRtData).removeKitInstruments(pMusicDevice);
       InstrumentsMDRefSetter(nonRtData).removeMelodicInstruments(pMusicDevice);
    });
+   triggerChanged();
 }

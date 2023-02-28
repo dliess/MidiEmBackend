@@ -101,14 +101,13 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
 
+   void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
+   void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
    std::vector<Cb> m_subscribers;
-   friend class InstrumentsMDChangeHandler;
-   void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
-   void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 };
 
 }   // namespace base::instruments
