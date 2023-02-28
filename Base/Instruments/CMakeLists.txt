@@ -9,6 +9,7 @@ set(SOURCES
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"
    "InstrumentVoice.cpp"
+   "InstrumentsMDRefSetter.cpp"
 )
 
 set(HEADERS
@@ -20,6 +21,7 @@ set(HEADERS
    "Instruments.h"
    "InstrumentsRef.h"
    "InstrumentsModifier.h"
+   "InstrumentsMDRefSetter.h"
 )
 
 set(TARGET_NAME "Instruments")

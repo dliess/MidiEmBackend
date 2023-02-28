@@ -101,7 +101,8 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
 
-   void fillReferences(musicDevice::MusicDevice* pMusicDevice);
+   void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
+   void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;

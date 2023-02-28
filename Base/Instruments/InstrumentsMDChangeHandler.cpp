@@ -8,67 +8,6 @@
 using namespace base;
 using namespace base::instruments;
 
-namespace detail
-{
-void removeKitInstruments(Data rData, musicDevice::MusicDevice* pMusicDevice)
-{
-   auto it = rData.kitInstruments.begin();
-   while (it != rData.kitInstruments.end())
-   {
-      bool isDeviceContained{false};
-      it->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
-         if (voice.pSoundDevice() == &pMusicDevice->soundHandler.value())
-         {
-            isDeviceContained = true;
-            voice.setSoundDevicePtr(nullptr);
-         }
-      });
-      if (isDeviceContained && it->isDefaultCreated())
-      {
-         spdlog::info("Erasing");
-         it = rData.kitInstruments.erase(it);
-      }
-      else
-      {
-         ++it;
-      }
-   }
-}
-
-void removeMelodicInstruments(Data& rData,
-                              musicDevice::MusicDevice* pMusicDevice)
-{
-   auto it = rData.melodicInstruments.begin();
-   while (it != rData.melodicInstruments.end())
-   {
-      bool isDeviceContained{false};
-      std::for_each(
-          it->voices().begin(), it->voices().end(),
-          [&isDeviceContained, &pMusicDevice](CompositeSound& compositeSound) {
-             std::for_each(compositeSound.voices.begin(),
-                           compositeSound.voices.end(),
-                           [&isDeviceContained, &pMusicDevice](Voice& voice) {
-                              if (voice.pSoundDevice() ==
-                                  &pMusicDevice->soundHandler.value())
-                              {
-                                 isDeviceContained = true;
-                                 voice.setSoundDevicePtr(nullptr);
-                              }
-                           });
-          });
-      if (isDeviceContained && it->isDefaultCreated())
-      {
-         it = rData.melodicInstruments.erase(it);
-      }
-      else
-      {
-         ++it;
-      }
-   }
-}
-
-}   // namespace detail
-
 InstrumentsMDChangeHandler::InstrumentsMDChangeHandler(
     Instruments& rInstruments) noexcept :
     m_rInstruments(rInstruments)
@@ -187,14 +126,13 @@ void InstrumentsMDChangeHandler::add(musicDevice::MusicDevice* pMusicDevice)
 {
    assert(pMusicDevice);
    assert(pMusicDevice->description()->soundSection);
-   m_rInstruments.fillReferences(pMusicDevice);
+   m_rInstruments.fillReferencesToMD(pMusicDevice);
    addDefaultInstrumentsFor(pMusicDevice);
 }
 
 void InstrumentsMDChangeHandler::remove(musicDevice::MusicDevice* pMusicDevice)
 {
-   m_rDoubleBufferedData.withNonRtLocked([this, pMusicDevice](auto& nonRtData) {
-      detail::removeKitInstruments(nonRtData, pMusicDevice);
-      detail::removeMelodicInstruments(nonRtData, pMusicDevice);
-   });
+   assert(pMusicDevice);
+   assert(pMusicDevice->description()->soundSection);
+   m_rInstruments.removeReferencesToMD(pMusicDevice);
 }
