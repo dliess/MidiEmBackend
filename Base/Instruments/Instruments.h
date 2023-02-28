@@ -31,7 +31,6 @@ struct Instruments   //: public utils::Settings<Instruments>
     */
    using Cb = std::function<void(void)>;
    void registerForDataChange(Cb cb);
-   void triggerChanged();
 
    void createKitInstrument(std::string name);
    void insertKitInstrument(const KitInstrument& kitInstrument);
@@ -108,6 +107,8 @@ private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
    std::vector<Cb> m_subscribers;
+
+   void triggerChanged();
 };
 
 }   // namespace base::instruments

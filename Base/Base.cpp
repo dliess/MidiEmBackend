@@ -77,6 +77,9 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
    musicDeviceFactory.dataHolder().onMusicDeviceAboutToRemove([this](auto md) {
       instruments::InstrumentsMDChangeHandler(instruments).remove(md);
    });
+   instruments.registerForDataChange([this](){
+      FileSaver(instruments.serializeKitInstruments());
+   });
 }
 
 base::Base::~Base() noexcept = default;
