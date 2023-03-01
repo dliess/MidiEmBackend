@@ -1,5 +1,6 @@
 #include "InstrumentsMDRefSetter.h"
 
+using namespace base;
 using namespace base::instruments;
 
 InstrumentsMDRefSetter::InstrumentsMDRefSetter(Data& rData) : m_rData(rData) {}
@@ -43,11 +44,14 @@ void InstrumentsMDRefSetter::fillReferencesMelodicInstruments(
    }
 }
 
-void InstrumentsMDRefSetter::removeKitInstruments(
-    musicDevice::MusicDevice* pMusicDevice)
+namespace detail
 {
-   auto it = m_rData.kitInstruments.begin();
-   while (it != m_rData.kitInstruments.end())
+template <class InstrumentContainer>
+void removeReference(InstrumentContainer&& instrumentContainer,
+                     musicDevice::MusicDevice* pMusicDevice)
+{
+   auto it = instrumentContainer.begin();
+   while (it != instrumentContainer.end())
    {
       bool isDeviceContained{false};
       it->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
@@ -57,10 +61,9 @@ void InstrumentsMDRefSetter::removeKitInstruments(
             voice.setSoundDevicePtr(nullptr);
          }
       });
-      if (isDeviceContained && it->isDefaultCreated())
+      if (isDeviceContained && it->isDefaultCreated() && it->refCount() == 0)
       {
-         spdlog::info("Erasing");
-         it = m_rData.kitInstruments.erase(it);
+         it = instrumentContainer.erase(it);
       }
       else
       {
@@ -68,35 +71,16 @@ void InstrumentsMDRefSetter::removeKitInstruments(
       }
    }
 }
+}   // namespace detail
+
+void InstrumentsMDRefSetter::removeKitInstruments(
+    musicDevice::MusicDevice* pMusicDevice)
+{
+   detail::removeReference(m_rData.kitInstruments, pMusicDevice);
+}
 
 void InstrumentsMDRefSetter::removeMelodicInstruments(
     musicDevice::MusicDevice* pMusicDevice)
 {
-   auto it = m_rData.melodicInstruments.begin();
-   while (it != m_rData.melodicInstruments.end())
-   {
-      bool isDeviceContained{false};
-      std::for_each(
-          it->voices().begin(), it->voices().end(),
-          [&isDeviceContained, &pMusicDevice](CompositeSound& compositeSound) {
-             std::for_each(compositeSound.voices.begin(),
-                           compositeSound.voices.end(),
-                           [&isDeviceContained, &pMusicDevice](Voice& voice) {
-                              if (voice.pSoundDevice() ==
-                                  &pMusicDevice->soundHandler.value())
-                              {
-                                 isDeviceContained = true;
-                                 voice.setSoundDevicePtr(nullptr);
-                              }
-                           });
-          });
-      if (isDeviceContained && it->isDefaultCreated())
-      {
-         it = m_rData.melodicInstruments.erase(it);
-      }
-      else
-      {
-         ++it;
-      }
-   }
+   detail::removeReference(m_rData.melodicInstruments, pMusicDevice);
 }

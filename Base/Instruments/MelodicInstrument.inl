@@ -20,6 +20,15 @@ inline int MelodicInstrument::RtData::currentVoiceIndex() const noexcept
    return m_currentVoiceIndex;
 }
 
+template <typename Cb> void MelodicInstrument::forEachVoice(Cb&& cb)
+{
+   for (auto& sound : m_voices)
+   {
+      for (auto& voice : sound.voices) { cb(voice); }
+   }
+}
+
+
 } // namespace base::instruments
 
 #endif // MELODIC_INSTRUMENT_INL

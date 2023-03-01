@@ -6,6 +6,7 @@
 #include "MusicDeviceFactory.h"
 
 using namespace uiadapter::capnzero;
+using namespace base;
 using namespace base::musicDevice;
 
 LoaderRpc::LoaderRpc(
@@ -27,12 +28,13 @@ LoaderRpc::LoaderRpc(
           m_rSignals.Presets__presetRemoved(id.musicDeviceName, id.engineIdx,
                                             id.presetName);
        });
-   m_rInstruments.registerForDataChange([this]() {
-      m_rSignals.Instruments__kitInstrumentsChanged(
-          m_rInstruments.serializeKitInstruments());
-      m_rSignals.Instruments__melodicInstrumentsChanged(
-          m_rInstruments.serializeMelodicInstruments());
-   });
+   m_rInstruments.onDataChanged(
+       [this](const instruments::Data& data, bool doSaveToFile) {
+          m_rSignals.Instruments__kitInstrumentsChanged(
+              meta::serialize(data.kitInstruments).dump().c_str());
+          m_rSignals.Instruments__melodicInstrumentsChanged(
+              meta::serialize(data.melodicInstruments).dump().c_str());
+       });
 }
 
 void LoaderRpc::reEmitSignals()
@@ -40,10 +42,7 @@ void LoaderRpc::reEmitSignals()
    m_rMusicDevicFactory.dataHolder().reEmitSignals();
    m_rSignals.allMusicDevicesChanged(
        m_rMusicDevicFactory.getAllDevicesAsJson());
-   m_rSignals.Instruments__kitInstrumentsChanged(
-       m_rInstruments.serializeKitInstruments());
-   m_rSignals.Instruments__melodicInstrumentsChanged(
-       m_rInstruments.serializeMelodicInstruments());
+   m_rInstruments.reEmitSignals();
 }
 
 void LoaderRpc::loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,

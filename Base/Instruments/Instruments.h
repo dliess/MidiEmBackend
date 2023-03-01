@@ -12,6 +12,7 @@
 #include "Meta.h"
 #include "Settings_old.h"
 #include "function_ref.h"
+#include "CallbackSignal.h"
 
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
@@ -22,15 +23,9 @@ namespace base::instruments
 struct Instruments   //: public utils::Settings<Instruments>
 {
    Instruments(musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
-   /*
-   // ============== Settings ===============
-   using Settings = Data;
-   Settings getSettings() const noexcept;
-   void setSettings(const Settings& settings) noexcept;
-   // =======================================
-    */
-   using Cb = std::function<void(void)>;
-   void registerForDataChange(Cb cb);
+
+   CB_SIGNAL(DataChanged, const Data& data, bool doSaveToFile);
+   void reEmitSignals();
 
    void createKitInstrument(std::string name);
    void insertKitInstrument(const KitInstrument& kitInstrument);
@@ -106,9 +101,6 @@ struct Instruments   //: public utils::Settings<Instruments>
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
-   std::vector<Cb> m_subscribers;
-
-   void triggerChanged();
 };
 
 }   // namespace base::instruments

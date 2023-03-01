@@ -16,13 +16,26 @@ Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
-}
+   onDataChanged([this](const instruments::Data& data,
+                                    bool doSaveToFile) {
+      if (doSaveToFile)
+      {
+        /* TODO
+         FileSaver(persistentOpenFileObject)
+             .write(meta::serialize(
+                        filterOutDefaultInstruments(data.kitInstruments))
+                        .dump()
+                        .c_str());
+         FileSaver(persistentOpenFileObject)
+             .write(meta::serialize(
+                        filterOutDefaultInstruments(data.melodicInstruments))
+                        .dump()
+                        .c_str());
+        */
+      }
+   });
 
-void Instruments::registerForDataChange(Cb cb) { m_subscribers.push_back(cb); }
-
-void Instruments::triggerChanged()
-{
-   for (auto& cb : m_subscribers) cb();
+   //FileLoader();
 }
 
 void Instruments::createKitInstrument(std::string name)
@@ -33,7 +46,7 @@ void Instruments::createKitInstrument(std::string name)
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .insertKitInstrument(kitInstrument);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::insertKitInstrument(const KitInstrument& kitInstrument)
@@ -42,7 +55,7 @@ void Instruments::insertKitInstrument(const KitInstrument& kitInstrument)
        [this, &kitInstrument](auto& nonRtData) {
           nonRtData.kitInstruments.push_back(kitInstrument);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeKitInstrument(
@@ -52,7 +65,7 @@ void Instruments::removeKitInstrument(
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeKitInstrument(instrumentId);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::renameKitInstrument(
@@ -63,7 +76,7 @@ void Instruments::renameKitInstrument(
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .renameKitInstrument(instrumentId, std::move(name));
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::createMelodicInstrument(std::string name)
@@ -75,7 +88,7 @@ void Instruments::createMelodicInstrument(std::string name)
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .insertMelodicInstrument(melodicInstrument);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::insertMelodicInstrument(
@@ -85,7 +98,7 @@ void Instruments::insertMelodicInstrument(
        [this, &melodicInstrument](auto& nonRtData) {
           nonRtData.melodicInstruments.push_back(melodicInstrument);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeMelodicInstrument(
@@ -95,7 +108,7 @@ void Instruments::removeMelodicInstrument(
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeMelodicInstrument(instrumentId);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::renameMelodicInstrument(
@@ -106,7 +119,7 @@ void Instruments::renameMelodicInstrument(
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .renameMelodicInstrument(instrumentId, std::move(name));
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::createNewSlotInMelodicInstrument(
@@ -122,7 +135,7 @@ void Instruments::createNewSlotInMelodicInstrument(
           .createNewSlotInMelodicInstrument(instrumentUuid, soundDeviceUuid,
                                             voiceIdx, paramCache);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::addVoiceToMelodicInstrumentSlot(
@@ -143,7 +156,7 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
           .addVoiceToMelodicInstrumentSlot(
               instrumentUuid, slotIdx, soundDeviceUuid, voiceIdx, paramCache);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeVoiceFromMelodicInstrumentSlot(
@@ -156,7 +169,7 @@ void Instruments::removeVoiceFromMelodicInstrumentSlot(
               .removeVoiceFromMelodicInstrumentSlot(instrumentUuid, slotIdx,
                                                     compositeIdx);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeSlotFromMelodicInstrument(
@@ -167,7 +180,7 @@ void Instruments::removeSlotFromMelodicInstrument(
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
               .removeSlotFromMelodicInstrument(instrumentUuid, slotIdx);
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::setNoteOffsetInMelodicInstrumentVoice(
@@ -181,7 +194,7 @@ void Instruments::setNoteOffsetInMelodicInstrumentVoice(
           .setNoteOffsetInMelodicInstrumentVoice(instrumentUuid, slotIdx,
                                                  compositeIdx, noteOffset);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::setCompositeNameInMelodicInstrument(
@@ -194,7 +207,7 @@ void Instruments::setCompositeNameInMelodicInstrument(
               .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx,
                                                    std::move(name));
        });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::createNewSlotInKitInstrument(
@@ -215,7 +228,7 @@ void Instruments::createNewSlotInKitInstrument(
           .createNewSlotInKitInstrument(instrumentUuid, soundDeviceUuid,
                                         voiceIdx, paramCache);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::addVoiceToKitInstrumentSlot(
@@ -236,7 +249,7 @@ void Instruments::addVoiceToKitInstrumentSlot(
           .addVoiceToKitInstrumentSlot(instrumentUuid, slotIdx, soundDeviceUuid,
                                        voiceIdx, paramCache);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::moveKitInstrumentSlotVoice(
@@ -250,7 +263,7 @@ void Instruments::moveKitInstrumentSlotVoice(
                                       srcCompositeIdx, dstInstrumentUuid,
                                       dstSlotIdx);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeVoiceFromKitInstrumentSlot(
@@ -262,7 +275,7 @@ void Instruments::removeVoiceFromKitInstrumentSlot(
           .removeVoiceFromKitInstrumentSlot(instrumentUuid, slotIdx,
                                             compositeIdx);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeSlotFromKitInstrument(
@@ -272,7 +285,7 @@ void Instruments::removeSlotFromKitInstrument(
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .removeSlotFromKitInstrument(instrumentUuid, slotIdx);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::setNoteOffsetInKitInstrumentVoice(
@@ -284,7 +297,7 @@ void Instruments::setNoteOffsetInKitInstrumentVoice(
           .setNoteOffsetInKitInstrumentVoice(instrumentUuid, slotIdx,
                                              compositeIdx, noteOffset);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::setCompositeNameInKitInstrument(
@@ -296,7 +309,7 @@ void Instruments::setCompositeNameInKitInstrument(
           .setCompositeNameInKitInstrument(instrumentUuid, slotIdx,
                                            std::move(name));
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 template <typename Container>
@@ -349,7 +362,7 @@ void Instruments::fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
       InstrumentsMDRefSetter(nonRtData).fillReferencesMelodicInstruments(
           pMusicDevice);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), false);
 }
 
 void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
@@ -358,5 +371,10 @@ void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
       InstrumentsMDRefSetter(nonRtData).removeKitInstruments(pMusicDevice);
       InstrumentsMDRefSetter(nonRtData).removeMelodicInstruments(pMusicDevice);
    });
-   triggerChanged();
+   emitDataChanged(m_doubleBufferedData.nonRt(), false);
+}
+
+void Instruments::reEmitSignals()
+{
+   emitDataChanged(m_doubleBufferedData.nonRt(), false);
 }

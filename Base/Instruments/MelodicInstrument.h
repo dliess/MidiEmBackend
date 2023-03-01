@@ -76,6 +76,8 @@ public:
    VoiceContainer& voices() noexcept;
    friend auto meta::registerMembers<MelodicInstrument>();
 
+    template <typename Cb> void forEachVoice(Cb&& cb);
+
 private:
    VoiceContainer m_voices;
    std::string m_name;
