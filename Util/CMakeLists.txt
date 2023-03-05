@@ -5,12 +5,15 @@ if(NOMIDI_BACKEND_BUILD_TESTS)
 endif()
 
 set(SOURCES
+    "FilePersister.cpp"
     "FdSet.cpp"
     "FileReader.cpp"
     "HomeDir.cpp"
 )
 
 set(HEADERS
+    "IDataPersister.h"
+    "FilePersister.h"
     "FdSet.h"
     "error_msg.hpp"
     "FloatEqual.h"

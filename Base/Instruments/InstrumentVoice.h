@@ -14,6 +14,7 @@ class Voice
 {
 public:
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
+   Voice() = default;
    inline explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,
                 std::shared_ptr<ParameterCache> pParameterCache,
                 musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,

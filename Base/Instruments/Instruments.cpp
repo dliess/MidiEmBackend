@@ -2,6 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
+#include "FilePersister.h"
 #include "InstrumentsMDRefSetter.h"
 #include "InstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
@@ -12,30 +13,51 @@
 using namespace base;
 using namespace base::instruments;
 
+namespace detail
+{
+instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
+{
+   instruments::Data data = rData;
+   for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
+        ++it)
+   {
+      if (it->isDefaultCreated() && it->refCount() != 0)
+      {
+         it = data.kitInstruments.erase(it);
+      }
+   }
+   for (auto it = data.melodicInstruments.begin();
+        it != data.melodicInstruments.end(); ++it)
+   {
+      if (it->isDefaultCreated() && it->refCount() != 0)
+      {
+         it = data.melodicInstruments.erase(it);
+      }
+   }
+   return data;
+}
+
+}   // namespace detail
+
 Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
-    m_rFactoryDataHolder(rFactoryDataHolder)
+    m_rFactoryDataHolder(rFactoryDataHolder),
+    m_dataPersister(
+        std::make_unique<util::FilePersister>("Instruments", "settings.json"))
 {
-   onDataChanged([this](const instruments::Data& data,
-                                    bool doSaveToFile) {
+   onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
-        /* TODO
-         FileSaver(persistentOpenFileObject)
-             .write(meta::serialize(
-                        filterOutDefaultInstruments(data.kitInstruments))
-                        .dump()
-                        .c_str());
-         FileSaver(persistentOpenFileObject)
-             .write(meta::serialize(
-                        filterOutDefaultInstruments(data.melodicInstruments))
-                        .dump()
-                        .c_str());
-        */
+         m_dataPersister->save(
+             meta::serialize(detail::filterOutDefaultInstruments(data))
+                 .dump()
+                 .c_str());
       }
    });
 
-   //FileLoader();
+   const auto strData = m_dataPersister->load();
+   nlohmann::json j = nlohmann::json::parse(strData);
+   j["section"].get<Data>();
 }
 
 void Instruments::createKitInstrument(std::string name)

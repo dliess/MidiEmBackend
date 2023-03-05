@@ -3,6 +3,8 @@
 #include <fstream>
 #include <cerrno>
 
+
+// TODO: unused, maybe delete!!
 std::string util::get_file_contents(const char *filename)
 {
   std::ifstream in(filename, std::ios::in | std::ios::binary);
