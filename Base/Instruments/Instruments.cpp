@@ -21,7 +21,7 @@ instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
    for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
         ++it)
    {
-      if (it->isDefaultCreated() && it->refCount() != 0)
+      if (it->isDefaultCreated() && it->refCount() == 0)
       {
          it = data.kitInstruments.erase(it);
       }
@@ -29,7 +29,7 @@ instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
    for (auto it = data.melodicInstruments.begin();
         it != data.melodicInstruments.end(); ++it)
    {
-      if (it->isDefaultCreated() && it->refCount() != 0)
+      if (it->isDefaultCreated() && it->refCount() == 0)
       {
          it = data.melodicInstruments.erase(it);
       }
