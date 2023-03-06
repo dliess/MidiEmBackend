@@ -13,7 +13,7 @@
 #include "Settings_old.h"
 #include "function_ref.h"
 #include "CallbackSignal.h"
-#include "IDataPersister.h"
+#include "InstrumentsPersister.h"
 
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
@@ -102,7 +102,7 @@ struct Instruments   //: public utils::Settings<Instruments>
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
-   std::unique_ptr<util::IDataPersister> m_dataPersister;
+   Persister m_persister;
 };
 
 }   // namespace base::instruments

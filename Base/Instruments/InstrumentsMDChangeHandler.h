@@ -12,15 +12,12 @@ class Instruments;
 class InstrumentsMDChangeHandler
 {
 public:
-   InstrumentsMDChangeHandler(
-       Instruments& m_rInstruments,
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   InstrumentsMDChangeHandler(Instruments& m_rInstruments) noexcept;
    void add(musicDevice::MusicDevice* pMusicDevice);
    void remove(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    Instruments& m_rInstruments;
-   base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 
    void addDefaultInstrumentsFor(
        musicDevice::MusicDevice* pMusicDevice) noexcept;

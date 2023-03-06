@@ -3,62 +3,33 @@
 #include <spdlog/spdlog.h>
 
 #include "FilePersister.h"
+#include "InstrumentVoiceFactory.h"
 #include "InstrumentsMDRefSetter.h"
 #include "InstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "SoundSection.h"
-#include "InstrumentVoiceFactory.h"
 
 using namespace base;
 using namespace base::instruments;
 
-namespace detail
-{
-instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
-{
-   instruments::Data data = rData;
-   for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
-        ++it)
-   {
-      if (it->isDefaultCreated() && it->refCount() == 0)
-      {
-         it = data.kitInstruments.erase(it);
-      }
-   }
-   for (auto it = data.melodicInstruments.begin();
-        it != data.melodicInstruments.end(); ++it)
-   {
-      if (it->isDefaultCreated() && it->refCount() == 0)
-      {
-         it = data.melodicInstruments.erase(it);
-      }
-   }
-   return data;
-}
-
-}   // namespace detail
-
 Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder),
-    m_dataPersister(
+    m_persister(
         std::make_unique<util::FilePersister>("Instruments", "settings.json"))
 {
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
-         m_dataPersister->save(
-             meta::serialize(detail::filterOutDefaultInstruments(data))
-                 .dump()
-                 .c_str());
+         m_persister->save(data);
       }
    });
 
-   const auto strData = m_dataPersister->load();
-   nlohmann::json j = nlohmann::json::parse(strData);
-   j["section"].get<Data>();
+   auto data = m_persister.load();
+   m_doubleBufferedData.withNonRtLocked(
+       [&data](auto& nonRtData) { nonRtData = data; });
 }
 
 void Instruments::createKitInstrument(std::string name)
@@ -150,7 +121,8 @@ void Instruments::createNewSlotInMelodicInstrument(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
+       voiceIdx);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -166,7 +138,8 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
+       voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");
@@ -238,7 +211,8 @@ void Instruments::createNewSlotInKitInstrument(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
+       voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");
@@ -259,7 +233,8 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
+       voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");

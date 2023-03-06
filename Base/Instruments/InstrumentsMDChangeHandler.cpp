@@ -1,18 +1,17 @@
 #include "InstrumentsMDChangeHandler.h"
 
+#include "InstrumentVoiceFactory.h"
 #include "Instruments.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
-#include "InstrumentVoiceFactory.h"
 
 using namespace base;
 using namespace base::instruments;
 
 InstrumentsMDChangeHandler::InstrumentsMDChangeHandler(
-    Instruments& rInstruments,
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
-    m_rInstruments(rInstruments), m_rFactoryDataHolder(rFactoryDataHolder)
+    Instruments& rInstruments) noexcept :
+    m_rInstruments(rInstruments)
 {
 }
 
@@ -55,9 +54,8 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      
-      auto paramCache = createParameterCache(
-          m_rFactoryDataHolder, pMusicDevice->id(), voiceIndex);
+      auto paramCache = createParameterCache(pMusicDevice->description().get(),
+                                             pMusicDevice->id(), voiceIndex);
       if (!paramCache)
       {
          spdlog::error("Could not create parameter cache");
@@ -67,8 +65,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
       kompositeSound.voices.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          paramCache,
-          pMusicDevice->deviceId(), voiceIndex, 0);
+          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
       kitInstrument.addSound(voiceIndex, kompositeSound);
    }
    m_rInstruments.insertKitInstrument(kitInstrument);
@@ -89,11 +86,17 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
       CompositeSound compositeSound(voiceDescr[voiceIndex].name);
+      auto paramCache = createParameterCache(pMusicDevice->description().get(),
+                                             pMusicDevice->id(), voiceIndex);
+      if (!paramCache)
+      {
+         spdlog::error("Could not create parameter cache");
+         continue;
+      }
       compositeSound.voices.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          nullptr,   // TODO
-          pMusicDevice->deviceId(), voiceIndex, 0);
+          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(compositeSound));
 
       m_rInstruments.insertMelodicInstrument(melodicInstrument);
@@ -111,12 +114,18 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
+      auto paramCache = createParameterCache(pMusicDevice->description().get(),
+                                             pMusicDevice->id(), voiceIndex);
+      if (!paramCache)
+      {
+         spdlog::error("Could not create parameter cache");
+         continue;
+      }
       CompositeSound compositeSound(voiceDescr[voiceIndex].name);
       compositeSound.voices.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          nullptr,   // TODO
-          pMusicDevice->deviceId(), voiceIndex, 0);
+          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(compositeSound));
    }
    m_rInstruments.insertMelodicInstrument(melodicInstrument);

@@ -14,13 +14,14 @@ class Voice
 {
 public:
    using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
-   Voice() = default;
+   Voice()              = default;
    inline explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,
-                std::shared_ptr<ParameterCache> pParameterCache,
-                musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,
-                int noteOffset) noexcept;
+                         std::shared_ptr<ParameterCache> pParameterCache,
+                         musicDevice::MusicDeviceId soundDeviceId,
+                         int voiceIndex, int noteOffset) noexcept;
    [[nodiscard]] inline const musicDevice::MusicDeviceId& soundDeviceId() const;
-   [[nodiscard]] inline const musicDevice::sound::SoundHandler* pSoundDevice() const;
+   [[nodiscard]] inline const musicDevice::sound::SoundHandler* pSoundDevice()
+       const;
    inline void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
    inline void setNoteOffset(int noteOffset);
    void noteOn(int note, float velocity) const;
@@ -40,6 +41,7 @@ public:
        int parameterIdx) const;
 
    friend auto meta::registerMembers<Voice>();
+   friend class Persister;
 
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};

@@ -11,6 +11,7 @@ set(SOURCES
    "InstrumentVoice.cpp"
    "InstrumentVoiceFactory.cpp"
    "InstrumentsMDRefSetter.cpp"
+   "InstrumentsPersister.cpp"
 )
 
 set(HEADERS
@@ -24,6 +25,7 @@ set(HEADERS
    "InstrumentsRef.h"
    "InstrumentsModifier.h"
    "InstrumentsMDRefSetter.h"
+   "InstrumentsPersister.h"
 )
 
 set(TARGET_NAME "Instruments")

@@ -1,12 +1,12 @@
 #include "InstrumentVoiceFactory.h"
 
-using namespace base::instruments;
+using namespace base;
 
-std::shared_ptr<Voice::ParameterCache> createParameterCache(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+std::shared_ptr<instruments::Voice::ParameterCache>
+instruments::createParameterCache(
+    const musicDevice::description::Description* descr,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto descr = rFactoryDataHolder.getDescription(soundDeviceUuid);
    if (descr && descr->soundSection)
    {
       const auto engine = descr->soundSection->engineBase(voiceIdx);
@@ -24,7 +24,7 @@ std::shared_ptr<Voice::ParameterCache> createParameterCache(
    }
    return nullptr;
 }
-
+/*
 InstrumentVoiceFactory::InstrumentVoiceFactory(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
     m_rFactoryDataHolder(rFactoryDataHolder)
@@ -36,3 +36,4 @@ Voice InstrumentVoiceFactory::create(musicDevice::MusicDeviceId soundDeviceId,
 {
     return Voice();
 }
+*/

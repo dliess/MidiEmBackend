@@ -2,24 +2,24 @@
 #define INSTRUMENTS_INSTRUMENT_VOICE_FACTORY_H
 
 #include "InstrumentVoice.h"
-#include "MusicDeviceFactoryDataHolder.h"
+#include "MusicDeviceDescription.h"
 
 namespace base::instruments
 {
-inline std::shared_ptr<Voice::ParameterCache> createParameterCache(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+std::shared_ptr<Voice::ParameterCache> createParameterCache(
+    const musicDevice::description::Description* pDescription,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
 
+/*
 class InstrumentVoiceFactory
 {
 public:
-   InstrumentVoiceFactory(base::musicDevice::factory::DataHolder& rFactoryDataHolder);
-   Voice create(musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,
-                int noteOffset);
-private:
-    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   InstrumentVoiceFactory(base::musicDevice::factory::DataHolder&
+rFactoryDataHolder); Voice create(musicDevice::MusicDeviceId soundDeviceId, int
+voiceIndex, int noteOffset); private: base::musicDevice::factory::DataHolder&
+m_rFactoryDataHolder;
 };
-
+*/
 }   // namespace base::instruments
 
 #endif
