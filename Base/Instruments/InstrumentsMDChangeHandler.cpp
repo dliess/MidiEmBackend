@@ -4,13 +4,15 @@
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
+#include "InstrumentVoiceFactory.h"
 
 using namespace base;
 using namespace base::instruments;
 
 InstrumentsMDChangeHandler::InstrumentsMDChangeHandler(
-    Instruments& rInstruments) noexcept :
-    m_rInstruments(rInstruments)
+    Instruments& rInstruments,
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
+    m_rInstruments(rInstruments), m_rFactoryDataHolder(rFactoryDataHolder)
 {
 }
 
@@ -53,21 +55,19 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      /* TODO
-      auto paramCache = InstrumentsModifier::createParameterCache(
-          m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
+      
+      auto paramCache = createParameterCache(
+          m_rFactoryDataHolder, pMusicDevice->id(), voiceIndex);
       if (!paramCache)
       {
          spdlog::error("Could not create parameter cache");
          continue;
       }
-      */
-
       CompositeSound kompositeSound(voiceDescr[voiceIndex].name);
       kompositeSound.voices.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          nullptr,   // TODO
+          paramCache,
           pMusicDevice->deviceId(), voiceIndex, 0);
       kitInstrument.addSound(voiceIndex, kompositeSound);
    }

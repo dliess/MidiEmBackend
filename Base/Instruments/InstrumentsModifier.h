@@ -69,10 +69,6 @@ struct InstrumentsModifier
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
-   static std::shared_ptr<Voice::ParameterCache> createParameterCache(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
-
 private:
    Data& m_rData;
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;

@@ -9,6 +9,7 @@ set(SOURCES
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"
    "InstrumentVoice.cpp"
+   "InstrumentVoiceFactory.cpp"
    "InstrumentsMDRefSetter.cpp"
 )
 
@@ -17,6 +18,7 @@ set(HEADERS
    "CompositeSound.inl"
    "InstrumentVoice.h"
    "InstrumentVoice.inl"
+   "InstrumentVoiceFactory.h"
    "INotePlayer.h"
    "Instruments.h"
    "InstrumentsRef.h"

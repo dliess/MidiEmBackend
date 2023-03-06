@@ -9,6 +9,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "SoundSection.h"
+#include "InstrumentVoiceFactory.h"
 
 using namespace base;
 using namespace base::instruments;
@@ -148,7 +149,7 @@ void Instruments::createNewSlotInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto paramCache = InstrumentsModifier::createParameterCache(
+   auto paramCache = createParameterCache(
        m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
                                          &soundDeviceUuid, voiceIdx,
@@ -164,7 +165,7 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto paramCache = InstrumentsModifier::createParameterCache(
+   auto paramCache = createParameterCache(
        m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
    if (!paramCache)
    {
@@ -236,7 +237,7 @@ void Instruments::createNewSlotInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto paramCache = InstrumentsModifier::createParameterCache(
+   auto paramCache = createParameterCache(
        m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
    if (!paramCache)
    {
@@ -257,7 +258,7 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
-   auto paramCache = InstrumentsModifier::createParameterCache(
+   auto paramCache = createParameterCache(
        m_rFactoryDataHolder, soundDeviceUuid, voiceIdx);
    if (!paramCache)
    {
