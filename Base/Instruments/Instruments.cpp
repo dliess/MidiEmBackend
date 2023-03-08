@@ -121,8 +121,7 @@ void Instruments::createNewSlotInMelodicInstrument(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
-       voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -138,8 +137,7 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
-       voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");
@@ -211,8 +209,7 @@ void Instruments::createNewSlotInKitInstrument(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
-       voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");
@@ -233,8 +230,7 @@ void Instruments::addVoiceToKitInstrumentSlot(
     const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx)
 {
    auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(soundDeviceUuid), soundDeviceUuid,
-       voiceIdx);
+       m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
    if (!paramCache)
    {
       spdlog::error("Could not create parameter cache");

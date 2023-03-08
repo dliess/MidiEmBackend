@@ -54,8 +54,8 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache = createParameterCache(pMusicDevice->description().get(),
-                                             pMusicDevice->id(), voiceIndex);
+      auto paramCache =
+          createParameterCache(pMusicDevice->description().get(), voiceIndex);
       if (!paramCache)
       {
          spdlog::error("Could not create parameter cache");
@@ -86,8 +86,8 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
       CompositeSound compositeSound(voiceDescr[voiceIndex].name);
-      auto paramCache = createParameterCache(pMusicDevice->description().get(),
-                                             pMusicDevice->id(), voiceIndex);
+      auto paramCache =
+          createParameterCache(pMusicDevice->description().get(), voiceIndex);
       if (!paramCache)
       {
          spdlog::error("Could not create parameter cache");
@@ -114,8 +114,8 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache = createParameterCache(pMusicDevice->description().get(),
-                                             pMusicDevice->id(), voiceIndex);
+      auto paramCache =
+          createParameterCache(pMusicDevice->description().get(), voiceIndex);
       if (!paramCache)
       {
          spdlog::error("Could not create parameter cache");

@@ -1,5 +1,8 @@
 #include "InstrumentsPersister.h"
 
+#include "InstrumentVoiceFactory.h"
+#include "MusicDeviceFactoryDataHolder.h"
+
 using namespace base::instruments;
 
 namespace detail
@@ -28,8 +31,11 @@ instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
 
 }   // namespace detail
 
-Persister::Persister(std::unique_ptr<util::IDataPersister> dataPersister) :
-    m_dataPersister(std::move(dataPersister))
+Persister::Persister(
+    std::unique_ptr<util::IDataPersister> dataPersister,
+    base::musicDevice::factory::DataHolder rFactoryDataHolder) :
+    m_dataPersister(std::move(dataPersister)),
+    m_rFactoryDataHolder(rFactoryDataHolder)
 {
 }
 void Persister::save(const Data& data)
@@ -47,10 +53,19 @@ Data Persister::load()
    auto data          = j["section"].get<Data>();
    for (auto& instr : data.kitInstruments)
    {
-      instr.forEachVoice([](auto& voice) { voice.setParameterCache(); });
+      instr.forEachVoice([](auto& voice) {
+         voice.m_pParameterCache = createParameterCache(
+             m_rFactoryDataHolder.getDescription(voice.m_soundDeviceId),
+             voice.m_voiceIndex);
+      });
    }
    for (auto& instr : data.melodicInstruments)
    {
-      instr.forEachVoice([](auto& voice) { voice.setParameterCache(); });
+      instr.forEachVoice([](auto& voice) {
+         voice.m_pParameterCache = createParameterCache(
+             m_rFactoryDataHolder.getDescription(voice.m_soundDeviceId),
+             voice.m_voiceIndex);
+      });
    }
+   return data;
 }

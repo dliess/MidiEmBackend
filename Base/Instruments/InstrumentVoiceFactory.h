@@ -7,8 +7,7 @@
 namespace base::instruments
 {
 std::shared_ptr<Voice::ParameterCache> createParameterCache(
-    const musicDevice::description::Description* pDescription,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
+    const musicDevice::description::Description* pDescription, int voiceIdx);
 
 /*
 class InstrumentVoiceFactory
