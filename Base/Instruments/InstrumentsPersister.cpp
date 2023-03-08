@@ -7,9 +7,9 @@ using namespace base::instruments;
 
 namespace detail
 {
-instruments::Data filterOutDefaultInstruments(const instruments::Data& rData)
+Data filterOutDefaultInstruments(const Data& rData)
 {
-   instruments::Data data = rData;
+   Data data = rData;
    for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
         ++it)
    {
@@ -53,17 +53,21 @@ Data Persister::load()
    auto data          = j["section"].get<Data>();
    for (auto& instr : data.kitInstruments)
    {
-      instr.forEachVoice([](auto& voice) {
+      instr.forEachVoice([this](auto& voice) {
          voice.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder.getDescription(voice.m_soundDeviceId),
+             m_rFactoryDataHolder
+                 .getDescription(voice.m_soundDeviceId.deviceName())
+                 .get(),
              voice.m_voiceIndex);
       });
    }
    for (auto& instr : data.melodicInstruments)
    {
-      instr.forEachVoice([](auto& voice) {
+      instr.forEachVoice([this](auto& voice) {
          voice.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder.getDescription(voice.m_soundDeviceId),
+             m_rFactoryDataHolder
+                 .getDescription(voice.m_soundDeviceId.deviceName())
+                 .get(),
              voice.m_voiceIndex);
       });
    }

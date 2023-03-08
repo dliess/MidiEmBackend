@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "IDataPersister.h"
+#include "InstrumentsData.h"
 
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
@@ -21,7 +22,7 @@ public:
 
 private:
    std::unique_ptr<util::IDataPersister> m_dataPersister;
-   base::musicDevice::factory::DataHolder m_rFactoryDataHolder;
+   base::musicDevice::factory::DataHolder &m_rFactoryDataHolder;
 };
 
 }   // namespace base::instruments

@@ -18,12 +18,13 @@ Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder),
     m_persister(
-        std::make_unique<util::FilePersister>("Instruments", "settings.json"))
+        std::make_unique<util::FilePersister>("Instruments", "settings.json"),
+        rFactoryDataHolder)
 {
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
-         m_persister->save(data);
+         m_persister.save(data);
       }
    });
 
