@@ -28,9 +28,18 @@ Instruments::Instruments(
       }
    });
 
-   auto data = m_persister.load();
-   m_doubleBufferedData.withNonRtLocked(
-       [&data](auto& nonRtData) { nonRtData = data; });
+   try
+   {
+      auto data = m_persister.load();
+      m_doubleBufferedData.withNonRtLocked(
+          [&data](auto& nonRtData) { nonRtData = data; });
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error(
+          "Error loading Instruments settings, its maybe the first run: {}",
+          e.what());
+   }
 }
 
 void Instruments::createKitInstrument(std::string name)

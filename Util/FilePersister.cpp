@@ -30,6 +30,13 @@ void FilePersister::save(std::string_view data)
 
 std::string FilePersister::load()
 {
+   if (!std::filesystem::exists(m_filePath))
+   {
+      std::ofstream outFile;
+      outFile.open(m_filePath);
+      outFile << "{}";
+      outFile.close();
+   }
    std::ifstream inFile;
    inFile.open(m_filePath);
    if (inFile.fail())

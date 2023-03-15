@@ -10,20 +10,27 @@ namespace detail
 Data filterOutDefaultInstruments(const Data& rData)
 {
    Data data = rData;
-   for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();
-        ++it)
+   for (auto it = data.kitInstruments.begin(); it != data.kitInstruments.end();)
    {
       if (it->isDefaultCreated() && it->refCount() == 0)
       {
          it = data.kitInstruments.erase(it);
       }
+      else
+      {
+         ++it;
+      }
    }
    for (auto it = data.melodicInstruments.begin();
-        it != data.melodicInstruments.end(); ++it)
+        it != data.melodicInstruments.end();)
    {
       if (it->isDefaultCreated() && it->refCount() == 0)
       {
          it = data.melodicInstruments.erase(it);
+      }
+      else
+      {
+         ++it;
       }
    }
    return data;

@@ -46,8 +46,8 @@ public:
                (m_portName.empty() || rhs.m_portName.empty() || m_portName == rhs.m_portName);
     }
     std::string toStr() const noexcept { return m_deviceName + "@" + m_portName; }
-    const MusicDeviceName& deviceName() const noexcept { return  m_deviceName; }
-    const std::string& portName() const noexcept { return m_portName; }
+    MusicDeviceName deviceName() const noexcept { return m_deviceName; }
+    std::string portName() const noexcept { return m_portName; }
     friend auto meta::registerMembers<MusicDeviceId>();
 private:
     MusicDeviceName m_deviceName;

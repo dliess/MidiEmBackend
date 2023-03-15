@@ -134,7 +134,6 @@ void InstrumentsMDChangeHandler::
 void InstrumentsMDChangeHandler::add(musicDevice::MusicDevice* pMusicDevice)
 {
    assert(pMusicDevice);
-   assert(pMusicDevice->description()->soundSection);
    m_rInstruments.fillReferencesToMD(pMusicDevice);
    addDefaultInstrumentsFor(pMusicDevice);
 }
@@ -142,6 +141,5 @@ void InstrumentsMDChangeHandler::add(musicDevice::MusicDevice* pMusicDevice)
 void InstrumentsMDChangeHandler::remove(musicDevice::MusicDevice* pMusicDevice)
 {
    assert(pMusicDevice);
-   assert(pMusicDevice->description()->soundSection);
    m_rInstruments.removeReferencesToMD(pMusicDevice);
 }
