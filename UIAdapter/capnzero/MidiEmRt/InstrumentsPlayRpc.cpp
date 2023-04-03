@@ -1,16 +1,16 @@
-#include "InstrumentsRpc.h"
+#include "InstrumentsPlayRpc.h"
 
 #include "Instruments.h"
 
 using namespace uiadapter::capnzero;
 using namespace base::instruments;
 
-InstrumentsRpc::InstrumentsRpc(base::instruments::Instruments& rInstruments) :
+InstrumentsPlayRpc::InstrumentsPlayRpc(base::instruments::Instruments& rInstruments) :
     m_rInstruments(rInstruments)
 {
 }
 
-void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
+void InstrumentsPlayRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                    ::capnzero::Int16 note,
                                    ::capnzero::Float32 velocity)
 {
@@ -19,7 +19,7 @@ void InstrumentsRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
    });
 }
 
-void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
+void InstrumentsPlayRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                     ::capnzero::Int16 note,
                                     ::capnzero::Float32 velocity)
 {
@@ -28,7 +28,7 @@ void InstrumentsRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
    });
 }
 
-void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
+void InstrumentsPlayRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                ::capnzero::Int16 soundIndex,
                                ::capnzero::Int16 note,
                                ::capnzero::Float32 velocity)
@@ -38,7 +38,7 @@ void InstrumentsRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
    });
 }
 
-void InstrumentsRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
+void InstrumentsPlayRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                 ::capnzero::Int16 soundIndex,
                                 ::capnzero::Int16 note,
                                 ::capnzero::Float32 velocity)

@@ -29,7 +29,7 @@ inline void Instruments::withMelodicInstrumentRt(
     util::Identifiable::UUIDView uuid,
     util::function_ref<void(const MelodicInstrument&)> cb)
 {
-   m_doubleBufferedData.withRtLocked([&uuid, &cb](const auto& rtData) {
+   m_doubleBufferedData.withRtLocked([uuid, cb](const auto& rtData) {
       util::withUuid(rtData.melodicInstruments.cbegin(),
                      rtData.melodicInstruments.cend(), uuid, cb);
    });
