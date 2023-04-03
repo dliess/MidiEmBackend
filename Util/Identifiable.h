@@ -78,14 +78,14 @@ inline bool operator<(const util::Identifiable::UUID& lhs,
 
 namespace std
 {
-inline bool operator==(const util::Identifiable::UUIDView& lhs,
-                       const util::Identifiable::UUIDView& rhs) noexcept
+inline bool operator==(util::Identifiable::UUIDView lhs,
+                       util::Identifiable::UUIDView rhs) noexcept
 {
    return std::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
-inline bool operator!=(const util::Identifiable::UUIDView& lhs,
-                       const util::Identifiable::UUIDView& rhs) noexcept
+inline bool operator!=(util::Identifiable::UUIDView lhs,
+                       util::Identifiable::UUIDView rhs) noexcept
 {
    return !(lhs == rhs);
 }

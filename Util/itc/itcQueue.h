@@ -17,7 +17,7 @@ public:
    template<typename Receiver, typename Tag, typename... Args>
    void tryPush(Receiver& receiver, ActionData<Action<Tag, Args...>> data)
    {
-      if constexpr (ActionReceiver::is<Receiver, Action<Tag, Args...>>)
+     // if constexpr (ActionReceiver::is<Receiver, Action<Tag, Args...>>)
       {
          push([&receiver, data]() { invokeReceiver(receiver, data); });
       }

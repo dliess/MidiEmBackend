@@ -65,7 +65,6 @@ public:
 
     void invokeQueueActions();
 
-private:
    struct HandleMidiInInsert
    {
    };
@@ -106,6 +105,7 @@ private:
    void action(EraseFromMidiInHolder, const MidiHolder::Id& holderId);
    void action(EraseFromMidiOutHolder, const MidiHolder::Id& holderId);
 
+private:
    Holder& m_rRtDataHolder;
    DataHolder& m_rDataHolder;
    std::string m_resourceRootDir;
