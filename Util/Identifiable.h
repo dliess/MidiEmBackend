@@ -35,7 +35,7 @@ void withUuid(Iterator beginIt, Iterator endIt, Identifiable::UUIDView uuid,
               Callable&& cb)
 {
    auto it = std::find_if(beginIt, endIt,
-                          [&uuid](const auto& e) { return e.id() == uuid; });
+                          [uuid](const auto& e) { return e.id() == uuid; });
    if (it != endIt)
    {
       cb(*it);

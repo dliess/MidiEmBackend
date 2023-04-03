@@ -34,7 +34,7 @@ std::string FilePersister::load()
    {
       std::ofstream outFile;
       outFile.open(m_filePath);
-      outFile << "{}";
+      outFile << "{\"kitInstruments\":null,\"melodicInstruments\":null}";
       outFile.close();
    }
    std::ifstream inFile;

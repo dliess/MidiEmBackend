@@ -57,7 +57,7 @@ Data Persister::load()
 {
    const auto strData = m_dataPersister->load();
    nlohmann::json j   = nlohmann::json::parse(strData);
-   auto data          = j["section"].get<Data>();
+   auto data          = j.get<Data>();
    for (auto& instr : data.kitInstruments)
    {
       instr.forEachVoice([this](auto& voice) {
