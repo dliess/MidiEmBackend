@@ -36,6 +36,7 @@
       "mitaki28.vscode-clang",
       "hbenl.vscode-test-explorer",
       "redhat.vscode-xml",
-      "shd101wyy.markdown-preview-enhanced"
+      "shd101wyy.markdown-preview-enhanced",
+      "sonarsource.sonarlint-vscode"
    ]
 }
