@@ -73,29 +73,31 @@ void SessionRpc::copyClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                           const ::capnzero::SpanCL<16>& destTryckUuid,
                           ::capnzero::Int16 destRow)
 {
-   m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack) {
-      if (srcTrack.clip(srcRow))
-      {
-         m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
-            destTrack.createClip(destRow, *srcTrack.clip(srcRow));
-         });
-      }
-   });
+   m_rTracks.withTrack(
+       srcTrackUuid, [srcRow, destTryckUuid, destRow, this](auto& srcTrack) {
+          if (srcTrack.clip(srcRow))
+          {
+             m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
+                destTrack.createClip(destRow, *srcTrack.clip(srcRow));
+             });
+          }
+       });
 }
 void SessionRpc::moveClip(const ::capnzero::SpanCL<16>& srcTrackUuid,
                           ::capnzero::Int16 srcRow,
                           const ::capnzero::SpanCL<16>& destTryckUuid,
                           ::capnzero::Int16 destRow)
 {
-   m_rTracks.withTrack(srcTrackUuid, [&, this](auto& srcTrack) {
-      if (srcTrack.clip(srcRow))
-      {
-         m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
-            destTrack.createClip(destRow, *srcTrack.clip(srcRow));
-         });
-         srcTrack.deleteClip(srcRow);
-      }
-   });
+   m_rTracks.withTrack(
+       srcTrackUuid, [srcRow, destTryckUuid, destRow, this](auto& srcTrack) {
+          if (srcTrack.clip(srcRow))
+          {
+             m_rTracks.withTrack(destTryckUuid, [&](auto& destTrack) {
+                destTrack.createClip(destRow, *srcTrack.clip(srcRow));
+             });
+             srcTrack.deleteClip(srcRow);
+          }
+       });
 }
 void SessionRpc::deleteClip(const ::capnzero::SpanCL<16>& trackUuid,
                             ::capnzero::Int16 row)
@@ -108,7 +110,7 @@ void SessionRpc::renameClip(const ::capnzero::SpanCL<16>& trackUuid,
                             const ::capnzero::TextView& name)
 {
    m_rTracks.withClip(trackUuid, row,
-                      [&name](auto& clip) { clip.setName(name); });
+                      [name](auto& clip) { clip.setName(name); });
 }
 void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 row, ::capnzero::Float32 beat,
@@ -116,32 +118,35 @@ void SessionRpc::addNoteToClip(const ::capnzero::SpanCL<16>& trackUuid,
                                ::capnzero::Int16 note,
                                ::capnzero::Float32 velocity)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
-      clip.addNote(beat, length, note, velocity);
-   });
+   m_rTracks.withClip(trackUuid, row,
+                      [beat, length, note, velocity](auto& clip) {
+                         clip.addNote(beat, length, note, velocity);
+                      });
 }
 void SessionRpc::changeNoteVelocity(const ::capnzero::SpanCL<16>& trackUuid,
                                     ::capnzero::Int16 row,
                                     ::capnzero::UInt32 noteId,
                                     ::capnzero::Float32 velocity)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
+   m_rTracks.withClip(trackUuid, row, [noteId, velocity](auto& clip) {
       clip.setNoteVelocity(noteId, velocity);
    });
 }
 void SessionRpc::changeNoteLength(const ::capnzero::SpanCL<16>& trackUuid,
-                        ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
-                        ::capnzero::Float32 length)
+                                  ::capnzero::Int16 row,
+                                  ::capnzero::UInt32 noteId,
+                                  ::capnzero::Float32 length)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
+   m_rTracks.withClip(trackUuid, row, [noteId, length](auto& clip) {
       clip.setNoteLength(noteId, length);
    });
 }
 void SessionRpc::changeNoteStartBeat(const ::capnzero::SpanCL<16>& trackUuid,
-                        ::capnzero::Int16 row, ::capnzero::UInt32 noteId,
-                        ::capnzero::Float32 startBeat)
+                                     ::capnzero::Int16 row,
+                                     ::capnzero::UInt32 noteId,
+                                     ::capnzero::Float32 startBeat)
 {
-   m_rTracks.withClip(trackUuid, row, [&](auto& clip) {
+   m_rTracks.withClip(trackUuid, row, [noteId, startBeat](auto& clip) {
       clip.setNoteStartBeat(noteId, startBeat);
    });
 }
@@ -151,30 +156,32 @@ void SessionRpc::removeNoteFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                     ::capnzero::UInt32 noteId)
 {
    m_rTracks.withClip(trackUuid, row,
-                      [&](auto& clip) { clip.removeNote(noteId); });
+                      [noteId](auto& clip) { clip.removeNote(noteId); });
 }
 void SessionRpc::removeAllNotesFromClip(const ::capnzero::SpanCL<16>& trackUuid,
                                         ::capnzero::Int16 row)
 {
    m_rTracks.withClip(trackUuid, row,
-                      [&](auto& clip) { clip.removeAllNotes(); });
+                      [](auto& clip) { clip.removeAllNotes(); });
 }
 
 void SessionRpc::changeSequenceLength(const ::capnzero::SpanCL<16>& trackUuid,
-                              ::capnzero::Int16 row, ::capnzero::Float32 sequenceLength)
+                                      ::capnzero::Int16 row,
+                                      ::capnzero::Float32 sequenceLength)
 {
-   m_rTracks.withClip(trackUuid, row,
-                      [&](auto& clip) { clip.setSequenceLength(sequenceLength); });
+   m_rTracks.withClip(trackUuid, row, [sequenceLength](auto& clip) {
+      clip.setSequenceLength(sequenceLength);
+   });
 }
 
 void SessionRpc::startClip(const ::capnzero::SpanCL<16>& trackUuid,
                            ::capnzero::Int16 row)
 {
-   m_rTracks.withTrack(trackUuid, [&](auto& track) { track.startClip(row); });
+   m_rTracks.withTrack(trackUuid, [row](auto& track) { track.startClip(row); });
 }
 void SessionRpc::stopTrack(const ::capnzero::SpanCL<16>& trackUuid)
 {
-   m_rTracks.withTrack(trackUuid, [&](auto& track) { track.stopClip(); });
+   m_rTracks.withTrack(trackUuid, [](auto& track) { track.stopClip(); });
 }
 void SessionRpc::startClipRow(::capnzero::Int16 row)
 {

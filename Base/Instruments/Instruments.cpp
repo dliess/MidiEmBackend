@@ -44,7 +44,7 @@ Instruments::Instruments(
 
 void Instruments::createKitInstrument(std::string name)
 {
-   KitInstrument kitInstrument(name);
+   KitInstrument kitInstrument(std::move(name));
    m_doubleBufferedData.withNonRtLocked(
        [this, &kitInstrument](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
@@ -203,7 +203,7 @@ void Instruments::setNoteOffsetInMelodicInstrumentVoice(
 
 void Instruments::setCompositeNameInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    const std::string name)
+    std::string name)
 {
    m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {

@@ -57,7 +57,7 @@ struct Instruments   //: public utils::Settings<Instruments>
        int compositeIdx, int noteOffset);
    void setCompositeNameInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const std::string name);
+       std::string name);
 
    void createNewSlotInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
