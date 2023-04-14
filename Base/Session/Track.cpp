@@ -93,7 +93,7 @@ void session::Track::update()
          m_toStartClipIdx.reset();
       }
    }
-   if (m_activeClipIdx)
+   if (m_activeClipIdx && m_instrumentUUID)
    {
       m_instrumentsRef.withInstrumentRt(
           *m_instrumentUUID, [this](const instruments::Instrument& instrument) {

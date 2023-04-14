@@ -15,6 +15,7 @@ class InstrumentsRef
 {
 public:
    template <class Instruments>
+   requires (!std::is_same_v<std::decay_t<Instruments>, InstrumentsRef>)
    InstrumentsRef(Instruments& instruments) :
        m_pTypeErasedObj(std::addressof(instruments)),
        m_vtable({[](void* obj, util::Identifiable::UUIDView uuid,
@@ -35,30 +36,30 @@ public:
    void withInstrumentRt(util::Identifiable::UUIDView uuid,
                         util::function_ref<void(const Instrument&)> cb)
    {
-      m_vtable.fn_withInstrument(m_pTypeErasedObj, uuid, cb);
+      m_vtable.fn_withInstrumentRt(m_pTypeErasedObj, uuid, cb);
    }
    void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
                           util::function_ref<void(const KitInstrument&)> cb)
    {
-      m_vtable.fn_withKitInstrument(m_pTypeErasedObj, uuid, cb);
+      m_vtable.fn_withKitInstrumentRt(m_pTypeErasedObj, uuid, cb);
    }
    void withMelodicInstrumentRt(util::Identifiable::UUIDView uuid,
                               util::function_ref<void(const MelodicInstrument&)> cb)
    {
-      m_vtable.fn_withMelodicInstrument(m_pTypeErasedObj, uuid, cb);
+      m_vtable.fn_withMelodicInstrumentRt(m_pTypeErasedObj, uuid, cb);
    }
 
 private:
    void* m_pTypeErasedObj{nullptr};
    struct VTable
    {
-      void (*fn_withInstrument)(void* obj, util::Identifiable::UUIDView,
+      void (*fn_withInstrumentRt)(void* obj, util::Identifiable::UUIDView,
                                    util::function_ref<void(const Instrument&)>) =
           nullptr;
-      void (*fn_withKitInstrument)(void* obj, util::Identifiable::UUIDView,
+      void (*fn_withKitInstrumentRt)(void* obj, util::Identifiable::UUIDView,
                                    util::function_ref<void(const KitInstrument&)>) =
           nullptr;
-      void (*fn_withMelodicInstrument)(
+      void (*fn_withMelodicInstrumentRt)(
           void* obj, util::Identifiable::UUIDView,
           util::function_ref<void(const MelodicInstrument&)>) = nullptr;
    };

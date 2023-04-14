@@ -6,5 +6,5 @@ using namespace base::instruments;
 
 TEST(MelodicInstrumentTest, test)
 {
-   MelodicInstrument melodicInstrument("A name");
+   MelodicInstrument melodicInstrument("A name", std::make_shared<MelodicInstrument::RtData>());
 }

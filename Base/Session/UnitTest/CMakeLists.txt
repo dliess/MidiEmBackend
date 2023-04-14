@@ -1,5 +1,6 @@
 set(SOURCES
    "UT_Serialize.cpp"
+   "UT_Track.cpp"
 )
 
 set(TARGET_NAME "SessionTests")

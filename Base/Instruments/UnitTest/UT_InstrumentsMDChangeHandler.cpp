@@ -1,11 +1,15 @@
 #include <gtest/gtest.h>
 
 #include "InstrumentsMDChangeHandler.h"
+#include "MusicDeviceFactoryDataHolder.h"
+#include "Instruments.h"
 
+using namespace base::musicDevice;
 using namespace base::instruments;
 
 TEST(InstrumentsMDChangeHandlerTest, test)
 {
-   base::instruments::Data data;
-   InstrumentsMDChangeHandler instrumentsFactory(data, musicDeviceHolder);
+   factory::DataHolder factoryDataHolder("~");
+   Instruments instruments(factoryDataHolder);
+   InstrumentsMDChangeHandler instrumentsMDChangeHandler(instruments);
 }

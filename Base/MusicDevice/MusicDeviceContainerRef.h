@@ -12,6 +12,7 @@ class MusicDeviceContainerRef
 {
 public:
    template <class MusicDeviceContainer>
+   requires (!std::is_same_v<std::decay_t<MusicDeviceContainer>, MusicDeviceContainerRef>)
    MusicDeviceContainerRef(MusicDeviceContainer& mdc) :
        m_pTypeErasedObj(std::addressof(mdc)),
        m_vtable({
