@@ -31,15 +31,14 @@ RtServer::RtServer(
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
-    base::eventRouter::EventRouter &rCtrlEventRouter,
     base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
-        std::make_unique<MainRpc>(
-            signals(), rMDHolder.musicDevices, rTransportControl,
-            rAbletonLinkWrapper, rMidiRouter, rCtrlEventRouter,
-            rParameterSceneContainer, rTracks),
+        std::make_unique<MainRpc>(signals(), rMDHolder.musicDevices,
+                                  rTransportControl, rAbletonLinkWrapper,
+                                  rMidiRouter, rParameterSceneContainer,
+                                  rTracks),
         std::make_unique<InstrumentsPlayRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),

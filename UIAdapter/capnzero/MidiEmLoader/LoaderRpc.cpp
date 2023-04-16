@@ -9,13 +9,15 @@ using namespace uiadapter::capnzero;
 using namespace base;
 using namespace base::musicDevice;
 
-LoaderRpc::LoaderRpc(
-    LoaderServer::Signals& rSignals,
-    base::instruments::Instruments& rInstruments,
-    base::musicDevice::factory::Factory& rMusicDevicFactory) noexcept :
+LoaderRpc::LoaderRpc(LoaderServer::Signals& rSignals,
+                     base::instruments::Instruments& rInstruments,
+                     base::musicDevice::factory::Factory& rMusicDevicFactory,
+                     base::eventRouter::EventRouter& rCtrlEventRouter) noexcept
+    :
     m_rSignals(rSignals),
     m_rInstruments(rInstruments),
-    m_rMusicDevicFactory(rMusicDevicFactory)
+    m_rMusicDevicFactory(rMusicDevicFactory),
+    m_rCtrlEventRouter(rCtrlEventRouter)
 {
    m_rMusicDevicFactory.dataHolder().onPresetUpdated(
        [this](const sound::preset::Id& id, sound::preset::Category category,
@@ -43,6 +45,7 @@ void LoaderRpc::reEmitSignals()
    m_rSignals.allMusicDevicesChanged(
        m_rMusicDevicFactory.getAllDevicesAsJson());
    m_rInstruments.reEmitSignals();
+   m_rCtrlEventRouter.retriggerCallbacks();
 }
 
 void LoaderRpc::loadMusicDeviceToChain(const ::capnzero::TextView& chainRoot,

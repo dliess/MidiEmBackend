@@ -51,7 +51,8 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
                ? 0.5f
                : 0.0f);
    }
-   m_map.withNonRtLocked([&](auto& map) { map[from] = destination; });
+   m_map.withNonRtLocked(
+       [&from, &destination](auto& map) { map[from] = destination; });
    emitGotConnected(from, destination);
 }
 
@@ -74,19 +75,16 @@ void EventRouter::removeConnection(
 
 void EventRouter::printMap() const noexcept
 {
-   // TODO
-   /*
-   for (const auto& e : m_map)
+   for (const auto& [from, to] : m_map.nonRt())
    {
-      spdlog::info("{}", meta::serialize(e.first).dump().c_str());
+      spdlog::info("{} -> {}", meta::serialize(from).dump().c_str(),
+                   meta::serialize(to).dump().c_str());
    }
-   */
 }
 
 void EventRouter::retriggerCallbacks()
 {
-   // TODO
-   // for (auto& e : m_map) { emitGotConnected(e.first, e.second); }
+   for (const auto& [from, to] : m_map.nonRt()) { emitGotConnected(from, to); }
 }
 
 const description::sound::Parameter* EventRouter::parameterDescription(

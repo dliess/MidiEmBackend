@@ -158,7 +158,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        m_zmqContext, m_rtRpcBindAddr, m_rtSignalBindAddr, instruments,
        musicDeviceHolder, transportControl,
        tempo::BeatTick::instance().abletonLink(), midiRouter,
-       controllerEventRouter, parameterSceneContainer, tracks);
+       parameterSceneContainer, tracks);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
