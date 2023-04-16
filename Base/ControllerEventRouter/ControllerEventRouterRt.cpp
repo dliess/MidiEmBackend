@@ -350,10 +350,11 @@ void EventRouterRt::setParameterOnMelodic(
     const EventDestination::Parameter& parameter,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withMelodicInstrumentRt(melodic.uuid, [&](auto& melodicInstr) {
-      detail::setParameter(melodicInstr, parameter, parameterCacheEntry(),
-                           value, melodic.componentIdx);
-   });
+   m_rInstruments.withMelodicInstrumentRt(
+       melodic.uuid, [&](auto& melodicInstr) {
+          detail::setParameter(melodicInstr, parameter, parameterCacheEntry(),
+                               value, melodic.componentIdx);
+       });
 }
 
 void EventRouterRt::playNoteOnMusicDevice(
@@ -395,8 +396,7 @@ void EventRouterRt::handlePressRelease(
                       },
                       [&, this](const EventDestination::Parameter& parameter) {
                          setParameterOnDrumKit(drumKit, parameter, value);
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
            [&, this](const EventDestination::Melodic& melodic) {
@@ -407,8 +407,7 @@ void EventRouterRt::handlePressRelease(
                       },
                       [&, this](const EventDestination::Parameter& parameter) {
                          setParameterOnMelodic(melodic, parameter, value);
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
            [&, this](const EventDestination::MusicDevice& musicDevice) {
@@ -420,8 +419,7 @@ void EventRouterRt::handlePressRelease(
                       [&, this](const EventDestination::Parameter& parameter) {
                          setParameterOnMusicDevice(musicDevice, parameter,
                                                    value);
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
        },
@@ -430,7 +428,7 @@ void EventRouterRt::handlePressRelease(
 
 void EventRouterRt::playLayoutMappedDrumKit(
     const controller::WidgetCoord& widgetCoord,
-    EventDestination::DrumKit& drumKit,
+    const EventDestination::DrumKit& drumKit,
     const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
@@ -446,18 +444,17 @@ void EventRouterRt::handleAnyWidgetCoordPressRelease(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit& drumKit) {
+           [&, this](const EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& note) {
                          playLayoutMappedDrumKit(widgetCoord, drumKit, value);
                       },
-                      [](const EventDestination::Parameter& parameter) {},
-                      [](auto&&) {}},
+                      [](const EventDestination::Parameter& parameter) {}},
                   eventDestination.controlType);
            },
-           [](EventDestination::Melodic& melodic) {},
-           [](EventDestination::MusicDevice& musicDevice) {}, [](auto&&) {}},
+           [](const EventDestination::Melodic& melodic) {},
+           [](const EventDestination::MusicDevice& musicDevice) {}},
        eventDestination.endpoint);
 }
 
@@ -467,7 +464,7 @@ void EventRouterRt::handleAnyNotePressRelease(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit& drumKit) {
+           [&, this](const EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
@@ -489,11 +486,10 @@ void EventRouterRt::handleAnyNotePressRelease(
                                 });
                          }
                       },
-                      [](const EventDestination::Parameter& parameter) {},
-                      [](auto&&) {}},
+                      [](const EventDestination::Parameter& parameter) {}},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::Melodic& melodic) {
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
@@ -503,11 +499,10 @@ void EventRouterRt::handleAnyNotePressRelease(
                                                       value.value);
                              });
                       },
-                      [](const EventDestination::Parameter& parameter) {},
-                      [](auto&&) {}},
+                      [](const EventDestination::Parameter& parameter) {}},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::MusicDevice& musicDevice) {
+           [&, this](const EventDestination::MusicDevice& musicDevice) {
               mpark::visit(
                   util::overload{
                       [&, this](const EventDestination::Note& dstNote) {
@@ -518,11 +513,9 @@ void EventRouterRt::handleAnyNotePressRelease(
                                                       musicDevice.voiceIdx);
                              });
                       },
-                      [](const EventDestination::Parameter& parameter) {},
-                      [](auto&&) {}},
+                      [](const EventDestination::Parameter& parameter) {}},
                   eventDestination.controlType);
-           },
-           [](auto&&) {}},
+           }},
        eventDestination.endpoint);
 }
 
@@ -532,7 +525,7 @@ void EventRouterRt::handleContinousValue(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit& drumKit) {
+           [&, this](const EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -543,11 +536,10 @@ void EventRouterRt::handleContinousValue(
                                                      drumKit.voiceIdx,
                                                      drumKit.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::Melodic& melodic) {
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -558,11 +550,10 @@ void EventRouterRt::handleContinousValue(
                                                      value,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::MusicDevice& musicDevice) {
+           [&, this](const EventDestination::MusicDevice& musicDevice) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -573,11 +564,9 @@ void EventRouterRt::handleContinousValue(
                                                      value,
                                                      musicDevice.voiceIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
-           },
-           [](auto&&) {}},
+           }},
        eventDestination.endpoint);
 }
 
@@ -587,8 +576,8 @@ void EventRouterRt::sendMPEContinousValue(
 {
    mpark::visit(
        util::overload{
-           [](EventDestination::DrumKit&) {},
-           [&, this](EventDestination::Melodic& melodic) {
+           [](const EventDestination::DrumKit&) {},
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -599,11 +588,10 @@ void EventRouterRt::sendMPEContinousValue(
                                                      value, note,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [](EventDestination::MusicDevice&) {}, [](auto&&) {}},
+           [](const EventDestination::MusicDevice&) {}},
        eventDestination.endpoint);
 }
 
@@ -613,7 +601,7 @@ void EventRouterRt::handleIncrement(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit& drumKit) {
+           [&, this](const EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -625,11 +613,10 @@ void EventRouterRt::handleIncrement(
                                     increment, drumKit.voiceIdx,
                                     drumKit.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::Melodic& melodic) {
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -641,11 +628,10 @@ void EventRouterRt::handleIncrement(
                                                      increment,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::MusicDevice& musicDevice) {
+           [&, this](const EventDestination::MusicDevice& musicDevice) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -657,11 +643,9 @@ void EventRouterRt::handleIncrement(
                                                      increment,
                                                      musicDevice.voiceIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
-           },
-           [](auto&&) {}},
+           }},
        eventDestination.endpoint);
 }
 
@@ -671,8 +655,8 @@ void EventRouterRt::sendMPEIncrementValue(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit&) {},
-           [&, this](EventDestination::Melodic& melodic) {
+           [&, this](const EventDestination::DrumKit&) {},
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -684,12 +668,10 @@ void EventRouterRt::sendMPEIncrementValue(
                                                      increment, note,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::MusicDevice& musicDevice) {},
-           [](auto&&) {}},
+           [&, this](const EventDestination::MusicDevice& musicDevice) {}},
        eventDestination.endpoint);
 }
 
@@ -699,7 +681,7 @@ void EventRouterRt::handleRelativeValue(
 {
    mpark::visit(
        util::overload{
-           [&, this](EventDestination::DrumKit& drumKit) {
+           [&, this](const EventDestination::DrumKit& drumKit) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -711,11 +693,10 @@ void EventRouterRt::handleRelativeValue(
                                                      value, drumKit.voiceIdx,
                                                      drumKit.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::Melodic& melodic) {
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -727,11 +708,10 @@ void EventRouterRt::handleRelativeValue(
                                                      value,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [&, this](EventDestination::MusicDevice& musicDevice) {
+           [&, this](const EventDestination::MusicDevice& musicDevice) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -743,11 +723,9 @@ void EventRouterRt::handleRelativeValue(
                                                      value,
                                                      musicDevice.voiceIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
-           },
-           [](auto&&) {}},
+           }},
        eventDestination.endpoint);
 }
 
@@ -757,8 +735,8 @@ void EventRouterRt::sendMPERelativeValue(
 {
    mpark::visit(
        util::overload{
-           [](EventDestination::DrumKit&) {},
-           [&, this](EventDestination::Melodic& melodic) {
+           [](const EventDestination::DrumKit&) {},
+           [&, this](const EventDestination::Melodic& melodic) {
               mpark::visit(
                   util::overload{
                       [](const EventDestination::Note&) {},
@@ -770,11 +748,10 @@ void EventRouterRt::sendMPERelativeValue(
                                                      value, note,
                                                      melodic.componentIdx);
                              });
-                      },
-                      [](auto&&) {}},
+                      }},
                   eventDestination.controlType);
            },
-           [](EventDestination::MusicDevice&) {}, [](auto&&) {}},
+           [](const EventDestination::MusicDevice&) {}},
        eventDestination.endpoint);
 }
 

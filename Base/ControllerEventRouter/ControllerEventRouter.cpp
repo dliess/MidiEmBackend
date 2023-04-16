@@ -33,7 +33,17 @@ void EventRouter::onControllerDevEventOccured(
 void EventRouter::createConnection(const controller::EventIdExt& from,
                                    const EventDestination& to) noexcept
 {
+   controller::EventIdExt source = from;
    EventDestination destination = to;
+   if (auto note = mpark::get_if<controller::Note>(&source.eventId.widgetCoord))
+   {
+      if(note->number != ANY && 
+         mpark::holds_alternative<EventDestination::Melodic>(destination.endpoint))
+      {
+         note->number = ANY;
+      }
+   }
+
    if (auto param =
            mpark::get_if<EventDestination::Parameter>(&destination.controlType))
    {
@@ -52,8 +62,9 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
                : 0.0f);
    }
    m_map.withNonRtLocked(
-       [&from, &destination](auto& map) { map[from] = destination; });
-   emitGotConnected(from, destination);
+       [&source, &destination](auto& map) { map[source] = destination; });
+   emitGotConnected(source, destination);
+   //printMap();
 }
 
 void EventRouter::removeConnectionToDestination(

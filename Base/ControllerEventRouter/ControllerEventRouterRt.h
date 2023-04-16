@@ -110,7 +110,7 @@ private:
        const musicDevice::controller::PressReleaseType& value) noexcept;
    void playLayoutMappedDrumKit(
        const musicDevice::controller::WidgetCoord& widgetCoord,
-       EventDestination::DrumKit& drumKit,
+       const EventDestination::DrumKit& drumKit,
        const musicDevice::controller::PressReleaseType& value) noexcept;
 
    ParameterCache& parameterCacheEntry();

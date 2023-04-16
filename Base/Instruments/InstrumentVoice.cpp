@@ -10,7 +10,8 @@ void Voice::noteOn(int note, float velocity) const
       if (m_pSoundDevice->lastplayerId !=
           static_cast<void*>(m_pParameterCache.get()))
       {
-         refreshParameters();
+         // TODO: rectivate later
+         //refreshParameters();
          m_pSoundDevice->lastplayerId = static_cast<void*>(m_pParameterCache.get());
       }
       m_pSoundDevice->noteOn(m_voiceIndex, note + m_noteOffset, velocity);
