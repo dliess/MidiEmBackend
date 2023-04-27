@@ -9,25 +9,25 @@ using namespace base;
 using namespace base::musicDevice;
 
 eventRouter::EventDestination::Endpoint toEndpoint(
-    const base::musicDevice::factory::DataHolder &rMDFDataHolder,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    const base::musicDevice::factory::DataHolder& rMDFDataHolder,
+    ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
-    ::capnzero::Int16 componentIdx = eventRouter::EventDestination::DrumKit::NOT_SET)
+    ::capnzero::Int16 componentIdx =
+        eventRouter::EventDestination::DrumKit::NOT_SET)
 {
-   switch (dest)
+   switch (destInstrumentType)
    {
-      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::DRUM_KIT:
+      case ::capnzero::MidiEmLoader::InstrumentType::DRUM_KIT:
       {
          return eventRouter::EventDestination::DrumKit{util::deepCopy(destUUID),
                                                        voiceIdx, componentIdx};
       }
-      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::MELODIC:
+      case ::capnzero::MidiEmLoader::InstrumentType::MELODIC:
       {
          return eventRouter::EventDestination::Melodic{util::deepCopy(destUUID),
                                                        voiceIdx};
       }
-      case ::capnzero::MidiEmLoader::ControllerEventRouteDestination::
-          MUSIC_DEVICE:
+      case ::capnzero::MidiEmLoader::InstrumentType::MUSIC_DEVICE:
       {
          return eventRouter::EventDestination::MusicDevice{
              *rMDFDataHolder.getMdIdByUUID(destUUID), voiceIdx};
@@ -42,7 +42,7 @@ eventRouter::EventDestination::Endpoint toEndpoint(
 
 LdControllerEventRouterRpc::LdControllerEventRouterRpc(
     base::eventRouter::EventRouter& rCtrlEventRouter,
-    base::musicDevice::factory::DataHolder &rMDFDataHolder) noexcept :
+    base::musicDevice::factory::DataHolder& rMDFDataHolder) noexcept :
     m_rCtrlEventRouter(rCtrlEventRouter), m_rMDFDataHolder(rMDFDataHolder)
 {
 }
@@ -50,23 +50,22 @@ LdControllerEventRouterRpc::LdControllerEventRouterRpc(
 void LdControllerEventRouterRpc::connectNotes2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::Int16 channelIdx, ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
    m_rCtrlEventRouter.createConnection(
        controller::EventIdExt{
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
-       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
-                                     eventRouter::EventDestination::Note{}});
+       eventRouter::EventDestination{
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx),
+           eventRouter::EventDestination::Note{}});
 }
 
 void LdControllerEventRouterRpc::connectNotes2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 note, ::capnzero::Int16 eventIdx,
-    ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::Int16 channelIdx, ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
@@ -76,7 +75,7 @@ void LdControllerEventRouterRpc::connectNotes2Parameter(
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::Note{note}, eventIdx, channelIdx}},
        eventRouter::EventDestination{
-           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});
@@ -86,7 +85,7 @@ void LdControllerEventRouterRpc::connectWidget2Notes(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
    m_rCtrlEventRouter.createConnection(
@@ -94,15 +93,16 @@ void LdControllerEventRouterRpc::connectWidget2Notes(
            util::deepCopy(controllerUUID),
            {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
             eventIdx, channelIdx}},
-       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
-                                     eventRouter::EventDestination::Note{}});
+       eventRouter::EventDestination{
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx),
+           eventRouter::EventDestination::Note{}});
 }
 
 void LdControllerEventRouterRpc::connectWidget2Parameter(
     const ::capnzero::SpanCL<16>& controllerUUID, ::capnzero::Int16 widgetIdx,
     ::capnzero::Int16 widgetCoordX, ::capnzero::Int16 widgetCoordY,
     ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
@@ -113,7 +113,7 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
            {widgetIdx, controller::WidgetCoord{widgetCoordY, widgetCoordX},
             eventIdx, channelIdx}},
        eventRouter::EventDestination{
-           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});
@@ -141,23 +141,24 @@ void LdControllerEventRouterRpc::eraseConnectionForWidget(
 }
 
 void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx)
 {
    m_rCtrlEventRouter.removeConnectionToDestination(
-       eventRouter::EventDestination{toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx),
-                                     eventRouter::EventDestination::Note{}});
+       eventRouter::EventDestination{
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx),
+           eventRouter::EventDestination::Note{}});
 }
 
 void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
-    ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+    ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
     ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
 {
    m_rCtrlEventRouter.removeConnectionToDestination(
        eventRouter::EventDestination{
-           toEndpoint(m_rMDFDataHolder, dest, destUUID, voiceIdx, componentIdx),
+           toEndpoint(m_rMDFDataHolder, destInstrumentType, destUUID, voiceIdx, componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
                static_cast<eventRouter::ParameterDestination>(paramFunc)}});

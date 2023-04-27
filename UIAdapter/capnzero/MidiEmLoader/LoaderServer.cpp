@@ -15,27 +15,27 @@ auto unpackEndpoint(
     const base::eventRouter::EventDestination::Endpoint &endpoint)
 {
    using RetType =
-       std::tuple<::capnzero::MidiEmLoader::ControllerEventRouteDestination,
+       std::tuple<::capnzero::MidiEmLoader::InstrumentType,
                   ::capnzero::Data<16>, ::capnzero::Int16, ::capnzero::Int16>;
    return mpark::visit(
        util::overload{
            [](const base::eventRouter::EventDestination::DrumKit &drumKit)
                -> RetType {
               return RetType{::capnzero::MidiEmLoader::
-                                 ControllerEventRouteDestination::DRUM_KIT,
+                                 InstrumentType::DRUM_KIT,
                              drumKit.uuid, drumKit.voiceIdx,
                              drumKit.componentIdx};
            },
            [](const base::eventRouter::EventDestination::Melodic &melodic)
                -> RetType {
               return RetType{::capnzero::MidiEmLoader::
-                                 ControllerEventRouteDestination::MELODIC,
+                                 InstrumentType::MELODIC,
                              melodic.uuid, 0, melodic.componentIdx};
            },
            [&](const base::eventRouter::EventDestination::MusicDevice
                    &musicDevice) -> RetType {
               return RetType{::capnzero::MidiEmLoader::
-                                 ControllerEventRouteDestination::MUSIC_DEVICE,
+                                 InstrumentType::MUSIC_DEVICE,
                              *rMDFDataHolder.getUUIDByMdId(musicDevice.mdid),
                              musicDevice.voiceIdx, 0};
            }},

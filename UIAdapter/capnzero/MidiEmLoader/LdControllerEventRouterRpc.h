@@ -23,14 +23,14 @@ public:
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID,
        ::capnzero::Int16 voiceIdx) override;
    void connectNotes2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
@@ -39,7 +39,7 @@ public:
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
        ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
        ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID,
        ::capnzero::Int16 voiceIdx) override;
    void connectWidget2Parameter(
@@ -47,7 +47,7 @@ public:
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
        ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
        ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
@@ -65,11 +65,11 @@ public:
                                  ::capnzero::Int16 channelIdx) override;
 
    void eraseConnectionsToDestinationNotes(
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID,
        ::capnzero::Int16 voiceIdx) override;
    void eraseConnectionsToDestinationParameter(
-       ::capnzero::MidiEmLoader::ControllerEventRouteDestination dest,
+       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
