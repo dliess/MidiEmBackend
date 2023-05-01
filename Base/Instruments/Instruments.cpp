@@ -64,15 +64,15 @@ void Instruments::insertKitInstrument(const KitInstrument& kitInstrument)
 
 bool Instruments::hasKitInstrument(const KitInstrument& kitInstrument) const
 {
-    const auto& data = m_doubleBufferedData.nonRt();
-    for(const auto& e : data.kitInstruments)
-    {
-        if(isSameInstrument(kitInstrument, e))
-        {
-            return true;
-        }
-    }
-    return false;
+   const auto& data = m_doubleBufferedData.nonRt();
+   for (const auto& e : data.kitInstruments)
+   {
+      if (isSameInstrument(kitInstrument, e))
+      {
+         return true;
+      }
+   }
+   return false;
 }
 
 void Instruments::removeKitInstrument(
@@ -86,12 +86,12 @@ void Instruments::removeKitInstrument(
 }
 
 void Instruments::renameKitInstrument(
-    const util::Identifiable::UUID& instrumentId, std::string name)
+    const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
    m_doubleBufferedData.withNonRtLocked(
        [this, &instrumentId, &name](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .renameKitInstrument(instrumentId, std::move(name));
+              .renameKitInstrument(instrumentId, name);
        });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
@@ -99,7 +99,7 @@ void Instruments::renameKitInstrument(
 void Instruments::createMelodicInstrument(std::string name)
 {
    MelodicInstrument melodicInstrument(
-       name, std::make_shared<MelodicInstrument::RtData>());
+       std::move(name), std::make_shared<MelodicInstrument::RtData>());
    m_doubleBufferedData.withNonRtLocked(
        [this, &melodicInstrument](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
@@ -108,17 +108,18 @@ void Instruments::createMelodicInstrument(std::string name)
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
-bool Instruments::hasMelodicInstrument(const MelodicInstrument& melodicInstrument) const
+bool Instruments::hasMelodicInstrument(
+    const MelodicInstrument& melodicInstrument) const
 {
-    const auto& data = m_doubleBufferedData.nonRt();
-    for(const auto& e : data.melodicInstruments)
-    {
-        if(isSameInstrument(melodicInstrument, e))
-        {
-            return true;
-        }
-    }
-    return false;
+   const auto& data = m_doubleBufferedData.nonRt();
+   for (const auto& e : data.melodicInstruments)
+   {
+      if (isSameInstrument(melodicInstrument, e))
+      {
+         return true;
+      }
+   }
+   return false;
 }
 
 void Instruments::insertMelodicInstrument(
@@ -142,12 +143,12 @@ void Instruments::removeMelodicInstrument(
 }
 
 void Instruments::renameMelodicInstrument(
-    const util::Identifiable::UUID& instrumentId, std::string name)
+    const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
    m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentId, &name](auto& nonRtData) {
+       [this, &instrumentId, name](auto& nonRtData) {
           InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .renameMelodicInstrument(instrumentId, std::move(name));
+              .renameMelodicInstrument(instrumentId, name);
        });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
@@ -229,14 +230,13 @@ void Instruments::setNoteOffsetInMelodicInstrumentVoice(
 
 void Instruments::setCompositeNameInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    std::string name)
+    const std::string& name)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx,
-                                                   std::move(name));
-       });
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
+                                         &name](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setCompositeNameInMelodicInstrument(instrumentUuid, slotIdx, name);
+   });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
@@ -300,21 +300,23 @@ void Instruments::removeVoiceFromKitInstrumentSlot(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx)
 {
-   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .removeVoiceFromKitInstrumentSlot(instrumentUuid, slotIdx,
-                                            compositeIdx);
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentUuid, slotIdx, compositeIdx](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .removeVoiceFromKitInstrumentSlot(instrumentUuid, slotIdx,
+                                                compositeIdx);
+       });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
 void Instruments::removeSlotFromKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx)
 {
-   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .removeSlotFromKitInstrument(instrumentUuid, slotIdx);
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentUuid, slotIdx](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .removeSlotFromKitInstrument(instrumentUuid, slotIdx);
+       });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
@@ -322,7 +324,9 @@ void Instruments::setNoteOffsetInKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     int compositeIdx, int noteOffset)
 {
-   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
+                                         compositeIdx,
+                                         noteOffset](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
           .setNoteOffsetInKitInstrumentVoice(instrumentUuid, slotIdx,
                                              compositeIdx, noteOffset);
@@ -334,12 +338,43 @@ void Instruments::setCompositeNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int slotIdx,
     const std::string& name)
 {
-   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setCompositeNameInKitInstrument(instrumentUuid, slotIdx,
-                                           std::move(name));
-   });
+   m_doubleBufferedData.withNonRtLocked(
+       [this, &instrumentUuid, slotIdx, &name](auto& nonRtData) {
+          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+              .setCompositeNameInKitInstrument(instrumentUuid, slotIdx, name);
+       });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
+}
+
+void Instruments::incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .incKitInstrumentRefCount(uuid);
+   });
+}
+void Instruments::decKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .decKitInstrumentRefCount(uuid);
+   });
+}
+void Instruments::incMelodicInstrumentRefCount(
+    const util::Identifiable::UUID& uuid)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .incMelodicInstrumentRefCount(uuid);
+   });
+}
+void Instruments::decMelodicInstrumentRefCount(
+    const util::Identifiable::UUID& uuid)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .decMelodicInstrumentRefCount(uuid);
+   });
 }
 
 template <typename Container>

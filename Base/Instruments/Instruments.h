@@ -33,14 +33,14 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] bool hasKitInstrument(const KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
-                            std::string name);
+                            const std::string& name);
 
    void createMelodicInstrument(std::string name);
    [[nodiscard]] bool hasMelodicInstrument(const MelodicInstrument& melodicInstrument) const;
    void insertMelodicInstrument(const MelodicInstrument& melodicInstrument);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
-                                std::string name);
+                                const std::string& name);
 
    void createNewSlotInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
@@ -59,7 +59,7 @@ struct Instruments   //: public utils::Settings<Instruments>
        int compositeIdx, int noteOffset);
    void setCompositeNameInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       std::string name);
+       const std::string& name);
 
    void createNewSlotInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
@@ -82,6 +82,10 @@ struct Instruments   //: public utils::Settings<Instruments>
    void setCompositeNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name);
+   void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
 
    std::string serializeKitInstruments() const;
    std::string serializeMelodicInstruments() const;

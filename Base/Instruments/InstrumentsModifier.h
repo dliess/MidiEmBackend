@@ -69,6 +69,11 @@ struct InstrumentsModifier
        const util::Identifiable::UUID& instrumentUuid, int slotIdx,
        const std::string& name) noexcept;
 
+   void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
+
 private:
    Data& m_rData;
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;

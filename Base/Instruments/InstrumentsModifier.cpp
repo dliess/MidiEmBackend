@@ -241,3 +241,28 @@ void InstrumentsModifier::setCompositeNameInKitInstrument(
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->sounds().operator[](slotIdx).name = name;
 }
+
+void InstrumentsModifier::incKitInstrumentRefCount(
+    const util::Identifiable::UUID& instrumentUuid)
+{
+   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
+   instrumentIt->incRefCount();
+}
+void InstrumentsModifier::decKitInstrumentRefCount(
+    const util::Identifiable::UUID& instrumentUuid)
+{
+   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
+   instrumentIt->decRefCount();
+}
+void InstrumentsModifier::incMelodicInstrumentRefCount(
+    const util::Identifiable::UUID& instrumentUuid)
+{
+   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
+   instrumentIt->incRefCount();
+}
+void InstrumentsModifier::decMelodicInstrumentRefCount(
+    const util::Identifiable::UUID& instrumentUuid)
+{
+   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
+   instrumentIt->decRefCount();
+}

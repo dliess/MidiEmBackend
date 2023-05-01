@@ -15,6 +15,11 @@ public:
    MOCK_METHOD(void, withInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const Instrument&)>));
    MOCK_METHOD(void, withKitInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const KitInstrument&)>));
    MOCK_METHOD(void, withMelodicInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const MelodicInstrument&)>));
+   MOCK_METHOD(const Instrument*, getInstrumentByUuid, (util::Identifiable::UUIDView));
+   MOCK_METHOD(void, incKitInstrumentRefCount, (const util::Identifiable::UUID&));
+   MOCK_METHOD(void, decKitInstrumentRefCount, (const util::Identifiable::UUID&));
+   MOCK_METHOD(void, incMelodicInstrumentRefCount, (const util::Identifiable::UUID&));
+   MOCK_METHOD(void, decMelodicInstrumentRefCount, (const util::Identifiable::UUID&));
 };
 
 }   // namespace mock

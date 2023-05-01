@@ -34,11 +34,12 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
                                    const EventDestination& to) noexcept
 {
    controller::EventIdExt source = from;
-   EventDestination destination = to;
+   EventDestination destination  = to;
    if (auto note = mpark::get_if<controller::Note>(&source.eventId.widgetCoord))
    {
-      if(note->number != ANY && 
-         mpark::holds_alternative<EventDestination::Melodic>(destination.endpoint))
+      if (note->number != ANY &&
+          mpark::holds_alternative<EventDestination::Melodic>(
+              destination.endpoint))
       {
          note->number = ANY;
       }
@@ -63,8 +64,22 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
    }
    m_map.withNonRtLocked(
        [&source, &destination](auto& map) { map[source] = destination; });
+
+   // inc refcount of instrument
+   mpark::visit(
+       util::overload{
+           [this](const EventDestination::DrumKit& drumKit) {
+              m_rInstruments.incKitInstrumentRefCount(drumKit.uuid);
+           },
+           [this](const EventDestination::Melodic& melodic) {
+              m_rInstruments.incMelodicInstrumentRefCount(melodic.uuid);
+           },
+           [](const EventDestination::MusicDevice&) {},
+       },
+       destination.endpoint);
+
    emitGotConnected(source, destination);
-   //printMap();
+   // printMap();
 }
 
 void EventRouter::removeConnectionToDestination(
@@ -76,6 +91,22 @@ void EventRouter::removeConnectionToDestination(
 void EventRouter::removeConnection(
     const controller::EventIdExt& eventIdExt) noexcept
 {
+   auto iter = m_map.nonRt().find(eventIdExt);
+   if (iter != m_map.nonRt().end())
+   {
+      // dec refcount of instrument
+      mpark::visit(
+          util::overload{
+              [this](const EventDestination::DrumKit& drumKit) {
+                 m_rInstruments.decKitInstrumentRefCount(drumKit.uuid);
+              },
+              [this](const EventDestination::Melodic& melodic) {
+                 m_rInstruments.decMelodicInstrumentRefCount(melodic.uuid);
+              },
+              [](const EventDestination::MusicDevice&) {},
+          },
+          iter->second.endpoint);
+   }
    m_map.withNonRtLocked([&](auto& map) {
       auto it = map.find(eventIdExt);
       map.erase(it);
