@@ -17,6 +17,7 @@ struct CompositeSound //: public util::Identifiable
    //   using Voices = std::array<Voice, NUM_MAX_VOICES_PER_KIT_VOICE>;
    using Voices = std::vector<Voice>;
    Voices voices;
+   inline bool operator==(const CompositeSound& rhs) const;
 };
 
 }   // namespace base::instruments

@@ -58,6 +58,8 @@ public:
    template <typename Cb> void forEachVoice(Cb&& cb);
 
    friend auto meta::registerMembers<KitInstrument>();
+   friend bool isSameInstrument(const KitInstrument& lhs,
+                                const KitInstrument& rhs);
 
 private:
    std::string m_name;
@@ -67,6 +69,7 @@ private:
                          util::function_ref<void(const Voice&)> cb) const;
 };
 
+ 
 }   // namespace instruments
 }   // namespace base
 

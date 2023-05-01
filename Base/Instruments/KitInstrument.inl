@@ -41,6 +41,13 @@ inline void KitInstrument::withVoice(
    cb(m_compositeSounds.at(soundIdx).voices.at(componentIdx));
 }
 
+inline
+bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
+{
+   return lhs.m_name == rhs.m_name &&
+          lhs.m_compositeSounds == rhs.m_compositeSounds;
+}
+
 }   // namespace base::instruments
 
 #endif

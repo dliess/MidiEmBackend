@@ -30,11 +30,13 @@ struct Instruments   //: public utils::Settings<Instruments>
 
    void createKitInstrument(std::string name);
    void insertKitInstrument(const KitInstrument& kitInstrument);
+   [[nodiscard]] bool hasKitInstrument(const KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name);
 
    void createMelodicInstrument(std::string name);
+   [[nodiscard]] bool hasMelodicInstrument(const MelodicInstrument& melodicInstrument) const;
    void insertMelodicInstrument(const MelodicInstrument& melodicInstrument);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,

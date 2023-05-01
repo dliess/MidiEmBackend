@@ -7,4 +7,12 @@ inline CompositeSound::CompositeSound(std::string name) noexcept :
 {
 }
 
+inline
+bool CompositeSound::operator==(const CompositeSound& rhs) const
+{
+    return name == rhs.name &&
+           voices == rhs.voices;
+}
+
+
 }   // namespace base::instruments

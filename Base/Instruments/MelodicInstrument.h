@@ -30,7 +30,8 @@ public:
       std::array<int, NUM_NOTES> noteAllocations;
       inline void incrementVoiceIndex(int maxSize) noexcept;
       [[nodiscard]] inline int currentVoiceIndex() const noexcept;
-    private:
+
+   private:
       int m_currentVoiceIndex{-1};
    };
 
@@ -44,8 +45,7 @@ public:
    void incrementParameterValue(int compPart, int parameterId, float increment,
                                 bool roundRobin = false) const;
    void incrementParameterValue(int note, int compPart, int parameterId,
-                                float increment,
-                                bool roundRobin = false) const;
+                                float increment, bool roundRobin = false) const;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
@@ -54,8 +54,7 @@ public:
        int note, int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =
            musicDevice::sound::ParameterPart::Commanded) const;
-   void setParameterValue(int compPart, int parameterId,
-                          float value) const;
+   void setParameterValue(int compPart, int parameterId, float value) const;
    void setParameterValue(int note, int compPart, int parameterId,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
@@ -75,8 +74,10 @@ public:
    using VoiceContainer = std::vector<CompositeSound>;
    VoiceContainer& voices() noexcept;
    friend auto meta::registerMembers<MelodicInstrument>();
+   friend bool isSameInstrument(const MelodicInstrument& lhs,
+                                const MelodicInstrument& rhs);
 
-    template <typename Cb> void forEachVoice(Cb&& cb);
+   template <typename Cb> void forEachVoice(Cb&& cb);
 
 private:
    VoiceContainer m_voices;

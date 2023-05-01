@@ -8,7 +8,7 @@ namespace base::instruments
 inline Voice::Voice(musicDevice::sound::SoundHandler* pSoundDevice,
                     std::shared_ptr<ParameterCache> pParameterCache,
                     musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,
-                    int noteOffset) noexcept:
+                    int noteOffset) noexcept :
     m_pSoundDevice(pSoundDevice),
     m_pParameterCache(std::move(pParameterCache)),
     m_soundDeviceId(std::move(soundDeviceId)),
@@ -33,11 +33,13 @@ inline void Voice::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
    m_pSoundDevice = ptr;
 }
 
-inline void Voice::setNoteOffset(int noteOffset)
-{
-   m_noteOffset = noteOffset;
-}
+inline void Voice::setNoteOffset(int noteOffset) { m_noteOffset = noteOffset; }
 
+inline bool Voice::operator==(const Voice& rhs) const
+{
+   return m_soundDeviceId == rhs.m_soundDeviceId &&
+          m_voiceIndex == rhs.m_voiceIndex && m_noteOffset == rhs.m_noteOffset;
+}
 
 }   // namespace base::instruments
 

@@ -43,6 +43,8 @@ public:
    friend auto meta::registerMembers<Voice>();
    friend class Persister;
 
+   inline bool operator==(const Voice& rhs) const;
+
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
    std::shared_ptr<ParameterCache> m_pParameterCache;

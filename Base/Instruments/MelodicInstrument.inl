@@ -5,11 +5,10 @@
 
 namespace base::instruments
 {
-
 inline void MelodicInstrument::RtData::incrementVoiceIndex(int maxSize) noexcept
 {
    ++m_currentVoiceIndex;
-   if(m_currentVoiceIndex == maxSize)
+   if (m_currentVoiceIndex == maxSize)
    {
       m_currentVoiceIndex = 0;
    }
@@ -28,7 +27,12 @@ template <typename Cb> void MelodicInstrument::forEachVoice(Cb&& cb)
    }
 }
 
+inline bool isSameInstrument(const MelodicInstrument& lhs,
+                               const MelodicInstrument& rhs)
+{
+   return lhs.m_name == rhs.m_name && lhs.m_voices == rhs.m_voices;
+}
 
-} // namespace base::instruments
+}   // namespace base::instruments
 
-#endif // MELODIC_INSTRUMENT_INL
+#endif   // MELODIC_INSTRUMENT_INL

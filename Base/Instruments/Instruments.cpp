@@ -62,6 +62,19 @@ void Instruments::insertKitInstrument(const KitInstrument& kitInstrument)
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
+bool Instruments::hasKitInstrument(const KitInstrument& kitInstrument) const
+{
+    const auto& data = m_doubleBufferedData.nonRt();
+    for(const auto& e : data.kitInstruments)
+    {
+        if(isSameInstrument(kitInstrument, e))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Instruments::removeKitInstrument(
     const util::Identifiable::UUID& instrumentId)
 {
@@ -93,6 +106,19 @@ void Instruments::createMelodicInstrument(std::string name)
               .insertMelodicInstrument(melodicInstrument);
        });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
+}
+
+bool Instruments::hasMelodicInstrument(const MelodicInstrument& melodicInstrument) const
+{
+    const auto& data = m_doubleBufferedData.nonRt();
+    for(const auto& e : data.melodicInstruments)
+    {
+        if(isSameInstrument(melodicInstrument, e))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Instruments::insertMelodicInstrument(
