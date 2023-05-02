@@ -91,8 +91,7 @@ void EventRouter::removeConnectionToDestination(
 void EventRouter::removeConnection(
     const controller::EventIdExt& eventIdExt) noexcept
 {
-   auto iter = m_map.nonRt().find(eventIdExt);
-   if (iter != m_map.nonRt().end())
+   if (auto iter = m_map.nonRt().find(eventIdExt); iter != m_map.nonRt().end())
    {
       // dec refcount of instrument
       mpark::visit(
