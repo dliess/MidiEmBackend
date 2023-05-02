@@ -59,8 +59,6 @@ Data Persister::load()
    nlohmann::json j   = nlohmann::json::parse(strData);
    auto data          = j.get<Data>();
 
-   spdlog::info("DEBUG Loaded: {}", meta::serialize(data).dump());
-
    for (auto& instr : data.kitInstruments)
    {
       instr.forEachVoice([this](auto& voice) {

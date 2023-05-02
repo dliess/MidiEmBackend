@@ -1,19 +1,20 @@
 #include "ControllerEventRoutePersister.h"
 
-using namespace base::eventRouter;
-
-Persister::Persister(std::unique_ptr<util::IDataPersister> dataPersister) :
-   m_dataPersister(std::move(dataPersister))
+base::eventRouter::Persister::Persister(
+    std::unique_ptr<util::IDataPersister> dataPersister) :
+    m_dataPersister(std::move(dataPersister))
 {
-
 }
 
-void Persister::save(const EventRouter::Data& data)
+void base::eventRouter::Persister::save(const Data& data)
 {
-
+   m_dataPersister->save(meta::serialize(data).dump().c_str());
 }
 
-EventRouter::Data Persister::load()
+base::eventRouter::Data base::eventRouter::Persister::load()
 {
-
+   const auto strData = m_dataPersister->load();
+   nlohmann::json j   = nlohmann::json::parse(strData);
+   //return j.get<Data>();
+   return Data{};
 }

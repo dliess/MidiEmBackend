@@ -1,8 +1,7 @@
-#ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
-#define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_ROUTER_H
+#ifndef CONTROLLER_EVENT_ROUTER_H
+#define CONTROLLER_EVENT_ROUTER_H
 
-#include <unordered_map>
-
+#include "ControllerEventRouterData.h"
 #include "ControllerEventRouterRt.h"
 #include "CallbackSignal.h"
 #include "ControllerEventDestination.h"
@@ -36,8 +35,6 @@ public:
    void retriggerCallbacks();
 
    void loadFromFile();
-
-   using Data = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
 
    CB_SIGNAL(GotConnected, const musicDevice::controller::EventIdExt&,
              const EventDestination&);

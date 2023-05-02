@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "IDataPersister.h"
-#include "ControllerEventRouter.h"
+#include "ControllerEventRouterData.h"
 
 namespace base::eventRouter
 {
@@ -12,8 +12,8 @@ class Persister
 {
 public:
    explicit Persister(std::unique_ptr<util::IDataPersister> dataPersister);
-   void save(const EventRouter::Data& data);
-   EventRouter::Data load();
+   void save(const Data& data);
+   Data load();
 
 private:
    std::unique_ptr<util::IDataPersister> m_dataPersister;

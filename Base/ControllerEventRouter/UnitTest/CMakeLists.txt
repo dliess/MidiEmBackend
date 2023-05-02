@@ -1,6 +1,7 @@
 set(SOURCES
    "UT_ControllerEventDestination.cpp"
    "UT_ControllerEventRouter.cpp"
+   "UT_ControllerEventRouterData.cpp"
 )
 
 set(TARGET_NAME "ControllerEvtRouterTests")
