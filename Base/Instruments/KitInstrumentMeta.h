@@ -4,9 +4,6 @@
 #include "Meta.h"
 
 #include <JsonCast.h>
-namespace base::instruments{
-#include "JsonCastNamespaceFix.h"
-}
 
 namespace meta
 {
@@ -18,20 +15,6 @@ inline auto registerMembers<base::instruments::KitInstrument>()
       member("name", &base::instruments::KitInstrument::m_name),
       member("sounds", &base::instruments::KitInstrument::m_compositeSounds)
    );
-}
-
-template<>
-inline auto registerMembers<base::instruments::Voice>()
-{
-   return members(member("soundDeviceId", &base::instruments::Voice::soundDeviceId),
-                  member("voiceIndex", &base::instruments::Voice::m_voiceIndex),
-                  member("noteOffset", &base::instruments::Voice::m_noteOffset));
-}
-
-template<>
-inline auto registerMembers<base::instruments::CompositeSound>()
-{
-   return members(member("voices", &base::instruments::CompositeSound::voices));
 }
 
 } // namespace meta

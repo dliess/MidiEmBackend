@@ -1,6 +1,8 @@
 #include "ControllerEventRouter.h"
 
+#include "ControllerEventRoutePersister.h"
 #include "ControllerHandler.h"
+#include "FilePersister.h"
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 #include "SoundHandler.h"
@@ -10,16 +12,33 @@ using namespace base::musicDevice;
 
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
                          MusicDeviceContainerRef rMusicDeviceContainer) :
-    m_rInstruments(rInstruments), m_rMusicDeviceContainer(rMusicDeviceContainer)
+    m_rInstruments(rInstruments),
+    m_rMusicDeviceContainer(rMusicDeviceContainer),
+    m_persister(std::make_unique<util::FilePersister>("ControllerEventRouter",
+                                                      "settings.json"))
 {
+   onGotConnected(
+       [this](const musicDevice::controller::EventIdExt&,
+              const EventDestination&) { m_persister.save(m_map.nonRt()); });
+   onGotErased([this](const musicDevice::controller::EventIdExt&) {
+      m_persister.save(m_map.nonRt());
+   });
+
+   try
+   {
+      auto data = m_persister.load();
+      m_map.withNonRtLocked([&data](auto& nonRtData) { nonRtData = data; });
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("Error loading ControllerEventRoute settings, its maybe "
+                    "the first run: {}",
+                    e.what());
+   }
 }
 
-void EventRouter::loadFromFile()
-{
-   // TODO
-   // m_data = m_settings.load<decltype(m_data)>(CONFIG_SECTION);
-   // for (const auto& e : m_data) { emitEntry(e); }
-}
+// ???
+void EventRouter::loadFromFile() {}
 
 void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID& uuid, const controller::Event& event)

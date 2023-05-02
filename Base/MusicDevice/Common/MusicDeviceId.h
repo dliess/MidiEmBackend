@@ -26,9 +26,6 @@ public:
     MusicDeviceId(std::string deviceName, std::string portName) noexcept:
         m_deviceName(std::move(deviceName)), m_portName(std::move(portName)) 
     {}
-    MusicDeviceId(const MusicDeviceId&) = default;
-    MusicDeviceId& operator=(const MusicDeviceId&) = default;
-    MusicDeviceId(MusicDeviceId&&) noexcept = default;
     MusicDeviceId(const std::string& deviceIdStr) noexcept
     {
         auto n = deviceIdStr.find("@");

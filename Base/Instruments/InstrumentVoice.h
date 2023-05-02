@@ -51,13 +51,12 @@ private:
    musicDevice::MusicDeviceId m_soundDeviceId;
    int m_voiceIndex{0};
    int m_noteOffset{0};
-
-private:
    void refreshParameters() const;
 };
 
 }   // namespace base::instruments
 
 #include "InstrumentVoice.inl"
+#include "InstrumentVoiceMeta.h"
 
 #endif

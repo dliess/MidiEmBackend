@@ -11,6 +11,7 @@
 #include "MusicDeviceContainerRef.h"
 #include "MusicDeviceDescription.h"
 #include "DoubleBuffer.h"
+#include "ControllerEventRoutePersister.h"
 
 
 namespace base::eventRouter
@@ -36,19 +37,21 @@ public:
 
    void loadFromFile();
 
-private:
-   instruments::InstrumentsRef m_rInstruments;
-   musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
-   using MapType = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
-   util::DoubleBuffer<MapType> m_map;
-   ParameterCacheMap m_parameterCacheMap;
-
-   const musicDevice::description::sound::Parameter* parameterDescription(
-       const EventDestination::Endpoint& endpoint, int paramIdx);
+   using Data = std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
 
    CB_SIGNAL(GotConnected, const musicDevice::controller::EventIdExt&,
              const EventDestination&);
    CB_SIGNAL(GotErased, const musicDevice::controller::EventIdExt&);
+
+private:
+   instruments::InstrumentsRef m_rInstruments;
+   musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
+   util::DoubleBuffer<Data> m_map;
+   ParameterCacheMap m_parameterCacheMap;
+   Persister m_persister;
+
+   const musicDevice::description::sound::Parameter* parameterDescription(
+       const EventDestination::Endpoint& endpoint, int paramIdx);
 
    void printMap() const noexcept;
 

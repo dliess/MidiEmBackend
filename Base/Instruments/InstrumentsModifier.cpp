@@ -51,6 +51,7 @@ void InstrumentsModifier::renameKitInstrument(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentId);
    instrumentIt->setName(std::move(name));
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::insertMelodicInstrument(
@@ -71,6 +72,7 @@ void InstrumentsModifier::renameMelodicInstrument(
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentId);
    instrumentIt->setName(std::move(name));
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::createNewSlotInMelodicInstrument(
@@ -88,6 +90,7 @@ void InstrumentsModifier::createNewSlotInMelodicInstrument(
                                          std::move(parameterCache),
                                          md->deviceId(), voiceIdx, 0);
       instrumentIt->voices().push_back(std::move(compositeSound));
+      instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
@@ -103,6 +106,7 @@ void InstrumentsModifier::addVoiceToMelodicInstrumentSlot(
       instrumentIt->voices().operator[](slotIdx).voices.emplace_back(
           &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
           voiceIdx, 0);
+      instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
@@ -117,6 +121,7 @@ void InstrumentsModifier::removeVoiceFromMelodicInstrumentSlot(
    {
       instrumentIt->voices().erase(instrumentIt->voices().begin() + slotIdx);
    }
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::removeSlotFromMelodicInstrument(
@@ -124,6 +129,7 @@ void InstrumentsModifier::removeSlotFromMelodicInstrument(
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->voices().erase(instrumentIt->voices().begin() + slotIdx);
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::setNoteOffsetInMelodicInstrumentVoice(
@@ -136,6 +142,7 @@ void InstrumentsModifier::setNoteOffsetInMelodicInstrumentVoice(
        operator[](slotIdx)
        .voices[compositeIdx]
        .setNoteOffset(noteOffset);
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::setCompositeNameInMelodicInstrument(
@@ -144,6 +151,7 @@ void InstrumentsModifier::setCompositeNameInMelodicInstrument(
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->voices().operator[](slotIdx).name = name;
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::createNewSlotInKitInstrument(
@@ -161,6 +169,7 @@ void InstrumentsModifier::createNewSlotInKitInstrument(
                                          std::move(parameterCache),
                                          md->deviceId(), voiceIdx, 0);
       instrumentIt->sounds().push_back(std::move(compositeSound));
+      instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
@@ -181,6 +190,7 @@ void InstrumentsModifier::addVoiceToKitInstrumentSlot(
       instrumentIt->sounds().operator[](slotIdx).voices.emplace_back(
           &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
           voiceIdx, 0);
+      instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
@@ -204,6 +214,8 @@ void InstrumentsModifier::moveKitInstrumentSlotVoice(
    dstInstrumentIt->sounds().operator[](dstSlotIdx).voices.push_back(srcVoice);
    removeVoiceFromKitInstrumentSlot(srcInstrumentUuid, srcSlotIdx,
                                     srcCompositeIdx);
+   srcInstrumentIt->unmarkAsDefaultCreated();
+   dstInstrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::removeVoiceFromKitInstrumentSlot(
@@ -213,6 +225,7 @@ void InstrumentsModifier::removeVoiceFromKitInstrumentSlot(
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto& voices = instrumentIt->sounds().operator[](slotIdx).voices;
    voices.erase(voices.begin() + compositeIdx);
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::removeSlotFromKitInstrument(
@@ -220,6 +233,7 @@ void InstrumentsModifier::removeSlotFromKitInstrument(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->sounds().erase(instrumentIt->sounds().begin() + slotIdx);
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::setNoteOffsetInKitInstrumentVoice(
@@ -232,6 +246,7 @@ void InstrumentsModifier::setNoteOffsetInKitInstrumentVoice(
        operator[](slotIdx)
        .voices[compositeIdx]
        .setNoteOffset(noteOffset);
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::setCompositeNameInKitInstrument(
@@ -240,6 +255,7 @@ void InstrumentsModifier::setCompositeNameInKitInstrument(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->sounds().operator[](slotIdx).name = name;
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::incKitInstrumentRefCount(

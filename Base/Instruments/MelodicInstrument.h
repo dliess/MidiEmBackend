@@ -35,7 +35,7 @@ public:
       int m_currentVoiceIndex{-1};
    };
 
-   MelodicInstrument() = default;
+   MelodicInstrument() : MelodicInstrument("", std::make_shared<RtData>()) {};
    MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
 
    void noteOn(int note, float velocity) const override;

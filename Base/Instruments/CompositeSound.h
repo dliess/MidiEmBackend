@@ -23,5 +23,6 @@ struct CompositeSound //: public util::Identifiable
 }   // namespace base::instruments
 
 #include "CompositeSound.inl"
+#include "CompositeSoundMeta.h"
 
 #endif

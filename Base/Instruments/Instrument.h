@@ -9,6 +9,7 @@ class Instrument : public util::Identifiable, public INotePlayer
 {
 public:
    void markAsDefaultCreated() noexcept { m_isDefaultCreated = true; };
+   void unmarkAsDefaultCreated() noexcept { m_isDefaultCreated = false; };
    bool isDefaultCreated() const noexcept { return m_isDefaultCreated; }
    int refCount() const { return m_refCount; }
    void incRefCount() { ++m_refCount; }
