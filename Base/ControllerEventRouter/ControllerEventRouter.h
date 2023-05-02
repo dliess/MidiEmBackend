@@ -34,8 +34,6 @@ public:
    // void musicDeviceDisappeared(const musicDevice::MusicDeviceId& mdId);
    void retriggerCallbacks();
 
-   void loadFromFile();
-
    CB_SIGNAL(GotConnected, const musicDevice::controller::EventIdExt&,
              const EventDestination&);
    CB_SIGNAL(GotErased, const musicDevice::controller::EventIdExt&);

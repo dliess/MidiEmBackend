@@ -37,9 +37,6 @@ EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
    }
 }
 
-// ???
-void EventRouter::loadFromFile() {}
-
 void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID& uuid, const controller::Event& event)
 {

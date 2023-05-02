@@ -15,6 +15,5 @@ base::eventRouter::Data base::eventRouter::Persister::load()
 {
    const auto strData = m_dataPersister->load();
    nlohmann::json j   = nlohmann::json::parse(strData);
-   //return j.get<Data>();
-   return Data{};
+   return j.get<Data>();
 }
