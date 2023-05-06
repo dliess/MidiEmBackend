@@ -2,6 +2,7 @@ set(SOURCES
    "UT_ControllerHandler.cpp"
    "UT_ControllerMidiInMsgHandler.cpp"
    "UT_ControllerMidiOutMsgHandler.cpp"
+   "UT_ControllerEvents.cpp"
 )
 
 set(TARGET_NAME "MusicDeviceControllerTest")

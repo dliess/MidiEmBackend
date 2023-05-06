@@ -8,10 +8,12 @@ using namespace base::eventRouter;
 
 struct UUIDCreator : public util::Identifiable {};
 
-TEST(TestSerializations, test)
+TEST(ControllerEventDestination, SerializationTest)
 {
    EventDestination eventDestination;
    eventDestination.endpoint.emplace<EventDestination::DrumKit>(UUIDCreator().id(), 3, 5);
    const auto j = meta::serialize(eventDestination);
-   std::cout << j.dump() << "\n";
+   const auto jString = j.dump();
+   nlohmann::json jRet = nlohmann::json::parse(jString);
+   auto retData     = jRet.get<EventDestination>();
 }

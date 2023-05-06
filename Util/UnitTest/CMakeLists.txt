@@ -6,6 +6,8 @@ set(SOURCES
     "UT_FunctionRef.cpp"
     "UT_Identifiable.cpp"
     "UT_KeyValueVector.cpp"
+    "UT_Json.cpp"
+    "UT_JsonMetaNs.cpp"
     "UT_JsonParseOptionals.cpp"
     "UT_JsonParseVariants.cpp"
     "UT_Overload.cpp"

@@ -9,7 +9,7 @@
 namespace base::eventRouter
 {
 using Data =
-    std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
+    std::unordered_map<::base::musicDevice::controller::EventIdExt, EventDestination>;
 
 }   // namespace base::eventRouter
 

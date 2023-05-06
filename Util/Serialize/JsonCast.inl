@@ -134,7 +134,9 @@ nlohmann::json serialize_basic(const std::vector<T>& obj)
 }
 
 // specialization for std::unordered_map
-template<typename K, typename V>
+template<typename K, typename V,
+typename std::enable_if<std::is_convertible<K, std::string>::value &&
+                                  std::is_same<decltype(std::to_string(std::declval<K>())), std::string>::value>::type* = nullptr>
 nlohmann::json serialize_basic(const std::unordered_map<K, V>& obj)
 {
    nlohmann::json value;
@@ -290,7 +292,9 @@ void deserialize_basic(std::vector<T>& obj, const nlohmann::json& object)
 }
 
 // specialization for std::unodered_map
-template<typename K, typename V>
+template<typename K, typename V,
+    typename std::enable_if<std::is_convertible<K, std::string>::value &&
+                                  std::is_same<decltype(std::to_string(std::declval<K>())), std::string>::value>::type* = nullptr>
 void deserialize_basic(std::unordered_map<K, V>& obj,
                        const nlohmann::json& object)
 {
