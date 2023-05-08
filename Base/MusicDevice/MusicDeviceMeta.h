@@ -3,17 +3,18 @@
 
 #include "JsonCast.h"
 
-template<>
-inline void to_json<base::musicDevice::MusicDevice>(
-   nlohmann::json& j,
-   const base::musicDevice::MusicDevice& obj)
+namespace base::musicDevice
 {
-    j["id"] = meta::serialize(obj.id());
-    j["deviceName"] = meta::serialize(obj.deviceId().deviceName());
-    j["portName"] = meta::serialize(obj.deviceId().portName());
-    j["soundHandler"] = static_cast<bool>(obj.soundHandler);
-    j["controllerHandler"] = static_cast<bool>(obj.controllerHandler);
-    j["sequencer"] = static_cast<bool>(obj.sequencer);
+inline void to_json(nlohmann::json& j, const MusicDevice& obj)
+{
+   j["id"]                = meta::serialize(obj.id());
+   j["deviceName"]        = meta::serialize(obj.deviceId().deviceName());
+   j["portName"]          = meta::serialize(obj.deviceId().portName());
+   j["soundHandler"]      = static_cast<bool>(obj.soundHandler);
+   j["controllerHandler"] = static_cast<bool>(obj.controllerHandler);
+   j["sequencer"]         = static_cast<bool>(obj.sequencer);
 }
+
+}   // namespace base::musicDevice
 
 #endif

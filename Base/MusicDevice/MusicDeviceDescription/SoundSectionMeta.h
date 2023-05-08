@@ -4,15 +4,6 @@
 #include "SoundSection.h"
 #include "Meta.h"
 
-namespace base::musicDevice::description::sound
-{
-#include "JsonCastNamespaceFix.h"
-}
-
-namespace base::musicDevice::description::sound::midisysex
-{
-#include "JsonCastNamespaceFix.h"
-}
 namespace meta
 {
 

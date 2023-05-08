@@ -4,105 +4,109 @@
 #include "JsonCast.h"
 #include "Meta.h"
 
-template <>
-inline void to_json<base::eventRouter::ParameterDestination>(
-    nlohmann::json& j,
-    const base::eventRouter::ParameterDestination& obj)
+namespace base::eventRouter
+{
+inline void to_json(
+    nlohmann::json& j, const ParameterDestination& obj)
 {
    j = ~obj;
 }
 
-template <>
-inline void from_json<base::eventRouter::ParameterDestination>(
-    const nlohmann::json& j,
-    base::eventRouter::ParameterDestination& obj)
+inline void from_json(
+    const nlohmann::json& j, ParameterDestination& obj)
 {
-   obj = base::eventRouter::create_ParameterDestination(j.get<std::string>());
+   obj = create_ParameterDestination(j.get<std::string>());
 }
 
-namespace base::eventRouter{
-#include "JsonCastNamespaceFix.h"
-}
+}   // namespace base::eventRouter
+
 
 namespace meta
 {
-
-template<>
+template <>
 inline auto registerMembers<base::eventRouter::EventDestination::DrumKit>()
 {
    return members(
-      member("uuid", &base::eventRouter::EventDestination::DrumKit::uuid),
-      member("voiceIdx", &base::eventRouter::EventDestination::DrumKit::voiceIdx),
-      member("componentIdx", &base::eventRouter::EventDestination::DrumKit::componentIdx));
+       member("uuid", &base::eventRouter::EventDestination::DrumKit::uuid),
+       member("voiceIdx",
+              &base::eventRouter::EventDestination::DrumKit::voiceIdx),
+       member("componentIdx",
+              &base::eventRouter::EventDestination::DrumKit::componentIdx));
 }
-template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::DrumKit>(int i) noexcept
+template <>
+inline auto getClassNameOrIndex<base::eventRouter::EventDestination::DrumKit>(
+    int i) noexcept
 {
    return "DrumKit";
 }
 
-template<>
+template <>
 inline auto registerMembers<base::eventRouter::EventDestination::Melodic>()
 {
    return members(
-      member("uuid", &base::eventRouter::EventDestination::Melodic::uuid),
-      member("componentIdx", &base::eventRouter::EventDestination::Melodic::componentIdx));
+       member("uuid", &base::eventRouter::EventDestination::Melodic::uuid),
+       member("componentIdx",
+              &base::eventRouter::EventDestination::Melodic::componentIdx));
 }
-template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Melodic>(int i) noexcept
+template <>
+inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Melodic>(
+    int i) noexcept
 {
    return "Melodic";
 }
 
-template<>
+template <>
 inline auto registerMembers<base::eventRouter::EventDestination::MusicDevice>()
 {
    return members(
-      member("mdid", &base::eventRouter::EventDestination::MusicDevice::mdid),
-      member("voiceIdx", &base::eventRouter::EventDestination::MusicDevice::voiceIdx));
+       member("mdid", &base::eventRouter::EventDestination::MusicDevice::mdid),
+       member("voiceIdx",
+              &base::eventRouter::EventDestination::MusicDevice::voiceIdx));
 }
-template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::MusicDevice>(int i) noexcept
+template <>
+inline auto
+getClassNameOrIndex<base::eventRouter::EventDestination::MusicDevice>(
+    int i) noexcept
 {
    return "MusicDevice";
 }
 
-
-
-template<>
+template <>
 inline auto registerMembers<base::eventRouter::EventDestination::Note>()
 {
    return members(
-      member("pitch", &base::eventRouter::EventDestination::Note::pitch));
+       member("pitch", &base::eventRouter::EventDestination::Note::pitch));
 }
-template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Note>(int i) noexcept
+template <>
+inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Note>(
+    int i) noexcept
 {
    return "Note";
 }
 
-template<>
+template <>
 inline auto registerMembers<base::eventRouter::EventDestination::Parameter>()
 {
    return members(
-      member("id", &base::eventRouter::EventDestination::Parameter::id),
-      member("parameterDestination", &base::eventRouter::EventDestination::Parameter::parameterDestination));
+       member("id", &base::eventRouter::EventDestination::Parameter::id),
+       member("parameterDestination", &base::eventRouter::EventDestination::
+                                          Parameter::parameterDestination));
 }
-template<>
-inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Parameter>(int i) noexcept
+template <>
+inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Parameter>(
+    int i) noexcept
 {
    return "Parameter";
 }
 
-template<>
-inline auto registerMembers<base::eventRouter::EventDestination>()
+template <> inline auto registerMembers<base::eventRouter::EventDestination>()
 {
    return members(
-      member("endpoint", &base::eventRouter::EventDestination::endpoint),
-      member("controlType", &base::eventRouter::EventDestination::controlType));
+       member("endpoint", &base::eventRouter::EventDestination::endpoint),
+       member("controlType",
+              &base::eventRouter::EventDestination::controlType));
 }
 
-} // namespace meta
-
+}   // namespace meta
 
 #endif

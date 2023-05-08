@@ -90,7 +90,19 @@
         "charconv": "cpp",
         "span": "cpp",
         "pointers": "cpp",
-        "assert": "cpp"
+        "assert": "cpp",
+        "cassert": "cpp",
+        "cerrno": "cpp",
+        "cfloat": "cpp",
+        "ciso646": "cpp",
+        "climits": "cpp",
+        "filesystem": "cpp",
+        "ios": "cpp",
+        "locale": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "cstdbool": "cpp",
+        "version": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/x86_64-linux-gnu-gcc-10_Debug/compile_commands.json"

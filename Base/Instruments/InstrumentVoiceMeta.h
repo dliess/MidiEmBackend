@@ -6,12 +6,6 @@
 
 #include "InstrumentVoice.h"
 
-
-namespace base::instruments{
-#include "JsonCastNamespaceFix.h"
-}
-
-
 namespace meta
 {
 

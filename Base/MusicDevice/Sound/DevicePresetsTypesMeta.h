@@ -6,37 +6,20 @@
 
 namespace base::musicDevice::sound::preset
 {
-#include "JsonCastNamespaceFix.h"
+inline void to_json(nlohmann::json& j, const Genre& obj) { j = ~obj; }
+
+inline void from_json(const nlohmann::json& j, Genre& obj)
+{
+   obj = create_Genre(j.get<std::string>());
 }
 
-template <>
-inline void to_json<base::musicDevice::sound::preset::Genre>(
-    nlohmann::json& j, const base::musicDevice::sound::preset::Genre& obj)
-{
-   j = ~obj;
-}
+inline void to_json(nlohmann::json& j, const Category& obj) { j = ~obj; }
 
-template <>
-inline void from_json<base::musicDevice::sound::preset::Genre>(
-    const nlohmann::json& j, base::musicDevice::sound::preset::Genre& obj)
+inline void from_json(const nlohmann::json& j, Category& obj)
 {
-   obj = base::musicDevice::sound::preset::create_Genre(j.get<std::string>());
+   obj = create_Category(j.get<std::string>());
 }
-
-template <>
-inline void to_json<base::musicDevice::sound::preset::Category>(
-    nlohmann::json& j, const base::musicDevice::sound::preset::Category& obj)
-{
-   j = ~obj;
-}
-
-template <>
-inline void from_json<base::musicDevice::sound::preset::Category>(
-    const nlohmann::json& j, base::musicDevice::sound::preset::Category& obj)
-{
-   obj =
-       base::musicDevice::sound::preset::create_Category(j.get<std::string>());
-}
+}   // namespace base::musicDevice::sound::preset
 
 namespace meta
 {

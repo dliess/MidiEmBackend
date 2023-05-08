@@ -5,13 +5,13 @@
 
 
 template<typename T>
-void to_json(nlohmann::json& j, const T& obj)
+void nlohmann::to_json(nlohmann::json& j, const T& obj)
 {
    j = meta::serialize(obj);
 }
 
 template<typename T>
-void from_json(const nlohmann::json& j, T& obj)
+void nlohmann::from_json(const nlohmann::json& j, T& obj)
 {
    meta::deserialize(obj, j);
 }

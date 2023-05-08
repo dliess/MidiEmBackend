@@ -4,10 +4,6 @@
 #include "JsonCast.h"
 #include "Meta.h"
 
-namespace base::musicDevice::controller{
-#include "JsonCastNamespaceFix.h"
-}
-
 namespace meta
 {
 template<>

@@ -3,16 +3,13 @@
 
 #include "JsonCast.h"
 
-template<>
-inline void to_json<base::musicDevice::MusicDeviceContainer>(
-   nlohmann::json& j,
-   const base::musicDevice::MusicDeviceContainer& obj)
+namespace base::musicDevice
+{
+inline void to_json(nlohmann::json& j, const MusicDeviceContainer& obj)
 {
    j = nlohmann::json::array();
-   for(auto& it : obj)
-   {
-      j.push_back(meta::serialize(*it.second.get()));
-   }
+   for (auto& it : obj) { j.push_back(meta::serialize(*it.second.get())); }
 }
 
+}   // namespace base::musicDevice
 #endif

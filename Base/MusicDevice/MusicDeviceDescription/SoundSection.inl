@@ -45,26 +45,20 @@ base::musicDevice::description::sound::Section::defaultInstrumentTypeFromString(
    return base::musicDevice::description::sound::Section::
        DefaultInstrumentType::InstrumentPerVoice;
 }
-template <>
-inline void
-to_json<base::musicDevice::description::sound::Section::DefaultInstrumentType>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::Section::DefaultInstrumentType&
-        obj)
-{
-   j = base::musicDevice::description::sound::Section::
-       defaultInstrumentType2String(obj);
-}
-template <>
-inline void from_json<
-    base::musicDevice::description::sound::Section::DefaultInstrumentType>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::Section::DefaultInstrumentType& obj)
-{
-   obj = base::musicDevice::description::sound::Section::
-       defaultInstrumentTypeFromString(j.get<std::string>());
-}
 
+namespace base::musicDevice::description::sound
+{
+inline void to_json(nlohmann::json& j,
+                    const Section::DefaultInstrumentType& obj)
+{
+   j = Section::defaultInstrumentType2String(obj);
+}
+inline void from_json(const nlohmann::json& j,
+                      Section::DefaultInstrumentType& obj)
+{
+   obj = Section::defaultInstrumentTypeFromString(j.get<std::string>());
+}
+}   // namespace base::musicDevice::description::sound
 // --------------------------------------------------------
 // base::musicDevice::description::sound::Component::Role
 // --------------------------------------------------------
@@ -81,42 +75,31 @@ base::musicDevice::description::sound::Component::roleFromString(
    return create_ComponentRole(roleStr);
 }
 
-template <>
-inline void to_json<base::musicDevice::description::sound::Component::Role>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::Component::Role& obj)
+namespace base::musicDevice::description::sound
 {
-   j = base::musicDevice::description::sound::Component::role2String(obj);
+inline void to_json(nlohmann::json& j, const Component::Role& obj)
+{
+   j = Component::role2String(obj);
 }
 
-template <>
-inline void from_json<base::musicDevice::description::sound::Component::Role>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::Component::Role& obj)
+inline void from_json(const nlohmann::json& j, Component::Role& obj)
 {
-   obj = base::musicDevice::description::sound::Component::roleFromString(
-       j.get<std::string>());
+   obj = Component::roleFromString(j.get<std::string>());
 }
 
 // --------------------------------------------------------
 // SoundDeviceParameter::Type
 // --------------------------------------------------------
-template <>
-inline void to_json<base::musicDevice::description::sound::Parameter::Type>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::Parameter::Type& obj)
+inline void to_json(nlohmann::json& j, const Parameter::Type& obj)
 {
-   j = base::musicDevice::description::sound::Parameter::type2String(obj);
+   j = Parameter::type2String(obj);
 }
 
-template <>
-inline void from_json<base::musicDevice::description::sound::Parameter::Type>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::Parameter::Type& obj)
+inline void from_json(const nlohmann::json& j, Parameter::Type& obj)
 {
-   obj = base::musicDevice::description::sound::Parameter::typeFromString(
-       j.get<std::string>());
+   obj = Parameter::typeFromString(j.get<std::string>());
 }
+}   // namespace base::musicDevice::description::sound
 
 inline std::string
 base::musicDevice::description::sound::Parameter::type2String(
@@ -152,26 +135,20 @@ base::musicDevice::description::sound::Parameter::typeFromString(
 // --------------------------------------------------------
 // ParameterSourceRange::Role
 // --------------------------------------------------------
-template <>
-inline void
-to_json<base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::ParameterSourceRangeBase::Role&
-        obj)
+namespace base::musicDevice::description::sound
 {
-   j = base::musicDevice::description::sound::ParameterSourceRangeBase::
-       role2String(obj);
+inline void to_json(nlohmann::json& j,
+                    const ParameterSourceRangeBase::Role& obj)
+{
+   j = ParameterSourceRangeBase::role2String(obj);
 }
 
-template <>
-inline void from_json<
-    base::musicDevice::description::sound::ParameterSourceRangeBase::Role>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::ParameterSourceRangeBase::Role& obj)
+inline void from_json(const nlohmann::json& j,
+                      ParameterSourceRangeBase::Role& obj)
 {
-   obj = base::musicDevice::description::sound::ParameterSourceRangeBase::
-       roleFromString(j.get<std::string>());
+   obj = ParameterSourceRangeBase::roleFromString(j.get<std::string>());
 }
+}   // namespace base::musicDevice::description::sound
 
 inline std::string
 base::musicDevice::description::sound::ParameterSourceRangeBase::role2String(
@@ -190,32 +167,21 @@ base::musicDevice::description::sound::ParameterSourceRangeBase::roleFromString(
 // --------------------------------------------------------
 // SoundDeviceParameter::Role
 // --------------------------------------------------------
-template <>
-inline void to_json<base::musicDevice::description::sound::Parameter::Role>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::Parameter::Role& obj)
+namespace base::musicDevice::description::sound
 {
-   j = base::musicDevice::description::sound::Parameter::role2String(obj);
+inline void to_json(nlohmann::json& j, const Parameter::Role& obj)
+{
+   j = Parameter::role2String(obj);
 }
 
-template <>
-inline void from_json<base::musicDevice::description::sound::Parameter::Role>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::Parameter::Role& obj)
+inline void from_json(const nlohmann::json& j, Parameter::Role& obj)
 {
-   obj = base::musicDevice::description::sound::Parameter::roleFromString(
-       j.get<std::string>());
+   obj = Parameter::roleFromString(j.get<std::string>());
 }
 
-inline std::string
-base::musicDevice::description::sound::Parameter::role2String(Role role)
-{
-   return ~role;
-}
+inline std::string Parameter::role2String(Role role) { return ~role; }
 
-inline base::musicDevice::description::sound::Parameter::Role
-base::musicDevice::description::sound::Parameter::roleFromString(
-    const std::string& roleStr)
+inline Parameter::Role Parameter::roleFromString(const std::string& roleStr)
 {
    return create_ParameterRole(roleStr);
 }
@@ -223,26 +189,17 @@ base::musicDevice::description::sound::Parameter::roleFromString(
 // --------------------------------------------------------
 // ParameterDumpRequest::Effect
 // --------------------------------------------------------
-template <>
-inline void
-to_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
-    nlohmann::json& j,
-    const base::musicDevice::description::sound::ParameterDumpRequest::Effect&
-        obj)
+inline void to_json(nlohmann::json& j, const ParameterDumpRequest::Effect& obj)
 {
    j = ~obj;
 }
 
-template <>
-inline void
-from_json<base::musicDevice::description::sound::ParameterDumpRequest::Effect>(
-    const nlohmann::json& j,
-    base::musicDevice::description::sound::ParameterDumpRequest::Effect& obj)
+inline void from_json(const nlohmann::json& j,
+                      ParameterDumpRequest::Effect& obj)
 {
-   obj =
-       base::musicDevice::description::sound::create_ParameterDumpRequestEffect(
-           j.get<std::string>());
+   obj = create_ParameterDumpRequestEffect(j.get<std::string>());
 }
+}   // namespace base::musicDevice::description::sound
 
 // --------------------------------------------------------
 // base::musicDevice::description::sound::Section
@@ -263,10 +220,11 @@ inline const Parameter& Section::parameterDescr(
    }
    else
    {
-      assert(parameterId.engineId >= 0 && parameterId.engineId < engines.size());
+      assert(parameterId.engineId >= 0 &&
+             parameterId.engineId < engines.size());
       assert(parameterId.parameterId >= 0 &&
-            parameterId.parameterId <
-               engines[parameterId.engineId].parameters.size());
+             parameterId.parameterId <
+                 engines[parameterId.engineId].parameters.size());
       return engines[parameterId.engineId].parameters[parameterId.parameterId];
    }
 }

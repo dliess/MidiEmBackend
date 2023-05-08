@@ -4,11 +4,6 @@
 #include "Meta.h"
 #include "JsonCast.h"
 
-
-namespace base::midifriends{
-#include "JsonCastNamespaceFix.h"
-}
-
 namespace meta
 {
 

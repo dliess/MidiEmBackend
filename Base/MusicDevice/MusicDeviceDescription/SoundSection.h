@@ -1,7 +1,7 @@
 #ifndef SOUND_SECTION_H
 #define SOUND_SECTION_H
 
-#include <JsonCast.h>   // needed because of "JsonCastNamespaceFix.h"
+#include <JsonCast.h>
 
 #include <mpark/variant.hpp>
 #include <optional>

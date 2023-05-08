@@ -4,29 +4,21 @@
 #include "JsonCast.h"
 #include "Round1000.h"
 
-template <>
-inline void to_json<base::musicDevice::sound::ParameterData>(
-    nlohmann::json& j,
-    const base::musicDevice::sound::ParameterData& obj)
+namespace base::musicDevice::sound
+{
+inline void to_json(nlohmann::json& j, const ParameterData& obj)
 {
    j["commanded"] = util::round1000(obj.commanded);
-   if (obj.lfoData.amplitude !=
-           base::musicDevice::sound::lfo::DefaultAmplitude ||
-       obj.lfoData.frequency !=
-           base::musicDevice::sound::lfo::DefaultFrequency ||
-       obj.lfoData.waveform !=
-           base::musicDevice::sound::lfo::DefaultWaveform ||
-       obj.lfoData.multiplierExp !=
-           base::musicDevice::sound::lfo::DefaultMultiplierExp)
+   if (obj.lfoData.amplitude != lfo::DefaultAmplitude ||
+       obj.lfoData.frequency != lfo::DefaultFrequency ||
+       obj.lfoData.waveform != lfo::DefaultWaveform ||
+       obj.lfoData.multiplierExp != lfo::DefaultMultiplierExp)
    {
       j["lfo"] = obj.lfoData;
    }
 }
 
-template <>
-inline void from_json<base::musicDevice::sound::ParameterData>(
-    const nlohmann::json& j,
-    base::musicDevice::sound::ParameterData& obj)
+inline void from_json(const nlohmann::json& j, ParameterData& obj)
 {
    {
       const auto it = j.find("commanded");
@@ -39,9 +31,9 @@ inline void from_json<base::musicDevice::sound::ParameterData>(
       const auto it = j.find("lfo");
       if (it != j.end())
       {
-         obj.lfoData = it->get<base::musicDevice::sound::lfo::LFOData>();
+         obj.lfoData = it->get<lfo::LFOData>();
       }
    }
 }
-
+}   // namespace base::musicDevice::sound
 #endif

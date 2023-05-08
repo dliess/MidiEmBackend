@@ -4,12 +4,6 @@
 #include "HubSection.h"
 #include "Meta.h"
 
-namespace base::musicDevice::description::hub
-{
-#include "JsonCastNamespaceFix.h"
-} // namespace base::musicDevice::description::hub
-
-
 namespace meta
 {
 template<>

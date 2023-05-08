@@ -11,12 +11,13 @@
 #include "StringCast.h"
 #include "mpark/variant.hpp"
 
+namespace nlohmann {
 template <typename T>
 void to_json(nlohmann::json& j, const T& obj);
 
 template <typename T>
 void from_json(const nlohmann::json& j, T& obj);
-
+} // namespace nlohmann
 namespace meta
 {
 

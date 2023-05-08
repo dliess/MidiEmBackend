@@ -5,7 +5,6 @@
 #include "Meta.h"
 
 #include <JsonCast.h>
-#include "MusicDeviceJsonNamespaceFix.h"
 
 namespace meta
 {

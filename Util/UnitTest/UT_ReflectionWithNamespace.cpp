@@ -28,8 +28,6 @@ struct EmptyStruct
    int b;
 };
 
-#include "JsonCastNamespaceFix.h"
-
 } // namespace base
 
 namespace meta

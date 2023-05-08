@@ -3,11 +3,6 @@
 
 #include "Meta.h"
 
-namespace base::musicDevice::description
-{
-#include "JsonCastNamespaceFix.h"
-}
-
 namespace meta
 {
 template<>

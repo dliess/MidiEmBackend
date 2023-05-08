@@ -4,50 +4,28 @@
 #include "JsonCast.h"
 #include "Round1000.h"
 
-namespace base::musicDevice::sound
-{
-#include "JsonCastNamespaceFix.h"
-}
 namespace base::musicDevice::sound::lfo
 {
-#include "JsonCastNamespaceFix.h"
+inline void to_json(nlohmann::json& j, const Waveform& obj) { j = ~obj; }
+
+inline void from_json(const nlohmann::json& j, Waveform& obj)
+{
+   obj = create_Waveform(j.get<std::string>());
 }
 
-template <>
-inline void to_json<base::musicDevice::sound::lfo::Waveform>(
-    nlohmann::json& j, const base::musicDevice::sound::lfo::Waveform& obj)
+inline void to_json(nlohmann::json& j, const LFOData& obj)
 {
-   j = ~obj;
-}
-
-template <>
-inline void from_json<base::musicDevice::sound::lfo::Waveform>(
-    const nlohmann::json& j, base::musicDevice::sound::lfo::Waveform& obj)
-{
-   obj = base::musicDevice::sound::lfo::create_Waveform(j.get<std::string>());
-}
-
-template <>
-inline void to_json<base::musicDevice::sound::lfo::LFOData>(
-    nlohmann::json& j, const base::musicDevice::sound::lfo::LFOData& obj)
-{
-   if (obj.amplitude !=
-       base::musicDevice::sound::lfo::DefaultAmplitude)
+   if (obj.amplitude != DefaultAmplitude)
       j["amplitude"] = util::round1000(obj.amplitude);
-   if (obj.frequency !=
-       base::musicDevice::sound::lfo::DefaultFrequency)
+   if (obj.frequency != DefaultFrequency)
       j["frequency"] = util::round1000(obj.frequency);
-   if (obj.waveform !=
-       base::musicDevice::sound::lfo::DefaultWaveform)
+   if (obj.waveform != DefaultWaveform)
       j["waveform"] = obj.waveform;
-   if (obj.multiplierExp !=
-       base::musicDevice::sound::lfo::DefaultMultiplierExp)
+   if (obj.multiplierExp != DefaultMultiplierExp)
       j["multiplierExp"] = obj.multiplierExp;
 }
 
-template <>
-inline void from_json<base::musicDevice::sound::lfo::LFOData>(
-    const nlohmann::json& j, base::musicDevice::sound::lfo::LFOData& obj)
+inline void from_json(const nlohmann::json& j, LFOData& obj)
 {
    {
       const auto it = j.find("amplitude");
@@ -67,7 +45,7 @@ inline void from_json<base::musicDevice::sound::lfo::LFOData>(
       const auto it = j.find("waveform");
       if (it != j.end())
       {
-         obj.waveform = it->get<base::musicDevice::sound::lfo::Waveform>();
+         obj.waveform = it->get<Waveform>();
       }
    }
    {
@@ -78,5 +56,6 @@ inline void from_json<base::musicDevice::sound::lfo::LFOData>(
       }
    }
 }
+}   // namespace base::musicDevice::sound::lfo
 
 #endif

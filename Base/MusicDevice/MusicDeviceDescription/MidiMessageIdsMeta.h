@@ -5,11 +5,6 @@
 #include "JsonCast.h"
 #include "Meta.h"
 
-namespace midi
-{
-#include "JsonCastNamespaceFix.h"
-}
-
 namespace meta
 {
 template<>

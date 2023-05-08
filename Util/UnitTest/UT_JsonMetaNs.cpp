@@ -2,35 +2,34 @@
 
 #include "JsonCast.h"
 
-namespace base
+namespace myns
 {
+
 struct Person
 {
    std::string name;
    int age;
    int weight;
 };
-}   // namespace base
+}   // namespace myns
 
 namespace meta
 {
 
 template <>
-inline auto registerMembers<base::Person>()
+inline auto registerMembers<myns::Person>()
 {
    return members(
-      member("name", &base::Person::name),
-      member("age", &base::Person::age),
-      member("weight", &base::Person::weight)
+      member("name", &myns::Person::name),
+      member("age", &myns::Person::age),
+      member("weight", &myns::Person::weight)
    );
 }
 
 } // namespace meta
 
-
-
-TEST(JsonTest, objectSerializeDeserialize)
+TEST(JsonMetaNsTest, objectSerializeDeserialize)
 {
-   base::Person person{"George", 40, 88};
+   myns::Person person{"George", 40, 88};
    nlohmann::json j(person);
 }
