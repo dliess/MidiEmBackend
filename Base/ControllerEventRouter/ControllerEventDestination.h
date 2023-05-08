@@ -14,6 +14,7 @@ DECLARE_ENUM(ParameterDestination, uint, Parameter, LFOWaveform, LFOAmplitude,
              LFOFrequency, LFOMultiplier);
 struct EventDestination
 {
+   auto operator<=>(const EventDestination&) const = default;
    // Endpoint
    struct DrumKit
    {

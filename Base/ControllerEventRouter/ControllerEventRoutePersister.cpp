@@ -8,13 +8,12 @@ base::eventRouter::Persister::Persister(
 
 void base::eventRouter::Persister::save(const Data& data)
 {
-   //m_dataPersister->save(meta::serialize(data).dump().c_str());
+   m_dataPersister->save(nlohmann::json(data).dump().c_str());
 }
 
 base::eventRouter::Data base::eventRouter::Persister::load()
 {
    const auto strData = m_dataPersister->load();
    nlohmann::json j   = nlohmann::json::parse(strData);
-   return Data{};
-   //TODO return j.get<Data>();
+   return j.get<Data>();
 }
