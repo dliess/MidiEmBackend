@@ -10,9 +10,9 @@ set(SOURCES
     "UT_JsonMetaNs.cpp"
     "UT_JsonParseOptionals.cpp"
     "UT_JsonParseVariants.cpp"
+    "UT_ReflectionWithNamespace.cpp"
     "UT_Overload.cpp"
     "UT_Ringbuffer.cpp"
-    "UT_ReflectionWithNamespace.cpp"
     "UT_ThreadHelpers.cpp"
 )
 

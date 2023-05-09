@@ -53,6 +53,15 @@ namespace meta
 {
 
 template <>
+inline auto registerMembers<Person>()
+{
+   return members(
+      member("name", &Person::name),
+      member("age", &Person::age)
+   );
+}
+
+template <>
 inline auto registerMembers<BreakDancer>()
 {
    return members(

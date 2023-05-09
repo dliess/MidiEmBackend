@@ -2,7 +2,6 @@
 #include <string>
 #include <optional>
 
-#include "Meta.h"
 #include "JsonCast.h"
 
 struct Person
@@ -10,13 +9,7 @@ struct Person
    std::string        name;
    int                age;
    std::optional<int> weight;
-
-   bool operator==(const Person& rhs) const
-   {
-      return name == rhs.name &&
-             age == rhs.age &&
-             weight == rhs.weight;
-   }
+   auto operator<=>(const Person&) const = default;
 };
 
 namespace meta
@@ -51,5 +44,10 @@ TEST(JsonParseOptionalsTest, OptionalsSet) {
 
 TEST(JsonParseOptionalsTest, DeserializeNonExistingNonOptional) {
    auto j = nlohmann::json::parse("{\"name\":\"Dodo\",\"weight\":98}");
-   ASSERT_THROW(auto person = j.get<Person>(), std::runtime_error);
+   ASSERT_THROW(auto person = j.get<Person>(), std::exception);
+}
+
+TEST(JsonParseOptionalsTest, DeserializeNonExistingOptional) {
+   auto j = nlohmann::json::parse("{\"name\":\"Dodo\",\"age\":11}");
+   ASSERT_NO_THROW(auto person = j.get<Person>());
 }

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include <nlohmann/json.hpp>
-
+//#include <nlohmann/json.hpp>
+#include "JsonCast.h"
 namespace base
 {
 struct Person

@@ -5,12 +5,14 @@
 
 
 template<typename T>
+requires meta::TypeIsHandledByMeta<T>
 void nlohmann::to_json(nlohmann::json& j, const T& obj)
 {
    j = meta::serialize(obj);
 }
 
 template<typename T>
+requires meta::TypeIsHandledByMeta<T>
 void nlohmann::from_json(const nlohmann::json& j, T& obj)
 {
    meta::deserialize(obj, j);
@@ -26,6 +28,7 @@ auto getClassNameOrIndex(int i) noexcept
 
 //////////////////// SOME HELPERS
 
+/*
 template<typename T>
 struct is_optional : std::false_type
 {
@@ -35,6 +38,7 @@ template<typename T>
 struct is_optional<std::optional<T>> : std::true_type
 {
 };
+*/
 
 template<std::size_t I = 0, typename... Tp, typename Fn>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
