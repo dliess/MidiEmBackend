@@ -27,19 +27,6 @@ auto getClassNameOrIndex(int i) noexcept
 };
 
 //////////////////// SOME HELPERS
-
-/*
-template<typename T>
-struct is_optional : std::false_type
-{
-};
-
-template<typename T>
-struct is_optional<std::optional<T>> : std::true_type
-{
-};
-*/
-
 template<std::size_t I = 0, typename... Tp, typename Fn>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
 for_each_in_tuple(std::tuple<Tp...>& t, Fn&& func)
@@ -117,6 +104,7 @@ nlohmann::json serialize(const Class& obj)
    return serialize_basic(obj);
 }
 
+/*
 template<typename Class>
 nlohmann::json serialize_basic(const Class& obj)
 {
@@ -150,7 +138,7 @@ nlohmann::json serialize_basic(const std::unordered_map<K, V>& obj)
    }
    return value;
 }
-
+*/
 // specialization for mpark::variant
 template<typename... T>
 nlohmann::json serialize_basic(const mpark::variant<T...>& obj)

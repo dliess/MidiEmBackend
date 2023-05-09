@@ -57,6 +57,7 @@ template <typename Class,
           typename = void>
 nlohmann::json serialize(const Class& obj);
 
+/*
 template <typename Class> nlohmann::json serialize_basic(const Class& obj);
 
 // specialization for std::vector
@@ -69,7 +70,7 @@ template <typename K, typename V,
               std::is_same<decltype(std::to_string(std::declval<K>())),
                            std::string>::value>::type* = nullptr>
 nlohmann::json serialize_basic(const std::unordered_map<K, V>& obj);
-
+*/
 // specialization for mpark::variant
 template <typename... T>
 nlohmann::json serialize_basic(const mpark::variant<T...>& obj);

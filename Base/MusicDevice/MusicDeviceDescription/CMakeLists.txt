@@ -4,13 +4,11 @@ endif()
 
 set(SOURCES
    "MusicDeviceDescription.cpp"
-   "DeviceDescriptionLoader.cpp"
 )
 
 set(HEADERS
    "ControllerSection.h"
    "ControllerSectionMeta.h"
-   "DeviceDescriptionLoader.h"
    "HubSection.h"
    "HubSectionMeta.h"
    "MidiMessageIdsMeta.h"

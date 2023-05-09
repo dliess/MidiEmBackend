@@ -112,6 +112,18 @@ inline auto registerMembers<midi::MidiMsgId<midi::PitchBend>>()
    return members(member("dummy", &midi::MidiMsgId<midi::PitchBend>::dummy));
 }
 
+template<>
+inline auto getClassNameOrIndex<midi::MidiMsgId<midi::SystemExclusive>>(int i) noexcept
+{
+   return "SystemExclusive";
+}
+template<>
+inline auto registerMembers<midi::MidiMsgId<midi::SystemExclusive>>()
+{
+   return members(member("dummy", &midi::MidiMsgId<midi::SystemExclusive>::dummy));
+}
+
+
 } // namespace meta
 
 #endif

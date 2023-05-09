@@ -8,6 +8,49 @@
 #include "MusicDeviceDescription.h"
 namespace fs = std::filesystem;
 
+
+TEST(MusicDeviceDescriptionTest, serializeMidiMsgIds)
+{
+   midi::MidiMessageId obj;
+   nlohmann::json j(obj);
+   decltype(obj) objRet; 
+   j.get_to(objRet);
+}
+
+TEST(MusicDeviceDescriptionTest, serializeHubSection)
+{
+   base::musicDevice::description::hub::Section obj;
+   nlohmann::json j(obj);
+   decltype(obj) objRet; 
+   j.get_to(objRet);
+}
+
+TEST(MusicDeviceDescriptionTest, serializeControllerSection)
+{
+   base::musicDevice::description::controller::Section obj;
+   nlohmann::json j(obj);
+   decltype(obj) objRet; 
+   j.get_to(objRet);
+}
+
+
+TEST(MusicDeviceDescriptionTest, serializeSoundSection)
+{
+   base::musicDevice::description::sound::Section obj;
+   nlohmann::json j(obj);
+   decltype(obj) objRet;
+   j.get_to(objRet);
+}
+
+
+TEST(MusicDeviceDescriptionTest, serializeDescription)
+{
+   base::musicDevice::description::Description devDescr;
+   nlohmann::json j(devDescr);
+   base::musicDevice::description::Description devDescrRet;
+   j.get_to(devDescrRet);
+}
+
 TEST(MusicDeviceDescriptionTest, verifyJsons)
 {
    const std::string devicesPath = fmt::format("{}/MidiConfigs/Devices", RESOURCE_ROOT_DIR);

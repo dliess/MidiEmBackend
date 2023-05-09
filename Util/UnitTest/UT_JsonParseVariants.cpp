@@ -48,6 +48,7 @@ struct MainData
 };
 
 using Dancer = mpark::variant<BreakDancer, PopLocker>;
+using Dancer2 = mpark::variant<mpark::monostate, BreakDancer, PopLocker>;
 
 namespace meta
 {
@@ -128,6 +129,17 @@ TEST(JsonParseVariantsTest, VariantToJson) {
    jDancer.get_to(dancerReadBack);
    ASSERT_EQ(dancerReadBack, dancer);
 }
+
+TEST(JsonParseVariantsTest, VariantToJsonWithMonostate) {
+   Dancer2 dancer;
+   dancer.emplace<PopLocker>("MrWiggles", 20, 20);
+   nlohmann::json jDancer(dancer);
+   Dancer2 dancerReadBack;
+   //std::cout << jDancer.dump() << std::endl;
+   jDancer.get_to(dancerReadBack);
+   ASSERT_EQ(dancerReadBack, dancer);
+}
+
 
 TEST(JsonParseVariantsTest, VectorOfVariantToJson) {
    std::vector<Dancer> dancers;
