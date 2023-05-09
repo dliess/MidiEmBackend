@@ -30,3 +30,11 @@ TEST(JsonTest, objectSerializeDeserialize)
    base::Person person{"George", 40, 88};
    nlohmann::json j(person);
 }
+
+TEST(JsonTest, arrayTest)
+{
+   std::array<base::Person, 16> person;
+   nlohmann::json j(person);
+   decltype(person) personRet;
+   j.get_to(personRet);
+}

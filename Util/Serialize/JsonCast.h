@@ -28,10 +28,14 @@ template <typename T> concept is_variant = requires
 };
 static_assert(is_variant<mpark::variant<int, double>>);
 static_assert(!is_variant<int>);
+static_assert(!is_variant<std::array<unsigned char, 16>>);
 
 template<typename T>
 concept TypeIsHandledByMeta = (meta::isRegistered<T>()) || meta::is_variant<T> ||
     meta::is_optional<T>::value;
+
+static_assert(!TypeIsHandledByMeta<std::array<unsigned char, 16>>);
+ 
 }   // namespace meta
 
 namespace nlohmann
@@ -87,7 +91,7 @@ template <typename Class,
           typename = std::enable_if_t<!meta::isRegistered<Class>()>,
           typename = void>
 void deserialize(Class& obj, const nlohmann::json& object);
-
+/*
 template <typename Class>
 void deserialize_basic(Class& obj, const nlohmann::json& object);
 
@@ -103,7 +107,7 @@ template <typename K, typename V,
                            std::string>::value>::type* = nullptr>
 void deserialize_basic(std::unordered_map<K, V>& obj,
                        const nlohmann::json& object);
-
+*/
 // specialization for mpark::variant
 template <typename... T>
 void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object);

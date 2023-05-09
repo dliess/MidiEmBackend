@@ -134,8 +134,8 @@ void EventRouter::printMap() const noexcept
 {
    for (const auto& [from, to] : m_map.nonRt())
    {
-      spdlog::info("{} -> {}", meta::serialize(from).dump().c_str(),
-                   meta::serialize(to).dump().c_str());
+      spdlog::info("{} -> {}", nlohmann::json(from).dump().c_str(),
+                   nlohmann::json(to).dump().c_str());
    }
 }
 

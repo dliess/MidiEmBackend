@@ -14,7 +14,7 @@ inline void to_json(nlohmann::json& j, const Tracks& tracks)
    j["tracks"] = nlohmann::json::array();
    for (auto& track : tracks.m_tracks)
    {
-      auto jN = meta::serialize(track);
+      auto jN = nlohmann::json(track);
       j["tracks"].push_back(jN);
    }
 }

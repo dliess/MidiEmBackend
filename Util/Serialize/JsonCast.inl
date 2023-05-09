@@ -264,6 +264,7 @@ void deserialize(Class& obj, const nlohmann::json& object)
    deserialize_basic(obj, object);
 }
 
+/*
 template<typename Class>
 void deserialize_basic(Class& obj, const nlohmann::json& object)
 {
@@ -295,7 +296,7 @@ void deserialize_basic(std::unordered_map<K, V>& obj,
       obj.emplace(fromString<K>(it.key()), it.value());
    }
 }
-
+*/
 // specialization for mpark::variant
 template<typename... T>
 void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object)

@@ -16,7 +16,7 @@ void to_json(nlohmann::json& j, const Clip& p) {
     j["sequence"] = nlohmann::json::array();
     for(auto& it : p.m_noteEvents)
     {
-        auto jN = meta::serialize(it.second);
+        auto jN = nlohmann::json(it.second);
         j["sequence"].push_back(jN);
     }
 }

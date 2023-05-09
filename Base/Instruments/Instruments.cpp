@@ -407,14 +407,14 @@ const Instrument* Instruments::getInstrumentByUuid(
 
 std::string Instruments::serializeKitInstruments() const
 {
-   return meta::serialize(m_doubleBufferedData.nonRt().kitInstruments)
+   return nlohmann::json(m_doubleBufferedData.nonRt().kitInstruments)
        .dump()
        .c_str();
 }
 
 std::string Instruments::serializeMelodicInstruments() const
 {
-   return meta::serialize(m_doubleBufferedData.nonRt().melodicInstruments)
+   return nlohmann::json(m_doubleBufferedData.nonRt().melodicInstruments)
        .dump()
        .c_str();
 }

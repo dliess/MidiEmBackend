@@ -48,7 +48,7 @@ Persister::Persister(
 void Persister::save(const Data& data)
 {
    m_dataPersister->save(
-       meta::serialize(detail::filterOutDefaultInstruments(data))
+       nlohmann::json(detail::filterOutDefaultInstruments(data))
            .dump()
            .c_str());
 }

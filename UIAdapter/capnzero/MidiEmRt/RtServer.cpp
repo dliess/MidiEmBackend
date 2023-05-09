@@ -6,7 +6,7 @@
 #include "ControllerEventRouter.h"
 #include "Instruments.h"
 #include "InstrumentsPlayRpc.h"
-#include "JsonCast.h"   // meta::serialize
+#include "JsonCast.h"   // nlohmann::json
 #include "MainRpc.h"
 #include "MidiRouter.h"
 #include "MidiRoutingRpc.h"
@@ -63,7 +63,7 @@ RtServer::RtServer(
           const auto midiVoiceOffset =
               md.soundHandler ? md.soundHandler->getMidiVoiceOffset() : 0;
           signals().MusicDevices__musicDeviceDescriptionAdded(
-              deviceName, meta::serialize(description).dump().c_str());
+              deviceName, nlohmann::json(description).dump().c_str());
           signals().MusicDevices__deviceAdded(
               md.id(), md.deviceId().deviceName(), md.deviceId().portName(),
               mediumId.toStr(), midiVoiceOffset);

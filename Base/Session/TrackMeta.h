@@ -30,7 +30,7 @@ inline void to_json(nlohmann::json& j, const Track& track)
    {
       if (pClip)
       {
-         auto jN = meta::serialize(*pClip);
+         auto jN = nlohmann::json(*pClip);
          j["clips"].push_back(jN);
       }
       else

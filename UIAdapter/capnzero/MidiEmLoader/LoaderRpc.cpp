@@ -33,9 +33,9 @@ LoaderRpc::LoaderRpc(LoaderServer::Signals& rSignals,
    m_rInstruments.onDataChanged(
        [this](const instruments::Data& data, bool doSaveToFile) {
           m_rSignals.Instruments__kitInstrumentsChanged(
-              meta::serialize(data.kitInstruments).dump().c_str());
+              nlohmann::json(data.kitInstruments).dump().c_str());
           m_rSignals.Instruments__melodicInstrumentsChanged(
-              meta::serialize(data.melodicInstruments).dump().c_str());
+              nlohmann::json(data.melodicInstruments).dump().c_str());
        });
 }
 

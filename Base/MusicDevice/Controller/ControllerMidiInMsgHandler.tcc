@@ -13,8 +13,8 @@ std::string controller::MidiInMsgHandler<MidiInIfPtr>::cache2Str(
    std::string ret;
    for (auto iter = map.begin(); iter != map.end(); iter++)
    {
-      ret.append(meta::serialize(iter->first).dump() + " --> " +
-                 meta::serialize(iter->second).dump() + "\n");
+      ret.append(nlohmann::json(iter->first).dump() + " --> " +
+                 nlohmann::json(iter->second).dump() + "\n");
    }
    return ret;
 }
@@ -45,7 +45,7 @@ controller::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
          /*
           spdlog::info("CONTROLLER --- {} No mapping for Midi msg id {}",
                        m_pMidiInIf->medium().getDeviceName(),
-                       meta::serialize(midiId).dump());
+                       nlohmann::json(midiId).dump());
          */
          return;
       }

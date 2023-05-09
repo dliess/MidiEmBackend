@@ -13,7 +13,7 @@ inline void to_json<util::Identifiable::UUID>(
    nlohmann::json& j,
    const util::Identifiable::UUID& obj)
 {
-   j = meta::serialize(std::string(obj.begin(), obj.end()));
+   j = nlohmann::json(std::string(obj.begin(), obj.end()));
 }
 
 template<>
@@ -35,7 +35,7 @@ namespace meta
 template <>
 nlohmann::json serialize_basic(const util::Identifiable::UUID& obj)
 {
-    return meta::serialize(std::string(obj.begin(), obj.end()));
+    return nlohmann::json(std::string(obj.begin(), obj.end()));
 }
 
 template <>

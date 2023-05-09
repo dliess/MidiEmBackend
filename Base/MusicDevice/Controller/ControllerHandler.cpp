@@ -31,8 +31,8 @@ void ControllerHandler::initMidiInHandler(
          m_uiEventBuffer[event.id] = std::make_pair(event, true);
          /*
          spdlog::info( "Received evt id {} | value: {}",
-               meta::serialize(event.id).dump(),
-               meta::serialize(event.value).dump());
+               nlohmann::json(event.id).dump(),
+               nlohmann::json(event.value).dump());
          */
       });
 }

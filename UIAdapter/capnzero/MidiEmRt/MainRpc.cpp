@@ -1,6 +1,6 @@
 #include "MainRpc.h"
 
-#include "JsonCast.h"   // meta::serialize
+#include "JsonCast.h"   // nlohmann::json
 #include "MusicDeviceDescription.h"
 
 using namespace uiadapter::capnzero;
@@ -39,7 +39,7 @@ void MainRpc::reEmitSignals()
       const base::musicDevice::description::Description &description =
           *it.second.get()->description();
       m_rSignals.MusicDevices__musicDeviceDescriptionAdded(
-          deviceName, meta::serialize(description).dump().c_str());
+          deviceName, nlohmann::json(description).dump().c_str());
       m_rSignals.MusicDevices__deviceAdded(uuid, deviceName, portName,
                                            mediumId.toStr(), midiVoiceOffset);
       if (it.second.get()->soundHandler)

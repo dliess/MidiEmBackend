@@ -254,7 +254,7 @@ std::string Loader::getAllDevicesAsJson() const
          ret.push_back(manufacturerEntry);
       }
    }
-   return meta::serialize(ret).dump();
+   return nlohmann::json(ret).dump();
 }
 
 void Loader::appendDeviceToChain(const MusicDeviceId &rootDeviceId,
@@ -310,7 +310,7 @@ void Loader::saveDeviceChainsToFile()
    {
       spdlog::info("deviceChainsFile.fail() {}", m_deviceChainsFileName);
    }
-   deviceChainsFile << meta::serialize(m_deviceChains).dump(3);
+   deviceChainsFile << nlohmann::json(m_deviceChains).dump(3);
 }
 
 void Loader::markAsUsed(

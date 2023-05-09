@@ -222,7 +222,7 @@ void EventRouterRt::handleContinousValueType(
               else
               {
                  spdlog::info("Not match found for event: {}\n in map:\n",
-                              meta::serialize(eventIdExt).dump().c_str());
+                              nlohmann::json(eventIdExt).dump().c_str());
                   printMap();
               }
               */

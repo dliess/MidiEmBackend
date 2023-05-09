@@ -3,7 +3,7 @@
 #include "ControllerEventRouter.h"
 #include "Instruments.h"
 #include "InstrumentsRpc.h"
-#include "JsonCast.h"   // meta::serialize
+#include "JsonCast.h"   // nlohmann::json
 #include "LdControllerEventRouterRpc.h"
 #include "LoaderRpc.h"
 #include "MusicDeviceFactory.h"
