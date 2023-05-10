@@ -48,13 +48,11 @@ static_assert(!TypeIsHandledByMeta<std::array<unsigned char, 16>>);
 
 namespace nlohmann
 {
-template <typename T>
-    requires meta::TypeIsHandledByMeta<T> 
-    void to_json(nlohmann::json& j, const T& obj);
+template <meta::TypeIsHandledByMeta T>
+void to_json(nlohmann::json& j, const T& obj);
 
-template <typename T>
-    requires meta::TypeIsHandledByMeta<T> 
-    void from_json(const nlohmann::json& j, T& obj);
+template <meta::TypeIsHandledByMeta T>
+void from_json(const nlohmann::json& j, T& obj);
 }   // namespace nlohmann
 
 namespace meta
@@ -68,8 +66,8 @@ nlohmann::json serialize(const T& obj);
 
 // specialization for mpark::variant
 template <typename... T>
-nlohmann::json serialize_basic(const mpark::variant<T...>& obj);
-inline nlohmann::json serialize_basic(const mpark::monostate& obj);
+nlohmann::json serialize_variant(const mpark::variant<T...>& obj);
+inline nlohmann::json serialize_variant(const mpark::monostate& obj);
 
 /////////////////// DESERIALIZATION
 //
@@ -81,8 +79,8 @@ void deserialize(T& obj, const nlohmann::json& object);
 
 // specialization for mpark::variant
 template <typename... T>
-void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object);
-inline void deserialize_basic(mpark::monostate& ret,
+void deserialize_variant(mpark::variant<T...>& ret, const nlohmann::json& object);
+inline void deserialize_variant(mpark::monostate& ret,
                               const nlohmann::json& object);
 
 }   // namespace meta

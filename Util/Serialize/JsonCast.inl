@@ -4,16 +4,14 @@
 
 #include "JsonCast.h"
 
-template <typename T>
-requires meta::TypeIsHandledByMeta<T> void nlohmann::to_json(nlohmann::json& j,
-                                                             const T& obj)
+template <meta::TypeIsHandledByMeta T>
+void nlohmann::to_json(nlohmann::json& j, const T& obj)
 {
    j = meta::serialize(obj);
 }
 
-template <typename T>
-requires meta::TypeIsHandledByMeta<T> void nlohmann::from_json(
-    const nlohmann::json& j, T& obj)
+template <meta::TypeIsHandledByMeta T>
+void nlohmann::from_json(const nlohmann::json& j, T& obj)
 {
    meta::deserialize(obj, j);
 }
@@ -87,12 +85,12 @@ template <IsRegistered T> nlohmann::json serialize(const T& obj)
 
 template <IsNotRegistered T> nlohmann::json serialize(const T& obj)
 {
-   return serialize_basic(obj);
+   return serialize_variant(obj);
 }
 
 // specialization for mpark::variant
 template <typename... T>
-nlohmann::json serialize_basic(const mpark::variant<T...>& obj)
+nlohmann::json serialize_variant(const mpark::variant<T...>& obj)
 {
    nlohmann::json ret;
    std::tuple<T...> tuple;
@@ -109,7 +107,7 @@ nlohmann::json serialize_basic(const mpark::variant<T...>& obj)
    return ret;
 }
 
-inline nlohmann::json serialize_basic(const mpark::monostate& obj)
+inline nlohmann::json serialize_variant(const mpark::monostate& obj)
 {
    return nlohmann::json();
 }
@@ -198,12 +196,12 @@ template <IsRegistered T> void deserialize(T& obj, const nlohmann::json& object)
 template <IsNotRegistered T>
 void deserialize(T& obj, const nlohmann::json& object)
 {
-   deserialize_basic(obj, object);
+   deserialize_variant(obj, object);
 }
 
 // specialization for mpark::variant
 template <typename... T>
-void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object)
+void deserialize_variant(mpark::variant<T...>& ret, const nlohmann::json& object)
 {
    std::tuple<T...> tuple;
    for_each_in_tuple(tuple, [&ret, &object](int i, auto& typeHolder) {
@@ -240,7 +238,7 @@ void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object)
    });
 }
 
-inline void deserialize_basic(mpark::monostate& ret,
+inline void deserialize_variant(mpark::monostate& ret,
                               const nlohmann::json& object)
 {
 }
