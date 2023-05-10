@@ -21,18 +21,26 @@ template <typename T> struct is_optional<std::optional<T>> : std::true_type
 {
 };
 
-template <typename T> concept is_variant = requires
+template <typename T> concept IsVariant = requires
 {
    typename mpark::variant_size<T>::type;
    typename mpark::variant_alternative<0, T>::type;
 };
-static_assert(is_variant<mpark::variant<int, double>>);
-static_assert(!is_variant<int>);
-static_assert(!is_variant<std::array<unsigned char, 16>>);
+static_assert(IsVariant<mpark::variant<int, double>>);
+static_assert(!IsVariant<int>);
+static_assert(!IsVariant<std::array<unsigned char, 16>>);
 
 template<typename T>
-concept TypeIsHandledByMeta = (meta::isRegistered<T>()) || meta::is_variant<T> ||
-    meta::is_optional<T>::value;
+concept IsRegistered = (isRegistered<T>());
+template<typename T>
+concept IsNotRegistered = (!isRegistered<T>());
+template<typename T>
+concept IsOptional = is_optional<T>::value;
+template<typename T>
+concept IsNotOptional = !IsOptional<T>;
+
+template<typename T>
+concept TypeIsHandledByMeta = IsRegistered<T> || IsVariant<T> || IsOptional<T>;
 
 static_assert(!TypeIsHandledByMeta<std::array<unsigned char, 16>>);
  
@@ -52,29 +60,12 @@ template <typename T>
 namespace meta
 {
 /////////////////// SERIALIZATION
-template <typename Class,
-          typename = std::enable_if_t<meta::isRegistered<Class>()>>
-nlohmann::json serialize(const Class& obj);
+template <IsRegistered T>
+nlohmann::json serialize(const T& obj);
 
-template <typename Class,
-          typename = std::enable_if_t<!meta::isRegistered<Class>()>,
-          typename = void>
-nlohmann::json serialize(const Class& obj);
+template <IsNotRegistered T>
+nlohmann::json serialize(const T& obj);
 
-/*
-template <typename Class> nlohmann::json serialize_basic(const Class& obj);
-
-// specialization for std::vector
-template <typename T> nlohmann::json serialize_basic(const std::vector<T>& obj);
-
-// specialization for std::unodered_map
-template <typename K, typename V,
-          typename std::enable_if<
-              std::is_convertible<K, std::string>::value &&
-              std::is_same<decltype(std::to_string(std::declval<K>())),
-                           std::string>::value>::type* = nullptr>
-nlohmann::json serialize_basic(const std::unordered_map<K, V>& obj);
-*/
 // specialization for mpark::variant
 template <typename... T>
 nlohmann::json serialize_basic(const mpark::variant<T...>& obj);
@@ -82,32 +73,12 @@ inline nlohmann::json serialize_basic(const mpark::monostate& obj);
 
 /////////////////// DESERIALIZATION
 //
+template <IsRegistered T>
+void deserialize(T& obj, const nlohmann::json& object);
 
-template <typename Class,
-          typename = std::enable_if_t<meta::isRegistered<Class>()>>
-void deserialize(Class& obj, const nlohmann::json& object);
+template <IsNotRegistered T>
+void deserialize(T& obj, const nlohmann::json& object);
 
-template <typename Class,
-          typename = std::enable_if_t<!meta::isRegistered<Class>()>,
-          typename = void>
-void deserialize(Class& obj, const nlohmann::json& object);
-/*
-template <typename Class>
-void deserialize_basic(Class& obj, const nlohmann::json& object);
-
-// specialization for std::vector
-template <typename T>
-void deserialize_basic(std::vector<T>& obj, const nlohmann::json& object);
-
-// specialization for std::unodered_map
-template <typename K, typename V,
-          typename std::enable_if<
-              std::is_convertible<K, std::string>::value &&
-              std::is_same<decltype(std::to_string(std::declval<K>())),
-                           std::string>::value>::type* = nullptr>
-void deserialize_basic(std::unordered_map<K, V>& obj,
-                       const nlohmann::json& object);
-*/
 // specialization for mpark::variant
 template <typename... T>
 void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object);

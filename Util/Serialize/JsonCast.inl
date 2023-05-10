@@ -1,76 +1,49 @@
+#include <fmt/format.h>
+
 #include <iostream>
 
 #include "JsonCast.h"
-#include <fmt/format.h>
 
-
-template<typename T>
-requires meta::TypeIsHandledByMeta<T>
-void nlohmann::to_json(nlohmann::json& j, const T& obj)
+template <typename T>
+requires meta::TypeIsHandledByMeta<T> void nlohmann::to_json(nlohmann::json& j,
+                                                             const T& obj)
 {
    j = meta::serialize(obj);
 }
 
-template<typename T>
-requires meta::TypeIsHandledByMeta<T>
-void nlohmann::from_json(const nlohmann::json& j, T& obj)
+template <typename T>
+requires meta::TypeIsHandledByMeta<T> void nlohmann::from_json(
+    const nlohmann::json& j, T& obj)
 {
    meta::deserialize(obj, j);
 }
 
 namespace meta
 {
-template<class T>
-auto getClassNameOrIndex(int i) noexcept
-{
-   return i;
-};
+template <class T> auto getClassNameOrIndex(int i) noexcept { return i; };
 
 //////////////////// SOME HELPERS
-template<std::size_t I = 0, typename... Tp, typename Fn>
-inline typename std::enable_if<I == sizeof...(Tp), void>::type
-for_each_in_tuple(std::tuple<Tp...>& t, Fn&& func)
+template <std::size_t I = 0, typename... Tp, typename Fn>
+inline void for_each_in_tuple(std::tuple<Tp...>& t, Fn&& func)
 {
-}
-
-template<std::size_t I = 0, typename... Tp, typename Fn>
-   inline typename std::enable_if <
-   I<sizeof...(Tp), void>::type for_each_in_tuple(std::tuple<Tp...>& t,
-                                                  Fn&& func)
-{
-   if (func(I, std::get<I>(t)))
+   if constexpr (I < sizeof...(Tp))
    {
-      for_each_in_tuple<I + 1, Tp...>(t, func);
+      if (func(I, std::get<I>(t)))
+      {
+         for_each_in_tuple<I + 1, Tp...>(t, func);
+      }
    }
 }
 
 /////////////////// SERIALIZATION
 
-template<typename Class>
-class SerializerFunc
+template <typename Class> class SerializerFunc
 {
 public:
    SerializerFunc(const Class& rObj, nlohmann::json& rValue) :
-      m_rObj(rObj), m_rValue(rValue){};
-   template<typename Member, typename = std::enable_if_t<!is_optional<
-                                meta::get_member_type<Member>>::value>>
-   void operator()(Member& member)
-   {
-      auto& valueName = m_rValue[member.getName()];
-      if (member.canGetConstRef())
-      {
-         valueName = member.get(m_rObj);
-      }
-      else if (member.hasGetter())
-      {
-         valueName =
-            member.getCopy(m_rObj); // passing copy as const ref, it's okay
-      }
-   }
-   template<typename Member,
-            typename = std::enable_if_t<
-               is_optional<meta::get_member_type<Member>>::value>,
-            typename = void>
+       m_rObj(rObj), m_rValue(rValue){};
+   template <typename Member>
+      requires IsOptional<get_member_type<Member>> 
    void operator()(Member& member)
    {
       if (member.canGetConstRef())
@@ -83,64 +56,42 @@ public:
          }
       }
    }
+   template <typename Member>
+      requires IsNotOptional<get_member_type<Member>> 
+   void operator()(Member& member)
+   {
+      auto& valueName = m_rValue[member.getName()];
+      if (member.canGetConstRef())
+      {
+         valueName = member.get(m_rObj);
+      }
+      else if (member.hasGetter())
+      {
+         valueName =
+             member.getCopy(m_rObj);   // passing copy as const ref, it's okay
+      }
+   }
 
 private:
    const Class& m_rObj;
    nlohmann::json& m_rValue;
 };
 
-template<typename Class, typename>
-nlohmann::json serialize(const Class& obj)
+template <IsRegistered T> nlohmann::json serialize(const T& obj)
 {
    nlohmann::json value;
-   SerializerFunc<Class> serializeFunc(obj, value);
-   meta::doForAllMembers<Class>(serializeFunc);
+   SerializerFunc<T> serializeFunc(obj, value);
+   meta::doForAllMembers<T>(serializeFunc);
    return value;
 }
 
-template<typename Class, typename, typename>
-nlohmann::json serialize(const Class& obj)
+template <IsNotRegistered T> nlohmann::json serialize(const T& obj)
 {
    return serialize_basic(obj);
 }
 
-/*
-template<typename Class>
-nlohmann::json serialize_basic(const Class& obj)
-{
-   return nlohmann::json(obj);
-}
-
-// specialization for std::vector
-template<typename T>
-nlohmann::json serialize_basic(const std::vector<T>& obj)
-{
-   nlohmann::json value;
-   int i = 0;
-   for (auto& elem : obj)
-   {
-      value[i] = elem;
-      ++i;
-   }
-   return value;
-}
-
-// specialization for std::unordered_map
-template<typename K, typename V,
-typename std::enable_if<std::is_convertible<K, std::string>::value &&
-                                  std::is_same<decltype(std::to_string(std::declval<K>())), std::string>::value>::type* = nullptr>
-nlohmann::json serialize_basic(const std::unordered_map<K, V>& obj)
-{
-   nlohmann::json value;
-   for (auto& pair : obj)
-   {
-      value.emplace(castToString(pair.first), pair.second);
-   }
-   return value;
-}
-*/
 // specialization for mpark::variant
-template<typename... T>
+template <typename... T>
 nlohmann::json serialize_basic(const mpark::variant<T...>& obj)
 {
    nlohmann::json ret;
@@ -164,24 +115,14 @@ inline nlohmann::json serialize_basic(const mpark::monostate& obj)
 }
 
 /////////////////// DESERIALIZATION
-
-template<typename Class>
-Class deserialize(const nlohmann::json& obj)
-{
-   Class c;
-   deserialize(c, obj);
-   return c;
-}
-
-template<typename Class>
-class DeserializerFunc
+template <typename Class> class DeserializerFunc
 {
 public:
    DeserializerFunc(Class& rObj, const nlohmann::json& rValue) :
-      m_rObj(rObj), m_rValue(rValue){};
-   template<typename Member, typename = std::enable_if_t<!is_optional<
-                                meta::get_member_type<Member>>::value>>
-   void operator()(Member& member)
+       m_rObj(rObj), m_rValue(rValue){};
+   template <typename Member>
+   requires IsNotOptional<get_member_type<Member>> void operator()(
+       Member& member)
    {
       auto it = m_rValue.find(member.getName());
       if (it != m_rValue.end())
@@ -201,7 +142,7 @@ public:
             else
             {
                throw std::runtime_error(
-                  "Error: can't deserialize member because it's read only");
+                   "Error: can't deserialize member because it's read only");
             }
          }
       }
@@ -212,18 +153,15 @@ public:
          throw std::runtime_error(errMsg);
       }
    }
-   template<typename Member,
-            typename = std::enable_if_t<
-               is_optional<meta::get_member_type<Member>>::value>,
-            typename = void>
-   void operator()(Member& member)
+   template <typename Member>
+   requires IsOptional<get_member_type<Member>> void operator()(Member& member)
    {
       auto it = m_rValue.find(member.getName());
       if (it != m_rValue.end())
       {
          auto& objName = *it;
          using MemberT =
-            typename meta::get_member_type<decltype(member)>::value_type;
+             typename meta::get_member_type<decltype(member)>::value_type;
          if (member.canGetRef())
          {
             member.getRef(m_rObj).emplace(objName.template get<MemberT>());
@@ -231,7 +169,7 @@ public:
          else
          {
             throw std::runtime_error(
-               "Error: can't get reference to std::optional");
+                "Error: can't get reference to std::optional");
          }
       }
    }
@@ -241,64 +179,30 @@ private:
    const nlohmann::json& m_rValue;
 };
 
-template<typename Class, typename>
-void deserialize(Class& obj, const nlohmann::json& object)
+template <IsRegistered T> void deserialize(T& obj, const nlohmann::json& object)
 {
    if (object.is_object())
    {
-      DeserializerFunc<Class> deserializerFunc(obj, object);
-      meta::doForAllMembers<Class>(deserializerFunc);
+      DeserializerFunc<T> deserializerFunc(obj, object);
+      meta::doForAllMembers<T>(deserializerFunc);
    }
    else
    {
       throw std::runtime_error(
-         fmt::format("Error: can't deserialize from nlohmann::json to Class "
-                     "because its not an object, it's an array. {}",
-                     object.dump()));
+          fmt::format("Error: can't deserialize from nlohmann::json to Class "
+                      "because its not an object, it's an array. {}",
+                      object.dump()));
    }
 }
 
-template<typename Class, typename, typename>
-void deserialize(Class& obj, const nlohmann::json& object)
+template <IsNotRegistered T>
+void deserialize(T& obj, const nlohmann::json& object)
 {
    deserialize_basic(obj, object);
 }
 
-/*
-template<typename Class>
-void deserialize_basic(Class& obj, const nlohmann::json& object)
-{
-   obj = object.get<Class>();
-}
-
-// specialization for std::vector
-template<typename T>
-void deserialize_basic(std::vector<T>& obj, const nlohmann::json& object)
-{
-   obj.reserve(
-      object
-         .size()); // vector.resize() works only for default constructible types
-   for (auto& elem : object)
-   {
-      obj.push_back(elem); // push rvalue
-   }
-}
-
-// specialization for std::unodered_map
-template<typename K, typename V,
-    typename std::enable_if<std::is_convertible<K, std::string>::value &&
-                                  std::is_same<decltype(std::to_string(std::declval<K>())), std::string>::value>::type* = nullptr>
-void deserialize_basic(std::unordered_map<K, V>& obj,
-                       const nlohmann::json& object)
-{
-   for (auto it = object.begin(); it != object.end(); ++it)
-   {
-      obj.emplace(fromString<K>(it.key()), it.value());
-   }
-}
-*/
 // specialization for mpark::variant
-template<typename... T>
+template <typename... T>
 void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object)
 {
    std::tuple<T...> tuple;
@@ -319,12 +223,12 @@ void deserialize_basic(mpark::variant<T...>& ret, const nlohmann::json& object)
          {
             ret = object.get<Type>();
          }
-         return false; // we have the match
+         return false;   // we have the match
       }
       catch (std::runtime_error& e)
       {
          using FirstType =
-            typename std::tuple_element<0, std::tuple<T...>>::type;
+             typename std::tuple_element<0, std::tuple<T...>>::type;
          using LastType = typename std::tuple_element<sizeof...(T) - 1,
                                                       std::tuple<T...>>::type;
          if (std::is_same<Type, LastType>::value)
@@ -341,4 +245,4 @@ inline void deserialize_basic(mpark::monostate& ret,
 {
 }
 
-} // namespace meta
+}   // namespace meta
