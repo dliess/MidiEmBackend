@@ -40,7 +40,7 @@ template<typename T>
 concept IsNotOptional = !IsOptional<T>;
 
 template<typename T>
-concept TypeIsHandledByMeta = IsRegistered<T> || IsVariant<T> || IsOptional<T>;
+concept TypeIsHandledByMeta = IsRegistered<T> || IsVariant<T>;
 
 static_assert(!TypeIsHandledByMeta<std::array<unsigned char, 16>>);
  
