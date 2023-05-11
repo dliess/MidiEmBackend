@@ -383,23 +383,25 @@ void EventRouterRt::handlePressRelease(
     const controller::PressReleaseType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
-      [&, this](const EventDestination::DrumKit& drumKit) {
+      CASE_1(drumKit) 
+      {
          SWITCH(eventDestination.controlType)
-            [&, this](const EventDestination::Note& note) { playNoteOnDrumKit(drumKit, note, value); },
-            [&, this](const EventDestination::Parameter& parameter) { setParameterOnDrumKit(drumKit, parameter, value); }
+            CASE_1(note) { playNoteOnDrumKit(drumKit, note, value); },
+            CASE_2(parameter) { setParameterOnDrumKit(drumKit, parameter, value); }
          END_SWITCH
       },
-      [&, this](const EventDestination::Melodic& melodic) {
+      CASE_2(melodic) 
+      {
          SWITCH(eventDestination.controlType)
-                  [&, this](const EventDestination::Note& note) { },
-                  [&, this](const EventDestination::Parameter& parameter) { setParameterOnMelodic(melodic, parameter, value); }
+            CASE_1(note) { /*EMPTY*/ },
+            CASE_2(parameter) { setParameterOnMelodic(melodic, parameter, value); }
          END_SWITCH
       },
-      [&, this](const EventDestination::MusicDevice& musicDevice) {
+      CASE_3(musicDevice) 
+      {
          SWITCH(eventDestination.controlType)
-                  [&, this](const EventDestination::Note& note) { playNoteOnMusicDevice(musicDevice, note, value); },
-                  [&, this](const EventDestination::Parameter& parameter) { setParameterOnMusicDevice(musicDevice, parameter, value);
-                  }
+            CASE_1(note) { playNoteOnMusicDevice(musicDevice, note, value); },
+            CASE_2(parameter) { setParameterOnMusicDevice(musicDevice, parameter, value); }
          END_SWITCH
       }
    END_SWITCH
@@ -423,16 +425,13 @@ void EventRouterRt::handleAnyWidgetCoordPressRelease(
     const controller::PressReleaseType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
-      [&, this](const EventDestination::DrumKit& drumKit) {
+      CASE_1(drumKit) {
          SWITCH(eventDestination.controlType)
-            [&, this](const EventDestination::Note& note) {
-               playLayoutMappedDrumKit(widgetCoord, drumKit, value);
-            },
-            [](const EventDestination::Parameter& parameter) {}
+            CASE_1(note) { playLayoutMappedDrumKit(widgetCoord, drumKit, value); },
+            CASE_2(parameter) {}
          END_SWITCH
       },
-      [](const EventDestination::Melodic& melodic) {},
-      [](const EventDestination::MusicDevice& musicDevice) {}
+      CASE_DEFAULT {}
    END_SWITCH
 }
 
