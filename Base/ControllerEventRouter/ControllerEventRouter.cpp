@@ -82,17 +82,17 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
        [&source, &destination](auto& map) { map[source] = destination; });
 
    // inc refcount of instrument
-   mpark::visit(
-       util::overload{
-           [this](const EventDestination::DrumKit& drumKit) {
-              m_rInstruments.incKitInstrumentRefCount(drumKit.uuid);
-           },
-           [this](const EventDestination::Melodic& melodic) {
-              m_rInstruments.incMelodicInstrumentRefCount(melodic.uuid);
-           },
-           [](const EventDestination::MusicDevice&) {},
-       },
-       destination.endpoint);
+   SWITCH(destination.endpoint)
+      CASE(EventDestination::DrumKit, drumKit)
+      {
+         m_rInstruments.incKitInstrumentRefCount(drumKit.uuid);
+      },
+      CASE(EventDestination::Melodic, melodic)
+      {
+         m_rInstruments.incMelodicInstrumentRefCount(melodic.uuid);
+      },
+      CASE(EventDestination::MusicDevice,_) {}
+   END_SWITCH
 
    emitGotConnected(source, destination);
    // printMap();
@@ -110,17 +110,17 @@ void EventRouter::removeConnection(
    if (auto iter = m_map.nonRt().find(eventIdExt); iter != m_map.nonRt().end())
    {
       // dec refcount of instrument
-      mpark::visit(
-          util::overload{
-              [this](const EventDestination::DrumKit& drumKit) {
-                 m_rInstruments.decKitInstrumentRefCount(drumKit.uuid);
-              },
-              [this](const EventDestination::Melodic& melodic) {
-                 m_rInstruments.decMelodicInstrumentRefCount(melodic.uuid);
-              },
-              [](const EventDestination::MusicDevice&) {},
-          },
-          iter->second.endpoint);
+      SWITCH(iter->second.endpoint)
+         CASE(EventDestination::DrumKit, drumKit)
+         {
+            m_rInstruments.decKitInstrumentRefCount(drumKit.uuid);
+         },
+         CASE(EventDestination::Melodic, melodic)
+         {
+            m_rInstruments.decMelodicInstrumentRefCount(melodic.uuid);
+         },
+         CASE(EventDestination::MusicDevice,_) {}
+      END_SWITCH
    }
    m_map.withNonRtLocked([&](auto& map) {
       auto it = map.find(eventIdExt);
@@ -148,29 +148,32 @@ const description::sound::Parameter* EventRouter::parameterDescription(
     const EventDestination::Endpoint& endpoint, int paramIdx)
 {
    const description::sound::Parameter* ret{nullptr};
-   mpark::visit(util::overload{[&](EventDestination::DrumKit& drumKit) {
-                                  m_rInstruments.withKitInstrumentRt(
-                                      drumKit.uuid, [&](const auto& instr) {
-                                         ret = instr.parameterDescription(
-                                             drumKit.voiceIdx,
-                                             drumKit.componentIdx, paramIdx);
-                                      });
-                               },
-                               [&](EventDestination::Melodic& melodic) {
-                                  m_rInstruments.withMelodicInstrumentRt(
-                                      melodic.uuid, [&](const auto& instr) {
-                                         ret = instr.parameterDescription(
-                                             melodic.componentIdx, paramIdx);
-                                      });
-                               },
-                               [&](EventDestination::MusicDevice& musicDevice) {
-                                  m_rMusicDeviceContainer.withSoundHandler(
-                                      musicDevice.mdid, [&](const auto& sd) {
-                                         ret = sd.parameterDescription(
-                                             musicDevice.voiceIdx, paramIdx);
-                                      });
-                               },
-                               [](auto&&) {}},
-                endpoint);
+   SWITCH(endpoint)
+      CASE(EventDestination::DrumKit, drumKit)
+      {
+         m_rInstruments.withKitInstrumentRt(
+            drumKit.uuid, [&](const auto& instr) {
+               ret = instr.parameterDescription(
+                  drumKit.voiceIdx,
+                  drumKit.componentIdx, paramIdx);
+            });
+      },
+      CASE(EventDestination::Melodic, melodic)
+      {
+         m_rInstruments.withMelodicInstrumentRt(
+            melodic.uuid, [&](const auto& instr) {
+               ret = instr.parameterDescription(
+                  melodic.componentIdx, paramIdx);
+            });
+      },
+      CASE(EventDestination::MusicDevice, musicDevice)
+      {
+         m_rMusicDeviceContainer.withSoundHandler(
+            musicDevice.mdid, [&](const auto& sd) {
+               ret = sd.parameterDescription(
+                  musicDevice.voiceIdx, paramIdx);
+            });
+      }
+   END_SWITCH
    return ret;
 }

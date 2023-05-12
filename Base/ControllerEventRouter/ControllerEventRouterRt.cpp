@@ -24,6 +24,7 @@ void EventRouterRt::operator()(const util::Identifiable::UUID uuid,
 {
    const controller::EventIdExt eventIdExt{uuid, event.id};
    SWITCH(event.value)
+      CASE_MONOSTATE {},
       [this, &eventIdExt](const controller::PressReleaseType& value) {
          handlePressReleaseType(eventIdExt, value);
       },
@@ -35,8 +36,7 @@ void EventRouterRt::operator()(const util::Identifiable::UUID uuid,
       },
       [this, &eventIdExt](const controller::RelativeValueType& value) {
          handleRelativeValueType(eventIdExt, value);
-      },
-      [this](auto&&) {}
+      }
    END_SWITCH
 }
 
@@ -160,46 +160,47 @@ void EventRouterRt::handlePressReleaseType(
     const controller::PressReleaseType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-           [this, &eventIdExt,
-            &value](const controller::WidgetCoord& widgetCoord) {
-              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
-              if (destIter != m_rMap.end())
-              {
-                 handlePressRelease(destIter->second, value);
-              }
-              else
-              {
-                 controller::EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord
-                     .emplace<controller::WidgetCoord>(ANY, ANY);
-                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
-                 if (destIter2 != m_rMap.end())
-                 {
-                    handleAnyWidgetCoordPressRelease(widgetCoord,
-                                                     destIter2->second, value);
-                 }
-              }
-           },
-           [this, &eventIdExt, &value](const controller::Note& note) {
-              const auto destIter = m_actIter = m_rMap.find(eventIdExt);
-              if (destIter != m_rMap.end())
-              {
-                 handlePressRelease(destIter->second, value);
-              }
-              else
-              {
-                 controller::EventIdExt melodicEvent = eventIdExt;
-                 melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
-                     ANY);
-                 const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
-                 if (destIter2 != m_rMap.end())
-                 {
-                    handleAnyNotePressRelease(note.number, destIter2->second,
-                                              value);
-                 }
-              }
-           },
-           [this](auto&&) {}
+      CASE_MONOSTATE { assert(false); },
+      CASE(controller::WidgetCoord, widgetCoord)
+      {
+         const auto destIter = m_actIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handlePressRelease(destIter->second, value);
+         }
+         else
+         {
+            controller::EventIdExt melodicEvent = eventIdExt;
+            melodicEvent.eventId.widgetCoord
+               .emplace<controller::WidgetCoord>(ANY, ANY);
+            const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
+            if (destIter2 != m_rMap.end())
+            {
+               handleAnyWidgetCoordPressRelease(widgetCoord,
+                                                destIter2->second, value);
+            }
+         }
+      },
+      CASE(controller::Note, note)
+      {
+         const auto destIter = m_actIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handlePressRelease(destIter->second, value);
+         }
+         else
+         {
+            controller::EventIdExt melodicEvent = eventIdExt;
+            melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+               ANY);
+            const auto destIter2 = m_actIter = m_rMap.find(melodicEvent);
+            if (destIter2 != m_rMap.end())
+            {
+               handleAnyNotePressRelease(note.number, destIter2->second,
+                                          value);
+            }
+         }
+      }
    END_SWITCH
 }
 
@@ -208,8 +209,9 @@ void EventRouterRt::handleContinousValueType(
     const controller::ContinousValueType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-      [this, &eventIdExt,
-      &value](const controller::WidgetCoord& widgetCoord) {
+      CASE_MONOSTATE { assert(false); },
+      CASE(controller::WidgetCoord, _)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
@@ -224,7 +226,8 @@ void EventRouterRt::handleContinousValueType(
          }
          */
       },
-      [this, &eventIdExt, &value](const controller::Note& note) {
+      CASE(controller::Note, note)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
@@ -242,8 +245,7 @@ void EventRouterRt::handleContinousValueType(
                                     value);
             }
          }
-      },
-      [this](auto&&) {}
+      }
    END_SWITCH
 }
 
@@ -252,15 +254,17 @@ void EventRouterRt::handleIncrementType(
     const controller::IncrementType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-      [this, &eventIdExt,
-      &value](const controller::WidgetCoord& widgetCoord) {
+      CASE_MONOSTATE { assert(false); },
+      CASE(controller::WidgetCoord, _)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
             handleIncrement(destIter->second, value);
          }
       },
-      [this, &eventIdExt, &value](const controller::Note& note) {
+      CASE(controller::Note, note)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
@@ -278,8 +282,7 @@ void EventRouterRt::handleIncrementType(
                                     value);
             }
          }
-      },
-      [this](auto&&) { assert(false); }
+      }
    END_SWITCH
 }
 
@@ -288,15 +291,18 @@ void EventRouterRt::handleRelativeValueType(
     const controller::RelativeValueType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-      [this, &eventIdExt,
-      &value](const controller::WidgetCoord& widgetCoord) {
+
+      CASE_MONOSTATE { assert(false); },
+      CASE(controller::WidgetCoord, _)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
             handleRelativeValue(destIter->second, value);
          }
       },
-      [this, &eventIdExt, &value](const controller::Note& note) {
+      CASE(controller::Note, note)
+      {
          const auto destIter = m_actIter = m_rMap.find(eventIdExt);
          if (destIter != m_rMap.end())
          {
@@ -440,9 +446,11 @@ void EventRouterRt::handleAnyNotePressRelease(
     const controller::PressReleaseType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
-      [&, this](const EventDestination::DrumKit& drumKit) {
+      CASE(EventDestination::DrumKit, drumKit)
+      {
          SWITCH(eventDestination.controlType)
-            [&, this](const EventDestination::Note& dstNote) {
+            CASE(EventDestination::Note, dstNote)
+            {
                if (drumKit.voiceIdx == ANY)
                {
                   m_rInstruments.withKitInstrumentRt(
@@ -461,24 +469,28 @@ void EventRouterRt::handleAnyNotePressRelease(
                      });
                }
             },
-            [](const EventDestination::Parameter& parameter) {}
+            CASE(EventDestination::Parameter, parameter) {}
          END_SWITCH
       },
-      [&, this](const EventDestination::Melodic& melodic) {
+      CASE(EventDestination::Melodic, melodic)
+      {
          SWITCH(eventDestination.controlType)
-            [&, this](const EventDestination::Note& dstNote) {
+            CASE(EventDestination::Note, dstNote)
+            {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
                      detail::playNoteOnOff(melodicInstr, note,
                                           value.value);
                   });
             },
-            [](const EventDestination::Parameter& parameter) {}
+            CASE(EventDestination::Parameter, parameter) {}
          END_SWITCH
       },
-      [&, this](const EventDestination::MusicDevice& musicDevice) {
+      CASE(EventDestination::MusicDevice, musicDevice)
+      {
          SWITCH(eventDestination.controlType)
-            [&, this](const EventDestination::Note& dstNote) {
+            CASE(EventDestination::Note, dstNote)
+            {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundaHandler) {
                      detail::playNoteOnOff(soundaHandler, note,
@@ -486,7 +498,7 @@ void EventRouterRt::handleAnyNotePressRelease(
                                           musicDevice.voiceIdx);
                   });
             },
-            [](const EventDestination::Parameter& parameter) {}
+            CASE(EventDestination::Parameter, parameter) {}
          END_SWITCH
       }
    END_SWITCH

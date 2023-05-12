@@ -8,8 +8,11 @@ namespace base::eventRouter
 {
 class EventRouter;
 }
-namespace base::musicDevice::factory { class DataHolder; }
-
+namespace base::musicDevice::factory
+{
+class DataHolder;
+}
+namespace base::instruments { class Instruments; }
 namespace uiadapter::capnzero
 {
 class LdControllerEventRouterRpc
@@ -18,36 +21,33 @@ class LdControllerEventRouterRpc
 public:
    LdControllerEventRouterRpc(
        base::eventRouter::EventRouter& rCtrlEventRouter,
-       base::musicDevice::factory::DataHolder &rMDFDataHolder) noexcept;
-   void connectNotes2Notes(
-       const ::capnzero::SpanCL<16>& controllerUUID,
-       ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
-       ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
-       const ::capnzero::SpanCL<16>& destUUID,
-       ::capnzero::Int16 voiceIdx) override;
+       base::instruments::Instruments& rInstruments,
+       base::musicDevice::factory::DataHolder& rMDFDataHolder) noexcept;
+   void connectNotes2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
+                           ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
+                           ::capnzero::Int16 eventIdx,
+                           ::capnzero::Int16 channelIdx,
+                           const ::capnzero::SpanCL<16>& destUUID,
+                           ::capnzero::Int16 voiceIdx) override;
    void connectNotes2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
        ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
-   void connectWidget2Notes(
-       const ::capnzero::SpanCL<16>& controllerUUID,
-       ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
-       ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
-       ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
-       const ::capnzero::SpanCL<16>& destUUID,
-       ::capnzero::Int16 voiceIdx) override;
+   void connectWidget2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
+                            ::capnzero::Int16 widgetIdx,
+                            ::capnzero::Int16 widgetCoordX,
+                            ::capnzero::Int16 widgetCoordY,
+                            ::capnzero::Int16 eventIdx,
+                            ::capnzero::Int16 channelIdx,
+                            const ::capnzero::SpanCL<16>& destUUID,
+                            ::capnzero::Int16 voiceIdx) override;
    void connectWidget2Parameter(
        const ::capnzero::SpanCL<16>& controllerUUID,
-       ::capnzero::Int16 widgetIdx, ::capnzero::Int16 widgetCoordX,
-       ::capnzero::Int16 widgetCoordY, ::capnzero::Int16 eventIdx,
-       ::capnzero::Int16 channelIdx,
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
+       ::capnzero::Int16 widgetIdx, ::capnzero::UInt32 widgetCoord,
+       ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
@@ -65,18 +65,17 @@ public:
                                  ::capnzero::Int16 channelIdx) override;
 
    void eraseConnectionsToDestinationNotes(
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID,
        ::capnzero::Int16 voiceIdx) override;
    void eraseConnectionsToDestinationParameter(
-       ::capnzero::MidiEmLoader::InstrumentType destInstrumentType,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
        ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
 
 private:
    base::eventRouter::EventRouter& m_rCtrlEventRouter;
-   base::musicDevice::factory::DataHolder &m_rMDFDataHolder;
+   base::instruments::Instruments& m_rInstruments;
+   base::musicDevice::factory::DataHolder& m_rMDFDataHolder;
 };
 
 }   // namespace uiadapter::capnzero

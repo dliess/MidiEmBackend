@@ -4,16 +4,16 @@
 #include <functional>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "DoubleBuffer.h"
 #include "Identifiable.h"
 #include "InstrumentsData.h"
+#include "InstrumentsPersister.h"
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 #include "Meta.h"
 #include "Settings_old.h"
 #include "function_ref.h"
-#include "CallbackSignal.h"
-#include "InstrumentsPersister.h"
 
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
@@ -30,13 +30,15 @@ struct Instruments   //: public utils::Settings<Instruments>
 
    void createKitInstrument(std::string name);
    void insertKitInstrument(const KitInstrument& kitInstrument);
-   [[nodiscard]] bool hasKitInstrument(const KitInstrument& kitInstrument) const;
+   [[nodiscard]] bool hasKitInstrument(
+       const KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             const std::string& name);
 
    void createMelodicInstrument(std::string name);
-   [[nodiscard]] bool hasMelodicInstrument(const MelodicInstrument& melodicInstrument) const;
+   [[nodiscard]] bool hasMelodicInstrument(
+       const MelodicInstrument& melodicInstrument) const;
    void insertMelodicInstrument(const MelodicInstrument& melodicInstrument);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
@@ -93,17 +95,21 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] const Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView);
 
-   inline void withInstrumentRt(util::Identifiable::UUIDView uuid,
+   void withInstrumentRt(util::Identifiable::UUIDView uuid,
                                 util::function_ref<void(const Instrument&)> cb);
-   inline void withKitInstrumentRt(
+   void withKitInstrumentRt(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const KitInstrument&)> cb);
-   inline void withMelodicInstrumentRt(
+   void withMelodicInstrumentRt(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
 
    void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
    void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
+
+   [[nodiscard]] bool hasKitInstrument(util::Identifiable::UUIDView uuid) const;
+   [[nodiscard]] bool hasMelodicInstrument(
+       util::Identifiable::UUIDView uuid) const;
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
