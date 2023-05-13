@@ -27,6 +27,7 @@ EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
    try
    {
       auto data = m_persister.load();
+      initRtCache(data);
       m_map.withNonRtLocked([&data](auto& nonRtData) { nonRtData = data; });
    }
    catch (std::exception& e)
@@ -78,6 +79,7 @@ void EventRouter::createConnection(const controller::EventIdExt& from,
                ? 0.5f
                : 0.0f);
    }
+   initRtCache(destination);
    m_map.withNonRtLocked(
        [&source, &destination](auto& map) { map[source] = destination; });
 

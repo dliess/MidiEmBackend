@@ -487,8 +487,8 @@ void EventRouterRt::handleAnyNotePressRelease(
             CASE(EventDestination::Note, dstNote)
             {
                m_rMusicDeviceContainer.withSoundHandler(
-                  musicDevice.mdid, [&](auto& soundaHandler) {
-                     detail::playNoteOnOff(soundaHandler, note,
+                  musicDevice.mdid, [&](auto& soundHandler) {
+                     detail::playNoteOnOff(soundHandler, note,
                                           value.value,
                                           musicDevice.voiceIdx);
                   });

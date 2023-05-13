@@ -7,6 +7,7 @@
 #include "EnumReflect.h"
 #include "Identifiable.h"
 #include "MusicDeviceId.h"
+#include "Overload.h"
 
 namespace base::eventRouter
 {
@@ -47,7 +48,8 @@ struct EventDestination
    };
    struct Parameter
    {
-      struct DescriptionCache {
+      struct DescriptionCache 
+      {
          bool isList{false};
          int resolution{128};
          float zeroVal{0};
@@ -70,7 +72,23 @@ struct EventDestination
    ControlType controlType;
 };
 
-}   // namespace base::musicDevice::controller
+inline
+void initRtCache(EventDestination& eventDestination)
+{
+   SWITCH(eventDestination.controlType)
+      MFCASE_1(note) {},
+      MFCASE_2(parameter)
+      {
+         if(!parameter.valueCache)
+         {
+            parameter.valueCache = 
+               std::make_shared<EventDestination::Parameter::ValueCache>();
+         }
+      }
+   END_SWITCH
+}
+
+}   // namespace base::eventRouter
 
 #include "ControllerEventDestinationHash.h"
 #include "ControllerEventDestination.inl"
