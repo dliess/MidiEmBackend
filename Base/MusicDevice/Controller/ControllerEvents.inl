@@ -70,11 +70,12 @@ inline bool operator==(Event const& lhs, Event const& rhs)
 {
    return lhs.id == rhs.id && lhs.value == rhs.value;
 }
-
+/*
 inline bool operator==(EventIdExt const& lhs, EventIdExt const& rhs)
 {
    return lhs.uuid == rhs.uuid && lhs.eventId == rhs.eventId;
 }
+*/
 
 }   // namespace base::musicDevice::controller
 

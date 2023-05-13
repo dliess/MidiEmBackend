@@ -8,8 +8,12 @@
 
 namespace base::eventRouter
 {
-using Data =
-    std::unordered_map<::base::musicDevice::controller::EventIdExt, EventDestination>;
+template<typename ControllerIdType>
+using MapDataType =
+    std::unordered_map<::base::musicDevice::controller::EventIdAndUuid<ControllerIdType>, EventDestination>;
+
+using Data = MapDataType<util::Identifiable::UUID>;
+using LoaderData = MapDataType<MusicDeviceId>;
 
 inline
 void initRtCache(Data& data)

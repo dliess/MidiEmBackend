@@ -56,11 +56,15 @@ struct Event
    EventValue value;
 };
 
-struct EventIdExt
+template<typename IdType>
+struct EventIdAndUuid
 {
-   util::Identifiable::UUID uuid;
+   IdType uuid;
    EventId eventId;
+   auto operator<=>(const EventIdAndUuid<IdType>&) const = default;
 };
+
+using EventIdExt = EventIdAndUuid<util::Identifiable::UUID>;
 
 } // namespace base::musicDevice::controller
 
