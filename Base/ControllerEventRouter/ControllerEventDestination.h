@@ -3,7 +3,7 @@
 
 #include <mpark/variant.hpp>
 #include <optional>
-
+#include <memory>
 #include "EnumReflect.h"
 #include "Identifiable.h"
 #include "MusicDeviceId.h"
@@ -47,15 +47,22 @@ struct EventDestination
    };
    struct Parameter
    {
-      int id;
-      ParameterDestination parameterDestination{
-          ParameterDestination::Parameter};
       struct DescriptionCache {
          bool isList{false};
          int resolution{128};
          float zeroVal{0};
          bool upwards{true};
-      } descriptionCache;
+      };
+      struct ValueCache
+      {
+         int storedIncrements{0};
+         std::optional<float> valueAtPress{0};
+      };
+      int id;
+      ParameterDestination parameterDestination{
+          ParameterDestination::Parameter};
+      DescriptionCache descriptionCache;
+      std::shared_ptr<ValueCache> valueCache;
    };
    using ControlType = mpark::variant<Note, Parameter>;
 

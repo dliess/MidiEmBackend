@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 
+#include "ControllerEventRouterData.h"
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
 #include "DoubleBuffer.h"
@@ -12,38 +13,20 @@
 
 namespace base::eventRouter
 {
-using MapType =
-    std::unordered_map<musicDevice::controller::EventIdExt, EventDestination>;
-
-struct ParameterCacheKey
-{
-   musicDevice::controller::EventIdExt eventId;
-   EventDestination eventDestination;
-};
-struct ParameterCache
-{
-   int storedIncrements{0};
-   std::optional<float> valueAtPress{0};
-};
-
-using ParameterCacheMap = std::unordered_map<ParameterCacheKey, ParameterCache>;
 
 class EventRouterRt
 {
 public:
-   EventRouterRt(const MapType& rMap, ParameterCacheMap& rParameterCacheMap,
-                 instruments::InstrumentsRef rInstruments,
+   EventRouterRt(const Data& rMap, instruments::InstrumentsRef rInstruments,
                  musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
 
    void operator()(const util::Identifiable::UUID uuid,
                    const musicDevice::controller::Event& event);
 
 private:
-   const MapType& m_rMap;
-   ParameterCacheMap& m_rParameterCacheMap;
+   const Data& m_rMap;
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
-   MapType::const_iterator m_actIter;
    void handlePressReleaseType(
        const musicDevice::controller::EventIdExt& event,
        const musicDevice::controller::PressReleaseType& value) noexcept;
@@ -113,13 +96,9 @@ private:
        const EventDestination::DrumKit& drumKit,
        const musicDevice::controller::PressReleaseType& value) noexcept;
 
-   ParameterCache& parameterCacheEntry();
-
    static constexpr int ANY = -1;
 };
 
 }   // namespace base::eventRouter
-
-#include "ControllerEventRouterRtHash.h"
 
 #endif

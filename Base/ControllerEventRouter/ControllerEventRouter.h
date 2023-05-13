@@ -42,7 +42,6 @@ private:
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
    util::DoubleBuffer<Data> m_map;
-   ParameterCacheMap m_parameterCacheMap;
    Persister m_persister;
 
    const musicDevice::description::sound::Parameter* parameterDescription(

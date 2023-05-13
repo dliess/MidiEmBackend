@@ -41,7 +41,7 @@ void EventRouter::onControllerDevEventOccured(
     const util::Identifiable::UUID& uuid, const controller::Event& event)
 {
    m_map.withRtLocked([this, &uuid, &event](const auto& map) {
-      EventRouterRt(map, m_parameterCacheMap, m_rInstruments,
+      EventRouterRt(map, m_rInstruments,
                     m_rMusicDeviceContainer)(uuid, event);
    });
 }
