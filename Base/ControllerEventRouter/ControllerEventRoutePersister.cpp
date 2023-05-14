@@ -6,14 +6,14 @@ base::eventRouter::Persister::Persister(
 {
 }
 
-void base::eventRouter::Persister::save(const Data& data)
+void base::eventRouter::Persister::save(const LoaderData& data)
 {
    m_dataPersister->save(nlohmann::json(data).dump().c_str());
 }
 
-base::eventRouter::Data base::eventRouter::Persister::load()
+base::eventRouter::LoaderData base::eventRouter::Persister::load()
 {
    const auto strData = m_dataPersister->load();
    nlohmann::json j   = nlohmann::json::parse(strData);
-   return j.get<Data>();
+   return j.get<LoaderData>();
 }

@@ -12,8 +12,8 @@ class Persister
 {
 public:
    explicit Persister(std::unique_ptr<util::IDataPersister> dataPersister);
-   void save(const Data& data);
-   Data load();
+   void save(const LoaderData& data);
+   LoaderData load();
 
 private:
    std::unique_ptr<util::IDataPersister> m_dataPersister;

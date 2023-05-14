@@ -22,7 +22,7 @@ Data convertFromLoaded(const LoaderData& loaderData)
         auto uuid = m_rMDFDataHolder.getUUIDByMdId(eventId.uuid);
         if(uuid)
         {
-            ret.try_emplace(*uuid, eventId.eventId, eventDest);
+            ret.try_emplace({*uuid, eventId.eventId}, eventDest);
         }
     }
     return ret;
@@ -36,7 +36,7 @@ LoaderData convertToLoaded(const Data& data)
         auto mdId = m_rMDFDataHolder.getMdIdByUUID(eventId.uuid);
         if(mdId)
         {
-            ret.try_emplace(*mdId, eventId.eventId, eventDest);
+            ret.try_emplace({*mdId, eventId.eventId}, eventDest);
         }
     }
     return ret;

@@ -11,6 +11,7 @@
 #include "MusicDeviceDescription.h"
 #include "DoubleBuffer.h"
 #include "ControllerEventRoutePersister.h"
+#include "MusicDeviceFactoryDataHolder.h"
 
 
 namespace base::eventRouter
@@ -19,7 +20,8 @@ class EventRouter
 {
 public:
    EventRouter(instruments::InstrumentsRef rInstruments,
-               musicDevice::MusicDeviceContainerRef rMusicDeviceContainer);
+               musicDevice::MusicDeviceContainerRef rMusicDeviceContainer,
+               musicDevice::factory::DataHolder& rMDFDataHolder);
    void createConnection(const musicDevice::controller::EventIdExt& from,
                          const EventDestination& to) noexcept;
    void removeConnection(
@@ -41,11 +43,19 @@ public:
 private:
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
+   musicDevice::factory::DataHolder& m_rMDFDataHolder;
    util::DoubleBuffer<Data> m_map;
    Persister m_persister;
+   LoaderData m_loaderData;
 
    const musicDevice::description::sound::Parameter* parameterDescription(
        const EventDestination::Endpoint& endpoint, int paramIdx);
+
+   void _createConnection(const musicDevice::controller::EventIdExt& from,
+                         const EventDestination& to) noexcept;
+   void _removeConnection(
+       const musicDevice::controller::EventIdExt& eventIdExt) noexcept;
+
 
    void printMap() const noexcept;
 

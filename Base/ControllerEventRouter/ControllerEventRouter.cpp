@@ -6,29 +6,55 @@
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 #include "SoundHandler.h"
+#include "ControllerEventRouterDataConverter.h"
 
 using namespace base::eventRouter;
 using namespace base::musicDevice;
 
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
-                         MusicDeviceContainerRef rMusicDeviceContainer) :
+                         MusicDeviceContainerRef rMusicDeviceContainer,
+                         musicDevice::factory::DataHolder& rMDFDataHolder) :
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
+    m_rMDFDataHolder(rMDFDataHolder),
     m_persister(std::make_unique<util::FilePersister>("ControllerEventRouter",
                                                       "settings.json"))
 {
-   onGotConnected(
-       [this](const musicDevice::controller::EventIdExt&,
-              const EventDestination&) { m_persister.save(m_map.nonRt()); });
-   onGotErased([this](const musicDevice::controller::EventIdExt&) {
-      m_persister.save(m_map.nonRt());
+   m_rMDFDataHolder.onMusicDeviceAdded([this](const musicDevice::MusicDevice* pMd){
+      for(const auto& [eventId, eventDest] : m_loaderData)
+      {
+         if(eventId.uuid == pMd->deviceId())
+         {
+            const auto uuid = m_rMDFDataHolder.getUUIDByMdId(eventId.uuid);
+            if(uuid)
+            {
+               _createConnection({*uuid, eventId.eventId}, eventDest);
+            }
+         }
+      }
+   });
+   m_rMDFDataHolder.onMusicDeviceAboutToRemove([this](const musicDevice::MusicDevice* pMd){
+      for(const auto& [eventId, _] : m_loaderData)
+      {
+         if(eventId.uuid == pMd->deviceId())
+         {
+            const auto uuid = m_rMDFDataHolder.getUUIDByMdId(eventId.uuid);
+            if(uuid)
+            {
+               removeConnection({*uuid, eventId.eventId});
+            }
+         }
+      }
    });
 
    try
    {
-      auto data = m_persister.load();
-      initRtCache(data);
-      m_map.withNonRtLocked([&data](auto& nonRtData) { nonRtData = data; });
+      m_loaderData = m_persister.load();
+      const Data data = DataConverter(m_rMDFDataHolder).convertFromLoaded(m_loaderData);
+      for(const auto& [evt, evtDest] : data)
+      {
+         _createConnection(evt, evtDest);
+      }
    }
    catch (std::exception& e)
    {
@@ -47,7 +73,32 @@ void EventRouter::onControllerDevEventOccured(
    });
 }
 
-void EventRouter::createConnection(const controller::EventIdExt& from,
+void EventRouter::createConnection(const musicDevice::controller::EventIdExt& from,
+                        const EventDestination& to) noexcept
+{
+   _createConnection(from, to);
+   auto mdId = m_rMDFDataHolder.getMdIdByUUID(from.uuid);
+   if(mdId)
+   {
+      m_loaderData.try_emplace({*mdId, from.eventId}, to);
+      m_persister.save(m_loaderData);
+   }
+}
+
+void EventRouter::removeConnection(
+      const musicDevice::controller::EventIdExt& from) noexcept
+{
+   _removeConnection(from);
+   auto mdId = m_rMDFDataHolder.getMdIdByUUID(from.uuid);
+   if(mdId)
+   {
+      auto it = m_loaderData.find({*mdId, from.eventId});
+      m_loaderData.erase(it);
+      m_persister.save(m_loaderData);
+   }
+}
+
+void EventRouter::_createConnection(const controller::EventIdExt& from,
                                    const EventDestination& to) noexcept
 {
    controller::EventIdExt source = from;
@@ -106,7 +157,7 @@ void EventRouter::removeConnectionToDestination(
    // TODO
 }
 
-void EventRouter::removeConnection(
+void EventRouter::_removeConnection(
     const controller::EventIdExt& eventIdExt) noexcept
 {
    if (auto iter = m_map.nonRt().find(eventIdExt); iter != m_map.nonRt().end())
