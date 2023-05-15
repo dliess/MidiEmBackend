@@ -14,9 +14,8 @@ void KitInstrument::noteOn(int note, float velocity, void* token) const
    auto si = toSoundIndex(note);
    if (si)
    {
-      noteOn(*si, 64, velocity);
+      noteOn(*si, 64, velocity, token);
    }
-   rtData->emitNoteOnPlayed(note, velocity, token);
 }
 
 void KitInstrument::noteOff(int note, float velocity, void* token) const
@@ -24,27 +23,28 @@ void KitInstrument::noteOff(int note, float velocity, void* token) const
    auto si = toSoundIndex(note);
    if (si)
    {
-      noteOff(*si, 64, velocity);
+      noteOff(*si, 64, velocity, token);
    }
-   rtData->emitNoteOffPlayed(note, velocity, token);
 }
 
 void KitInstrument::noteOn(int soundIndex, int note,
-                           float velocity) const
+                           float velocity, void* token) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
       voice.noteOn(note, velocity);
    }
+   rtData->emitNoteOnPlayed(soundIndex + 64, velocity, token);
 }
 
 void KitInstrument::noteOff(int soundIndex, int note,
-                            float velocity) const
+                            float velocity, void* token) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
       voice.noteOff(note, velocity);
    }
+   rtData->emitNoteOffPlayed(soundIndex + 64, velocity, token);
 }
 
 void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,

@@ -71,6 +71,19 @@ inline auto getClassNameOrIndex<base::musicDevice::controller::IncrementType>(in
 }
 
 template<>
+inline auto registerMembers<base::musicDevice::controller::RelativeValueType>()
+{
+   return members(member("value", &base::musicDevice::controller::RelativeValueType::value));
+}
+
+template<>
+inline auto getClassNameOrIndex<base::musicDevice::controller::RelativeValueType>(int i) noexcept
+{
+   return "RelativeValueType";
+}
+
+
+template<>
 inline auto registerMembers<base::musicDevice::controller::Event>()
 {
    return members(

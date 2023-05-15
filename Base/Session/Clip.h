@@ -25,21 +25,23 @@ public:
    Clip(const Clip& other, const allocator_type& alloc);
    Clip(Clip&& other, const allocator_type& alloc) noexcept;
    void update(const instruments::Instrument* instrument);
-   inline void setName(std::string_view nameV);
-   inline std::string_view name() const;
-   inline void addNote(sequencer::Beat beat, sequencer::Beat length, int note,
+   void setName(std::string_view nameV);
+   std::string_view name() const;
+   void addNote(sequencer::Beat beatInSeq, sequencer::Beat length, int note,
                        float velocity);
-   inline void setNoteVelocity(sequencer::NoteId noteId, float velocity);
-   inline void setNoteLength(sequencer::NoteId noteId, sequencer::Beat length);
-   inline void setNoteStartBeat(sequencer::NoteId noteId,
+   void addNoteAbsBeat(sequencer::Beat beat, sequencer::Beat length, int note,
+                       float velocity);
+   void setNoteVelocity(sequencer::NoteId noteId, float velocity);
+   void setNoteLength(sequencer::NoteId noteId, sequencer::Beat length);
+   void setNoteStartBeat(sequencer::NoteId noteId,
                                 sequencer::Beat startBeat);
-   inline void removeNote(sequencer::NoteId noteId);
-   inline void removeAllNotes();
+   void removeNote(sequencer::NoteId noteId);
+   void removeAllNotes();
    void reset();
    void stop(const instruments::Instrument* instrument);
    void setSequenceLength(sequencer::Beat);
-   inline sequencer::Beat getSequenceLength() const noexcept;
-   [[nodiscard]] inline sequencer::Beat getPrevClipBeat() const noexcept;
+   sequencer::Beat getSequenceLength() const noexcept;
+   [[nodiscard]] sequencer::Beat getPrevClipBeat() const noexcept;
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(NameChanged, std::string_view);
    CB_SIGNAL_SINGLE_SUBSCRIBER(NoteAdded, sequencer::NoteId, sequencer::Beat,

@@ -13,15 +13,21 @@ inline void Clip::setName(std::string_view nameV)
 
 inline std::string_view Clip::name() const { return m_name; }
 
-inline void Clip::addNote(sequencer::Beat beat, sequencer::Beat length,
+inline void Clip::addNote(sequencer::Beat beatInSeq, sequencer::Beat length,
                           int note, float velocity)
 {
-   const auto beatToInsert = std::fmod(beat, m_sequenceLength);
+   const auto beatToInsert = std::fmod(beatInSeq, m_sequenceLength);
    auto it                 = m_noteEvents.insert(std::make_pair(
        beatToInsert,
        sequencer::NoteEvent{++m_lastId, beatToInsert, note, velocity, length}));
    emitNoteAdded(it->second.id, it->second.beatstamp, it->second.length,
                  it->second.note, it->second.velocity);
+}
+
+inline void Clip::addNoteAbsBeat(sequencer::Beat beat, sequencer::Beat length,
+                          int note, float velocity)
+{
+   addNote(beat - m_startBeat, length, note, velocity);
 }
 
 inline void Clip::setNoteVelocity(sequencer::NoteId noteId, float velocity)

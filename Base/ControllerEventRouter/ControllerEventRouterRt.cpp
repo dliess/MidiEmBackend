@@ -204,7 +204,14 @@ void EventRouterRt::handleContinousValueType(
     const controller::ContinousValueType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-      CASE_MONOSTATE { assert(false); },
+      CASE_MONOSTATE 
+      { 
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleContinousValue(destIter->second, value);
+         }
+      },
       CASE(controller::WidgetCoord, _)
       {
          const auto destIter = m_rMap.find(eventIdExt);

@@ -68,12 +68,12 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
        m_rControllerSection.widgets[id.widgetId].events[id.eventId];
 
    const bool mpeMode = (m_rControllerSection.widgets[id.widgetId].mpe &&
-                         m_rControllerSection.widgets[id.widgetId].mpe);
+                         m_rControllerSection.widgets[id.widgetId].mpe.value());
 
-   const auto value = mpark::visit(
-       midi::overload{
-           [this, &id, &eventDescr](
-               const midi::Message<midi::ControlChange>& msg) -> EventValue {
+   const auto value = 
+      R_SWITCH(midiMsg)
+           CASE(midi::Message<midi::ControlChange>, msg)
+           {
               if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
               {
                  id.widgetCoord = m_mpeMap[msg.channel() - 1];
@@ -144,9 +144,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       }},
                   eventDescr);
            },
-           [this, &id,
-            &eventDescr](const midi::Message<midi::ControlChangeHighRes>& msg)
-               -> EventValue {
+           CASE(midi::Message<midi::ControlChangeHighRes>, msg)
+           {
               if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
               {
                  id.widgetCoord = m_mpeMap[msg.channel() - 1];
@@ -189,8 +188,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       }},
                   eventDescr);
            },
-           [this, &id,
-            &eventDescr](const midi::Message<midi::NRPN>& msg) -> EventValue {
+           CASE(midi::Message<midi::NRPN>, msg)
+           {
               if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
               {
                  id.widgetCoord = m_mpeMap[msg.channel() - 1];
@@ -230,8 +229,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       }},
                   eventDescr);
            },
-           [this, &id, &eventDescr,
-            mpeMode](const midi::Message<midi::NoteOn>& msg) -> EventValue {
+           CASE(midi::Message<midi::NoteOn>, msg)
+           {
               if (m_nativeNoteMode)
               {
                  id.widgetCoord = Note{msg.noteNumber()};
@@ -241,29 +240,31 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                  if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
                  {
                     spdlog::error("MPE mode note-on without widget coordinate");
-                    return mpark::monostate();
+                    return EventValue{mpark::monostate()};
                  }
                  m_mpeMap[msg.channel() - 1] = id.widgetCoord;
               }
               else
               {
                  id.channelId = msg.channel() - 1;
-              }
-              return mpark::visit(
-                  midi::overload{
-                      [&msg](const description::controller::EventNativeNote&) -> EventValue {
-                       return PressReleaseType{msg.relativeVelocity()};
-                      },
-                      [this, &msg](
-                          const description::controller::EventPressRelease& evt)
-                          -> EventValue {
-                         return PressReleaseType{msg.relativeVelocity()};
-                      },
-                      [](auto&&) -> EventValue { return mpark::monostate(); }},
-                  eventDescr);
+              }             
+              return R_SWITCH(eventDescr)
+                  CASE(description::controller::EventNativeNote, _) -> EventValue
+                  {
+                     return PressReleaseType{msg.relativeVelocity()};
+                  },
+                  CASE(description::controller::EventPressRelease, evt) -> EventValue
+                  {
+                     return PressReleaseType{msg.relativeVelocity()};
+                  },
+                  CASE_DEFAULT -> EventValue 
+                  { 
+                     return mpark::monostate();
+                  }
+               R_END_SWITCH
            },
-           [this, &id, &eventDescr,
-            mpeMode](const midi::Message<midi::NoteOff>& msg) -> EventValue {
+           CASE(midi::Message<midi::NoteOff>, msg)
+           {
               if (m_nativeNoteMode)
               {
                  id.widgetCoord = Note{msg.noteNumber()};
@@ -286,10 +287,9 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [](auto&&) -> EventValue { return mpark::monostate(); }},
                   eventDescr);
            },
-           [this, &id,
-            &eventDescr](const midi::Message<midi::AfterTouchChannel>& msg)
-               -> EventValue {
-              if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
+           CASE(midi::Message<midi::AfterTouchChannel>, msg)
+           {
+              if (mpeMode)
               {
                  id.widgetCoord = m_mpeMap[msg.channel() - 1];
               }
@@ -307,8 +307,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [](auto&&) -> EventValue { return mpark::monostate(); }},
                   eventDescr);
            },
-           [this, &id, &eventDescr, mpeMode](
-               const midi::Message<midi::AfterTouchPoly>& msg) -> EventValue {
+           CASE(midi::Message<midi::AfterTouchPoly>, msg)
+           {
               if (!mpeMode)
               {
                  id.channelId = msg.channel() - 1;
@@ -323,8 +323,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [](auto&&) -> EventValue { return mpark::monostate(); }},
                   eventDescr);
            },
-           [this, &id, &eventDescr](
-               const midi::Message<midi::PitchBend>& msg) -> EventValue {
+           CASE(midi::Message<midi::PitchBend>, msg)
+           {
               if (mpark::holds_alternative<mpark::monostate>(id.widgetCoord))
               {
                  id.widgetCoord = m_mpeMap[msg.channel() - 1];
@@ -344,8 +344,8 @@ void controller::MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                       [](auto&&) -> EventValue { return mpark::monostate(); }},
                   eventDescr);
            },
-           [](auto&& other) -> EventValue { return mpark::monostate(); }},
-       midiMsg);
+           [](auto&& other) -> EventValue { return mpark::monostate(); }
+   R_END_SWITCH
    if (!mpark::holds_alternative<mpark::monostate>(value))
    {
       m_drainCb(Event{id, value});

@@ -14,8 +14,8 @@ session::Track::Track(std::string_view name,
    m_noteCollector.onNoteOccured([this](const sequencer::Note& note) {
       if (m_activeClipIdx)   // TODO: add record condition here
       {
-         m_clips[m_activeClipIdx.value()]->addNote(note.beatstamp, note.length,
-                                                   note.note, note.velocity);
+         m_clips[m_activeClipIdx.value()]->addNoteAbsBeat(
+             note.beatstamp, note.length, note.note, note.velocity);
       }
    });
 }
