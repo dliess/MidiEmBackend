@@ -6,8 +6,18 @@
 namespace base::sequencer
 {
 
-struct NoteEvent : public TimedEvent
+struct Note
 {
+    Beat beatstamp{0.0};
+    int note{0};
+    float velocity{0.0};
+    Beat length{0};
+};
+
+struct NoteEvent
+{
+    NoteId id{0};
+    Beat beatstamp{0.0};
     int note{0};
     float velocity{0.0};
     Beat length{0};

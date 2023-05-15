@@ -9,22 +9,24 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-void KitInstrument::noteOn(int note, float velocity) const
+void KitInstrument::noteOn(int note, float velocity, void* token) const
 {
    auto si = toSoundIndex(note);
    if (si)
    {
       noteOn(*si, 64, velocity);
    }
+   rtData->emitNoteOnPlayed(note, velocity, token);
 }
 
-void KitInstrument::noteOff(int note, float velocity) const
+void KitInstrument::noteOff(int note, float velocity, void* token) const
 {
    auto si = toSoundIndex(note);
    if (si)
    {
       noteOff(*si, 64, velocity);
    }
+   rtData->emitNoteOffPlayed(note, velocity, token);
 }
 
 void KitInstrument::noteOn(int soundIndex, int note,

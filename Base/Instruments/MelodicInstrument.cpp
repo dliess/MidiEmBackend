@@ -13,7 +13,7 @@ MelodicInstrument::MelodicInstrument(std::string name,
    for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
 
-void MelodicInstrument::noteOn(int note, float velocity) const
+void MelodicInstrument::noteOn(int note, float velocity, void* token) const
 {
    if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] != RtData::FREE)
@@ -29,9 +29,10 @@ void MelodicInstrument::noteOn(int note, float velocity) const
        m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
        m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
        [note, velocity](const Voice& voice) { voice.noteOn(note, velocity); });
+   rtData->emitNoteOnPlayed(note, velocity, token);
 }
 
-void MelodicInstrument::noteOff(int note, float velocity) const
+void MelodicInstrument::noteOff(int note, float velocity, void* token) const
 {
    if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] == RtData::FREE)
@@ -43,6 +44,7 @@ void MelodicInstrument::noteOff(int note, float velocity) const
        compositeVoice.voices.begin(), compositeVoice.voices.end(),
        [note, velocity](const Voice& voice) { voice.noteOff(note, velocity); });
    m_pRtData->noteAllocations[note] = RtData::FREE;
+   rtData->emitNoteOffPlayed(note, velocity, token);
 }
 
 void MelodicInstrument::pitchBend(float value) const

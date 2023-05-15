@@ -26,8 +26,8 @@ class KitInstrument : public Instrument
 public:
    KitInstrument() = default;
    KitInstrument(std::string name) noexcept;
-   void noteOn(int note, float velocity) const override;
-   void noteOff(int note, float velocity) const override;
+   void noteOn(int note, float velocity, void* token = nullptr) const override;
+   void noteOff(int note, float velocity, void* token = nullptr) const override;
    void noteOn(int soundIndex, int note, float velocity) const;
    void noteOff(int soundIndex, int note, float velocity) const;
    void incrementParameterValue(int soundIdx, int componentIdx,

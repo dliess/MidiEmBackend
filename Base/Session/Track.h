@@ -13,6 +13,7 @@
 #include "Identifiable.h"
 #include "InstrumentsRef.h"
 #include "Memory.h"
+#include "NoteCollector.h"
 
 namespace base::session
 {
@@ -76,6 +77,7 @@ private:
    static constexpr int StopperIdx = -1;
    std::optional<int> m_activeClipIdx;
    std::optional<int> m_toStartClipIdx;
+   sequencer::NoteCollector m_noteCollector;
    void registerCbs(int row);
 
    friend void to_json(nlohmann::json& j, const Track& track);

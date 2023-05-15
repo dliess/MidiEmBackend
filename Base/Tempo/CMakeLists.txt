@@ -7,11 +7,12 @@ set(SOURCES
    "TapTempoHandler.cpp"
 )
 
-add_library(Tempo STATIC ${SOURCES})
+set(TARGET_NAME "Tempo")
+add_library(${TARGET_NAME} STATIC ${SOURCES})
 
-target_include_directories(Tempo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(Tempo
+target_link_libraries(${TARGET_NAME}
    PRIVATE spdlog::spdlog
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper

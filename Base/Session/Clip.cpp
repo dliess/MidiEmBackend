@@ -47,7 +47,7 @@ void session::Clip::update(const instruments::Instrument* instrument)
       {
          if (instrument)
          {
-            instrument->noteOff((*it)->note, (*it)->velocity);
+            instrument->noteOff((*it)->note, (*it)->velocity, this);
          }
          it = m_activeNotes.erase(it);
       }
@@ -61,7 +61,7 @@ void session::Clip::update(const instruments::Instrument* instrument)
           if (instrument)
           {
              instrument->noteOn(noteEventIt->second.note,
-                           noteEventIt->second.velocity);
+                           noteEventIt->second.velocity, this);
           }
           m_activeNotes.push_back(&noteEventIt->second);
        });
@@ -80,7 +80,7 @@ void session::Clip::stop(const instruments::Instrument* instrument)
    {
       if (instrument)
       {
-         instrument->noteOff(activeNote->note, activeNote->velocity);
+         instrument->noteOff(activeNote->note, activeNote->velocity, this);
       }
    }
    m_activeNotes.clear();

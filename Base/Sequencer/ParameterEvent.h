@@ -6,8 +6,10 @@
 namespace base::sequencer
 {
 
-struct ParameterEvent : public TimedEvent
+struct ParameterEvent
 {
+    NoteId id{0};
+    Beat beatstamp{0.0};
     int parameterIdx{0};
     float value{0.0};
 };

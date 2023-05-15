@@ -7,6 +7,7 @@ set(SOURCES
 set(HEADERS
     "NoteEvent.h"
     "TimedEvent.h"
+    "NoteCollector.h"
 )
 
 add_library(${TARGET_NAME} INTERFACE)
