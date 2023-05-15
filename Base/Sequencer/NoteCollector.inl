@@ -10,7 +10,7 @@ namespace base::sequencer
 inline
 void NoteCollector::noteOn(int note, float velocity)
 {
-   m_notes.at(note) = {velocity, base::tempo::BeatTick::instance().getBeat()};
+   m_notes.at(note) = {velocity, base::tempo::BeatTick::instance().getLocalBeat()};
 }
 
 inline
@@ -20,7 +20,7 @@ void NoteCollector::noteOff(int note, float velocity)
    {
       const auto& n = m_notes.at(note);
       const Beat duration =
-          base::tempo::BeatTick::instance().getBeat() - n->startBeat;
+          base::tempo::BeatTick::instance().getLocalBeat() - n->startBeat;
       emitNoteOccured(Note{n->startBeat, note, n->velocity, duration});
       m_notes.at(note).reset();
    }
