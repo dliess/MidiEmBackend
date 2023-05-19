@@ -51,7 +51,7 @@ void MelodicInstrument::pitchBend(float value) const
 {
    for (auto& compositeVoice : m_voices)
    {
-      for(const Voice& voice : compositeVoice.voices)
+      for (const Voice& voice : compositeVoice.voices)
       {
          voice.pitchBend(value);
       }
@@ -83,8 +83,8 @@ void MelodicInstrument::incrementParameterValue(int note, int compPart,
    const auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
    if (util::vector_index_in_range(compPart, compositeVoice.voices))
    {
-      compositeVoice.voices[compPart].incrementParameterValue(parameterId,
-                                                              increment, rr);
+      compositeVoice.voices[compPart].incrementParameterValueDontCache(
+          parameterId, increment, rr);
    }
 }
 

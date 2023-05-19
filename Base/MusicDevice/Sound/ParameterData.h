@@ -5,11 +5,15 @@
 
 namespace base::musicDevice::sound
 {
+
+ParameterType = float;
 struct ParameterData
 {
    float commanded{0.0};
    lfo::LFOData lfoData;
 };
+
+ParameterValue = mpark::variant<float, > 
 
 }   // namespace base::musicDevice::sound
 

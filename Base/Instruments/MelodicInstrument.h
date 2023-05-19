@@ -43,9 +43,9 @@ public:
 
    void pitchBend(float value) const;
    void incrementParameterValue(int compPart, int parameterId, float increment,
-                                bool roundRobin = false) const;
+                                bool roundRobin) const;
    void incrementParameterValue(int note, int compPart, int parameterId,
-                                float increment, bool roundRobin = false) const;
+                                float increment, bool roundRobin) const;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
        musicDevice::sound::ParameterPart parameterPart =

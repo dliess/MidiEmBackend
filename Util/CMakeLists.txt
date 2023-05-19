@@ -20,6 +20,7 @@ set(HEADERS
     "function_ref.h"
     "DoubleBuffer.h"
     "Round1000.h"
+    "StrongType.h"
 )
 
 set(TARGET_NAME Util)

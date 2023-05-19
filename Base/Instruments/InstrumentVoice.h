@@ -7,29 +7,43 @@
 #include "MusicDevice.h"
 #include "ParameterData.h"
 #include "SoundHandler.h"
+#include "CallbackSignal.h"
 
 namespace base::instruments
 {
 class Voice
 {
 public:
-   using ParameterCache = std::vector<base::musicDevice::sound::ParameterData>;
-   Voice()              = default;
-   inline explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,
-                         std::shared_ptr<ParameterCache> pParameterCache,
-                         musicDevice::MusicDeviceId soundDeviceId,
-                         int voiceIndex, int noteOffset) noexcept;
-   [[nodiscard]] inline const musicDevice::MusicDeviceId& soundDeviceId() const;
-   [[nodiscard]] inline const musicDevice::sound::SoundHandler* pSoundDevice()
-       const;
-   inline void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
-   inline void setNoteOffset(int noteOffset);
+   struct ParameterCache
+   {
+      explicit ParameterCache(size_t size) : data(size) {}
+      [[nodiscard]] std::size_t size() const { return data.size(); }
+      [[nodiscard]] const base::musicDevice::sound::ParameterData& at(std::size_t pos) const { return data.at(pos); }
+      [[nodiscard]] base::musicDevice::sound::ParameterData& at(std::size_t pos) { return data.at(pos); }
+      
+      void setParameter(std::size_t index, musicDevice::sound::ParameterPart, float value);
+      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int, musicDevice::sound::ParameterPart, float);
+      private:
+      std::vector<base::musicDevice::sound::ParameterData> data;
+   };
+   Voice() = default;
+   explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,
+                  std::shared_ptr<ParameterCache> pParameterCache,
+                  musicDevice::MusicDeviceId soundDeviceId, int voiceIndex,
+                  int noteOffset) noexcept;
+   [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
+   [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
+   void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
+   void setNoteOffset(int noteOffset);
    void noteOn(int note, float velocity) const;
    void noteOff(int note, float velocity) const;
    void pitchBend(float value) const;
 
    void incrementParameterValue(int parameterIdx, float increment,
                                 bool roundRobin) const;
+   void incrementParameterValueDontCache(int parameterIdx, float increment,
+                                         bool roundRobin) const;
+
    [[nodiscard]] float getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterPart parameterPart) const;
    void setParameterValue(int parameterIdx, float value) const;
