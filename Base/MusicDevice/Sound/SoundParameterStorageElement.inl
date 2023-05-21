@@ -32,14 +32,14 @@ inline void ParameterStorageElement::applyModifier(
          m_modifier += intensity * (destination - m_commanded);
          break;
       }
-      case ParameterPart::LfoAmplitude:
-      {
-         m_lfo.applyModifier2Amplitude(destination, intensity);
-         break;
-      }
       case ParameterPart::LfoFrequency:
       {
          m_lfo.applyModifier2Frequency(destination, intensity);
+         break;
+      }
+      case ParameterPart::LfoAmplitude:
+      {
+         m_lfo.applyModifier2Amplitude(destination, intensity);
          break;
       }
       case ParameterPart::LfoWaveform:

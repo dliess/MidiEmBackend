@@ -5,6 +5,7 @@
 #include "StrongType.h"
 #include <mpark/variant.hpp>
 #include "Overload.h"
+#include "ParameterPart.h"
 namespace base::musicDevice::sound
 {
 
@@ -38,6 +39,17 @@ void setParameterData(ParameterData& pd, const ParameterValue& value) noexcept
       FCASE(ParameterLFOMultiplExp, val){ pd.lfo.multiplierExp = val.get(); }
    END_SWITCH
 }
+
+static_assert(std::is_same_v <Parameter, 
+   mpark::variant_alternative_t<static_cast<int>(ParameterPart::Commanded), ParameterValue>>);
+static_assert(std::is_same_v <ParameterLFOFreq, 
+   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoFrequency), ParameterValue>>);
+static_assert(std::is_same_v <ParameterLFOAmp, 
+   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoAmplitude), ParameterValue>>);
+static_assert(std::is_same_v <ParameterLFOWaveform, 
+   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoWaveform), ParameterValue>>);
+static_assert(std::is_same_v <ParameterLFOMultiplExp, 
+   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoMultiplierExp), ParameterValue>>);
 
 }   // namespace base::musicDevice::sound
 

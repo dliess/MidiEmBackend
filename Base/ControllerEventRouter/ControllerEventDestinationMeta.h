@@ -4,23 +4,6 @@
 #include "JsonCast.h"
 #include "Meta.h"
 
-namespace base::eventRouter
-{
-inline void to_json(
-    nlohmann::json& j, const ParameterDestination& obj)
-{
-   j = ~obj;
-}
-
-inline void from_json(
-    const nlohmann::json& j, ParameterDestination& obj)
-{
-   obj = create_ParameterDestination(j.get<std::string>());
-}
-
-}   // namespace base::eventRouter
-
-
 namespace meta
 {
 template <>

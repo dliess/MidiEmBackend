@@ -85,7 +85,7 @@ void LdControllerEventRouterRpc::connectNotes2Parameter(
                       componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
-               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
+               static_cast<eventRouter::ParameterPart>(paramFunc)}});
 }
 
 void LdControllerEventRouterRpc::connectWidget2Notes(
@@ -124,7 +124,7 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
                       componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
-               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
+               static_cast<eventRouter::ParameterPart>(paramFunc)}});
 }
 
 void LdControllerEventRouterRpc::eraseConnectionForNotes(
@@ -168,5 +168,5 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
                       componentIdx),
            eventRouter::EventDestination::Parameter{
                parameterIdx,
-               static_cast<eventRouter::ParameterDestination>(paramFunc)}});
+               static_cast<eventRouter::ParameterPart>(paramFunc)}});
 }

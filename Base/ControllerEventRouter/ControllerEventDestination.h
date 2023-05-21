@@ -13,7 +13,7 @@
 namespace base::eventRouter
 {
 
-using ParameterDestination = base::musicDevice::sound::ParameterPart;
+using ParameterPart = base::musicDevice::sound::ParameterPart;
 struct EventDestination
 {
    auto operator<=>(const EventDestination&) const = default;
@@ -62,8 +62,8 @@ struct EventDestination
          std::optional<float> valueAtPress{0};
       };
       int id;
-      ParameterDestination parameterDestination{
-          ParameterDestination::Commanded};
+      ParameterPart parameterDestination{
+          ParameterPart::Commanded};
       DescriptionCache descriptionCache;
       std::shared_ptr<ValueCache> valueCache;
    };
