@@ -9,12 +9,12 @@ namespace base::musicDevice::sound
 inline void to_json(nlohmann::json& j, const ParameterData& obj)
 {
    j["commanded"] = util::round1000(obj.commanded);
-   if (obj.lfoData.amplitude != lfo::DefaultAmplitude ||
-       obj.lfoData.frequency != lfo::DefaultFrequency ||
-       obj.lfoData.waveform != lfo::DefaultWaveform ||
-       obj.lfoData.multiplierExp != lfo::DefaultMultiplierExp)
+   if (obj.lfo.amplitude != lfo::DefaultAmplitude ||
+       obj.lfo.frequency != lfo::DefaultFrequency ||
+       obj.lfo.waveform != lfo::DefaultWaveform ||
+       obj.lfo.multiplierExp != lfo::DefaultMultiplierExp)
    {
-      j["lfo"] = obj.lfoData;
+      j["lfo"] = obj.lfo;
    }
 }
 
@@ -31,7 +31,7 @@ inline void from_json(const nlohmann::json& j, ParameterData& obj)
       const auto it = j.find("lfo");
       if (it != j.end())
       {
-         obj.lfoData = it->get<lfo::LFOData>();
+         obj.lfo = it->get<lfo::LFOData>();
       }
    }
 }

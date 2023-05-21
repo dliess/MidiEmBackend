@@ -75,7 +75,7 @@ template <typename Derived> struct Printable
 };
 template <typename Derived> struct Swappable
 {
-   friend void swap(Derived& lhs, Derived& rhs)
+   friend void swap(Derived& lhs, Derived& rhs) noexcept
    {
       using std::swap;   // Enable ADL
       swap(lhs.get(), rhs.get());
@@ -86,7 +86,6 @@ template <typename Derived> struct Swappable
 
 #define MAKE_FMT_CONVERTIBLE(StrongType)                                      \
    template <>                                                                \
-   \ 
 struct fmt::formatter<StrongType>                                             \
        : formatter<StrongType::value_type>{auto format(StrongType c,          \
                                                        format_context & ctx){ \

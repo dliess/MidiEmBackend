@@ -41,7 +41,7 @@ void Voice::incrementParameterValue(int parameterIdx, float increment,
    {
       m_pSoundDevice->incrementParameterValue(m_voiceIndex, parameterIdx, increment,
                                             roundRobin);
-      m_pParameterCache->data.at(parameterIdx).commanded =
+      m_pParameterCache->at(parameterIdx).commanded =
           m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx);
    }
 }
@@ -64,16 +64,16 @@ float Voice::getParameterValue(
       switch (parameterPart)
       {
          case musicDevice::sound::ParameterPart::Commanded:
-            return m_pParameterCache->data.at(parameterIdx).commanded;
+            return m_pParameterCache->at(parameterIdx).commanded;
          case musicDevice::sound::ParameterPart::LfoAmplitude:
-            return m_pParameterCache->data.at(parameterIdx).lfoData.amplitude;
+            return m_pParameterCache->at(parameterIdx).lfo.amplitude;
          case musicDevice::sound::ParameterPart::LfoFrequency:
-            return m_pParameterCache->data.at(parameterIdx).lfoData.frequency;
+            return m_pParameterCache->at(parameterIdx).lfo.frequency;
          case musicDevice::sound::ParameterPart::LfoMultiplierExp:
-            return m_pParameterCache->data.at(parameterIdx).lfoData.multiplierExp;
+            return float(m_pParameterCache->at(parameterIdx).lfo.multiplierExp);
          case musicDevice::sound::ParameterPart::LfoWaveform:
-            return static_cast<int>(
-                m_pParameterCache->data.at(parameterIdx).lfoData.waveform);
+            return float(static_cast<int>(
+                m_pParameterCache->at(parameterIdx).lfo.waveform));
       }
    }
    return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of
@@ -85,7 +85,7 @@ void Voice::setParameterValue(int parameterIdx, float value) const
    if (m_pSoundDevice)
    {
       m_pSoundDevice->setParameterValue(m_voiceIndex, parameterIdx, value);
-      m_pParameterCache->data.at(parameterIdx).commanded = value;
+      m_pParameterCache->at(parameterIdx).commanded = value;
    }
 }
 
@@ -118,20 +118,20 @@ void Voice::refreshParameters() const
    {
       return;
    }
-   for (int paramIdx = 0; paramIdx < m_pParameterCache->data.size(); ++paramIdx)
+   for (int paramIdx = 0; paramIdx < m_pParameterCache->size(); ++paramIdx)
    {
       m_pSoundDevice->setParameterValue(m_voiceIndex, paramIdx,
-                                      m_pParameterCache->data.at(paramIdx).commanded);
+                                      m_pParameterCache->at(paramIdx).commanded);
       m_pSoundDevice->setLFOAmplitude(
           m_voiceIndex, paramIdx,
-          m_pParameterCache->data.at(paramIdx).lfoData.amplitude);
+          m_pParameterCache->at(paramIdx).lfo.amplitude);
       m_pSoundDevice->setLFOFrequency(
           m_voiceIndex, paramIdx,
-          m_pParameterCache->data.at(paramIdx).lfoData.frequency);
+          m_pParameterCache->at(paramIdx).lfo.frequency);
       m_pSoundDevice->setLFOMultiplierExp(
           m_voiceIndex, paramIdx,
-          m_pParameterCache->data.at(paramIdx).lfoData.multiplierExp);
+          m_pParameterCache->at(paramIdx).lfo.multiplierExp);
       m_pSoundDevice->setLFOWaveform(
-          m_voiceIndex, paramIdx, m_pParameterCache->data.at(paramIdx).lfoData.waveform);
+          m_voiceIndex, paramIdx, m_pParameterCache->at(paramIdx).lfo.waveform);
    }
 }

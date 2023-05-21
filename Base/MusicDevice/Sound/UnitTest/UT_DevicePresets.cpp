@@ -17,7 +17,7 @@ bool operator==(const base::musicDevice::sound::ParameterData& lhs,
                 const base::musicDevice::sound::ParameterData& rhs)
 {
    return lhs.commanded == rhs.commanded &&
-          lhs.lfoData == rhs.lfoData;
+          lhs.lfo == rhs.lfo;
 }
 */
 using namespace base::musicDevice::sound;
@@ -47,8 +47,8 @@ TEST(DevicePresetSerializationTest, deserialize)
    ASSERT_EQ(preset.genre, Genre::None);
    ASSERT_EQ(preset.parameters.size(), 4);
    EXPECT_NEAR(preset.parameters[0].commanded, 0.163, 0.0001);
-   EXPECT_NEAR(preset.parameters[0].lfoData.amplitude, lfo::DefaultAmplitude, 0.0001);
-   EXPECT_NEAR(preset.parameters[0].lfoData.frequency, lfo::DefaultFrequency, 0.0001);
-   ASSERT_EQ(preset.parameters[0].lfoData.waveform, lfo::DefaultWaveform);
-   ASSERT_EQ(preset.parameters[0].lfoData.multiplierExp, lfo::DefaultMultiplierExp);
+   EXPECT_NEAR(preset.parameters[0].lfo.amplitude, lfo::DefaultAmplitude, 0.0001);
+   EXPECT_NEAR(preset.parameters[0].lfo.frequency, lfo::DefaultFrequency, 0.0001);
+   ASSERT_EQ(preset.parameters[0].lfo.waveform, lfo::DefaultWaveform);
+   ASSERT_EQ(preset.parameters[0].lfo.multiplierExp, lfo::DefaultMultiplierExp);
 }

@@ -18,13 +18,14 @@ public:
    {
       explicit ParameterCache(size_t size) : data(size) {}
       [[nodiscard]] std::size_t size() const { return data.size(); }
-      [[nodiscard]] const base::musicDevice::sound::ParameterData& at(std::size_t pos) const { return data.at(pos); }
-      [[nodiscard]] base::musicDevice::sound::ParameterData& at(std::size_t pos) { return data.at(pos); }
+      using ParameterData = base::musicDevice::sound::ParameterData;
+      [[nodiscard]] const ParameterData& at(std::size_t pos) const { return data.at(pos); }
+      [[nodiscard]] ParameterData& at(std::size_t pos) { return data.at(pos); }
       
       void setParameter(std::size_t index, musicDevice::sound::ParameterPart, float value);
       CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int, musicDevice::sound::ParameterPart, float);
       private:
-      std::vector<base::musicDevice::sound::ParameterData> data;
+      std::vector<ParameterData> data;
    };
    Voice() = default;
    explicit Voice(musicDevice::sound::SoundHandler* pSoundDevice,

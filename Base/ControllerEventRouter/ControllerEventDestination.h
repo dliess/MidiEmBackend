@@ -8,11 +8,12 @@
 #include "Identifiable.h"
 #include "MusicDeviceId.h"
 #include "Overload.h"
+#include "ParameterPart.h"
 
 namespace base::eventRouter
 {
-DECLARE_ENUM(ParameterDestination, uint, Parameter, LFOWaveform, LFOAmplitude,
-             LFOFrequency, LFOMultiplier);
+
+using ParameterDestination = base::musicDevice::sound::ParameterPart;
 struct EventDestination
 {
    auto operator<=>(const EventDestination&) const = default;
@@ -62,7 +63,7 @@ struct EventDestination
       };
       int id;
       ParameterDestination parameterDestination{
-          ParameterDestination::Parameter};
+          ParameterDestination::Commanded};
       DescriptionCache descriptionCache;
       std::shared_ptr<ValueCache> valueCache;
    };
