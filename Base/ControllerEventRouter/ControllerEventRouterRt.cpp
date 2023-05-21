@@ -101,7 +101,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
 {
    const float val = dev.normalizePercentageValue(
        mdCoords..., parameter.id,
-       base::musicDevice::sound::ParameterPart::Commanded, value.value);
+       base::musicDevice::sound::ParameterAttr::Commanded, value.value);
    const float actualVal = dev.getParameterValue(mdCoords..., parameter.id);
    const float diff      = std::fabs(actualVal - val);
    if ((diff != 0) && (diff < 0.02 || diff >= 1.0))

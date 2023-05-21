@@ -268,30 +268,30 @@ void ParameterStorage::updateActualValues(Cb&& cb) noexcept
 }
 
 inline float ParameterStorage::getCommandedValue(
-    int voiceIdx, int parameterId, ParameterPart parameterPart) const noexcept
+    int voiceIdx, int parameterId, ParameterAttr parameterAttr) const noexcept
 {
-   switch (parameterPart)
+   switch (parameterAttr)
    {
-      case ParameterPart::Commanded:
+      case ParameterAttr::Commanded:
       {
          return elementContainer(voiceIdx).parameters[parameterId].commanded();
       }
-      case ParameterPart::LfoAmplitude:
+      case ParameterAttr::LfoAmplitude:
       {
          return amplitude(voiceIdx, parameterId);
       }
-      case ParameterPart::LfoFrequency:
+      case ParameterAttr::LfoFrequency:
       {
          return frequency(voiceIdx, parameterId);
       }
-      case ParameterPart::LfoWaveform:
+      case ParameterAttr::LfoWaveform:
       {
          return static_cast<float>(elementContainer(voiceIdx)
              .parameters[parameterId]
              .lfo()
              .waveform());
       }
-      case ParameterPart::LfoMultiplierExp:
+      case ParameterAttr::LfoMultiplierExp:
       {
          return static_cast<float>(elementContainer(voiceIdx)
              .parameters[parameterId]
@@ -444,13 +444,13 @@ inline uint32_t ParameterStorage::multiplierExp(int voiceId,
 }
 
 inline void ParameterStorage::applyModifier(int voiceIndex, int paramIdx,
-                                            ParameterPart parameterPart,
+                                            ParameterAttr parameterAttr,
                                             float destValue,
                                             float intensity) noexcept
 {
    elementContainer(voiceIndex)
        .parameters[paramIdx]
-       .applyModifier(destValue, intensity, parameterPart);
+       .applyModifier(destValue, intensity, parameterAttr);
 }
 
 }   // namespace base::musicDevice::sound

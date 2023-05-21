@@ -58,11 +58,11 @@ void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
 
 float KitInstrument::getParameterValue(
     int soundIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const
+    musicDevice::sound::ParameterAttr parameterAttr) const
 {
    float ret = 0.0;
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      ret = voice.getParameterValue(parameterIdx, parameterPart);
+      ret = voice.getParameterValue(parameterIdx, parameterAttr);
    });
    return ret;
 }
@@ -78,12 +78,12 @@ void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
 
 float KitInstrument::normalizePercentageValue(
     int soundIdx, int componentIdx, int parameterId,
-    musicDevice::sound::ParameterPart parameterPart,
+    musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    float ret = 0.0;
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      ret = voice.normalizePercentageValue(parameterId, parameterPart,
+      ret = voice.normalizePercentageValue(parameterId, parameterAttr,
                                            percentageValue);
    });
    return ret;

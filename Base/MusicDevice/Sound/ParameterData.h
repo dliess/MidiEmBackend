@@ -5,7 +5,7 @@
 #include "StrongType.h"
 #include <mpark/variant.hpp>
 #include "Overload.h"
-#include "ParameterPart.h"
+#include "ParameterAttr.h"
 namespace base::musicDevice::sound
 {
 
@@ -41,15 +41,15 @@ void setParameterData(ParameterData& pd, const ParameterValue& value) noexcept
 }
 
 static_assert(std::is_same_v <Parameter, 
-   mpark::variant_alternative_t<static_cast<int>(ParameterPart::Commanded), ParameterValue>>);
+   mpark::variant_alternative_t<static_cast<int>(ParameterAttr::Commanded), ParameterValue>>);
 static_assert(std::is_same_v <ParameterLFOFreq, 
-   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoFrequency), ParameterValue>>);
+   mpark::variant_alternative_t<static_cast<int>(ParameterAttr::LfoFrequency), ParameterValue>>);
 static_assert(std::is_same_v <ParameterLFOAmp, 
-   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoAmplitude), ParameterValue>>);
+   mpark::variant_alternative_t<static_cast<int>(ParameterAttr::LfoAmplitude), ParameterValue>>);
 static_assert(std::is_same_v <ParameterLFOWaveform, 
-   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoWaveform), ParameterValue>>);
+   mpark::variant_alternative_t<static_cast<int>(ParameterAttr::LfoWaveform), ParameterValue>>);
 static_assert(std::is_same_v <ParameterLFOMultiplExp, 
-   mpark::variant_alternative_t<static_cast<int>(ParameterPart::LfoMultiplierExp), ParameterValue>>);
+   mpark::variant_alternative_t<static_cast<int>(ParameterAttr::LfoMultiplierExp), ParameterValue>>);
 
 }   // namespace base::musicDevice::sound
 

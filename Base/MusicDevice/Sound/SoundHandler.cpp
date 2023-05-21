@@ -174,16 +174,16 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
 }
 
 float SoundHandler::getParameterValue(
-    int voiceId, int parameterId, ParameterPart parameterPart) const noexcept
+    int voiceId, int parameterId, ParameterAttr parameterAttr) const noexcept
 {
-   return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterPart);
+   return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterAttr);
 }
 
 float SoundHandler::normalizePercentageValue(
-    int voiceId, int parameterId, ParameterPart parameterPart,
+    int voiceId, int parameterId, ParameterAttr parameterAttr,
     float percentageValue) const noexcept
 {
-   const auto range = getParameterRange(voiceId, parameterId, parameterPart);
+   const auto range = getParameterRange(voiceId, parameterId, parameterAttr);
    const auto& pd   = m_rSoundSection.parameterDescr(voiceId, parameterId);
    if (pd.type == description::sound::Parameter::Type::List)
    {
@@ -200,12 +200,12 @@ const base::musicDevice::description::sound::Parameter* SoundHandler::parameterD
 }
 
 float SoundHandler::getParameterRange(int voiceId, int parameterId,
-                                      ParameterPart parameterPart) const
+                                      ParameterAttr parameterAttr) const
 {
    float maxVal = 1.0;
-   switch (parameterPart)
+   switch (parameterAttr)
    {
-      case ParameterPart::Commanded:
+      case ParameterAttr::Commanded:
       {
          const auto& pd = m_rSoundSection.parameterDescr(voiceId, parameterId);
          if (pd.type == description::sound::Parameter::Type::List)
@@ -218,22 +218,22 @@ float SoundHandler::getParameterRange(int voiceId, int parameterId,
          }
          break;
       }
-      case ParameterPart::LfoAmplitude:
+      case ParameterAttr::LfoAmplitude:
       {
          maxVal = 1.0;
          break;
       }
-      case ParameterPart::LfoFrequency:
+      case ParameterAttr::LfoFrequency:
       {
          maxVal = 1.0;
          break;
       }
-      case ParameterPart::LfoWaveform:
+      case ParameterAttr::LfoWaveform:
       {
          maxVal = 4.0;
          break;
       }
-      case ParameterPart::LfoMultiplierExp:
+      case ParameterAttr::LfoMultiplierExp:
       {
          maxVal = lfo::MAX_MULTIPLIER_EXP;
          break;
@@ -430,10 +430,10 @@ std::vector<base::arp::Arpeggiator>& SoundHandler::arpeggiators() noexcept
 }
 
 void SoundHandler::applyModifier(int voiceIndex, int paramIdx,
-                                 ParameterPart parameterPart, float destValue,
+                                 ParameterAttr parameterAttr, float destValue,
                                  float intensity) noexcept
 {
-   m_paramStorage.applyModifier(voiceIndex, paramIdx, parameterPart, destValue,
+   m_paramStorage.applyModifier(voiceIndex, paramIdx, parameterAttr, destValue,
                                 intensity);
 }
 

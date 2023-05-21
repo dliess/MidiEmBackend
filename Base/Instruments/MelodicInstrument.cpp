@@ -90,19 +90,19 @@ void MelodicInstrument::incrementParameterValue(int note, int compPart,
 
 float MelodicInstrument::getParameterValue(
     int compPart, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const
+    musicDevice::sound::ParameterAttr parameterAttr) const
 {
    return m_voices.at(0).voices.at(compPart).getParameterValue(parameterIdx,
-                                                               parameterPart);
+                                                               parameterAttr);
 }
 
 float MelodicInstrument::getParameterValue(
     int note, int compPart, int parameterIdx,
-    musicDevice::sound::ParameterPart parameterPart) const
+    musicDevice::sound::ParameterAttr parameterAttr) const
 {
    return m_voices.at(m_pRtData->noteAllocations.at(note))
        .voices.at(compPart)
-       .getParameterValue(parameterIdx, parameterPart);
+       .getParameterValue(parameterIdx, parameterAttr);
 }
 
 void MelodicInstrument::setParameterValue(int compPart, int parameterId,
@@ -128,21 +128,21 @@ void MelodicInstrument::setParameterValue(int note, int compPart,
 
 float MelodicInstrument::normalizePercentageValue(
     int compPart, int parameterId,
-    musicDevice::sound::ParameterPart parameterPart,
+    musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    return m_voices.at(0).voices.at(compPart).normalizePercentageValue(
-       parameterId, parameterPart, percentageValue);
+       parameterId, parameterAttr, percentageValue);
 }
 
 float MelodicInstrument::normalizePercentageValue(
     int note, int compPart, int parameterId,
-    musicDevice::sound::ParameterPart parameterPart,
+    musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    return m_voices.at(m_pRtData->noteAllocations.at(note))
        .voices.at(compPart)
-       .normalizePercentageValue(parameterId, parameterPart, percentageValue);
+       .normalizePercentageValue(parameterId, parameterAttr, percentageValue);
 }
 
 const base::musicDevice::description::sound::Parameter*

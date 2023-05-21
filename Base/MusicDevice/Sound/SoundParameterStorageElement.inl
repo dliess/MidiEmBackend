@@ -23,31 +23,31 @@ ParameterStorageElement::uiAsksForChangedValues() noexcept
 }
 
 inline void ParameterStorageElement::applyModifier(
-    float destination, float intensity, ParameterPart parameterPart) noexcept
+    float destination, float intensity, ParameterAttr parameterAttr) noexcept
 {
-   switch (parameterPart)
+   switch (parameterAttr)
    {
-      case ParameterPart::Commanded:
+      case ParameterAttr::Commanded:
       {
          m_modifier += intensity * (destination - m_commanded);
          break;
       }
-      case ParameterPart::LfoFrequency:
+      case ParameterAttr::LfoFrequency:
       {
          m_lfo.applyModifier2Frequency(destination, intensity);
          break;
       }
-      case ParameterPart::LfoAmplitude:
+      case ParameterAttr::LfoAmplitude:
       {
          m_lfo.applyModifier2Amplitude(destination, intensity);
          break;
       }
-      case ParameterPart::LfoWaveform:
+      case ParameterAttr::LfoWaveform:
       {
          m_lfo.applyModifier2Waveform(destination, intensity);
          break;
       }
-      case ParameterPart::LfoMultiplierExp:
+      case ParameterAttr::LfoMultiplierExp:
       {
          m_lfo.applyModifier2MultiplierExp(destination, intensity);
          break;

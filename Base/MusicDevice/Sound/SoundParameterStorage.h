@@ -8,7 +8,7 @@
 
 #include "CallbackSignal.h"
 #include "LFO.h"
-#include "ParameterPart.h"
+#include "ParameterAttr.h"
 #include "SoundParameterStorageElement.h"
 #include "SoundSection.h"
 
@@ -47,7 +47,7 @@ public:
 
    inline float getCommandedValue(
        int voiceIdx, int parameterId,
-       ParameterPart parameterPart = ParameterPart::Commanded) const noexcept;
+       ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
    inline std::vector<float> getCommandedValuesOfVoice(
        int voiceIdx) const noexcept;
 
@@ -75,7 +75,7 @@ public:
                                                int parameterId) const noexcept;
 
    inline void applyModifier(int voiceIndex, int paramIdx,
-                             ParameterPart parameterPart, float destValue,
+                             ParameterAttr parameterAttr, float destValue,
                              float intensity) noexcept;
 
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);

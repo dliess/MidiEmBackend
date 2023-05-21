@@ -22,17 +22,17 @@ public:
    void setModifierEndValue(
        ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+       ::capnzero::MidiEmRt::SDParameterDestination parameterAttr,
        ::capnzero::Float32 endValue) override;
    void incrementModifierEndValue(
        ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+       ::capnzero::MidiEmRt::SDParameterDestination parameterAttr,
        ::capnzero::Float32 increment) override;
    void removeModifier(
        ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
        ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmRt::SDParameterDestination parameterPart) override;
+       ::capnzero::MidiEmRt::SDParameterDestination parameterAttr) override;
 
 private:
    base::musicDevice::sound::ParameterSceneContainer&

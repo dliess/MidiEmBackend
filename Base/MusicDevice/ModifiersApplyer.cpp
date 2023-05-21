@@ -26,7 +26,7 @@ void ModifiersApplyer::operator()() noexcept
                 mdIter->second->soundHandler->applyModifier(
                     modifier.destParamCoord.voiceIdx,
                     modifier.destParamCoord.parameterIdx,
-                    modifier.destParamCoord.parameterPart,
+                    modifier.destParamCoord.parameterAttr,
                     modifier.goalValue->value, intensity);
              }
              else
@@ -35,12 +35,12 @@ void ModifiersApplyer::operator()() noexcept
                     mdIter->second->soundHandler->getParameterValue(
                         modifier.destParamCoord.voiceIdx,
                         modifier.destParamCoord.parameterIdx,
-                        modifier.destParamCoord.parameterPart);
+                        modifier.destParamCoord.parameterAttr);
                 const auto pr = 
                     mdIter->second->soundHandler->getParameterRange(
                         modifier.destParamCoord.voiceIdx,
                         modifier.destParamCoord.parameterIdx,
-                        modifier.destParamCoord.parameterPart);
+                        modifier.destParamCoord.parameterAttr);
                 modifier.goalValue.emplace(pv, pr);
              }
           }

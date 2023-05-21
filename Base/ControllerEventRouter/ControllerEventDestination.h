@@ -8,12 +8,12 @@
 #include "Identifiable.h"
 #include "MusicDeviceId.h"
 #include "Overload.h"
-#include "ParameterPart.h"
+#include "ParameterAttr.h"
 
 namespace base::eventRouter
 {
 
-using ParameterPart = base::musicDevice::sound::ParameterPart;
+using ParameterAttr = base::musicDevice::sound::ParameterAttr;
 struct EventDestination
 {
    auto operator<=>(const EventDestination&) const = default;
@@ -62,8 +62,8 @@ struct EventDestination
          std::optional<float> valueAtPress{0};
       };
       int id;
-      ParameterPart parameterDestination{
-          ParameterPart::Commanded};
+      ParameterAttr parameterDestination{
+          ParameterAttr::Commanded};
       DescriptionCache descriptionCache;
       std::shared_ptr<ValueCache> valueCache;
    };

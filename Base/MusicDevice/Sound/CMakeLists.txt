@@ -13,7 +13,7 @@ set(SOURCES
 )
 
 set(HEADERS
-   "ParameterPart.h"
+   "ParameterAttr.h"
    "ParameterCoordinate.h"
    "ParameterScene.h"
    "ParameterSceneContainer.h"

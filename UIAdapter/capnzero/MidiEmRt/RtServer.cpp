@@ -292,7 +292,7 @@ RtServer::RtServer(
               sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
               paramCoord.parameterIdx,
               static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
-                  paramCoord.parameterPart),
+                  paramCoord.parameterAttr),
               value);
        });
    rParameterSceneContainer.onModifierRemoved(
@@ -302,7 +302,7 @@ RtServer::RtServer(
               sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
               paramCoord.parameterIdx,
               static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
-                  paramCoord.parameterPart));
+                  paramCoord.parameterAttr));
        });
 
    rTracks.onTrackAdded([this](util::Identifiable::UUIDView uuid,

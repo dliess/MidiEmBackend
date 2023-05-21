@@ -48,22 +48,22 @@ public:
                                 float increment, bool roundRobin) const;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
-       musicDevice::sound::ParameterPart parameterPart =
-           musicDevice::sound::ParameterPart::Commanded) const;
+       musicDevice::sound::ParameterAttr parameterAttr =
+           musicDevice::sound::ParameterAttr::Commanded) const;
    [[nodiscard]] float getParameterValue(
        int note, int compPart, int parameterIdx,
-       musicDevice::sound::ParameterPart parameterPart =
-           musicDevice::sound::ParameterPart::Commanded) const;
+       musicDevice::sound::ParameterAttr parameterAttr =
+           musicDevice::sound::ParameterAttr::Commanded) const;
    void setParameterValue(int compPart, int parameterId, float value) const;
    void setParameterValue(int note, int compPart, int parameterId,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int compPart, int parameterId,
-       musicDevice::sound::ParameterPart parameterPart,
+       musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] float normalizePercentageValue(
        int note, int compPart, int parameterId,
-       musicDevice::sound::ParameterPart parameterPart,
+       musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int compPart, int parameterIdx) const;

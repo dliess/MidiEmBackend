@@ -57,21 +57,21 @@ void Voice::incrementParameterValueDontCache(int parameterIdx, float increment,
 }
 
 float Voice::getParameterValue(
-    int parameterIdx, musicDevice::sound::ParameterPart parameterPart) const
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    if (m_pSoundDevice)
    {
-      switch (parameterPart)
+      switch (parameterAttr)
       {
-         case musicDevice::sound::ParameterPart::Commanded:
+         case musicDevice::sound::ParameterAttr::Commanded:
             return m_pParameterCache->at(parameterIdx).commanded;
-         case musicDevice::sound::ParameterPart::LfoAmplitude:
+         case musicDevice::sound::ParameterAttr::LfoAmplitude:
             return m_pParameterCache->at(parameterIdx).lfo.amplitude;
-         case musicDevice::sound::ParameterPart::LfoFrequency:
+         case musicDevice::sound::ParameterAttr::LfoFrequency:
             return m_pParameterCache->at(parameterIdx).lfo.frequency;
-         case musicDevice::sound::ParameterPart::LfoMultiplierExp:
+         case musicDevice::sound::ParameterAttr::LfoMultiplierExp:
             return float(m_pParameterCache->at(parameterIdx).lfo.multiplierExp);
-         case musicDevice::sound::ParameterPart::LfoWaveform:
+         case musicDevice::sound::ParameterAttr::LfoWaveform:
             return float(static_cast<int>(
                 m_pParameterCache->at(parameterIdx).lfo.waveform));
       }
@@ -90,13 +90,13 @@ void Voice::setParameterValue(int parameterIdx, float value) const
 }
 
 float Voice::normalizePercentageValue(
-    int parameterId, musicDevice::sound::ParameterPart parameterPart,
+    int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    if (m_pSoundDevice)
    {
       return m_pSoundDevice->normalizePercentageValue(
-          m_voiceIndex, parameterId, parameterPart, percentageValue);
+          m_voiceIndex, parameterId, parameterAttr, percentageValue);
    }
    return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of
                  // type util::non_null

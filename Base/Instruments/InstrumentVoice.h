@@ -22,8 +22,8 @@ public:
       [[nodiscard]] const ParameterData& at(std::size_t pos) const { return data.at(pos); }
       [[nodiscard]] ParameterData& at(std::size_t pos) { return data.at(pos); }
       
-      void setParameter(std::size_t index, musicDevice::sound::ParameterPart, float value);
-      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int, musicDevice::sound::ParameterPart, float);
+      void setParameter(std::size_t index, musicDevice::sound::ParameterAttr, float value);
+      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int, musicDevice::sound::ParameterAttr, float);
       private:
       std::vector<ParameterData> data;
    };
@@ -46,10 +46,10 @@ public:
                                          bool roundRobin) const;
 
    [[nodiscard]] float getParameterValue(
-       int parameterIdx, musicDevice::sound::ParameterPart parameterPart) const;
+       int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int parameterIdx, float value) const;
    [[nodiscard]] float normalizePercentageValue(
-       int parameterId, musicDevice::sound::ParameterPart parameterPart,
+       int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 
    const musicDevice::description::sound::Parameter* parameterDescription(

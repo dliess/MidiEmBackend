@@ -4,7 +4,7 @@
 #include <optional>
 
 #include "LFO.h"
-#include "ParameterPart.h"
+#include "ParameterAttr.h"
 
 namespace base::musicDevice::sound
 {
@@ -22,7 +22,7 @@ struct ParameterStorageElement
    inline void setValueFromDeviceRel(float value) noexcept;
    inline void setValueFromDevice(float value) noexcept;
    inline void applyModifier(float destination, float intensity,
-                             ParameterPart parameterPart) noexcept;
+                             ParameterAttr parameterAttr) noexcept;
 
    inline void enable(bool enable) noexcept;
    inline void incUiInterestCount() noexcept;

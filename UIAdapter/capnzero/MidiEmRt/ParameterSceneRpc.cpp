@@ -31,7 +31,7 @@ void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
 void ParameterSceneRpc::setModifierEndValue(
     ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+    ::capnzero::MidiEmRt::SDParameterDestination parameterAttr,
     ::capnzero::Float32 endValue)
 {
    util::Identifiable::UUID deviceUuid_;
@@ -40,14 +40,14 @@ void ParameterSceneRpc::setModifierEndValue(
        sceneIdx,
        base::musicDevice::sound::ParameterCoordinate{
            deviceUuid_, voiceIdx, parameterIdx,
-           static_cast<base::musicDevice::sound::ParameterPart>(parameterPart)},
+           static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        endValue);
 }
 
 void ParameterSceneRpc::incrementModifierEndValue(
     ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmRt::SDParameterDestination parameterPart,
+    ::capnzero::MidiEmRt::SDParameterDestination parameterAttr,
     ::capnzero::Float32 increment)
 {
    util::Identifiable::UUID deviceUuid_;
@@ -56,20 +56,20 @@ void ParameterSceneRpc::incrementModifierEndValue(
        sceneIdx,
        base::musicDevice::sound::ParameterCoordinate{
            deviceUuid_, voiceIdx, parameterIdx,
-           static_cast<base::musicDevice::sound::ParameterPart>(parameterPart)},
+           static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        increment);
 }
 
 void ParameterSceneRpc::removeModifier(
     ::capnzero::Int16 sceneIdx, const ::capnzero::SpanCL<16>& uuid,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmRt::SDParameterDestination parameterPart)
+    ::capnzero::MidiEmRt::SDParameterDestination parameterAttr)
 {
    util::Identifiable::UUID deviceUuid_;
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
    m_rParameterSceneContainer.removeModifier(
        sceneIdx, base::musicDevice::sound::ParameterCoordinate{
                      deviceUuid_, voiceIdx, parameterIdx,
-                     static_cast<base::musicDevice::sound::ParameterPart>(
-                         parameterPart)});
+                     static_cast<base::musicDevice::sound::ParameterAttr>(
+                         parameterAttr)});
 }

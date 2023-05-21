@@ -51,12 +51,12 @@ public:
    void setParameterValue(int voiceId, int parameterId, float value) noexcept;
    [[nodiscard]] float getParameterValue(
        int voiceId, int parameterId,
-       ParameterPart parameterPart = ParameterPart::Commanded) const noexcept;
+       ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
    [[nodiscard]] float getParameterRange(
        int voiceId, int parameterId,
-       ParameterPart parameterPart = ParameterPart::Commanded) const;
+       ParameterAttr parameterAttr = ParameterAttr::Commanded) const;
    [[nodiscard]] float normalizePercentageValue(
-       int voiceId, int parameterId, ParameterPart parameterPart,
+       int voiceId, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter*
    parameterDescription(int voiceIdx, int parameterIdx) const;
@@ -91,7 +91,7 @@ public:
    void incLFOMultiplierExp(int voiceIndex, int paramIdx,
                             int increment) noexcept;
 
-   void applyModifier(int voiceIndex, int paramIdx, ParameterPart parameterPart,
+   void applyModifier(int voiceIndex, int paramIdx, ParameterAttr parameterAttr,
                       float destValue, float intensity) noexcept;
 
    // TODO: do we need this?
