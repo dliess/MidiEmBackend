@@ -10,7 +10,7 @@ inline bool operator==(const EventDestination::Parameter& lhs,
                        const EventDestination::Parameter& rhs)
 {
    return lhs.id == rhs.id && 
-          lhs.parameterDestination == rhs.parameterDestination;
+          lhs.parameterAttr == rhs.parameterAttr;
 }
 
 /*

@@ -62,8 +62,7 @@ struct EventDestination
          std::optional<float> valueAtPress{0};
       };
       int id;
-      ParameterAttr parameterDestination{
-          ParameterAttr::Commanded};
+      ParameterAttr parameterAttr{ParameterAttr::Commanded};
       DescriptionCache descriptionCache;
       std::shared_ptr<ValueCache> valueCache;
    };

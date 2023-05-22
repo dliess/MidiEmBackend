@@ -72,8 +72,8 @@ inline auto registerMembers<base::eventRouter::EventDestination::Parameter>()
 {
    return members(
        member("id", &base::eventRouter::EventDestination::Parameter::id),
-       member("parameterDestination", &base::eventRouter::EventDestination::
-                                          Parameter::parameterDestination));
+       member("parameterAttr", &base::eventRouter::EventDestination::
+                                          Parameter::parameterAttr));
 }
 template <>
 inline auto getClassNameOrIndex<base::eventRouter::EventDestination::Parameter>(

@@ -54,42 +54,47 @@ void playNoteOnOff(Dev& dev, int note, float velocity,
    }
 }
 
+bool isList(const EventDestination::Parameter& parameter) {
+   return parameter.descriptionCache.isList || 
+          parameter.parameterAttr == ParameterAttr::LfoMultiplierExp ||
+          parameter.parameterAttr == ParameterAttr::LfoWaveform;
+}
+
+bool isPress(const controller::PressReleaseType& value) {
+   return value.value > 0;
+}
+
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::PressReleaseType& value,
                   MDCoords... mdCoords)
 {
-   if (parameter.descriptionCache.isList)
+   if (!isPress(value)) return;
+   if (isList(parameter))
    {
-      if (value.value > 0)
-      {
-         const float incr =
-             parameter.descriptionCache.upwards ? value.value : -value.value;
-         dev.incrementParameterValue(mdCoords..., parameter.id, incr, true);
-      }
+      const float incr =
+            parameter.descriptionCache.upwards ? value.value : -value.value;
+      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, true);
    }
    else
    {
-      if (value.value > 0)
+      const float actualVal =
+            dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+      if (std::fabs(actualVal - parameter.descriptionCache.zeroVal) <
+            std::numeric_limits<float>::epsilon())
       {
-         const float actualVal =
-             dev.getParameterValue(mdCoords..., parameter.id);
-         if (std::fabs(actualVal - parameter.descriptionCache.zeroVal) <
-             std::numeric_limits<float>::epsilon())
+         if (parameter.valueCache->valueAtPress)
          {
-            if (parameter.valueCache->valueAtPress)
-            {
-               dev.setParameterValue(mdCoords..., parameter.id,
-                                     *parameter.valueCache->valueAtPress);
-            }
+            dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr,
+                                    *parameter.valueCache->valueAtPress);
          }
-         else
-         {
-            parameter.valueCache->valueAtPress =
-                dev.getParameterValue(mdCoords..., parameter.id);
-            dev.setParameterValue(mdCoords..., parameter.id,
-                                  parameter.descriptionCache.zeroVal);
-         }
+      }
+      else
+      {
+         parameter.valueCache->valueAtPress =
+               dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+         dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr,
+                                 parameter.descriptionCache.zeroVal);
       }
    }
 }
@@ -102,11 +107,11 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    const float val = dev.normalizePercentageValue(
        mdCoords..., parameter.id,
        base::musicDevice::sound::ParameterAttr::Commanded, value.value);
-   const float actualVal = dev.getParameterValue(mdCoords..., parameter.id);
+   const float actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
    const float diff      = std::fabs(actualVal - val);
    if ((diff != 0) && (diff < 0.02 || diff >= 1.0))
    {
-      dev.setParameterValue(mdCoords..., parameter.id, val);
+      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
    }
 }
 
@@ -127,7 +132,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    {   // TODO: highres mode
       incr = float(increment.value) / float(increment.resolution);
    }
-   dev.incrementParameterValue(mdCoords..., parameter.id, incr, false);
+   dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
 }
 
 template <typename Dev, typename... MDCoords>
@@ -139,10 +144,10 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    if (!parameter.valueCache->valueAtPress)
    {
       parameter.valueCache->valueAtPress.emplace<float>(
-          dev.getParameterValue(mdCoords..., parameter.id));
+          dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr));
    }
    valueToSet += parameter.valueCache->valueAtPress.value();
-   dev.setParameterValue(mdCoords..., parameter.id, valueToSet);
+   dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
    if (0 == value.value)
    {
       parameter.valueCache->valueAtPress = std::nullopt;

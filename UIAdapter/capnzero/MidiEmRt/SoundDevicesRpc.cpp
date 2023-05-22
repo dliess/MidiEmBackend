@@ -87,7 +87,7 @@ void SoundDevicesRpc::incrementParameterValue(
     ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incrementParameterValue(voiceIdx, paramIdx, increment);
+      soundHandler.incCommandedValue(voiceIdx, paramIdx, increment, false);
    });
 }
 
@@ -97,7 +97,7 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
                                         ::capnzero::Float32 value)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.setParameterValue(voiceIdx, paramIdx, value);
+      soundHandler.setCommandedValue(voiceIdx, paramIdx, value);
    });
 }
 
@@ -144,7 +144,7 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Int16 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incLFOWaveform(voiceIdx, paramIdx, increment);
+      soundHandler.incLFOWaveform(voiceIdx, paramIdx, increment, false);
    });
 }
 
@@ -204,7 +204,7 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
                                           ::capnzero::Int32 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incLFOMultiplierExp(voiceIdx, paramIdx, increment);
+      soundHandler.incLFOMultiplierExp(voiceIdx, paramIdx, increment, false);
    });
 }
 

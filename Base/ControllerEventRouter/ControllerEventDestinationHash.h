@@ -42,7 +42,7 @@ template <> struct hash<base::eventRouter::EventDestination::ControlType>
             },
             [](const base::eventRouter::EventDestination::Parameter& parameter) -> std::size_t {
                return std::hash<int>{}(parameter.id) ^
-                      std::hash<int>{}(static_cast<int>(parameter.parameterDestination)) << 16;
+                      std::hash<int>{}(static_cast<int>(parameter.parameterAttr)) << 16;
             }
          }, controllerType
       );

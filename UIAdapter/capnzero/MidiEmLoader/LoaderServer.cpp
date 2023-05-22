@@ -11,6 +11,17 @@
 using namespace uiadapter::capnzero;
 using namespace base;
 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::PARAMETER) == 
+              int(base::musicDevice::sound::ParameterAttr::Commanded));
+static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_FREQ) == 
+              int(base::musicDevice::sound::ParameterAttr::LfoFrequency));
+static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_AMP) == 
+              int(base::musicDevice::sound::ParameterAttr::LfoAmplitude));
+static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_WAVEFORM) == 
+              int(base::musicDevice::sound::ParameterAttr::LfoWaveform));
+static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_MULTIPLIER_EXP) == 
+              int(base::musicDevice::sound::ParameterAttr::LfoMultiplierExp));
+
 auto unpackEndpoint(
     const musicDevice::factory::DataHolder &rMDFDataHolder,
     const eventRouter::EventDestination::Endpoint &endpoint)
@@ -91,7 +102,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                             e_voiceIdx, e_comIdx, parameter.id,
                             static_cast<::capnzero::MidiEmLoader::
                                             SDParameterDestination>(
-                                parameter.parameterDestination));
+                                parameter.parameterAttr));
                     }
                 END_SWITCH
             },
@@ -117,7 +128,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                             e_voiceIdx, e_comIdx, parameter.id,
                             static_cast<::capnzero::MidiEmLoader::
                                             SDParameterDestination>(
-                                parameter.parameterDestination));
+                                parameter.parameterAttr));
                     }
                 END_SWITCH
             }
