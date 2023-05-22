@@ -28,16 +28,19 @@ public:
    KitInstrument(std::string name) noexcept;
    void noteOn(int note, float velocity, void* token = nullptr) const override;
    void noteOff(int note, float velocity, void* token = nullptr) const override;
-   void noteOn(int soundIndex, int note, float velocity, void* token = nullptr) const;
-   void noteOff(int soundIndex, int note, float velocity, void* token = nullptr) const;
+   void noteOn(int soundIndex, int note, float velocity,
+               void* token = nullptr) const;
+   void noteOff(int soundIndex, int note, float velocity,
+                void* token = nullptr) const;
    void incrementParameterValue(int soundIdx, int componentIdx,
-                                int parameterIdx, float increment,
-                                bool roundRobin = false) const;
+                                int parameterIdx,
+                                musicDevice::sound::ParameterAttr parameterAttr,
+                                float increment, bool roundRobin = false) const;
    [[nodiscard]] float getParameterValue(
        int soundIdx, int componentIdx, int parameterIdx,
-       musicDevice::sound::ParameterAttr parameterAttr =
-           musicDevice::sound::ParameterAttr::Commanded) const;
+       musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int soundIdx, int componentIdx, int parameterIdx,
+                          musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int soundIdx, int componentIdx, int parameterId,
@@ -69,7 +72,6 @@ private:
                          util::function_ref<void(const Voice&)> cb) const;
 };
 
- 
 }   // namespace instruments
 }   // namespace base
 

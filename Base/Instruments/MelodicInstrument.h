@@ -35,27 +35,30 @@ public:
       int m_currentVoiceIndex{-1};
    };
 
-   MelodicInstrument() : MelodicInstrument("", std::make_shared<RtData>()) {};
+   MelodicInstrument() : MelodicInstrument("", std::make_shared<RtData>()){};
    MelodicInstrument(std::string name, std::shared_ptr<RtData> rtData) noexcept;
 
    void noteOn(int note, float velocity, void* token = nullptr) const override;
    void noteOff(int note, float velocity, void* token = nullptr) const override;
 
    void pitchBend(float value) const;
-   void incrementParameterValue(int compPart, int parameterId, float increment,
-                                bool roundRobin) const;
+   void incrementParameterValue(int compPart, int parameterId,
+                                musicDevice::sound::ParameterAttr parameterAttr,
+                                float increment, bool roundRobin) const;
    void incrementParameterValue(int note, int compPart, int parameterId,
+                                musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
    [[nodiscard]] float getParameterValue(
        int compPart, int parameterIdx,
-       musicDevice::sound::ParameterAttr parameterAttr =
-           musicDevice::sound::ParameterAttr::Commanded) const;
+       musicDevice::sound::ParameterAttr parameterAttr) const;
    [[nodiscard]] float getParameterValue(
        int note, int compPart, int parameterIdx,
-       musicDevice::sound::ParameterAttr parameterAttr =
-           musicDevice::sound::ParameterAttr::Commanded) const;
-   void setParameterValue(int compPart, int parameterId, float value) const;
+       musicDevice::sound::ParameterAttr parameterAttr) const;
+   void setParameterValue(int compPart, int parameterId,
+                          musicDevice::sound::ParameterAttr parameterAttr,
+                          float value) const;
    void setParameterValue(int note, int compPart, int parameterId,
+                          musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int compPart, int parameterId,

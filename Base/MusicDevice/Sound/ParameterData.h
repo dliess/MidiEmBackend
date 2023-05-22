@@ -40,6 +40,18 @@ void setParameterData(ParameterData& pd, const ParameterValue& value) noexcept
    END_SWITCH
 }
 
+inline
+void setParameterData(ParameterData& pd, ParameterAttr parameterAttr, float value) noexcept
+{
+   switch(parameterAttr) {
+      case(ParameterAttr::Commanded): { pd.commanded = value; }
+      case(ParameterAttr::LfoFrequency): { pd.lfo.frequency = value; }
+      case(ParameterAttr::LfoAmplitude): { pd.lfo.amplitude = value; }
+      case(ParameterAttr::LfoWaveform): { pd.lfo.waveform = static_cast<lfo::Waveform>(value); }
+      case(ParameterAttr::LfoMultiplierExp): { pd.lfo.multiplierExp = static_cast<int>(value); }
+   }
+}
+
 static_assert(std::is_same_v <Parameter, 
    mpark::variant_alternative_t<static_cast<int>(ParameterAttr::Commanded), ParameterValue>>);
 static_assert(std::is_same_v <ParameterLFOFreq, 

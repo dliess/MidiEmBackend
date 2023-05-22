@@ -11,8 +11,9 @@ void Voice::noteOn(int note, float velocity) const
           static_cast<void*>(m_pParameterCache.get()))
       {
          // TODO: rectivate later
-         //refreshParameters();
-         m_pSoundDevice->lastplayerId = static_cast<void*>(m_pParameterCache.get());
+         // refreshParameters();
+         m_pSoundDevice->lastplayerId =
+             static_cast<void*>(m_pParameterCache.get());
       }
       m_pSoundDevice->noteOn(m_voiceIndex, note + m_noteOffset, velocity);
    }
@@ -34,25 +35,29 @@ void Voice::pitchBend(float value) const
    }
 }
 
-void Voice::incrementParameterValue(int parameterIdx, float increment,
-                                    bool roundRobin) const
+void Voice::incrementParameterValue(
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+    float increment, bool roundRobin) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->incrementParameterValue(m_voiceIndex, parameterIdx, increment,
-                                            roundRobin);
-      m_pParameterCache->at(parameterIdx).commanded =
-          m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx);
+      m_pSoundDevice->incrementParameterValue(
+          m_voiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
+      musicDevice::sound::setParameterData(
+          m_pParameterCache->at(parameterIdx), parameterAttr,
+          m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
+                                            parameterAttr));
    }
 }
 
-void Voice::incrementParameterValueDontCache(int parameterIdx, float increment,
-                                    bool roundRobin) const
+void Voice::incrementParameterValueDontCache(
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+    float increment, bool roundRobin) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->incrementParameterValue(m_voiceIndex, parameterIdx, increment,
-                                            roundRobin);
+      m_pSoundDevice->incrementParameterValue(
+          m_voiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
    }
 }
 
@@ -80,12 +85,18 @@ float Voice::getParameterValue(
                  // type util::non_null
 }
 
-void Voice::setParameterValue(int parameterIdx, float value) const
+void Voice::setParameterValue(int parameterIdx,
+                              musicDevice::sound::ParameterAttr parameterAttr,
+                              float value) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->setParameterValue(m_voiceIndex, parameterIdx, value);
-      m_pParameterCache->at(parameterIdx).commanded = value;
+      m_pSoundDevice->setParameterValue(m_voiceIndex, parameterIdx,
+                                        parameterAttr, value);
+      musicDevice::sound::setParameterData(
+          m_pParameterCache->at(parameterIdx), parameterAttr,
+          m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
+                                            parameterAttr));
    }
 }
 
@@ -120,8 +131,8 @@ void Voice::refreshParameters() const
    }
    for (int paramIdx = 0; paramIdx < m_pParameterCache->size(); ++paramIdx)
    {
-      m_pSoundDevice->setParameterValue(m_voiceIndex, paramIdx,
-                                      m_pParameterCache->at(paramIdx).commanded);
+      m_pSoundDevice->setCommandedValue(
+          m_voiceIndex, paramIdx, m_pParameterCache->at(paramIdx).commanded);
       m_pSoundDevice->setLFOAmplitude(
           m_voiceIndex, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.amplitude);

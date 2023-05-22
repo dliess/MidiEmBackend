@@ -48,7 +48,7 @@ public:
    void pitchBend(int voiceIndex, float value) noexcept;
    void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
    void afterTouch(int voiceIndex, float value) noexcept;
-   void setParameterValue(int voiceId, int parameterId, float value) noexcept;
+   void setParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr, float value) noexcept;
    [[nodiscard]] float getParameterValue(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
@@ -60,8 +60,8 @@ public:
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter*
    parameterDescription(int voiceIdx, int parameterIdx) const;
-   void incrementParameterValue(int voiceId, int parameterId, float increment,
-                                bool roundRobin = false) noexcept;
+   void incrementParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr,
+                                float increment, bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;
    inline std::optional<std::string> getActualPresetOfVoice(
        int voiceId) const noexcept;
@@ -79,17 +79,20 @@ public:
    void blankVoiceParameters(int voiceId) noexcept;
    void blankAllVoiceParameters() noexcept;
 
+   void setCommandedValue(int voiceId, int parameterId, float value) noexcept;
    void setLFOWaveform(int voiceId, int paramIdx,
                        lfo::Waveform waveform) noexcept;
    void setLFOAmplitude(int voiceIndex, int paramIdx, float amplitude) noexcept;
    void setLFOFrequency(int voiceIndex, int paramIdx, float frequency) noexcept;
    void setLFOMultiplierExp(int voiceIndex, int paramIdx,
                             int multiplExp) noexcept;
-   void incLFOWaveform(int voiceId, int paramIdx, int increment) noexcept;
+
+   void incCommandedValue(int voiceId, int parameterId,float increment, bool roundRobin) noexcept;
+   void incLFOWaveform(int voiceId, int paramIdx, int increment, bool roundRobin) noexcept;
    void incLFOAmplitude(int voiceIndex, int paramIdx, float increment) noexcept;
    void incLFOFrequency(int voiceIndex, int paramIdx, float increment) noexcept;
    void incLFOMultiplierExp(int voiceIndex, int paramIdx,
-                            int increment) noexcept;
+                            int increment, bool roundRobin) noexcept;
 
    void applyModifier(int voiceIndex, int paramIdx, ParameterAttr parameterAttr,
                       float destValue, float intensity) noexcept;

@@ -4,10 +4,10 @@
 #include <memory>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "MusicDevice.h"
 #include "ParameterData.h"
 #include "SoundHandler.h"
-#include "CallbackSignal.h"
 
 namespace base::instruments
 {
@@ -19,12 +19,18 @@ public:
       explicit ParameterCache(size_t size) : data(size) {}
       [[nodiscard]] std::size_t size() const { return data.size(); }
       using ParameterData = base::musicDevice::sound::ParameterData;
-      [[nodiscard]] const ParameterData& at(std::size_t pos) const { return data.at(pos); }
+      [[nodiscard]] const ParameterData& at(std::size_t pos) const
+      {
+         return data.at(pos);
+      }
       [[nodiscard]] ParameterData& at(std::size_t pos) { return data.at(pos); }
-      
-      void setParameter(std::size_t index, musicDevice::sound::ParameterAttr, float value);
-      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int, musicDevice::sound::ParameterAttr, float);
-      private:
+
+      void setParameter(std::size_t index, musicDevice::sound::ParameterAttr,
+                        float value);
+      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChanged, int,
+                                  musicDevice::sound::ParameterAttr, float);
+
+   private:
       std::vector<ParameterData> data;
    };
    Voice() = default;
@@ -40,14 +46,18 @@ public:
    void noteOff(int note, float velocity) const;
    void pitchBend(float value) const;
 
-   void incrementParameterValue(int parameterIdx, float increment,
-                                bool roundRobin) const;
-   void incrementParameterValueDontCache(int parameterIdx, float increment,
-                                         bool roundRobin) const;
+   void incrementParameterValue(int parameterIdx,
+                                musicDevice::sound::ParameterAttr parameterAttr,
+                                float increment, bool roundRobin) const;
+   void incrementParameterValueDontCache(
+       int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+       float increment, bool roundRobin) const;
 
    [[nodiscard]] float getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int parameterIdx, float value) const;
+   void setParameterValue(int parameterIdx,
+                          musicDevice::sound::ParameterAttr parameterAttr,
+                          float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;

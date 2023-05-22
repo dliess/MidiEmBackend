@@ -27,8 +27,8 @@ void KitInstrument::noteOff(int note, float velocity, void* token) const
    }
 }
 
-void KitInstrument::noteOn(int soundIndex, int note,
-                           float velocity, void* token) const
+void KitInstrument::noteOn(int soundIndex, int note, float velocity,
+                           void* token) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -37,8 +37,8 @@ void KitInstrument::noteOn(int soundIndex, int note,
    rtData->emitNoteOnPlayed(soundIndex + 64, velocity, token);
 }
 
-void KitInstrument::noteOff(int soundIndex, int note,
-                            float velocity, void* token) const
+void KitInstrument::noteOff(int soundIndex, int note, float velocity,
+                            void* token) const
 {
    for (auto& voice : m_compositeSounds[soundIndex].voices)
    {
@@ -47,12 +47,14 @@ void KitInstrument::noteOff(int soundIndex, int note,
    rtData->emitNoteOffPlayed(soundIndex + 64, velocity, token);
 }
 
-void KitInstrument::incrementParameterValue(int soundIdx, int componentIdx,
-                                            int parameterIdx, float increment,
-                                            bool roundRobin) const
+void KitInstrument::incrementParameterValue(
+    int soundIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float increment,
+    bool roundRobin) const
 {
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      voice.incrementParameterValue(parameterIdx, increment, roundRobin);
+      voice.incrementParameterValue(parameterIdx, parameterAttr, increment,
+                                    roundRobin);
    });
 }
 
@@ -67,12 +69,12 @@ float KitInstrument::getParameterValue(
    return ret;
 }
 
-void KitInstrument::setParameterValue(int soundIdx, int componentIdx,
-                                      int parameterIdx,
-                                      float value) const
+void KitInstrument::setParameterValue(
+    int soundIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
    withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      voice.setParameterValue(parameterIdx, value);
+      voice.setParameterValue(parameterIdx, parameterAttr, value);
    });
 }
 
