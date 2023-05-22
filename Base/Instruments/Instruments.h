@@ -112,6 +112,8 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView uuid) const;
 
     void updateParameterUI();
+    CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged, util::Identifiable::UUIDView, int padIdx, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
+    CB_SIGNAL_SINGLE_SUBSCRIBER(MusicInstrumentParamChanged, util::Identifiable::UUIDView, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;

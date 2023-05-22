@@ -159,6 +159,9 @@ void Instruments::createNewSlotInMelodicInstrument(
 {
    auto paramCache = createParameterCache(
        m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
+   paramCache->onDataChangedUI([this](size_t parameterId, musicDevice::sound::ParameterAttr parameterAttr, float value){
+      //emit
+   });
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
