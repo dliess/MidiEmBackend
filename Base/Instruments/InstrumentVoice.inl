@@ -41,6 +41,12 @@ inline bool Voice::operator==(const Voice& rhs) const
           m_voiceIndex == rhs.m_voiceIndex && m_noteOffset == rhs.m_noteOffset;
 }
 
+inline
+void Voice::updateParameterUI() const
+{
+   m_pParameterCache->updateParameterUI();
+}
+
 }   // namespace base::instruments
 
 #endif

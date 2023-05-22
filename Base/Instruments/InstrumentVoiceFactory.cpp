@@ -15,8 +15,9 @@ instruments::createParameterCache(
              std::make_shared<Voice::ParameterCache>(engine->parameters.size());
          for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
          {
-            paramCache->at(paramIdx).commanded =
-                descr->soundSection->getInitialValueFor(voiceIdx, paramIdx);
+            paramCache->setParameter(
+                paramIdx, musicDevice::sound::ParameterAttr::Commanded,
+                descr->soundSection->getInitialValueFor(voiceIdx, paramIdx));
          }
          return paramCache;
       }

@@ -43,8 +43,8 @@ void Voice::incrementParameterValue(
    {
       m_pSoundDevice->incrementParameterValue(
           m_voiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
-      musicDevice::sound::setParameterData(
-          m_pParameterCache->at(parameterIdx), parameterAttr,
+      m_pParameterCache->setParameter(
+          parameterIdx, parameterAttr,
           m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
                                             parameterAttr));
    }
@@ -93,8 +93,8 @@ void Voice::setParameterValue(int parameterIdx,
    {
       m_pSoundDevice->setParameterValue(m_voiceIndex, parameterIdx,
                                         parameterAttr, value);
-      musicDevice::sound::setParameterData(
-          m_pParameterCache->at(parameterIdx), parameterAttr,
+      m_pParameterCache->setParameter(
+          parameterIdx, parameterAttr,
           m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
                                             parameterAttr));
    }

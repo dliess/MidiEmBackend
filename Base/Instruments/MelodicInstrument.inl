@@ -19,6 +19,17 @@ inline int MelodicInstrument::RtData::currentVoiceIndex() const noexcept
    return m_currentVoiceIndex;
 }
 
+inline void MelodicInstrument::updateParameterUI() const
+{
+   if(m_voices.size())
+   {
+      for(const auto& compPart : m_voices.at(0).voices)
+      {
+         compPart.updateParameterUI();
+      }
+   }
+}
+
 template <typename Cb> void MelodicInstrument::forEachVoice(Cb&& cb)
 {
    for (auto& sound : m_voices)
@@ -32,6 +43,7 @@ inline bool isSameInstrument(const MelodicInstrument& lhs,
 {
    return lhs.m_name == rhs.m_name && lhs.m_voices == rhs.m_voices;
 }
+
 
 }   // namespace base::instruments
 

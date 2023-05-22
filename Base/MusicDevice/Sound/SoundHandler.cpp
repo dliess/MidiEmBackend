@@ -163,11 +163,11 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId, ParameterAttr
                                      float value) noexcept
 {
    switch(parameterAttr) {
-      case(ParameterAttr::Commanded): { setCommandedValue(voiceId, parameterId, value); }
-      case(ParameterAttr::LfoFrequency): { setLFOFrequency(voiceId, parameterId, value); }
-      case(ParameterAttr::LfoAmplitude): { setLFOAmplitude(voiceId, parameterId, value); }
-      case(ParameterAttr::LfoWaveform): { setLFOWaveform(voiceId, parameterId, static_cast<lfo::Waveform>(value)); }
-      case(ParameterAttr::LfoMultiplierExp): { setLFOMultiplierExp(voiceId, parameterId, static_cast<int>(value)); }
+      case(ParameterAttr::Commanded): { setCommandedValue(voiceId, parameterId, value); break; }
+      case(ParameterAttr::LfoFrequency): { setLFOFrequency(voiceId, parameterId, value); break; }
+      case(ParameterAttr::LfoAmplitude): { setLFOAmplitude(voiceId, parameterId, value); break; }
+      case(ParameterAttr::LfoWaveform): { setLFOWaveform(voiceId, parameterId, static_cast<lfo::Waveform>(value)); break; }
+      case(ParameterAttr::LfoMultiplierExp): { setLFOMultiplierExp(voiceId, parameterId, static_cast<int>(value)); break; }
    }
 }
 
@@ -260,11 +260,11 @@ void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
                                            bool roundRobin) noexcept
 {
    switch(parameterAttr) {
-      case(ParameterAttr::Commanded): { incCommandedValue(voiceId, parameterId, increment, roundRobin); }
-      case(ParameterAttr::LfoFrequency): { incLFOFrequency(voiceId, parameterId, increment); }
-      case(ParameterAttr::LfoAmplitude): { incLFOAmplitude(voiceId, parameterId, increment); }
-      case(ParameterAttr::LfoWaveform): { incLFOWaveform(voiceId, parameterId, static_cast<int>(increment), roundRobin); }
-      case(ParameterAttr::LfoMultiplierExp): { incLFOMultiplierExp(voiceId, parameterId, static_cast<int>(increment), roundRobin); }
+      case(ParameterAttr::Commanded): { incCommandedValue(voiceId, parameterId, increment, roundRobin); break;}
+      case(ParameterAttr::LfoFrequency): { incLFOFrequency(voiceId, parameterId, increment); break;}
+      case(ParameterAttr::LfoAmplitude): { incLFOAmplitude(voiceId, parameterId, increment); break;}
+      case(ParameterAttr::LfoWaveform): { incLFOWaveform(voiceId, parameterId, static_cast<int>(increment), roundRobin); break; }
+      case(ParameterAttr::LfoMultiplierExp): { incLFOMultiplierExp(voiceId, parameterId, static_cast<int>(increment), roundRobin); break;}
    }
 }
 

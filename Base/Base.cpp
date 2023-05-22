@@ -187,6 +187,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
       musicDeviceHolder.musicDevices.updateMDParameterUI();
+      instruments.updateParameterUI();
       tracks.updateActiveClipBeatsUI();
    });
    fdSet.AddFd(rtServer.getFd(), [&rtServer](int fd) {

@@ -44,12 +44,25 @@ inline
 void setParameterData(ParameterData& pd, ParameterAttr parameterAttr, float value) noexcept
 {
    switch(parameterAttr) {
-      case(ParameterAttr::Commanded): { pd.commanded = value; }
-      case(ParameterAttr::LfoFrequency): { pd.lfo.frequency = value; }
-      case(ParameterAttr::LfoAmplitude): { pd.lfo.amplitude = value; }
-      case(ParameterAttr::LfoWaveform): { pd.lfo.waveform = static_cast<lfo::Waveform>(value); }
-      case(ParameterAttr::LfoMultiplierExp): { pd.lfo.multiplierExp = static_cast<int>(value); }
+      case(ParameterAttr::Commanded): { pd.commanded = value; break; }
+      case(ParameterAttr::LfoFrequency): { pd.lfo.frequency = value; break;}
+      case(ParameterAttr::LfoAmplitude): { pd.lfo.amplitude = value; break;}
+      case(ParameterAttr::LfoWaveform): { pd.lfo.waveform = static_cast<lfo::Waveform>(value); break;}
+      case(ParameterAttr::LfoMultiplierExp): { pd.lfo.multiplierExp = static_cast<int>(value); break;}
    }
+}
+
+inline
+float getParameterData(const ParameterData& pd, ParameterAttr parameterAttr) noexcept
+{
+   switch(parameterAttr) {
+      case(ParameterAttr::Commanded): { return pd.commanded; }
+      case(ParameterAttr::LfoFrequency): { return pd.lfo.frequency; }
+      case(ParameterAttr::LfoAmplitude): { return pd.lfo.amplitude; }
+      case(ParameterAttr::LfoWaveform): { return float(pd.lfo.waveform); }
+      case(ParameterAttr::LfoMultiplierExp): { return float(pd.lfo.multiplierExp); }
+   }
+   return 0.0;
 }
 
 static_assert(std::is_same_v <Parameter, 

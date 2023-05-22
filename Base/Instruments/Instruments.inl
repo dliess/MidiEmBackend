@@ -55,4 +55,18 @@ inline bool Instruments::hasMelodicInstrument(
    return it != m_doubleBufferedData.nonRt().melodicInstruments.end();
 }
 
+inline void Instruments::updateParameterUI()
+{
+   m_doubleBufferedData.withRtLocked([](const auto& rtData) {
+      for(const auto& instr : rtData.kitInstruments) 
+      { 
+         instr.updateParameterUI();
+      }
+      for(const auto& instr : rtData.melodicInstruments) 
+      { 
+         instr.updateParameterUI();
+      }
+   });
+}
+
 }   // namespace base::instruments

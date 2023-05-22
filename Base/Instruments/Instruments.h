@@ -111,6 +111,8 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] bool hasMelodicInstrument(
        util::Identifiable::UUIDView uuid) const;
 
+    void updateParameterUI();
+
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;

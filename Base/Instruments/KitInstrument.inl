@@ -34,6 +34,14 @@ template <typename Cb> void KitInstrument::forEachVoice(Cb&& cb)
    }
 }
 
+inline void KitInstrument::updateParameterUI() const
+{
+   for (auto& sound : m_compositeSounds)
+   {
+      for (auto& voice : sound.voices) { voice.updateParameterUI(); }
+   }
+}
+
 inline void KitInstrument::withVoice(
     int soundIdx, int componentIdx,
     util::function_ref<void(const Voice&)> cb) const
@@ -41,8 +49,7 @@ inline void KitInstrument::withVoice(
    cb(m_compositeSounds.at(soundIdx).voices.at(componentIdx));
 }
 
-inline
-bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
+inline bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
 {
    return lhs.m_name == rhs.m_name &&
           lhs.m_compositeSounds == rhs.m_compositeSounds;

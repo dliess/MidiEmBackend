@@ -76,6 +76,9 @@ public:
 
    using VoiceContainer = std::vector<CompositeSound>;
    VoiceContainer& voices() noexcept;
+
+   void updateParameterUI() const;
+
    friend auto meta::registerMembers<MelodicInstrument>();
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);

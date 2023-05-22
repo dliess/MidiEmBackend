@@ -52,13 +52,15 @@ public:
 
    template <typename T> void addSound(int padIdx, T&& kompositeSound);
 
-   inline std::string name() const noexcept;
-   inline void setName(const std::string& name) noexcept;
+   std::string name() const noexcept;
+   void setName(const std::string& name) noexcept;
 
-   inline std::vector<CompositeSound>& sounds() noexcept;
-   inline const std::vector<CompositeSound>& sounds() const noexcept;
+   std::vector<CompositeSound>& sounds() noexcept;
+   const std::vector<CompositeSound>& sounds() const noexcept;
 
    template <typename Cb> void forEachVoice(Cb&& cb);
+
+   void updateParameterUI() const;
 
    friend auto meta::registerMembers<KitInstrument>();
    friend bool isSameInstrument(const KitInstrument& lhs,
