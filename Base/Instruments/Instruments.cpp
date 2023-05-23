@@ -159,9 +159,14 @@ void Instruments::createNewSlotInMelodicInstrument(
 {
    auto paramCache = createParameterCache(
        m_rFactoryDataHolder.getDescription(soundDeviceUuid), voiceIdx);
-   paramCache->onDataChangedUI([this](size_t parameterId, musicDevice::sound::ParameterAttr parameterAttr, float value){
-      //emit
-   });
+    /*
+   paramCache->onDataChangedUI(
+       [instrumentUuid, voiceIdx, this](int parameterId,
+                 musicDevice::sound::ParameterAttr parameterAttr, float value) {
+          emitMusicInstrumentParamChanged(instrumentUuid, voiceIdx, parameterId,
+                                          parameterAttr, value);
+       });
+       */
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -183,6 +188,14 @@ void Instruments::addVoiceToMelodicInstrumentSlot(
       spdlog::error("Could not create parameter cache");
       return;
    }
+   /*
+   paramCache->onDataChangedUI(
+       [instrumentUuid, voiceIdx, this](int parameterId,
+                 musicDevice::sound::ParameterAttr parameterAttr, float value) {
+          emitMusicInstrumentParamChanged(instrumentUuid, voiceIdx, parameterId,
+                                          parameterAttr, value);
+       });
+       */
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
                                          &soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -254,6 +267,14 @@ void Instruments::createNewSlotInKitInstrument(
       spdlog::error("Could not create parameter cache");
       return;
    }
+   /*
+   paramCache->onDataChangedUI(
+       [instrumentUuid, voiceIdx, this](int parameterId,
+                 musicDevice::sound::ParameterAttr parameterAttr, float value) {
+          emitKitInstrumentParamChanged(instrumentUuid, voiceIdx, parameterId,
+                                          parameterAttr, value);
+       });
+       */
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, soundDeviceUuid,
                                          voiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -275,6 +296,14 @@ void Instruments::addVoiceToKitInstrumentSlot(
       spdlog::error("Could not create parameter cache");
       return;
    }
+   /*
+   paramCache->onDataChangedUI(
+       [instrumentUuid, slotIdx, this](int parameterId,
+                 musicDevice::sound::ParameterAttr parameterAttr, float value) {
+          emitKitInstrumentParamChanged(instrumentUuid, slotIdx, parameterId,
+                                          parameterAttr, value);
+       });
+       */
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, slotIdx,
                                          soundDeviceUuid, voiceIdx,
                                          &paramCache](auto& nonRtData) {
