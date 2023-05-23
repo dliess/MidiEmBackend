@@ -9,9 +9,9 @@ TEST(InstrumentSerializationTest, melodicInstrument)
 {
    MelodicInstrument melodicInstrument(
        "A test music device", std::make_shared<MelodicInstrument::RtData>());
-   melodicInstrument.voices().emplace_back("sound1");
-   melodicInstrument.voices().at(0).voices.emplace_back(
-       nullptr, std::make_shared<Voice::ParameterCache>(),
+   melodicInstrument.components().emplace_back("sound1");
+   melodicInstrument.components().at(0).components.emplace_back(
+       nullptr, std::make_shared<Component::ParameterCache>(),
        base::musicDevice::MusicDeviceId("Novation/Circuit", "1235:0079"), 4, 3);
    std::string jsonStr = nlohmann::json(melodicInstrument).dump();
    spdlog::info(jsonStr);
@@ -19,13 +19,13 @@ TEST(InstrumentSerializationTest, melodicInstrument)
    auto data        = j.get<MelodicInstrument>();
 }
 
-TEST(InstrumentSerializationTest, voice)
+TEST(InstrumentSerializationTest, component)
 {
-   Voice voice(
-       nullptr, std::make_shared<Voice::ParameterCache>(),
+   Component component(
+       nullptr, std::make_shared<Component::ParameterCache>(),
        base::musicDevice::MusicDeviceId("Novation/Circuit", "1235:0079"), 4, 3);
-   std::string jsonStr = nlohmann::json(voice).dump();
+   std::string jsonStr = nlohmann::json(component).dump();
    spdlog::info(jsonStr);
    nlohmann::json j    = nlohmann::json::parse(jsonStr);
-   auto data           = j.get<Voice>();
+   auto data           = j.get<Component>();
 }

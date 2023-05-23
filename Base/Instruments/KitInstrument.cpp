@@ -5,107 +5,107 @@
 using namespace base::instruments;
 
 KitInstrument::KitInstrument(std::string name) noexcept :
-    m_name(std::move(name)), m_compositeSounds(16)
+    m_name(std::move(name)), m_voices(16)
 {
 }
 
 void KitInstrument::noteOn(int note, float velocity, void* token) const
 {
-   auto si = toSoundIndex(note);
-   if (si)
+   auto vi = toVoiceIndex(note);
+   if (vi)
    {
-      noteOn(*si, 64, velocity, token);
+      noteOn(*vi, 64, velocity, token);
    }
 }
 
 void KitInstrument::noteOff(int note, float velocity, void* token) const
 {
-   auto si = toSoundIndex(note);
-   if (si)
+   auto vi = toVoiceIndex(note);
+   if (vi)
    {
-      noteOff(*si, 64, velocity, token);
+      noteOff(*vi, 64, velocity, token);
    }
 }
 
-void KitInstrument::noteOn(int soundIndex, int note, float velocity,
+void KitInstrument::noteOn(int voiceIdx, int note, float velocity,
                            void* token) const
 {
-   for (auto& voice : m_compositeSounds[soundIndex].voices)
+   for (auto& component : m_voices[voiceIdx].components)
    {
-      voice.noteOn(note, velocity);
+      component.noteOn(note, velocity);
    }
-   rtData->emitNoteOnPlayed(soundIndex + 64, velocity, token);
+   rtData->emitNoteOnPlayed(voiceIdx + 64, velocity, token);
 }
 
-void KitInstrument::noteOff(int soundIndex, int note, float velocity,
+void KitInstrument::noteOff(int voiceIdx, int note, float velocity,
                             void* token) const
 {
-   for (auto& voice : m_compositeSounds[soundIndex].voices)
+   for (auto& component : m_voices[voiceIdx].components)
    {
-      voice.noteOff(note, velocity);
+      component.noteOff(note, velocity);
    }
-   rtData->emitNoteOffPlayed(soundIndex + 64, velocity, token);
+   rtData->emitNoteOffPlayed(voiceIdx + 64, velocity, token);
 }
 
 void KitInstrument::incrementParameterValue(
-    int soundIdx, int componentIdx, int parameterIdx,
+    int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
     bool roundRobin) const
 {
-   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      voice.incrementParameterValue(parameterIdx, parameterAttr, increment,
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      component.incrementParameterValue(parameterIdx, parameterAttr, increment,
                                     roundRobin);
    });
 }
 
 float KitInstrument::getParameterValue(
-    int soundIdx, int componentIdx, int parameterIdx,
+    int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
    float ret = 0.0;
-   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      ret = voice.getParameterValue(parameterIdx, parameterAttr);
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      ret = component.getParameterValue(parameterIdx, parameterAttr);
    });
    return ret;
 }
 
 void KitInstrument::setParameterValue(
-    int soundIdx, int componentIdx, int parameterIdx,
+    int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
-   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      voice.setParameterValue(parameterIdx, parameterAttr, value);
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      component.setParameterValue(parameterIdx, parameterAttr, value);
    });
 }
 
 float KitInstrument::normalizePercentageValue(
-    int soundIdx, int componentIdx, int parameterId,
+    int voiceIdx, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    float ret = 0.0;
-   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      ret = voice.normalizePercentageValue(parameterId, parameterAttr,
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      ret = component.normalizePercentageValue(parameterId, parameterAttr,
                                            percentageValue);
    });
    return ret;
 }
 
 const base::musicDevice::description::sound::Parameter*
-KitInstrument::parameterDescription(int soundIdx, int componentIdx,
+KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
                                     int parameterIdx) const
 {
    const base::musicDevice::description::sound::Parameter* ret{nullptr};
-   withVoice(soundIdx, componentIdx, [&](const Voice& voice) {
-      ret = voice.parameterDescription(parameterIdx);
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      ret = component.parameterDescription(parameterIdx);
    });
    return ret;
 }
 
-std::optional<int> KitInstrument::toSoundIndex(int note) const
+std::optional<int> KitInstrument::toVoiceIndex(int note) const
 {
    const int noteAdjusted = note - 64;
-   if (0 <= noteAdjusted && noteAdjusted < m_compositeSounds.size())
+   if (0 <= noteAdjusted && noteAdjusted < m_voices.size())
    {
       return noteAdjusted;
    }

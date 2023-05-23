@@ -13,7 +13,7 @@ inline auto registerMembers<base::instruments::KitInstrument>()
    return members(
       member("id", &base::instruments::KitInstrument::m_uuid),
       member("name", &base::instruments::KitInstrument::m_name),
-      member("sounds", &base::instruments::KitInstrument::m_compositeSounds)
+      member("sounds", &base::instruments::KitInstrument::m_voices)
    );
 }
 

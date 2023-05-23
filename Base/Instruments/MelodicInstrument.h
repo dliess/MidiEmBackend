@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-#include "CompositeSound.h"
+#include "InstrumentVoice.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
 
@@ -74,7 +74,7 @@ public:
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   using VoiceContainer = std::vector<CompositeSound>;
+   using VoiceContainer = std::vector<Voice>;
    VoiceContainer& voices() noexcept;
 
    void updateParameterUI() const;
@@ -83,7 +83,7 @@ public:
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
 
-   template <typename Cb> void forEachVoice(Cb&& cb);
+   template <typename Cb> void forEachComponent(Cb&& cb);
 
 private:
    VoiceContainer m_voices;

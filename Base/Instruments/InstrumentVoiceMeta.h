@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_INSTRUMENT_VOICE_META_H
-#define INSTRUMENTS_INSTRUMENT_VOICE_META_H
+#ifndef INSTRUMENT_VOICE_META_H
+#define INSTRUMENT_VOICE_META_H
 
 #include "Meta.h"
 #include <JsonCast.h>
@@ -12,9 +12,7 @@ namespace meta
 template<>
 inline auto registerMembers<base::instruments::Voice>()
 {
-   return members(member("soundDeviceId", &base::instruments::Voice::m_soundDeviceId),
-                  member("voiceIndex", &base::instruments::Voice::m_voiceIndex),
-                  member("noteOffset", &base::instruments::Voice::m_noteOffset));
+   return members(member("components", &base::instruments::Voice::components));
 }
 
 } // namespace meta

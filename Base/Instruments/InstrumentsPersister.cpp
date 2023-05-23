@@ -1,6 +1,6 @@
 #include "InstrumentsPersister.h"
 
-#include "InstrumentVoiceFactory.h"
+#include "InstrumentComponentFactory.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
 using namespace base::instruments;
@@ -61,22 +61,22 @@ Data Persister::load()
 
    for (auto& instr : data.kitInstruments)
    {
-      instr.forEachVoice([this](auto& voice) {
-         voice.m_pParameterCache = createParameterCache(
+      instr.forEachComponent([this](auto& component) {
+         component.m_pParameterCache = createParameterCache(
              m_rFactoryDataHolder
-                 .getDescription(voice.m_soundDeviceId.deviceName())
+                 .getDescription(component.m_soundDeviceId.deviceName())
                  .get(),
-             voice.m_voiceIndex);
+             component.m_sdVoiceIndex);
       });
    }
    for (auto& instr : data.melodicInstruments)
    {
-      instr.forEachVoice([this](auto& voice) {
-         voice.m_pParameterCache = createParameterCache(
+      instr.forEachComponent([this](auto& component) {
+         component.m_pParameterCache = createParameterCache(
              m_rFactoryDataHolder
-                 .getDescription(voice.m_soundDeviceId.deviceName())
+                 .getDescription(component.m_soundDeviceId.deviceName())
                  .get(),
-             voice.m_voiceIndex);
+             component.m_sdVoiceIndex);
       });
    }
    return data;

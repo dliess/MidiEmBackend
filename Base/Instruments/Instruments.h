@@ -23,9 +23,8 @@ namespace base::instruments
 {
 struct Instruments   //: public utils::Settings<Instruments>
 {
-   Instruments(musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   explicit Instruments(musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
 
-   CB_SIGNAL(DataChanged, const Data& data, bool doSaveToFile);
    void reEmitSignals();
 
    void createKitInstrument(std::string name);
@@ -44,45 +43,45 @@ struct Instruments   //: public utils::Settings<Instruments>
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 const std::string& name);
 
-   void createNewSlotInMelodicInstrument(
+   void createNewVoiceInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
 
-   void addVoiceToMelodicInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
-   void removeVoiceFromMelodicInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx);
-   void removeSlotFromMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx);
-   void setNoteOffsetInMelodicInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset);
-   void setCompositeNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+   void addComponentToMelodicInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
+   void removeComponentFromMelodicInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx);
+   void removeVoiceFromMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx);
+   void setNoteOffsetInMelodicInstrumentComponent(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx, int noteOffset);
+   void setVoiceNameInMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string& name);
 
-   void createNewSlotInKitInstrument(
+   void createNewVoiceInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
-   void addVoiceToKitInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx);
-   void moveKitInstrumentSlotVoice(
-       const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
-       int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
-       int dstSlotIdx);
-   void removeVoiceFromKitInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx);
-   void removeSlotFromKitInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx);
-   void setNoteOffsetInKitInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset);
-   void setCompositeNameInKitInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
+   void addComponentToKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
+   void moveKitInstrumentComponent(
+       const util::Identifiable::UUID& srcInstrumentUuid, int srcVoiceIdx,
+       int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,
+       int dstVoiceIdx);
+   void removeComponentFromKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx);
+   void removeVoiceFromKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx);
+   void setNoteOffsetInKitInstrumentComponent(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx, int noteOffset);
+   void setVoiceNameInKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string& name);
    void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
@@ -112,6 +111,8 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView uuid) const;
 
     void updateParameterUI();
+
+    CB_SIGNAL(DataChanged, const Data& data, bool doSaveToFile);
     CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged, util::Identifiable::UUIDView, int padIdx, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
     CB_SIGNAL_SINGLE_SUBSCRIBER(MusicInstrumentParamChanged, util::Identifiable::UUIDView, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
 

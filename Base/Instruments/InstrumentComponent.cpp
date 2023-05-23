@@ -1,9 +1,9 @@
-#include "InstrumentVoice.h"
+#include "InstrumentComponent.h"
 
 using namespace base;
 using namespace base::instruments;
 
-void Voice::noteOn(int note, float velocity) const
+void Component::noteOn(int note, float velocity) const
 {
    if (m_pSoundDevice)
    {
@@ -15,53 +15,53 @@ void Voice::noteOn(int note, float velocity) const
          m_pSoundDevice->lastplayerId =
              static_cast<void*>(m_pParameterCache.get());
       }
-      m_pSoundDevice->noteOn(m_voiceIndex, note + m_noteOffset, velocity);
+      m_pSoundDevice->noteOn(m_sdVoiceIndex, note + m_noteOffset, velocity);
    }
 }
 
-void Voice::noteOff(int note, float velocity) const
+void Component::noteOff(int note, float velocity) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->noteOff(m_voiceIndex, note + m_noteOffset, velocity);
+      m_pSoundDevice->noteOff(m_sdVoiceIndex, note + m_noteOffset, velocity);
    }
 }
 
-void Voice::pitchBend(float value) const
+void Component::pitchBend(float value) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->pitchBend(m_voiceIndex, value);
+      m_pSoundDevice->pitchBend(m_sdVoiceIndex, value);
    }
 }
 
-void Voice::incrementParameterValue(
+void Component::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, bool roundRobin) const
 {
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
-          m_voiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
+          m_sdVoiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
       m_pParameterCache->setParameter(
           parameterIdx, parameterAttr,
-          m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
+          m_pSoundDevice->getParameterValue(m_sdVoiceIndex, parameterIdx,
                                             parameterAttr));
    }
 }
 
-void Voice::incrementParameterValueDontCache(
+void Component::incrementParameterValueDontCache(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, bool roundRobin) const
 {
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
-          m_voiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
+          m_sdVoiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
    }
 }
 
-float Voice::getParameterValue(
+float Component::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    if (m_pSoundDevice)
@@ -85,45 +85,45 @@ float Voice::getParameterValue(
                  // type util::non_null
 }
 
-void Voice::setParameterValue(int parameterIdx,
+void Component::setParameterValue(int parameterIdx,
                               musicDevice::sound::ParameterAttr parameterAttr,
                               float value) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->setParameterValue(m_voiceIndex, parameterIdx,
+      m_pSoundDevice->setParameterValue(m_sdVoiceIndex, parameterIdx,
                                         parameterAttr, value);
       m_pParameterCache->setParameter(
           parameterIdx, parameterAttr,
-          m_pSoundDevice->getParameterValue(m_voiceIndex, parameterIdx,
+          m_pSoundDevice->getParameterValue(m_sdVoiceIndex, parameterIdx,
                                             parameterAttr));
    }
 }
 
-float Voice::normalizePercentageValue(
+float Component::normalizePercentageValue(
     int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    if (m_pSoundDevice)
    {
       return m_pSoundDevice->normalizePercentageValue(
-          m_voiceIndex, parameterId, parameterAttr, percentageValue);
+          m_sdVoiceIndex, parameterId, parameterAttr, percentageValue);
    }
    return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of
                  // type util::non_null
 }
 
-const musicDevice::description::sound::Parameter* Voice::parameterDescription(
+const musicDevice::description::sound::Parameter* Component::parameterDescription(
     int parameterIdx) const
 {
    if (m_pSoundDevice)
    {
-      return m_pSoundDevice->parameterDescription(m_voiceIndex, parameterIdx);
+      return m_pSoundDevice->parameterDescription(m_sdVoiceIndex, parameterIdx);
    }
    return nullptr;
 }
 
-void Voice::refreshParameters() const
+void Component::refreshParameters() const
 {
    if (!m_pParameterCache || !m_pSoundDevice)
    {
@@ -132,17 +132,17 @@ void Voice::refreshParameters() const
    for (int paramIdx = 0; paramIdx < m_pParameterCache->size(); ++paramIdx)
    {
       m_pSoundDevice->setCommandedValue(
-          m_voiceIndex, paramIdx, m_pParameterCache->at(paramIdx).commanded);
+          m_sdVoiceIndex, paramIdx, m_pParameterCache->at(paramIdx).commanded);
       m_pSoundDevice->setLFOAmplitude(
-          m_voiceIndex, paramIdx,
+          m_sdVoiceIndex, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.amplitude);
       m_pSoundDevice->setLFOFrequency(
-          m_voiceIndex, paramIdx,
+          m_sdVoiceIndex, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.frequency);
       m_pSoundDevice->setLFOMultiplierExp(
-          m_voiceIndex, paramIdx,
+          m_sdVoiceIndex, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.multiplierExp);
       m_pSoundDevice->setLFOWaveform(
-          m_voiceIndex, paramIdx, m_pParameterCache->at(paramIdx).lfo.waveform);
+          m_sdVoiceIndex, paramIdx, m_pParameterCache->at(paramIdx).lfo.waveform);
    }
 }

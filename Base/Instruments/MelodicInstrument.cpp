@@ -25,10 +25,10 @@ void MelodicInstrument::noteOn(int note, float velocity, void* token) const
       m_pRtData->incrementVoiceIndex(m_voices.size());
    }
    m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   std::for_each(
-       m_voices[m_pRtData->currentVoiceIndex()].voices.begin(),
-       m_voices[m_pRtData->currentVoiceIndex()].voices.end(),
-       [note, velocity](const Voice& voice) { voice.noteOn(note, velocity); });
+   std::ranges::for_each(m_voices[m_pRtData->currentVoiceIndex()].components,
+                         [note, velocity](const Component& component) {
+                            component.noteOn(note, velocity);
+                         });
    rtData->emitNoteOnPlayed(note, velocity, token);
 }
 
@@ -39,21 +39,22 @@ void MelodicInstrument::noteOff(int note, float velocity, void* token) const
    {
       return;
    }
-   auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
-   std::for_each(
-       compositeVoice.voices.begin(), compositeVoice.voices.end(),
-       [note, velocity](const Voice& voice) { voice.noteOff(note, velocity); });
+   auto& voice = m_voices[m_pRtData->noteAllocations[note]];
+   std::ranges::for_each(voice.components,
+                         [note, velocity](const Component& component) {
+                            component.noteOff(note, velocity);
+                         });
    m_pRtData->noteAllocations[note] = RtData::FREE;
    rtData->emitNoteOffPlayed(note, velocity, token);
 }
 
 void MelodicInstrument::pitchBend(float value) const
 {
-   for (auto& compositeVoice : m_voices)
+   for (auto& voice : m_voices)
    {
-      for (const Voice& voice : compositeVoice.voices)
+      for (const Component& component : voice.components)
       {
-         voice.pitchBend(value);
+         component.pitchBend(value);
       }
    }
 }
@@ -63,13 +64,13 @@ void MelodicInstrument::incrementParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
     bool rr) const
 {
-   for (auto& compositeVoice : m_voices)
+   for (auto& voice : m_voices)
    {
-      if (util::vector_index_in_range(compPart, compositeVoice.voices))
+      if (util::vector_index_in_range(compPart, voice.components))
       {
-         auto& voice = compositeVoice.voices[compPart];
-         voice.incrementParameterValue(parameterId, parameterAttr, increment,
-                                       rr);
+         auto& component = voice.components[compPart];
+         component.incrementParameterValue(parameterId, parameterAttr,
+                                           increment, rr);
       }
    }
 }
@@ -84,10 +85,10 @@ void MelodicInstrument::incrementParameterValue(
    {
       return;
    }
-   const auto& compositeVoice = m_voices[m_pRtData->noteAllocations[note]];
-   if (util::vector_index_in_range(compPart, compositeVoice.voices))
+   const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
+   if (util::vector_index_in_range(compPart, voice.components))
    {
-      compositeVoice.voices[compPart].incrementParameterValueDontCache(
+      voice.components[compPart].incrementParameterValueDontCache(
           parameterId, parameterAttr, increment, rr);
    }
 }
@@ -96,8 +97,8 @@ float MelodicInstrument::getParameterValue(
     int compPart, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   return m_voices.at(0).voices.at(compPart).getParameterValue(parameterIdx,
-                                                               parameterAttr);
+   return m_voices.at(0).components.at(compPart).getParameterValue(
+       parameterIdx, parameterAttr);
 }
 
 float MelodicInstrument::getParameterValue(
@@ -105,7 +106,7 @@ float MelodicInstrument::getParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
    return m_voices.at(m_pRtData->noteAllocations.at(note))
-       .voices.at(compPart)
+       .components.at(compPart)
        .getParameterValue(parameterIdx, parameterAttr);
 }
 
@@ -113,12 +114,12 @@ void MelodicInstrument::setParameterValue(
     int compPart, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
-   for (auto& compositeVoice : m_voices)
+   for (auto& voice : m_voices)
    {
-      if (util::vector_index_in_range(compPart, compositeVoice.voices))
+      if (util::vector_index_in_range(compPart, voice.components))
       {
-         auto& voice = compositeVoice.voices[compPart];
-         voice.setParameterValue(parameterId, parameterAttr, value);
+         auto& component = voice.components[compPart];
+         component.setParameterValue(parameterId, parameterAttr, value);
       }
    }
 }
@@ -128,7 +129,7 @@ void MelodicInstrument::setParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
    m_voices.at(m_pRtData->noteAllocations.at(note))
-       .voices.at(compPart)
+       .components.at(compPart)
        .setParameterValue(parameterId, parameterAttr, value);
 }
 
@@ -137,7 +138,7 @@ float MelodicInstrument::normalizePercentageValue(
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   return m_voices.at(0).voices.at(compPart).normalizePercentageValue(
+   return m_voices.at(0).components.at(compPart).normalizePercentageValue(
        parameterId, parameterAttr, percentageValue);
 }
 
@@ -147,14 +148,15 @@ float MelodicInstrument::normalizePercentageValue(
     float percentageValue) const
 {
    return m_voices.at(m_pRtData->noteAllocations.at(note))
-       .voices.at(compPart)
+       .components.at(compPart)
        .normalizePercentageValue(parameterId, parameterAttr, percentageValue);
 }
 
 const base::musicDevice::description::sound::Parameter*
 MelodicInstrument::parameterDescription(int compPart, int parameterIdx) const
 {
-   return m_voices.at(0).voices.at(compPart).parameterDescription(parameterIdx);
+   return m_voices.at(0).components.at(compPart).parameterDescription(
+       parameterIdx);
 }
 
 MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept

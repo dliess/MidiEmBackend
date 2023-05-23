@@ -23,18 +23,18 @@ inline void MelodicInstrument::updateParameterUI() const
 {
    if(m_voices.size())
    {
-      for(const auto& compPart : m_voices.at(0).voices)
+      for(const auto& compPart : m_voices.at(0).components)
       {
          compPart.updateParameterUI();
       }
    }
 }
 
-template <typename Cb> void MelodicInstrument::forEachVoice(Cb&& cb)
+template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
 {
    for (auto& sound : m_voices)
    {
-      for (auto& voice : sound.voices) { cb(voice); }
+      for (auto& component : sound.components) { cb(component); }
    }
 }
 

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "CompositeSound.h"
+#include "InstrumentVoice.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
@@ -25,40 +25,40 @@ class KitInstrument : public Instrument
 {
 public:
    KitInstrument() = default;
-   KitInstrument(std::string name) noexcept;
+   explicit KitInstrument(std::string name) noexcept;
    void noteOn(int note, float velocity, void* token = nullptr) const override;
    void noteOff(int note, float velocity, void* token = nullptr) const override;
-   void noteOn(int soundIndex, int note, float velocity,
+   void noteOn(int voiceIdx, int note, float velocity,
                void* token = nullptr) const;
-   void noteOff(int soundIndex, int note, float velocity,
+   void noteOff(int voiceIdx, int note, float velocity,
                 void* token = nullptr) const;
-   void incrementParameterValue(int soundIdx, int componentIdx,
+   void incrementParameterValue(int voiceIdx, int componentIdx,
                                 int parameterIdx,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin = false) const;
    [[nodiscard]] float getParameterValue(
-       int soundIdx, int componentIdx, int parameterIdx,
+       int voiceIdx, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int soundIdx, int componentIdx, int parameterIdx,
+   void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
-       int soundIdx, int componentIdx, int parameterId,
+       int voiceIdx, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 
    [[nodiscard]] const musicDevice::description::sound::Parameter*
-   parameterDescription(int soundIdx, int componentIdx, int parameterIdx) const;
+   parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
-   template <typename T> void addSound(int padIdx, T&& kompositeSound);
+   template <typename T> void addVoice(int padIdx, T&& voice);
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   std::vector<CompositeSound>& sounds() noexcept;
-   const std::vector<CompositeSound>& sounds() const noexcept;
+   std::vector<Voice>& voices() noexcept;
+   const std::vector<Voice>& voices() const noexcept;
 
-   template <typename Cb> void forEachVoice(Cb&& cb);
+   template <typename Cb> void forEachComponent(Cb&& cb);
 
    void updateParameterUI() const;
 
@@ -68,10 +68,10 @@ public:
 
 private:
    std::string m_name;
-   std::vector<CompositeSound> m_compositeSounds;
-   std::optional<int> toSoundIndex(int note) const;
-   inline void withVoice(int soundIdx, int componentIdx,
-                         util::function_ref<void(const Voice&)> cb) const;
+   std::vector<Voice> m_voices;
+   std::optional<int> toVoiceIndex(int note) const;
+   inline void withComponent(int voiceIdx, int componentIdx,
+                         util::function_ref<void(const Component&)> cb) const;
 };
 
 }   // namespace instruments

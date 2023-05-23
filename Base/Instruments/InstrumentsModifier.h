@@ -24,49 +24,49 @@ struct InstrumentsModifier
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 std::string name) noexcept;
 
-   void createNewSlotInMelodicInstrument(
+   void createNewVoiceInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
+       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
 
-   void addVoiceToMelodicInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
-   void removeVoiceFromMelodicInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx) noexcept;
-   void removeSlotFromMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
-   void setNoteOffsetInMelodicInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset) noexcept;
-   void setCompositeNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+   void addComponentToMelodicInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
+       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+   void removeComponentFromMelodicInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx) noexcept;
+   void removeVoiceFromMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
+   void setNoteOffsetInMelodicInstrumentComponent(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx, int noteOffset) noexcept;
+   void setVoiceNameInMelodicInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string name) noexcept;
 
-   void createNewSlotInKitInstrument(
+   void createNewVoiceInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
-   void addVoiceToKitInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-       std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept;
-   void moveKitInstrumentSlotVoice(
-       const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
-       int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
-       int dstSlotIdx) noexcept;
-   void removeVoiceFromKitInstrumentSlot(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx) noexcept;
-   void removeSlotFromKitInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept;
-   void setNoteOffsetInKitInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-       int compositeIdx, int noteOffset) noexcept;
-   void setCompositeNameInKitInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
+       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+   void addComponentToKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
+       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+   void moveKitInstrumentComponent(
+       const util::Identifiable::UUID& srcInstrumentUuid, int srcVoiceIdx,
+       int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,
+       int dstVoiceIdx) noexcept;
+   void removeComponentFromKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx) noexcept;
+   void removeVoiceFromKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
+   void setNoteOffsetInKitInstrumentComponent(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int componentIdx, int noteOffset) noexcept;
+   void setVoiceNameInKitInstrument(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string& name) noexcept;
 
    void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
@@ -77,7 +77,7 @@ struct InstrumentsModifier
 private:
    Data& m_rData;
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
-   static constexpr int MAX_VOICES_IN_SLOT = 4;
+   static constexpr int MAX_COMPONENTS_IN_VOICE = 4;
 };
 
 }   // namespace base::instruments

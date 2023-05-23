@@ -75,129 +75,129 @@ void InstrumentsModifier::renameMelodicInstrument(
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::createNewSlotInMelodicInstrument(
+void InstrumentsModifier::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
+    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
+   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      CompositeSound compositeSound(
-          md->description()->soundSection->voices[voiceIdx].name);
-      compositeSound.voices.emplace_back(&md->soundHandler.value(),
+      Voice voice(
+          md->description()->soundSection->voices[sdVoiceIdx].name);
+      voice.components.emplace_back(&md->soundHandler.value(),
                                          std::move(parameterCache),
-                                         md->deviceId(), voiceIdx, 0);
-      instrumentIt->voices().push_back(std::move(compositeSound));
+                                         md->deviceId(), sdVoiceIdx, 0);
+      instrumentIt->voices().push_back(std::move(voice));
       instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
-void InstrumentsModifier::addVoiceToMelodicInstrumentSlot(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
+void InstrumentsModifier::addComponentToMelodicInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
+    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
+   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      instrumentIt->voices().operator[](slotIdx).voices.emplace_back(
+      instrumentIt->voices().operator[](voiceIdx).components.emplace_back(
           &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
-          voiceIdx, 0);
+          sdVoiceIdx, 0);
       instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
-void InstrumentsModifier::removeVoiceFromMelodicInstrumentSlot(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    int compositeIdx) noexcept
+void InstrumentsModifier::removeComponentFromMelodicInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int componentIdx) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto& voices = instrumentIt->voices().operator[](slotIdx).voices;
-   voices.erase(voices.begin() + compositeIdx);
+   auto& voices = instrumentIt->voices().operator[](voiceIdx).components;
+   voices.erase(voices.begin() + componentIdx);
    if (voices.size() == 0)
    {
-      instrumentIt->voices().erase(instrumentIt->voices().begin() + slotIdx);
+      instrumentIt->voices().erase(instrumentIt->voices().begin() + voiceIdx);
    }
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::removeSlotFromMelodicInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept
+void InstrumentsModifier::removeVoiceFromMelodicInstrument(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().erase(instrumentIt->voices().begin() + slotIdx);
+   instrumentIt->voices().erase(instrumentIt->voices().begin() + voiceIdx);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::setNoteOffsetInMelodicInstrumentVoice(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    int compositeIdx, int noteOffset) noexcept
+void InstrumentsModifier::setNoteOffsetInMelodicInstrumentComponent(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int componentIdx, int noteOffset) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->voices()
        .
-       operator[](slotIdx)
-       .voices[compositeIdx]
+       operator[](voiceIdx)
+       .components[componentIdx]
        .setNoteOffset(noteOffset);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::setCompositeNameInMelodicInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+void InstrumentsModifier::setVoiceNameInMelodicInstrument(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string name) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().operator[](slotIdx).name = name;
+   instrumentIt->voices().operator[](voiceIdx).name = name;
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::createNewSlotInKitInstrument(
+void InstrumentsModifier::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
+    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
+   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      CompositeSound compositeSound(
-          md->description()->soundSection->voices[voiceIdx].name);
-      compositeSound.voices.emplace_back(&md->soundHandler.value(),
+      Voice voice(
+          md->description()->soundSection->voices[sdVoiceIdx].name);
+      voice.components.emplace_back(&md->soundHandler.value(),
                                          std::move(parameterCache),
-                                         md->deviceId(), voiceIdx, 0);
-      instrumentIt->sounds().push_back(std::move(compositeSound));
+                                         md->deviceId(), sdVoiceIdx, 0);
+      instrumentIt->voices().push_back(std::move(voice));
       instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
-void InstrumentsModifier::addVoiceToKitInstrumentSlot(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    const util::Identifiable::UUID& soundDeviceUuid, int voiceIdx,
-    std::shared_ptr<Voice::ParameterCache> parameterCache) noexcept
+void InstrumentsModifier::addComponentToKitInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
+    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(soundDeviceUuid);
+   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      if (instrumentIt->sounds().operator[](slotIdx).voices.size() >=
-          MAX_VOICES_IN_SLOT)
+      if (instrumentIt->voices().operator[](voiceIdx).components.size() >=
+          MAX_COMPONENTS_IN_VOICE)
       {
          return;
       }
-      instrumentIt->sounds().operator[](slotIdx).voices.emplace_back(
+      instrumentIt->voices().operator[](voiceIdx).components.emplace_back(
           &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
-          voiceIdx, 0);
+          sdVoiceIdx, 0);
       instrumentIt->unmarkAsDefaultCreated();
    }
 }
 
-void InstrumentsModifier::moveKitInstrumentSlotVoice(
-    const util::Identifiable::UUID& srcInstrumentUuid, int srcSlotIdx,
-    int srcCompositeIdx, const util::Identifiable::UUID& dstInstrumentUuid,
-    int dstSlotIdx) noexcept
+void InstrumentsModifier::moveKitInstrumentComponent(
+    const util::Identifiable::UUID& srcInstrumentUuid, int srcVoiceIdx,
+    int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,
+    int dstVoiceIdx) noexcept
 {
    KitInstruments::iterator srcInstrumentIt;
    {
@@ -210,51 +210,51 @@ void InstrumentsModifier::moveKitInstrumentSlotVoice(
       dstInstrumentIt = instrumentIt;
    }
    const auto& srcVoice =
-       srcInstrumentIt->sounds().operator[](srcSlotIdx).voices[srcCompositeIdx];
-   dstInstrumentIt->sounds().operator[](dstSlotIdx).voices.push_back(srcVoice);
-   removeVoiceFromKitInstrumentSlot(srcInstrumentUuid, srcSlotIdx,
-                                    srcCompositeIdx);
+       srcInstrumentIt->voices().operator[](srcVoiceIdx).components[srcComponentIdx];
+   dstInstrumentIt->voices().operator[](dstVoiceIdx).components.push_back(srcVoice);
+   removeComponentFromKitInstrumentVoice(srcInstrumentUuid, srcVoiceIdx,
+                                    srcComponentIdx);
    srcInstrumentIt->unmarkAsDefaultCreated();
    dstInstrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::removeVoiceFromKitInstrumentSlot(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    int compositeIdx) noexcept
+void InstrumentsModifier::removeComponentFromKitInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int componentIdx) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto& voices = instrumentIt->sounds().operator[](slotIdx).voices;
-   voices.erase(voices.begin() + compositeIdx);
+   auto& voices = instrumentIt->voices().operator[](voiceIdx).components;
+   voices.erase(voices.begin() + componentIdx);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::removeSlotFromKitInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx) noexcept
+void InstrumentsModifier::removeVoiceFromKitInstrument(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->sounds().erase(instrumentIt->sounds().begin() + slotIdx);
+   instrumentIt->voices().erase(instrumentIt->voices().begin() + voiceIdx);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::setNoteOffsetInKitInstrumentVoice(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
-    int compositeIdx, int noteOffset) noexcept
+void InstrumentsModifier::setNoteOffsetInKitInstrumentComponent(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int componentIdx, int noteOffset) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->sounds()
+   instrumentIt->voices()
        .
-       operator[](slotIdx)
-       .voices[compositeIdx]
+       operator[](voiceIdx)
+       .components[componentIdx]
        .setNoteOffset(noteOffset);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::setCompositeNameInKitInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int slotIdx,
+void InstrumentsModifier::setVoiceNameInKitInstrument(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string& name) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->sounds().operator[](slotIdx).name = name;
+   instrumentIt->voices().operator[](voiceIdx).name = name;
    instrumentIt->unmarkAsDefaultCreated();
 }
 

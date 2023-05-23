@@ -1,23 +1,23 @@
-#include "InstrumentVoiceFactory.h"
+#include "InstrumentComponentFactory.h"
 
 using namespace base;
 
-std::shared_ptr<instruments::Voice::ParameterCache>
+std::shared_ptr<instruments::Component::ParameterCache>
 instruments::createParameterCache(
-    const musicDevice::description::Description* descr, int voiceIdx)
+    const musicDevice::description::Description* descr, int sdVoiceIdx)
 {
    if (descr && descr->soundSection)
    {
-      const auto engine = descr->soundSection->engineBase(voiceIdx);
+      const auto engine = descr->soundSection->engineBase(sdVoiceIdx);
       if (engine)
       {
          auto paramCache =
-             std::make_shared<Voice::ParameterCache>(engine->parameters.size());
+             std::make_shared<Component::ParameterCache>(engine->parameters.size());
          for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
          {
             paramCache->setParameter(
                 paramIdx, musicDevice::sound::ParameterAttr::Commanded,
-                descr->soundSection->getInitialValueFor(voiceIdx, paramIdx));
+                descr->soundSection->getInitialValueFor(sdVoiceIdx, paramIdx));
          }
          return paramCache;
       }
@@ -25,15 +25,15 @@ instruments::createParameterCache(
    return nullptr;
 }
 /*
-InstrumentVoiceFactory::InstrumentVoiceFactory(
+InstrumentComponentFactory::InstrumentComponentFactory(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
 }
 
-Voice InstrumentVoiceFactory::create(musicDevice::MusicDeviceId soundDeviceId,
+Component InstrumentComponentFactory::create(musicDevice::MusicDeviceId soundDeviceId,
                                      int voiceIndex, int noteOffset)
 {
-    return Voice();
+    return Component();
 }
 */

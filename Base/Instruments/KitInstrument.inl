@@ -4,9 +4,9 @@
 namespace base::instruments
 {
 template <typename T>
-void KitInstrument::addSound(int padIdx, T&& kompositeSound)
+void KitInstrument::addVoice(int padIdx, T&& voice)
 {
-   m_compositeSounds[padIdx] = std::move(kompositeSound);
+   m_voices[padIdx] = std::move(voice);
 };
 
 inline std::string KitInstrument::name() const noexcept { return m_name; }
@@ -16,43 +16,43 @@ inline void KitInstrument::setName(const std::string& name) noexcept
    m_name = name;
 }
 
-inline std::vector<CompositeSound>& KitInstrument::sounds() noexcept
+inline std::vector<Voice>& KitInstrument::voices() noexcept
 {
-   return m_compositeSounds;
+   return m_voices;
 }
 
-inline const std::vector<CompositeSound>& KitInstrument::sounds() const noexcept
+inline const std::vector<Voice>& KitInstrument::voices() const noexcept
 {
-   return m_compositeSounds;
+   return m_voices;
 }
 
-template <typename Cb> void KitInstrument::forEachVoice(Cb&& cb)
+template <typename Cb> void KitInstrument::forEachComponent(Cb&& cb)
 {
-   for (auto& sound : m_compositeSounds)
+   for (auto& sound : m_voices)
    {
-      for (auto& voice : sound.voices) { cb(voice); }
+      for (auto& component : sound.components) { cb(component); }
    }
 }
 
 inline void KitInstrument::updateParameterUI() const
 {
-   for (auto& sound : m_compositeSounds)
+   for (auto& sound : m_voices)
    {
-      for (auto& voice : sound.voices) { voice.updateParameterUI(); }
+      for (auto& component : sound.components) { component.updateParameterUI(); }
    }
 }
 
-inline void KitInstrument::withVoice(
-    int soundIdx, int componentIdx,
-    util::function_ref<void(const Voice&)> cb) const
+inline void KitInstrument::withComponent(
+    int voiceIdx, int componentIdx,
+    util::function_ref<void(const Component&)> cb) const
 {
-   cb(m_compositeSounds.at(soundIdx).voices.at(componentIdx));
+   cb(m_voices.at(voiceIdx).components.at(componentIdx));
 }
 
 inline bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
 {
    return lhs.m_name == rhs.m_name &&
-          lhs.m_compositeSounds == rhs.m_compositeSounds;
+          lhs.m_voices == rhs.m_voices;
 }
 
 }   // namespace base::instruments

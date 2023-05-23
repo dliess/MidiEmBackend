@@ -10,12 +10,12 @@ void InstrumentsMDRefSetter::fillReferencesKitInstruments(
 {
    for (auto& kitInstrument : m_rData.kitInstruments)
    {
-      kitInstrument.forEachVoice([&pMusicDevice](Voice& voice) {
-         if (voice.soundDeviceId() == pMusicDevice->deviceId())
+      kitInstrument.forEachComponent([&pMusicDevice](Component& component) {
+         if (component.soundDeviceId() == pMusicDevice->deviceId())
          {
-            voice.setSoundDevicePtr(pMusicDevice->soundHandler
-                                        ? &pMusicDevice->soundHandler.value()
-                                        : nullptr);
+            component.setSoundDevicePtr(
+                pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
+                                           : nullptr);
          }
       });
    }
@@ -26,15 +26,13 @@ void InstrumentsMDRefSetter::fillReferencesMelodicInstruments(
 {
    for (auto& melodicInstrument : m_rData.melodicInstruments)
    {
-      std::for_each(
-          melodicInstrument.voices().begin(), melodicInstrument.voices().end(),
-          [&pMusicDevice](CompositeSound& compositeSound) {
-             std::for_each(
-                 compositeSound.voices.begin(), compositeSound.voices.end(),
-                 [&pMusicDevice](Voice& voice) {
-                    if (voice.soundDeviceId() == pMusicDevice->deviceId())
+      std::ranges::for_each(
+          melodicInstrument.voices(), [&pMusicDevice](Voice& voice) {
+             std::ranges::for_each(
+                 voice.components, [&pMusicDevice](Component& component) {
+                    if (component.soundDeviceId() == pMusicDevice->deviceId())
                     {
-                       voice.setSoundDevicePtr(
+                       component.setSoundDevicePtr(
                            pMusicDevice->soundHandler
                                ? &pMusicDevice->soundHandler.value()
                                : nullptr);
@@ -54,11 +52,12 @@ void removeReference(InstrumentContainer&& instrumentContainer,
    while (it != instrumentContainer.end())
    {
       bool isDeviceContained{false};
-      it->forEachVoice([&isDeviceContained, &pMusicDevice](Voice& voice) {
-         if (voice.pSoundDevice() == &pMusicDevice->soundHandler.value())
+      it->forEachComponent([&isDeviceContained,
+                            &pMusicDevice](Component& component) {
+         if (component.pSoundDevice() == &pMusicDevice->soundHandler.value())
          {
             isDeviceContained = true;
-            voice.setSoundDevicePtr(nullptr);
+            component.setSoundDevicePtr(nullptr);
          }
       });
       if (isDeviceContained && it->isDefaultCreated() && it->refCount() == 0)
