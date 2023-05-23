@@ -29,7 +29,7 @@ void InstrumentsRpc::renameMelodicInstrument(const ::capnzero::SpanCL<16>& instr
    m_rInstruments.renameMelodicInstrument(instrumentUuid_, std::string(name));
 }
 
-void InstrumentsRpc::createNewSlotInMelodicInstrument(
+void InstrumentsRpc::createNewVoiceInMelodicInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid,
     const ::capnzero::SpanCL<16>& sdUuid, ::capnzero::Int16 sdVoiceIdx)
 {
@@ -41,7 +41,7 @@ void InstrumentsRpc::createNewSlotInMelodicInstrument(
                                                    sdUuid_, sdVoiceIdx);
 }
 
-void InstrumentsRpc::addVoiceToMelodicInstrumentSlot(
+void InstrumentsRpc::addComponentToMelodicInstrumentVoice(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     const ::capnzero::SpanCL<16>& sdUuid, ::capnzero::Int16 sdVoiceIdx)
 {
@@ -53,7 +53,7 @@ void InstrumentsRpc::addVoiceToMelodicInstrumentSlot(
                                                        sdUuid_, sdVoiceIdx);
 }
 
-void InstrumentsRpc::removeVoiceFromMelodicInstrumentSlot(
+void InstrumentsRpc::removeComponentFromMelodicInstrumentVoice(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx)
 {
@@ -63,7 +63,7 @@ void InstrumentsRpc::removeVoiceFromMelodicInstrumentSlot(
                                                        componentIdx);
 }
 
-void InstrumentsRpc::removeSlotFromMelodicInstrument(
+void InstrumentsRpc::removeVoiceFromMelodicInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID instrumentUuid_;
@@ -71,7 +71,7 @@ void InstrumentsRpc::removeSlotFromMelodicInstrument(
    m_rInstruments.removeVoiceFromMelodicInstrument(instrumentUuid_, voiceIdx);
 }
 
-void InstrumentsRpc::setNoteOffsetInMelodicInstrumentVoice(
+void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset)
 {
@@ -81,7 +81,7 @@ void InstrumentsRpc::setNoteOffsetInMelodicInstrumentVoice(
        instrumentUuid_, voiceIdx, componentIdx, noteOffset);
 }
 
-void InstrumentsRpc::setCompositeNameInMelodicInstrument(
+void InstrumentsRpc::setVoiceNameInMelodicInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     const ::capnzero::TextView& name)
 {
@@ -112,7 +112,7 @@ void InstrumentsRpc::renameKitInstrument(const ::capnzero::SpanCL<16>& instrumen
    m_rInstruments.renameKitInstrument(instrumentUuid_, std::string(name));
 }
 
-void InstrumentsRpc::createNewSlotInKitInstrument(
+void InstrumentsRpc::createNewVoiceInKitInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid,
     const ::capnzero::SpanCL<16>& sdUuid, ::capnzero::Int16 sdVoiceIdx)
 {
@@ -124,7 +124,7 @@ void InstrumentsRpc::createNewSlotInKitInstrument(
                                                sdUuid_, sdVoiceIdx);
 }
 
-void InstrumentsRpc::addVoiceToKitInstrumentSlot(
+void InstrumentsRpc::addComponentToKitInstrumentVoice(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     const ::capnzero::SpanCL<16>& sdUuid, ::capnzero::Int16 sdVoiceIdx)
 {
@@ -135,9 +135,9 @@ void InstrumentsRpc::addVoiceToKitInstrumentSlot(
    m_rInstruments.addComponentToKitInstrumentVoice(instrumentUuid_, voiceIdx,
                                               sdUuid_, sdVoiceIdx);
 }
-void InstrumentsRpc::moveKitInstrumentSlotVoice(
+void InstrumentsRpc::moveKitInstrumentComponent(
     const ::capnzero::SpanCL<16>& srcInstrumentUuid,
-    ::capnzero::Int16 srcVoiceIdx, ::capnzero::Int16 srcCompositeIdx,
+    ::capnzero::Int16 srcVoiceIdx, ::capnzero::Int16 srcComponentIdx,
     const ::capnzero::SpanCL<16>& dstInstrumentUuid,
     ::capnzero::Int16 dstVoiceIdx)
 {
@@ -146,10 +146,10 @@ void InstrumentsRpc::moveKitInstrumentSlotVoice(
    util::Identifiable::UUID dstInstrumentUuid_;
    std::ranges::copy(dstInstrumentUuid, dstInstrumentUuid_.begin());
    m_rInstruments.moveKitInstrumentComponent(srcInstrumentUuid_, srcVoiceIdx,
-                                             srcCompositeIdx,
+                                             srcComponentIdx,
                                              dstInstrumentUuid_, dstVoiceIdx);
 }
-void InstrumentsRpc::removeVoiceFromKitInstrumentSlot(
+void InstrumentsRpc::removeComponentFromKitInstrumentVoice(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx)
 {
@@ -158,14 +158,14 @@ void InstrumentsRpc::removeVoiceFromKitInstrumentSlot(
    m_rInstruments.removeComponentFromKitInstrumentVoice(instrumentUuid_, voiceIdx,
                                                    componentIdx);
 }
-void InstrumentsRpc::removeSlotFromKitInstrument(
+void InstrumentsRpc::removeVoiceFromKitInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
    m_rInstruments.removeVoiceFromKitInstrument(instrumentUuid_, voiceIdx);
 }
-void InstrumentsRpc::setNoteOffsetInKitInstrumentVoice(
+void InstrumentsRpc::setNoteOffsetInKitInstrumentComponent(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset)
 {
@@ -175,7 +175,7 @@ void InstrumentsRpc::setNoteOffsetInKitInstrumentVoice(
                                                     componentIdx, noteOffset);
 }
 
-void InstrumentsRpc::setCompositeNameInKitInstrument(
+void InstrumentsRpc::setVoiceNameInKitInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
     const ::capnzero::TextView& name)
 {

@@ -11,15 +11,15 @@
 using namespace uiadapter::capnzero;
 using namespace base;
 
-static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::PARAMETER) == 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::PARAMETER) == 
               int(base::musicDevice::sound::ParameterAttr::Commanded));
-static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_FREQ) == 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::L_F_O_FREQ) == 
               int(base::musicDevice::sound::ParameterAttr::LfoFrequency));
-static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_AMP) == 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::L_F_O_AMP) == 
               int(base::musicDevice::sound::ParameterAttr::LfoAmplitude));
-static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_WAVEFORM) == 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::L_F_O_WAVEFORM) == 
               int(base::musicDevice::sound::ParameterAttr::LfoWaveform));
-static_assert(int(::capnzero::MidiEmLoader::SDParameterDestination::L_F_O_MULTIPLIER_EXP) == 
+static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::L_F_O_MULTIPLIER_EXP) == 
               int(base::musicDevice::sound::ParameterAttr::LfoMultiplierExp));
 
 auto unpackEndpoint(
@@ -101,7 +101,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                             from.eventId.channelId, e_uuid,
                             e_voiceIdx, e_comIdx, parameter.id,
                             static_cast<::capnzero::MidiEmLoader::
-                                            SDParameterDestination>(
+                                            SDParameterAttr>(
                                 parameter.parameterAttr));
                     }
                 END_SWITCH
@@ -127,7 +127,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                             from.eventId.channelId, e_uuid,
                             e_voiceIdx, e_comIdx, parameter.id,
                             static_cast<::capnzero::MidiEmLoader::
-                                            SDParameterDestination>(
+                                            SDParameterAttr>(
                                 parameter.parameterAttr));
                     }
                 END_SWITCH

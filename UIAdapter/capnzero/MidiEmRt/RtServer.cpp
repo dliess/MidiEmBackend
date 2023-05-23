@@ -291,7 +291,7 @@ RtServer::RtServer(
           signals().ParameterScene__modifierEndValueChanged(
               sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
               paramCoord.parameterIdx,
-              static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(
                   paramCoord.parameterAttr),
               value);
        });
@@ -301,7 +301,7 @@ RtServer::RtServer(
           signals().ParameterScene__modifierRemoved(
               sceneIdx, paramCoord.uuid, paramCoord.voiceIdx,
               paramCoord.parameterIdx,
-              static_cast<::capnzero::MidiEmRt::SDParameterDestination>(
+              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(
                   paramCoord.parameterAttr));
        });
 

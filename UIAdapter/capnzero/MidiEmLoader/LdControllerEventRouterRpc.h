@@ -35,7 +35,7 @@ public:
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
+       ::capnzero::MidiEmLoader::SDParameterAttr paramFunc) override;
    void connectWidget2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
                             ::capnzero::Int16 widgetIdx,
                             ::capnzero::Int16 widgetCoordX,
@@ -50,7 +50,7 @@ public:
        ::capnzero::Int16 eventIdx, ::capnzero::Int16 channelIdx,
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
+       ::capnzero::MidiEmLoader::SDParameterAttr paramFunc) override;
 
    void eraseConnectionForNotes(const ::capnzero::SpanCL<16>& controllerUUID,
                                 ::capnzero::Int16 widgetIdx,
@@ -70,7 +70,7 @@ public:
    void eraseConnectionsToDestinationParameter(
        const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-       ::capnzero::MidiEmLoader::SDParameterDestination paramFunc) override;
+       ::capnzero::MidiEmLoader::SDParameterAttr paramFunc) override;
 
 private:
    base::eventRouter::EventRouter& m_rCtrlEventRouter;

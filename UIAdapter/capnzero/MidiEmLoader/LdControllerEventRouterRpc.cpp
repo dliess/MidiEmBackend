@@ -74,7 +74,7 @@ void LdControllerEventRouterRpc::connectNotes2Parameter(
     ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& destUUID,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 componentIdx,
     ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+    ::capnzero::MidiEmLoader::SDParameterAttr paramFunc)
 {
    m_rCtrlEventRouter.createConnection(
        controller::EventIdExt{
@@ -110,7 +110,7 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
     ::capnzero::Int16 channelIdx, const ::capnzero::SpanCL<16>& destUUID,
     ::capnzero::Int16 voiceIdx, ::capnzero::Int16 componentIdx,
     ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+    ::capnzero::MidiEmLoader::SDParameterAttr paramFunc)
 {
    m_rCtrlEventRouter.createConnection(
        controller::EventIdExt{
@@ -160,7 +160,7 @@ void LdControllerEventRouterRpc::eraseConnectionsToDestinationNotes(
 void LdControllerEventRouterRpc::eraseConnectionsToDestinationParameter(
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 parameterIdx,
-    ::capnzero::MidiEmLoader::SDParameterDestination paramFunc)
+    ::capnzero::MidiEmLoader::SDParameterAttr paramFunc)
 {
    m_rCtrlEventRouter.removeConnectionToDestination(
        eventRouter::EventDestination{

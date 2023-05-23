@@ -13,31 +13,31 @@ namespace uiadapter::capnzero
 class InstrumentsRpc : public ::capnzero::MidiEmLoader::InstrumentsRpcIf
 {
 public:
-   InstrumentsRpc(base::instruments::Instruments& rInstruments);
+   explicit InstrumentsRpc(base::instruments::Instruments& rInstruments);
 
    void createMelodicInstrument(const ::capnzero::TextView& name) override;
    void removeMelodicInstrument(const ::capnzero::SpanCL<16>& uuid) override;
    void renameMelodicInstrument(const ::capnzero::SpanCL<16>& instrumentUUID,
                                 const ::capnzero::TextView& name) override;
-   void createNewSlotInMelodicInstrument(
+   void createNewVoiceInMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
-   void addVoiceToMelodicInstrumentSlot(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
-   void removeVoiceFromMelodicInstrumentSlot(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 compositeIdx) override;
-   void removeSlotFromMelodicInstrument(
+       const ::capnzero::SpanCL<16>& sdUuid,
+       ::capnzero::Int16 sdVoiceIdx) override;
+   void addComponentToMelodicInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       const ::capnzero::SpanCL<16>& sdUuid,
+       ::capnzero::Int16 sdVoiceIdx) override;
+   void removeComponentFromMelodicInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx) override;
+   void removeVoiceFromMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
-       ::capnzero::Int16 slotIdx) override;
-   void setNoteOffsetInMelodicInstrumentVoice(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 compositeIdx, ::capnzero::Int16 noteOffset) override;
-   void setCompositeNameInMelodicInstrument(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+       ::capnzero::Int16 voiceIdx) override;
+   void setNoteOffsetInMelodicInstrumentComponent(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset) override;
+   void setVoiceNameInMelodicInstrument(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
        const ::capnzero::TextView& name) override;
 
    void createKitInstrument(const ::capnzero::TextView& name) override;
@@ -45,30 +45,30 @@ public:
        const ::capnzero::SpanCL<16>& instrumentUUID) override;
    void renameKitInstrument(const ::capnzero::SpanCL<16>& instrumentUUID,
                             const ::capnzero::TextView& name) override;
-   void createNewSlotInKitInstrument(
+   void createNewVoiceInKitInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
-   void addVoiceToKitInstrumentSlot(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       const ::capnzero::SpanCL<16>& soundDeviceUuid,
-       ::capnzero::Int16 voiceIdx) override;
-   void moveKitInstrumentSlotVoice(
+       const ::capnzero::SpanCL<16>& sdUuid,
+       ::capnzero::Int16 sdVoiceIdx) override;
+   void addComponentToKitInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       const ::capnzero::SpanCL<16>& sdUuid,
+       ::capnzero::Int16 sdVoiceIdx) override;
+   void moveKitInstrumentComponent(
        const ::capnzero::SpanCL<16>& srcInstrumentUuid,
-       ::capnzero::Int16 srcSlotIdx, ::capnzero::Int16 srcCompositeIdx,
+       ::capnzero::Int16 srcVoiceIdx, ::capnzero::Int16 srcComponentIdx,
        const ::capnzero::SpanCL<16>& dstInstrumentUuid,
-       ::capnzero::Int16 dstSlotIdx) override;
-   void removeVoiceFromKitInstrumentSlot(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 compositeIdx) override;
-   void removeSlotFromKitInstrument(
+       ::capnzero::Int16 dstVoiceIdx) override;
+   void removeComponentFromKitInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx) override;
+   void removeVoiceFromKitInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
-       ::capnzero::Int16 slotIdx) override;
-   void setNoteOffsetInKitInstrumentVoice(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
-       ::capnzero::Int16 compositeIdx, ::capnzero::Int16 noteOffset) override;
-   void setCompositeNameInKitInstrument(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 slotIdx,
+       ::capnzero::Int16 voiceIdx) override;
+   void setNoteOffsetInKitInstrumentComponent(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset) override;
+   void setVoiceNameInKitInstrument(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
        const ::capnzero::TextView& name) override;
 
 private:
