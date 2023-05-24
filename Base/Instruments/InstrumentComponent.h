@@ -74,6 +74,8 @@ public:
 
    [[nodiscard]] float getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
+   [[nodiscard]] float getParameterValueCached(
+       int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;

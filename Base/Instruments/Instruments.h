@@ -23,12 +23,13 @@ namespace base::instruments
 {
 struct Instruments   //: public utils::Settings<Instruments>
 {
-   explicit Instruments(musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   explicit Instruments(
+       musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
 
    void reEmitSignals();
 
    void createKitInstrument(std::string name);
-   void insertKitInstrument(const KitInstrument& kitInstrument);
+   void insertKitInstrument(KitInstrument& kitInstrument);
    [[nodiscard]] bool hasKitInstrument(
        const KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
@@ -95,10 +96,9 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView);
 
    void withInstrumentRt(util::Identifiable::UUIDView uuid,
-                                util::function_ref<void(const Instrument&)> cb);
-   void withKitInstrumentRt(
-       util::Identifiable::UUIDView uuid,
-       util::function_ref<void(const KitInstrument&)> cb);
+                         util::function_ref<void(const Instrument&)> cb);
+   void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
+                            util::function_ref<void(const KitInstrument&)> cb);
    void withMelodicInstrumentRt(
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const MelodicInstrument&)> cb);
@@ -110,16 +110,27 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] bool hasMelodicInstrument(
        util::Identifiable::UUIDView uuid) const;
 
-    void updateParameterUI();
+   void updateParameterUI();
 
-    CB_SIGNAL(DataChanged, const Data& data, bool doSaveToFile);
-    CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged, util::Identifiable::UUIDView, int padIdx, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
-    CB_SIGNAL_SINGLE_SUBSCRIBER(MusicInstrumentParamChanged, util::Identifiable::UUIDView, int partIdx, int parameterIdx, musicDevice::sound::ParameterAttr, float);
+   CB_SIGNAL(DataChanged, const Data&, bool);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged,
+                               util::Identifiable::UUIDView, int, int, int,
+                               musicDevice::sound::ParameterAttr, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicInstrumentParamChanged,
+                               util::Identifiable::UUIDView, int, int,
+                               musicDevice::sound::ParameterAttr, float);
 
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
    Persister m_persister;
+   void initOnDataChangedUIForKitInstr(
+       Component::ParameterCache* paramCache,
+       const util::Identifiable::UUID& instrumentUuid,
+       std::optional<int> voiceIdx = std::nullopt);
+   void initOnDataChangedUIForMelodicInstr(
+       Component::ParameterCache* paramCache,
+       const util::Identifiable::UUID& instrumentUuid);
 };
 
 }   // namespace base::instruments

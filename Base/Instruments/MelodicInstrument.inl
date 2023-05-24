@@ -21,9 +21,9 @@ inline int MelodicInstrument::RtData::currentVoiceIndex() const noexcept
 
 inline void MelodicInstrument::updateParameterUI() const
 {
-   if(m_voices.size())
+   if (m_voices.size())
    {
-      for(const auto& compPart : m_voices.at(0).components)
+      for (const auto& compPart : m_voices.at(0).components)
       {
          compPart.updateParameterUI();
       }
@@ -32,18 +32,36 @@ inline void MelodicInstrument::updateParameterUI() const
 
 template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
 {
-   for (auto& sound : m_voices)
+   for (auto& voice : m_voices)
    {
-      for (auto& component : sound.components) { cb(component); }
+      for (auto& component : voice.components) { std::forward<Cb>(cb)(component); }
+   }
+}
+
+template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb)
+{
+   if(m_voices.size() > 0)
+   {
+      for (auto& component : m_voices.at(LEAD_VOICE_IDX).components) { std::forward<Cb>(cb)(component); }
    }
 }
 
 inline bool isSameInstrument(const MelodicInstrument& lhs,
-                               const MelodicInstrument& rhs)
+                             const MelodicInstrument& rhs)
 {
    return lhs.m_name == rhs.m_name && lhs.m_voices == rhs.m_voices;
 }
 
+inline MelodicInstrument::VoiceContainer& MelodicInstrument::voices() noexcept
+{
+   return m_voices;
+}
+
+inline const MelodicInstrument::VoiceContainer& MelodicInstrument::voices()
+    const noexcept
+{
+   return m_voices;
+}
 
 }   // namespace base::instruments
 

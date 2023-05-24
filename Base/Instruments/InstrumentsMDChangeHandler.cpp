@@ -120,13 +120,8 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache =
-          createParameterCache(pMusicDevice->description().get(), voiceIndex);
-      if (!paramCache)
-      {
-         spdlog::error("Could not create parameter cache");
-         continue;
-      }
+      auto paramCache = (voiceIndex == 0) ?
+          createParameterCache(pMusicDevice->description().get(), voiceIndex) : nullptr;
       Voice voice(voiceDescr[voiceIndex].name);
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()

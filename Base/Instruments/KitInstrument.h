@@ -59,6 +59,7 @@ public:
    const std::vector<Voice>& voices() const noexcept;
 
    template <typename Cb> void forEachComponent(Cb&& cb);
+   template <typename Cb> void forEachComponentExt(Cb&& cb);
 
    void updateParameterUI() const;
 

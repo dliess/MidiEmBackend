@@ -3,8 +3,7 @@
 
 namespace base::instruments
 {
-template <typename T>
-void KitInstrument::addVoice(int padIdx, T&& voice)
+template <typename T> void KitInstrument::addVoice(int padIdx, T&& voice)
 {
    m_voices[padIdx] = std::move(voice);
 };
@@ -16,10 +15,7 @@ inline void KitInstrument::setName(const std::string& name) noexcept
    m_name = name;
 }
 
-inline std::vector<Voice>& KitInstrument::voices() noexcept
-{
-   return m_voices;
-}
+inline std::vector<Voice>& KitInstrument::voices() noexcept { return m_voices; }
 
 inline const std::vector<Voice>& KitInstrument::voices() const noexcept
 {
@@ -28,9 +24,21 @@ inline const std::vector<Voice>& KitInstrument::voices() const noexcept
 
 template <typename Cb> void KitInstrument::forEachComponent(Cb&& cb)
 {
-   for (auto& sound : m_voices)
+   for (auto& voice : m_voices)
    {
-      for (auto& component : sound.components) { cb(component); }
+      for (auto& component : voice.components) { cb(component); }
+   }
+}
+
+template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb)
+{
+   for (size_t voiceIdx = 0; voiceIdx < m_voices.size(); ++voiceIdx)
+   {
+      for (size_t componentIdx = 0;
+           componentIdx < m_voices[voiceIdx].components.size(); ++componentIdx)
+      {
+         cb(m_voices[voiceIdx].components[componentIdx], voiceIdx, componentIdx);
+      }
    }
 }
 
@@ -38,7 +46,10 @@ inline void KitInstrument::updateParameterUI() const
 {
    for (auto& sound : m_voices)
    {
-      for (auto& component : sound.components) { component.updateParameterUI(); }
+      for (auto& component : sound.components)
+      {
+         component.updateParameterUI();
+      }
    }
 }
 
@@ -51,8 +62,7 @@ inline void KitInstrument::withComponent(
 
 inline bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
 {
-   return lhs.m_name == rhs.m_name &&
-          lhs.m_voices == rhs.m_voices;
+   return lhs.m_name == rhs.m_name && lhs.m_voices == rhs.m_voices;
 }
 
 }   // namespace base::instruments

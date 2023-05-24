@@ -42,40 +42,42 @@ public:
    void noteOff(int note, float velocity, void* token = nullptr) const override;
 
    void pitchBend(float value) const;
-   void incrementParameterValue(int compPart, int parameterId,
+   void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
-   void incrementParameterValue(int note, int compPart, int parameterId,
+   void incrementParameterValue(int note, int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
    [[nodiscard]] float getParameterValue(
-       int compPart, int parameterIdx,
+       int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
    [[nodiscard]] float getParameterValue(
-       int note, int compPart, int parameterIdx,
+       int note, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int compPart, int parameterId,
+   void setParameterValue(int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   void setParameterValue(int note, int compPart, int parameterId,
+   void setParameterValue(int note, int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
    [[nodiscard]] float normalizePercentageValue(
-       int compPart, int parameterId,
+       int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] float normalizePercentageValue(
-       int note, int compPart, int parameterId,
+       int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] const musicDevice::description::sound::Parameter*
-   parameterDescription(int compPart, int parameterIdx) const;
+   parameterDescription(int componentIdx, int parameterIdx) const;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
    using VoiceContainer = std::vector<Voice>;
    VoiceContainer& voices() noexcept;
+   const VoiceContainer& voices() const noexcept;
+   static constexpr size_t LEAD_VOICE_IDX = 0;
 
    void updateParameterUI() const;
 
@@ -84,6 +86,7 @@ public:
                                 const MelodicInstrument& rhs);
 
    template <typename Cb> void forEachComponent(Cb&& cb);
+   template <typename Cb> void forEachLeadComponent(Cb&& cb);
 
 private:
    VoiceContainer m_voices;

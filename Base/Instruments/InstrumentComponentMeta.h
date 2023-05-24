@@ -13,7 +13,7 @@ template<>
 inline auto registerMembers<base::instruments::Component>()
 {
    return members(member("soundDeviceId", &base::instruments::Component::m_soundDeviceId),
-                  member("voiceIndex", &base::instruments::Component::m_sdVoiceIndex),
+                  member("sdVoiceIndex", &base::instruments::Component::m_sdVoiceIndex),
                   member("noteOffset", &base::instruments::Component::m_noteOffset));
 }
 

@@ -71,7 +71,7 @@ Data Persister::load()
    }
    for (auto& instr : data.melodicInstruments)
    {
-      instr.forEachComponent([this](auto& component) {
+      instr.forEachLeadComponent([this](auto& component) {
          component.m_pParameterCache = createParameterCache(
              m_rFactoryDataHolder
                  .getDescription(component.m_soundDeviceId.deviceName())

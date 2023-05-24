@@ -8,6 +8,9 @@
 #include <cstdint>
 #include <span>
 #include <string>
+#include <algorithm>
+#include <optional>
+#include <type_traits>
 
 #include "arrayCount.h"
 
@@ -30,16 +33,29 @@ protected:
 inline std::string uuid2Str(const Identifiable::UUID& uuid);
 inline std::string uuid2Str(Identifiable::UUIDView uuid);
 
-template <class Iterator, class Callable>
-void withUuid(Iterator beginIt, Iterator endIt, Identifiable::UUIDView uuid,
+template <class Container, class Callable>
+void withUuid(const Container& container, Identifiable::UUIDView uuid,
               Callable&& cb)
 {
-   auto it = std::find_if(beginIt, endIt,
+   auto it = std::ranges::find_if(container,
                           [uuid](const auto& e) { return e.idView() == uuid; });
-   if (it != endIt)
+   if (it != container.end())
    {
-      cb(*it);
+      std::forward<Callable>(cb)(*it);
    }
+}
+
+template <class Container, class Callable>
+auto withUuidRet(const Container& container, Identifiable::UUIDView uuid,
+              Callable&& cb) -> std::optional< std::invoke_result_t<Callable, typename Container::value_type> >
+{
+   auto it = std::ranges::find_if(container,
+                          [uuid](const auto& e) { return e.idView() == uuid; });
+   if (it != container.end())
+   {
+      return std::forward<Callable>(cb)(*it);
+   }
+   return std::nullopt;
 }
 
 struct IdentifiableHash

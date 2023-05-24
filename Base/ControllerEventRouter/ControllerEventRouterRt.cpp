@@ -91,8 +91,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       }
       else
       {
-         parameter.valueCache->valueAtPress =
-               dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+         parameter.valueCache->valueAtPress = actualVal;
          dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr,
                                  parameter.descriptionCache.zeroVal);
       }
