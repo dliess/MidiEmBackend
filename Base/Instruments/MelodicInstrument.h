@@ -87,6 +87,7 @@ public:
 
    template <typename Cb> void forEachComponent(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb);
+   template <typename Cb> void forEachLeadComponentExt(Cb&& cb);
 
 private:
    VoiceContainer m_voices;

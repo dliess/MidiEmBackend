@@ -6,9 +6,9 @@
 namespace base::instruments
 {
 inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
-                    std::shared_ptr<ParameterCache> pParameterCache,
-                    musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIndex,
-                    int noteOffset) noexcept :
+                            std::shared_ptr<ParameterCache> pParameterCache,
+                            musicDevice::MusicDeviceId soundDeviceId,
+                            int sdVoiceIndex, int noteOffset) noexcept :
     m_pSoundDevice(pSoundDevice),
     m_pParameterCache(std::move(pParameterCache)),
     m_soundDeviceId(std::move(soundDeviceId)),
@@ -33,18 +33,26 @@ inline void Component::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
    m_pSoundDevice = ptr;
 }
 
-inline void Component::setNoteOffset(int noteOffset) { m_noteOffset = noteOffset; }
+inline void Component::setNoteOffset(int noteOffset)
+{
+   m_noteOffset = noteOffset;
+}
 
 inline bool Component::operator==(const Component& rhs) const
 {
    return m_soundDeviceId == rhs.m_soundDeviceId &&
-          m_sdVoiceIndex == rhs.m_sdVoiceIndex && m_noteOffset == rhs.m_noteOffset;
+          m_sdVoiceIndex == rhs.m_sdVoiceIndex &&
+          m_noteOffset == rhs.m_noteOffset;
 }
 
-inline
-void Component::updateParameterUI() const
+inline void Component::updateParameterUI() const
 {
    m_pParameterCache->updateParameterUI();
+}
+
+inline Component::ParameterCache* Component::parameterCache()
+{
+   return m_pParameterCache.get();
 }
 
 }   // namespace base::instruments

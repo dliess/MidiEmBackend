@@ -39,7 +39,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    void createMelodicInstrument(std::string name);
    [[nodiscard]] bool hasMelodicInstrument(
        const MelodicInstrument& melodicInstrument) const;
-   void insertMelodicInstrument(const MelodicInstrument& melodicInstrument);
+   void insertMelodicInstrument(MelodicInstrument& melodicInstrument);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 const std::string& name);

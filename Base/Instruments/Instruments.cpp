@@ -58,7 +58,7 @@ void Instruments::insertKitInstrument(KitInstrument& kitInstrument)
    const util::Identifiable::UUID uuid = kitInstrument.id();
    kitInstrument.forEachComponentExt([&, this](Component& component,
                                                int voiceIdx, int componentIdx) {
-      component.onDataChangedUI(
+      component.parameterCache()->onDataChangedUI(
           [&, this](int parameterId,
                     musicDevice::sound::ParameterAttr parameterAttr,
                     float value) {
@@ -133,9 +133,19 @@ bool Instruments::hasMelodicInstrument(
    return false;
 }
 
-void Instruments::insertMelodicInstrument(
-    const MelodicInstrument& melodicInstrument)
+void Instruments::insertMelodicInstrument(MelodicInstrument& melodicInstrument)
 {
+   const util::Identifiable::UUID uuid = melodicInstrument.id();
+   melodicInstrument.forEachLeadComponentExt(
+       [&, this](Component& component, int componentIdx) {
+          component.parameterCache()->onDataChangedUI(
+              [&, this](int parameterId,
+                        musicDevice::sound::ParameterAttr parameterAttr,
+                        float value) {
+                 emitMelodicInstrumentParamChanged(
+                     uuid, componentIdx, parameterId, parameterAttr, value);
+              });
+       });
    m_doubleBufferedData.withNonRtLocked(
        [this, &melodicInstrument](auto& nonRtData) {
           nonRtData.melodicInstruments.push_back(melodicInstrument);

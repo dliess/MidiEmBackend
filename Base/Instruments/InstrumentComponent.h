@@ -92,7 +92,7 @@ public:
    bool operator==(const Component& rhs) const;
 
    void updateParameterUI() const;
-
+   ParameterCache* parameterCache();
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
    std::shared_ptr<ParameterCache> m_pParameterCache;
