@@ -9,6 +9,7 @@
 #include "AbletonLinkWrapper.h"
 #include "ParameterSceneContainer.h"
 #include "Tracks.h"
+#include "Instruments.h"
 
 namespace uiadapter::capnzero
 {
@@ -21,7 +22,8 @@ public:
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router &rMidiRouter,
            base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
-           base::session::Tracks& rTracks);
+           base::session::Tracks& rTracks,
+           base::instruments::Instruments& rInstruments);
    void reEmitSignals() override;
 
 private:
@@ -32,6 +34,7 @@ private:
    base::midifriends::Router &m_rMidiRouter;
    base::musicDevice::sound::ParameterSceneContainer &m_rParameterSceneContainer;
    base::session::Tracks& m_rTracks;
+   base::instruments::Instruments& m_rInstruments;
 };
 
 }   // namespace uiadapter::capnzero

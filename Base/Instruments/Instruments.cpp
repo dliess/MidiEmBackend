@@ -479,6 +479,26 @@ void Instruments::reEmitSignals()
    emitDataChanged(m_doubleBufferedData.nonRt(), false);
 }
 
+void Instruments::retriggerParameterCacheCallbacks()
+{
+   m_doubleBufferedData.withRtLocked([](const Data& rtData) {
+      for(const auto& instr : rtData.kitInstruments)
+      {
+         instr.forEachComponent([](const auto& component){
+            assert(component.parameterCache());
+            component.parameterCache()->emiAllNonNullParameters();
+         });
+      }
+      for(const auto& instr : rtData.melodicInstruments)
+      {
+         instr.forEachLeadComponent([](const auto& component){
+            assert(component.parameterCache());
+            component.parameterCache()->emiAllNonNullParameters();
+         });
+      }
+   });
+}
+
 void Instruments::initOnDataChangedUIForKitInstr(
     Component::ParameterCache* paramCache,
     const util::Identifiable::UUID& instrumentUuid, std::optional<int> voiceIdx)

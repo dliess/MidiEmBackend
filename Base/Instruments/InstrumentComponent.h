@@ -1,6 +1,7 @@
 #ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_H
 #define INSTRUMENTS_INSTRUMENT_COMPONENT_H
 
+#include <magic_enum.hpp>
 #include <memory>
 #include <vector>
 
@@ -37,12 +38,29 @@ public:
       {
          if (dirtyFlags_.any())
          {
-            dirtyFlags_.forEach([this](size_t paramIdx, musicDevice::sound::ParameterAttr parameterAttr) {
-               emitDataChangedUI(paramIdx, parameterAttr,
-                                 musicDevice::sound::getParameterData(
-                                     data_.at(paramIdx), parameterAttr));
-            });
+            dirtyFlags_.forEach(
+                [this](size_t paramIdx,
+                       musicDevice::sound::ParameterAttr parameterAttr) {
+                   emitDataChangedUI(paramIdx, parameterAttr,
+                                     musicDevice::sound::getParameterData(
+                                         data_.at(paramIdx), parameterAttr));
+                });
             dirtyFlags_.reset();
+         }
+      }
+      void emiAllNonNullParameters()
+      {
+         for (int paramIdx = 0; paramIdx < data_.size(); ++paramIdx)
+         {
+            magic_enum::enum_for_each<musicDevice::sound::ParameterAttr>(
+                [paramIdx, this](auto parameterAttr) {
+                   const float val = musicDevice::sound::getParameterData(
+                       data_[paramIdx], parameterAttr);
+                   if (val != 0.0)
+                   {
+                      emitDataChangedUI(paramIdx, parameterAttr, val);
+                   }
+                });
          }
       }
       CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
@@ -54,9 +72,9 @@ public:
    };
    Component() = default;
    explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
-                  std::shared_ptr<ParameterCache> pParameterCache,
-                  musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIndex,
-                  int noteOffset) noexcept;
+                      std::shared_ptr<ParameterCache> pParameterCache,
+                      musicDevice::MusicDeviceId soundDeviceId,
+                      int sdVoiceIndex, int noteOffset) noexcept;
    [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
@@ -93,6 +111,8 @@ public:
 
    void updateParameterUI() const;
    ParameterCache* parameterCache();
+   ParameterCache* parameterCache() const;
+
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
    std::shared_ptr<ParameterCache> m_pParameterCache;

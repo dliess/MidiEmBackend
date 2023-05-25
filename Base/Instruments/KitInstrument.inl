@@ -30,6 +30,14 @@ template <typename Cb> void KitInstrument::forEachComponent(Cb&& cb)
    }
 }
 
+template <typename Cb> void KitInstrument::forEachComponent(Cb&& cb) const
+{
+   for (const auto& voice : m_voices)
+   {
+      for (const auto& component : voice.components) { cb(component); }
+   }
+}
+
 template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb)
 {
    for (size_t voiceIdx = 0; voiceIdx < m_voices.size(); ++voiceIdx)

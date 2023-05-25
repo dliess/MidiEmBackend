@@ -42,4 +42,5 @@ target_link_libraries(${TARGET_NAME}
    PRIVATE MIDI::usbmidi
    PRIVATE spdlog::spdlog
    PUBLIC  util
+   PUBLIC  magic_enum::magic_enum
 )

@@ -38,7 +38,7 @@ RtServer::RtServer(
         std::make_unique<MainRpc>(signals(), rMDHolder.musicDevices,
                                   rTransportControl, rAbletonLinkWrapper,
                                   rMidiRouter, rParameterSceneContainer,
-                                  rTracks),
+                                  rTracks, rInstruments),
         std::make_unique<InstrumentsPlayRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
         std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),

@@ -103,6 +103,12 @@ if(AbletonLink_ADDED)
   add_library(AbletonLink::AbletonLink ALIAS AbletonLink)
 endif()
 
+CPMFindPackage(
+  NAME magic_enum
+  GITHUB_REPOSITORY Neargye/magic_enum
+  VERSION 0.9.0
+)
+
 add_subdirectory(3rdparty)
 add_subdirectory(Base)
 add_subdirectory(Util)

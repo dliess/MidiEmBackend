@@ -34,25 +34,45 @@ template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
 {
    for (auto& voice : m_voices)
    {
-      for (auto& component : voice.components) { std::forward<Cb>(cb)(component); }
+      for (auto& component : voice.components)
+      {
+         std::forward<Cb>(cb)(component);
+      }
    }
 }
 
 template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb)
 {
-   if(m_voices.size() > 0)
+   if (m_voices.size() > 0)
    {
-      for (auto& component : m_voices[LEAD_VOICE_IDX].components) { std::forward<Cb>(cb)(component); }
+      for (auto& component : m_voices[LEAD_VOICE_IDX].components)
+      {
+         std::forward<Cb>(cb)(component);
+      }
+   }
+}
+
+template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb) const
+{
+   if (m_voices.size() > 0)
+   {
+      for (const auto& component : m_voices[LEAD_VOICE_IDX].components)
+      {
+         std::forward<Cb>(cb)(component);
+      }
    }
 }
 
 template <typename Cb> void MelodicInstrument::forEachLeadComponentExt(Cb&& cb)
 {
-   if(m_voices.size() > 0)
+   if (m_voices.size() > 0)
    {
-      for (size_t componentIdx = 0; componentIdx < m_voices[LEAD_VOICE_IDX].components.size(); ++ componentIdx) 
+      for (size_t componentIdx = 0;
+           componentIdx < m_voices[LEAD_VOICE_IDX].components.size();
+           ++componentIdx)
       {
-         std::forward<Cb>(cb)(m_voices[LEAD_VOICE_IDX].components[componentIdx], componentIdx); 
+         std::forward<Cb>(cb)(m_voices[LEAD_VOICE_IDX].components[componentIdx],
+                              componentIdx);
       }
    }
 }

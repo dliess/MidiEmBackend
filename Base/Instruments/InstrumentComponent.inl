@@ -55,6 +55,11 @@ inline Component::ParameterCache* Component::parameterCache()
    return m_pParameterCache.get();
 }
 
+inline Component::ParameterCache* Component::parameterCache() const
+{
+   return m_pParameterCache.get();
+}
+
 }   // namespace base::instruments
 
 #endif
