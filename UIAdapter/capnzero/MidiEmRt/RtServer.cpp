@@ -448,4 +448,26 @@ RtServer::RtServer(
               *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
               row, beat);
        });
+   rInstruments.onKitInstrumentParamChanged(
+       [this](util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx,
+              int parameterIdx,
+              base::musicDevice::sound::ParameterAttr parameterAttr,
+              float value) {
+          signals().InstrumentsPlay__kitParamChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              voiceIdx, componentIdx, parameterIdx,
+              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
+              value);
+       });
+   rInstruments.onMelodicInstrumentParamChanged(
+       [this](util::Identifiable::UUIDView uuid, int componentIdx,
+              int parameterIdx,
+              base::musicDevice::sound::ParameterAttr parameterAttr,
+              float value) {
+          signals().InstrumentsPlay__melodicParamChanged(
+              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              componentIdx, parameterIdx,
+              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
+              value);
+       });
 }

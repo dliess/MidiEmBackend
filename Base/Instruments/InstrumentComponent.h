@@ -22,47 +22,12 @@ public:
       [[nodiscard]] std::size_t size() const { return data_.size(); }
       using ParameterData = base::musicDevice::sound::ParameterData;
       using DirtyFlags    = base::musicDevice::sound::DirtyFlagsVec;
-      [[nodiscard]] const ParameterData& at(std::size_t pos) const
-      {
-         return data_.at(pos);
-      }
+      [[nodiscard]] const ParameterData& at(std::size_t pos) const;
       void setParameter(std::size_t index,
                         musicDevice::sound::ParameterAttr parameterAttr,
-                        float value)
-      {
-         musicDevice::sound::setParameterData(data_.at(index), parameterAttr,
-                                              value);
-         dirtyFlags_.set(index, parameterAttr);
-      }
-      void updateParameterUI()
-      {
-         if (dirtyFlags_.any())
-         {
-            dirtyFlags_.forEach(
-                [this](size_t paramIdx,
-                       musicDevice::sound::ParameterAttr parameterAttr) {
-                   emitDataChangedUI(paramIdx, parameterAttr,
-                                     musicDevice::sound::getParameterData(
-                                         data_.at(paramIdx), parameterAttr));
-                });
-            dirtyFlags_.reset();
-         }
-      }
-      void emiAllNonNullParameters()
-      {
-         for (int paramIdx = 0; paramIdx < data_.size(); ++paramIdx)
-         {
-            magic_enum::enum_for_each<musicDevice::sound::ParameterAttr>(
-                [paramIdx, this](auto parameterAttr) {
-                   const float val = musicDevice::sound::getParameterData(
-                       data_[paramIdx], parameterAttr);
-                   if (val != 0.0)
-                   {
-                      emitDataChangedUI(paramIdx, parameterAttr, val);
-                   }
-                });
-         }
-      }
+                        float value);
+      void updateParameterUI();
+      void emiAllNonNullParameters();
       CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
                                   musicDevice::sound::ParameterAttr, float);
 
