@@ -516,8 +516,8 @@ void Instruments::initOnDataChangedUIForKitInstr(
    {
       voiceIdx = instrIt->voices().size();
    }
-   const size_t nextComponentIdx =
-       instrIt->voices().at(*voiceIdx).components.size();
+   const size_t nextComponentIdx = instrIt->voices().size() ?
+       instrIt->voices().at(*voiceIdx).components.size() : 0;
    paramCache->onDataChangedUI(
        [instrumentUuid, voiceIdx, nextComponentIdx, this](
            int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
@@ -541,9 +541,9 @@ void Instruments::initOnDataChangedUIForMelodicInstr(
    {
       throw std::runtime_error("kit instrument not found");
    }
-   const size_t nextComponentIdx = instrIt->voices()
+   const size_t nextComponentIdx = instrIt->voices().size() ? instrIt->voices()
                                        .at(MelodicInstrument::LEAD_VOICE_IDX)
-                                       .components.size();
+                                       .components.size() : 0;
    paramCache->onDataChangedUI(
        [instrumentUuid, nextComponentIdx, this](
            int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
