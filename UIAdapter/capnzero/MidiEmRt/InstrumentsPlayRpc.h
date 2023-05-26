@@ -27,6 +27,33 @@ public:
    void kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
                    ::capnzero::Int16 soundIndex, ::capnzero::Int16 note,
                    ::capnzero::Float32 velocity) override;
+   void incrementKitParameterValue(const ::capnzero::SpanCL<16>& uuid,
+                                   ::capnzero::Int16 voiceIdx,
+                                   ::capnzero::Int16 componentIdx,
+                                   ::capnzero::Int16 parameterIdx,
+                                   ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
+                                   ::capnzero::Float32 increment) override;
+   void setKitParameterValue(const ::capnzero::SpanCL<16>& uuid,
+                             ::capnzero::Int16 voiceIdx,
+                             ::capnzero::Int16 componentIdx,
+                             ::capnzero::Int16 parameterIdx,
+                             ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
+                             ::capnzero::Float32 value) override;
+   void blancKitParameterValues(const ::capnzero::SpanCL<16>& uuid,
+                                ::capnzero::Int16 voiceIdx,
+                                ::capnzero::Int16 componentIdx) override;
+   void incrementMelodicParameterValue(
+       const ::capnzero::SpanCL<16>& uuid, ::capnzero::Int16 componentIdx,
+       ::capnzero::Int16 parameterIdx,
+       ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
+       ::capnzero::Float32 increment) override;
+   void setMelodicParameterValue(const ::capnzero::SpanCL<16>& uuid,
+                                 ::capnzero::Int16 componentIdx,
+                                 ::capnzero::Int16 parameterIdx,
+                                 ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
+                                 ::capnzero::Float32 value) override;
+   void blancMelodicParameterValues(const ::capnzero::SpanCL<16>& uuid,
+                                    ::capnzero::Int16 componentIdx) override;
 
 private:
    base::instruments::Instruments& m_rInstruments;
