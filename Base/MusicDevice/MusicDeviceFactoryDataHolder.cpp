@@ -67,7 +67,7 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
       m_descriptionCache[deviceName] = pDescr;
       emitDescriptionAdded(deviceName, *pDescr);
    }
-   return std::move(pDescr);
+   return pDescr;
 }
 
 const description::Description* factory::DataHolder::getDescription(

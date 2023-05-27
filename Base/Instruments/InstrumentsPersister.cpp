@@ -40,7 +40,7 @@ Data filterOutDefaultInstruments(const Data& rData)
 
 Persister::Persister(
     std::unique_ptr<util::IDataPersister> dataPersister,
-    base::musicDevice::factory::DataHolder rFactoryDataHolder) :
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
     m_dataPersister(std::move(dataPersister)),
     m_rFactoryDataHolder(rFactoryDataHolder)
 {
@@ -71,13 +71,24 @@ Data Persister::load()
    }
    for (auto& instr : data.melodicInstruments)
    {
-      instr.forEachLeadComponent([this](auto& component) {
-         component.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder
-                 .getDescription(component.m_soundDeviceId.deviceName())
-                 .get(),
-             component.m_sdVoiceIndex);
-      });
+      instr.forEachComponentExt(
+          [this, &instr](auto& component, size_t voiceIdx, size_t componentIdx) {
+             if (MelodicInstrument::LEAD_VOICE_IDX == voiceIdx)
+             {
+                component.m_pParameterCache = createParameterCache(
+                    m_rFactoryDataHolder
+                        .getDescription(component.m_soundDeviceId.deviceName())
+                        .get(),
+                    component.m_sdVoiceIndex);
+             }
+             else
+             {
+                component.m_pParameterCache =
+                    instr.voices()[MelodicInstrument::LEAD_VOICE_IDX]
+                        .components[componentIdx]
+                        .m_pParameterCache;
+             }
+          });
    }
    return data;
 }

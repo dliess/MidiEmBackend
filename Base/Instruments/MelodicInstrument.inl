@@ -41,6 +41,18 @@ template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
    }
 }
 
+template <typename Cb> void MelodicInstrument::forEachComponentExt(Cb&& cb)
+{
+   for (size_t voiceIdx = 0; voiceIdx < m_voices.size(); ++voiceIdx)
+   {
+      for (size_t componentIdx = 0;
+           componentIdx < m_voices[voiceIdx].components.size(); ++componentIdx)
+      {
+         cb(m_voices[voiceIdx].components[componentIdx], voiceIdx, componentIdx);
+      }
+   }
+}
+
 template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb)
 {
    if (m_voices.size() > 0)

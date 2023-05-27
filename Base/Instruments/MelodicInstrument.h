@@ -86,6 +86,7 @@ public:
                                 const MelodicInstrument& rhs);
 
    template <typename Cb> void forEachComponent(Cb&& cb);
+   template <typename Cb> void forEachComponentExt(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
    template <typename Cb> void forEachLeadComponentExt(Cb&& cb);
