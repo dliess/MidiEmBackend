@@ -60,7 +60,6 @@ inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
     m_sdVoiceIndex(sdVoiceIndex),
     m_noteOffset(noteOffset)
 {
-   assert(m_pParameterCache);
 }
 
 inline const musicDevice::MusicDeviceId& Component::soundDeviceId() const
@@ -92,7 +91,10 @@ inline bool Component::operator==(const Component& rhs) const
 
 inline void Component::updateParameterUI() const
 {
-   m_pParameterCache->updateParameterUI();
+   if (m_pParameterCache)
+   {
+      m_pParameterCache->updateParameterUI();
+   }
 }
 
 inline Component::ParameterCache* Component::parameterCache()
