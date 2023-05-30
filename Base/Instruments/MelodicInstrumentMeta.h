@@ -1,6 +1,7 @@
 #ifndef MELODIC_INSTRUMENT_META_H
 #define MELODIC_INSTRUMENT_META_H
 
+#include <nlohmann/json.hpp>
 #include "Meta.h"
 
 namespace meta

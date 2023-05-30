@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_FACTORY_H
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_FACTORY_H
+#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_H
+#define INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_H
 
 #include "InstrumentComponent.h"
 #include "MelodicInstrument.h"
@@ -16,9 +16,11 @@ class MelodicInstrumentsParameterCacheCreator
 {
 public:
    explicit MelodicInstrumentsParameterCacheCreator(
-       const MelodicInstrument& melodicInstrument,
+       MelodicInstrument& rMelodicInstrument,
        const base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-       ParameterChangeEmitter& parameterChangeEmitter);
+       ParameterChangeEmitter& rParameterChangeEmitter);
+
+    void initParameterCaches();
 
    std::shared_ptr<Component::ParameterCache>
    createParameterCacheForNextComponentInNextVoice();
@@ -28,13 +30,13 @@ public:
        size_t componentIdx);
 
 private:
-   const MelodicInstrument& m_rMelodicInstrument;
+   MelodicInstrument& m_rMelodicInstrument;
    const base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    ParameterChangeEmitter& m_rParameterChangeEmitter;
 };
 
 }   // namespace base::instruments
 
-#include "InstrumentComponentParameterCacheFactory.inl"
+#include "InstrumentComponentParameterCacheCreator.inl"
 
 #endif

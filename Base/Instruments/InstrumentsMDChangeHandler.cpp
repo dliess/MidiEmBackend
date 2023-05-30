@@ -1,6 +1,6 @@
 #include "InstrumentsMDChangeHandler.h"
 
-#include "InstrumentComponentParameterCacheFactory.h"
+#include "InstrumentComponentParameterCacheCreator.h"
 #include "Instruments.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"

@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "FilePersister.h"
-#include "InstrumentComponentParameterCacheFactory.h"
+#include "InstrumentComponentParameterCacheCreator.h"
 #include "InstrumentsMDRefSetter.h"
 #include "InstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
@@ -47,17 +47,7 @@ Instruments::Instruments(
       }
       for (auto& instr : data.melodicInstruments)
       {
-         instr.forEachLeadComponentExt([this, &instr](auto& component,
-                                                      int componentIdx) {
-            component.parameterCache()->onDataChangedUI(
-                [&, this](int parameterId,
-                          musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) {
-                   emitMelodicInstrumentParamChanged(instr.id(), componentIdx,
-                                                     parameterId, parameterAttr,
-                                                     value);
-                });
-         });
+         MelodicInstrumentsParameterCacheCreator(instr).initParameterCaches();
       }
       m_doubleBufferedData.withNonRtLocked(
           [&data](auto& nonRtData) { nonRtData = data; });

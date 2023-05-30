@@ -1,6 +1,6 @@
 #include "InstrumentsPersister.h"
 
-#include "InstrumentComponentParameterCacheFactory.h"
+#include "InstrumentComponentParameterCacheCreator.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
 using namespace base::instruments;
@@ -69,6 +69,7 @@ Data Persister::load()
              component.m_sdVoiceIndex);
       });
    }
+/*   
    for (auto& instr : data.melodicInstruments)
    {
       instr.forEachComponentExt(
@@ -90,5 +91,6 @@ Data Persister::load()
              }
           });
    }
+*/
    return data;
 }

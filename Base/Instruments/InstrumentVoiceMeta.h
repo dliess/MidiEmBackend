@@ -6,6 +6,23 @@
 
 #include "InstrumentVoice.h"
 
+namespace base::instruments {
+/*
+inline
+void to_json(nlohmann::json& j, const Voice::Components& data)
+{
+    
+}
+
+inline
+void from_json(const nlohmann::json& j, Voice::Components& data)
+{
+    
+}
+*/
+} // namespace base::instruments
+
+
 namespace meta
 {
 
