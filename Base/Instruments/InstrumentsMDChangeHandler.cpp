@@ -1,6 +1,6 @@
 #include "InstrumentsMDChangeHandler.h"
 
-#include "InstrumentComponentFactory.h"
+#include "InstrumentComponentParameterCacheFactory.h"
 #include "Instruments.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
@@ -120,8 +120,13 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache = (voiceIndex == 0) ?
-          createParameterCache(pMusicDevice->description().get(), voiceIndex) : nullptr;
+      auto paramCache =
+          (voiceIndex == MelodicInstrument::LEAD_VOICE_IDX)
+              ? createParameterCache(pMusicDevice->description().get(),
+                                     voiceIndex)
+              : melodicInstrument.voices()[MelodicInstrument::LEAD_VOICE_IDX]
+                    .components[0]
+                    .m_pParameterCache;
       Voice voice(voiceDescr[voiceIndex].name);
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()

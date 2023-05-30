@@ -1,6 +1,6 @@
 #include "InstrumentsPersister.h"
 
-#include "InstrumentComponentFactory.h"
+#include "InstrumentComponentParameterCacheFactory.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
 using namespace base::instruments;

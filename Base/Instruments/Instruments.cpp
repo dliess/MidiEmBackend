@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "FilePersister.h"
-#include "InstrumentComponentFactory.h"
+#include "InstrumentComponentParameterCacheFactory.h"
 #include "InstrumentsMDRefSetter.h"
 #include "InstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
@@ -31,6 +31,34 @@ Instruments::Instruments(
    try
    {
       auto data = m_persister.load();
+      for (auto& instr : data.kitInstruments)
+      {
+         instr.forEachComponentExt(
+             [this, &instr](auto& component, int voiceIdx, int componentIdx) {
+                component.parameterCache()->onDataChangedUI(
+                    [&, this](int parameterId,
+                              musicDevice::sound::ParameterAttr parameterAttr,
+                              float value) {
+                       emitKitInstrumentParamChanged(instr.id(), voiceIdx,
+                                                     componentIdx, parameterId,
+                                                     parameterAttr, value);
+                    });
+             });
+      }
+      for (auto& instr : data.melodicInstruments)
+      {
+         instr.forEachLeadComponentExt([this, &instr](auto& component,
+                                                      int componentIdx) {
+            component.parameterCache()->onDataChangedUI(
+                [&, this](int parameterId,
+                          musicDevice::sound::ParameterAttr parameterAttr,
+                          float value) {
+                   emitMelodicInstrumentParamChanged(instr.id(), componentIdx,
+                                                     parameterId, parameterAttr,
+                                                     value);
+                });
+         });
+      }
       m_doubleBufferedData.withNonRtLocked(
           [&data](auto& nonRtData) { nonRtData = data; });
    }
@@ -482,16 +510,16 @@ void Instruments::reEmitSignals()
 void Instruments::retriggerParameterCacheCallbacks()
 {
    m_doubleBufferedData.withRtLocked([](const Data& rtData) {
-      for(const auto& instr : rtData.kitInstruments)
+      for (const auto& instr : rtData.kitInstruments)
       {
-         instr.forEachComponent([](const auto& component){
+         instr.forEachComponent([](const auto& component) {
             assert(component.parameterCache());
             component.parameterCache()->emiAllNonNullParameters();
          });
       }
-      for(const auto& instr : rtData.melodicInstruments)
+      for (const auto& instr : rtData.melodicInstruments)
       {
-         instr.forEachLeadComponent([](const auto& component){
+         instr.forEachLeadComponent([](const auto& component) {
             assert(component.parameterCache());
             component.parameterCache()->emiAllNonNullParameters();
          });
@@ -516,8 +544,10 @@ void Instruments::initOnDataChangedUIForKitInstr(
    {
       voiceIdx = instrIt->voices().size();
    }
-   const size_t nextComponentIdx = instrIt->voices().size() ?
-       instrIt->voices().at(*voiceIdx).components.size() : 0;
+   const size_t nextComponentIdx =
+       instrIt->voices().size()
+           ? instrIt->voices().at(*voiceIdx).components.size()
+           : 0;
    paramCache->onDataChangedUI(
        [instrumentUuid, voiceIdx, nextComponentIdx, this](
            int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
@@ -541,9 +571,11 @@ void Instruments::initOnDataChangedUIForMelodicInstr(
    {
       throw std::runtime_error("kit instrument not found");
    }
-   const size_t nextComponentIdx = instrIt->voices().size() ? instrIt->voices()
-                                       .at(MelodicInstrument::LEAD_VOICE_IDX)
-                                       .components.size() : 0;
+   const size_t nextComponentIdx =
+       instrIt->voices().size() ? instrIt->voices()
+                                      .at(MelodicInstrument::LEAD_VOICE_IDX)
+                                      .components.size()
+                                : 0;
    paramCache->onDataChangedUI(
        [instrumentUuid, nextComponentIdx, this](
            int parameterId, musicDevice::sound::ParameterAttr parameterAttr,

@@ -1,4 +1,4 @@
-#include "InstrumentComponentFactory.h"
+#include "InstrumentComponentParameterCacheFactory.h"
 
 using namespace base;
 

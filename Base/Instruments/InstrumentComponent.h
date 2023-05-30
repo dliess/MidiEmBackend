@@ -71,6 +71,7 @@ public:
 
    friend auto meta::registerMembers<Component>();
    friend class Persister;
+   friend class InstrumentsMDChangeHandler;
 
    bool operator==(const Component& rhs) const;
 
