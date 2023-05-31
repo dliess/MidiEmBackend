@@ -70,9 +70,8 @@ public:
        int parameterIdx) const;
 
    friend auto meta::registerMembers<Component>();
-   friend class Persister;
-   friend class InstrumentsMDChangeHandler;
    friend class MelodicInstrumentsParameterCacheCreator;
+   friend class KitInstrumentsParameterCacheCreator;
 
    bool operator==(const Component& rhs) const;
 

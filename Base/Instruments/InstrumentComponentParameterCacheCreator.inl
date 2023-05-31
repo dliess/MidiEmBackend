@@ -131,7 +131,7 @@ MelodicInstrumentsParameterCacheCreator::createParameterCacheForComponent(
        getParameterCacheForComponent(melodicInstrument, componentIdx);
    if (!parameterCache)
    {
-      parameterCache = parameterCache = createParameterCache(
+      parameterCache = createParameterCache(
           m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
       parameterCache->onDataChangedUI(
           [&, this](int parameterId,
@@ -257,6 +257,12 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
 {
    kitInstrument.forEachComponentExt(
        [&, this](auto& component, int voiceIdx, int componentIdx) {
+           component.m_pParameterCache = createParameterCache(
+             m_rFactoryDataHolder
+                 .getDescription(component.m_soundDeviceId.deviceName())
+                 .get(),
+             component.m_sdVoiceIndex);
+
           component.parameterCache()->onDataChangedUI(
               [&, this](int parameterId,
                         musicDevice::sound::ParameterAttr parameterAttr,

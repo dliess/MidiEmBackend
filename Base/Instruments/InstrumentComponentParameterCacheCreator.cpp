@@ -1,4 +1,5 @@
 #include "InstrumentComponentParameterCacheCreator.h"
+#include <exception>
 
 using namespace base;
 
@@ -22,18 +23,6 @@ instruments::createParameterCache(
          return paramCache;
       }
    }
-   return nullptr;
+   spdlog::error("createParameterCache failed");
+   throw std::runtime_error("ParameterCache creation failed");
 }
-/*
-InstrumentComponentFactory::InstrumentComponentFactory(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
-    m_rFactoryDataHolder(rFactoryDataHolder)
-{
-}
-
-Component InstrumentComponentFactory::create(musicDevice::MusicDeviceId soundDeviceId,
-                                     int voiceIndex, int noteOffset)
-{
-    return Component();
-}
-*/

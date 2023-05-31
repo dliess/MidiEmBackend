@@ -15,18 +15,35 @@ void InstrumentsRpc::createMelodicInstrument(const ::capnzero::TextView& name)
    m_rInstruments.createMelodicInstrument(std::string(name));
 }
 
-void InstrumentsRpc::removeMelodicInstrument(const ::capnzero::SpanCL<16>& instrumentUuid)
+void InstrumentsRpc::removeMelodicInstrument(
+    const ::capnzero::SpanCL<16>& instrumentUuid)
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeMelodicInstrument(instrumentUuid_);
+   try
+   {
+      m_rInstruments.removeMelodicInstrument(instrumentUuid_);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
-void InstrumentsRpc::renameMelodicInstrument(const ::capnzero::SpanCL<16>& instrumentUuid,
-                                             const ::capnzero::TextView& name)
+void InstrumentsRpc::renameMelodicInstrument(
+    const ::capnzero::SpanCL<16>& instrumentUuid,
+    const ::capnzero::TextView& name)
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.renameMelodicInstrument(instrumentUuid_, std::string(name));
+   try
+   {
+      m_rInstruments.renameMelodicInstrument(instrumentUuid_,
+                                             std::string(name));
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::createNewVoiceInMelodicInstrument(
@@ -37,8 +54,15 @@ void InstrumentsRpc::createNewVoiceInMelodicInstrument(
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
    util::Identifiable::UUID sdUuid_;
    std::ranges::copy(sdUuid, sdUuid_.begin());
-   m_rInstruments.createNewVoiceInMelodicInstrument(instrumentUuid_,
-                                                   sdUuid_, sdVoiceIdx);
+   try
+   {
+      m_rInstruments.createNewVoiceInMelodicInstrument(instrumentUuid_, sdUuid_,
+                                                       sdVoiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::addComponentToMelodicInstrumentVoice(
@@ -49,8 +73,15 @@ void InstrumentsRpc::addComponentToMelodicInstrumentVoice(
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
    util::Identifiable::UUID sdUuid_;
    std::ranges::copy(sdUuid, sdUuid_.begin());
-   m_rInstruments.addComponentToMelodicInstrumentVoice(instrumentUuid_, voiceIdx,
-                                                       sdUuid_, sdVoiceIdx);
+   try
+   {
+      m_rInstruments.addComponentToMelodicInstrumentVoice(
+          instrumentUuid_, voiceIdx, sdUuid_, sdVoiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::removeComponentFromMelodicInstrumentVoice(
@@ -59,8 +90,15 @@ void InstrumentsRpc::removeComponentFromMelodicInstrumentVoice(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeComponentFromMelodicInstrumentVoice(instrumentUuid_, voiceIdx,
-                                                       componentIdx);
+   try
+   {
+      m_rInstruments.removeComponentFromMelodicInstrumentVoice(
+          instrumentUuid_, voiceIdx, componentIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::removeVoiceFromMelodicInstrument(
@@ -68,7 +106,15 @@ void InstrumentsRpc::removeVoiceFromMelodicInstrument(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeVoiceFromMelodicInstrument(instrumentUuid_, voiceIdx);
+   try
+   {
+      m_rInstruments.removeVoiceFromMelodicInstrument(instrumentUuid_,
+                                                      voiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
@@ -77,8 +123,15 @@ void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.setNoteOffsetInMelodicInstrumentComponent(
-       instrumentUuid_, voiceIdx, componentIdx, noteOffset);
+   try
+   {
+      m_rInstruments.setNoteOffsetInMelodicInstrumentComponent(
+          instrumentUuid_, voiceIdx, componentIdx, noteOffset);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::setVoiceNameInMelodicInstrument(
@@ -87,13 +140,27 @@ void InstrumentsRpc::setVoiceNameInMelodicInstrument(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.setVoiceNameInMelodicInstrument(instrumentUuid_, voiceIdx,
-                                                      std::string(name));
+   try
+   {
+      m_rInstruments.setVoiceNameInMelodicInstrument(instrumentUuid_, voiceIdx,
+                                                     std::string(name));
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView& name)
 {
-   m_rInstruments.createKitInstrument(std::string(name));
+   try
+   {
+      m_rInstruments.createKitInstrument(std::string(name));
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::removeKitInstrument(
@@ -101,15 +168,30 @@ void InstrumentsRpc::removeKitInstrument(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeKitInstrument(instrumentUuid_);
+   try
+   {
+      m_rInstruments.removeKitInstrument(instrumentUuid_);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
-void InstrumentsRpc::renameKitInstrument(const ::capnzero::SpanCL<16>& instrumentUuid,
-                                             const ::capnzero::TextView& name)
+void InstrumentsRpc::renameKitInstrument(
+    const ::capnzero::SpanCL<16>& instrumentUuid,
+    const ::capnzero::TextView& name)
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.renameKitInstrument(instrumentUuid_, std::string(name));
+   try
+   {
+      m_rInstruments.renameKitInstrument(instrumentUuid_, std::string(name));
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::createNewVoiceInKitInstrument(
@@ -120,8 +202,15 @@ void InstrumentsRpc::createNewVoiceInKitInstrument(
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
    util::Identifiable::UUID sdUuid_;
    std::ranges::copy(sdUuid, sdUuid_.begin());
-   m_rInstruments.createNewVoiceInKitInstrument(instrumentUuid_,
-                                               sdUuid_, sdVoiceIdx);
+   try
+   {
+      m_rInstruments.createNewVoiceInKitInstrument(instrumentUuid_, sdUuid_,
+                                                   sdVoiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::addComponentToKitInstrumentVoice(
@@ -132,8 +221,15 @@ void InstrumentsRpc::addComponentToKitInstrumentVoice(
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
    util::Identifiable::UUID sdUuid_;
    std::ranges::copy(sdUuid, sdUuid_.begin());
-   m_rInstruments.addComponentToKitInstrumentVoice(instrumentUuid_, voiceIdx,
-                                              sdUuid_, sdVoiceIdx);
+   try
+   {
+      m_rInstruments.addComponentToKitInstrumentVoice(instrumentUuid_, voiceIdx,
+                                                      sdUuid_, sdVoiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 void InstrumentsRpc::moveKitInstrumentComponent(
     const ::capnzero::SpanCL<16>& srcInstrumentUuid,
@@ -145,9 +241,16 @@ void InstrumentsRpc::moveKitInstrumentComponent(
    std::ranges::copy(srcInstrumentUuid, srcInstrumentUuid_.begin());
    util::Identifiable::UUID dstInstrumentUuid_;
    std::ranges::copy(dstInstrumentUuid, dstInstrumentUuid_.begin());
-   m_rInstruments.moveKitInstrumentComponent(srcInstrumentUuid_, srcVoiceIdx,
-                                             srcComponentIdx,
-                                             dstInstrumentUuid_, dstVoiceIdx);
+   try
+   {
+      m_rInstruments.moveKitInstrumentComponent(
+          srcInstrumentUuid_, srcVoiceIdx, srcComponentIdx, dstInstrumentUuid_,
+          dstVoiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 void InstrumentsRpc::removeComponentFromKitInstrumentVoice(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
@@ -155,15 +258,29 @@ void InstrumentsRpc::removeComponentFromKitInstrumentVoice(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeComponentFromKitInstrumentVoice(instrumentUuid_, voiceIdx,
-                                                   componentIdx);
+   try
+   {
+      m_rInstruments.removeComponentFromKitInstrumentVoice(
+          instrumentUuid_, voiceIdx, componentIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 void InstrumentsRpc::removeVoiceFromKitInstrument(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx)
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.removeVoiceFromKitInstrument(instrumentUuid_, voiceIdx);
+   try
+   {
+      m_rInstruments.removeVoiceFromKitInstrument(instrumentUuid_, voiceIdx);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 void InstrumentsRpc::setNoteOffsetInKitInstrumentComponent(
     const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
@@ -171,8 +288,15 @@ void InstrumentsRpc::setNoteOffsetInKitInstrumentComponent(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.setNoteOffsetInKitInstrumentComponent(instrumentUuid_, voiceIdx,
-                                                    componentIdx, noteOffset);
+   try
+   {
+      m_rInstruments.setNoteOffsetInKitInstrumentComponent(
+          instrumentUuid_, voiceIdx, componentIdx, noteOffset);
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
 
 void InstrumentsRpc::setVoiceNameInKitInstrument(
@@ -181,6 +305,13 @@ void InstrumentsRpc::setVoiceNameInKitInstrument(
 {
    util::Identifiable::UUID instrumentUuid_;
    std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   m_rInstruments.setVoiceNameInKitInstrument(instrumentUuid_, voiceIdx,
-                                                  std::string(name));
+   try
+   {
+      m_rInstruments.setVoiceNameInKitInstrument(instrumentUuid_, voiceIdx,
+                                                 std::string(name));
+   }
+   catch (std::exception& e)
+   {
+      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
 }
