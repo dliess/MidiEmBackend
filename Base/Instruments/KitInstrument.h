@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "InstrumentVoice.h"
+#include "KitInstrumentVoice.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
@@ -55,8 +55,8 @@ public:
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   std::vector<Voice>& voices() noexcept;
-   const std::vector<Voice>& voices() const noexcept;
+   std::vector<KitVoice>& voices() noexcept;
+   const std::vector<KitVoice>& voices() const noexcept;
 
    template <typename Cb> void forEachComponent(Cb&& cb);
    template <typename Cb> void forEachComponent(Cb&& cb) const;
@@ -70,7 +70,7 @@ public:
 
 private:
    std::string m_name;
-   std::vector<Voice> m_voices;
+   std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
    inline void withComponent(int voiceIdx, int componentIdx,
                          util::function_ref<void(const Component&)> cb) const;

@@ -23,9 +23,12 @@ inline void MelodicInstrument::updateParameterUI() const
 {
    if (m_voices.size())
    {
-      for (const auto& compPart : m_voices.at(0).components)
+      for (const auto& component : m_voices.at(0).components)
       {
-         compPart.updateParameterUI();
+         if(component)
+         {
+            component->updateParameterUI();
+         }
       }
    }
 }
@@ -36,7 +39,10 @@ template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
    {
       for (auto& component : voice.components)
       {
-         std::forward<Cb>(cb)(component);
+         if(component)
+         {
+            std::forward<Cb>(cb)(component.value());
+         }
       }
    }
 }
@@ -48,7 +54,10 @@ template <typename Cb> void MelodicInstrument::forEachComponentExt(Cb&& cb)
       for (size_t componentIdx = 0;
            componentIdx < m_voices[voiceIdx].components.size(); ++componentIdx)
       {
-         cb(m_voices[voiceIdx].components[componentIdx], voiceIdx, componentIdx);
+         if(m_voices[voiceIdx].components[componentIdx])
+         {
+            cb(m_voices[voiceIdx].components[componentIdx].value(), voiceIdx, componentIdx);
+         }
       }
    }
 }
@@ -59,7 +68,10 @@ template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb)
    {
       for (auto& component : m_voices[LEAD_VOICE_IDX].components)
       {
-         std::forward<Cb>(cb)(component);
+         if(component)
+         {
+            std::forward<Cb>(cb)(component.value());
+         }
       }
    }
 }
@@ -70,7 +82,10 @@ template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb) con
    {
       for (const auto& component : m_voices[LEAD_VOICE_IDX].components)
       {
-         std::forward<Cb>(cb)(component);
+         if(component)
+         {
+            std::forward<Cb>(cb)(component.value());
+         }
       }
    }
 }
@@ -83,8 +98,11 @@ template <typename Cb> void MelodicInstrument::forEachLeadComponentExt(Cb&& cb)
            componentIdx < m_voices[LEAD_VOICE_IDX].components.size();
            ++componentIdx)
       {
-         std::forward<Cb>(cb)(m_voices[LEAD_VOICE_IDX].components[componentIdx],
-                              componentIdx);
+         if(m_voices[LEAD_VOICE_IDX].components[componentIdx])
+         {
+            std::forward<Cb>(cb)(m_voices[LEAD_VOICE_IDX].components[componentIdx].value(),
+                                 componentIdx);
+         }
       }
    }
 }

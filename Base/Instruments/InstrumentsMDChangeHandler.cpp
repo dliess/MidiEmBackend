@@ -54,7 +54,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      Voice voice(voiceDescr[voiceIndex].name);
+      KitVoice voice(voiceDescr[voiceIndex].name);
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
@@ -81,8 +81,8 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
       MelodicInstrument melodicInstrument(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
-      Voice voice(voiceDescr[voiceIndex].name);
-      voice.components.emplace_back(
+      MelodicVoice voice(voiceDescr[voiceIndex].name);
+      voice.components[0] = Component(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
           nullptr, pMusicDevice->deviceId(), voiceIndex, 0);
@@ -106,8 +106,8 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      Voice voice(voiceDescr[voiceIndex].name);
-      voice.components.emplace_back(
+      MelodicVoice voice(voiceDescr[voiceIndex].name);
+      voice.components[0] = Component(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
           nullptr, pMusicDevice->deviceId(), voiceIndex, 0);

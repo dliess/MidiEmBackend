@@ -18,7 +18,7 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
     ParameterChangeEmitter& rParameterChangeEmitter)
 {
    for (size_t componentIdx = 0;
-        componentIdx < Voice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
    {
       auto pComponent = getFirstComponent(melodicInstrument, componentIdx);
       if (!pComponent)
@@ -45,9 +45,9 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
       for (auto& voice : melodicInstrument.voices())
       {
          if (voice.components.containsComponent(componentIdx) &&
-             voice.components[componentIdx].m_pParameterCache == nullptr)
+             voice.components[componentIdx]->m_pParameterCache == nullptr)
          {
-            voice.components[componentIdx].m_pParameterCache = parameterCache;
+            voice.components[componentIdx]->m_pParameterCache = parameterCache;
          }
       }
    }
@@ -61,7 +61,7 @@ MelodicInstrumentsParameterCacheCreator::getFirstComponent(
    {
       if (voice.components.containsComponent(componentIdx))
       {
-         return &voice.components[componentIdx];
+         return &voice.components[componentIdx].value();
       }
    }
    return nullptr;
@@ -74,9 +74,9 @@ MelodicInstrumentsParameterCacheCreator::getParameterCacheForComponent(
    for (const auto& voice : melodicInstrument.voices())
    {
       if (voice.components.containsComponent(componentIdx) &&
-          voice.components[componentIdx].m_pParameterCache != nullptr)
+          voice.components[componentIdx]->m_pParameterCache != nullptr)
       {
-         return voice.components[componentIdx].m_pParameterCache;
+         return voice.components[componentIdx]->m_pParameterCache;
       }
    }
    return nullptr;
@@ -156,7 +156,7 @@ MelodicInstrumentsParameterCacheCreator::findComponentIdxToPlaceNewComponent(
       return std::nullopt;
    }
    for (size_t componentIdx = 0;
-        componentIdx < Voice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
    {
       auto componentEngineType =
           getComponentEngineType(melodicInstrument, componentIdx);
@@ -183,7 +183,7 @@ inline std::optional<size_t> MelodicInstrumentsParameterCacheCreator::
       return std::nullopt;
    }
    for (size_t componentIdx = 0;
-        componentIdx < Voice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
    {
       auto componentEngineType =
           getComponentEngineType(melodicInstrument, componentIdx);

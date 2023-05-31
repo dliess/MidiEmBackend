@@ -15,9 +15,9 @@ inline void KitInstrument::setName(const std::string& name) noexcept
    m_name = name;
 }
 
-inline std::vector<Voice>& KitInstrument::voices() noexcept { return m_voices; }
+inline std::vector<KitVoice>& KitInstrument::voices() noexcept { return m_voices; }
 
-inline const std::vector<Voice>& KitInstrument::voices() const noexcept
+inline const std::vector<KitVoice>& KitInstrument::voices() const noexcept
 {
    return m_voices;
 }

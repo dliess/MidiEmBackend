@@ -15,9 +15,12 @@ set(SOURCES
 )
 
 set(HEADERS
-   "InstrumentVoice.h"
-   "InstrumentVoice.inl"
-   "InstrumentVoiceMeta.h"
+   "KitInstrumentVoice.h"
+   "KitInstrumentVoice.inl"
+   "KitInstrumentVoiceMeta.h"
+   "MelodicInstrumentVoice.h"
+   "MelodicInstrumentVoice.inl"
+   "MelodicInstrumentVoiceMeta.h"
    "InstrumentComponent.h"
    "InstrumentComponent.inl"
    "InstrumentComponentMeta.h"

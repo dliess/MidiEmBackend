@@ -86,7 +86,8 @@ void InstrumentsModifier::createNewVoiceInMelodicInstrument(
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
+      MelodicVoice voice(
+          md->description()->soundSection->voices[sdVoiceIdx].name);
       auto componentIdx =
           MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
               .findComponentIdxToPlaceNewComponent(*instrumentIt, sdUuid,
@@ -131,12 +132,7 @@ void InstrumentsModifier::removeComponentFromMelodicInstrumentVoice(
     int componentIdx) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto& voices = instrumentIt->voices().operator[](voiceIdx).components;
-   voices.erase(voices.begin() + componentIdx);
-   if (voices.size() == 0)
-   {
-      instrumentIt->voices().erase(instrumentIt->voices().begin() + voiceIdx);
-   }
+   instrumentIt->voices().at(voiceIdx).components.at(componentIdx).reset();
    instrumentIt->unmarkAsDefaultCreated();
 }
 
@@ -153,12 +149,13 @@ void InstrumentsModifier::setNoteOffsetInMelodicInstrumentComponent(
     int componentIdx, int noteOffset) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices()
-       .
-       operator[](voiceIdx)
-       .components[componentIdx]
-       .setNoteOffset(noteOffset);
-   instrumentIt->unmarkAsDefaultCreated();
+   auto& component =
+       instrumentIt->voices().at(voiceIdx).components[componentIdx];
+   if (component)
+   {
+      component->setNoteOffset(noteOffset);
+      instrumentIt->unmarkAsDefaultCreated();
+   }
 }
 
 void InstrumentsModifier::setVoiceNameInMelodicInstrument(
@@ -179,7 +176,7 @@ void InstrumentsModifier::createNewVoiceInKitInstrument(
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
+      KitVoice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
       voice.components.emplace_back(&md->soundHandler.value(),
                                     std::move(parameterCache), md->deviceId(),
                                     sdVoiceIdx, 0);
@@ -198,7 +195,7 @@ void InstrumentsModifier::addComponentToKitInstrumentVoice(
    if (md && md->soundHandler)
    {
       if (instrumentIt->voices().operator[](voiceIdx).components.size() >=
-          Voice::NUM_MAX_COMPONENTS_PER_VOICE)
+          KitVoice::NUM_MAX_COMPONENTS_PER_VOICE)
       {
          return;
       }

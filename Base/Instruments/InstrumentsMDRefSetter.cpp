@@ -27,12 +27,13 @@ void InstrumentsMDRefSetter::fillReferencesMelodicInstruments(
    for (auto& melodicInstrument : m_rData.melodicInstruments)
    {
       std::ranges::for_each(
-          melodicInstrument.voices(), [&pMusicDevice](Voice& voice) {
+          melodicInstrument.voices(), [&pMusicDevice](MelodicVoice& voice) {
              std::ranges::for_each(
-                 voice.components, [&pMusicDevice](Component& component) {
-                    if (component.soundDeviceId() == pMusicDevice->deviceId())
+                 voice.components, [&pMusicDevice](auto& component) {
+                    if (component &&
+                        (component->soundDeviceId() == pMusicDevice->deviceId()))
                     {
-                       component.setSoundDevicePtr(
+                       component->setSoundDevicePtr(
                            pMusicDevice->soundHandler
                                ? &pMusicDevice->soundHandler.value()
                                : nullptr);

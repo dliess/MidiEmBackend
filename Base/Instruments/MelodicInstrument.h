@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-#include "InstrumentVoice.h"
+#include "MelodicInstrumentVoice.h"
 #include "Instrument.h"
 #include "MusicDeviceId.h"
 
@@ -74,7 +74,7 @@ public:
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   using VoiceContainer = std::vector<Voice>;
+   using VoiceContainer = std::vector<MelodicVoice>;
    VoiceContainer& voices() noexcept;
    const VoiceContainer& voices() const noexcept;
    static constexpr size_t LEAD_VOICE_IDX = 0;
