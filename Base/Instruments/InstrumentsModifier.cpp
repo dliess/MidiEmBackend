@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include "InstrumentComponentParameterCacheCreator.h"
+
 using namespace base::instruments;
 
 #define GET_MELODIC_INSTR_OR_RETURN(instrumentUuid)                          \
@@ -84,11 +86,17 @@ void InstrumentsModifier::createNewVoiceInMelodicInstrument(
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      Voice voice(
-          md->description()->soundSection->voices[sdVoiceIdx].name);
-      voice.components.emplace_back(&md->soundHandler.value(),
-                                         std::move(parameterCache),
-                                         md->deviceId(), sdVoiceIdx, 0);
+      Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
+      auto componentIdx =
+          MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+              .findComponentIdxToPlaceNewComponent(*instrumentIt, sdUuid,
+                                                   sdVoiceIdx);
+      if (componentIdx)
+      {
+         voice.components[componentIdx.value()] =
+             Component(&md->soundHandler.value(), std::move(parameterCache),
+                       md->deviceId(), sdVoiceIdx, 0);
+      }
       instrumentIt->voices().push_back(std::move(voice));
       instrumentIt->unmarkAsDefaultCreated();
    }
@@ -103,10 +111,18 @@ void InstrumentsModifier::addComponentToMelodicInstrumentVoice(
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      instrumentIt->voices().operator[](voiceIdx).components.emplace_back(
-          &md->soundHandler.value(), std::move(parameterCache), md->deviceId(),
-          sdVoiceIdx, 0);
-      instrumentIt->unmarkAsDefaultCreated();
+      auto componentIdx =
+          MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+              .findComponentIdxToPlaceNewComponentInVoice(
+                  *instrumentIt, voiceIdx, sdUuid, sdVoiceIdx);
+      if (componentIdx)
+      {
+         instrumentIt->voices().operator[](voiceIdx).components[componentIdx
+                                                                    .value()] =
+             Component(&md->soundHandler.value(), std::move(parameterCache),
+                       md->deviceId(), sdVoiceIdx, 0);
+         instrumentIt->unmarkAsDefaultCreated();
+      }
    }
 }
 
@@ -163,11 +179,10 @@ void InstrumentsModifier::createNewVoiceInKitInstrument(
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
-      Voice voice(
-          md->description()->soundSection->voices[sdVoiceIdx].name);
+      Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
       voice.components.emplace_back(&md->soundHandler.value(),
-                                         std::move(parameterCache),
-                                         md->deviceId(), sdVoiceIdx, 0);
+                                    std::move(parameterCache), md->deviceId(),
+                                    sdVoiceIdx, 0);
       instrumentIt->voices().push_back(std::move(voice));
       instrumentIt->unmarkAsDefaultCreated();
    }
@@ -183,7 +198,7 @@ void InstrumentsModifier::addComponentToKitInstrumentVoice(
    if (md && md->soundHandler)
    {
       if (instrumentIt->voices().operator[](voiceIdx).components.size() >=
-          MAX_COMPONENTS_IN_VOICE)
+          Voice::NUM_MAX_COMPONENTS_PER_VOICE)
       {
          return;
       }
@@ -209,11 +224,16 @@ void InstrumentsModifier::moveKitInstrumentComponent(
       GET_KIT_INSTR_OR_RETURN(dstInstrumentUuid);
       dstInstrumentIt = instrumentIt;
    }
-   const auto& srcVoice =
-       srcInstrumentIt->voices().operator[](srcVoiceIdx).components[srcComponentIdx];
-   dstInstrumentIt->voices().operator[](dstVoiceIdx).components.push_back(srcVoice);
+   const auto& srcVoice = srcInstrumentIt->voices()
+                              .
+                              operator[](srcVoiceIdx)
+                              .components[srcComponentIdx];
+   dstInstrumentIt->voices()
+       .
+       operator[](dstVoiceIdx)
+       .components.push_back(srcVoice);
    removeComponentFromKitInstrumentVoice(srcInstrumentUuid, srcVoiceIdx,
-                                    srcComponentIdx);
+                                         srcComponentIdx);
    srcInstrumentIt->unmarkAsDefaultCreated();
    dstInstrumentIt->unmarkAsDefaultCreated();
 }

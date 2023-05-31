@@ -36,6 +36,14 @@ public:
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
        ParameterChangeEmitter& rParameterChangeEmitter) const;
 
+   [[nodiscard]] std::optional<size_t> findComponentIdxToPlaceNewComponent(
+       const MelodicInstrument& melodicInstrument,
+       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
+
+   [[nodiscard]] std::optional<size_t>
+   findComponentIdxToPlaceNewComponentInVoice(
+       const MelodicInstrument& melodicInstrument, int voiceIdx,
+       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
 private:
    musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 
@@ -53,14 +61,7 @@ private:
    determineComponentEngineType(const util::Identifiable::UUID& sdUuid,
                                 int sdVoiceIdx) const;
 
-   [[nodiscard]] std::optional<size_t> findComponentIdxToPlaceNewComponent(
-       const MelodicInstrument& melodicInstrument,
-       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
 
-   [[nodiscard]] std::optional<size_t>
-   findComponentIdxToPlaceNewComponentInVoice(
-       const MelodicInstrument& melodicInstrument, int voiceIdx,
-       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
 
    template <typename ParameterChangeEmitter>
    [[nodiscard]] std::shared_ptr<Component::ParameterCache>

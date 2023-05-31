@@ -77,7 +77,6 @@ struct InstrumentsModifier
 private:
    Data& m_rData;
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
-   static constexpr int MAX_COMPONENTS_IN_VOICE = 4;
 };
 
 }   // namespace base::instruments

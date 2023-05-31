@@ -17,7 +17,8 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
     MelodicInstrument& melodicInstrument,
     ParameterChangeEmitter& rParameterChangeEmitter)
 {
-   for (size_t componentIdx = 0; componentIdx < 4; ++componentIdx)
+   for (size_t componentIdx = 0;
+        componentIdx < Voice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
    {
       auto pComponent = getFirstComponent(melodicInstrument, componentIdx);
       if (!pComponent)
