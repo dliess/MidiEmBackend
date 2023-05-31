@@ -47,8 +47,6 @@ public:
 private:
    musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 
-   [[nodiscard]] const Component* getFirstComponent(
-       const MelodicInstrument& rMelodicInstrument, size_t componentIdx) const;
    [[nodiscard]] std::shared_ptr<Component::ParameterCache>
    getParameterCacheForComponent(const MelodicInstrument& rMelodicInstrument,
                                  size_t componentIdx) const;

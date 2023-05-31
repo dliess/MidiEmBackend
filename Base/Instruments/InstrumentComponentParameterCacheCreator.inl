@@ -20,7 +20,7 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
    for (size_t componentIdx = 0;
         componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
    {
-      auto pComponent = getFirstComponent(melodicInstrument, componentIdx);
+      auto pComponent = melodicInstrument.getFirstComponent(componentIdx);
       if (!pComponent)
          continue;
       auto parameterCache =
@@ -51,20 +51,6 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
          }
       }
    }
-}
-
-inline const Component*
-MelodicInstrumentsParameterCacheCreator::getFirstComponent(
-    const MelodicInstrument& melodicInstrument, size_t componentIdx) const
-{
-   for (const auto& voice : melodicInstrument.voices())
-   {
-      if (voice.components.containsComponent(componentIdx))
-      {
-         return &voice.components[componentIdx].value();
-      }
-   }
-   return nullptr;
 }
 
 inline std::shared_ptr<Component::ParameterCache>
@@ -208,7 +194,7 @@ inline std::optional<std::pair<musicDevice::MusicDeviceName, int>>
 MelodicInstrumentsParameterCacheCreator::getComponentEngineType(
     const MelodicInstrument& melodicInstrument, size_t componentIdx) const
 {
-   auto pComponent = getFirstComponent(melodicInstrument, componentIdx);
+   auto pComponent = melodicInstrument.getFirstComponent(componentIdx);
    if (!pComponent)
    {
       return std::nullopt;

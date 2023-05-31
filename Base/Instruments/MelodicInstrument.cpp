@@ -112,7 +112,7 @@ float MelodicInstrument::getParameterValue(
     int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   auto& component = m_voices.at(LEAD_VOICE_IDX).components.at(componentIdx);
+   auto component = getFirstComponent(componentIdx);
    if (component)
    {
       return component->getParameterValueCached(parameterIdx, parameterAttr);
@@ -167,7 +167,7 @@ float MelodicInstrument::normalizePercentageValue(
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   auto& component = m_voices.at(LEAD_VOICE_IDX).components.at(componentIdx);
+   auto component = getFirstComponent(componentIdx);
    if (component)
    {
       return component->normalizePercentageValue(parameterId, parameterAttr,
@@ -195,7 +195,7 @@ const base::musicDevice::description::sound::Parameter*
 MelodicInstrument::parameterDescription(int componentIdx,
                                         int parameterIdx) const
 {
-   auto& component = m_voices.at(LEAD_VOICE_IDX).components.at(componentIdx);
+   auto component = getFirstComponent(componentIdx);
    if (component)
    {
       return component->parameterDescription(parameterIdx);

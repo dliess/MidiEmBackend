@@ -77,7 +77,6 @@ public:
    using VoiceContainer = std::vector<MelodicVoice>;
    VoiceContainer& voices() noexcept;
    const VoiceContainer& voices() const noexcept;
-   static constexpr size_t LEAD_VOICE_IDX = 0;
 
    void updateParameterUI() const;
 
@@ -90,6 +89,9 @@ public:
    template <typename Cb> void forEachLeadComponent(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
    template <typename Cb> void forEachLeadComponentExt(Cb&& cb);
+
+   [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
+
 
 private:
    VoiceContainer m_voices;

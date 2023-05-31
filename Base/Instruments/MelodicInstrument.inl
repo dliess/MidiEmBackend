@@ -25,7 +25,7 @@ inline void MelodicInstrument::updateParameterUI() const
    {
       for (const auto& component : m_voices.at(0).components)
       {
-         if(component)
+         if (component)
          {
             component->updateParameterUI();
          }
@@ -39,7 +39,7 @@ template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
    {
       for (auto& component : voice.components)
       {
-         if(component)
+         if (component)
          {
             std::forward<Cb>(cb)(component.value());
          }
@@ -54,9 +54,10 @@ template <typename Cb> void MelodicInstrument::forEachComponentExt(Cb&& cb)
       for (size_t componentIdx = 0;
            componentIdx < m_voices[voiceIdx].components.size(); ++componentIdx)
       {
-         if(m_voices[voiceIdx].components[componentIdx])
+         if (m_voices[voiceIdx].components[componentIdx])
          {
-            cb(m_voices[voiceIdx].components[componentIdx].value(), voiceIdx, componentIdx);
+            cb(m_voices[voiceIdx].components[componentIdx].value(), voiceIdx,
+               componentIdx);
          }
       }
    }
@@ -64,45 +65,43 @@ template <typename Cb> void MelodicInstrument::forEachComponentExt(Cb&& cb)
 
 template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb)
 {
-   if (m_voices.size() > 0)
+   for (size_t componentIdx = 0;
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
-      for (auto& component : m_voices[LEAD_VOICE_IDX].components)
+      auto component = getFirstComponent(componentIdx);
+      if (component)
       {
-         if(component)
-         {
-            std::forward<Cb>(cb)(component.value());
-         }
+         std::forward<Cb>(cb)(*component);
       }
    }
 }
 
-template <typename Cb> void MelodicInstrument::forEachLeadComponent(Cb&& cb) const
+template <typename Cb>
+void MelodicInstrument::forEachLeadComponent(Cb&& cb) const
 {
-   if (m_voices.size() > 0)
+   for (size_t componentIdx = 0;
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
-      for (const auto& component : m_voices[LEAD_VOICE_IDX].components)
+      auto component = getFirstComponent(componentIdx);
+      if (component)
       {
-         if(component)
-         {
-            std::forward<Cb>(cb)(component.value());
-         }
+         std::forward<Cb>(cb)(*component);
       }
    }
 }
 
 template <typename Cb> void MelodicInstrument::forEachLeadComponentExt(Cb&& cb)
 {
-   if (m_voices.size() > 0)
+   for (size_t componentIdx = 0;
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
-      for (size_t componentIdx = 0;
-           componentIdx < m_voices[LEAD_VOICE_IDX].components.size();
-           ++componentIdx)
+      auto component = getFirstComponent(componentIdx);
+      if (component)
       {
-         if(m_voices[LEAD_VOICE_IDX].components[componentIdx])
-         {
-            std::forward<Cb>(cb)(m_voices[LEAD_VOICE_IDX].components[componentIdx].value(),
-                                 componentIdx);
-         }
+         std::forward<Cb>(cb)(*component, componentIdx);
       }
    }
 }
@@ -122,6 +121,19 @@ inline const MelodicInstrument::VoiceContainer& MelodicInstrument::voices()
     const noexcept
 {
    return m_voices;
+}
+
+inline const Component* MelodicInstrument::getFirstComponent(
+    size_t componentIdx) const
+{
+   for (const auto& voice : m_voices)
+   {
+      if (voice.components.containsComponent(componentIdx))
+      {
+         return &voice.components[componentIdx].value();
+      }
+   }
+   return nullptr;
 }
 
 }   // namespace base::instruments
