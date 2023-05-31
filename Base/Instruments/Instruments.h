@@ -121,17 +121,13 @@ struct Instruments   //: public utils::Settings<Instruments>
                                util::Identifiable::UUIDView, int, int,
                                musicDevice::sound::ParameterAttr, float);
 
+   friend class MelodicInstrumentsParameterCacheCreator;
+   friend class KitInstrumentsParameterCacheCreator;
+
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
    Persister m_persister;
-   void initOnDataChangedUIForKitInstr(
-       Component::ParameterCache* paramCache,
-       const util::Identifiable::UUID& instrumentUuid,
-       std::optional<int> voiceIdx = std::nullopt);
-   void initOnDataChangedUIForMelodicInstr(
-       Component::ParameterCache* paramCache,
-       const util::Identifiable::UUID& instrumentUuid);
 };
 
 }   // namespace base::instruments

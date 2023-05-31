@@ -58,39 +58,5 @@ Data Persister::load()
    const auto strData = m_dataPersister->load();
    nlohmann::json j   = nlohmann::json::parse(strData);
    auto data          = j.get<Data>();
-
-   for (auto& instr : data.kitInstruments)
-   {
-      instr.forEachComponent([this](auto& component) {
-         component.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder
-                 .getDescription(component.m_soundDeviceId.deviceName())
-                 .get(),
-             component.m_sdVoiceIndex);
-      });
-   }
-/*   
-   for (auto& instr : data.melodicInstruments)
-   {
-      instr.forEachComponentExt(
-          [this, &instr](auto& component, size_t voiceIdx, size_t componentIdx) {
-             if (MelodicInstrument::LEAD_VOICE_IDX == voiceIdx)
-             {
-                component.m_pParameterCache = createParameterCache(
-                    m_rFactoryDataHolder
-                        .getDescription(component.m_soundDeviceId.deviceName())
-                        .get(),
-                    component.m_sdVoiceIndex);
-             }
-             else
-             {
-                component.m_pParameterCache =
-                    instr.voices()[MelodicInstrument::LEAD_VOICE_IDX]
-                        .components[componentIdx]
-                        .m_pParameterCache;
-             }
-          });
-   }
-*/
    return data;
 }

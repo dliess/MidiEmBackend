@@ -72,6 +72,7 @@ public:
    friend auto meta::registerMembers<Component>();
    friend class Persister;
    friend class InstrumentsMDChangeHandler;
+   friend class MelodicInstrumentsParameterCacheCreator;
 
    bool operator==(const Component& rhs) const;
 

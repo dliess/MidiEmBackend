@@ -33,21 +33,13 @@ Instruments::Instruments(
       auto data = m_persister.load();
       for (auto& instr : data.kitInstruments)
       {
-         instr.forEachComponentExt(
-             [this, &instr](auto& component, int voiceIdx, int componentIdx) {
-                component.parameterCache()->onDataChangedUI(
-                    [&, this](int parameterId,
-                              musicDevice::sound::ParameterAttr parameterAttr,
-                              float value) {
-                       emitKitInstrumentParamChanged(instr.id(), voiceIdx,
-                                                     componentIdx, parameterId,
-                                                     parameterAttr, value);
-                    });
-             });
+         KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+             .initParameterCaches(instr, *this);
       }
       for (auto& instr : data.melodicInstruments)
       {
-         MelodicInstrumentsParameterCacheCreator(instr).initParameterCaches();
+         MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+             .initParameterCaches(instr, *this);
       }
       m_doubleBufferedData.withNonRtLocked(
           [&data](auto& nonRtData) { nonRtData = data; });
@@ -73,17 +65,8 @@ void Instruments::createKitInstrument(std::string name)
 
 void Instruments::insertKitInstrument(KitInstrument& kitInstrument)
 {
-   const util::Identifiable::UUID uuid = kitInstrument.id();
-   kitInstrument.forEachComponentExt([&, this](Component& component,
-                                               int voiceIdx, int componentIdx) {
-      component.parameterCache()->onDataChangedUI(
-          [&, this](int parameterId,
-                    musicDevice::sound::ParameterAttr parameterAttr,
-                    float value) {
-             emitKitInstrumentParamChanged(uuid, voiceIdx, componentIdx,
-                                           parameterId, parameterAttr, value);
-          });
-   });
+   KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+       .initParameterCaches(kitInstrument, *this);
    m_doubleBufferedData.withNonRtLocked(
        [this, &kitInstrument](auto& nonRtData) {
           nonRtData.kitInstruments.push_back(kitInstrument);
@@ -153,17 +136,8 @@ bool Instruments::hasMelodicInstrument(
 
 void Instruments::insertMelodicInstrument(MelodicInstrument& melodicInstrument)
 {
-   const util::Identifiable::UUID uuid = melodicInstrument.id();
-   melodicInstrument.forEachLeadComponentExt(
-       [&, this](Component& component, int componentIdx) {
-          component.parameterCache()->onDataChangedUI(
-              [&, this](int parameterId,
-                        musicDevice::sound::ParameterAttr parameterAttr,
-                        float value) {
-                 emitMelodicInstrumentParamChanged(
-                     uuid, componentIdx, parameterId, parameterAttr, value);
-              });
-       });
+   MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+       .initParameterCaches(melodicInstrument, *this);
    m_doubleBufferedData.withNonRtLocked(
        [this, &melodicInstrument](auto& nonRtData) {
           nonRtData.melodicInstruments.push_back(melodicInstrument);
@@ -196,15 +170,17 @@ void Instruments::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
-   const auto isLead = util::withUuidRet(
-       m_doubleBufferedData.nonRt().melodicInstruments, instrumentUuid,
-       [](const auto& instr) -> bool { return instr.voices().size() == 0; });
-   if (isLead && isLead.value())
+   auto instrIt = std::ranges::find_if(
+       m_doubleBufferedData.nonRt().melodicInstruments,
+       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
+   if (instrIt == m_doubleBufferedData.nonRt().melodicInstruments.end())
    {
-      initOnDataChangedUIForMelodicInstr(paramCache.get(), instrumentUuid);
+      return;
    }
+   auto paramCache =
+       MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+           .createParameterCacheForNextMatchingComponentInNextVoice(
+               *instrIt, sdUuid, sdVoiceIdx, *this);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, &sdUuid,
                                          sdVoiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -219,18 +195,17 @@ void Instruments::addComponentToMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   std::shared_ptr<instruments::Component::ParameterCache> paramCache{nullptr};
-   if (MelodicInstrument::LEAD_VOICE_IDX == voiceIdx)
+   auto instrIt = std::ranges::find_if(
+       m_doubleBufferedData.nonRt().melodicInstruments,
+       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
+   if (instrIt == m_doubleBufferedData.nonRt().melodicInstruments.end())
    {
-      paramCache = createParameterCache(
-          m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
-      if (!paramCache)
-      {
-         spdlog::error("Could not create parameter cache");
-         return;
-      }
-      initOnDataChangedUIForMelodicInstr(paramCache.get(), instrumentUuid);
+      return;
    }
+   auto paramCache =
+       MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+           .createParameterCacheForNextMatchingComponentInVoice(
+               *instrIt, voiceIdx, sdUuid, sdVoiceIdx, *this);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
                                          &sdUuid, sdVoiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -295,14 +270,16 @@ void Instruments::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
-   if (!paramCache)
+   auto instrIt = std::ranges::find_if(
+       m_doubleBufferedData.nonRt().kitInstruments,
+       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
+   if (instrIt == m_doubleBufferedData.nonRt().kitInstruments.end())
    {
-      spdlog::error("Could not create parameter cache");
       return;
    }
-   initOnDataChangedUIForKitInstr(paramCache.get(), instrumentUuid);
+   auto paramCache = KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+                         .createParameterCacheForNewComponentInNextVoice(
+                             *instrIt, sdUuid, sdVoiceIdx, *this);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, sdUuid,
                                          sdVoiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -317,14 +294,16 @@ void Instruments::addComponentToKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto paramCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
-   if (!paramCache)
+   auto instrIt = std::ranges::find_if(
+       m_doubleBufferedData.nonRt().kitInstruments,
+       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
+   if (instrIt == m_doubleBufferedData.nonRt().kitInstruments.end())
    {
-      spdlog::error("Could not create parameter cache");
       return;
    }
-   initOnDataChangedUIForKitInstr(paramCache.get(), instrumentUuid, voiceIdx);
+   auto paramCache = KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+                         .createParameterCacheForNewComponentInVoice(
+                             *instrIt, voiceIdx, sdUuid, sdVoiceIdx, *this);
    m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
                                          sdUuid, sdVoiceIdx,
                                          &paramCache](auto& nonRtData) {
@@ -515,62 +494,4 @@ void Instruments::retriggerParameterCacheCallbacks()
          });
       }
    });
-}
-
-void Instruments::initOnDataChangedUIForKitInstr(
-    Component::ParameterCache* paramCache,
-    const util::Identifiable::UUID& instrumentUuid, std::optional<int> voiceIdx)
-{
-   auto instrIt =
-       std::ranges::find_if(m_doubleBufferedData.nonRt().kitInstruments,
-                            [&instrumentUuid](const auto& instr) {
-                               return instr.id() == instrumentUuid;
-                            });
-   if (instrIt == m_doubleBufferedData.nonRt().kitInstruments.end())
-   {
-      throw std::runtime_error("kit instrument not found");
-   }
-   if (!voiceIdx)
-   {
-      voiceIdx = instrIt->voices().size();
-   }
-   const size_t nextComponentIdx =
-       instrIt->voices().size()
-           ? instrIt->voices().at(*voiceIdx).components.size()
-           : 0;
-   paramCache->onDataChangedUI(
-       [instrumentUuid, voiceIdx, nextComponentIdx, this](
-           int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
-           float value) {
-          emitKitInstrumentParamChanged(instrumentUuid, *voiceIdx,
-                                        nextComponentIdx, parameterId,
-                                        parameterAttr, value);
-       });
-}
-
-void Instruments::initOnDataChangedUIForMelodicInstr(
-    Component::ParameterCache* paramCache,
-    const util::Identifiable::UUID& instrumentUuid)
-{
-   auto instrIt =
-       std::ranges::find_if(m_doubleBufferedData.nonRt().melodicInstruments,
-                            [&instrumentUuid](const auto& instr) {
-                               return instr.id() == instrumentUuid;
-                            });
-   if (instrIt == m_doubleBufferedData.nonRt().melodicInstruments.end())
-   {
-      throw std::runtime_error("kit instrument not found");
-   }
-   const size_t nextComponentIdx =
-       instrIt->voices().size() ? instrIt->voices()
-                                      .at(MelodicInstrument::LEAD_VOICE_IDX)
-                                      .components.size()
-                                : 0;
-   paramCache->onDataChangedUI(
-       [instrumentUuid, nextComponentIdx, this](
-           int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
-           float value) {
-          emitMelodicInstrumentParamChanged(instrumentUuid, nextComponentIdx,
-                                            parameterId, parameterAttr, value);
-       });
 }

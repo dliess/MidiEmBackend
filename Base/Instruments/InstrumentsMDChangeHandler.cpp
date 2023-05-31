@@ -54,18 +54,11 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache =
-          createParameterCache(pMusicDevice->description().get(), voiceIndex);
-      if (!paramCache)
-      {
-         spdlog::error("Could not create parameter cache");
-         continue;
-      }
       Voice voice(voiceDescr[voiceIndex].name);
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
+          nullptr, pMusicDevice->deviceId(), voiceIndex, 0);
       kitInstrument.addVoice(voiceIndex, voice);
    }
    if (!m_rInstruments.hasKitInstrument(kitInstrument))
@@ -89,17 +82,10 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
           name, std::make_shared<MelodicInstrument::RtData>());
       melodicInstrument.markAsDefaultCreated();
       Voice voice(voiceDescr[voiceIndex].name);
-      auto paramCache =
-          createParameterCache(pMusicDevice->description().get(), voiceIndex);
-      if (!paramCache)
-      {
-         spdlog::error("Could not create parameter cache");
-         continue;
-      }
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
+          nullptr, pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(voice));
 
       if (!m_rInstruments.hasMelodicInstrument(melodicInstrument))
@@ -120,18 +106,11 @@ void InstrumentsMDChangeHandler::
    melodicInstrument.markAsDefaultCreated();
    for (int voiceIndex = 0; voiceIndex < voiceDescr.size(); ++voiceIndex)
    {
-      auto paramCache =
-          (voiceIndex == MelodicInstrument::LEAD_VOICE_IDX)
-              ? createParameterCache(pMusicDevice->description().get(),
-                                     voiceIndex)
-              : melodicInstrument.voices()[MelodicInstrument::LEAD_VOICE_IDX]
-                    .components[0]
-                    .m_pParameterCache;
       Voice voice(voiceDescr[voiceIndex].name);
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          paramCache, pMusicDevice->deviceId(), voiceIndex, 0);
+          nullptr, pMusicDevice->deviceId(), voiceIndex, 0);
       melodicInstrument.voices().push_back(std::move(voice));
    }
    if (!m_rInstruments.hasMelodicInstrument(melodicInstrument))
