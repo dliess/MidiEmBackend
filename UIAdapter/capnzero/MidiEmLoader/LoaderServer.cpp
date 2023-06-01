@@ -2,6 +2,7 @@
 
 #include "ControllerEventRouter.h"
 #include "Instruments.h"
+#include "MusicDevicesRpc.h"
 #include "InstrumentsRpc.h"
 #include "JsonCast.h"   // nlohmann::json
 #include "LdControllerEventRouterRpc.h"
@@ -60,6 +61,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<LoaderRpc>(signals(), rInstruments, rMDFactory,
                                     rCtrlEventRouter),
+        std::make_unique<MusicDevicesRpc>(rMDFactory.dataHolder()),
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<LdControllerEventRouterRpc>(rCtrlEventRouter,
                                                      rInstruments,

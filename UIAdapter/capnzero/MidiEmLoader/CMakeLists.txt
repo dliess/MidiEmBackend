@@ -3,6 +3,7 @@ set(SOURCES
     "LoaderRpc.cpp"
     "RtClient.cpp"
     "LdControllerEventRouterRpc.cpp"
+    "MusicDevicesRpc.cpp"
     "InstrumentsRpc.cpp"
 )
 
@@ -11,6 +12,7 @@ set(HEADERS
     "Interface/RtClient.h"
     "LoaderRpc.h"
     "LdControllerEventRouterRpc.h"
+    "MusicDevicesRpc.h"
     "InstrumentsRpc.h"
 )
 
