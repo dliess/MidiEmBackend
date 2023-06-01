@@ -33,6 +33,8 @@ set(HEADERS
    "InstrumentsModifier.h"
    "InstrumentsMDRefSetter.h"
    "InstrumentsPersister.h"
+   "InstrumentsParameterCache.h"
+   "InstrumentsParameterCache.inl"
 )
 
 set(TARGET_NAME "Instruments")

@@ -3,7 +3,7 @@
 
 using namespace base;
 
-std::shared_ptr<instruments::Component::ParameterCache>
+std::shared_ptr<instruments::ParameterCache>
 instruments::createParameterCache(
     const musicDevice::description::Description* descr, int sdVoiceIdx)
 {
@@ -13,7 +13,7 @@ instruments::createParameterCache(
       if (engine)
       {
          auto paramCache =
-             std::make_shared<Component::ParameterCache>(engine->parameters.size());
+             std::make_shared<ParameterCache>(engine->parameters.size());
          for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
          {
             paramCache->setParameter(

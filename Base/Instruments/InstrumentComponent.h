@@ -5,36 +5,15 @@
 #include <memory>
 #include <vector>
 
-#include "CallbackSignal.h"
-#include "DirtyFlags.h"
 #include "MusicDevice.h"
-#include "ParameterData.h"
 #include "SoundHandler.h"
+#include "InstrumentsParameterCache.h"
 
 namespace base::instruments
 {
 class Component
 {
 public:
-   struct ParameterCache
-   {
-      explicit ParameterCache(size_t size) : data_(size), dirtyFlags_(size) {}
-      [[nodiscard]] std::size_t size() const { return data_.size(); }
-      using ParameterData = base::musicDevice::sound::ParameterData;
-      using DirtyFlags    = base::musicDevice::sound::DirtyFlagsVec;
-      [[nodiscard]] const ParameterData& at(std::size_t pos) const;
-      void setParameter(std::size_t index,
-                        musicDevice::sound::ParameterAttr parameterAttr,
-                        float value);
-      void updateParameterUI();
-      void emiAllNonNullParameters();
-      CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
-                                  musicDevice::sound::ParameterAttr, float);
-
-   private:
-      std::vector<ParameterData> data_;
-      DirtyFlags dirtyFlags_;
-   };
    Component() = default;
    explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
                       std::shared_ptr<ParameterCache> pParameterCache,

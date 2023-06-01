@@ -53,7 +53,7 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
    }
 }
 
-inline std::shared_ptr<Component::ParameterCache>
+inline std::shared_ptr<ParameterCache>
 MelodicInstrumentsParameterCacheCreator::getParameterCacheForComponent(
     const MelodicInstrument& melodicInstrument, size_t componentIdx) const
 {
@@ -69,7 +69,7 @@ MelodicInstrumentsParameterCacheCreator::getParameterCacheForComponent(
 }
 
 template <typename ParameterChangeEmitter>
-std::shared_ptr<Component::ParameterCache>
+std::shared_ptr<ParameterCache>
 MelodicInstrumentsParameterCacheCreator::
     createParameterCacheForNextMatchingComponentInNextVoice(
         const MelodicInstrument& melodicInstrument,
@@ -88,7 +88,7 @@ MelodicInstrumentsParameterCacheCreator::
 }
 
 template <typename ParameterChangeEmitter>
-std::shared_ptr<Component::ParameterCache>
+std::shared_ptr<ParameterCache>
 MelodicInstrumentsParameterCacheCreator::
     createParameterCacheForNextMatchingComponentInVoice(
         const MelodicInstrument& melodicInstrument, int voiceIdx,
@@ -107,7 +107,7 @@ MelodicInstrumentsParameterCacheCreator::
 }
 
 template <typename ParameterChangeEmitter>
-[[nodiscard]] std::shared_ptr<Component::ParameterCache>
+[[nodiscard]] std::shared_ptr<ParameterCache>
 MelodicInstrumentsParameterCacheCreator::createParameterCacheForComponent(
     const MelodicInstrument& melodicInstrument, int componentIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -261,7 +261,7 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
 }
 
 template <typename ParameterChangeEmitter>
-[[nodiscard]] std::shared_ptr<Component::ParameterCache>
+[[nodiscard]] std::shared_ptr<ParameterCache>
 KitInstrumentsParameterCacheCreator::
     createParameterCacheForNewComponentInNextVoice(
         const KitInstrument& kitInstrument,
@@ -276,7 +276,7 @@ KitInstrumentsParameterCacheCreator::
 }
 
 template <typename ParameterChangeEmitter>
-[[nodiscard]] std::shared_ptr<Component::ParameterCache>
+[[nodiscard]] std::shared_ptr<ParameterCache>
 KitInstrumentsParameterCacheCreator::createParameterCacheForNewComponentInVoice(
     const KitInstrument& kitInstrument, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -290,7 +290,7 @@ KitInstrumentsParameterCacheCreator::createParameterCacheForNewComponentInVoice(
 }
 
 template <typename ParameterChangeEmitter>
-[[nodiscard]] std::shared_ptr<Component::ParameterCache>
+[[nodiscard]] std::shared_ptr<ParameterCache>
 KitInstrumentsParameterCacheCreator::createParameterCacheForComponent(
     const KitInstrument& kitInstrument, int voiceIdx, int componentIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,

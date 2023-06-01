@@ -27,12 +27,12 @@ struct InstrumentsModifier
    void createNewVoiceInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
-       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+       std::shared_ptr<ParameterCache> parameterCache) noexcept;
 
    void addComponentToMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
-       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+       std::shared_ptr<ParameterCache> parameterCache) noexcept;
    void removeComponentFromMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx) noexcept;
@@ -48,11 +48,11 @@ struct InstrumentsModifier
    void createNewVoiceInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
-       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+       std::shared_ptr<ParameterCache> parameterCache) noexcept;
    void addComponentToKitInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx,
-       std::shared_ptr<Component::ParameterCache> parameterCache) noexcept;
+       std::shared_ptr<ParameterCache> parameterCache) noexcept;
    void moveKitInstrumentComponent(
        const util::Identifiable::UUID& srcInstrumentUuid, int srcVoiceIdx,
        int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,

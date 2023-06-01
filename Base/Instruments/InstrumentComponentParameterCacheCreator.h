@@ -9,7 +9,7 @@
 
 namespace base::instruments
 {
-std::shared_ptr<Component::ParameterCache> createParameterCache(
+std::shared_ptr<ParameterCache> createParameterCache(
     const musicDevice::description::Description* pDescription, int sdVoiceIdx);
 
 class MelodicInstrumentsParameterCacheCreator
@@ -23,14 +23,14 @@ public:
                             ParameterChangeEmitter& rParameterChangeEmitter);
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForNextMatchingComponentInNextVoice(
        const MelodicInstrument& rMelodicInstrument,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
        ParameterChangeEmitter& rParameterChangeEmitter) const;
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForNextMatchingComponentInVoice(
        const MelodicInstrument& rMelodicInstrument, int voiceIdx,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -47,7 +47,7 @@ public:
 private:
    musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    getParameterCacheForComponent(const MelodicInstrument& rMelodicInstrument,
                                  size_t componentIdx) const;
    // TODO: strong type engineIdx
@@ -62,7 +62,7 @@ private:
 
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForComponent(
        const MelodicInstrument& rMelodicInstrument, int componentIdx,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -80,14 +80,14 @@ public:
                             ParameterChangeEmitter& rParameterChangeEmitter);
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForNewComponentInNextVoice(
        const KitInstrument& kitInstrument,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
        ParameterChangeEmitter& rParameterChangeEmitter) const;
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForNewComponentInVoice(
        const KitInstrument& kitInstrument, int voiceIdx,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -97,7 +97,7 @@ private:
    musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 
    template <typename ParameterChangeEmitter>
-   [[nodiscard]] std::shared_ptr<Component::ParameterCache>
+   [[nodiscard]] std::shared_ptr<ParameterCache>
    createParameterCacheForComponent(
        const KitInstrument& kitInstrument, int voiceIdx, int componentIdx,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,

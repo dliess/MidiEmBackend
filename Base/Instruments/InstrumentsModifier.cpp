@@ -80,7 +80,7 @@ void InstrumentsModifier::renameMelodicInstrument(
 void InstrumentsModifier::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
-    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
+    std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
@@ -106,7 +106,7 @@ void InstrumentsModifier::createNewVoiceInMelodicInstrument(
 void InstrumentsModifier::addComponentToMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
-    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
+    std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
@@ -170,7 +170,7 @@ void InstrumentsModifier::setVoiceNameInMelodicInstrument(
 void InstrumentsModifier::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
-    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
+    std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
@@ -188,7 +188,7 @@ void InstrumentsModifier::createNewVoiceInKitInstrument(
 void InstrumentsModifier::addComponentToKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
-    std::shared_ptr<Component::ParameterCache> parameterCache) noexcept
+    std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
