@@ -5,12 +5,10 @@
 #include "MidiEmRt_Client.h"
 #include "LoaderServer.h"
 
-
-namespace base::musicDevice::factory
-{
-class Factory;
-}
-
+// clang-format off
+namespace base::musicDevice::factory { class Factory; }
+namespace base::instruments { class Instruments; }
+// clang-format on
 namespace uiadapter::capnzero
 {
 class RtClient : public ::capnzero::MidiEmRt::MidiEmRtClientRpc,
@@ -21,7 +19,8 @@ public:
             const std::string& rtServerRpcAddr,
             const std::string& rtServerSignalAddr,
             LoaderServer::Signals& rSignals,
-            base::musicDevice::factory::Factory& rMDFactory);
+            base::musicDevice::factory::Factory& rMDFactory,
+            base::instruments::Instruments& rInstruments);
    using Super = ::capnzero::MidiEmRt::MidiEmRtClientSignals;
 };
 

@@ -208,7 +208,7 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
    uiadapter::capnzero::RtClient rtClient(
        m_zmqContext, util::replaceAsteriskToLocalhost(m_rtRpcBindAddr),
        util::replaceAsteriskToLocalhost(m_rtSignalBindAddr),
-       loaderServer.signals(), musicDeviceFactory);
+       loaderServer.signals(), musicDeviceFactory, instruments);
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::seconds(1);
    itimerspec t({.it_interval = {Period.count(), 0}, .it_value = {1, 0}});
@@ -219,6 +219,7 @@ void base::Base::loaderThreadFunction(const std::atomic<bool> &terminateRequest)
       std::array<uint8_t, 8> buf;
       read(fd, buf.data(), buf.size());
       midi::PortNotifiers::instance().update();
+      instruments.saveIfDirty();
    });
    fdSet.AddFd(loaderServer.getFd(), [&loaderServer](int fd) {
       loaderServer.processNextRequestAllNonBlock();

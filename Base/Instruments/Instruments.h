@@ -121,6 +121,19 @@ struct Instruments   //: public utils::Settings<Instruments>
                                util::Identifiable::UUIDView, int, int,
                                musicDevice::sound::ParameterAttr, float);
 
+   // loop it back here to Loader
+   void kitParamChanged(const util::Identifiable::UUID& uuid, int voiceIdx,
+                        int componentIdx, int parameterIdx,
+                        musicDevice::sound::ParameterAttr parameterAttr,
+                        float value);
+
+   void melodicParamChanged(const util::Identifiable::UUID& uuid,
+                            int componentIdx, int parameterIdx,
+                            musicDevice::sound::ParameterAttr parameterAttr,
+                            float value);
+
+    void saveIfDirty();
+
    friend class MelodicInstrumentsParameterCacheCreator;
    friend class KitInstrumentsParameterCacheCreator;
 
@@ -128,6 +141,7 @@ private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
    Persister m_persister;
+   bool m_parameterCacheDirty {false};
 };
 
 }   // namespace base::instruments

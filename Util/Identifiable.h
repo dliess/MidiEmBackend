@@ -58,6 +58,30 @@ auto withUuidRet(const Container& container, Identifiable::UUIDView uuid,
    return std::nullopt;
 }
 
+template <class Container>
+const Container::value_type& getByUuid(const Container& container, Identifiable::UUIDView uuid)
+{
+   auto it = std::ranges::find_if(container,
+                          [uuid](const auto& e) { return e.idView() == uuid; });
+   if (it == container.end())
+   {
+      throw std::out_of_range("uuid not found");
+   }
+   return *it;
+}
+
+template <class Container>
+Container::value_type& getByUuid(Container& container, Identifiable::UUIDView uuid)
+{
+   auto it = std::ranges::find_if(container,
+                          [uuid](const auto& e) { return e.idView() == uuid; });
+   if (it == container.end())
+   {
+      throw std::out_of_range("uuid not found");
+   }
+   return *it;
+}
+
 struct IdentifiableHash
 {
    using is_transparent = void;

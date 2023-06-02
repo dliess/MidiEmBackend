@@ -24,6 +24,7 @@ Instruments::Instruments(
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
+         /*
          m_doubleBufferedData.withRtLocked([](const Data& rtData) {
             for (auto& instr : rtData.kitInstruments)
             {
@@ -38,7 +39,9 @@ Instruments::Instruments(
                });
             }
          });
+         */
          m_persister.save(data);
+         m_parameterCacheDirty = false;
       }
    });
 
@@ -509,3 +512,37 @@ void Instruments::retriggerParameterCacheCallbacks()
       }
    });
 }
+
+void Instruments::kitParamChanged(
+    const util::Identifiable::UUID& uuid, int voiceIdx, int componentIdx,
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+    float value)
+{
+   auto& instr = util::getByUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
+   auto parameterCache = instr.voices().at(voiceIdx).components.at(componentIdx).parameterCache();
+   parameterCache->setParameterBackup(parameterIdx, parameterAttr, value);
+   m_parameterCacheDirty = true;
+}
+
+void Instruments::melodicParamChanged(
+    const util::Identifiable::UUID& uuid, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float value)
+{
+   auto& instr = util::getByUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
+   auto component = instr.getFirstComponent(componentIdx);
+   if(component)
+   {
+      component->parameterCache()->setParameterBackup(parameterIdx, parameterAttr, value);
+   }
+   m_parameterCacheDirty = true;
+}
+
+void Instruments::saveIfDirty()
+{
+   if(m_parameterCacheDirty)
+   {
+      m_persister.save(m_doubleBufferedData.nonRt());
+      m_parameterCacheDirty = false;
+   }
+}
+
