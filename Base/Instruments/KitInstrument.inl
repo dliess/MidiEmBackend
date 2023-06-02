@@ -50,6 +50,18 @@ template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb)
    }
 }
 
+template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb) const
+{
+   for (size_t voiceIdx = 0; voiceIdx < m_voices.size(); ++voiceIdx)
+   {
+      for (size_t componentIdx = 0;
+           componentIdx < m_voices[voiceIdx].components.size(); ++componentIdx)
+      {
+         cb(m_voices[voiceIdx].components[componentIdx], voiceIdx, componentIdx);
+      }
+   }
+}
+
 inline void KitInstrument::updateParameterUI() const
 {
    for (auto& sound : m_voices)
@@ -60,6 +72,14 @@ inline void KitInstrument::updateParameterUI() const
       }
    }
 }
+
+inline void KitInstrument::backupParameterCaches()
+{
+   forEachComponent([](auto& component){
+      component.parameterCache()->syncRtToNonRt();
+   });
+}
+
 
 inline void KitInstrument::withComponent(
     int voiceIdx, int componentIdx,

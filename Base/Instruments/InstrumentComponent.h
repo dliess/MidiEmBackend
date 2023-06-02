@@ -5,9 +5,9 @@
 #include <memory>
 #include <vector>
 
+#include "InstrumentsParameterCache.h"
 #include "MusicDevice.h"
 #include "SoundHandler.h"
-#include "InstrumentsParameterCache.h"
 
 namespace base::instruments
 {
@@ -19,6 +19,7 @@ public:
                       std::shared_ptr<ParameterCache> pParameterCache,
                       musicDevice::MusicDeviceId soundDeviceId,
                       int sdVoiceIndex, int noteOffset) noexcept;
+   void setParameterCache(std::shared_ptr<ParameterCache> p);
    [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);

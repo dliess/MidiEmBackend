@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "KitInstrumentVoice.h"
 #include "Instrument.h"
+#include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
 
@@ -61,10 +61,13 @@ public:
    template <typename Cb> void forEachComponent(Cb&& cb);
    template <typename Cb> void forEachComponent(Cb&& cb) const;
    template <typename Cb> void forEachComponentExt(Cb&& cb);
+   template <typename Cb> void forEachComponentExt(Cb&& cb) const;
 
    void updateParameterUI() const;
+   void backupParameterCaches();
 
-   friend auto meta::registerMembers<KitInstrument>();
+   friend void to_json(nlohmann::json& j, const KitInstrument& instr);
+   friend void from_json(const nlohmann::json& j, KitInstrument& instr);
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
 
@@ -72,8 +75,9 @@ private:
    std::string m_name;
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
-   inline void withComponent(int voiceIdx, int componentIdx,
-                         util::function_ref<void(const Component&)> cb) const;
+   inline void withComponent(
+       int voiceIdx, int componentIdx,
+       util::function_ref<void(const Component&)> cb) const;
 };
 
 }   // namespace instruments

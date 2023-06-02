@@ -47,6 +47,18 @@ template <typename Cb> void MelodicInstrument::forEachComponent(Cb&& cb)
    }
 }
 
+template <typename Cb>
+void MelodicInstrument::forEachComponent(size_t componentIdx, Cb&& cb)
+{
+   for (auto& voice : m_voices)
+   {
+      if (voice.components.at(componentIdx))
+      {
+         std::forward<Cb>(cb)(voice.components.at(componentIdx).value());
+      }
+   }
+}
+
 template <typename Cb> void MelodicInstrument::forEachComponentExt(Cb&& cb)
 {
    for (size_t voiceIdx = 0; voiceIdx < m_voices.size(); ++voiceIdx)
@@ -92,7 +104,8 @@ void MelodicInstrument::forEachLeadComponent(Cb&& cb) const
    }
 }
 
-template <typename Cb> void MelodicInstrument::forEachLeadComponentExt(Cb&& cb)
+template <typename Cb>
+void MelodicInstrument::forEachLeadComponentExt(Cb&& cb) const
 {
    for (size_t componentIdx = 0;
         componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;

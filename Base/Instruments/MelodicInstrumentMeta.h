@@ -2,21 +2,46 @@
 #define MELODIC_INSTRUMENT_META_H
 
 #include <nlohmann/json.hpp>
-#include "Meta.h"
 
-namespace meta
+namespace base::instruments
 {
 
-template <>
-inline auto registerMembers<base::instruments::MelodicInstrument>()
+inline
+void to_json(nlohmann::json& j, const MelodicInstrument& instr)
 {
-    return members(
-        member("id", &base::instruments::MelodicInstrument::m_uuid),
-        member("name", &base::instruments::MelodicInstrument::m_name),
-        member("voices", &base::instruments::MelodicInstrument::m_voices)
-    );
+    j["id"] = instr.m_uuid;
+    j["name"] = instr.m_name;
+    j["voices"] = instr.m_voices;
+    j["parameterCaches"] = nlohmann::json::array();
+    instr.forEachLeadComponentExt([&j](const auto& component, int componentIdx){
+        while(componentIdx > j["parameterCaches"].size()) {
+            j["parameterCaches"].push_back(nullptr);
+        }
+        j["parameterCaches"].push_back(*component.parameterCache());
+    });
 }
 
-} // namespace meta
+inline
+void from_json(const nlohmann::json& j, MelodicInstrument& instr)
+{
+    j["id"].get_to(instr.m_uuid);
+    j["name"].get_to(instr.m_name);
+    j["voices"].get_to(instr.m_voices);
+    const auto& jPCaches = j["parameterCaches"];
+    assert(jPCaches.size() == MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE);
+    for(int componentIdx = 0; componentIdx < jPCaches.size(); ++componentIdx) {
+        if(jPCaches[componentIdx] != nullptr) {
+            auto parameterCache = std::make_shared<ParameterCache>(jPCaches.size());
+            jPCaches[componentIdx].get_to(*parameterCache);
+            parameterCache->syncNonRtToRt();
+            instr.forEachComponent(componentIdx, [&parameterCache](auto& component){
+                component.setParameterCache(parameterCache);
+            });
+        }
+    }
+}
+
+
+} // namespace base::instruments
 
 #endif // MELODIC_INSTRUMENT_META_H

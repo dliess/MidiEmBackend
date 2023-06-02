@@ -24,6 +24,20 @@ Instruments::Instruments(
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
+         m_doubleBufferedData.withRtLocked([](const Data& rtData) {
+            for (auto& instr : rtData.kitInstruments)
+            {
+               instr.forEachComponent([](auto& component) {
+                  component.parameterCache()->syncRtToNonRt();
+               });
+            }
+            for (auto& instr : rtData.melodicInstruments)
+            {
+               instr.forEachLeadComponent([](auto& component) {
+                  component.parameterCache()->syncRtToNonRt();
+               });
+            }
+         });
          m_persister.save(data);
       }
    });

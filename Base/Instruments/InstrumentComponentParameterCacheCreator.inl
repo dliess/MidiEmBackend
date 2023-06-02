@@ -18,7 +18,8 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
     ParameterChangeEmitter& rParameterChangeEmitter)
 {
    for (size_t componentIdx = 0;
-        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
       auto pComponent = melodicInstrument.getFirstComponent(componentIdx);
       if (!pComponent)
@@ -32,15 +33,15 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
                  .getDescription(pComponent->m_soundDeviceId.deviceName())
                  .get(),
              pComponent->m_sdVoiceIndex);
-         parameterCache->onDataChangedUI(
-             [&, this](int parameterId,
-                       musicDevice::sound::ParameterAttr parameterAttr,
-                       float value) {
-                rParameterChangeEmitter.emitMelodicInstrumentParamChanged(
-                    melodicInstrument.id(), componentIdx, parameterId,
-                    parameterAttr, value);
-             });
       }
+      parameterCache->onDataChangedUI(
+          [&, this](int parameterId,
+                    musicDevice::sound::ParameterAttr parameterAttr,
+                    float value) {
+             rParameterChangeEmitter.emitMelodicInstrumentParamChanged(
+                 melodicInstrument.id(), componentIdx, parameterId,
+                 parameterAttr, value);
+          });
 
       for (auto& voice : melodicInstrument.voices())
       {
@@ -69,8 +70,7 @@ MelodicInstrumentsParameterCacheCreator::getParameterCacheForComponent(
 }
 
 template <typename ParameterChangeEmitter>
-std::shared_ptr<ParameterCache>
-MelodicInstrumentsParameterCacheCreator::
+std::shared_ptr<ParameterCache> MelodicInstrumentsParameterCacheCreator::
     createParameterCacheForNextMatchingComponentInNextVoice(
         const MelodicInstrument& melodicInstrument,
         const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -88,8 +88,7 @@ MelodicInstrumentsParameterCacheCreator::
 }
 
 template <typename ParameterChangeEmitter>
-std::shared_ptr<ParameterCache>
-MelodicInstrumentsParameterCacheCreator::
+std::shared_ptr<ParameterCache> MelodicInstrumentsParameterCacheCreator::
     createParameterCacheForNextMatchingComponentInVoice(
         const MelodicInstrument& melodicInstrument, int voiceIdx,
         const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,
@@ -142,7 +141,8 @@ MelodicInstrumentsParameterCacheCreator::findComponentIdxToPlaceNewComponent(
       return std::nullopt;
    }
    for (size_t componentIdx = 0;
-        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
       auto componentEngineType =
           getComponentEngineType(melodicInstrument, componentIdx);
@@ -169,7 +169,8 @@ inline std::optional<size_t> MelodicInstrumentsParameterCacheCreator::
       return std::nullopt;
    }
    for (size_t componentIdx = 0;
-        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+        componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE;
+        ++componentIdx)
    {
       auto componentEngineType =
           getComponentEngineType(melodicInstrument, componentIdx);
@@ -243,11 +244,11 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
 {
    kitInstrument.forEachComponentExt(
        [&, this](auto& component, int voiceIdx, int componentIdx) {
-           component.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder
-                 .getDescription(component.m_soundDeviceId.deviceName())
-                 .get(),
-             component.m_sdVoiceIndex);
+          component.m_pParameterCache = createParameterCache(
+              m_rFactoryDataHolder
+                  .getDescription(component.m_soundDeviceId.deviceName())
+                  .get(),
+              component.m_sdVoiceIndex);
 
           component.parameterCache()->onDataChangedUI(
               [&, this](int parameterId,

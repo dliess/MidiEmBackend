@@ -18,6 +18,12 @@ inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
 {
 }
 
+inline void Component::setParameterCache(std::shared_ptr<ParameterCache> p)
+{
+   m_pParameterCache = p;
+}
+
+
 inline const musicDevice::MusicDeviceId& Component::soundDeviceId() const
 {
    return m_soundDeviceId;

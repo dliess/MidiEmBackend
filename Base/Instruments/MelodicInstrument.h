@@ -5,8 +5,8 @@
 #include <memory>
 #include <vector>
 
-#include "MelodicInstrumentVoice.h"
 #include "Instrument.h"
+#include "MelodicInstrumentVoice.h"
 #include "MusicDeviceId.h"
 
 class MusicDevice;
@@ -80,18 +80,20 @@ public:
 
    void updateParameterUI() const;
 
-   friend auto meta::registerMembers<MelodicInstrument>();
+   friend void to_json(nlohmann::json& j, const MelodicInstrument& instr);
+   friend void from_json(const nlohmann::json& j, MelodicInstrument& instr);
+
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
 
    template <typename Cb> void forEachComponent(Cb&& cb);
+   template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
    template <typename Cb> void forEachComponentExt(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb);
    template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
-   template <typename Cb> void forEachLeadComponentExt(Cb&& cb);
+   template <typename Cb> void forEachLeadComponentExt(Cb&& cb) const;
 
    [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
-
 
 private:
    VoiceContainer m_voices;

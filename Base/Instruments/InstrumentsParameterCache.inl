@@ -5,9 +5,15 @@
 
 namespace base::instruments
 {
+inline ParameterCache::ParameterCache(size_t size) :
+    data_(size), nonRtBackupData_(size), dirtyFlags_(size)
+{
+}
 
-inline const ParameterCache::ParameterData&
-ParameterCache::at(std::size_t pos) const
+inline std::size_t ParameterCache::size() const { return data_.size(); }
+
+inline const ParameterCache::ParameterData& ParameterCache::at(
+    std::size_t pos) const
 {
    return data_.at(pos);
 }
@@ -51,7 +57,16 @@ inline void ParameterCache::emiAllNonNullParameters()
    }
 }
 
+inline void ParameterCache::syncRtToNonRt()
+{
+   std::ranges::copy(data_, nonRtBackupData_.begin());
+}
 
-} // namespace base::instruments
+inline void ParameterCache::syncNonRtToRt()
+{
+   std::ranges::copy(nonRtBackupData_, data_.begin());
+}
+
+}   // namespace base::instruments
 
 #endif
