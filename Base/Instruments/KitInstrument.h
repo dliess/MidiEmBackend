@@ -64,7 +64,6 @@ public:
    template <typename Cb> void forEachComponentExt(Cb&& cb) const;
 
    void updateParameterUI() const;
-   void backupParameterCaches();
 
    friend void to_json(nlohmann::json& j, const KitInstrument& instr);
    friend void from_json(const nlohmann::json& j, KitInstrument& instr);

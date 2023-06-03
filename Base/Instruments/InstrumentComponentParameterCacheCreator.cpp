@@ -12,15 +12,16 @@ instruments::createParameterCache(
       const auto engine = descr->soundSection->engineBase(sdVoiceIdx);
       if (engine)
       {
-         auto paramCache =
+         auto parameterCache =
              std::make_shared<ParameterCache>(engine->parameters.size());
-         for (int paramIdx = 0; paramIdx < paramCache->size(); ++paramIdx)
+         for (int paramIdx = 0; paramIdx < parameterCache->size(); ++paramIdx)
          {
-            paramCache->setParameter(
+            parameterCache->setParameterBackup(
                 paramIdx, musicDevice::sound::ParameterAttr::Commanded,
                 descr->soundSection->getInitialValueFor(sdVoiceIdx, paramIdx));
          }
-         return paramCache;
+         parameterCache->syncBackupToRt();
+         return parameterCache;
       }
    }
    spdlog::error("createParameterCache failed");

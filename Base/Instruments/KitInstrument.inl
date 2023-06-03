@@ -73,14 +73,6 @@ inline void KitInstrument::updateParameterUI() const
    }
 }
 
-inline void KitInstrument::backupParameterCaches()
-{
-   forEachComponent([](auto& component){
-      component.parameterCache()->syncRtToNonRt();
-   });
-}
-
-
 inline void KitInstrument::withComponent(
     int voiceIdx, int componentIdx,
     util::function_ref<void(const Component&)> cb) const

@@ -48,12 +48,7 @@ inline void ParameterCache::updateParameterUI()
    }
 }
 
-inline void ParameterCache::syncRtToNonRt()
-{
-   std::ranges::copy(data_, nonRtBackupData_.begin());
-}
-
-inline void ParameterCache::syncNonRtToRt()
+inline void ParameterCache::syncBackupToRt()
 {
    std::ranges::copy(nonRtBackupData_, data_.begin());
 }

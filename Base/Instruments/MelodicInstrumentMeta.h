@@ -33,7 +33,7 @@ void from_json(const nlohmann::json& j, MelodicInstrument& instr)
         if(jPCaches[componentIdx] != nullptr) {
             auto parameterCache = std::make_shared<ParameterCache>(jPCaches.size());
             jPCaches[componentIdx].get_to(*parameterCache);
-            parameterCache->syncNonRtToRt();
+            parameterCache->syncBackupToRt();
             instr.forEachComponent(componentIdx, [&parameterCache](auto& component){
                 component.setParameterCache(parameterCache);
             });

@@ -1,15 +1,16 @@
 #ifndef UTIL_IDENTIFIABLE_H
 #define UTIL_IDENTIFIABLE_H
 
+#include <spdlog/spdlog.h>
 #include <string.h>
 #include <uuid/uuid.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
+#include <optional>
 #include <span>
 #include <string>
-#include <algorithm>
-#include <optional>
 #include <type_traits>
 
 #include "arrayCount.h"
@@ -20,6 +21,7 @@ class Identifiable
 {
 protected:
    inline Identifiable() noexcept;
+
 public:
    using UUID     = std::array<uint8_t, util::array_count_v<uuid_t>>;
    using UUIDView = std::span<const uint8_t, util::array_count_v<uuid_t>>;
@@ -37,8 +39,8 @@ template <class Container, class Callable>
 void withUuid(const Container& container, Identifiable::UUIDView uuid,
               Callable&& cb)
 {
-   auto it = std::ranges::find_if(container,
-                          [uuid](const auto& e) { return e.idView() == uuid; });
+   auto it = std::ranges::find_if(
+       container, [uuid](const auto& e) { return e.idView() == uuid; });
    if (it != container.end())
    {
       std::forward<Callable>(cb)(*it);
@@ -47,10 +49,12 @@ void withUuid(const Container& container, Identifiable::UUIDView uuid,
 
 template <class Container, class Callable>
 auto withUuidRet(const Container& container, Identifiable::UUIDView uuid,
-              Callable&& cb) -> std::optional< std::invoke_result_t<Callable, typename Container::value_type> >
+                 Callable&& cb)
+    -> std::optional<
+        std::invoke_result_t<Callable, typename Container::value_type>>
 {
-   auto it = std::ranges::find_if(container,
-                          [uuid](const auto& e) { return e.idView() == uuid; });
+   auto it = std::ranges::find_if(
+       container, [uuid](const auto& e) { return e.idView() == uuid; });
    if (it != container.end())
    {
       return std::forward<Callable>(cb)(*it);
@@ -59,10 +63,12 @@ auto withUuidRet(const Container& container, Identifiable::UUIDView uuid,
 }
 
 template <class Container>
-const Container::value_type& getByUuid(const Container& container, Identifiable::UUIDView uuid)
+const Container::value_type& getByUuid(const Container& container,
+                                       Identifiable::UUIDView uuid)
 {
-   auto it = std::ranges::find_if(container,
-                          [uuid](const auto& e) { return e.idView() == uuid; });
+   auto it = std::ranges::find_if(container, [uuid](const auto& e) {
+      return e.idView() == uuid;
+   });
    if (it == container.end())
    {
       throw std::out_of_range("uuid not found");
@@ -71,10 +77,12 @@ const Container::value_type& getByUuid(const Container& container, Identifiable:
 }
 
 template <class Container>
-Container::value_type& getByUuid(Container& container, Identifiable::UUIDView uuid)
+Container::value_type& getByUuid(Container& container,
+                                 Identifiable::UUIDView uuid)
 {
-   auto it = std::ranges::find_if(container,
-                          [uuid](const auto& e) { return e.idView() == uuid; });
+   auto it = std::ranges::find_if(container, [uuid](const auto& e) {
+      return e.idView() == uuid;
+   });
    if (it == container.end())
    {
       throw std::out_of_range("uuid not found");

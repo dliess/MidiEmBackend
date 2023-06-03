@@ -34,13 +34,13 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
                  .get(),
              pComponent->m_sdVoiceIndex);
       }
+      const auto uuid = melodicInstrument.id();
       parameterCache->onDataChangedUI(
-          [&, this](int parameterId,
-                    musicDevice::sound::ParameterAttr parameterAttr,
-                    float value) {
+          [uuid, componentIdx, &rParameterChangeEmitter](
+              int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
+              float value) {
              rParameterChangeEmitter.emitMelodicInstrumentParamChanged(
-                 melodicInstrument.id(), componentIdx, parameterId,
-                 parameterAttr, value);
+                 uuid, componentIdx, parameterId, parameterAttr, value);
           });
 
       for (auto& voice : melodicInstrument.voices())
@@ -118,15 +118,15 @@ MelodicInstrumentsParameterCacheCreator::createParameterCacheForComponent(
    {
       parameterCache = createParameterCache(
           m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
-      parameterCache->onDataChangedUI(
-          [&, this](int parameterId,
-                    musicDevice::sound::ParameterAttr parameterAttr,
-                    float value) {
-             rParameterChangeEmitter.emitMelodicInstrumentParamChanged(
-                 melodicInstrument.id(), componentIdx, parameterId,
-                 parameterAttr, value);
-          });
    }
+   const auto uuid = melodicInstrument.id();
+   parameterCache->onDataChangedUI(
+       [uuid, componentIdx, &rParameterChangeEmitter](
+           int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
+           float value) {
+          rParameterChangeEmitter.emitMelodicInstrumentParamChanged(
+              uuid, componentIdx, parameterId, parameterAttr, value);
+       });
    return parameterCache;
 }
 
@@ -242,23 +242,23 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
     KitInstrument& kitInstrument,
     ParameterChangeEmitter& rParameterChangeEmitter)
 {
-   kitInstrument.forEachComponentExt(
-       [&, this](auto& component, int voiceIdx, int componentIdx) {
-          component.m_pParameterCache = createParameterCache(
-              m_rFactoryDataHolder
-                  .getDescription(component.m_soundDeviceId.deviceName())
-                  .get(),
-              component.m_sdVoiceIndex);
-
-          component.parameterCache()->onDataChangedUI(
-              [&, this](int parameterId,
-                        musicDevice::sound::ParameterAttr parameterAttr,
-                        float value) {
-                 rParameterChangeEmitter.emitKitInstrumentParamChanged(
-                     kitInstrument.id(), voiceIdx, componentIdx, parameterId,
-                     parameterAttr, value);
-              });
-       });
+   kitInstrument.forEachComponentExt([&, this](auto& component, int voiceIdx,
+                                               int componentIdx) {
+      component.m_pParameterCache = createParameterCache(
+          m_rFactoryDataHolder
+              .getDescription(component.m_soundDeviceId.deviceName())
+              .get(),
+          component.m_sdVoiceIndex);
+      const auto uuid = kitInstrument.id();
+      component.parameterCache()->onDataChangedUI(
+          [uuid, voiceIdx, componentIdx, &rParameterChangeEmitter](
+              int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
+              float value) {
+             rParameterChangeEmitter.emitKitInstrumentParamChanged(
+                 uuid, voiceIdx, componentIdx, parameterId, parameterAttr,
+                 value);
+          });
+   });
 }
 
 template <typename ParameterChangeEmitter>
@@ -303,12 +303,13 @@ KitInstrumentsParameterCacheCreator::createParameterCacheForComponent(
    {
       return nullptr;
    }
+   const auto uuid = kitInstrument.id();
    parameterCache->onDataChangedUI(
-       [&, this](int parameterId,
-                 musicDevice::sound::ParameterAttr parameterAttr, float value) {
+       [uuid, voiceIdx, componentIdx, &rParameterChangeEmitter](
+           int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
+           float value) {
           rParameterChangeEmitter.emitKitInstrumentParamChanged(
-              kitInstrument.id(), voiceIdx, componentIdx, parameterId,
-              parameterAttr, value);
+              uuid, voiceIdx, componentIdx, parameterId, parameterAttr, value);
        });
    return parameterCache;
 }

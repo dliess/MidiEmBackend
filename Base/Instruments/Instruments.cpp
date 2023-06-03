@@ -24,22 +24,6 @@ Instruments::Instruments(
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
-         /*
-         m_doubleBufferedData.withRtLocked([](const Data& rtData) {
-            for (auto& instr : rtData.kitInstruments)
-            {
-               instr.forEachComponent([](auto& component) {
-                  component.parameterCache()->syncRtToNonRt();
-               });
-            }
-            for (auto& instr : rtData.melodicInstruments)
-            {
-               instr.forEachLeadComponent([](auto& component) {
-                  component.parameterCache()->syncRtToNonRt();
-               });
-            }
-         });
-         */
          m_persister.save(data);
          m_parameterCacheDirty = false;
       }
@@ -52,11 +36,13 @@ Instruments::Instruments(
       {
          KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
              .initParameterCaches(instr, *this);
+         spdlog::info("Loaded KitInstrument with uuid: {}", util::uuid2Str(instr.id()));
       }
       for (auto& instr : data.melodicInstruments)
       {
          MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
              .initParameterCaches(instr, *this);
+         spdlog::info("Loaded MelodicInstrument with uuid: {}", util::uuid2Str(instr.id()));
       }
       m_doubleBufferedData.withNonRtLocked(
           [&data](auto& nonRtData) { nonRtData = data; });
@@ -82,6 +68,7 @@ void Instruments::createKitInstrument(std::string name)
 
 void Instruments::insertKitInstrument(KitInstrument& kitInstrument)
 {
+   spdlog::info("Inserting KitInstrument with uuid: {}", util::uuid2Str(kitInstrument.id()));
    KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
        .initParameterCaches(kitInstrument, *this);
    m_doubleBufferedData.withNonRtLocked(
@@ -153,6 +140,7 @@ bool Instruments::hasMelodicInstrument(
 
 void Instruments::insertMelodicInstrument(MelodicInstrument& melodicInstrument)
 {
+   spdlog::info("Inserting MelodicInstrument with uuid: {}", util::uuid2Str(melodicInstrument.id()));
    MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
        .initParameterCaches(melodicInstrument, *this);
    m_doubleBufferedData.withNonRtLocked(
