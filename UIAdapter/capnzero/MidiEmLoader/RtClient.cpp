@@ -64,24 +64,43 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
            ::capnzero::Float32 value) {
           util::Identifiable::UUID uuidCopy;
           std::ranges::copy(uuid, uuidCopy.begin());
-          rInstruments.kitParamChanged(
-              uuidCopy, voiceIdx, componentIdx, parameterIdx,
-              static_cast<base::musicDevice::sound::ParameterAttr>(
-                  parameterAttr),
-              value);
+          try
+          {
+             rInstruments.kitParamChanged(
+                 uuidCopy, voiceIdx, componentIdx, parameterIdx,
+                 static_cast<base::musicDevice::sound::ParameterAttr>(
+                     parameterAttr),
+                 value);
+          }
+          catch (const std::exception& e)
+          {
+             spdlog::error(
+                 "Exception occured in onInstrumentsPlayKitParamChanged: {}",
+                 e.what());
+          }
        });
-   onInstrumentsPlayMelodicParamChanged(
-       [&rInstruments](const ::capnzero::SpanCL<16>& uuid,
-                       ::capnzero::Int16 componentIdx,
-                       ::capnzero::Int16 parameterIdx,
-                       ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
-                       ::capnzero::Float32 value) {
-          util::Identifiable::UUID uuidCopy;
-          std::ranges::copy(uuid, uuidCopy.begin());
-          rInstruments.melodicParamChanged(
-              uuidCopy, componentIdx, parameterIdx,
-              static_cast<base::musicDevice::sound::ParameterAttr>(
-                  parameterAttr),
-              value);
-       });
+   onInstrumentsPlayMelodicParamChanged([&rInstruments](
+                                            const ::capnzero::SpanCL<16>& uuid,
+                                            ::capnzero::Int16 componentIdx,
+                                            ::capnzero::Int16 parameterIdx,
+                                            ::capnzero::MidiEmRt::
+                                                SDParameterAttr parameterAttr,
+                                            ::capnzero::Float32 value) {
+      util::Identifiable::UUID uuidCopy;
+      std::ranges::copy(uuid, uuidCopy.begin());
+      try
+      {
+         rInstruments.melodicParamChanged(
+             uuidCopy, componentIdx, parameterIdx,
+             static_cast<base::musicDevice::sound::ParameterAttr>(
+                 parameterAttr),
+             value);
+      }
+      catch (const std::exception& e)
+      {
+         spdlog::error(
+             "Exception occured in onInstrumentsPlayMelodicParamChanged: {}",
+             e.what());
+      }
+   });
 }

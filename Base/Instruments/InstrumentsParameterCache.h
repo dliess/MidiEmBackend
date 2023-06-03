@@ -26,7 +26,6 @@ struct ParameterCache
    void updateParameterUI();
    void syncRtToNonRt();
    void syncNonRtToRt();
-   void emiAllNonNullParameters();
    CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
                                musicDevice::sound::ParameterAttr, float);
    friend auto meta::registerMembers<ParameterCache>();

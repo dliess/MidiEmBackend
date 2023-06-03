@@ -27,7 +27,6 @@ struct Instruments   //: public utils::Settings<Instruments>
        musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
 
    void reEmitSignals();
-   void retriggerParameterCacheCallbacks();
 
    void createKitInstrument(std::string name);
    void insertKitInstrument(KitInstrument& kitInstrument);

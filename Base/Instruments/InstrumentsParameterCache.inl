@@ -48,22 +48,6 @@ inline void ParameterCache::updateParameterUI()
    }
 }
 
-inline void ParameterCache::emiAllNonNullParameters()
-{
-   for (int paramIdx = 0; paramIdx < data_.size(); ++paramIdx)
-   {
-      magic_enum::enum_for_each<musicDevice::sound::ParameterAttr>(
-          [paramIdx, this](auto parameterAttr) {
-             const float val = musicDevice::sound::getParameterData(
-                 data_[paramIdx], parameterAttr);
-             if (val != 0.0)
-             {
-                emitDataChangedUI(paramIdx, parameterAttr, val);
-             }
-          });
-   }
-}
-
 inline void ParameterCache::syncRtToNonRt()
 {
    std::ranges::copy(data_, nonRtBackupData_.begin());

@@ -12,16 +12,14 @@ MainRpc::MainRpc(
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
     base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
-    base::session::Tracks &rTracks,
-    base::instruments::Instruments& rInstruments) :
+    base::session::Tracks &rTracks) :
     m_rSignals(rSignals),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
     m_rTransportControl(rTransportControl),
     m_rAbletonLinkWrapper(rAbletonLinkWrapper),
     m_rMidiRouter(rMidiRouter),
     m_rParameterSceneContainer(rParameterSceneContainer),
-    m_rTracks(rTracks),
-    m_rInstruments(rInstruments)
+    m_rTracks(rTracks)
 {
 }
 
@@ -94,5 +92,4 @@ void MainRpc::reEmitSignals()
    m_rMidiRouter.retriggerCallbacks();
    m_rParameterSceneContainer.retriggerCallbacks();
    m_rSignals.Session__tracksChanged(nlohmann::json(m_rTracks).dump());
-   m_rInstruments.retriggerParameterCacheCallbacks();
 }
