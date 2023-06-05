@@ -32,7 +32,7 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
              m_rFactoryDataHolder
                  .getDescription(pComponent->m_soundDeviceId.deviceName())
                  .get(),
-             pComponent->m_sdVoiceIndex);
+             pComponent->m_sdVoiceIdx);
       }
       const auto uuid = melodicInstrument.id();
       parameterCache->onDataChangedUI(
@@ -208,7 +208,7 @@ MelodicInstrumentsParameterCacheCreator::getComponentEngineType(
       return std::nullopt;
    }
    return std::make_pair(mdName, descr->soundSection->voice2EngineIdx(
-                                     pComponent->m_sdVoiceIndex));
+                                     pComponent->m_sdVoiceIdx));
 }
 
 inline std::optional<std::pair<musicDevice::MusicDeviceName, int>>
@@ -248,7 +248,7 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
           m_rFactoryDataHolder
               .getDescription(component.m_soundDeviceId.deviceName())
               .get(),
-          component.m_sdVoiceIndex);
+          component.m_sdVoiceIdx);
       const auto uuid = kitInstrument.id();
       component.parameterCache()->onDataChangedUI(
           [uuid, voiceIdx, componentIdx, &rParameterChangeEmitter](

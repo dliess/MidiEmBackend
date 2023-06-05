@@ -18,7 +18,7 @@ public:
    explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
                       std::shared_ptr<ParameterCache> pParameterCache,
                       musicDevice::MusicDeviceId soundDeviceId,
-                      int sdVoiceIndex, int noteOffset) noexcept;
+                      int sdVoiceIdx, int noteOffset) noexcept;
    void setParameterCache(std::shared_ptr<ParameterCache> p);
    [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
@@ -63,7 +63,7 @@ private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
    std::shared_ptr<ParameterCache> m_pParameterCache;
    musicDevice::MusicDeviceId m_soundDeviceId;
-   int m_sdVoiceIndex{0};
+   int m_sdVoiceIdx{0};
    int m_noteOffset{0};
    void refreshParameters() const;
 };

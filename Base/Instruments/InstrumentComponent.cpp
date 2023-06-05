@@ -15,7 +15,7 @@ void Component::noteOn(int note, float velocity) const
          m_pSoundDevice->lastplayerId =
              static_cast<void*>(m_pParameterCache.get());
       }
-      m_pSoundDevice->noteOn(m_sdVoiceIndex, note + m_noteOffset, velocity);
+      m_pSoundDevice->noteOn(m_sdVoiceIdx, note + m_noteOffset, velocity);
    }
 }
 
@@ -23,7 +23,7 @@ void Component::noteOff(int note, float velocity) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->noteOff(m_sdVoiceIndex, note + m_noteOffset, velocity);
+      m_pSoundDevice->noteOff(m_sdVoiceIdx, note + m_noteOffset, velocity);
    }
 }
 
@@ -31,7 +31,7 @@ void Component::pitchBend(float value) const
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->pitchBend(m_sdVoiceIndex, value);
+      m_pSoundDevice->pitchBend(m_sdVoiceIdx, value);
    }
 }
 
@@ -42,12 +42,12 @@ void Component::incrementParameterValue(
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
-          m_sdVoiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
+          m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
       if (m_pParameterCache)
       {
          m_pParameterCache->setParameter(
              parameterIdx, parameterAttr,
-             m_pSoundDevice->getParameterValue(m_sdVoiceIndex, parameterIdx,
+             m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
                                                parameterAttr));
       }
    }
@@ -60,7 +60,7 @@ void Component::incrementParameterValueDontCache(
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
-          m_sdVoiceIndex, parameterIdx, parameterAttr, increment, roundRobin);
+          m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
    }
 }
 
@@ -93,7 +93,7 @@ float Component::getParameterValueCached(
 {
    if (m_pSoundDevice)
    {
-      return m_pSoundDevice->getParameterValue(m_sdVoiceIndex, parameterIdx,
+      return m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
                                                parameterAttr);
    }
    return 0.0;   // TODO: better error handling
@@ -105,13 +105,13 @@ void Component::setParameterValue(
 {
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->setParameterValue(m_sdVoiceIndex, parameterIdx,
+      m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, value);
       if (m_pParameterCache)
       {
          m_pParameterCache->setParameter(
              parameterIdx, parameterAttr,
-             m_pSoundDevice->getParameterValue(m_sdVoiceIndex, parameterIdx,
+             m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
                                                parameterAttr));
       }
    }
@@ -124,7 +124,7 @@ float Component::normalizePercentageValue(
    if (m_pSoundDevice)
    {
       return m_pSoundDevice->normalizePercentageValue(
-          m_sdVoiceIndex, parameterId, parameterAttr, percentageValue);
+          m_sdVoiceIdx, parameterId, parameterAttr, percentageValue);
    }
    return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of
                  // type util::non_null
@@ -135,7 +135,7 @@ Component::parameterDescription(int parameterIdx) const
 {
    if (m_pSoundDevice)
    {
-      return m_pSoundDevice->parameterDescription(m_sdVoiceIndex, parameterIdx);
+      return m_pSoundDevice->parameterDescription(m_sdVoiceIdx, parameterIdx);
    }
    return nullptr;
 }
@@ -149,18 +149,18 @@ void Component::refreshParameters() const
    for (int paramIdx = 0; paramIdx < m_pParameterCache->size(); ++paramIdx)
    {
       m_pSoundDevice->setCommandedValue(
-          m_sdVoiceIndex, paramIdx, m_pParameterCache->at(paramIdx).commanded);
+          m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).commanded);
       m_pSoundDevice->setLFOAmplitude(
-          m_sdVoiceIndex, paramIdx,
+          m_sdVoiceIdx, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.amplitude);
       m_pSoundDevice->setLFOFrequency(
-          m_sdVoiceIndex, paramIdx,
+          m_sdVoiceIdx, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.frequency);
       m_pSoundDevice->setLFOMultiplierExp(
-          m_sdVoiceIndex, paramIdx,
+          m_sdVoiceIdx, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.multiplierExp);
       m_pSoundDevice->setLFOWaveform(
-          m_sdVoiceIndex, paramIdx,
+          m_sdVoiceIdx, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.waveform);
    }
 }

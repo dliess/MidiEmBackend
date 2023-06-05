@@ -9,11 +9,11 @@ namespace base::instruments
 inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
                             std::shared_ptr<ParameterCache> pParameterCache,
                             musicDevice::MusicDeviceId soundDeviceId,
-                            int sdVoiceIndex, int noteOffset) noexcept :
+                            int sdVoiceIdx, int noteOffset) noexcept :
     m_pSoundDevice(pSoundDevice),
     m_pParameterCache(std::move(pParameterCache)),
     m_soundDeviceId(std::move(soundDeviceId)),
-    m_sdVoiceIndex(sdVoiceIndex),
+    m_sdVoiceIdx(sdVoiceIdx),
     m_noteOffset(noteOffset)
 {
 }
@@ -47,7 +47,7 @@ inline void Component::setNoteOffset(int noteOffset)
 inline bool Component::operator==(const Component& rhs) const
 {
    return m_soundDeviceId == rhs.m_soundDeviceId &&
-          m_sdVoiceIndex == rhs.m_sdVoiceIndex &&
+          m_sdVoiceIdx == rhs.m_sdVoiceIdx &&
           m_noteOffset == rhs.m_noteOffset;
 }
 
