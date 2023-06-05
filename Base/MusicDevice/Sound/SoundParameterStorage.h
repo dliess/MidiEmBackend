@@ -74,7 +74,7 @@ public:
    [[nodiscard]] inline uint32_t multiplierExp(int voiceId,
                                                int parameterId) const noexcept;
 
-   inline void applyModifier(int voiceIndex, int paramIdx,
+   inline void applyModifier(int voiceIdx, int paramIdx,
                              ParameterAttr parameterAttr, float destValue,
                              float intensity) noexcept;
 

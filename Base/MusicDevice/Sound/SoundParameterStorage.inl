@@ -443,12 +443,12 @@ inline uint32_t ParameterStorage::multiplierExp(int voiceId,
    return lfoOf(voiceId, parameterId).multiplierExp();
 }
 
-inline void ParameterStorage::applyModifier(int voiceIndex, int paramIdx,
+inline void ParameterStorage::applyModifier(int voiceIdx, int paramIdx,
                                             ParameterAttr parameterAttr,
                                             float destValue,
                                             float intensity) noexcept
 {
-   elementContainer(voiceIndex)
+   elementContainer(voiceIdx)
        .parameters[paramIdx]
        .applyModifier(destValue, intensity, parameterAttr);
 }

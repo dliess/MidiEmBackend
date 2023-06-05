@@ -151,11 +151,11 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendParameterDumpRequest() noexcept
 }
 
 template <typename MidiOutIfPtr>
-void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIdx, int note,
                                                     float velocity) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    const auto engineIdx   = voiceDescr.engineId;
    const auto& engineDesc = m_rSoundSection.engines[engineIdx];
    if (engineDesc.noteSettings)
@@ -172,7 +172,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
                       operator[](note - noteRangeStart)
                     : float(note - noteRangeStart) / (noteRangeEnd - noteRangeStart + 1);
 
-            sendSoundParameter(voiceIndex,
+            sendSoundParameter(voiceIdx,
                                engineDesc.noteSettings->midi->pitchRouting
                                    ->destinationParameterIdx,
                                value);
@@ -184,7 +184,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
                     ? engineDesc.noteSettings->midi->velocityRouting->mapping->
                       operator[](note - noteRangeStart)
                     : velocity;
-            sendSoundParameter(voiceIndex,
+            sendSoundParameter(voiceIdx,
                                engineDesc.noteSettings->midi->velocityRouting
                                    ->destinationParameterIdx,
                                value);
@@ -199,11 +199,11 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOn(int voiceIndex, int note,
 }
 
 template <typename MidiOutIfPtr>
-void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOff(int voiceIndex, int note,
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOff(int voiceIdx, int note,
                                                      float velocity) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    const int note2Send    = voiceDescr.midiTriggerNoteNumber
                                 ? *voiceDescr.midiTriggerNoteNumber
                                 : note;
@@ -213,42 +213,42 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::noteOff(int voiceIndex, int note,
 }
 
 template <typename MidiOutIfPtr>
-void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIndex,
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIdx,
                                                        float value) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    m_pMidiOutIf->pitchBend(voiceDescr.midiChannel + m_midiChannelOffset,
                            value * m_pitchBendFactor * 16383);
 }
 
 template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouchPoly(
-    int voiceIndex, int note, float value) noexcept
+    int voiceIdx, int note, float value) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    m_pMidiOutIf->afterTouchPoly(
        voiceDescr.midiChannel + m_midiChannelOffset + m_midiChannelOffset, note,
        value * 127);
 }
 
 template <typename MidiOutIfPtr>
-void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouch(int voiceIndex,
+void sound::MidiOutMsgHandler<MidiOutIfPtr>::afterTouch(int voiceIdx,
                                                         float value) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    m_pMidiOutIf->afterTouch(voiceDescr.midiChannel + m_midiChannelOffset,
                             value * 127);
 }
 
 template <typename MidiOutIfPtr>
 void sound::MidiOutMsgHandler<MidiOutIfPtr>::programChange(
-    int voiceIndex, int programIdx) noexcept
+    int voiceIdx, int programIdx) noexcept
 {
-   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIndex);
-   const auto& voiceDescr = m_rSoundSection.voices[voiceIndex];
+   assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
+   const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    m_pMidiOutIf->send(midi::Message<midi::ProgramChange>(
        voiceDescr.midiChannel + m_midiChannelOffset, programIdx));
 }

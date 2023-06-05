@@ -85,7 +85,7 @@ void SoundHandler::initEvdevHandler()
    // TODO
 }
 
-void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
+void SoundHandler::noteOn(int voiceIdx, int note, float velocity) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -94,16 +94,16 @@ void SoundHandler::noteOn(int voiceIndex, int note, float velocity) noexcept
           m_deviceName);
       return;
    }
-   if (voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
+   if (voiceIdx == base::musicDevice::description::sound::GlobalSectionId)
    {
       spdlog::error("noteOn() called for global section for device '{}'",
                     m_deviceName);
       return;
    }
-   m_arpeggiators[voiceIndex].noteOn(note, velocity);
+   m_arpeggiators[voiceIdx].noteOn(note, velocity);
 }
 
-void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
+void SoundHandler::noteOff(int voiceIdx, int note, float velocity) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -112,16 +112,16 @@ void SoundHandler::noteOff(int voiceIndex, int note, float velocity) noexcept
           m_deviceName);
       return;
    }
-   if (voiceIndex == base::musicDevice::description::sound::GlobalSectionId)
+   if (voiceIdx == base::musicDevice::description::sound::GlobalSectionId)
    {
       spdlog::error("noteOff() called for global section for device '{}'",
                     m_deviceName);
       return;
    }
-   m_arpeggiators[voiceIndex].noteOff(note, velocity);
+   m_arpeggiators[voiceIdx].noteOff(note, velocity);
 }
 
-void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
+void SoundHandler::pitchBend(int voiceIdx, float value) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -130,10 +130,10 @@ void SoundHandler::pitchBend(int voiceIndex, float value) noexcept
           m_deviceName);
       return;
    }
-   m_midiOutHandler->pitchBend(voiceIndex, value);
+   m_midiOutHandler->pitchBend(voiceIdx, value);
 }
 
-void SoundHandler::afterTouchPoly(int voiceIndex, int note,
+void SoundHandler::afterTouchPoly(int voiceIdx, int note,
                                   float value) noexcept
 {
    if (!m_midiOutHandler)
@@ -144,10 +144,10 @@ void SoundHandler::afterTouchPoly(int voiceIndex, int note,
           m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouchPoly(voiceIndex, note, value);
+   m_midiOutHandler->afterTouchPoly(voiceIdx, note, value);
 }
 
-void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
+void SoundHandler::afterTouch(int voiceIdx, float value) noexcept
 {
    if (!m_midiOutHandler)
    {
@@ -156,7 +156,7 @@ void SoundHandler::afterTouch(int voiceIndex, float value) noexcept
           m_deviceName);
       return;
    }
-   m_midiOutHandler->afterTouch(voiceIndex, value);
+   m_midiOutHandler->afterTouch(voiceIdx, value);
 }
 
 void SoundHandler::setParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr,
@@ -374,29 +374,29 @@ void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
    m_paramStorage.setWaveform(voiceId, paramIdx, waveform);
 }
 
-void SoundHandler::setLFOAmplitude(int voiceIndex, int paramIdx,
+void SoundHandler::setLFOAmplitude(int voiceIdx, int paramIdx,
                                    float amplitude) noexcept
 {
-   m_paramStorage.setAmplitude(voiceIndex, paramIdx, amplitude);
+   m_paramStorage.setAmplitude(voiceIdx, paramIdx, amplitude);
 }
 
-void SoundHandler::setLFOFrequency(int voiceIndex, int paramIdx,
+void SoundHandler::setLFOFrequency(int voiceIdx, int paramIdx,
                                    float frequency) noexcept
 {
-   m_paramStorage.setFrequency(voiceIndex, paramIdx, frequency);
+   m_paramStorage.setFrequency(voiceIdx, paramIdx, frequency);
 }
 
-void SoundHandler::setLFOMultiplierExp(int voiceIndex, int paramIdx,
+void SoundHandler::setLFOMultiplierExp(int voiceIdx, int paramIdx,
                                        int multiplExp) noexcept
 {
-   m_paramStorage.setMultiplierExp(voiceIndex, paramIdx, multiplExp);
+   m_paramStorage.setMultiplierExp(voiceIdx, paramIdx, multiplExp);
 }
 
-void SoundHandler::incLFOWaveform(int voiceIndex, int paramIdx,
+void SoundHandler::incLFOWaveform(int voiceIdx, int paramIdx,
                                   int increment, bool roundRobin) noexcept
 {
    int idx =
-       static_cast<int>(m_paramStorage.waveform(voiceIndex, paramIdx)) +
+       static_cast<int>(m_paramStorage.waveform(voiceIdx, paramIdx)) +
        increment;
    static constexpr int lastIdx = static_cast<int>(lfo::Waveform::Random) + 1;
    if (roundRobin) 
@@ -406,37 +406,37 @@ void SoundHandler::incLFOWaveform(int voiceIndex, int paramIdx,
    if (idx >= static_cast<int>(lfo::Waveform::Sine) &&
        idx < lastIdx)
    {
-      m_paramStorage.setWaveform(voiceIndex, paramIdx,
+      m_paramStorage.setWaveform(voiceIdx, paramIdx,
                                  static_cast<lfo::Waveform>(idx));
    }
 }
 
-void SoundHandler::incLFOAmplitude(int voiceIndex, int paramIdx,
+void SoundHandler::incLFOAmplitude(int voiceIdx, int paramIdx,
                                    float increment) noexcept
 {
    m_paramStorage.setAmplitude(
-       voiceIndex, paramIdx,
-       m_paramStorage.amplitude(voiceIndex, paramIdx) + increment);
+       voiceIdx, paramIdx,
+       m_paramStorage.amplitude(voiceIdx, paramIdx) + increment);
 }
 
-void SoundHandler::incLFOFrequency(int voiceIndex, int paramIdx,
+void SoundHandler::incLFOFrequency(int voiceIdx, int paramIdx,
                                    float increment) noexcept
 {
    m_paramStorage.setFrequency(
-       voiceIndex, paramIdx,
-       m_paramStorage.frequency(voiceIndex, paramIdx) + increment);
+       voiceIdx, paramIdx,
+       m_paramStorage.frequency(voiceIdx, paramIdx) + increment);
 }
 
-void SoundHandler::incLFOMultiplierExp(int voiceIndex, int paramIdx,
+void SoundHandler::incLFOMultiplierExp(int voiceIdx, int paramIdx,
                                        int increment, bool roundRobin) noexcept
 {
-   int newExponent = m_paramStorage.multiplierExp(voiceIndex, paramIdx) + increment;
+   int newExponent = m_paramStorage.multiplierExp(voiceIdx, paramIdx) + increment;
    if(roundRobin) 
    {
       newExponent = newExponent % (lfo::MAX_MULTIPLIER_EXP + 1);
    }
    m_paramStorage.setMultiplierExp(
-       voiceIndex, paramIdx, newExponent);
+       voiceIdx, paramIdx, newExponent);
 }
 
 std::shared_ptr<preset::DevicePresets> SoundHandler::presets() const noexcept
@@ -464,11 +464,11 @@ std::vector<base::arp::Arpeggiator>& SoundHandler::arpeggiators() noexcept
    return m_arpeggiators;
 }
 
-void SoundHandler::applyModifier(int voiceIndex, int paramIdx,
+void SoundHandler::applyModifier(int voiceIdx, int paramIdx,
                                  ParameterAttr parameterAttr, float destValue,
                                  float intensity) noexcept
 {
-   m_paramStorage.applyModifier(voiceIndex, paramIdx, parameterAttr, destValue,
+   m_paramStorage.applyModifier(voiceIdx, paramIdx, parameterAttr, destValue,
                                 intensity);
 }
 

@@ -17,12 +17,12 @@ public:
                            float value) noexcept;
    void sendParameterDumpRequest() noexcept;
 
-   void noteOn(int voiceIndex, int note, float velocity) noexcept;
-   void noteOff(int voiceIndex, int note, float velocity) noexcept;
-   void pitchBend(int voiceIndex, float value) noexcept;
-   void afterTouchPoly(int voiceIndex, int note, float value) noexcept;
-   void afterTouch(int voiceIndex, float value) noexcept;
-   void programChange(int voiceIndex, int programIdx) noexcept;
+   void noteOn(int voiceIdx, int note, float velocity) noexcept;
+   void noteOff(int voiceIdx, int note, float velocity) noexcept;
+   void pitchBend(int voiceIdx, float value) noexcept;
+   void afterTouchPoly(int voiceIdx, int note, float value) noexcept;
+   void afterTouch(int voiceIdx, float value) noexcept;
+   void programChange(int voiceIdx, int programIdx) noexcept;
 
    uint8_t getMidiChannelOffset() const noexcept;
 
