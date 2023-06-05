@@ -10,8 +10,7 @@ void Component::noteOn(int note, float velocity) const
       if (m_pSoundDevice->lastplayerId !=
           static_cast<void*>(m_pParameterCache.get()))
       {
-         // TODO: rectivate later
-         // refreshParameters();
+         refreshParameters();
          m_pSoundDevice->lastplayerId =
              static_cast<void*>(m_pParameterCache.get());
       }
