@@ -28,7 +28,6 @@ void from_json(const nlohmann::json& j, MelodicInstrument& instr)
     j["name"].get_to(instr.m_name);
     j["voices"].get_to(instr.m_voices);
     const auto& jPCaches = j["parameterCaches"];
-    assert(jPCaches.size() == MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE);
     for(int componentIdx = 0; componentIdx < jPCaches.size(); ++componentIdx) {
         if(jPCaches[componentIdx] != nullptr) {
             auto parameterCache = std::make_shared<ParameterCache>(jPCaches.size());

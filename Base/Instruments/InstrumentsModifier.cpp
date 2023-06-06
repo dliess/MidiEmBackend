@@ -240,8 +240,8 @@ void InstrumentsModifier::removeComponentFromKitInstrumentVoice(
     int componentIdx) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto& voices = instrumentIt->voices().operator[](voiceIdx).components;
-   voices.erase(voices.begin() + componentIdx);
+   auto& components = instrumentIt->voices().at(voiceIdx).components;
+   components.erase(components.begin() + componentIdx);
    instrumentIt->unmarkAsDefaultCreated();
 }
 
@@ -258,9 +258,7 @@ void InstrumentsModifier::setNoteOffsetInKitInstrumentComponent(
     int componentIdx, int noteOffset) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices()
-       .
-       operator[](voiceIdx)
+   instrumentIt->voices().at(voiceIdx)
        .components[componentIdx]
        .setNoteOffset(noteOffset);
    instrumentIt->unmarkAsDefaultCreated();

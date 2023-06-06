@@ -26,6 +26,7 @@ inline void to_json(nlohmann::json& j, const MelodicVoice::Components& data)
 
 inline void from_json(const nlohmann::json& j, MelodicVoice::Components& data)
 {
+   spdlog::info("dump(): {}", j.dump());
    if (j.is_array() && j.size() == data.size())
    {
       for (std::size_t i = 0; i < j.size(); ++i)
@@ -36,6 +37,7 @@ inline void from_json(const nlohmann::json& j, MelodicVoice::Components& data)
          }
          else
          {
+            //spdlog::info("i: {} -> j[i].dump(): {} j.size(): {}",i, j[i].dump().c_str(), j.size());
             data[i] = j[i].get<Component>();
          }
       }

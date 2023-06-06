@@ -23,8 +23,9 @@ inline void MelodicInstrument::updateParameterUI() const
 {
    if (m_voices.size())
    {
-      for (const auto& component : m_voices.at(0).components)
+      for(size_t componentIdx = 0; componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
       {
+         const auto component = getFirstComponent(componentIdx);
          if (component)
          {
             component->updateParameterUI();
