@@ -29,7 +29,6 @@ TEST(InstrumentSerializationTest, component)
    nlohmann::json j = nlohmann::json::parse(jsonStr);
    auto data        = j.get<Component>();
 }
-
 TEST(InstrumentSerializationTest, KitVoiceComponents)
 {
    KitVoice::Components components;

@@ -1,12 +1,12 @@
 add_subdirectory(Mock)
 
 set(SOURCES
-   #"UT_Instruments.cpp"
-   #"UT_InstrumentSerialization.cpp"
-   #"UT_InstrumentsMDChangeHandler.cpp"
+   "UT_Instruments.cpp"
+   "UT_InstrumentSerialization.cpp"
+   "UT_InstrumentsMDChangeHandler.cpp"
    "UT_InstrumentsDataSerialization.cpp"
-   #"UT_KitInstrument.cpp"
-   #"UT_MelodicInstrument.cpp"
+   "UT_KitInstrument.cpp"
+   "UT_MelodicInstrument.cpp"
 )
 
 set(TARGET_NAME InstrumentsTest)

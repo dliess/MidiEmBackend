@@ -25,7 +25,8 @@ inline void from_json(const nlohmann::json& j, KitInstrument& instr)
    instr.forEachComponentExt([&j](auto& component, int voiceIdx,
                                   int componentIdx) {
       auto& jParameterCache = j["voices"][voiceIdx]["components"][componentIdx]["parameterCache"];
-      auto parameterCache = std::make_shared<ParameterCache>(jParameterCache.size());
+      const size_t numParameters = jParameterCache["data"].size();
+      auto parameterCache = std::make_shared<ParameterCache>(numParameters);
       jParameterCache.get_to(*parameterCache);
       parameterCache->syncBackupToRt();
       component.setParameterCache(parameterCache);

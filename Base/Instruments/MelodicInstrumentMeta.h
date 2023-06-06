@@ -30,16 +30,16 @@ void from_json(const nlohmann::json& j, MelodicInstrument& instr)
     const auto& jPCaches = j["parameterCaches"];
     for(int componentIdx = 0; componentIdx < jPCaches.size(); ++componentIdx) {
         if(jPCaches[componentIdx] != nullptr) {
-            auto parameterCache = std::make_shared<ParameterCache>(jPCaches.size());
+            const size_t numParams = jPCaches[componentIdx]["data"].size();
+            auto parameterCache = std::make_shared<ParameterCache>(numParams);
             jPCaches[componentIdx].get_to(*parameterCache);
             parameterCache->syncBackupToRt();
-            instr.forEachComponent(componentIdx, [&parameterCache](auto& component){
+            instr.forEachComponent(componentIdx, [parameterCache](auto& component){
                 component.setParameterCache(parameterCache);
             });
         }
     }
 }
-
 
 } // namespace base::instruments
 
