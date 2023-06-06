@@ -38,7 +38,7 @@ void Component::pitchBend(float value) const
 void Component::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, bool roundRobin) const
-{
+{ /*TODO: increment paramcache first and then set sounddevice*/
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
