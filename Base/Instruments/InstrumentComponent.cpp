@@ -13,7 +13,7 @@ void Component::noteOn(int note, float velocity) const
          refreshParameters();
          m_pSoundDevice->lastplayerId =
              static_cast<void*>(m_pParameterCache.get());
-         spdlog::info("refreshing parameters");
+         //spdlog::info("refreshing parameters");
       }
       m_pSoundDevice->noteOn(m_sdVoiceIdx, note + m_noteOffset, velocity);
    }
