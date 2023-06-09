@@ -1,5 +1,5 @@
 #include "InstrumentComponent.h"
-
+#include "clip.h"
 using namespace base;
 using namespace base::instruments;
 
@@ -13,7 +13,7 @@ void Component::noteOn(int note, float velocity) const
          refreshParameters();
          m_pSoundDevice->lastplayerId =
              static_cast<void*>(m_pParameterCache.get());
-         //spdlog::info("refreshing parameters");
+         // spdlog::info("refreshing parameters");
       }
       m_pSoundDevice->noteOn(m_sdVoiceIdx, note + m_noteOffset, velocity);
    }
@@ -35,21 +35,49 @@ void Component::pitchBend(float value) const
    }
 }
 
+float calculateIncrementedParameterValue(float actualValue, float increment,
+                                         bool roundRobin, bool isList, float paramValueRange)
+{
+   float targetVal = actualValue + increment;
+   if (isList)
+   {
+      const auto targetlistIdx = int(targetVal);
+      const auto listValueRange = int(paramValueRange);
+      if (roundRobin)
+      {
+         if (targetlistIdx < 0) 
+         {
+            return float(listValueRange + (targetlistIdx % listValueRange));
+         }
+         else
+         {
+            return float(targetlistIdx % listValueRange);
+         }
+      }
+      else
+      {
+         return float(util::clip(targetlistIdx, 0, listValueRange));
+      }
+   }
+   else
+   {
+      return util::clip(targetVal, 0.0f, paramValueRange);
+   }
+}
+
 void Component::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, bool roundRobin) const
-{ /*TODO: increment paramcache first and then set sounddevice*/
+{
    if (m_pSoundDevice)
    {
-      m_pSoundDevice->incrementParameterValue(
-          m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
-      if (m_pParameterCache)
-      {
-         m_pParameterCache->setParameter(
-             parameterIdx, parameterAttr,
-             m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
-                                               parameterAttr));
-      }
+      const float actualValue =
+          m_pParameterCache->getParameter(parameterIdx, parameterAttr);
+      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+          m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
+      const float newParamValue = calculateIncrementedParameterValue(
+          actualValue, increment, roundRobin, isList, paramValueRange);
+      setParameterValue(parameterIdx, parameterAttr, newParamValue);
    }
 }
 
@@ -107,13 +135,7 @@ void Component::setParameterValue(
    {
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, value);
-      if (m_pParameterCache)
-      {
-         m_pParameterCache->setParameter(
-             parameterIdx, parameterAttr,
-             m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
-                                               parameterAttr));
-      }
+      m_pParameterCache->setParameter(parameterIdx, parameterAttr, value);
    }
 }
 
@@ -160,7 +182,6 @@ void Component::refreshParameters() const
           m_sdVoiceIdx, paramIdx,
           m_pParameterCache->at(paramIdx).lfo.multiplierExp);
       m_pSoundDevice->setLFOWaveform(
-          m_sdVoiceIdx, paramIdx,
-          m_pParameterCache->at(paramIdx).lfo.waveform);
+          m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).lfo.waveform);
    }
 }

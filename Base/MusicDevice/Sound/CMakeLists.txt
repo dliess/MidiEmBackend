@@ -42,4 +42,5 @@ target_link_libraries(${TARGET_NAME}
    PUBLIC Tempo
    PUBLIC MusicDeviceCommon
    PUBLIC base-arpeggiator
+   PUBLIC magic_enum::magic_enum
 )

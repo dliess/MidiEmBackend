@@ -822,6 +822,28 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    return 0;
 }
 
+inline float base::musicDevice::description::sound::Parameter::getValueRange() const noexcept
+{
+   switch (type)
+   {
+      case base::musicDevice::description::sound::Parameter::Type::List:
+      {
+         if (source.midi->sourceRanges)
+         {
+            return static_cast<int>(source.midi->sourceRanges->size());
+         }
+         break;
+      }
+      case base::musicDevice::description::sound::Parameter::Type::Continous:
+      case base::musicDevice::description::sound::Parameter::Type::
+          ContinousBipolar:
+      {
+         return 1;
+      }
+   }
+   return 0;
+}
+
 inline void base::musicDevice::description::sound::Section::
     autoFillSourceRangesForLists() noexcept
 {

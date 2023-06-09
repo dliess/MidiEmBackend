@@ -22,15 +22,25 @@ inline void ParameterCache::setParameter(
     std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value)
 {
-   musicDevice::sound::setParameterData(data_.at(parameterIdx), parameterAttr, value);
+   musicDevice::sound::setParameterData(data_.at(parameterIdx), parameterAttr,
+                                        value);
    dirtyFlags_.set(parameterIdx, parameterAttr);
+}
+
+inline float ParameterCache::getParameter(
+    std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr) const
+{
+   return musicDevice::sound::getParameterData(data_.at(parameterIdx),
+                                               parameterAttr);
 }
 
 inline void ParameterCache::setParameterBackup(
     std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value)
 {
-   musicDevice::sound::setParameterData(nonRtBackupData_.at(parameterIdx), parameterAttr, value);
+   musicDevice::sound::setParameterData(nonRtBackupData_.at(parameterIdx),
+                                        parameterAttr, value);
 }
 
 inline void ParameterCache::updateParameterUI()

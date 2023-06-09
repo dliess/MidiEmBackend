@@ -271,6 +271,7 @@ struct Parameter
    inline std::optional<float> getListIndexByListRole(
        ParameterSourceRangeBase::Role role) const noexcept;
    inline int getSourceResolution() const noexcept;
+   inline float getValueRange() const noexcept;
 };
 
 struct Presets

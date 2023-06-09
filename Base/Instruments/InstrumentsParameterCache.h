@@ -1,12 +1,12 @@
 #ifndef BASE_INSTRUMENTS_PARAMETER_CACHE_H
 #define BASE_INSTRUMENTS_PARAMETER_CACHE_H
 
+#include <type_traits>
 #include <vector>
 
 #include "CallbackSignal.h"
 #include "DirtyFlags.h"
 #include "ParameterData.h"
-#include <type_traits>
 
 namespace base::instruments
 {
@@ -20,6 +20,9 @@ struct ParameterCache
    void setParameter(std::size_t parameterIdx,
                      musicDevice::sound::ParameterAttr parameterAttr,
                      float value);
+   [[nodiscard]] float getParameter(std::size_t parameterIdx,
+                     musicDevice::sound::ParameterAttr parameterAttr) const;
+
    void setParameterBackup(std::size_t parameterIdx,
                            musicDevice::sound::ParameterAttr parameterAttr,
                            float value);
@@ -36,9 +39,10 @@ private:
    DirtyFlags dirtyFlags_;
 };
 
-
-static_assert(std::is_move_constructible_v<ParameterCache>, "ParameterCache Object must be movable");
-static_assert(std::is_move_constructible_v<ParameterCache::DirtyFlags>, "ParameterCache::DirtyFlags Object must be movable");
+static_assert(std::is_move_constructible_v<ParameterCache>,
+              "ParameterCache Object must be movable");
+static_assert(std::is_move_constructible_v<ParameterCache::DirtyFlags>,
+              "ParameterCache::DirtyFlags Object must be movable");
 
 }   // namespace base::instruments
 

@@ -113,12 +113,12 @@ inline void ParameterStorageElement::setCommandedValue(float value,
    m_dirtyFlagUi = true;
 }
 
-template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+template <typename T> int sgn(T val) { return int(T(0) < val) - int(val < T(0)); }
 
 inline void ParameterStorageElement::incCommandedValue(float increment,
                                                        bool roundRobin) noexcept
 {
-   const float theIncrement = m_isListIndex ? sgn(increment) : increment;
+   const float theIncrement = m_isListIndex ? float(sgn(increment)) : increment;
    setCommandedValue(m_commanded + theIncrement, roundRobin);
 }
 
