@@ -55,7 +55,7 @@ void playNoteOnOff(Dev& dev, int note, float velocity,
 }
 
 bool isList(const EventDestination::Parameter& parameter) {
-   return parameter.descriptionCache.isList || 
+   return (parameter.parameterAttr == ParameterAttr::Commanded && parameter.descriptionCache.isList) || 
           parameter.parameterAttr == ParameterAttr::LfoMultiplierExp ||
           parameter.parameterAttr == ParameterAttr::LfoWaveform;
 }
@@ -120,7 +120,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   MDCoords... mdCoords)
 {
    float incr = 0;
-   if (parameter.descriptionCache.isList)
+   if (isList(parameter))
    {
       const int accIncr = increment.value + parameter.valueCache->storedIncrements;
       const int incrForOneStep        = increment.resolution / 12;

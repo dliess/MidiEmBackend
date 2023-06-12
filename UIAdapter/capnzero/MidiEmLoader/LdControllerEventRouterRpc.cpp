@@ -24,13 +24,17 @@ eventRouter::EventDestination::Endpoint toEndpoint(
    if (rInstrumnets.hasMelodicInstrument(destUUID))
    {
       return eventRouter::EventDestination::Melodic{util::deepCopy(destUUID),
-                                                    voiceIdx};
+                                                    componentIdx};
    }
    auto mdId = rMDFDataHolder.getMdIdByUUID(destUUID);
    if (mdId)
    {
       return eventRouter::EventDestination::MusicDevice{*mdId, voiceIdx};
    }
+   spdlog::error("Looking for destUUID: {} but NOT FOUND\nkitInstruments:\n{}\nmelodicInstruments:\n{}", 
+        util::uuid2Str(destUUID), 
+        rInstrumnets.serializeKitInstruments(), 
+        rInstrumnets.serializeMelodicInstruments() );
    assert(false);
    return eventRouter::EventDestination::DrumKit{};
 }
@@ -116,8 +120,8 @@ void LdControllerEventRouterRpc::connectWidget2Parameter(
        controller::EventIdExt{
            util::deepCopy(controllerUUID),
            {widgetIdx,
-            controller::WidgetCoord{extractWidgetCoordsXY(widgetCoord).first,
-                                    extractWidgetCoordsXY(widgetCoord).second},
+            controller::WidgetCoord{extractWidgetCoordsXY(widgetCoord).second,
+                                    extractWidgetCoordsXY(widgetCoord).first},
             eventIdx, channelIdx}},
        eventRouter::EventDestination{
            toEndpoint(m_rInstruments, m_rMDFDataHolder, destUUID, voiceIdx,
