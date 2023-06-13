@@ -814,14 +814,31 @@
     "widgets": [
       {
         "name": "Sequencer",
+        "isKeyboard": true,
         "dimension": {
           "numRows": 1,
           "numColumns": 1
         },
         "events": [
           {
-            ".type": "NativeNote",
-            "name": "keys-native"
+            ".type": "PressRelease",
+            "name": "key",
+            "pressSource": [
+              [
+                {
+                  ".type": "MidiNoteOn",
+                  "note": -1
+                }
+              ]
+            ],
+            "releaseSource": [
+              [
+                {
+                  ".type": "MidiNoteOff",
+                  "note": -1
+                }
+              ]
+            ]
           }
         ]
       }

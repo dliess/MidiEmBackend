@@ -260,7 +260,14 @@ void EventRouterRt::handleIncrementType(
     const controller::IncrementType& value) noexcept
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
-      CASE_MONOSTATE { assert(false); },
+      CASE_MONOSTATE 
+      { 
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleIncrement(destIter->second, value);
+         }
+      },
       CASE(controller::WidgetCoord, _)
       {
          const auto destIter = m_rMap.find(eventIdExt);
@@ -298,7 +305,14 @@ void EventRouterRt::handleRelativeValueType(
 {
    SWITCH(eventIdExt.eventId.widgetCoord)
 
-      CASE_MONOSTATE { assert(false); },
+      CASE_MONOSTATE
+      {
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleRelativeValue(destIter->second, value);
+         }
+      },
       CASE(controller::WidgetCoord, _)
       {
          const auto destIter = m_rMap.find(eventIdExt);

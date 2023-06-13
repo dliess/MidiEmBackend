@@ -27,6 +27,8 @@ auto match(Variant&& v, CBs&&... cbs)
 #define FCASE(Variant_Type, name) [&](const Variant_Type& name)
 #define FFCASE(Variant_Type, name) [](const Variant_Type& name)
 #define CASE_MONOSTATE [&,this](const mpark::monostate&)
+#define FCASE_MONOSTATE [&](const mpark::monostate&)
+#define FFCASE_MONOSTATE [](const mpark::monostate&)
 
 #define SWITCH(variant) {auto& vr=variant; util::match(variant,
 #define END_SWITCH );}

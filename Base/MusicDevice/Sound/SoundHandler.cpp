@@ -53,7 +53,7 @@ void SoundHandler::initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn,
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
        pMidiIn, m_rSoundSection, midiVoiceOffset,
        [this](int voiceId, int parameterId, float value) {
-          // spdlog::info( "Received parameter values {} {} {}: ", voiceId,
+          //spdlog::info( "Received parameter values {} {} {}: ", voiceId,
           // parameterId, value);
           m_paramStorage.setSoundParameterActualValue(voiceId, parameterId,
                                                       value);

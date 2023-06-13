@@ -14,23 +14,19 @@ struct WidgetDimension
    int numRows;
    int numColumns;
 };
-
 struct EventIncremental
 {
    std::string name;
+   std::optional<bool> global;
    int resolution;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
 
-struct EventNativeNote
-{
-   std::string name;
-};
-
 struct EventPressRelease
 {
    std::string name;
+   std::optional<bool> global;
    std::optional<bool> sourceHasInvertedLogic;
    std::vector<std::vector<midi::MidiMessageId>> pressSource;
    std::vector<std::vector<midi::MidiMessageId>> releaseSource;
@@ -39,17 +35,19 @@ struct EventPressRelease
 struct EventContinousValue
 {
    std::string name;
+   std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
 struct EventRelativeValue
 {
    std::string name;
+   std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
 using Event = mpark::variant<
-   EventIncremental, EventNativeNote, EventPressRelease,
+   EventIncremental, EventPressRelease,
    EventContinousValue, EventRelativeValue>;
 
 struct Widget
@@ -57,6 +55,7 @@ struct Widget
    std::string name;
    WidgetDimension dimension;
    std::optional<bool> mpe;
+   std::optional<bool> isKeyboard;
    std::vector<Event> events;
 };
 
