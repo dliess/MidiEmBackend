@@ -280,13 +280,17 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
          CASE(midi::Message<midi::PitchBend>, msg)
          {
             return R_SWITCH(eventDescr)
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue
+               {
+                  return RelativeValueType{msg.normalizedValue()};
+               },
                CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue
                {
-                  return RelativeUnlimitedValueType{msg.value(), evt.incrementsPerCentimeter};
+                  return RelativeUnlimitedValueType{msg.value(), evt.incrementsPerSemitoneDistance};
                },
                CASE_DEFAULT -> EventValue 
                {
-                  spdlog::error("<midi::PitchBend should result in an event type: EventRelativeUnlimitedValue");
+                  spdlog::error("<midi::PitchBend should result in an event type: EventRelativeUnlimitedValue or EventRelativeValue");
                   return mpark::monostate(); 
                }
             R_END_SWITCH

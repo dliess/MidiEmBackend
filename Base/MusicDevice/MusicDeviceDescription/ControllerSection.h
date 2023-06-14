@@ -50,7 +50,7 @@ struct EventRelativeValue
 struct EventRelativeUnlimitedValue
 {
    std::string name;
-   int incrementsPerCentimeter;
+   int incrementsPerSemitoneDistance;
    std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };

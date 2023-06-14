@@ -50,7 +50,7 @@ struct RelativeValueType
 struct RelativeUnlimitedValueType
 {
    int value{0};
-   int incrementsPerCentimeter{1};
+   int incrementsPerSemitoneDistance{1};
 };
 
 using EventValue = mpark::variant<mpark::monostate, PressReleaseType,

@@ -77,9 +77,9 @@
         },
         "events": [
           {
-            ".type": "RelativeUnlimitedValue",
+            ".type": "RelativeValue",
             "name": "PitchBend",
-            "incrementsPerCentimeter": 3276,
+            "bidirectional": true,
             "source": [
               [
                 {

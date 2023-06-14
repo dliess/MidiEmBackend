@@ -788,7 +788,9 @@ void EventRouterRt::handleRelativeUnlimitedValue(
       CASE(EventDestination::DrumKit, drumKit) 
       {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               spdlog::error("Empty HERE");
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withKitInstrumentRt(
                   drumKit.uuid, [&](auto& kitInstr) {
@@ -801,7 +803,12 @@ void EventRouterRt::handleRelativeUnlimitedValue(
       },
       CASE(EventDestination::Melodic, melodic) {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     melodicInstr.pitchBend(value);
+                  });
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
@@ -814,7 +821,12 @@ void EventRouterRt::handleRelativeUnlimitedValue(
       },
       CASE(EventDestination::MusicDevice, musicDevice) {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               m_rMusicDeviceContainer.withSoundHandler(
+                  musicDevice.mdid, [&](auto& soundHandler) {
+                     soundHandler.pitchBend(musicDevice.voiceIdx, value);
+                  });
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {

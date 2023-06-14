@@ -95,7 +95,7 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
 {
    return members(
       member("name", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::name),
-      member("incrementsPerCentimeter", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::incrementsPerCentimeter),
+      member("incrementsPerSemitoneDistance", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::incrementsPerSemitoneDistance),
       member("global", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::global),
       member("source", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::source)
    );
