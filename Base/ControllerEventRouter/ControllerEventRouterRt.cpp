@@ -34,6 +34,9 @@ void EventRouterRt::operator()(const util::Identifiable::UUID uuid,
       },
       [this, &eventIdExt](const controller::RelativeValueType& value) {
          handleRelativeValueType(eventIdExt, value);
+      },
+      [this, &eventIdExt](const controller::RelativeUnlimitedValueType& value) {
+         handleRelativeUnlimitedValueType(eventIdExt, value);
       }
    END_SWITCH
 }
@@ -139,23 +142,26 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::RelativeValueType& value,
                   MDCoords... mdCoords)
 {
-   float valueToSet = value.value;
-   spdlog::error("-----HERE1 {}", value.value);
-   if (!parameter.valueCache->valueAtPress)
+   if (0 == value.value)
    {
       parameter.valueCache->valueAtPress.emplace<float>(
           dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr));
    }
-   spdlog::error("-----HERE2 {}", parameter.valueCache->valueAtPress.value());
-   valueToSet += parameter.valueCache->valueAtPress.value();
-   dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
-   spdlog::error("-----HERE3 {}", valueToSet);
-   if (0 == value.value)
+   if(parameter.valueCache->valueAtPress)
    {
-      parameter.valueCache->valueAtPress = std::nullopt;
+      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
+      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
    }
-   spdlog::error("-----HERE4");
 }
+
+template <typename Dev, typename... MDCoords>
+void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+                  const controller::RelativeUnlimitedValueType& value,
+                  MDCoords... mdCoords)
+{
+/* TODO */
+}
+
 }   // namespace detail
 
 void EventRouterRt::handlePressReleaseType(
@@ -341,6 +347,51 @@ void EventRouterRt::handleRelativeValueType(
             if (destIter2 != m_rMap.end())
             {
                sendMPERelativeValue(note.number, destIter2->second, value);
+            }
+         }
+      },
+      [this](auto&&) {}
+   END_SWITCH
+}
+
+void EventRouterRt::handleRelativeUnlimitedValueType(
+    const controller::EventIdExt& eventIdExt,
+    const controller::RelativeUnlimitedValueType& value) noexcept
+{
+   SWITCH(eventIdExt.eventId.widgetCoord)
+
+      CASE_MONOSTATE
+      {
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleRelativeUnlimitedValue(destIter->second, value);
+         }
+      },
+      CASE(controller::WidgetCoord, _)
+      {
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleRelativeUnlimitedValue(destIter->second, value);
+         }
+      },
+      CASE(controller::Note, note)
+      {
+         const auto destIter = m_rMap.find(eventIdExt);
+         if (destIter != m_rMap.end())
+         {
+            handleRelativeUnlimitedValue(destIter->second, value);
+         }
+         else
+         {
+            controller::EventIdExt melodicEvent = eventIdExt;
+            melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
+               ANY);
+            const auto destIter2 = m_rMap.find(melodicEvent);
+            if (destIter2 != m_rMap.end())
+            {
+               sendMPERelativeUnlimitedValue(note.number, destIter2->second, value);
             }
          }
       },
@@ -729,9 +780,83 @@ void EventRouterRt::handleRelativeValue(
    END_SWITCH
 }
 
+void EventRouterRt::handleRelativeUnlimitedValue(
+    const EventDestination& eventDestination,
+    const controller::RelativeUnlimitedValueType& value) noexcept
+{
+   SWITCH(eventDestination.endpoint)
+      CASE(EventDestination::DrumKit, drumKit) 
+      {
+         SWITCH(eventDestination.controlType)
+            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Parameter, parameter) {
+               m_rInstruments.withKitInstrumentRt(
+                  drumKit.uuid, [&](auto& kitInstr) {
+                     detail::setParameter(kitInstr, parameter,
+                                          value, drumKit.voiceIdx,
+                                          drumKit.componentIdx);
+                  });
+            }
+         END_SWITCH
+      },
+      CASE(EventDestination::Melodic, melodic) {
+         SWITCH(eventDestination.controlType)
+            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Parameter, parameter) {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     detail::setParameter(melodicInstr, parameter,
+                                          value,
+                                          melodic.componentIdx);
+                  });
+            }
+         END_SWITCH
+      },
+      CASE(EventDestination::MusicDevice, musicDevice) {
+         SWITCH(eventDestination.controlType)
+            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Parameter, parameter) {
+               m_rMusicDeviceContainer.withSoundHandler(
+                  musicDevice.mdid, [&](auto& soundHandler) {
+                     detail::setParameter(soundHandler, parameter,
+                                          value,
+                                          musicDevice.voiceIdx);
+                  });
+            }
+         END_SWITCH
+      }
+   END_SWITCH
+}
+
+
 void EventRouterRt::sendMPERelativeValue(
     int note, const EventDestination& eventDestination,
     const controller::RelativeValueType& value) noexcept
+{
+   SWITCH(eventDestination.endpoint)
+      CASE(EventDestination::DrumKit,_) {},
+      CASE(EventDestination::Melodic, melodic) 
+      {
+         SWITCH(eventDestination.controlType)
+            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Parameter, parameter) 
+            {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     detail::setParameter(melodicInstr, parameter,                                                    
+                                          value, note,
+                                          melodic.componentIdx);
+                  });
+            }
+         END_SWITCH
+      },
+      CASE(EventDestination::MusicDevice,_) {}
+   END_SWITCH
+}
+
+void EventRouterRt::sendMPERelativeUnlimitedValue(
+    int note, const EventDestination& eventDestination,
+    const controller::RelativeUnlimitedValueType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
       CASE(EventDestination::DrumKit,_) {},

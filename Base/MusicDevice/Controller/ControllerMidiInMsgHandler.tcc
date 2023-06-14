@@ -90,174 +90,208 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
    
    const auto value = 
       R_SWITCH(midiMsg)
-           CASE(midi::Message<midi::ControlChange>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) -> EventValue 
+         CASE(midi::Message<midi::ControlChange>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventPressRelease, evt) -> EventValue 
+               {
+                  if (evt.sourceHasInvertedLogic.value_or(false))
                   {
-                     if (evt.sourceHasInvertedLogic.value_or(false))
+                     return PressReleaseType{
+                        msg.controllerValue() ? -1.0f : 1.0f};
+                  }
+                  else
+                  {
+                     return PressReleaseType{
+                        msg.controllerValue() ? 1.0f : -1.0f};
+                  }
+               },
+               CASE(description::controller::EventContinousValue, evt) -> EventValue 
+               {
+                  return ContinousValueType{msg.getNormalizedValue()};
+               },
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue 
+               {
+                  if(evt.bidirectional)
+                  {
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
+                  }
+                  else
+                  {
+                     return RelativeValueType{msg.getNormalizedValue()};
+                  }
+               },
+               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
+               {
+                  return mpark::monostate();
+               },
+               CASE(description::controller::EventIncremental, evt) -> EventValue 
+               {
+                  const int ccVal = msg.controllerValue();
+                  static constexpr int middleVal =
+                     midi::Message<midi::ControlChange>::RES_MAX / 2;
+                  static constexpr int THRESHOLD = middleVal / 2;
+                  const int diffFromMiddleVal    = ccVal - middleVal;
+                  if (std::abs(diffFromMiddleVal) > THRESHOLD)
+                  {
+                     if (ccVal < middleVal)
                      {
-                        return PressReleaseType{
-                           msg.controllerValue() ? -1.0f : 1.0f};
+                        return IncrementType{evt.resolution, ccVal};
                      }
                      else
                      {
-                        return PressReleaseType{
-                           msg.controllerValue() ? 1.0f : -1.0f};
-                     }
-                  },
-                  CASE(description::controller::EventContinousValue, evt) -> EventValue 
-                  {
-                     return ContinousValueType{msg.getRelativeValue()};
-                  },
-                  CASE(description::controller::EventRelativeValue, evt) -> EventValue 
-                  {
-                     return RelativeValueType{msg.getRelativeValue() -
-                                             0.5f};
-                  },
-                  CASE(description::controller::EventIncremental, evt) -> EventValue 
-                  {
-                     const int ccVal = msg.controllerValue();
-                     static constexpr int middleVal =
-                        midi::Message<midi::ControlChange>::RES_MAX / 2;
-                     static constexpr int THRESHOLD = middleVal / 2;
-                     const int diffFromMiddleVal    = ccVal - middleVal;
-                     if (std::abs(diffFromMiddleVal) > THRESHOLD)
-                     {
-                        if (ccVal < middleVal)
-                        {
-                           return IncrementType{evt.resolution, ccVal};
-                        }
-                        else
-                        {
-                           return IncrementType{
-                              evt.resolution,
-                              ccVal - midi::Message<
-                                          midi::ControlChange>::RES_MAX};
-                        }
-                     }
-                     else
-                     {
-                        return IncrementType{evt.resolution,
-                                             diffFromMiddleVal};
+                        return IncrementType{
+                           evt.resolution,
+                           ccVal - midi::Message<
+                                       midi::ControlChange>::RES_MAX};
                      }
                   }
+                  else
+                  {
+                     return IncrementType{evt.resolution,
+                                          diffFromMiddleVal};
+                  }
+               }
+         R_END_SWITCH
+         },
+         CASE(midi::Message<midi::ControlChangeHighRes>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventPressRelease, evt) -> EventValue 
+               {
+                  return PressReleaseType{msg.controllerValue() ? 1.0f : -1.0f};
+               },
+               CASE(description::controller::EventContinousValue, evt) -> EventValue 
+               {
+                  return ContinousValueType{msg.getNormalizedValue()};
+               },
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue
+               {
+                  if(evt.bidirectional)
+                  {
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
+                  }
+                  else
+                  {
+                     return RelativeValueType{msg.getNormalizedValue()};
+                  }
+               },
+               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
+               {
+                  return mpark::monostate();
+               },
+               CASE(description::controller::EventIncremental, evt) -> EventValue 
+               {
+                  return IncrementType{
+                     msg.controllerValue() - (midi::Message<midi::ControlChangeHighRes>::RES_MAX / 2)};
+               }
             R_END_SWITCH
-           },
-           CASE(midi::Message<midi::ControlChangeHighRes>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) -> EventValue 
+         },
+         CASE(midi::Message<midi::NRPN>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventPressRelease, evt) -> EventValue 
+               {
+                  return PressReleaseType{msg.getValue() ? 1.0f : -1.0f};
+               },
+               CASE(description::controller::EventContinousValue, evt) -> EventValue 
+               {
+                  return ContinousValueType{msg.getNormalizedValue()};
+               },
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue 
+               {
+                  if(evt.bidirectional)
                   {
-                     return PressReleaseType{msg.controllerValue() ? 1.0f : -1.0f};
-                  },
-                  CASE(description::controller::EventContinousValue, evt) -> EventValue 
-                  {
-                     return ContinousValueType{msg.getRelativeValue()};
-                  },
-                  CASE(description::controller::EventRelativeValue, evt) -> EventValue
-                  {
-                  return RelativeValueType{msg.getRelativeValue() - 0.5f};
-                  },
-                  CASE(description::controller::EventIncremental, evt) -> EventValue 
-                  {
-                     return IncrementType{
-                        msg.controllerValue() - (midi::Message<midi::ControlChangeHighRes>::RES_MAX / 2)};
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
                   }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::NRPN>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) -> EventValue 
+                  else
                   {
-                     return PressReleaseType{msg.getValue() ? 1.0f : -1.0f};
-                  },
-                  CASE(description::controller::EventContinousValue, evt) -> EventValue 
-                  {
-                     return ContinousValueType{msg.getRelativeValue()};
-                  },
-                  CASE(description::controller::EventRelativeValue, evt) -> EventValue 
-                  {
-                     return RelativeValueType{msg.getRelativeValue() - 0.5f};
-                  },
-                  CASE(description::controller::EventIncremental, evt) -> EventValue
-                  {
-                     return IncrementType{
-                        msg.getValue() - (midi::Message<midi::NRPN>::RES_MAX / 2)};
+                     return RelativeValueType{msg.getNormalizedValue()};
                   }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::NoteOn>, msg)
-           {
-              if (mpeMode)
-              {
-                 m_mpeMap[msg.channel() - 1] = id.widgetCoord;
-              }
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) -> EventValue
-                  {
-                     return PressReleaseType{msg.relativeVelocity()};
-                  },
-                  CASE_DEFAULT -> EventValue 
-                  { 
-                     return mpark::monostate();
-                  }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::NoteOff>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) -> EventValue
-                  {
-                     return PressReleaseType{-1.0f * msg.relativeVelocity()};
-                  },
-                  CASE_DEFAULT -> EventValue
-                  {
-                     return mpark::monostate();
-                  }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::AfterTouchChannel>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventContinousValue, evt) -> EventValue
-                  {
-                     return ContinousValueType{msg.relativeValue()};
-                  },
-                  CASE_DEFAULT -> EventValue
-                  { 
-                     return mpark::monostate(); 
-                  }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::AfterTouchPoly>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventContinousValue, evt) -> EventValue
-                  {
-                     return ContinousValueType{msg.relativePressure()};
-                  },
-                  CASE_DEFAULT -> EventValue
-                  {
-                     return mpark::monostate();
-                  }
-               R_END_SWITCH
-           },
-           CASE(midi::Message<midi::PitchBend>, msg)
-           {
-              return R_SWITCH(eventDescr)
-                  CASE(description::controller::EventRelativeValue, evt) -> EventValue
-                  {
-                     return RelativeValueType{float(msg.value())};   // TODO: need some coefficient?
-                  },
-                  CASE_DEFAULT -> EventValue 
-                  { 
-                     return mpark::monostate(); 
-                  }
-               R_END_SWITCH
-           },
-           CASE_DEFAULT -> EventValue { return mpark::monostate(); }
+               },
+               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
+               {
+                  return mpark::monostate();
+               },
+               CASE(description::controller::EventIncremental, evt) -> EventValue
+               {
+                  return IncrementType{
+                     msg.getValue() - (midi::Message<midi::NRPN>::RES_MAX / 2)};
+               }
+            R_END_SWITCH
+         },
+         CASE(midi::Message<midi::NoteOn>, msg)
+         {
+            if (mpeMode)
+            {
+               m_mpeMap[msg.channel() - 1] = id.widgetCoord;
+            }
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventPressRelease, evt) -> EventValue
+               {
+                  return PressReleaseType{msg.normalizedVelocity()};
+               },
+               CASE_DEFAULT -> EventValue 
+               { 
+                  return mpark::monostate();
+               }
+            R_END_SWITCH
+         },
+         CASE(midi::Message<midi::NoteOff>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventPressRelease, evt) -> EventValue
+               {
+                  return PressReleaseType{-1.0f * msg.normalizedVelocity()};
+               },
+               CASE_DEFAULT -> EventValue
+               {
+                  return mpark::monostate();
+               }
+            R_END_SWITCH
+         },
+         CASE(midi::Message<midi::AfterTouchChannel>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue
+               {
+                  return RelativeValueType{msg.normalizedValue()};
+               },
+               CASE_DEFAULT -> EventValue
+               {
+                  spdlog::error("AfterTouchChannel should always be RelativeValue");
+                  return mpark::monostate(); 
+               }
+            R_END_SWITCH
+         },
+         CASE(midi::Message<midi::AfterTouchPoly>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventContinousValue, evt) -> EventValue
+               {
+                  return ContinousValueType{msg.relativePressure()};
+               },
+               CASE_DEFAULT -> EventValue
+               {
+                  return mpark::monostate();
+               }
+            R_END_SWITCH
+         },
+         CASE(midi::Message<midi::PitchBend>, msg)
+         {
+            return R_SWITCH(eventDescr)
+               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue
+               {
+                  return RelativeUnlimitedValueType{msg.value(), evt.incrementsPerCentimeter};
+               },
+               CASE_DEFAULT -> EventValue 
+               {
+                  spdlog::error("<midi::PitchBend should result in an event type: EventRelativeUnlimitedValue");
+                  return mpark::monostate(); 
+               }
+            R_END_SWITCH
+         },
+         CASE_DEFAULT -> EventValue { return mpark::monostate(); }
    R_END_SWITCH
    if (!mpark::holds_alternative<mpark::monostate>(value))
    {
@@ -395,6 +429,10 @@ void MidiInMsgHandler<MidiInIfPtr>::initCache()
                detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
             },
             CASE(description::controller::EventRelativeValue, evt) 
+            {
+              detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
+            },
+            CASE(description::controller::EventRelativeUnlimitedValue, evt) 
             {
               detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
             },

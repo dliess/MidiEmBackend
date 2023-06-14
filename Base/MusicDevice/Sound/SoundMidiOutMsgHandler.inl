@@ -77,13 +77,13 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                  if (valueRange)
                  {
                     return midi::Message<midi::ControlChange>::
-                        fromRelativeValue(midiChannel, msgId.id, value,
+                        fromNormalizedValue(midiChannel, msgId.id, value,
                                           valueRange->from, valueRange->to);
                  }
                  else
                  {
                     return midi::Message<
-                        midi::ControlChange>::fromRelativeValue(midiChannel,
+                        midi::ControlChange>::fromNormalizedValue(midiChannel,
                                                                 msgId.id,
                                                                 value);
                  }
@@ -94,14 +94,14 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                  if (valueRange)
                  {
                     return midi::Message<midi::ControlChangeHighRes>::
-                        fromRelativeValue(midiChannel, msgId.idMsb, msgId.idLsb,
+                        fromNormalizedValue(midiChannel, msgId.idMsb, msgId.idLsb,
                                           value, valueRange->from,
                                           valueRange->to);
                  }
                  else
                  {
                     return midi::Message<midi::ControlChangeHighRes>::
-                        fromRelativeValue(midiChannel, msgId.idMsb, msgId.idLsb,
+                        fromNormalizedValue(midiChannel, msgId.idMsb, msgId.idLsb,
                                           value);
                  }
               },
@@ -110,13 +110,13 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                   -> midi::MidiMessage {
                  if (valueRange)
                  {
-                    return midi::Message<midi::NRPN>::fromRelativeValue(
+                    return midi::Message<midi::NRPN>::fromNormalizedValue(
                         midiChannel, msgId.idMsb, msgId.idLsb, value,
                         valueRange->from, valueRange->to);
                  }
                  else
                  {
-                    return midi::Message<midi::NRPN>::fromRelativeValue(
+                    return midi::Message<midi::NRPN>::fromNormalizedValue(
                         midiChannel, msgId.idMsb, msgId.idLsb, value);
                  }
               },
@@ -125,13 +125,13 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                   -> midi::MidiMessage {
                  if (valueRange)
                  {
-                    return midi::Message<midi::RPN>::fromRelativeValue(
+                    return midi::Message<midi::RPN>::fromNormalizedValue(
                         midiChannel, msgId.idMsb, msgId.idLsb, value,
                         valueRange->from, valueRange->to);
                  }
                  else
                  {
-                    return midi::Message<midi::RPN>::fromRelativeValue(
+                    return midi::Message<midi::RPN>::fromNormalizedValue(
                         midiChannel, msgId.idMsb, msgId.idLsb, value);
                  }
               },

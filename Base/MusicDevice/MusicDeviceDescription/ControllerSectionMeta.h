@@ -78,8 +78,26 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
 {
    return members(
       member("name", &base::musicDevice::description::controller::EventRelativeValue::name),
+      member("bidirectional", &base::musicDevice::description::controller::EventRelativeValue::bidirectional),
       member("global", &base::musicDevice::description::controller::EventRelativeValue::global),
       member("source", &base::musicDevice::description::controller::EventRelativeValue::source)
+   );
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventRelativeUnlimitedValue>(int i) noexcept
+{
+   return "RelativeUnlimitedValue";
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::controller::EventRelativeUnlimitedValue>()
+{
+   return members(
+      member("name", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::name),
+      member("incrementsPerCentimeter", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::incrementsPerCentimeter),
+      member("global", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::global),
+      member("source", &base::musicDevice::description::controller::EventRelativeUnlimitedValue::source)
    );
 }
 

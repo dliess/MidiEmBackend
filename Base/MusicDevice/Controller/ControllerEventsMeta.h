@@ -82,6 +82,17 @@ inline auto getClassNameOrIndex<base::musicDevice::controller::RelativeValueType
    return "RelativeValueType";
 }
 
+template<>
+inline auto registerMembers<base::musicDevice::controller::RelativeUnlimitedValueType>()
+{
+   return members(member("value", &base::musicDevice::controller::RelativeUnlimitedValueType::value));
+}
+
+template<>
+inline auto getClassNameOrIndex<base::musicDevice::controller::RelativeUnlimitedValueType>(int i) noexcept
+{
+   return "RelativeUnlimitedValueType";
+}
 
 template<>
 inline auto registerMembers<base::musicDevice::controller::Event>()

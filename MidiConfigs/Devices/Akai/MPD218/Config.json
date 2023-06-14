@@ -164,8 +164,9 @@
             ]
           },
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "global aftertouch",
+            "bidirectional": false,
             "source": [
               [
                 {

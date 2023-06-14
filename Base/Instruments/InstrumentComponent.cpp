@@ -35,10 +35,8 @@ void Component::pitchBend(float value) const
    }
 }
 
-float calculateIncrementedParameterValue(float actualValue, float increment,
-                                         bool roundRobin, bool isList, float paramValueRange)
+float limitParameterValue(float targetVal, bool roundRobin, bool isList, float paramValueRange)
 {
-   float targetVal = actualValue + increment;
    if (isList)
    {
       const auto targetlistIdx = int(targetVal);
@@ -75,8 +73,8 @@ void Component::incrementParameterValue(
           m_pParameterCache->getParameter(parameterIdx, parameterAttr);
       const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float newParamValue = calculateIncrementedParameterValue(
-          actualValue, increment, roundRobin, isList, paramValueRange);
+      const float newParamValue = limitParameterValue(
+          actualValue + increment, roundRobin, isList, paramValueRange);
       setParameterValue(parameterIdx, parameterAttr, newParamValue);
    }
 }
@@ -133,9 +131,14 @@ void Component::setParameterValue(
 {
    if (m_pSoundDevice)
    {
+      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+          m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
+      const float limitedValue = limitParameterValue(
+          value, false, isList, paramValueRange);
+
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
-                                        parameterAttr, value);
-      m_pParameterCache->setParameter(parameterIdx, parameterAttr, value);
+                                        parameterAttr, limitedValue);
+      m_pParameterCache->setParameter(parameterIdx, parameterAttr, limitedValue);
    }
 }
 

@@ -15,7 +15,7 @@
         "events": [
           {
             ".type": "PressRelease",
-            "name": "key",
+            "name": "keyPress",
             "pressSource": [
               [
                 {
@@ -34,8 +34,9 @@
             ]
           },
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "MPE Aftertouch",
+            "bidirectional": false,
             "source": [
               [
                 {
@@ -46,8 +47,9 @@
             ]
           },
           {
-            ".type": "RelativeValue",
+            ".type": "RelativeUnlimitedValue",
             "name": "MPE PitchBend",
+            "incrementsPerCentimeter": 154,
             "source": [
               [
                 {
@@ -60,6 +62,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE PosY",
+            "bidirectional": true,
             "source": [
               [
                 {

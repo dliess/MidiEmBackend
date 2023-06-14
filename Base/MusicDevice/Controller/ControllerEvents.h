@@ -47,8 +47,15 @@ struct RelativeValueType
    float value;
 };
 
+struct RelativeUnlimitedValueType
+{
+   int value{0};
+   int incrementsPerCentimeter{1};
+};
+
 using EventValue = mpark::variant<mpark::monostate, PressReleaseType,
-                                  ContinousValueType, IncrementType, RelativeValueType>;
+                                  ContinousValueType, IncrementType, 
+                                  RelativeValueType, RelativeUnlimitedValueType>;
 
 struct Event
 {

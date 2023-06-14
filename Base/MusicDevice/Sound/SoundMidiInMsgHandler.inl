@@ -148,9 +148,9 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
               {
                  const auto& valueRange = descr.source.midi->sourceValueRange;
                  return valueRange.has_value()
-                            ? msg.getRelativeValue(valueRange->from,
+                            ? msg.getNormalizedValue(valueRange->from,
                                                    valueRange->to)
-                            : msg.getRelativeValue();
+                            : msg.getNormalizedValue();
               }
            },
            [this, &descr](
@@ -163,9 +163,9 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
               {
                  const auto& valueRange = descr.source.midi->sourceValueRange;
                  return valueRange.has_value()
-                            ? msg.getRelativeValue(valueRange->from,
+                            ? msg.getNormalizedValue(valueRange->from,
                                                    valueRange->to)
-                            : msg.getRelativeValue();
+                            : msg.getNormalizedValue();
               }
            },
            [this, &descr](const midi::Message<midi::NRPN>& msg) -> float {
@@ -177,9 +177,9 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
               {
                  const auto& valueRange = descr.source.midi->sourceValueRange;
                  return valueRange.has_value()
-                            ? msg.getRelativeValue(valueRange->from,
+                            ? msg.getNormalizedValue(valueRange->from,
                                                    valueRange->to)
-                            : msg.getRelativeValue();
+                            : msg.getNormalizedValue();
               }
            },
            [this, &descr](const midi::Message<midi::RPN>& msg) -> float {
@@ -191,9 +191,9 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
               {
                  const auto& valueRange = descr.source.midi->sourceValueRange;
                  return valueRange.has_value()
-                            ? msg.getRelativeValue(valueRange->from,
+                            ? msg.getNormalizedValue(valueRange->from,
                                                    valueRange->to)
-                            : msg.getRelativeValue();
+                            : msg.getNormalizedValue();
               }
            },
            [](auto&& other) -> float { return -1; }},

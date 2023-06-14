@@ -66,6 +66,12 @@ inline bool operator==(const RelativeValueType& lhs,
    return lhs.value == rhs.value;
 }
 
+inline bool operator==(const RelativeUnlimitedValueType& lhs,
+                       const RelativeUnlimitedValueType& rhs)
+{
+   return lhs.value == rhs.value;
+}
+
 inline bool operator==(Event const& lhs, Event const& rhs)
 {
    return lhs.id == rhs.id && lhs.value == rhs.value;

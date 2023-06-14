@@ -12,8 +12,9 @@
         },
         "events": [
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "Front",
+            "bidirectional": false,
             "source": [
               [
                 {
@@ -24,8 +25,9 @@
             ]
           },
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "Back",
+            "bidirectional": false,
             "source": [
               [
                 {
@@ -36,8 +38,9 @@
             ]
           },
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "Left",
+            "bidirectional": false,
             "source": [
               [
                 {
@@ -48,8 +51,9 @@
             ]
           },
           {
-            ".type": "ContinousValue",
+            ".type": "RelativeValue",
             "name": "Right",
+            "bidirectional": false,
             "source": [
               [
                 {
