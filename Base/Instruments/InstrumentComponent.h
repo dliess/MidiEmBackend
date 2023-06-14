@@ -35,9 +35,9 @@ public:
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
        float increment, bool roundRobin) const;
 
-   [[nodiscard]] float getParameterValue(
+   [[nodiscard]] std::optional<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
-   [[nodiscard]] float getParameterValueCached(
+   [[nodiscard]] std::optional<float> getParameterValueCached(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,

@@ -49,7 +49,7 @@ public:
    void afterTouchPoly(int voiceIdx, int note, float value) noexcept;
    void afterTouch(int voiceIdx, float value) noexcept;
    void setParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr, float value) noexcept;
-   [[nodiscard]] float getParameterValue(
+   [[nodiscard]] std::optional<float> getParameterValue(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
    [[nodiscard]] float getParameterRange(

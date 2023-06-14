@@ -90,7 +90,7 @@ void Component::incrementParameterValueDontCache(
    }
 }
 
-float Component::getParameterValue(
+std::optional<float> Component::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    if (m_pParameterCache)
@@ -110,11 +110,10 @@ float Component::getParameterValue(
                 m_pParameterCache->at(parameterIdx).lfo.waveform));
       }
    }
-   return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of
-                 // type util::non_null
+   return std::nullopt;
 }
 
-float Component::getParameterValueCached(
+std::optional<float> Component::getParameterValueCached(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    if (m_pSoundDevice)
@@ -122,7 +121,7 @@ float Component::getParameterValueCached(
       return m_pSoundDevice->getParameterValue(m_sdVoiceIdx, parameterIdx,
                                                parameterAttr);
    }
-   return 0.0;   // TODO: better error handling
+   return std::nullopt;
 }
 
 void Component::setParameterValue(

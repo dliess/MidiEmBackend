@@ -58,11 +58,11 @@ void KitInstrument::incrementParameterValue(
    });
 }
 
-float KitInstrument::getParameterValue(
+std::optional<float> KitInstrument::getParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   float ret = 0.0;
+   std::optional<float> ret;
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
       ret = component.getParameterValue(parameterIdx, parameterAttr);
    });

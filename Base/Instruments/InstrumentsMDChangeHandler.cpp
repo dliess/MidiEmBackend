@@ -61,7 +61,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
           nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
       kitInstrument.addVoice(voiceIdx, voice);
    }
-   if (!m_rInstruments.hasKitInstrument(kitInstrument))
+   if (!m_rInstruments.hasSameInstrument(kitInstrument))
    {
       m_rInstruments.insertKitInstrument(kitInstrument);
    }
@@ -88,7 +88,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
           nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
       melodicInstrument.voices().push_back(std::move(voice));
 
-      if (!m_rInstruments.hasMelodicInstrument(melodicInstrument))
+      if (!m_rInstruments.hasSameInstrument(melodicInstrument))
       {
          m_rInstruments.insertMelodicInstrument(melodicInstrument);
       }
@@ -113,7 +113,7 @@ void InstrumentsMDChangeHandler::
           nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
       melodicInstrument.voices().push_back(std::move(voice));
    }
-   if (!m_rInstruments.hasMelodicInstrument(melodicInstrument))
+   if (!m_rInstruments.hasSameInstrument(melodicInstrument))
    {
       m_rInstruments.insertMelodicInstrument(melodicInstrument);
    }

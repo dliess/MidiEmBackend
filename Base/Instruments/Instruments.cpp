@@ -78,7 +78,7 @@ void Instruments::insertKitInstrument(KitInstrument& kitInstrument)
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
-bool Instruments::hasKitInstrument(const KitInstrument& kitInstrument) const
+bool Instruments::hasSameInstrument(const KitInstrument& kitInstrument) const
 {
    const auto& data = m_doubleBufferedData.nonRt();
    for (const auto& e : data.kitInstruments)
@@ -124,7 +124,7 @@ void Instruments::createMelodicInstrument(std::string name)
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
-bool Instruments::hasMelodicInstrument(
+bool Instruments::hasSameInstrument(
     const MelodicInstrument& melodicInstrument) const
 {
    const auto& data = m_doubleBufferedData.nonRt();

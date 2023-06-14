@@ -41,7 +41,7 @@ void ModifiersApplyer::operator()() noexcept
                         modifier.destParamCoord.voiceIdx,
                         modifier.destParamCoord.parameterIdx,
                         modifier.destParamCoord.parameterAttr);
-                modifier.goalValue.emplace(pv, pr);
+                modifier.goalValue.emplace(*pv, pr);
              }
           }
        });

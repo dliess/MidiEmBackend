@@ -126,7 +126,7 @@ void MelodicInstrument::incrementParameterValue(
    }
 }
 
-float MelodicInstrument::getParameterValue(
+std::optional<float> MelodicInstrument::getParameterValue(
     int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
@@ -135,20 +135,26 @@ float MelodicInstrument::getParameterValue(
    {
       return component->getParameterValueCached(parameterIdx, parameterAttr);
    }
-   return 0.0;   // TODO: exception?
+   return std::nullopt;
 }
 
-float MelodicInstrument::getParameterValue(
+std::optional<float> MelodicInstrument::getParameterValue(
     int note, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      return std::nullopt;
+   }
+
    auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
                          .components.at(componentIdx);
    if (component)
    {
       return component->getParameterValue(parameterIdx, parameterAttr);
    }
-   return 0.0;   // TODO: exception?
+   return std::nullopt;
 }
 
 void MelodicInstrument::setParameterValue(
@@ -172,8 +178,14 @@ void MelodicInstrument::setParameterValue(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
-   auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
-                         .components.at(componentIdx);
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      return;
+   }
+
+   const auto voiceIdx = m_pRtData->noteAllocations.at(note);
+   auto& component = m_voices.at(voiceIdx).components.at(componentIdx);
    if (component)
    {
       component->setParameterValue(parameterId, parameterAttr, value);
@@ -199,6 +211,12 @@ float MelodicInstrument::normalizePercentageValue(
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      return 0.0;
+   }
+
    auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
                          .components.at(componentIdx);
    if (component)

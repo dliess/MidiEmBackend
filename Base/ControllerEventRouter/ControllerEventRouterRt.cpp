@@ -81,9 +81,12 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    }
    else
    {
-      const float actualVal =
+      const auto actualVal =
             dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-      if (std::fabs(actualVal - parameter.descriptionCache.zeroVal) <
+      if(!actualVal) {
+         return;
+      }
+      if (std::fabs(actualVal.value() - parameter.descriptionCache.zeroVal) <
             std::numeric_limits<float>::epsilon())
       {
          if (parameter.valueCache->valueAtPress)
@@ -109,11 +112,14 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    const float val = dev.normalizePercentageValue(
        mdCoords..., parameter.id,
        base::musicDevice::sound::ParameterAttr::Commanded, value.value);
-   const float actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-   const float diff      = std::fabs(actualVal - val);
-   if ((diff != 0) && (diff < 0.12 || diff >= 1.0))
+   const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+   if(actualVal)
    {
-      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
+      const float diff = std::fabs(actualVal.value() - val);
+      if ((diff != 0) && (diff < 0.12 || diff >= 1.0))
+      {
+         dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
+      }
    }
 }
 
@@ -142,10 +148,10 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::RelativeValueType& value,
                   MDCoords... mdCoords)
 {
-   if (0 == value.value)
+   if (0 == value.value || !parameter.valueCache->valueAtPress)
    {
-      parameter.valueCache->valueAtPress.emplace<float>(
-          dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr));
+      const auto actValue = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+      parameter.valueCache->valueAtPress = actValue;
    }
    if(parameter.valueCache->valueAtPress)
    {
@@ -159,7 +165,16 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::RelativeUnlimitedValueType& value,
                   MDCoords... mdCoords)
 {
-/* TODO */
+   if (0 == value.value || !parameter.valueCache->valueAtPress)
+   {
+      const auto actValue = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+      parameter.valueCache->valueAtPress = actValue;
+   }
+   if(parameter.valueCache->valueAtPress)
+   {
+      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
+      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
+   }
 }
 
 }   // namespace detail
@@ -207,6 +222,12 @@ void EventRouterRt::handlePressReleaseType(
             {
                handleAnyNotePressRelease(note.number, destIter2->second,
                                           value);
+            }
+            else
+            {
+               spdlog::error("Should have found\n {}\n in \n{}", 
+                  nlohmann::json(melodicEvent).dump(3),
+                  nlohmann::json(m_rMap).dump(3));
             }
          }
       }

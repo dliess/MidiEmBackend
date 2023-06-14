@@ -185,7 +185,7 @@ void SoundHandler::setCommandedValue(int voiceId, int parameterId,
    m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
 }
 
-float SoundHandler::getParameterValue(
+std::optional<float> SoundHandler::getParameterValue(
     int voiceId, int parameterId, ParameterAttr parameterAttr) const noexcept
 {
    return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterAttr);

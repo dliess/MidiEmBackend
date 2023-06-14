@@ -49,10 +49,10 @@ public:
    void incrementParameterValue(int note, int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
-   [[nodiscard]] float getParameterValue(
+   [[nodiscard]] std::optional<float> getParameterValue(
        int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   [[nodiscard]] float getParameterValue(
+   [[nodiscard]] std::optional<float> getParameterValue(
        int note, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int componentIdx, int parameterId,
