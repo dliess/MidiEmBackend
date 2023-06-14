@@ -188,7 +188,7 @@ void MelodicInstrument::setParameterValue(
    auto& component = m_voices.at(voiceIdx).components.at(componentIdx);
    if (component)
    {
-      component->setParameterValue(parameterId, parameterAttr, value);
+      component->setParameterValueDontCache(parameterId, parameterAttr, value);
    }
 }
 

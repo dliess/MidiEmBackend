@@ -141,6 +141,22 @@ void Component::setParameterValue(
    }
 }
 
+void Component::setParameterValueDontCache(
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+    float value) const
+{
+   if (m_pSoundDevice)
+   {
+      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+          m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
+      const float limitedValue = limitParameterValue(
+          value, false, isList, paramValueRange);
+
+      m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
+                                        parameterAttr, limitedValue);
+   }
+}
+
 float Component::normalizePercentageValue(
     int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const

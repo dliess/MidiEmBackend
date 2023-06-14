@@ -104,22 +104,40 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    }
 }
 
+inline
+bool isNearEnough(float newVal, float actualVal)
+{
+   const float diff = std::fabs(newVal - actualVal);
+   return ((diff != 0) && (diff < 0.12 || diff >= 1.0));
+}
+
+inline int calcIncrements(const EventDestination::Parameter& parameter, 
+                          const controller::IncrementType& increment)
+{
+   if (isList(parameter))
+   {
+      const int accIncr = increment.value + parameter.valueCache->storedIncrements;
+      const int incrForOneStep        = increment.resolution / 12;
+      parameter.valueCache->storedIncrements = accIncr % incrForOneStep;
+      return accIncr / incrForOneStep;
+   }
+   else
+   {   // TODO: highres mode
+      return float(increment.value) / float(increment.resolution);
+   }
+}
+
+
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::ContinousValueType& value,
                   MDCoords... mdCoords)
 {
-   const float val = dev.normalizePercentageValue(
-       mdCoords..., parameter.id,
-       base::musicDevice::sound::ParameterAttr::Commanded, value.value);
+   const float val = dev.normalizePercentageValue(mdCoords..., parameter.id, base::musicDevice::sound::ParameterAttr::Commanded, value.value);
    const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-   if(actualVal)
+   if(actualVal && isNearEnough(actualVal.value(), val))
    {
-      const float diff = std::fabs(actualVal.value() - val);
-      if ((diff != 0) && (diff < 0.12 || diff >= 1.0))
-      {
-         dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
-      }
+      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
    }
 }
 
@@ -128,18 +146,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::IncrementType& increment,
                   MDCoords... mdCoords)
 {
-   float incr = 0;
-   if (isList(parameter))
-   {
-      const int accIncr = increment.value + parameter.valueCache->storedIncrements;
-      const int incrForOneStep        = increment.resolution / 12;
-      incr                            = accIncr / incrForOneStep;
-      parameter.valueCache->storedIncrements = accIncr % incrForOneStep;
-   }
-   else
-   {   // TODO: highres mode
-      incr = float(increment.value) / float(increment.resolution);
-   }
+   const int incr = calcIncrements(parameter, increment);
    dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
 }
 

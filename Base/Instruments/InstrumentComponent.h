@@ -42,6 +42,9 @@ public:
    void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
+   void setParameterValueDontCache(int parameterIdx,
+                          musicDevice::sound::ParameterAttr parameterAttr,
+                          float value) const;
    [[nodiscard]] float normalizePercentageValue(
        int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
