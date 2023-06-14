@@ -108,7 +108,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
        base::musicDevice::sound::ParameterAttr::Commanded, value.value);
    const float actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
    const float diff      = std::fabs(actualVal - val);
-   if ((diff != 0) && (diff < 0.02 || diff >= 1.0))
+   if ((diff != 0) && (diff < 0.12 || diff >= 1.0))
    {
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
    }
@@ -140,17 +140,21 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
                   MDCoords... mdCoords)
 {
    float valueToSet = value.value;
+   spdlog::error("-----HERE1 {}", value.value);
    if (!parameter.valueCache->valueAtPress)
    {
       parameter.valueCache->valueAtPress.emplace<float>(
           dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr));
    }
+   spdlog::error("-----HERE2 {}", parameter.valueCache->valueAtPress.value());
    valueToSet += parameter.valueCache->valueAtPress.value();
    dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
+   spdlog::error("-----HERE3 {}", valueToSet);
    if (0 == value.value)
    {
       parameter.valueCache->valueAtPress = std::nullopt;
    }
+   spdlog::error("-----HERE4");
 }
 }   // namespace detail
 
