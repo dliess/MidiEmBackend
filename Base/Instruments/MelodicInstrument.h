@@ -42,6 +42,7 @@ public:
    void noteOff(int note, float velocity, void* token = nullptr) const override;
 
    void pitchBend(float value) const;
+   void pitchBend(int note, float value) const;
    void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;

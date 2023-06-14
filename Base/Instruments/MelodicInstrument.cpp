@@ -68,6 +68,24 @@ void MelodicInstrument::pitchBend(float value) const
    }
 }
 
+void MelodicInstrument::pitchBend(int note, float value) const
+{
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+       m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      return;
+   }
+   const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
+   for (const auto& component : voice.components)
+   {
+      if (component)
+      {
+         component->pitchBend(value);
+      }
+   }
+}
+
+
 void MelodicInstrument::incrementParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,

@@ -286,7 +286,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                },
                CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue
                {
-                  return RelativeUnlimitedValueType{msg.value(), evt.incrementsPerSemitoneDistance};
+                  return RelativeUnlimitedValueType{float(msg.value()) / float(evt.incrementsPerSemitoneDistance)};
                },
                CASE_DEFAULT -> EventValue 
                {

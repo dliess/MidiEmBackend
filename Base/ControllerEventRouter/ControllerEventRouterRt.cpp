@@ -740,7 +740,9 @@ void EventRouterRt::handleRelativeValue(
       CASE(EventDestination::DrumKit, drumKit) 
       {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               spdlog::error("for now we dont do pitchbend on drumkit");
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withKitInstrumentRt(
                   drumKit.uuid, [&](auto& kitInstr) {
@@ -753,7 +755,12 @@ void EventRouterRt::handleRelativeValue(
       },
       CASE(EventDestination::Melodic, melodic) {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     melodicInstr.pitchBend(value.value);
+                  });
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
@@ -766,7 +773,12 @@ void EventRouterRt::handleRelativeValue(
       },
       CASE(EventDestination::MusicDevice, musicDevice) {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) {
+               m_rMusicDeviceContainer.withSoundHandler(
+                  musicDevice.mdid, [&](auto& soundHandler) {
+                     soundHandler.pitchBend(musicDevice.voiceIdx, value.value);
+                  });
+            },
             CASE(EventDestination::Parameter, parameter) {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {
@@ -806,7 +818,7 @@ void EventRouterRt::handleRelativeUnlimitedValue(
             CASE(EventDestination::Note,_) {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     melodicInstr.pitchBend(value);
+                     melodicInstr.pitchBend(value.value);
                   });
             },
             CASE(EventDestination::Parameter, parameter) {
@@ -824,7 +836,7 @@ void EventRouterRt::handleRelativeUnlimitedValue(
             CASE(EventDestination::Note,_) {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {
-                     soundHandler.pitchBend(musicDevice.voiceIdx, value);
+                     soundHandler.pitchBend(musicDevice.voiceIdx, value.value);
                   });
             },
             CASE(EventDestination::Parameter, parameter) {
@@ -871,11 +883,19 @@ void EventRouterRt::sendMPERelativeUnlimitedValue(
     const controller::RelativeUnlimitedValueType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
-      CASE(EventDestination::DrumKit,_) {},
+      CASE(EventDestination::DrumKit,_) {
+         spdlog::error("sendMPERelativeUnlimitedValue on drumkit, does it make sense?");
+      },
       CASE(EventDestination::Melodic, melodic) 
       {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) 
+            {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     melodicInstr.pitchBend(note, value.value);
+                  });
+            },
             CASE(EventDestination::Parameter, parameter) 
             {
                m_rInstruments.withMelodicInstrumentRt(

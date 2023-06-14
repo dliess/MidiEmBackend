@@ -17,7 +17,7 @@ sound::MidiOutMsgHandler<MidiOutIfPtr>::MidiOutMsgHandler(
 {
    if (m_rSoundSection.pitchBendFactor)
    {
-      m_pitchBendFactor = *m_rSoundSection.pitchBendFactor;
+      m_semitonesPerHalfPitchbendRange = *m_rSoundSection.pitchBendFactor;
    }
 }
 
@@ -219,7 +219,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIdx,
    assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
    const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
    m_pMidiOutIf->pitchBend(voiceDescr.midiChannel + m_midiChannelOffset,
-                           value * m_pitchBendFactor * 16383);
+                           float(std::min(value, m_semitonesPerHalfPitchbendRange) / m_semitonesPerHalfPitchbendRange) );
 }
 
 template <typename MidiOutIfPtr>

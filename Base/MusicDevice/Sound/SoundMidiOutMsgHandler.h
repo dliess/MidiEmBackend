@@ -29,7 +29,7 @@ public:
 private:
    MidiOutIfPtr m_pMidiOutIf;
    const description::sound::Section& m_rSoundSection;
-   float m_pitchBendFactor{1.0};
+   float m_semitonesPerHalfPitchbendRange{2.0};
    uint8_t m_midiChannelOffset{0};
 };
 
