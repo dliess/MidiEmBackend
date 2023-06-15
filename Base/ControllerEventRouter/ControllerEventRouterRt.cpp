@@ -5,6 +5,7 @@
 #include "MelodicInstrument.h"
 #include "SoundHandler.h"
 
+using namespace base;
 using namespace base::eventRouter;
 using namespace base::musicDevice;
 
@@ -140,6 +141,17 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
    }
 }
+void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+                     const controller::ContinousValueType& value, int note, int componentIdx)
+{
+   const float val = dev.normalizePercentageValue(note, componentIdx, parameter.id, base::musicDevice::sound::ParameterAttr::Commanded, value.value);
+   const auto actualVal = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
+   if(actualVal && isNearEnough(actualVal.value(), val))
+   {
+      dev.setParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr, val);
+   }
+}
+
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
@@ -149,6 +161,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    const int incr = calcIncrements(parameter, increment);
    dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
 }
+
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
@@ -164,6 +177,22 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    {
       const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
+   }
+}
+
+void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+                     const controller::RelativeValueType& value, int note,
+                     int componentIdx)
+{
+   if (0 == value.value || !parameter.valueCache->valueAtPress)
+   {
+      const auto actValue = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
+      parameter.valueCache->valueAtPress = actValue;
+   }
+   if(parameter.valueCache->valueAtPress)
+   {
+      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
+      dev.setParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr, valueToSet);
    }
 }
 
@@ -183,6 +212,22 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
    }
 }
+void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+                  const controller::RelativeUnlimitedValueType& value, int note,
+                  int componentIdx)
+{
+   if (0 == value.value || !parameter.valueCache->valueAtPress)
+   {
+      const auto actValue = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
+      parameter.valueCache->valueAtPress = actValue;
+   }
+   if(parameter.valueCache->valueAtPress)
+   {
+      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
+      dev.setParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr, valueToSet);
+   }
+}
+
 
 }   // namespace detail
 
@@ -320,18 +365,6 @@ void EventRouterRt::handleIncrementType(
          if (destIter != m_rMap.end())
          {
             handleIncrement(destIter->second, value);
-         }
-         else
-         {
-            controller::EventIdExt melodicEvent = eventIdExt;
-            melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
-               ANY);
-            const auto destIter2 = m_rMap.find(melodicEvent);
-            if (destIter2 != m_rMap.end())
-            {
-               sendMPEIncrementValue(note.number, destIter2->second,
-                                    value);
-            }
          }
       }
    END_SWITCH
@@ -674,7 +707,7 @@ void EventRouterRt::sendMPEContinousValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,
+                     detail::setParameterMPE(melodicInstr, parameter,
                                           value, note,
                                           melodic.componentIdx);
                   });
@@ -733,30 +766,6 @@ void EventRouterRt::handleIncrement(
             }
          END_SWITCH
       }
-   END_SWITCH
-}
-
-void EventRouterRt::sendMPEIncrementValue(
-    int note, const EventDestination& eventDestination,
-    const controller::IncrementType& increment) noexcept
-{
-   SWITCH(eventDestination.endpoint)
-      CASE(EventDestination::DrumKit,_) {},
-      CASE(EventDestination::Melodic, melodic) 
-      {
-         SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
-            CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,
-                                          increment, note,
-                                          melodic.componentIdx);
-                  });
-            }
-         END_SWITCH
-      },
-      CASE(EventDestination::MusicDevice, _) {}
    END_SWITCH
 }
 
@@ -895,7 +904,7 @@ void EventRouterRt::sendMPERelativeValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,                                                    
+                     detail::setParameterMPE(melodicInstr, parameter,                                                    
                                           value, note,
                                           melodic.componentIdx);
                   });
@@ -928,9 +937,9 @@ void EventRouterRt::sendMPERelativeUnlimitedValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,                                                    
-                                          value, note,
-                                          melodic.componentIdx);
+                     detail::setParameterMPE(melodicInstr, parameter,                                                    
+                                             value, note,
+                                             melodic.componentIdx);
                   });
             }
          END_SWITCH
