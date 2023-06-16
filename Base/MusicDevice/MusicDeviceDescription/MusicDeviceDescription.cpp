@@ -65,9 +65,6 @@ void Description::checkValidity() const
                     [&widget](const controller::EventRelativeValue& evt) {
                        checkSource(evt.source, widget.dimension, evt.name);
                     },
-                    [&widget](const controller::EventRelativeUnlimitedValue& evt) {
-                       checkSource(evt.source, widget.dimension, evt.name);
-                    },
                     [&widget](const controller::EventIncremental& evt) {
                        checkSource(evt.source, widget.dimension, evt.name);
                     }},

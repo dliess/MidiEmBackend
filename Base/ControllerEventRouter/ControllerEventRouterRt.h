@@ -39,9 +39,6 @@ private:
    void handleRelativeValueType(
        const musicDevice::controller::EventIdExt& event,
        const musicDevice::controller::RelativeValueType& value) noexcept;
-   void handleRelativeUnlimitedValueType(
-       const musicDevice::controller::EventIdExt& event,
-       const musicDevice::controller::RelativeUnlimitedValueType& value) noexcept;
 
    void handlePressRelease(
        const EventDestination& eventDestination,
@@ -70,12 +67,6 @@ private:
    void sendMPERelativeValue(
        int note, const EventDestination& eventDestination,
        const musicDevice::controller::RelativeValueType& value) noexcept;
-   void handleRelativeUnlimitedValue(
-       const EventDestination& eventDestination,
-       const musicDevice::controller::RelativeUnlimitedValueType& value) noexcept;
-   void sendMPERelativeUnlimitedValue(
-       int note, const EventDestination& eventDestination,
-       const musicDevice::controller::RelativeUnlimitedValueType& value) noexcept;
    void handleIncrement(
        const EventDestination& eventDestination,
        const musicDevice::controller::IncrementType& increment) noexcept;

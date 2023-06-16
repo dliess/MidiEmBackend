@@ -162,39 +162,6 @@ void setParameterMPERelativeValue(const instruments::MelodicInstrument& dev, con
    }
 }
 
-template <typename Dev, typename... MDCoords>
-void setParameterRelativeUnlimited(Dev& dev, const EventDestination::Parameter& parameter,
-                  const controller::RelativeUnlimitedValueType& value,
-                  MDCoords... mdCoords)
-{
-   if (0 == value.value || !parameter.valueCache->valueAtPress)
-   {
-      const auto actValue = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-      parameter.valueCache->valueAtPress = actValue;
-   }
-   if(parameter.valueCache->valueAtPress)
-   {
-      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
-      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
-   }
-}
-void setParameterMPERelativeUnlimited(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
-                  const controller::RelativeUnlimitedValueType& value, int note,
-                  int componentIdx)
-{
-   if (0 == value.value || !parameter.valueCache->valueAtPress)
-   {
-      const auto actValue = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
-      parameter.valueCache->valueAtPress = actValue;
-   }
-   if(parameter.valueCache->valueAtPress)
-   {
-      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
-      dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, valueToSet);
-   }
-}
-
-
 }   // namespace base::eventRouter::detail
 
 #endif

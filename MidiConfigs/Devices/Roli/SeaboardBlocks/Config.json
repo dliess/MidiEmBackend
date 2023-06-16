@@ -36,6 +36,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE Aftertouch",
+            "fittingSemitones": 2,
             "bidirectional": false,
             "source": [
               [
@@ -47,9 +48,10 @@
             ]
           },
           {
-            ".type": "RelativeUnlimitedValue",
+            ".type": "RelativeValue",
             "name": "MPE PitchBend",
-            "incrementsPerSemitoneDistance": 154,
+            "fittingSemitones": 27,
+            "bidirectional": true,
             "source": [
               [
                 {
@@ -62,6 +64,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE PosY",
+            "fittingSemitones": 6,
             "bidirectional": true,
             "source": [
               [

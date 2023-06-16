@@ -121,10 +121,6 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                      return RelativeValueType{msg.getNormalizedValue()};
                   }
                },
-               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
-               {
-                  return mpark::monostate();
-               },
                CASE(description::controller::EventIncremental, evt) -> EventValue 
                {
                   const int ccVal = msg.controllerValue();
@@ -176,10 +172,6 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                      return RelativeValueType{msg.getNormalizedValue()};
                   }
                },
-               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
-               {
-                  return mpark::monostate();
-               },
                CASE(description::controller::EventIncremental, evt) -> EventValue 
                {
                   return IncrementType{
@@ -208,10 +200,6 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                   {
                      return RelativeValueType{msg.getNormalizedValue()};
                   }
-               },
-               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue 
-               {
-                  return mpark::monostate();
                },
                CASE(description::controller::EventIncremental, evt) -> EventValue
                {
@@ -282,15 +270,11 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
             return R_SWITCH(eventDescr)
                CASE(description::controller::EventRelativeValue, evt) -> EventValue
                {
-                  return RelativeValueType{msg.normalizedValue()};
-               },
-               CASE(description::controller::EventRelativeUnlimitedValue, evt) -> EventValue
-               {
-                  return RelativeUnlimitedValueType{float(msg.value()) / float(evt.incrementsPerSemitoneDistance)};
+                  return RelativeValueType{msg.normalizedValue(), evt.fittingSemitones};
                },
                CASE_DEFAULT -> EventValue 
                {
-                  spdlog::error("<midi::PitchBend should result in an event type: EventRelativeUnlimitedValue or EventRelativeValue");
+                  spdlog::error("<midi::PitchBend should result in an event type: EventRelativeValue");
                   return mpark::monostate(); 
                }
             R_END_SWITCH
@@ -433,10 +417,6 @@ void MidiInMsgHandler<MidiInIfPtr>::initCache()
                detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
             },
             CASE(description::controller::EventRelativeValue, evt) 
-            {
-              detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
-            },
-            CASE(description::controller::EventRelativeUnlimitedValue, evt) 
             {
               detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
             },

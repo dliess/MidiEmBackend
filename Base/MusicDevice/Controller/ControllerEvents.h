@@ -36,6 +36,7 @@ struct PressReleaseType
 struct ContinousValueType
 {
    float value; // 0.0 to 1.0
+   //std::optional<decltype(value)> valueAtPress; // Dont need to serialize this
 };
 struct IncrementType
 {
@@ -44,17 +45,13 @@ struct IncrementType
 };
 struct RelativeValueType
 {
-   float value;
-};
-
-struct RelativeUnlimitedValueType
-{
-   float value;
+   float value{0}; // -1.0 to 1.0
+   size_t fittingSemitones{2};
 };
 
 using EventValue = mpark::variant<mpark::monostate, PressReleaseType,
                                   ContinousValueType, IncrementType, 
-                                  RelativeValueType, RelativeUnlimitedValueType>;
+                                  RelativeValueType>;
 
 struct Event
 {

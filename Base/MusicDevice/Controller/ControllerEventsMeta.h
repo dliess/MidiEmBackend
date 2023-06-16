@@ -73,25 +73,16 @@ inline auto getClassNameOrIndex<base::musicDevice::controller::IncrementType>(in
 template<>
 inline auto registerMembers<base::musicDevice::controller::RelativeValueType>()
 {
-   return members(member("value", &base::musicDevice::controller::RelativeValueType::value));
+   return members(
+      member("value", &base::musicDevice::controller::RelativeValueType::value),
+      member("fittingSemitones", &base::musicDevice::controller::RelativeValueType::fittingSemitones)
+   );
 }
 
 template<>
 inline auto getClassNameOrIndex<base::musicDevice::controller::RelativeValueType>(int i) noexcept
 {
    return "RelativeValueType";
-}
-
-template<>
-inline auto registerMembers<base::musicDevice::controller::RelativeUnlimitedValueType>()
-{
-   return members(member("value", &base::musicDevice::controller::RelativeUnlimitedValueType::value));
-}
-
-template<>
-inline auto getClassNameOrIndex<base::musicDevice::controller::RelativeUnlimitedValueType>(int i) noexcept
-{
-   return "RelativeUnlimitedValueType";
 }
 
 template<>

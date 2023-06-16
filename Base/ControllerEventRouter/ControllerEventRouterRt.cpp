@@ -37,9 +37,6 @@ void EventRouterRt::operator()(const util::Identifiable::UUID uuid,
       },
       [this, &eventIdExt](const controller::RelativeValueType& value) {
          handleRelativeValueType(eventIdExt, value);
-      },
-      [this, &eventIdExt](const controller::RelativeUnlimitedValueType& value) {
-         handleRelativeUnlimitedValueType(eventIdExt, value);
       }
    END_SWITCH
 }
@@ -221,51 +218,6 @@ void EventRouterRt::handleRelativeValueType(
             if (destIter2 != m_rMap.end())
             {
                sendMPERelativeValue(note.number, destIter2->second, value);
-            }
-         }
-      },
-      [this](auto&&) {}
-   END_SWITCH
-}
-
-void EventRouterRt::handleRelativeUnlimitedValueType(
-    const controller::EventIdExt& eventIdExt,
-    const controller::RelativeUnlimitedValueType& value) noexcept
-{
-   SWITCH(eventIdExt.eventId.widgetCoord)
-
-      CASE_MONOSTATE
-      {
-         const auto destIter = m_rMap.find(eventIdExt);
-         if (destIter != m_rMap.end())
-         {
-            handleRelativeUnlimitedValue(destIter->second, value);
-         }
-      },
-      CASE(controller::WidgetCoord, _)
-      {
-         const auto destIter = m_rMap.find(eventIdExt);
-         if (destIter != m_rMap.end())
-         {
-            handleRelativeUnlimitedValue(destIter->second, value);
-         }
-      },
-      CASE(controller::Note, note)
-      {
-         const auto destIter = m_rMap.find(eventIdExt);
-         if (destIter != m_rMap.end())
-         {
-            handleRelativeUnlimitedValue(destIter->second, value);
-         }
-         else
-         {
-            controller::EventIdExt melodicEvent = eventIdExt;
-            melodicEvent.eventId.widgetCoord.emplace<controller::Note>(
-               ANY);
-            const auto destIter2 = m_rMap.find(melodicEvent);
-            if (destIter2 != m_rMap.end())
-            {
-               sendMPERelativeUnlimitedValue(note.number, destIter2->second, value);
             }
          }
       },
@@ -610,7 +562,7 @@ void EventRouterRt::handleRelativeValue(
             CASE(EventDestination::Note,_) {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     melodicInstr.pitchBend(value.value);
+                     melodicInstr.pitchBend(value.value * float(value.fittingSemitones));
                   });
             },
             CASE(EventDestination::Parameter, parameter) {
@@ -628,7 +580,7 @@ void EventRouterRt::handleRelativeValue(
             CASE(EventDestination::Note,_) {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {
-                     soundHandler.pitchBend(musicDevice.voiceIdx, value.value);
+                     soundHandler.pitchBend(musicDevice.voiceIdx, value.value * float(value.fittingSemitones) );
                   });
             },
             CASE(EventDestination::Parameter, parameter) {
@@ -643,67 +595,6 @@ void EventRouterRt::handleRelativeValue(
       }
    END_SWITCH
 }
-
-void EventRouterRt::handleRelativeUnlimitedValue(
-    const EventDestination& eventDestination,
-    const controller::RelativeUnlimitedValueType& value) noexcept
-{
-   SWITCH(eventDestination.endpoint)
-      CASE(EventDestination::DrumKit, drumKit) 
-      {
-         SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {
-               spdlog::error("Empty HERE");
-            },
-            CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withKitInstrumentRt(
-                  drumKit.uuid, [&](auto& kitInstr) {
-                     detail::setParameterRelativeUnlimited(kitInstr, parameter,
-                                          value, drumKit.voiceIdx,
-                                          drumKit.componentIdx);
-                  });
-            }
-         END_SWITCH
-      },
-      CASE(EventDestination::Melodic, melodic) {
-         SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
-                     melodicInstr.pitchBend(value.value);
-                  });
-            },
-            CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameterRelativeUnlimited(melodicInstr, parameter,
-                                          value,
-                                          melodic.componentIdx);
-                  });
-            }
-         END_SWITCH
-      },
-      CASE(EventDestination::MusicDevice, musicDevice) {
-         SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {
-               m_rMusicDeviceContainer.withSoundHandler(
-                  musicDevice.mdid, [&](auto& soundHandler) {
-                     soundHandler.pitchBend(musicDevice.voiceIdx, value.value);
-                  });
-            },
-            CASE(EventDestination::Parameter, parameter) {
-               m_rMusicDeviceContainer.withSoundHandler(
-                  musicDevice.mdid, [&](auto& soundHandler) {
-                     detail::setParameterRelativeUnlimited(soundHandler, parameter,
-                                          value,
-                                          musicDevice.voiceIdx);
-                  });
-            }
-         END_SWITCH
-      }
-   END_SWITCH
-}
-
 
 void EventRouterRt::sendMPERelativeValue(
     int note, const EventDestination& eventDestination,
@@ -720,41 +611,6 @@ void EventRouterRt::sendMPERelativeValue(
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
                      detail::setParameterMPERelativeValue(melodicInstr, parameter,                                                    
-                                             value, note,
-                                             melodic.componentIdx);
-                  });
-            }
-         END_SWITCH
-      },
-      CASE(EventDestination::MusicDevice,_) {
-         spdlog::error("No MPE mapping for MusicDevice directly");
-      }
-   END_SWITCH
-}
-
-void EventRouterRt::sendMPERelativeUnlimitedValue(
-    int note, const EventDestination& eventDestination,
-    const controller::RelativeUnlimitedValueType& value) noexcept
-{
-   SWITCH(eventDestination.endpoint)
-      CASE(EventDestination::DrumKit,_) {
-         spdlog::error("sendMPERelativeUnlimitedValue on drumkit, does it make sense?");
-      },
-      CASE(EventDestination::Melodic, melodic) 
-      {
-         SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) 
-            {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
-                     melodicInstr.pitchBend(note, value.value);
-                  });
-            },
-            CASE(EventDestination::Parameter, parameter) 
-            {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameterMPERelativeUnlimited(melodicInstr, parameter,                                                    
                                              value, note,
                                              melodic.componentIdx);
                   });

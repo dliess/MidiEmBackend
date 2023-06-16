@@ -35,6 +35,7 @@
           {
             ".type": "RelativeValue",
             "name": "global aftertouch",
+            "fittingSemitones": 2,
             "bidirectional": false,
             "global": true,
             "source": [
@@ -79,6 +80,7 @@
           {
             ".type": "RelativeValue",
             "name": "PitchBend",
+            "fittingSemitones": 2,
             "bidirectional": true,
             "source": [
               [

@@ -43,22 +43,14 @@ struct EventRelativeValue
 {
    std::string name;
    bool bidirectional;
-   std::optional<bool> global;
-   std::vector<std::vector<midi::MidiMessageId>> source;
-};
-
-struct EventRelativeUnlimitedValue
-{
-   std::string name;
-   int incrementsPerSemitoneDistance;
+   size_t fittingSemitones;
    std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
 using Event = mpark::variant<
    EventIncremental, EventPressRelease,
-   EventContinousValue, EventRelativeValue, 
-   EventRelativeUnlimitedValue>;
+   EventContinousValue, EventRelativeValue>;
 
 struct Widget
 {

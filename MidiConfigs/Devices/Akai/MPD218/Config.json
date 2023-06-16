@@ -166,6 +166,7 @@
           {
             ".type": "RelativeValue",
             "name": "global aftertouch",
+            "fittingSemitones": 2,
             "bidirectional": false,
             "source": [
               [
