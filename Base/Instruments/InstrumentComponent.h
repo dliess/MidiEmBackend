@@ -37,7 +37,7 @@ public:
 
    [[nodiscard]] std::optional<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
-   [[nodiscard]] std::optional<float> getParameterValueCached(
+   [[nodiscard]] std::optional<float> getSDParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
@@ -45,7 +45,7 @@ public:
    void setParameterValueDontCache(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   [[nodiscard]] float normalizePercentageValue(
+   [[nodiscard]] float fromNormalizedValue(
        int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 

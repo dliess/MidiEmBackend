@@ -78,14 +78,14 @@ void KitInstrument::setParameterValue(
    });
 }
 
-float KitInstrument::normalizePercentageValue(
+float KitInstrument::fromNormalizedValue(
     int voiceIdx, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    float ret = 0.0;
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      ret = component.normalizePercentageValue(parameterId, parameterAttr,
+      ret = component.fromNormalizedValue(parameterId, parameterAttr,
                                            percentageValue);
    });
    return ret;

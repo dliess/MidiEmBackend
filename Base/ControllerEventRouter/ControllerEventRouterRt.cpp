@@ -130,28 +130,23 @@ inline int calcIncrements(const EventDestination::Parameter& parameter,
 
 
 template <typename Dev, typename... MDCoords>
-void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
-                  const controller::ContinousValueType& value,
-                  MDCoords... mdCoords)
+void setParameterForContinousValue(Dev& dev, const EventDestination::Parameter& parameter,
+                                   const controller::ContinousValueType& value,
+                                   MDCoords... mdCoords)
 {
-   const float val = dev.normalizePercentageValue(mdCoords..., parameter.id, base::musicDevice::sound::ParameterAttr::Commanded, value.value);
+   const float val = dev.fromNormalizedValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value);
    const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
    if(actualVal && isNearEnough(actualVal.value(), val))
    {
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
    }
 }
-void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+void setParameterMPEForContinousValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
                      const controller::ContinousValueType& value, int note, int componentIdx)
 {
-   const float val = dev.normalizePercentageValue(note, componentIdx, parameter.id, base::musicDevice::sound::ParameterAttr::Commanded, value.value);
-   const auto actualVal = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
-   if(actualVal && isNearEnough(actualVal.value(), val))
-   {
-      dev.setParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr, val);
-   }
+   const float val = dev.fromNormalizedValue(note, componentIdx, parameter.id, parameter.parameterAttr, value.value);
+   dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, val);
 }
-
 
 template <typename Dev, typename... MDCoords>
 void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
@@ -653,9 +648,9 @@ void EventRouterRt::handleContinousValue(
             {
                m_rInstruments.withKitInstrumentRt(
                   drumKit.uuid, [&](auto& kitInstr) {
-                     detail::setParameter(kitInstr, parameter, value,
-                                          drumKit.voiceIdx,
-                                          drumKit.componentIdx);
+                     detail::setParameterForContinousValue(kitInstr, parameter, value,
+                                                            drumKit.voiceIdx,
+                                                            drumKit.componentIdx);
                   });
             }
          END_SWITCH
@@ -668,9 +663,9 @@ void EventRouterRt::handleContinousValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,
-                                          value,
-                                          melodic.componentIdx);
+                     detail::setParameterForContinousValue(melodicInstr, parameter,
+                                                            value,
+                                                            melodic.componentIdx);
                   });
             }
          END_SWITCH
@@ -683,9 +678,9 @@ void EventRouterRt::handleContinousValue(
             {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {
-                     detail::setParameter(soundHandler, parameter,
-                                          value,
-                                          musicDevice.voiceIdx);
+                     detail::setParameterForContinousValue(soundHandler, parameter,
+                                                            value,
+                                                            musicDevice.voiceIdx);
                   });
             }
          END_SWITCH
@@ -714,7 +709,9 @@ void EventRouterRt::sendMPEContinousValue(
             }
          END_SWITCH
       },
-      CASE(EventDestination::MusicDevice,_) {}
+      CASE(EventDestination::MusicDevice,_) {
+         spdlog::error("No MPE mapping for MusicDevice directly");
+      }
    END_SWITCH
 }
 
@@ -905,13 +902,15 @@ void EventRouterRt::sendMPERelativeValue(
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
                      detail::setParameterMPE(melodicInstr, parameter,                                                    
-                                          value, note,
-                                          melodic.componentIdx);
+                                             value, note,
+                                             melodic.componentIdx);
                   });
             }
          END_SWITCH
       },
-      CASE(EventDestination::MusicDevice,_) {}
+      CASE(EventDestination::MusicDevice,_) {
+         spdlog::error("No MPE mapping for MusicDevice directly");
+      }
    END_SWITCH
 }
 
@@ -944,6 +943,8 @@ void EventRouterRt::sendMPERelativeUnlimitedValue(
             }
          END_SWITCH
       },
-      CASE(EventDestination::MusicDevice,_) {}
+      CASE(EventDestination::MusicDevice,_) {
+         spdlog::error("No MPE mapping for MusicDevice directly");
+      }
    END_SWITCH
 }

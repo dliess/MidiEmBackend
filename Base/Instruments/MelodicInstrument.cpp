@@ -133,7 +133,7 @@ std::optional<float> MelodicInstrument::getParameterValue(
    auto component = getFirstComponent(componentIdx);
    if (component)
    {
-      return component->getParameterValueCached(parameterIdx, parameterAttr);
+      return component->getSDParameterValue(parameterIdx, parameterAttr);
    }
    return std::nullopt;
 }
@@ -174,7 +174,7 @@ void MelodicInstrument::setParameterValue(
    }
 }
 
-void MelodicInstrument::setParameterValue(
+void MelodicInstrument::setParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
@@ -192,7 +192,7 @@ void MelodicInstrument::setParameterValue(
    }
 }
 
-float MelodicInstrument::normalizePercentageValue(
+float MelodicInstrument::fromNormalizedValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
@@ -200,13 +200,13 @@ float MelodicInstrument::normalizePercentageValue(
    auto component = getFirstComponent(componentIdx);
    if (component)
    {
-      return component->normalizePercentageValue(parameterId, parameterAttr,
+      return component->fromNormalizedValue(parameterId, parameterAttr,
                                                  percentageValue);
    }
    return 0.0;   // TODO: exception?
 }
 
-float MelodicInstrument::normalizePercentageValue(
+float MelodicInstrument::fromNormalizedValue(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
@@ -221,7 +221,7 @@ float MelodicInstrument::normalizePercentageValue(
                          .components.at(componentIdx);
    if (component)
    {
-      return component->normalizePercentageValue(parameterId, parameterAttr,
+      return component->fromNormalizedValue(parameterId, parameterAttr,
                                                  percentageValue);
    }
    return 0.0;   // TODO: exception?

@@ -113,7 +113,7 @@ std::optional<float> Component::getParameterValue(
    return std::nullopt;
 }
 
-std::optional<float> Component::getParameterValueCached(
+std::optional<float> Component::getSDParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    if (m_pSoundDevice)
@@ -157,13 +157,13 @@ void Component::setParameterValueDontCache(
    }
 }
 
-float Component::normalizePercentageValue(
+float Component::fromNormalizedValue(
     int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
    if (m_pSoundDevice)
    {
-      return m_pSoundDevice->normalizePercentageValue(
+      return m_pSoundDevice->fromNormalizedValue(
           m_sdVoiceIdx, parameterId, parameterAttr, percentageValue);
    }
    return 0.0;   // TODO: return optional or inspect id m_pSoundDevice can be of

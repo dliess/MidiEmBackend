@@ -42,7 +42,7 @@ public:
    void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   [[nodiscard]] float normalizePercentageValue(
+   [[nodiscard]] float fromNormalizedValue(
        int voiceIdx, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;

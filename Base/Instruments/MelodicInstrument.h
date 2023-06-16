@@ -58,14 +58,14 @@ public:
    void setParameterValue(int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   void setParameterValue(int note, int componentIdx, int parameterId,
+   void setParameterValueMPE(int note, int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   [[nodiscard]] float normalizePercentageValue(
+   [[nodiscard]] float fromNormalizedValue(
        int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
-   [[nodiscard]] float normalizePercentageValue(
+   [[nodiscard]] float fromNormalizedValue(
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;

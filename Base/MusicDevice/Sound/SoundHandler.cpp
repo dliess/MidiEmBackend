@@ -191,7 +191,7 @@ std::optional<float> SoundHandler::getParameterValue(
    return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterAttr);
 }
 
-float SoundHandler::normalizePercentageValue(
+float SoundHandler::fromNormalizedValue(
     int voiceId, int parameterId, ParameterAttr parameterAttr,
     float percentageValue) const noexcept
 {

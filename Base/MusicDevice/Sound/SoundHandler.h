@@ -55,7 +55,7 @@ public:
    [[nodiscard]] float getParameterRange(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const;
-   [[nodiscard]] float normalizePercentageValue(
+   [[nodiscard]] float fromNormalizedValue(
        int voiceId, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter*
