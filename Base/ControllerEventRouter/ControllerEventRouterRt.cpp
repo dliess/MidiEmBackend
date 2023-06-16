@@ -658,7 +658,7 @@ void EventRouterRt::handleRelativeUnlimitedValue(
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withKitInstrumentRt(
                   drumKit.uuid, [&](auto& kitInstr) {
-                     detail::setParameter(kitInstr, parameter,
+                     detail::setParameterRelativeUnlimited(kitInstr, parameter,
                                           value, drumKit.voiceIdx,
                                           drumKit.componentIdx);
                   });
@@ -676,7 +676,7 @@ void EventRouterRt::handleRelativeUnlimitedValue(
             CASE(EventDestination::Parameter, parameter) {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameter(melodicInstr, parameter,
+                     detail::setParameterRelativeUnlimited(melodicInstr, parameter,
                                           value,
                                           melodic.componentIdx);
                   });
@@ -694,7 +694,7 @@ void EventRouterRt::handleRelativeUnlimitedValue(
             CASE(EventDestination::Parameter, parameter) {
                m_rMusicDeviceContainer.withSoundHandler(
                   musicDevice.mdid, [&](auto& soundHandler) {
-                     detail::setParameter(soundHandler, parameter,
+                     detail::setParameterRelativeUnlimited(soundHandler, parameter,
                                           value,
                                           musicDevice.voiceIdx);
                   });
@@ -719,7 +719,7 @@ void EventRouterRt::sendMPERelativeValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameterMPE(melodicInstr, parameter,                                                    
+                     detail::setParameterMPERelativeValue(melodicInstr, parameter,                                                    
                                              value, note,
                                              melodic.componentIdx);
                   });
@@ -754,7 +754,7 @@ void EventRouterRt::sendMPERelativeUnlimitedValue(
             {
                m_rInstruments.withMelodicInstrumentRt(
                   melodic.uuid, [&](auto& melodicInstr) {
-                     detail::setParameterMPE(melodicInstr, parameter,                                                    
+                     detail::setParameterMPERelativeUnlimited(melodicInstr, parameter,                                                    
                                              value, note,
                                              melodic.componentIdx);
                   });

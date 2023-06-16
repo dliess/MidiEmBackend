@@ -146,7 +146,7 @@ void setParameterForRelativeValue(Dev& dev, const EventDestination::Parameter& p
    }
 }
 
-void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+void setParameterMPERelativeValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
                      const controller::RelativeValueType& value, int note,
                      int componentIdx)
 {
@@ -163,7 +163,7 @@ void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDesti
 }
 
 template <typename Dev, typename... MDCoords>
-void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+void setParameterRelativeUnlimited(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::RelativeUnlimitedValueType& value,
                   MDCoords... mdCoords)
 {
@@ -178,7 +178,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
    }
 }
-void setParameterMPE(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+void setParameterMPERelativeUnlimited(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
                   const controller::RelativeUnlimitedValueType& value, int note,
                   int componentIdx)
 {
