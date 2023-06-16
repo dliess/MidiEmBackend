@@ -13,6 +13,7 @@ set(HEADERS
     "ControllerEventDestinationMeta.h"
     "ControllerEventRouter.h"
     "ControllerEventRouterRt.h"
+    "ControllerEventRouterRtDetail.inl"
     "ControllerEventRoutePersister.h"
 )
 
