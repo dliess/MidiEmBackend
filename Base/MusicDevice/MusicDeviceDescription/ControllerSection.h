@@ -57,7 +57,6 @@ struct Widget
    std::string name;
    WidgetDimension dimension;
    std::optional<bool> mpe;
-   std::optional<bool> isKeyboard;
    std::vector<Event> events;
 };
 

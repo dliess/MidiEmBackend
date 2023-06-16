@@ -814,7 +814,6 @@
     "widgets": [
       {
         "name": "Sequencer",
-        "isKeyboard": true,
         "dimension": {
           "numRows": 1,
           "numColumns": 1

@@ -6,7 +6,6 @@
     "widgets": [
       {
         "name": "Keypad",
-        "isKeyboard": true,
         "dimension": {
           "numRows": 1,
           "numColumns": 24

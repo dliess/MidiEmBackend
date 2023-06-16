@@ -92,7 +92,6 @@ inline auto registerMembers<base::musicDevice::description::controller::Widget>(
       member("name", &base::musicDevice::description::controller::Widget::name),
       member("dimension", &base::musicDevice::description::controller::Widget::dimension),
       member("mpe", &base::musicDevice::description::controller::Widget::mpe),
-      member("isKeyboard", &base::musicDevice::description::controller::Widget::isKeyboard),
       member("events", &base::musicDevice::description::controller::Widget::events)
    );
 }
