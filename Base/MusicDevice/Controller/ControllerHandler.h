@@ -9,6 +9,7 @@
 #include "DoubleBufferedMessageDrain.h"
 #include "CallbackSignal.h"
 #include "ControllerEvents.h"
+#include "ControllerAdditionalEventCreator.h"
 
 namespace base::musicDevice
 {
@@ -55,6 +56,7 @@ private:
    std::unique_ptr<MidiInMsgHandlerT>     m_midiInMsgHandler;
    std::unique_ptr<MidiOutMsgHandlerT>    m_midiOutHandler;
    std::map<EventId, std::pair<Event, bool>>  m_uiEventBuffer;
+   AdditionalEventCreator m_additionalEventCreator;
 };
 
 } // namespace controller

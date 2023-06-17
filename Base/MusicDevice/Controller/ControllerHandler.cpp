@@ -12,8 +12,15 @@ ControllerHandler::ControllerHandler(
    std::string deviceName, PluginHandler& rPluginHandler,
    const description::controller::Section& rControllerSection) noexcept :
    m_deviceName(std::move(deviceName)),
-   m_rPluginHandler(rPluginHandler), m_rControllerSection(rControllerSection)
+   m_rPluginHandler(rPluginHandler), m_rControllerSection(rControllerSection),
+   m_additionalEventCreator(m_rControllerSection)
 {
+   m_additionalEventCreator.onEventHappened([this](const Event& event){
+//            spdlog::info( "Received evt {}",
+//                  nlohmann::json(event).dump());
+      emitEventReceived(event);
+      m_uiEventBuffer[event.id] = std::make_pair(event, true);
+   });
 }
 
 ControllerHandler::~ControllerHandler() = default;
@@ -26,12 +33,8 @@ void ControllerHandler::initMidiInHandler(
 {
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
-      pMidiIn, m_rControllerSection, [this](const Event& event) { 
-//            spdlog::info( "Received evt {}",
-//                  nlohmann::json(event).dump());
-         emitEventReceived(event);
-         m_uiEventBuffer[event.id] = std::make_pair(event, true);
-         
+      pMidiIn, m_rControllerSection, [this](const Event& event) {
+         m_additionalEventCreator.eventReceived(event);        
       });
 }
 

@@ -114,11 +114,11 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                {
                   if(evt.bidirectional)
                   {
-                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f, evt.fittingSemitones};
                   }
                   else
                   {
-                     return RelativeValueType{msg.getNormalizedValue()};
+                     return RelativeValueType{msg.getNormalizedValue(), evt.fittingSemitones};
                   }
                },
                CASE(description::controller::EventIncremental, evt) -> EventValue 
@@ -147,7 +147,8 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                      return IncrementType{evt.resolution,
                                           diffFromMiddleVal};
                   }
-               }
+               },
+               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
          R_END_SWITCH
          },
          CASE(midi::Message<midi::ControlChangeHighRes>, msg)
@@ -165,18 +166,19 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                {
                   if(evt.bidirectional)
                   {
-                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f, evt.fittingSemitones};
                   }
                   else
                   {
-                     return RelativeValueType{msg.getNormalizedValue()};
+                     return RelativeValueType{msg.getNormalizedValue(), evt.fittingSemitones};
                   }
                },
                CASE(description::controller::EventIncremental, evt) -> EventValue 
                {
                   return IncrementType{
                      msg.controllerValue() - (midi::Message<midi::ControlChangeHighRes>::RES_MAX / 2)};
-               }
+               },
+               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NRPN>, msg)
@@ -194,18 +196,19 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                {
                   if(evt.bidirectional)
                   {
-                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f};
+                     return RelativeValueType{(msg.getNormalizedValue() - 0.5f) * 2.0f, evt.fittingSemitones};
                   }
                   else
                   {
-                     return RelativeValueType{msg.getNormalizedValue()};
+                     return RelativeValueType{msg.getNormalizedValue(), evt.fittingSemitones};
                   }
                },
                CASE(description::controller::EventIncremental, evt) -> EventValue
                {
                   return IncrementType{
                      msg.getValue() - (midi::Message<midi::NRPN>::RES_MAX / 2)};
-               }
+               },
+               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NoteOn>, msg)
@@ -243,7 +246,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
             return R_SWITCH(eventDescr)
                CASE(description::controller::EventRelativeValue, evt) -> EventValue
                {
-                  return RelativeValueType{msg.normalizedValue()};
+                  return RelativeValueType{msg.normalizedValue(), evt.fittingSemitones};
                },
                CASE_DEFAULT -> EventValue
                {
@@ -255,9 +258,9 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
          CASE(midi::Message<midi::AfterTouchPoly>, msg)
          {
             return R_SWITCH(eventDescr)
-               CASE(description::controller::EventContinousValue, evt) -> EventValue
+               CASE(description::controller::EventRelativeValue, evt) -> EventValue
                {
-                  return ContinousValueType{msg.relativePressure()};
+                  return RelativeValueType{msg.relativePressure(), evt.fittingSemitones};
                },
                CASE_DEFAULT -> EventValue
                {
@@ -423,7 +426,8 @@ void MidiInMsgHandler<MidiInIfPtr>::initCache()
             CASE(description::controller::EventIncremental, evt)
             {
               detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
-            }
+            },
+            CASE(description::controller::EventDerivedRelativeValue, evt) {}
          END_SWITCH
       }
    }

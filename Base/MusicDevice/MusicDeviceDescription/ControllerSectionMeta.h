@@ -86,6 +86,21 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
 }
 
 template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventDerivedRelativeValue>(int i) noexcept
+{
+   return "DerivedRelativeValue";
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::controller::EventDerivedRelativeValue>()
+{
+   return members(
+      member("name", &base::musicDevice::description::controller::EventDerivedRelativeValue::name),
+      member("sourceEventIdx", &base::musicDevice::description::controller::EventDerivedRelativeValue::sourceEventIdx)
+   );
+}
+
+template <>
 inline auto registerMembers<base::musicDevice::description::controller::Widget>()
 {
    return members(

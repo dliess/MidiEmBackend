@@ -48,9 +48,16 @@ struct EventRelativeValue
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
+struct EventDerivedRelativeValue
+{
+   std::string name;
+   int sourceEventIdx;
+};
+
 using Event = mpark::variant<
    EventIncremental, EventPressRelease,
-   EventContinousValue, EventRelativeValue>;
+   EventContinousValue, EventRelativeValue,
+   EventDerivedRelativeValue>;
 
 struct Widget
 {

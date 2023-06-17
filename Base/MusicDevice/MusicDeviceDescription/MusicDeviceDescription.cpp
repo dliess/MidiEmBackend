@@ -67,7 +67,8 @@ void Description::checkValidity() const
                     },
                     [&widget](const controller::EventIncremental& evt) {
                        checkSource(evt.source, widget.dimension, evt.name);
-                    }},
+                    },
+                    [](const controller::EventDerivedRelativeValue& evt){}},
                 event);
          }
       }
@@ -129,5 +130,48 @@ void Description::initCaches() noexcept
       });
       soundSection->autoFillSourceRangesForLists();
       soundSection->fillParameterDumpOffsetCaches();
+   }
+}
+
+inline std::optional<int> getPressReleaseEventIdx(
+    const controller::Widget& widget)
+{
+   for (int i = 0; i < widget.events.size(); ++i)
+   {
+      if (mpark::holds_alternative<controller::EventPressRelease>(
+              widget.events[i]))
+      {
+         return i;
+      }
+   }
+   return std::nullopt;
+}
+
+void Description::createAdditionalControllerEvents()
+{
+   if (controllerSection)
+   {
+      for (auto& widget : controllerSection->widgets)
+      {
+         for (auto& event : widget.events)
+         {
+            SWITCH(event)
+            CASE(controller::EventPressRelease, evt){
+
+            },
+                CASE(controller::EventContinousValue, evt)
+            {
+               const auto prIdx = getPressReleaseEventIdx(widget);
+               if (prIdx)
+               {
+                  const controller::Event event = controller::EventDerivedRelativeValue{
+                      fmt::format("{}_Relative", evt.name), prIdx.value()};
+                  widget.events.push_back(event);
+               }
+            }
+            , CASE_DEFAULT {}
+            END_SWITCH
+         }
+      }
    }
 }

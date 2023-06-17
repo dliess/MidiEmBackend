@@ -32,6 +32,7 @@ struct Description
 
    void checkValidity() const;
    void initCaches() noexcept;
+   void createAdditionalControllerEvents();
 };
 
 } // namespace base::musicDevice::description

@@ -12,17 +12,24 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
    const base::musicDevice::controller::WidgetCoord& widgetCoord,
    const base::musicDevice::controller::ColorARGB& colorARGB)
 {
-   const auto midiMsgId = mpark::visit(
-      midi::overload{
-         [&widgetCoord](
-            const base::musicDevice::description::controller::EventPressRelease&
-               evt) -> midi::MidiMessageId {
+   using namespace base::musicDevice;
+   const auto midiMsgId = R_SWITCH(widgetDescr.events[0])
+      FCASE(description::controller::EventPressRelease, evt) -> midi::MidiMessageId {
             return evt.pressSource[widgetCoord.row][widgetCoord.col];
-         },
-         [&widgetCoord](auto&& evt) -> midi::MidiMessageId {
+      },
+      FCASE(description::controller::EventContinousValue, evt) -> midi::MidiMessageId {
             return evt.source[widgetCoord.row][widgetCoord.col];
-         }},
-      widgetDescr.events[0]);
+      },
+      FCASE(description::controller::EventRelativeValue, evt) -> midi::MidiMessageId {
+            return evt.source[widgetCoord.row][widgetCoord.col];
+      },
+      FCASE(description::controller::EventDerivedRelativeValue, evt) -> midi::MidiMessageId {
+            return mpark::monostate();
+      },
+      FCASE(description::controller::EventIncremental, evt) -> midi::MidiMessageId {
+            return evt.source[widgetCoord.row][widgetCoord.col];
+      }
+   R_END_SWITCH
 
    uint8_t color{0};
    static constexpr int RED_0      = 0;

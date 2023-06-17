@@ -64,6 +64,7 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
           description::loadDescription(m_configDir, deviceName);   // can throw
       pDescr->checkValidity();                                     // can throw
       pDescr->initCaches();
+      pDescr->createAdditionalControllerEvents();
       m_descriptionCache[deviceName] = pDescr;
       emitDescriptionAdded(deviceName, *pDescr);
    }
