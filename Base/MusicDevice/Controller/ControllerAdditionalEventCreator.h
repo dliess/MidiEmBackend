@@ -3,6 +3,7 @@
 
 #include "CallbackSignal.h"
 #include "ControllerEvents.h"
+#include <list>
 
 // clang-format off
 namespace base::musicDevice::description::controller { struct Section; }
@@ -19,6 +20,7 @@ public:
    CB_SIGNAL(EventHappened, const Event&);
 private:
    const description::controller::Section& m_rControllerSection;
+   std::list<Event> m_ongoingContinousEventStartPoints;
 };
 
 }   // namespace base::musicDevice::controller
