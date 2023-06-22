@@ -52,24 +52,27 @@ void Description::checkValidity() const
       {
          for (const auto& event : widget.events)
          {
-            mpark::visit(
-                util::overload{
-                    [&widget](const controller::EventPressRelease& evt) {
-                       checkSource(evt.pressSource, widget.dimension, evt.name);
-                       checkSource(evt.releaseSource, widget.dimension,
-                                   evt.name);
-                    },
-                    [&widget](const controller::EventContinousValue& evt) {
-                       checkSource(evt.source, widget.dimension, evt.name);
-                    },
-                    [&widget](const controller::EventRelativeValue& evt) {
-                       checkSource(evt.source, widget.dimension, evt.name);
-                    },
-                    [&widget](const controller::EventIncremental& evt) {
-                       checkSource(evt.source, widget.dimension, evt.name);
-                    },
-                    [](const controller::EventDerivedRelativeValue& evt){}},
-                event);
+            SWITCH(event)
+               CASE(controller::EventPressRelease, evt) 
+               {
+                  checkSource(evt.pressSource, widget.dimension, evt.name);
+                  checkSource(evt.releaseSource, widget.dimension,
+                              evt.name);
+               },
+               CASE(controller::EventContinousValue, evt) 
+               {
+                  checkSource(evt.source, widget.dimension, evt.name);
+               },
+               CASE(controller::EventRelativeValue, evt)
+               {
+                  checkSource(evt.source, widget.dimension, evt.name);
+               },
+               CASE(controller::EventIncremental, evt)
+               {
+                  checkSource(evt.source, widget.dimension, evt.name);
+               },
+               CASE_DEFAULT {}
+            END_SWITCH
          }
       }
    }
@@ -153,23 +156,28 @@ void Description::createAdditionalControllerEvents()
    {
       for (auto& widget : controllerSection->widgets)
       {
-         for (auto& event : widget.events)
+         for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
          {
-            SWITCH(event)
-            CASE(controller::EventPressRelease, evt){
-
-            },
-                CASE(controller::EventContinousValue, evt)
-            {
-               const auto prIdx = getPressReleaseEventIdx(widget);
-               if (prIdx)
+            SWITCH(widget.events[eventIdx])
+               CASE(controller::EventPressRelease, evt){
+                     const controller::Event event1 = controller::EventDerivedContinousValue{
+                        "PressVelocity", eventIdx};
+                     const controller::Event event2 = controller::EventDerivedContinousValue{
+                        "ReleaseVelocity", eventIdx};
+                     widget.events.push_back(event1);
+                     widget.events.push_back(event2);
+               },
+               CASE(controller::EventContinousValue, evt)
                {
-                  const controller::Event event = controller::EventDerivedRelativeValue{
-                      fmt::format("{}_Relative", evt.name), prIdx.value()};
-                  widget.events.push_back(event);
-               }
-            }
-            , CASE_DEFAULT {}
+                  const auto prIdx = getPressReleaseEventIdx(widget);
+                  if (prIdx && evt.dragMovementPossible.value_or(false))
+                  {
+                     const controller::Event event = controller::EventDerivedRelativeValue{
+                        fmt::format("{}_Relative", evt.name), eventIdx};
+                     widget.events.push_back(event);
+                  }
+               },
+               CASE_DEFAULT {}
             END_SWITCH
          }
       }

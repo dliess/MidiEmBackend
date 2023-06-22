@@ -148,7 +148,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                                           diffFromMiddleVal};
                   }
                },
-               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
          R_END_SWITCH
          },
          CASE(midi::Message<midi::ControlChangeHighRes>, msg)
@@ -178,7 +178,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                   return IncrementType{
                      msg.controllerValue() - (midi::Message<midi::ControlChangeHighRes>::RES_MAX / 2)};
                },
-               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NRPN>, msg)
@@ -208,7 +208,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                   return IncrementType{
                      msg.getValue() - (midi::Message<midi::NRPN>::RES_MAX / 2)};
                },
-               CASE(description::controller::EventDerivedRelativeValue, evt) -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NoteOn>, msg)
@@ -427,7 +427,7 @@ void MidiInMsgHandler<MidiInIfPtr>::initCache()
             {
               detail::fillMapByEventSourceNonPR(m_map, evt.source, widgetId, eventId, evt.global.value_or(false), widget.mpe.value_or(false));
             },
-            CASE(description::controller::EventDerivedRelativeValue, evt) {}
+            CASE_DEFAULT {}
          END_SWITCH
       }
    }

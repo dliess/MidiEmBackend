@@ -77,5 +77,6 @@ auto match(Variant&& v, CBs&&... cbs)
 #define MFCASE_7(name) [&](mpark::variant_alternative_t<6, std::decay_t<decltype(vr)>>& name)
 
 #define CASE_DEFAULT [](auto&&)
+#define MFCASE_DEFAULT [&](auto&&)
 
 #endif

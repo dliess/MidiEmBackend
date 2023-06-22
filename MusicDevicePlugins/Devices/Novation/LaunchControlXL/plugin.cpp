@@ -23,11 +23,11 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
       FCASE(description::controller::EventRelativeValue, evt) -> midi::MidiMessageId {
             return evt.source[widgetCoord.row][widgetCoord.col];
       },
-      FCASE(description::controller::EventDerivedRelativeValue, evt) -> midi::MidiMessageId {
-            return mpark::monostate();
-      },
       FCASE(description::controller::EventIncremental, evt) -> midi::MidiMessageId {
             return evt.source[widgetCoord.row][widgetCoord.col];
+      },
+      CASE_DEFAULT -> midi::MidiMessageId {
+            return mpark::monostate();
       }
    R_END_SWITCH
 

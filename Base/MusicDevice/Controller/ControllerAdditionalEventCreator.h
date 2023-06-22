@@ -21,6 +21,9 @@ public:
 private:
    const description::controller::Section& m_rControllerSection;
    std::list<Event> m_ongoingContinousEventStartPoints;
+   std::list<Event> m_lastContOrRelEventValues;
+   constexpr static float VALUE_JUMP_THRESHOLD = 0.1f;
+   constexpr static int DERIVED_INCREMENT_RESOLUTION = 128;
 };
 
 }   // namespace base::musicDevice::controller

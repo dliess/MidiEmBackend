@@ -36,6 +36,7 @@ struct EventContinousValue
 {
    std::string name;
    std::optional<bool> global;
+   std::optional<bool> dragMovementPossible;
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
@@ -48,7 +49,17 @@ struct EventRelativeValue
    std::vector<std::vector<midi::MidiMessageId>> source;
 };
 
+struct EventDerivedContinousValue
+{
+   std::string name;
+   int sourceEventIdx;
+};
 struct EventDerivedRelativeValue
+{
+   std::string name;
+   int sourceEventIdx;
+};
+struct EventDerivedIncremental
 {
    std::string name;
    int sourceEventIdx;
@@ -56,7 +67,10 @@ struct EventDerivedRelativeValue
 
 using Event = mpark::variant<
    EventIncremental, EventPressRelease,
-   EventContinousValue, EventRelativeValue,
+   EventContinousValue,
+   EventDerivedContinousValue,
+   EventRelativeValue,
+   EventDerivedIncremental,
    EventDerivedRelativeValue>;
 
 struct Widget

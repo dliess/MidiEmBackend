@@ -63,6 +63,7 @@ inline auto registerMembers<base::musicDevice::description::controller::EventCon
    return members(
       member("name", &base::musicDevice::description::controller::EventContinousValue::name),
       member("global", &base::musicDevice::description::controller::EventContinousValue::global),
+      member("dragMovementPossible", &base::musicDevice::description::controller::EventContinousValue::dragMovementPossible),
       member("source", &base::musicDevice::description::controller::EventContinousValue::source)
    );
 }
@@ -86,6 +87,21 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
 }
 
 template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventDerivedContinousValue>(int i) noexcept
+{
+   return "DerivedRelativeValue";
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::controller::EventDerivedContinousValue>()
+{
+   return members(
+      member("name", &base::musicDevice::description::controller::EventDerivedContinousValue::name),
+      member("sourceEventIdx", &base::musicDevice::description::controller::EventDerivedContinousValue::sourceEventIdx)
+   );
+}
+
+template <>
 inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventDerivedRelativeValue>(int i) noexcept
 {
    return "DerivedRelativeValue";
@@ -97,6 +113,21 @@ inline auto registerMembers<base::musicDevice::description::controller::EventDer
    return members(
       member("name", &base::musicDevice::description::controller::EventDerivedRelativeValue::name),
       member("sourceEventIdx", &base::musicDevice::description::controller::EventDerivedRelativeValue::sourceEventIdx)
+   );
+}
+
+template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventDerivedIncremental>(int i) noexcept
+{
+   return "DerivedRelativeValue";
+}
+
+template <>
+inline auto registerMembers<base::musicDevice::description::controller::EventDerivedIncremental>()
+{
+   return members(
+      member("name", &base::musicDevice::description::controller::EventDerivedIncremental::name),
+      member("sourceEventIdx", &base::musicDevice::description::controller::EventDerivedIncremental::sourceEventIdx)
    );
 }
 
