@@ -14,30 +14,43 @@ struct WidgetDimension
    int numRows;
    int numColumns;
 };
+
+struct EventPressRelease
+{
+   std::string name;
+   std::optional<bool> independent;
+   std::optional<bool> hasPressVelocity;
+   std::optional<bool> hasReleaseVelocity;
+   std::optional<bool> global;
+   std::optional<bool> sourceHasInvertedLogic;
+   std::vector<std::vector<midi::MidiMessageId>> pressSource;
+   std::vector<std::vector<midi::MidiMessageId>> releaseSource;
+   std::optional<int> pressVelocityEvtIdx; // Dont Serialize, its a helper value
+   std::optional<int> releaseVelocityEvtIdx; // Dont Serialize, its a helper value
+};
+
+struct TwinData
+{
+   int indepPressEvtIdx;
+   int twinEvtIdx;
+};
+
 struct EventIncremental
 {
    std::string name;
    std::optional<bool> global;
    int resolution;
    std::vector<std::vector<midi::MidiMessageId>> source;
-};
-
-
-struct EventPressRelease
-{
-   std::string name;
-   std::optional<bool> global;
-   std::optional<bool> sourceHasInvertedLogic;
-   std::vector<std::vector<midi::MidiMessageId>> pressSource;
-   std::vector<std::vector<midi::MidiMessageId>> releaseSource;
+   std::optional<TwinData> twin; // Dont Serialize, its a helper value
 };
 
 struct EventContinousValue
 {
    std::string name;
    std::optional<bool> global;
-   std::optional<bool> dragMovementPossible;
+   std::optional<bool> startValueCanJump;
    std::vector<std::vector<midi::MidiMessageId>> source;
+   std::optional<TwinData> twin; // Dont Serialize, its a helper value
 };
 
 struct EventRelativeValue
@@ -47,22 +60,23 @@ struct EventRelativeValue
    size_t fittingSemitones;
    std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;
+   std::optional<TwinData> twin; // Dont Serialize, its a helper value
 };
 
 struct EventDerivedContinousValue
 {
    std::string name;
-   int sourceEventIdx;
+   int sourceEventIdx; // Dont Serialize, its a helper value
 };
 struct EventDerivedRelativeValue
 {
    std::string name;
-   int sourceEventIdx;
+   int sourceEventIdx; // Dont Serialize, its a helper value
 };
 struct EventDerivedIncremental
 {
    std::string name;
-   int sourceEventIdx;
+   int sourceEventIdx; // Dont Serialize, its a helper value
 };
 
 using Event = mpark::variant<

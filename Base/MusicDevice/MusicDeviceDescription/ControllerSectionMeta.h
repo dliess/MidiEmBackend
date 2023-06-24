@@ -44,6 +44,9 @@ inline auto registerMembers<base::musicDevice::description::controller::EventPre
 {
    return members(
       member("name", &base::musicDevice::description::controller::EventPressRelease::name),
+      member("independent", &base::musicDevice::description::controller::EventPressRelease::independent),
+      member("hasPressVelocity", &base::musicDevice::description::controller::EventPressRelease::hasPressVelocity),
+      member("hasReleaseVelocity", &base::musicDevice::description::controller::EventPressRelease::hasReleaseVelocity),
       member("global", &base::musicDevice::description::controller::EventPressRelease::global),
       member("sourceHasInvertedLogic", &base::musicDevice::description::controller::EventPressRelease::sourceHasInvertedLogic),
       member("pressSource", &base::musicDevice::description::controller::EventPressRelease::pressSource),
@@ -63,7 +66,7 @@ inline auto registerMembers<base::musicDevice::description::controller::EventCon
    return members(
       member("name", &base::musicDevice::description::controller::EventContinousValue::name),
       member("global", &base::musicDevice::description::controller::EventContinousValue::global),
-      member("dragMovementPossible", &base::musicDevice::description::controller::EventContinousValue::dragMovementPossible),
+      member("startValueCanJump", &base::musicDevice::description::controller::EventContinousValue::startValueCanJump),
       member("source", &base::musicDevice::description::controller::EventContinousValue::source)
    );
 }

@@ -58,7 +58,7 @@
           {
             ".type": "ContinousValue",
             "name": "ModWheel",
-            "dragMovementPossible": true,
+            "startValueCanJump": true,
             "source": [
               [
                 {

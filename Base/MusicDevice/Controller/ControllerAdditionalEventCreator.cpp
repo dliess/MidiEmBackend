@@ -59,7 +59,7 @@ void AdditionalEventCreator::eventReceived(const Event& event)
                SWITCH(eventDescr)
                   CASE(description::controller::EventContinousValue, evt) 
                   {
-                     if(evt.dragMovementPossible)
+                     if(evt.startValueCanJump)
                      {
                         if(it == m_ongoingContinousEventStartPoints.end())
                         {
@@ -110,7 +110,7 @@ void AdditionalEventCreator::eventReceived(const Event& event)
                SWITCH(eventDescr)
                   CASE(description::controller::EventContinousValue, evt) 
                   {
-                     if(evt.dragMovementPossible){
+                     if(evt.startValueCanJump){
                         if(it == m_lastContOrRelEventValues.end())
                         {
                            m_ongoingContinousEventStartPoints.push_back(event);

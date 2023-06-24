@@ -156,26 +156,69 @@ void Description::createAdditionalControllerEvents()
    {
       for (auto& widget : controllerSection->widgets)
       {
+         std::optional<int> indepPressEvtIdx;
          for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
          {
             SWITCH(widget.events[eventIdx])
-               CASE(controller::EventPressRelease, evt){
+               MCASE(controller::EventPressRelease, evt){
+                  if(evt.independent.value_or(false))
+                  {
+                     if(indepPressEvtIdx)
+                     {
+                        spdlog::error("Only one independent PressRelease Evt allowed per widget");
+                     }
+                     else
+                     {
+                        indepPressEvtIdx = eventIdx;
+                     }
+                  }
+                  if(evt.hasPressVelocity.value_or(false))
+                  {
                      const controller::Event event1 = controller::EventDerivedContinousValue{
                         "PressVelocity", eventIdx};
+                     evt.pressVelocityEvtIdx = widget.events.size();
+                     widget.events.push_back(event1);
+                  }
+                  if(evt.hasReleaseVelocity.value_or(false))
+                  {
                      const controller::Event event2 = controller::EventDerivedContinousValue{
                         "ReleaseVelocity", eventIdx};
-                     widget.events.push_back(event1);
+                     evt.releaseVelocityEvtIdx = widget.events.size();
                      widget.events.push_back(event2);
+                  }
                },
-               CASE(controller::EventContinousValue, evt)
+               CASE_DEFAULT {}
+            END_SWITCH
+         }
+         for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
+         {
+            SWITCH(widget.events[eventIdx])
+               MCASE(controller::EventContinousValue, evt)
                {
-                  const auto prIdx = getPressReleaseEventIdx(widget);
-                  if (prIdx && evt.dragMovementPossible.value_or(false))
+                  if(indepPressEvtIdx)
+                  {
+                     evt.twin = controller::TwinData{indepPressEvtIdx.value(), 
+                                                     int(widget.events.size())};
+                     auto twin = evt;
+                     twin.name.append("Alt");
+                     widget.events.emplace_back(twin);
+                  }
+                  
+                  if (evt.startValueCanJump.value_or(false))
                   {
                      const controller::Event event = controller::EventDerivedRelativeValue{
                         fmt::format("{}_Relative", evt.name), eventIdx};
                      widget.events.push_back(event);
                   }
+                  
+               },
+               MCASE(controller::EventRelativeValue, evt)
+               {
+
+               },
+               MCASE(controller::EventIncremental, evt)
+               {
+                  
                },
                CASE_DEFAULT {}
             END_SWITCH
