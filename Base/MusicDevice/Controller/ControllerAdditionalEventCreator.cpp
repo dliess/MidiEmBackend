@@ -14,6 +14,28 @@ void AdditionalEventCreator::eventReceived(const Event& event)
 {
    const auto& eventsDescr = m_rControllerSection.widgets[event.id.widgetId].events;
    const auto& eventDescr = eventsDescr[event.id.eventId];
+   EventId derivedEvtId(event.id);
+
+   SWITCH(eventDescr)
+      CASE(description::controller::EventPressRelease, evt) 
+      {
+         const auto value = mpark::get<PressReleaseType>(event.value).value;
+         if((value > 0.0) && evt.pressVelocityEvtIdx)
+         {
+            derivedEvtId.eventId = evt.pressVelocityEvtIdx.value();
+            emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+         }
+         if((value <= 0.0) && evt.releaseVelocityEvtIdx)
+         {
+            derivedEvtId.eventId = evt.releaseVelocityEvtIdx.value();
+            emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+         }
+      },
+      CASE_DEFAULT {}
+   END_SWITCH
+
+
+
    const auto pressRelease = mpark::get_if<PressReleaseType>(&event.value);
    if(pressRelease && (pressRelease->value > 0.0))
    {

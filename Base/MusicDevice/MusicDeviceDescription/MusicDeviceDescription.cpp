@@ -136,18 +136,129 @@ void Description::initCaches() noexcept
    }
 }
 
-inline std::optional<int> getPressReleaseEventIdx(
+inline std::optional<int> getDependentPressReleaseEventIdx(
     const controller::Widget& widget)
 {
    for (int i = 0; i < widget.events.size(); ++i)
    {
-      if (mpark::holds_alternative<controller::EventPressRelease>(
-              widget.events[i]))
+      const auto pressReleaseEvent = mpark::get_if<controller::EventPressRelease>(&widget.events[i]);
+      if (pressReleaseEvent && !pressReleaseEvent->independent.value_or(false))
       {
          return i;
       }
    }
    return std::nullopt;
+}
+
+std::optional<int> createAdditionalControllerEventsForPressRelease(controller::Widget& widget)
+{
+   std::optional<int> indepPressEvtIdx;
+   for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
+   {
+      SWITCH(widget.events[eventIdx])
+         MFCASE(controller::EventPressRelease, evt){
+            if(evt.independent.value_or(false))
+            {
+               if(indepPressEvtIdx)
+               {
+                  spdlog::error("Only one independent PressRelease Evt allowed per widget");
+               }
+               else
+               {
+                  indepPressEvtIdx = eventIdx;
+               }
+            }
+            if(evt.hasPressVelocity.value_or(false))
+            {
+               const controller::Event event1 = controller::EventDerivedContinousValue{
+                  "PressVelocity", eventIdx};
+               evt.pressVelocityEvtIdx = widget.events.size();
+               widget.events.push_back(event1);
+            }
+            if(evt.hasReleaseVelocity.value_or(false))
+            {
+               const controller::Event event2 = controller::EventDerivedContinousValue{
+                  "ReleaseVelocity", eventIdx};
+               evt.releaseVelocityEvtIdx = widget.events.size();
+               widget.events.push_back(event2);
+            }
+         },
+         CASE_DEFAULT {}
+      END_SWITCH
+   }
+   return indepPressEvtIdx;
+}
+
+void createAdditionalControllerDerivedEvents(controller::Widget& widget)
+{
+   for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
+   {
+      SWITCH(widget.events[eventIdx])
+         MFCASE(controller::EventContinousValue, evt)
+         {            
+            if (evt.startValueCanJump.value_or(false))
+            {
+               const controller::Event event1 = controller::EventDerivedRelativeValue{
+                  fmt::format("{}_Relative", evt.name), eventIdx};
+               widget.events.insert(widget.events.begin() + eventIdx + 1, event1);
+               const controller::Event event2 = controller::EventDerivedIncremental{
+                  fmt::format("{}_Incremental", evt.name), eventIdx};
+               widget.events.insert(widget.events.begin() + eventIdx + 2, event2);
+            }
+            
+         },
+         MFCASE(controller::EventRelativeValue, evt)
+         {
+            const controller::Event event = controller::EventDerivedIncremental{
+               fmt::format("{}_Incremental", evt.name), eventIdx};
+            widget.events.insert(widget.events.begin() + eventIdx + 1, event);
+         },
+         MFCASE(controller::EventIncremental, evt)
+         {
+            if(getDependentPressReleaseEventIdx(widget).has_value())
+            {
+               const controller::Event event = controller::EventDerivedRelativeValue{
+                  fmt::format("{}_Relative", evt.name), eventIdx};
+               widget.events.insert(widget.events.begin() + eventIdx + 1, event);
+            }
+         },
+         CASE_DEFAULT {}
+      END_SWITCH
+   }
+}
+
+void createAdditionalControllerTwinEvents(controller::Widget& widget, int indepPressEvtIdx)
+{
+   for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
+   {
+      SWITCH(widget.events[eventIdx])
+         MFCASE(controller::EventContinousValue, evt)
+         {
+            evt.twin = controller::TwinData{indepPressEvtIdx, 
+                                          int(widget.events.size())};
+            auto twin = evt;
+            twin.name.append("_Alt");
+            widget.events.emplace_back(twin);
+         },
+         MFCASE(controller::EventRelativeValue, evt)
+         {
+            evt.twin = controller::TwinData{indepPressEvtIdx, 
+                                          int(widget.events.size())};
+            auto twin = evt;
+            twin.name.append("_Alt");
+            widget.events.emplace_back(twin);
+         },
+         MFCASE(controller::EventIncremental, evt)
+         {
+            evt.twin = controller::TwinData{indepPressEvtIdx, 
+                                          int(widget.events.size())};
+            auto twin = evt;
+            twin.name.append("_Alt");
+            widget.events.emplace_back(twin);
+         },
+         CASE_DEFAULT {}
+      END_SWITCH
+   }
 }
 
 void Description::createAdditionalControllerEvents()
@@ -156,72 +267,12 @@ void Description::createAdditionalControllerEvents()
    {
       for (auto& widget : controllerSection->widgets)
       {
-         std::optional<int> indepPressEvtIdx;
-         for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
+         const std::optional<int> indepPressEvtIdx =
+            createAdditionalControllerEventsForPressRelease(widget);
+         createAdditionalControllerDerivedEvents(widget);
+         if(indepPressEvtIdx)
          {
-            SWITCH(widget.events[eventIdx])
-               MCASE(controller::EventPressRelease, evt){
-                  if(evt.independent.value_or(false))
-                  {
-                     if(indepPressEvtIdx)
-                     {
-                        spdlog::error("Only one independent PressRelease Evt allowed per widget");
-                     }
-                     else
-                     {
-                        indepPressEvtIdx = eventIdx;
-                     }
-                  }
-                  if(evt.hasPressVelocity.value_or(false))
-                  {
-                     const controller::Event event1 = controller::EventDerivedContinousValue{
-                        "PressVelocity", eventIdx};
-                     evt.pressVelocityEvtIdx = widget.events.size();
-                     widget.events.push_back(event1);
-                  }
-                  if(evt.hasReleaseVelocity.value_or(false))
-                  {
-                     const controller::Event event2 = controller::EventDerivedContinousValue{
-                        "ReleaseVelocity", eventIdx};
-                     evt.releaseVelocityEvtIdx = widget.events.size();
-                     widget.events.push_back(event2);
-                  }
-               },
-               CASE_DEFAULT {}
-            END_SWITCH
-         }
-         for (int eventIdx = 0; eventIdx < widget.events.size(); ++eventIdx)
-         {
-            SWITCH(widget.events[eventIdx])
-               MCASE(controller::EventContinousValue, evt)
-               {
-                  if(indepPressEvtIdx)
-                  {
-                     evt.twin = controller::TwinData{indepPressEvtIdx.value(), 
-                                                     int(widget.events.size())};
-                     auto twin = evt;
-                     twin.name.append("Alt");
-                     widget.events.emplace_back(twin);
-                  }
-                  
-                  if (evt.startValueCanJump.value_or(false))
-                  {
-                     const controller::Event event = controller::EventDerivedRelativeValue{
-                        fmt::format("{}_Relative", evt.name), eventIdx};
-                     widget.events.push_back(event);
-                  }
-                  
-               },
-               MCASE(controller::EventRelativeValue, evt)
-               {
-
-               },
-               MCASE(controller::EventIncremental, evt)
-               {
-                  
-               },
-               CASE_DEFAULT {}
-            END_SWITCH
+            createAdditionalControllerTwinEvents(widget, indepPressEvtIdx.value());
          }
       }
    }
