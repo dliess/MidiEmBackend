@@ -22,6 +22,7 @@ private:
    const description::controller::Section& m_rControllerSection;
    std::list<Event> m_ongoingContinousEventStartPoints;
    std::list<Event> m_lastContOrRelEventValues;
+   std::list<EventId> m_independentPressList;
    constexpr static float VALUE_JUMP_THRESHOLD = 0.1f;
    constexpr static int DERIVED_INCREMENT_RESOLUTION = 128;
 };

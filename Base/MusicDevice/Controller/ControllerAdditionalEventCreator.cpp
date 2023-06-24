@@ -14,22 +14,62 @@ void AdditionalEventCreator::eventReceived(const Event& event)
 {
    const auto& eventsDescr = m_rControllerSection.widgets[event.id.widgetId].events;
    const auto& eventDescr = eventsDescr[event.id.eventId];
-   EventId derivedEvtId(event.id);
 
    SWITCH(eventDescr)
-      CASE(description::controller::EventPressRelease, evt) 
+      CASE(description::controller::EventPressRelease, evt)
       {
          const auto value = mpark::get<PressReleaseType>(event.value).value;
-         if((value > 0.0) && evt.pressVelocityEvtIdx)
+         if((value > 0.0))
          {
-            derivedEvtId.eventId = evt.pressVelocityEvtIdx.value();
-            emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+            if(evt.pressVelocityEvtIdx)
+            {
+               EventId derivedEvtId(event.id);
+               derivedEvtId.eventId = evt.pressVelocityEvtIdx.value();
+               emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+            }
+            if(evt.independent.value_or(false))
+            {
+               m_independentPressList.push_back(event.id);
+            }
          }
-         if((value <= 0.0) && evt.releaseVelocityEvtIdx)
+         if((value <= 0.0))
          {
-            derivedEvtId.eventId = evt.releaseVelocityEvtIdx.value();
-            emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+            if(evt.releaseVelocityEvtIdx)
+            {
+               EventId derivedEvtId(event.id);
+               derivedEvtId.eventId = evt.releaseVelocityEvtIdx.value();
+               emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+            }
+            if(evt.independent.value_or(false))
+            {
+               auto it = std::ranges::find(m_independentPressList, event.id);
+               if(it != m_independentPressList.end())
+               {
+                  m_independentPressList.erase(it);
+               }
+            }
          }
+      },
+      CASE(description::controller::EventContinousValue, evt)
+      {
+         if(evt.twin)
+         {
+            EventId indepPREvtId(event.id);
+            indepPREvtId.eventId = evt.twin->indepPressEvtIdx;
+            if(std::ranges::find(m_independentPressList, indepPREvtId) != 
+               m_independentPressList.end())
+            {
+
+            }
+         }
+      },
+      CASE(description::controller::EventRelativeValue, evt)
+      {
+
+      },
+      CASE(description::controller::EventIncremental, evt)
+      {
+
       },
       CASE_DEFAULT {}
    END_SWITCH
