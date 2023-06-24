@@ -56,8 +56,9 @@ void AdditionalEventCreator::eventReceived(const Event& event)
          {
             EventId indepPREvtId(event.id);
             indepPREvtId.eventId = evt.twin->indepPressEvtIdx;
-            if(std::ranges::find(m_independentPressList, indepPREvtId) != 
-               m_independentPressList.end())
+            const int evtIdx =
+            std::ranges::find(m_independentPressList, indepPREvtId) != 
+               m_independentPressList.end() ? evt.twin->twinEvtIdx : event.id.eventId;
             {
 
             }
