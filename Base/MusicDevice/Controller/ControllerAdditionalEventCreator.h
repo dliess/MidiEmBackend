@@ -3,6 +3,7 @@
 
 #include "CallbackSignal.h"
 #include "ControllerEvents.h"
+#include "ControllerSection.h"
 #include <list>
 
 // clang-format off

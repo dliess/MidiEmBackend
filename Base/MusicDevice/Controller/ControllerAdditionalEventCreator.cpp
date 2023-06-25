@@ -2,6 +2,7 @@
 
 #include "ControllerSection.h"
 
+using namespace base::musicDevice;
 using namespace base::musicDevice::controller;
 
 AdditionalEventCreator::AdditionalEventCreator(
@@ -24,6 +25,7 @@ int determineMainEvtIdx(const EventDescr& evt, const EventId& eventId,
    return eventId.eventId;
 }
 
+inline
 std::optional<int> getSourceEventIdx(const description::controller::Event& evtDescr)
 {
    return R_SWITCH(evtDescr)
