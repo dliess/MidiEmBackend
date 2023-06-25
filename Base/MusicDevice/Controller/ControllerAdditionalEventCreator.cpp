@@ -199,7 +199,7 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
    const Event& event)
 {
    const auto value = mpark::get<PressReleaseType>(event.value).value;
-   if((value > 0.0))
+   if(value > 0.0)
    {
       if(evtDescr.pressVelocityEvtIdx)
       {
@@ -212,13 +212,13 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
          m_independentPressList.push_back(event.id);
       }
    }
-   if((value <= 0.0))
+   if(value <= 0.0)
    {
       if(evtDescr.releaseVelocityEvtIdx)
       {
          EventId derivedEvtId(event.id);
          derivedEvtId.eventId = evtDescr.releaseVelocityEvtIdx.value();
-         emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+         emitEventHappened(Event{derivedEvtId, ContinousValueType{-value}});
       }
       if(evtDescr.independent.value_or(false))
       {

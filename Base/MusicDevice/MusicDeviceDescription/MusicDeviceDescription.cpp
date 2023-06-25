@@ -272,6 +272,7 @@ void Description::createAdditionalControllerEvents()
    {
       for (auto& widget : controllerSection->widgets)
       {
+         widget.events.reserve(16);
          const std::optional<int> indepPressEvtIdx =
             createAdditionalControllerEventsForPressRelease(widget);
          createAdditionalControllerDerivedEvents(widget);
