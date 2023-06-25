@@ -10,209 +10,250 @@ AdditionalEventCreator::AdditionalEventCreator(
 {
 }
 
+template<typename EventDescr>
+int determineMainEvtIdx(const EventDescr& evt, const EventId& eventId, 
+                        const std::list<EventId>& independentPressList)
+{
+   if(evt.twin)
+   {
+      EventId indepPREvtId(eventId);
+      indepPREvtId.eventId = evt.twin->indepPressEvtIdx;
+      return std::ranges::find(independentPressList, indepPREvtId) != 
+         independentPressList.end() ? evt.twin->twinEvtIdx : eventId.eventId;
+   }
+   return eventId.eventId;
+}
+
+std::optional<int> getSourceEventIdx(const description::controller::Event& evtDescr)
+{
+   return R_SWITCH(evtDescr)
+      FCASE(description::controller::EventDerivedRelativeValue, evtDescr) -> std::optional<int>
+      {
+         return evtDescr.sourceEventIdx;
+      },
+      FCASE(description::controller::EventDerivedIncremental, evtDescr) -> std::optional<int>
+      {
+         return evtDescr.sourceEventIdx;
+      },
+      CASE_DEFAULT -> std::optional<int> { return std::nullopt; }
+   R_END_SWITCH
+}
+
+void AdditionalEventCreator::createFromContinousToRelative(const Event& event, int destEvtIdx)
+{
+   EventId destEvtId(event.id);
+   destEvtId.eventId = destEvtIdx;
+   auto it = std::ranges::find_if(m_ongoingContinousEventStartPoints, [&event](const Event& e){
+      return e.id == event.id;
+   });
+   if(it == m_ongoingContinousEventStartPoints.end())
+   {
+      m_ongoingContinousEventStartPoints.push_back(event);
+      emitEventHappened(Event{destEvtId, RelativeValueType{0.0}});
+   }
+   else
+   {
+      const float diff = mpark::get<ContinousValueType>(event.value).value -
+                           mpark::get<ContinousValueType>(it->value).value;
+      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
+      {
+         emitEventHappened(Event{destEvtId, RelativeValueType{diff}});
+      }
+      else
+      {
+         it->value = event.value;
+         emitEventHappened(Event{destEvtId, RelativeValueType{0.0}});
+      }
+   }
+}
+
+void AdditionalEventCreator::createFromContinousToIncremental(const Event& event, int destEvtIdx)
+{
+   EventId destEvtId(event.id);
+   destEvtId.eventId = destEvtIdx;
+   auto it = std::ranges::find_if(m_lastContOrRelEventValues, [&event](const Event& e){
+      return e.id == event.id;
+   });
+   if(it == m_lastContOrRelEventValues.end())
+   {
+      m_ongoingContinousEventStartPoints.push_back(event);
+   }
+   else
+   {
+      const float diff = mpark::get<ContinousValueType>(event.value).value -
+                           mpark::get<ContinousValueType>(it->value).value;
+      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
+      {
+         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
+      }
+      it->value = event.value;
+   }
+}
+void AdditionalEventCreator::createFromRelativeToIncremental(const Event& event, int destEvtIdx)
+{
+   EventId destEvtId(event.id);
+   destEvtId.eventId = destEvtIdx;
+   auto it = std::ranges::find_if(m_lastContOrRelEventValues, [&event](const Event& e){
+      return e.id == event.id;
+   });
+   if(it == m_lastContOrRelEventValues.end())
+   {
+      m_ongoingContinousEventStartPoints.push_back(event);
+   }
+   else
+   {
+      const float diff = mpark::get<RelativeValueType>(event.value).value -
+                           mpark::get<RelativeValueType>(it->value).value;
+      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
+      {
+         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
+      }
+      it->value = event.value;
+   }
+}
+
+void AdditionalEventCreator::createFromIncrementalToRelative(const Event& event, int destEvtIdx)
+{
+   EventId destEvtId(event.id);
+   destEvtId.eventId = destEvtIdx;
+   auto it = std::ranges::find_if(m_ongoingContinousEventStartPoints, [&event](const Event& e){
+      return e.id == event.id;
+   });
+   if(it == m_ongoingContinousEventStartPoints.end())
+   {
+      m_ongoingContinousEventStartPoints.push_back(event);
+      emitEventHappened(Event{destEvtId, RelativeValueType{0.0}});
+   }
+   else
+   {
+      const auto increment = mpark::get<IncrementType>(event.value);
+      const float diff = increment.value / float(increment.resolution) ;
+      emitEventHappened(Event{destEvtId, RelativeValueType{diff}});
+   }
+}
+
+void AdditionalEventCreator::createExtraEvents4ContinousEvent(const std::vector<description::controller::Event>& eventsDescr,
+   const Event& event, int sourceEvtIdx)
+{
+   for(int destEvtIdx = sourceEvtIdx + 1; 
+       destEvtIdx < eventsDescr.size() && 
+       getSourceEventIdx(eventsDescr[destEvtIdx]).value_or(-1) == sourceEvtIdx; 
+       ++destEvtIdx)
+   {
+      SWITCH(eventsDescr[destEvtIdx])
+         FCASE(description::controller::EventDerivedRelativeValue, destEvtDescr)
+         {
+            createFromContinousToRelative(event, destEvtIdx);
+         },
+         FCASE(description::controller::EventDerivedIncremental, destEvtDescr)
+         {
+            createFromContinousToIncremental(event, destEvtIdx);
+         },
+         CASE_DEFAULT { }
+      END_SWITCH
+   }
+}
+
+void AdditionalEventCreator::createExtraEvents4RelativeEvent(const std::vector<description::controller::Event>& eventsDescr,
+                     const Event& event, int sourceEvtIdx)
+{
+   for(int destEvtIdx = sourceEvtIdx + 1; 
+       destEvtIdx < eventsDescr.size() && 
+       getSourceEventIdx(eventsDescr[destEvtIdx]).value_or(-1) == sourceEvtIdx; 
+       ++destEvtIdx)
+   {
+      SWITCH(eventsDescr[destEvtIdx])
+         FCASE(description::controller::EventDerivedIncremental, destEvtDescr)
+         {
+            createFromRelativeToIncremental(event, destEvtIdx);
+         },
+         CASE_DEFAULT { }
+      END_SWITCH
+   }
+}
+void AdditionalEventCreator::createExtraEvents4IncrementalEvent(const std::vector<description::controller::Event>& eventsDescr,
+                     const Event& event, int sourceEvtIdx)
+
+{
+   for(int destEvtIdx = sourceEvtIdx + 1; 
+       destEvtIdx < eventsDescr.size() && 
+       getSourceEventIdx(eventsDescr[destEvtIdx]).value_or(-1) == sourceEvtIdx; 
+       ++destEvtIdx)
+   {
+      SWITCH(eventsDescr[destEvtIdx])
+         FCASE(description::controller::EventDerivedRelativeValue, destEvtDescr)
+         {
+            createFromIncrementalToRelative(event, destEvtIdx);
+         },
+         CASE_DEFAULT { }
+      END_SWITCH
+   }
+}
+
+void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
+   const description::controller::EventPressRelease& evtDescr,
+   const Event& event)
+{
+   const auto value = mpark::get<PressReleaseType>(event.value).value;
+   if((value > 0.0))
+   {
+      if(evtDescr.pressVelocityEvtIdx)
+      {
+         EventId derivedEvtId(event.id);
+         derivedEvtId.eventId = evtDescr.pressVelocityEvtIdx.value();
+         emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+      }
+      if(evtDescr.independent.value_or(false))
+      {
+         m_independentPressList.push_back(event.id);
+      }
+   }
+   if((value <= 0.0))
+   {
+      if(evtDescr.releaseVelocityEvtIdx)
+      {
+         EventId derivedEvtId(event.id);
+         derivedEvtId.eventId = evtDescr.releaseVelocityEvtIdx.value();
+         emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
+      }
+      if(evtDescr.independent.value_or(false))
+      {
+         auto it = std::ranges::find(m_independentPressList, event.id);
+         if(it != m_independentPressList.end())
+         {
+            m_independentPressList.erase(it);
+         }
+      }
+   }
+}
+
+
 void AdditionalEventCreator::eventReceived(const Event& event)
 {
    const auto& eventsDescr = m_rControllerSection.widgets[event.id.widgetId].events;
    const auto& eventDescr = eventsDescr[event.id.eventId];
 
    SWITCH(eventDescr)
-      CASE(description::controller::EventPressRelease, evt)
+      CASE(description::controller::EventPressRelease, evtDescr)
       {
-         const auto value = mpark::get<PressReleaseType>(event.value).value;
-         if((value > 0.0))
-         {
-            if(evt.pressVelocityEvtIdx)
-            {
-               EventId derivedEvtId(event.id);
-               derivedEvtId.eventId = evt.pressVelocityEvtIdx.value();
-               emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
-            }
-            if(evt.independent.value_or(false))
-            {
-               m_independentPressList.push_back(event.id);
-            }
-         }
-         if((value <= 0.0))
-         {
-            if(evt.releaseVelocityEvtIdx)
-            {
-               EventId derivedEvtId(event.id);
-               derivedEvtId.eventId = evt.releaseVelocityEvtIdx.value();
-               emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
-            }
-            if(evt.independent.value_or(false))
-            {
-               auto it = std::ranges::find(m_independentPressList, event.id);
-               if(it != m_independentPressList.end())
-               {
-                  m_independentPressList.erase(it);
-               }
-            }
-         }
+         createExtraEvents4PressReleaseEvent(evtDescr, event);
       },
-      CASE(description::controller::EventContinousValue, evt)
+      CASE(description::controller::EventContinousValue, evtDescr)
       {
-         if(evt.twin)
-         {
-            EventId indepPREvtId(event.id);
-            indepPREvtId.eventId = evt.twin->indepPressEvtIdx;
-            const int evtIdx =
-            std::ranges::find(m_independentPressList, indepPREvtId) != 
-               m_independentPressList.end() ? evt.twin->twinEvtIdx : event.id.eventId;
-            {
-
-            }
-         }
+         const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
+         createExtraEvents4ContinousEvent(eventsDescr, event, evtIdx);
       },
-      CASE(description::controller::EventRelativeValue, evt)
+      CASE(description::controller::EventRelativeValue, evtDescr)
       {
-
+         const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
+         createExtraEvents4RelativeEvent(eventsDescr, event, evtIdx);
       },
-      CASE(description::controller::EventIncremental, evt)
+      CASE(description::controller::EventIncremental, evtDescr)
       {
-
+         const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
+         createExtraEvents4IncrementalEvent(eventsDescr, event, evtIdx);
       },
       CASE_DEFAULT {}
    END_SWITCH
-
-
-
-   const auto pressRelease = mpark::get_if<PressReleaseType>(&event.value);
-   if(pressRelease && (pressRelease->value > 0.0))
-   {
-      m_ongoingContinousEventStartPoints.remove_if([&event](const Event& e){
-         return e.id.widgetId == event.id.widgetId &&
-                e.id.widgetCoord == event.id.widgetCoord;
-      });
-   }
-   for(int eventIdx = int(eventsDescr.size()) - 1; 0 <= eventIdx; --eventIdx)
-   {
-      EventId derivedEvtId(event.id);
-      derivedEvtId.eventId = eventIdx;
-
-      SWITCH(eventsDescr[eventIdx])
-         CASE(description::controller::EventDerivedContinousValue, derivedEvt)
-         {
-            if(derivedEvt.sourceEventIdx == event.id.eventId)
-            {
-               SWITCH(eventDescr)
-                  CASE(description::controller::EventPressRelease, evt) 
-                  {
-                     const auto pressVel = mpark::get<PressReleaseType>(event.value).value;
-                     if((derivedEvt.name == "PressVelocity") && (pressVel > 0.0))
-                     {
-                        emitEventHappened(Event{derivedEvtId, ContinousValueType{pressVel}});
-                     }
-                     else if((derivedEvt.name == "ReleaseVelocity") && (pressVel <= 0.0))
-                     {
-                        emitEventHappened(Event{derivedEvtId, ContinousValueType{pressVel}});
-                     }
-                  },
-                  CASE_DEFAULT {}
-               END_SWITCH
-            }
-         },
-         CASE(description::controller::EventDerivedRelativeValue, derivedEvt)
-         {
-            if(derivedEvt.sourceEventIdx == event.id.eventId)
-            {
-               auto it = std::ranges::find_if(m_ongoingContinousEventStartPoints, [&event](const Event& e){
-                  return e.id == event.id;
-               });
-               SWITCH(eventDescr)
-                  CASE(description::controller::EventContinousValue, evt) 
-                  {
-                     if(evt.startValueCanJump)
-                     {
-                        if(it == m_ongoingContinousEventStartPoints.end())
-                        {
-                           m_ongoingContinousEventStartPoints.push_back(event);
-                           emitEventHappened(Event{derivedEvtId, RelativeValueType{0.0}});
-                        }
-                        else
-                        {
-                           const float diff = mpark::get<ContinousValueType>(event.value).value -
-                                              mpark::get<ContinousValueType>(it->value).value;
-                           if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
-                           {
-                              emitEventHappened(Event{derivedEvtId, RelativeValueType{diff}});
-                           }
-                           else
-                           {
-                              it->value = event.value;
-                              emitEventHappened(Event{derivedEvtId, RelativeValueType{0.0}});
-                           }
-                        }
-                     }                     
-                  },
-                  CASE(description::controller::EventIncremental, evt) 
-                  {
-                     if(it == m_ongoingContinousEventStartPoints.end())
-                     {
-                        m_ongoingContinousEventStartPoints.push_back(event);
-                        emitEventHappened(Event{derivedEvtId, RelativeValueType{0.0}});
-                     }
-                     else
-                     {
-                        const auto increment = mpark::get<IncrementType>(event.value);
-                        const float diff = increment.value / float(increment.resolution) ;
-                        emitEventHappened(Event{derivedEvtId, RelativeValueType{diff}});
-                     }
-                  },
-                  CASE_DEFAULT {}
-               END_SWITCH
-            }
-         },
-         CASE(description::controller::EventDerivedIncremental, derivedEvt)
-         {
-            if(derivedEvt.sourceEventIdx == event.id.eventId)
-            {
-               auto it = std::ranges::find_if(m_lastContOrRelEventValues, [&event](const Event& e){
-                  return e.id == event.id;
-               });
-               SWITCH(eventDescr)
-                  CASE(description::controller::EventContinousValue, evt) 
-                  {
-                     if(evt.startValueCanJump){
-                        if(it == m_lastContOrRelEventValues.end())
-                        {
-                           m_ongoingContinousEventStartPoints.push_back(event);
-                        }
-                        else
-                        {
-                           const float diff = mpark::get<ContinousValueType>(event.value).value -
-                                              mpark::get<ContinousValueType>(it->value).value;
-                           if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
-                           {
-                              emitEventHappened(Event{derivedEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
-                           }
-                           it->value = event.value;
-                        }
-                     }
-                  },
-                  CASE(description::controller::EventRelativeValue, evt) 
-                  {
-                     if(it == m_lastContOrRelEventValues.end())
-                     {
-                        m_ongoingContinousEventStartPoints.push_back(event);
-                     }
-                     else
-                     {
-                        const float diff = mpark::get<RelativeValueType>(event.value).value -
-                                             mpark::get<RelativeValueType>(it->value).value;
-                        if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
-                        {
-                           emitEventHappened(Event{derivedEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
-                        }
-                        it->value = event.value;
-                     }
-                  },
-                  CASE_DEFAULT {}
-               END_SWITCH
-            }
-         },
-         MFCASE_DEFAULT { eventIdx = -1; }
-      END_SWITCH
-   }
    emitEventHappened(event);
 }
