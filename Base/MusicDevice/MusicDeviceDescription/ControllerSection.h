@@ -57,6 +57,7 @@ struct EventRelativeValue
 {
    std::string name;
    bool bidirectional;
+   bool springsToZeroAtRelease;
    size_t fittingSemitones;
    std::optional<bool> global;
    std::vector<std::vector<midi::MidiMessageId>> source;

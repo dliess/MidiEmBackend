@@ -16,8 +16,9 @@ ControllerHandler::ControllerHandler(
    m_additionalEventCreator(m_rControllerSection)
 {
    m_additionalEventCreator.onEventHappened([this](const Event& event){
-//            spdlog::info( "Received evt {}",
-//                  nlohmann::json(event).dump());
+      if(event.id.eventId == 1 || event.id.eventId == 2)
+            spdlog::info( "Received evt {}",
+                  nlohmann::json(event).dump());
       emitEventReceived(event);
       m_uiEventBuffer[event.id] = std::make_pair(event, true);
    });

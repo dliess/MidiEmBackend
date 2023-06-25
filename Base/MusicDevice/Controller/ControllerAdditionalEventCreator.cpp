@@ -78,15 +78,16 @@ void AdditionalEventCreator::createFromContinousToIncremental(const Event& event
    });
    if(it == m_lastContOrRelEventValues.end())
    {
-      m_ongoingContinousEventStartPoints.push_back(event);
+      m_lastContOrRelEventValues.push_back(event);
    }
    else
    {
       const float diff = mpark::get<ContinousValueType>(event.value).value -
                            mpark::get<ContinousValueType>(it->value).value;
-      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
+      const int incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
+      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD && incr != 0)
       {
-         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
+         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
       }
       it->value = event.value;
    }
@@ -100,15 +101,16 @@ void AdditionalEventCreator::createFromRelativeToIncremental(const Event& event,
    });
    if(it == m_lastContOrRelEventValues.end())
    {
-      m_ongoingContinousEventStartPoints.push_back(event);
+      m_lastContOrRelEventValues.push_back(event);
    }
    else
    {
       const float diff = mpark::get<RelativeValueType>(event.value).value -
                            mpark::get<RelativeValueType>(it->value).value;
-      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
+      const int incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
+      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD  && incr != 0)
       {
-         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, int(diff * DERIVED_INCREMENT_RESOLUTION)}});
+         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
       }
       it->value = event.value;
    }
@@ -228,7 +230,6 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
       }
    }
 }
-
 
 void AdditionalEventCreator::eventReceived(const Event& event)
 {

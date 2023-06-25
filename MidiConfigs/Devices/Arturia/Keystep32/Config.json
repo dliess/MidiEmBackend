@@ -14,6 +14,8 @@
           {
             ".type": "PressRelease",
             "name": "key",
+            "hasPressVelocity": true,
+            "hasReleaseVelocity": true,
             "pressSource": [
               [
                 {
@@ -34,6 +36,7 @@
           {
             ".type": "RelativeValue",
             "name": "global aftertouch",
+            "springsToZeroAtRelease": true,
             "fittingSemitones": 2,
             "bidirectional": false,
             "global": true,
@@ -80,6 +83,7 @@
           {
             ".type": "RelativeValue",
             "name": "PitchBend",
+            "springsToZeroAtRelease": true,
             "fittingSemitones": 2,
             "bidirectional": true,
             "source": [

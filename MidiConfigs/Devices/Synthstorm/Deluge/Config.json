@@ -822,6 +822,8 @@
           {
             ".type": "PressRelease",
             "name": "key",
+            "hasPressVelocity": true,
+            "hasReleaseVelocity": true,
             "pressSource": [
               [
                 {

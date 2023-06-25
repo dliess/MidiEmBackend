@@ -85,12 +85,14 @@ void EventRouterRt::handlePressReleaseType(
                handleAnyNotePressRelease(note.number, destIter2->second,
                                           value);
             }
+/*
             else
             {
                spdlog::error("Should have found\n {}\n in \n{}", 
                   nlohmann::json(melodicEvent).dump(3),
                   nlohmann::json(m_rMap).dump(3));
             }
+*/
          }
       }
    END_SWITCH

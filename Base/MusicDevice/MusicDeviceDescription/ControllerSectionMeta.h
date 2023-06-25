@@ -83,6 +83,7 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
    return members(
       member("name", &base::musicDevice::description::controller::EventRelativeValue::name),
       member("bidirectional", &base::musicDevice::description::controller::EventRelativeValue::bidirectional),
+      member("springsToZeroAtRelease", &base::musicDevice::description::controller::EventRelativeValue::springsToZeroAtRelease),
       member("fittingSemitones", &base::musicDevice::description::controller::EventRelativeValue::fittingSemitones),
       member("global", &base::musicDevice::description::controller::EventRelativeValue::global),
       member("source", &base::musicDevice::description::controller::EventRelativeValue::source)

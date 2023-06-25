@@ -168,19 +168,21 @@ std::optional<int> createAdditionalControllerEventsForPressRelease(controller::W
                   indepPressEvtIdx = eventIdx;
                }
             }
+            int step = 1;
             if(evt.hasPressVelocity.value_or(false))
             {
                const controller::Event event1 = controller::EventDerivedContinousValue{
                   "PressVelocity", eventIdx};
-               evt.pressVelocityEvtIdx = widget.events.size();
-               widget.events.push_back(event1);
+               evt.pressVelocityEvtIdx = eventIdx + step;
+               widget.events.insert(widget.events.begin() + eventIdx + step, event1);
+               ++step;
             }
             if(evt.hasReleaseVelocity.value_or(false))
             {
                const controller::Event event2 = controller::EventDerivedContinousValue{
                   "ReleaseVelocity", eventIdx};
-               evt.releaseVelocityEvtIdx = widget.events.size();
-               widget.events.push_back(event2);
+               evt.releaseVelocityEvtIdx = eventIdx + step;
+               widget.events.insert(widget.events.begin() + eventIdx + step, event2);
             }
          },
          CASE_DEFAULT {}
@@ -209,9 +211,12 @@ void createAdditionalControllerDerivedEvents(controller::Widget& widget)
          },
          MFCASE(controller::EventRelativeValue, evt)
          {
-            const controller::Event event = controller::EventDerivedIncremental{
-               fmt::format("{}_Incremental", evt.name), eventIdx};
-            widget.events.insert(widget.events.begin() + eventIdx + 1, event);
+            if(!evt.springsToZeroAtRelease)
+            {
+               const controller::Event event = controller::EventDerivedIncremental{
+                  fmt::format("{}_Incremental", evt.name), eventIdx};
+               widget.events.insert(widget.events.begin() + eventIdx + 1, event);
+            }
          },
          MFCASE(controller::EventIncremental, evt)
          {
@@ -273,6 +278,14 @@ void Description::createAdditionalControllerEvents()
          if(indepPressEvtIdx)
          {
             createAdditionalControllerTwinEvents(widget, indepPressEvtIdx.value());
+         }
+         for(const auto& event : widget.events)
+         {
+            std::string name = 
+            R_SWITCH(event)
+               [](auto&& evt) -> std::string { return evt.name; }
+            R_END_SWITCH
+            spdlog::info("{}", name);
          }
       }
    }

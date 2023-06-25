@@ -15,6 +15,8 @@
           {
             ".type": "PressRelease",
             "name": "keyPress",
+            "hasPressVelocity": true,
+            "hasReleaseVelocity": true,
             "pressSource": [
               [
                 {
@@ -35,6 +37,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE Aftertouch",
+            "springsToZeroAtRelease": true,
             "fittingSemitones": 2,
             "bidirectional": false,
             "source": [
@@ -49,6 +52,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE PitchBend",
+            "springsToZeroAtRelease": false,
             "fittingSemitones": 27,
             "bidirectional": true,
             "source": [
@@ -63,6 +67,7 @@
           {
             ".type": "RelativeValue",
             "name": "MPE PosY",
+            "springsToZeroAtRelease": false,
             "fittingSemitones": 6,
             "bidirectional": true,
             "source": [
