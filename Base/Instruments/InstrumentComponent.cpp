@@ -58,6 +58,7 @@ void Component::incrementParameterValueDontCache(
    {
       m_pSoundDevice->incrementParameterValue(
           m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
+      m_pSoundDevice->lastplayerId = nullptr;
    }
 }
 
@@ -125,6 +126,7 @@ void Component::setParameterValueDontCache(
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
+      m_pSoundDevice->lastplayerId = nullptr;
    }
 }
 

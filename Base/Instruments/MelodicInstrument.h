@@ -42,7 +42,7 @@ public:
    void noteOff(int note, float velocity, void* token = nullptr) const override;
 
    void pitchBend(float value) const;
-   void pitchBend(int note, float value) const;
+   void pitchBendMPE(int note, float value) const;
    void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
@@ -70,7 +70,7 @@ public:
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] const musicDevice::description::sound::Parameter*
-   parameterDescription(int componentIdx, int parameterIdx) const;
+        parameterDescription(int componentIdx, int parameterIdx) const;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;

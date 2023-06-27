@@ -603,11 +603,19 @@ void EventRouterRt::sendMPERelativeValue(
     const controller::RelativeValueType& value) noexcept
 {
    SWITCH(eventDestination.endpoint)
-      CASE(EventDestination::DrumKit,_) {},
+      CASE(EventDestination::DrumKit,_) 
+      {
+      },
       CASE(EventDestination::Melodic, melodic) 
       {
          SWITCH(eventDestination.controlType)
-            CASE(EventDestination::Note,_) {},
+            CASE(EventDestination::Note,_) 
+            {
+               m_rInstruments.withMelodicInstrumentRt(
+                  melodic.uuid, [&](auto& melodicInstr) {
+                     melodicInstr.pitchBendMPE(note, value.value * float(value.fittingSemitones));
+               });
+            },
             CASE(EventDestination::Parameter, parameter) 
             {
                m_rInstruments.withMelodicInstrumentRt(
