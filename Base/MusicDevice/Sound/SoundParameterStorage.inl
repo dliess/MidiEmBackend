@@ -197,7 +197,7 @@ template <typename Cb> void ParameterStorage::forEachElementContainer(Cb&& cb)
 inline void ParameterStorage::_resetToInitialValue(
     int voiceIdx, int paramIdx, ParameterStorageElement& element) noexcept
 {
-   const auto& descr = m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+   const auto& descr = m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
    if (descr.role &&
        descr.role.value() ==
            description::sound::Parameter::Role::ComponentSelector &&

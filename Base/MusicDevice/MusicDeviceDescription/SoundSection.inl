@@ -207,7 +207,7 @@ inline void from_json(const nlohmann::json& j,
 
 namespace base::musicDevice::description::sound
 {
-inline const Parameter& Section::parameterDescr(
+inline const Parameter& Section::parameterDescription(
     const ParameterId& parameterId) const noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId ==
@@ -232,7 +232,7 @@ inline const Parameter& Section::parameterDescr(
 }   // namespace base::musicDevice::description::sound
 
 inline const base::musicDevice::description::sound::Parameter&
-base::musicDevice::description::sound::Section::parameterDescr(
+base::musicDevice::description::sound::Section::parameterDescription(
     int voiceId, int parameterId) const noexcept
 {
    if (base::musicDevice::description::sound::GlobalSectionId == voiceId)
@@ -594,7 +594,7 @@ int base::musicDevice::description::sound::Section::linSearchByName(
 inline float base::musicDevice::description::sound::Section::getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {
-   const auto& paramDescr = parameterDescr(voiceId, parameterId);
+   const auto& paramDescr = parameterDescription(voiceId, parameterId);
    return mpark::visit(
        util::overload{
            [this, paramDescr](const int& val) -> float { return val; },
@@ -620,7 +620,7 @@ inline mpark::variant<
 base::musicDevice::description::sound::Section::_getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {
-   const auto& paramDescr = parameterDescr(voiceId, parameterId);
+   const auto& paramDescr = parameterDescription(voiceId, parameterId);
    if (paramDescr.defaultValue.has_value())
    {
       return *paramDescr.defaultValue;

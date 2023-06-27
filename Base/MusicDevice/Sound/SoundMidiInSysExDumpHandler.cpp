@@ -101,7 +101,7 @@ void MidiInSysExDumpHandler::handle(
                     return;
                  }
                  const auto& descr =
-                     m_rSoundSection.parameterDescr(*voiceIdx, *paramIdx);
+                     m_rSoundSection.parameterDescription(*voiceIdx, *paramIdx);
                  assert(descr.source.midi.has_value());
                  const int value = sysexMsg[param.offset];
                  if (descr.type == description::sound::Parameter::Type::List)

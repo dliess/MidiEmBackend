@@ -27,7 +27,7 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
 {
    // spdlog::info( "sendSoundParameter {} {} {}", voiceId, parameterId, value);
    const auto& paramDescr =
-       m_rSoundSection.parameterDescr(voiceId, parameterId);
+       m_rSoundSection.parameterDescription(voiceId, parameterId);
    const auto midiChannel =
        m_rSoundSection.getMidiChannel(voiceId) + m_midiChannelOffset;
    assert(paramDescr.source.midi);

@@ -136,14 +136,12 @@ ValueRangeEnd getParamRangeEnd(
    {
       case (ParameterAttr::Commanded):
       {
-         if (const description::sound::Parameter* paramDescr =
-             paramDescrProvider.parameterDescription(voiceIdx, parameterIdx); paramDescr)
+         const auto& paramDescr =
+            paramDescrProvider.parameterDescription(voiceIdx, parameterIdx);
+         const auto vr = paramDescr.getValueRange();
+         if(vr)
          {
-            const auto vr = paramDescr->getValueRange();
-            if(vr)
-            {
-               return vr.value();
-            }
+            return vr.value();
          }
          break;
       }

@@ -133,7 +133,7 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
     const midi::MidiMessage& midiMsg,
     const description::sound::ParameterId& id) const noexcept
 {
-   const auto& descr = m_rSoundSection.parameterDescr(id);
+   const auto& descr = m_rSoundSection.parameterDescription(id);
    assert(descr.source.midi.has_value());
 
    return mpark::visit(

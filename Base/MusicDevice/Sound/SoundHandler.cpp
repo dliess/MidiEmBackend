@@ -7,6 +7,7 @@
 #include "SoundMidiInMsgHandler.h"
 #include "SoundMidiOutMsgHandler.h"
 #include "SoundSection.h"
+#include "ParameterData.h"
 
 using namespace base::musicDevice::sound;
 
@@ -195,63 +196,29 @@ float SoundHandler::fromNormalizedValue(
     int voiceId, int parameterId, ParameterAttr parameterAttr,
     float percentageValue) const noexcept
 {
-   const auto range = getParameterRange(voiceId, parameterId, parameterAttr);
-   const auto& pd   = m_rSoundSection.parameterDescr(voiceId, parameterId);
-   if (pd.type == description::sound::Parameter::Type::List)
-   {
-      return static_cast<int>(range * percentageValue);
-   }
-   return range * percentageValue;
+   const auto valueRangeEnd = getParameterRangeEnd(voiceId, parameterId, parameterAttr);
+   return R_SWITCH(valueRangeEnd)
+      FCASE(ListRangeEnd, range) -> float
+      {
+         return float(int(range.get() * percentageValue));
+      },
+      FCASE(FloatingPointRangeEnd, range) -> float
+      {
+         return range.get() * percentageValue;
+      }
+   R_END_SWITCH
 }
 
-const base::musicDevice::description::sound::Parameter* SoundHandler::parameterDescription(
+const base::musicDevice::description::sound::Parameter& SoundHandler::parameterDescription(
     int voiceIdx, int parameterIdx) const
 {
-   // TODO
-   return &m_rSoundSection.parameterDescr(voiceIdx, parameterIdx);
+   return m_rSoundSection.parameterDescription(voiceIdx, parameterIdx);
 }
 
-float SoundHandler::getParameterRange(int voiceId, int parameterId,
-                                      ParameterAttr parameterAttr) const
+ValueRangeEnd SoundHandler::getParameterRangeEnd(int voiceId, int parameterIdx,
+                                         ParameterAttr parameterAttr) const
 {
-   float maxVal = 1.0;
-   switch (parameterAttr)
-   {
-      case ParameterAttr::Commanded:
-      {
-         const auto& pd = m_rSoundSection.parameterDescr(voiceId, parameterId);
-         if (pd.type == description::sound::Parameter::Type::List)
-         {
-            maxVal = pd.source.midi->sourceRanges->size();
-         }
-         else
-         {
-            maxVal = 1.0;
-         }
-         break;
-      }
-      case ParameterAttr::LfoAmplitude:
-      {
-         maxVal = 1.0;
-         break;
-      }
-      case ParameterAttr::LfoFrequency:
-      {
-         maxVal = 1.0;
-         break;
-      }
-      case ParameterAttr::LfoWaveform:
-      {
-         maxVal = 4.0;
-         break;
-      }
-      case ParameterAttr::LfoMultiplierExp:
-      {
-         maxVal = lfo::MAX_MULTIPLIER_EXP;
-         break;
-      }
-   }
-   return maxVal;
+   return getParamRangeEnd(voiceId, parameterIdx, parameterAttr, m_rSoundSection);
 }
 
 void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
@@ -292,7 +259,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
       m_paramStorage.updateActualValues(
           [this](int voiceIdx, int paramIdx, float value, float prevValue) {
              const auto& paramDescr =
-                 m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+                 m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
              if (paramDescr.role ==
                  description::sound::Parameter::Role::ComponentSelector)
              {
@@ -312,7 +279,7 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
                     [this, voiceIdx, &compNamePrev, &compName](
                         int paramIdx, ParameterStorageElement& element) {
                        const auto& descr =
-                           m_rSoundSection.parameterDescr(voiceIdx, paramIdx);
+                           m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
                        if (descr.component && *descr.component == compNamePrev)
                        {
                           element.enable(false);

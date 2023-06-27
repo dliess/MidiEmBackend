@@ -329,9 +329,9 @@ struct Section
    //------------- Additional helpers ------------------
    //---------------------------------------------------
 
-   inline const Parameter& parameterDescr(
+   inline const Parameter& parameterDescription(
        const ParameterId& parameterId) const noexcept;
-   inline const Parameter& parameterDescr(int voiceId,
+   inline const Parameter& parameterDescription(int voiceId,
                                           int parameterId) const noexcept;
    inline const EngineBase* engineBase(int voiceId) const noexcept;
    inline const MidiChannelHolder* midiChannel(int voiceId) const noexcept;

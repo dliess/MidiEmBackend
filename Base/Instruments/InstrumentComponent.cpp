@@ -103,7 +103,7 @@ void Component::setParameterValue(
    {
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float limitedValue = limitParameterValue(
+      const float limitedValue = musicDevice::sound::limitParameterValue(
           value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
@@ -120,7 +120,7 @@ void Component::setParameterValueDontCache(
    {
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float limitedValue = limitParameterValue(
+      const float limitedValue = musicDevice::sound::limitParameterValue(
           value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
@@ -146,7 +146,7 @@ Component::parameterDescription(int parameterIdx) const
 {
    if (m_pSoundDevice)
    {
-      return m_pSoundDevice->parameterDescription(m_sdVoiceIdx, parameterIdx);
+      return &m_pSoundDevice->parameterDescription(m_sdVoiceIdx, parameterIdx);
    }
    return nullptr;
 }

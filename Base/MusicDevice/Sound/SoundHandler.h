@@ -52,13 +52,13 @@ public:
    [[nodiscard]] std::optional<float> getParameterValue(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
-   [[nodiscard]] float getParameterRange(
+   [[nodiscard]] ValueRangeEnd getParameterRangeEnd(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const;
    [[nodiscard]] float fromNormalizedValue(
        int voiceId, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
-   [[nodiscard]] const description::sound::Parameter*
+   [[nodiscard]] const description::sound::Parameter&
    parameterDescription(int voiceIdx, int parameterIdx) const;
    void incrementParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr,
                                 float increment, bool roundRobin = false) noexcept;

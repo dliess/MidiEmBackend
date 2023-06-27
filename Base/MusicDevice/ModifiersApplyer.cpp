@@ -37,11 +37,14 @@ void ModifiersApplyer::operator()() noexcept
                         modifier.destParamCoord.parameterIdx,
                         modifier.destParamCoord.parameterAttr);
                 const auto pr = 
-                    mdIter->second->soundHandler->getParameterRange(
+                    mdIter->second->soundHandler->getParameterRangeEnd(
                         modifier.destParamCoord.voiceIdx,
                         modifier.destParamCoord.parameterIdx,
                         modifier.destParamCoord.parameterAttr);
-                modifier.goalValue.emplace(*pv, pr);
+                const float range = R_SWITCH(pr)
+                    [](auto&& val) -> float { return float(val.get()); }
+                R_END_SWITCH
+                modifier.goalValue.emplace(*pv, range);
              }
           }
        });
