@@ -273,7 +273,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
             return R_SWITCH(eventDescr)
                CASE(description::controller::EventRelativeValue, evt) -> EventValue
                {
-                  return RelativeValueType{msg.normalizedValue() * 2.0f, evt.fittingSemitones}; // TODO: the 2.0f part :)
+                  return RelativeValueType{msg.normalizedValue(), evt.fittingSemitones};
                },
                CASE_DEFAULT -> EventValue 
                {

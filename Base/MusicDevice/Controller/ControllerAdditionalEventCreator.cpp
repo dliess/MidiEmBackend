@@ -41,7 +41,7 @@ std::optional<int> getSourceEventIdx(const description::controller::Event& evtDe
    R_END_SWITCH
 }
 
-void AdditionalEventCreator::createFromContinousToRelative(const Event& event, int destEvtIdx)
+void AdditionalEventCreator::createFromContinousToRelative(const Event& event, int destEvtIdx, float lastVal)
 {
    EventId destEvtId(event.id);
    destEvtId.eventId = destEvtIdx;
@@ -55,11 +55,12 @@ void AdditionalEventCreator::createFromContinousToRelative(const Event& event, i
    }
    else
    {
-      const float diff = mpark::get<ContinousValueType>(event.value).value -
-                           mpark::get<ContinousValueType>(it->value).value;
+      const float diff = mpark::get<ContinousValueType>(event.value).value - lastVal;
       if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
       {
-         emitEventHappened(Event{destEvtId, RelativeValueType{diff}});
+         const float vdiff = mpark::get<ContinousValueType>(event.value).value -
+                             mpark::get<ContinousValueType>(it->value).value;
+         emitEventHappened(Event{destEvtId, RelativeValueType{vdiff}});
       }
       else
       {
@@ -69,50 +70,26 @@ void AdditionalEventCreator::createFromContinousToRelative(const Event& event, i
    }
 }
 
-void AdditionalEventCreator::createFromContinousToIncremental(const Event& event, int destEvtIdx)
+void AdditionalEventCreator::createFromContinousToIncremental(const Event& event, int destEvtIdx, float lastVal)
 {
    EventId destEvtId(event.id);
    destEvtId.eventId = destEvtIdx;
-   auto it = std::ranges::find_if(m_lastContOrRelEventValues, [&event](const Event& e){
-      return e.id == event.id;
-   });
-   if(it == m_lastContOrRelEventValues.end())
+   const float diff = mpark::get<ContinousValueType>(event.value).value - lastVal;
+   const auto incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
+   if(std::fabs(diff) < VALUE_JUMP_THRESHOLD && incr != 0)
    {
-      m_lastContOrRelEventValues.push_back(event);
-   }
-   else
-   {
-      const float diff = mpark::get<ContinousValueType>(event.value).value -
-                           mpark::get<ContinousValueType>(it->value).value;
-      const int incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
-      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD && incr != 0)
-      {
-         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
-      }
-      it->value = event.value;
+      emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
    }
 }
-void AdditionalEventCreator::createFromRelativeToIncremental(const Event& event, int destEvtIdx)
+void AdditionalEventCreator::createFromRelativeToIncremental(const Event& event, int destEvtIdx, float lastVal)
 {
    EventId destEvtId(event.id);
    destEvtId.eventId = destEvtIdx;
-   auto it = std::ranges::find_if(m_lastContOrRelEventValues, [&event](const Event& e){
-      return e.id == event.id;
-   });
-   if(it == m_lastContOrRelEventValues.end())
+   const float diff = mpark::get<RelativeValueType>(event.value).value - lastVal;
+   const auto incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
+   if(std::fabs(diff) < VALUE_JUMP_THRESHOLD  && incr != 0)
    {
-      m_lastContOrRelEventValues.push_back(event);
-   }
-   else
-   {
-      const float diff = mpark::get<RelativeValueType>(event.value).value -
-                           mpark::get<RelativeValueType>(it->value).value;
-      const int incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
-      if(std::fabs(diff) < VALUE_JUMP_THRESHOLD  && incr != 0)
-      {
-         emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
-      }
-      it->value = event.value;
+      emitEventHappened(Event{destEvtId, IncrementType{DERIVED_INCREMENT_RESOLUTION, incr}});
    }
 }
 
@@ -137,7 +114,7 @@ void AdditionalEventCreator::createFromIncrementalToRelative(const Event& event,
 }
 
 void AdditionalEventCreator::createExtraEvents4ContinousEvent(const std::vector<description::controller::Event>& eventsDescr,
-   const Event& event, int sourceEvtIdx)
+   const Event& event, int sourceEvtIdx, float lastVal)
 {
    for(int destEvtIdx = sourceEvtIdx + 1; 
        destEvtIdx < eventsDescr.size() && 
@@ -147,11 +124,11 @@ void AdditionalEventCreator::createExtraEvents4ContinousEvent(const std::vector<
       SWITCH(eventsDescr[destEvtIdx])
          FCASE(description::controller::EventDerivedRelativeValue, destEvtDescr)
          {
-            createFromContinousToRelative(event, destEvtIdx);
+            createFromContinousToRelative(event, destEvtIdx, lastVal);
          },
          FCASE(description::controller::EventDerivedIncremental, destEvtDescr)
          {
-            createFromContinousToIncremental(event, destEvtIdx);
+            createFromContinousToIncremental(event, destEvtIdx, lastVal);
          },
          CASE_DEFAULT { }
       END_SWITCH
@@ -159,7 +136,7 @@ void AdditionalEventCreator::createExtraEvents4ContinousEvent(const std::vector<
 }
 
 void AdditionalEventCreator::createExtraEvents4RelativeEvent(const std::vector<description::controller::Event>& eventsDescr,
-                     const Event& event, int sourceEvtIdx)
+                     const Event& event, int sourceEvtIdx, float lastVal)
 {
    for(int destEvtIdx = sourceEvtIdx + 1; 
        destEvtIdx < eventsDescr.size() && 
@@ -169,7 +146,7 @@ void AdditionalEventCreator::createExtraEvents4RelativeEvent(const std::vector<d
       SWITCH(eventsDescr[destEvtIdx])
          FCASE(description::controller::EventDerivedIncremental, destEvtDescr)
          {
-            createFromRelativeToIncremental(event, destEvtIdx);
+            createFromRelativeToIncremental(event, destEvtIdx, lastVal);
          },
          CASE_DEFAULT { }
       END_SWITCH
@@ -236,6 +213,16 @@ void AdditionalEventCreator::eventReceived(const Event& event)
    const auto& eventsDescr = m_rControllerSection.widgets[event.id.widgetId].events;
    const auto& eventDescr = eventsDescr[event.id.eventId];
 
+   auto it = std::ranges::find_if(m_lastValues, [&event](const Event& e){
+      return e.id == event.id;
+   });
+   if(it == m_lastValues.end())
+   {
+      it = m_lastValues.insert(m_lastValues.end(), event);
+   }
+   const auto lastEvVal = it->value;
+   it->value = event.value;
+
    SWITCH(eventDescr)
       CASE(description::controller::EventPressRelease, evtDescr)
       {
@@ -243,13 +230,15 @@ void AdditionalEventCreator::eventReceived(const Event& event)
       },
       CASE(description::controller::EventContinousValue, evtDescr)
       {
+         const auto lastVal = mpark::get<ContinousValueType>(lastEvVal).value;
          const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
-         createExtraEvents4ContinousEvent(eventsDescr, event, evtIdx);
+         createExtraEvents4ContinousEvent(eventsDescr, event, evtIdx, lastVal);
       },
       CASE(description::controller::EventRelativeValue, evtDescr)
       {
+         const auto lastVal = mpark::get<RelativeValueType>(lastEvVal).value;
          const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
-         createExtraEvents4RelativeEvent(eventsDescr, event, evtIdx);
+         createExtraEvents4RelativeEvent(eventsDescr, event, evtIdx, lastVal);
       },
       CASE(description::controller::EventIncremental, evtDescr)
       {

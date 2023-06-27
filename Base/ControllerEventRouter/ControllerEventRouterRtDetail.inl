@@ -40,7 +40,7 @@ bool isPress(const controller::PressReleaseType& value) {
 }
 
 template <typename Dev, typename... MDCoords>
-void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
+void setParameter4PressRelease(Dev& dev, const EventDestination::Parameter& parameter,
                   const controller::PressReleaseType& value,
                   MDCoords... mdCoords)
 {
@@ -83,7 +83,7 @@ bool isNearEnough(float newVal, float actualVal)
    return ((diff != 0) && (diff < 0.12 || diff >= 1.0));
 }
 
-inline int calcIncrements(const EventDestination::Parameter& parameter, 
+inline float calcIncrements(const EventDestination::Parameter& parameter, 
                           const controller::IncrementType& increment)
 {
    if (isList(parameter))
@@ -91,7 +91,7 @@ inline int calcIncrements(const EventDestination::Parameter& parameter,
       const int accIncr = increment.value + parameter.valueCache->storedIncrements;
       const int incrForOneStep        = increment.resolution / 12;
       parameter.valueCache->storedIncrements = accIncr % incrForOneStep;
-      return accIncr / incrForOneStep;
+      return float(accIncr / incrForOneStep);
    }
    else
    {   // TODO: highres mode
@@ -124,7 +124,7 @@ void setParameterForIncrement(Dev& dev, const EventDestination::Parameter& param
                   const controller::IncrementType& increment,
                   MDCoords... mdCoords)
 {
-   const int incr = calcIncrements(parameter, increment);
+   const float incr = calcIncrements(parameter, increment);
    dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
 }
 
@@ -134,31 +134,17 @@ void setParameterForRelativeValue(Dev& dev, const EventDestination::Parameter& p
                   const controller::RelativeValueType& value,
                   MDCoords... mdCoords)
 {
-   if (0 == value.value || !parameter.valueCache->valueAtPress)
-   {
-      const auto actValue = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-      parameter.valueCache->valueAtPress = actValue;
-   }
-   if(parameter.valueCache->valueAtPress)
-   {
-      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
-      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, valueToSet);
-   }
+   dev.setRelativeParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value);
 }
 
 void setParameterMPERelativeValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
                      const controller::RelativeValueType& value, int note,
                      int componentIdx)
 {
-   if (0 == value.value || !parameter.valueCache->valueAtPress)
+   const auto actValue = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
+   if(actValue)
    {
-      const auto actValue = dev.getParameterValue(note, componentIdx, parameter.id, parameter.parameterAttr);
-      parameter.valueCache->valueAtPress = actValue;
-   }
-   if(parameter.valueCache->valueAtPress)
-   {
-      const float valueToSet = parameter.valueCache->valueAtPress.value() + value.value;
-      dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, valueToSet);
+      dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, actValue.value() + value.value);
    }
 }
 

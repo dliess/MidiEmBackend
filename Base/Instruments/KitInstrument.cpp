@@ -54,7 +54,7 @@ void KitInstrument::incrementParameterValue(
 {
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
       component.incrementParameterValue(parameterIdx, parameterAttr, increment,
-                                    roundRobin);
+                                        roundRobin);
    });
 }
 
@@ -78,6 +78,20 @@ void KitInstrument::setParameterValue(
    });
 }
 
+void KitInstrument::setRelativeParameterValue(
+    int voiceIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
+{
+   const auto actVal =
+       getParameterValue(voiceIdx, componentIdx, parameterIdx, parameterAttr);
+   if (actVal)
+   {
+      withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+         component.setParameterValueDontCache(parameterIdx, parameterAttr, actVal.value() + relValue);
+      });
+   }
+}
+
 float KitInstrument::fromNormalizedValue(
     int voiceIdx, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
@@ -86,7 +100,7 @@ float KitInstrument::fromNormalizedValue(
    float ret = 0.0;
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
       ret = component.fromNormalizedValue(parameterId, parameterAttr,
-                                           percentageValue);
+                                          percentageValue);
    });
    return ret;
 }

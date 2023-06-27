@@ -172,6 +172,14 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId, ParameterAttr
    }
 }
 
+void SoundHandler::setRelativeParameterValue(
+      int voiceIdx, int parameterId,
+      musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
+{
+   /*Not yet implemented, and I think its not so important*/
+}
+
+
 void SoundHandler::setCommandedValue(int voiceId, int parameterId,
                                      float value) noexcept
 {

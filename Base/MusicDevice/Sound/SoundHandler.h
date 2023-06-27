@@ -48,7 +48,11 @@ public:
    void pitchBend(int voiceIdx, float value) noexcept;
    void afterTouchPoly(int voiceIdx, int note, float value) noexcept;
    void afterTouch(int voiceIdx, float value) noexcept;
-   void setParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr, float value) noexcept;
+   void setParameterValue(int voiceId, int parameterId,
+                          ParameterAttr parameterAttr, float value) noexcept;
+   void setRelativeParameterValue(
+       int voiceIdx, int parameterId,
+       musicDevice::sound::ParameterAttr parameterAttr, float relValue) const;
    [[nodiscard]] std::optional<float> getParameterValue(
        int voiceId, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
@@ -58,10 +62,11 @@ public:
    [[nodiscard]] float fromNormalizedValue(
        int voiceId, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
-   [[nodiscard]] const description::sound::Parameter&
-   parameterDescription(int voiceIdx, int parameterIdx) const;
-   void incrementParameterValue(int voiceId, int parameterId, ParameterAttr parameterAttr,
-                                float increment, bool roundRobin = false) noexcept;
+   [[nodiscard]] const description::sound::Parameter& parameterDescription(
+       int voiceIdx, int parameterIdx) const;
+   void incrementParameterValue(int voiceId, int parameterId,
+                                ParameterAttr parameterAttr, float increment,
+                                bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;
    inline std::optional<std::string> getActualPresetOfVoice(
        int voiceId) const noexcept;
@@ -87,12 +92,14 @@ public:
    void setLFOMultiplierExp(int voiceIdx, int paramIdx,
                             int multiplExp) noexcept;
 
-   void incCommandedValue(int voiceId, int parameterId,float increment, bool roundRobin) noexcept;
-   void incLFOWaveform(int voiceId, int paramIdx, int increment, bool roundRobin) noexcept;
+   void incCommandedValue(int voiceId, int parameterId, float increment,
+                          bool roundRobin) noexcept;
+   void incLFOWaveform(int voiceId, int paramIdx, int increment,
+                       bool roundRobin) noexcept;
    void incLFOAmplitude(int voiceIdx, int paramIdx, float increment) noexcept;
    void incLFOFrequency(int voiceIdx, int paramIdx, float increment) noexcept;
-   void incLFOMultiplierExp(int voiceIdx, int paramIdx,
-                            int increment, bool roundRobin) noexcept;
+   void incLFOMultiplierExp(int voiceIdx, int paramIdx, int increment,
+                            bool roundRobin) noexcept;
 
    void applyModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr,
                       float destValue, float intensity) noexcept;
@@ -120,6 +127,7 @@ public:
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
    void* lastplayerId{nullptr};
+
 private:
    std::string m_deviceName;
    const description::sound::Section& m_rSoundSection;

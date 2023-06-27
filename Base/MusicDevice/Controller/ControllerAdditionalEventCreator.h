@@ -22,7 +22,7 @@ public:
 private:
    const description::controller::Section& m_rControllerSection;
    std::list<Event> m_ongoingContinousEventStartPoints;
-   std::list<Event> m_lastContOrRelEventValues;
+   std::list<Event> m_lastValues;
    std::list<EventId> m_independentPressList;
    constexpr static float VALUE_JUMP_THRESHOLD = 0.1f;
    constexpr static int DERIVED_INCREMENT_RESOLUTION = 128;
@@ -30,14 +30,14 @@ private:
    void createExtraEvents4PressReleaseEvent(const description::controller::EventPressRelease& evtDescr,
                                            const Event& event);
    void createExtraEvents4ContinousEvent(const std::vector<description::controller::Event>& eventsDescr,
-                                         const Event& event, int sourceEvtIdx);
+                                         const Event& event, int sourceEvtIdx, float lastVal);
    void createExtraEvents4RelativeEvent(const std::vector<description::controller::Event>& eventsDescr,
-                                        const Event& event, int sourceEvtIdx);
+                                        const Event& event, int sourceEvtIdx, float lastVal);
    void createExtraEvents4IncrementalEvent(const std::vector<description::controller::Event>& eventsDescr,
                                            const Event& event, int sourceEvtIdx);
-   void createFromContinousToRelative(const Event& event, int destEvtIdx);
-   void createFromContinousToIncremental(const Event& event, int destEvtIdx);
-   void createFromRelativeToIncremental(const Event& event, int destEvtIdx);
+   void createFromContinousToRelative(const Event& event, int destEvtIdx, float lastVal);
+   void createFromContinousToIncremental(const Event& event, int destEvtIdx, float lastVal);
+   void createFromRelativeToIncremental(const Event& event, int destEvtIdx, float lastVal);
    void createFromIncrementalToRelative(const Event& event, int destEvtIdx);
 };
 

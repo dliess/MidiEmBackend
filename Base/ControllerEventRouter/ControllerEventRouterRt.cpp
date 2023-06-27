@@ -244,7 +244,7 @@ void EventRouterRt::setParameterOnDrumKit(
     const controller::PressReleaseType& value) noexcept
 {
    m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
-      detail::setParameter(kitInstr, parameter, value,
+      detail::setParameter4PressRelease(kitInstr, parameter, value,
                            drumKit.voiceIdx, drumKit.componentIdx);
    });
 }
@@ -256,7 +256,7 @@ void EventRouterRt::setParameterOnMelodic(
 {
    m_rInstruments.withMelodicInstrumentRt(
        melodic.uuid, [&](auto& melodicInstr) {
-          detail::setParameter(melodicInstr, parameter,
+          detail::setParameter4PressRelease(melodicInstr, parameter,
                                value, melodic.componentIdx);
        });
 }
@@ -281,7 +281,7 @@ void EventRouterRt::setParameterOnMusicDevice(
 {
    m_rMusicDeviceContainer.withSoundHandler(
        musicDevice.mdid, [&](auto& soundHandler) {
-          detail::setParameter(soundHandler, parameter, 
+          detail::setParameter4PressRelease(soundHandler, parameter, 
                                value, musicDevice.voiceIdx);
        });
 }

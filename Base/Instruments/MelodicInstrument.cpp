@@ -85,7 +85,6 @@ void MelodicInstrument::pitchBendMPE(int note, float value) const
    }
 }
 
-
 void MelodicInstrument::incrementParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
@@ -99,7 +98,7 @@ void MelodicInstrument::incrementParameterValue(
          if (component)
          {
             component->incrementParameterValue(parameterId, parameterAttr,
-                                              increment, rr);
+                                               increment, rr);
          }
       }
    }
@@ -174,6 +173,28 @@ void MelodicInstrument::setParameterValue(
    }
 }
 
+void MelodicInstrument::setRelativeParameterValue(
+    int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
+{
+   const auto actVal =
+       getParameterValue(componentIdx, parameterIdx, parameterAttr);
+   if (actVal)
+   {
+      for (auto& voice : m_voices)
+      {
+         if (util::vector_index_in_range(componentIdx, voice.components))
+         {
+            auto& component = voice.components[componentIdx];
+            if (component)
+            {
+               component->setParameterValueDontCache(parameterIdx, parameterAttr, actVal.value() + relValue);
+            }
+         }
+      }
+   }
+}
+
 void MelodicInstrument::setParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
@@ -185,7 +206,7 @@ void MelodicInstrument::setParameterValueMPE(
    }
 
    const auto voiceIdx = m_pRtData->noteAllocations.at(note);
-   auto& component = m_voices.at(voiceIdx).components.at(componentIdx);
+   auto& component     = m_voices.at(voiceIdx).components.at(componentIdx);
    if (component)
    {
       component->setParameterValueDontCache(parameterId, parameterAttr, value);
@@ -201,7 +222,7 @@ float MelodicInstrument::fromNormalizedValue(
    if (component)
    {
       return component->fromNormalizedValue(parameterId, parameterAttr,
-                                                 percentageValue);
+                                            percentageValue);
    }
    return 0.0;   // TODO: exception?
 }
@@ -222,7 +243,7 @@ float MelodicInstrument::fromNormalizedValue(
    if (component)
    {
       return component->fromNormalizedValue(parameterId, parameterAttr,
-                                                 percentageValue);
+                                            percentageValue);
    }
    return 0.0;   // TODO: exception?
 }

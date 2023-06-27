@@ -58,9 +58,13 @@ public:
    void setParameterValue(int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
+   void setRelativeParameterValue(
+       int componentIdx, int parameterId,
+       musicDevice::sound::ParameterAttr parameterAttr, float relValue) const;
+
    void setParameterValueMPE(int note, int componentIdx, int parameterId,
-                          musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) const;
+                             musicDevice::sound::ParameterAttr parameterAttr,
+                             float value) const;
    [[nodiscard]] float fromNormalizedValue(
        int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
@@ -70,7 +74,7 @@ public:
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
    [[nodiscard]] const musicDevice::description::sound::Parameter*
-        parameterDescription(int componentIdx, int parameterIdx) const;
+   parameterDescription(int componentIdx, int parameterIdx) const;
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;

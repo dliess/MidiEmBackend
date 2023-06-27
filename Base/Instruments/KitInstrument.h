@@ -42,6 +42,10 @@ public:
    void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
+   void setRelativeParameterValue(
+       int voiceIdx, int componentIdx, int parameterId,
+       musicDevice::sound::ParameterAttr parameterAttr, float relValue) const;
+
    [[nodiscard]] float fromNormalizedValue(
        int voiceIdx, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
