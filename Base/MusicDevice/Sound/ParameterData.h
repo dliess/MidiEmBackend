@@ -9,19 +9,18 @@
 #include "ParameterAttr.h"
 #include "SoundSection.h"
 #include "StrongType.h"
+#include "clip.h"
+#include "Parameter.h"
+
 namespace base::musicDevice::sound
 {
-template <typename Tag>
-using FloatingPointType =
-    util::StrongType<float, Tag, util::Addable, util::Substractable,
-                     util::Multipliable, util::Dividable, util::Printable,
-                     util::Swappable>;
 using Parameter            = FloatingPointType<struct ParameterTag>;
 using ParameterLFOAmp      = FloatingPointType<struct ParameterLFOAmpTag>;
 using ParameterLFOFreq     = FloatingPointType<struct ParameterLFOFreqTag>;
 using ParameterLFOWaveform = lfo::Waveform;
 using ParameterLFOMultiplExp =
     util::StrongType<int, struct ParameterLFOMultiplExpTag>;
+
 struct ParameterData
 {
    float commanded{0.0};
@@ -129,13 +128,10 @@ static_assert(
                        ParameterValue>>);
 
 template <typename ParamDescrProvider>
-std::pair<bool, float> getParamValueTypeAndRange(
+ValueRangeEnd getParamRangeEnd(
     int voiceIdx, int parameterIdx, ParameterAttr parameterAttr,
     const ParamDescrProvider& paramDescrProvider)
 {
-   static constexpr float FUZZ {0.0001f};
-   static constexpr bool IS_LIST {true};
-   static constexpr bool IS_CONTINOUS_VAL {false};
    switch (parameterAttr)
    {
       case (ParameterAttr::Commanded):
@@ -143,31 +139,63 @@ std::pair<bool, float> getParamValueTypeAndRange(
          if (const description::sound::Parameter* paramDescr =
              paramDescrProvider.parameterDescription(voiceIdx, parameterIdx); paramDescr)
          {
-            return std::make_pair(
-                paramDescr->type == description::sound::Parameter::Type::List,
-                paramDescr->getValueRange() - FUZZ);
+            const auto vr = paramDescr->getValueRange();
+            if(vr)
+            {
+               return vr.value();
+            }
          }
          break;
       }
       case (ParameterAttr::LfoFrequency):
       {
-         return std::make_pair(IS_CONTINOUS_VAL, 1.0 - FUZZ);
+         return FloatingPointRangeEnd{1.0f};
       }
       case (ParameterAttr::LfoAmplitude):
       {
-         return std::make_pair(IS_CONTINOUS_VAL, 1.0 - FUZZ);
+         return FloatingPointRangeEnd{1.0f};
       }
       case (ParameterAttr::LfoWaveform):
       {
-         return std::make_pair(IS_LIST,
-                               magic_enum::enum_count<lfo::Waveform>() - 1);
+         return ListRangeEnd{magic_enum::enum_count<lfo::Waveform>()};
       }
       case (ParameterAttr::LfoMultiplierExp):
       {
-         return std::make_pair(IS_LIST, lfo::MAX_MULTIPLIER_EXP);
+         return ListRangeEnd{lfo::MAX_MULTIPLIER_EXP + 1};
       }
    }
    assert(false);
+}
+
+inline
+float limitParameterValue(float targetVal, bool roundRobin, const ValueRangeEnd& valueRange)
+{
+   return R_SWITCH(valueRange)
+      FCASE(ListRangeEnd, range) -> float
+      {
+         const auto targetlistIdx = int(targetVal);
+         if (roundRobin)
+         {
+            if (targetlistIdx < 0) 
+            {
+               return float(range.get() + (targetlistIdx % range.get()));
+            }
+            else
+            {
+               return float(targetlistIdx % range.get());
+            }
+         }
+         else
+         {
+            return float(util::clip(targetlistIdx, 0, int(range.get())));
+         }
+      },
+      FCASE(FloatingPointRangeEnd, range) -> float
+      {
+         static constexpr float FUZZ {0.0001f};
+         return util::clip(targetVal, 0.0f, range.get() - FUZZ);
+      }
+   R_END_SWITCH
 }
 
 }   // namespace base::musicDevice::sound

@@ -11,6 +11,7 @@
 
 #include "EnumReflect.h"
 #include "MidiMessageIds.h"
+#include "Parameter.h"
 namespace base::musicDevice::description::sound
 {
 constexpr int GlobalSectionId = -1;
@@ -267,11 +268,11 @@ struct Parameter
    static inline std::string role2String(Role role);
    static inline Role roleFromString(const std::string& roleStr);
 
-   inline int getListIndexByValue(int value) const noexcept;
-   inline std::optional<float> getListIndexByListRole(
+   [[nodiscard]] int getListIndexByValue(int value) const noexcept;
+   [[nodiscard]] std::optional<float> getListIndexByListRole(
        ParameterSourceRangeBase::Role role) const noexcept;
-   inline int getSourceResolution() const noexcept;
-   inline float getValueRange() const noexcept;
+   [[nodiscard]] int getSourceResolution() const noexcept;
+   [[nodiscard]] std::optional<ValueRangeEnd> getValueRange() const noexcept;
 };
 
 struct Presets

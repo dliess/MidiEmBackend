@@ -1,5 +1,4 @@
 #include "InstrumentComponent.h"
-#include "clip.h"
 using namespace base;
 using namespace base::instruments;
 
@@ -35,34 +34,6 @@ void Component::pitchBend(float value) const
    }
 }
 
-float limitParameterValue(float targetVal, bool roundRobin, bool isList, float paramValueRange)
-{
-   if (isList)
-   {
-      const auto targetlistIdx = int(targetVal);
-      const auto listValueRange = int(paramValueRange);
-      if (roundRobin)
-      {
-         if (targetlistIdx < 0) 
-         {
-            return float(listValueRange + (targetlistIdx % listValueRange));
-         }
-         else
-         {
-            return float(targetlistIdx % listValueRange);
-         }
-      }
-      else
-      {
-         return float(util::clip(targetlistIdx, 0, listValueRange));
-      }
-   }
-   else
-   {
-      return util::clip(targetVal, 0.0f, paramValueRange);
-   }
-}
-
 void Component::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, bool roundRobin) const
@@ -71,10 +42,10 @@ void Component::incrementParameterValue(
    {
       const float actualValue =
           m_pParameterCache->getParameter(parameterIdx, parameterAttr);
-      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+      const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float newParamValue = limitParameterValue(
-          actualValue + increment, roundRobin, isList, paramValueRange);
+      const float newParamValue = musicDevice::sound::limitParameterValue(
+          actualValue + increment, roundRobin, valueRange);
       setParameterValue(parameterIdx, parameterAttr, newParamValue);
    }
 }
@@ -130,10 +101,10 @@ void Component::setParameterValue(
 {
    if (m_pSoundDevice)
    {
-      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+      const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float limitedValue = limitParameterValue(
-          value, false, isList, paramValueRange);
+          value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
@@ -147,10 +118,10 @@ void Component::setParameterValueDontCache(
 {
    if (m_pSoundDevice)
    {
-      const auto [isList, paramValueRange] = musicDevice::sound::getParamValueTypeAndRange(
+      const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float limitedValue = limitParameterValue(
-          value, false, isList, paramValueRange);
+          value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);

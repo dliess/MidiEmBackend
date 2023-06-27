@@ -48,7 +48,7 @@ void setParameter(Dev& dev, const EventDestination::Parameter& parameter,
    if (isList(parameter))
    {
       const float incr =
-            parameter.descriptionCache.upwards ? value.value : -value.value;
+            parameter.descriptionCache.upwards ? 1 : -1;
       dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, true);
    }
    else

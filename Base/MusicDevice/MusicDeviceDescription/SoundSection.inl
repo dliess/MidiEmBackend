@@ -822,7 +822,8 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
    return 0;
 }
 
-inline float base::musicDevice::description::sound::Parameter::getValueRange() const noexcept
+inline 
+std::optional<ValueRangeEnd> base::musicDevice::description::sound::Parameter::getValueRange() const noexcept
 {
    switch (type)
    {
@@ -830,7 +831,7 @@ inline float base::musicDevice::description::sound::Parameter::getValueRange() c
       {
          if (source.midi->sourceRanges)
          {
-            return static_cast<int>(source.midi->sourceRanges->size());
+            return ListRangeEnd(source.midi->sourceRanges->size());
          }
          break;
       }
@@ -838,10 +839,10 @@ inline float base::musicDevice::description::sound::Parameter::getValueRange() c
       case base::musicDevice::description::sound::Parameter::Type::
           ContinousBipolar:
       {
-         return 1;
+         return FloatingPointRangeEnd(1.0f);
       }
    }
-   return 0;
+   return std::nullopt;
 }
 
 inline void base::musicDevice::description::sound::Section::
