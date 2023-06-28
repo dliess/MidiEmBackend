@@ -177,7 +177,10 @@ void EventRouter::_removeConnection(
    }
    m_map.withNonRtLocked([&](auto& map) {
       auto it = map.find(eventIdExt);
-      map.erase(it);
+      if(it != map.end())
+      {
+         map.erase(it);
+      }
    });
 
    emitGotErased(eventIdExt);
