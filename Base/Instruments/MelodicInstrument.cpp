@@ -15,16 +15,15 @@ MelodicInstrument::MelodicInstrument(std::string name,
 
 void MelodicInstrument::noteOn(int note, float velocity, void* token) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] != RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
    }
-   if (!m_voices.empty())
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
-   m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    std::ranges::for_each(m_voices[m_pRtData->currentVoiceIndex()].components,
                          [note, velocity](const auto& component) {
                             if (component)
@@ -70,10 +69,14 @@ void MelodicInstrument::pitchBend(float value) const
 
 void MelodicInstrument::pitchBendMPE(int note, float value) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
+   }
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
    const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
    for (const auto& component : voice.components)
@@ -109,10 +112,14 @@ void MelodicInstrument::incrementParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
     bool rr) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
+   }
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
    const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
    if (util::vector_index_in_range(componentIdx, voice.components))
@@ -141,10 +148,14 @@ std::optional<float> MelodicInstrument::getParameterValue(
     int note, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return std::nullopt;
+   }
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
 
    auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
@@ -199,10 +210,14 @@ void MelodicInstrument::setParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
+   }
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
 
    const auto voiceIdx = m_pRtData->noteAllocations.at(note);
@@ -232,10 +247,14 @@ float MelodicInstrument::fromNormalizedValue(
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
-      return 0.0;
+      return 0.0f;
+   }
+   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   {
+      m_pRtData->incrementVoiceIndex(m_voices.size());
+      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
 
    auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
@@ -245,7 +264,7 @@ float MelodicInstrument::fromNormalizedValue(
       return component->fromNormalizedValue(parameterId, parameterAttr,
                                             percentageValue);
    }
-   return 0.0;   // TODO: exception?
+   return 0.0f;   // TODO: exception?
 }
 
 const base::musicDevice::description::sound::Parameter*

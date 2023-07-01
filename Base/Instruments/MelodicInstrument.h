@@ -28,7 +28,7 @@ public:
       static constexpr int NUM_NOTES = 128;
       static constexpr int FREE      = -1;
       std::array<int, NUM_NOTES> noteAllocations;
-      inline void incrementVoiceIndex(int maxSize) noexcept;
+      inline void incrementVoiceIndex(size_t maxSize) noexcept;
       [[nodiscard]] inline int currentVoiceIndex() const noexcept;
 
    private:
