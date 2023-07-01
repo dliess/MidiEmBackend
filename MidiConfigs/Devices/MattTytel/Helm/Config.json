@@ -4,6 +4,7 @@
   "productName": "Helm",
   "soundSection": {
     "defaultInstrumentType": "InstrumentPerVoice",
+    "maxPitchBendRange": 24,
     "voices": [
       {
         "name": "melodic 1",

@@ -349,12 +349,12 @@ inline auto registerMembers<base::musicDevice::description::sound::Section>()
 {
    return members(
       member("defaultInstrumentType", &base::musicDevice::description::sound::Section::defaultInstrumentType),
+      member("maxPitchBendRange", &base::musicDevice::description::sound::Section::maxPitchBendRange),
       member("voices", &base::musicDevice::description::sound::Section::voices),
       member("global", &base::musicDevice::description::sound::Section::global),
       member("engines", &base::musicDevice::description::sound::Section::engines),
       member("engineTemplates", &base::musicDevice::description::sound::Section::engineTemplates),
-      member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges),
-      member("pitchBendFactor", &base::musicDevice::description::sound::Section::pitchBendFactor)
+      member("sourceRanges", &base::musicDevice::description::sound::Section::sourceRanges)
    );
 }
 

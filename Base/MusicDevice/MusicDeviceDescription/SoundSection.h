@@ -311,6 +311,7 @@ struct Section
       OnePolyphonicInstrument
    };
    DefaultInstrumentType defaultInstrumentType;
+   std::optional<int> maxPitchBendRange;
    std::vector<Voice> voices;
    std::optional<Global> global;
    std::vector<Engine> engines;
@@ -318,7 +319,6 @@ struct Section
    std::optional<
        std::unordered_map<std::string, std::vector<ParameterSourceRangeMidi>>>
        sourceRanges;
-   std::optional<float> pitchBendFactor;
 
    static inline std::string defaultInstrumentType2String(
        DefaultInstrumentType type);

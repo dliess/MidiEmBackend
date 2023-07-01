@@ -4,6 +4,7 @@
   "productName": "Minitaur",
   "soundSection": {
     "defaultInstrumentType": "InstrumentPerVoice",
+    "maxPitchBendRange": 24,
     "voices": [
       {
         "name": "1",

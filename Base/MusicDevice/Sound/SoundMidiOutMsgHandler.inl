@@ -15,10 +15,6 @@ sound::MidiOutMsgHandler<MidiOutIfPtr>::MidiOutMsgHandler(
     m_rSoundSection(rSoundSection),
     m_midiChannelOffset(midiChannelOffset)
 {
-   if (m_rSoundSection.pitchBendFactor)
-   {
-      m_semitonesPerHalfPitchbendRange = *m_rSoundSection.pitchBendFactor;
-   }
 }
 
 template <typename MidiOutIfPtr>
@@ -218,7 +214,8 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::pitchBend(int voiceIdx,
 {
    assert(base::musicDevice::description::sound::GlobalSectionId != voiceIdx);
    const auto& voiceDescr = m_rSoundSection.voices[voiceIdx];
-   const float normedVal = util::clip(value, -m_semitonesPerHalfPitchbendRange, m_semitonesPerHalfPitchbendRange) / m_semitonesPerHalfPitchbendRange;
+   const float maxPitchBendRange = m_rSoundSection.maxPitchBendRange.value_or(2);
+   const float normedVal = util::clip(value, -maxPitchBendRange, maxPitchBendRange) / maxPitchBendRange;
    //spdlog::info("pitchbend: value: {} normedVal: {}", value, normedVal);
    m_pMidiOutIf->pitchBend(voiceDescr.midiChannel + m_midiChannelOffset, normedVal);
 }
