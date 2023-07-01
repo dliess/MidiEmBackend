@@ -65,11 +65,9 @@
             ]
           },
           {
-            ".type": "RelativeValue",
+            ".type": "ContinousValue",
             "name": "MPE PosY",
-            "springsToZeroAtRelease": false,
-            "fittingSemitones": 6,
-            "bidirectional": true,
+            "startValueCanJump": true,
             "source": [
               [
                 {

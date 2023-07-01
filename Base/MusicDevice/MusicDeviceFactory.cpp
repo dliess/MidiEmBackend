@@ -32,7 +32,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           {
              return;
           }
-          spdlog::info("--> input added: {}", devOnUsbPort.getMidiPort());
+          spdlog::info("--> input added: {} {}", devOnUsbPort.getDeviceName(), devOnUsbPort.getMidiPort());
           auto pMidiIn =
               createMidi<MusicDevice::MidiInput, midi::UsbMidiIn>(index);
           if (!pMidiIn)
@@ -107,7 +107,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
    midi::PortNotifiers::instance().outputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
               const rtmidiadapt::DeviceOnUsbPort& devOnUsbPort) {
-          spdlog::info("--> output added: {}", devOnUsbPort.getMidiPort());
+          spdlog::info("--> output added: {} {}", devOnUsbPort.getDeviceName(), devOnUsbPort.getMidiPort());
           auto pMidiOut =
               createMidi<MusicDevice::MidiOutput, midi::UsbMidiOut>(index);
           if (!pMidiOut)
