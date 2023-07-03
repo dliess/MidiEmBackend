@@ -184,6 +184,23 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
          derivedEvtId.eventId = evtDescr.pressVelocityEvtIdx.value();
          emitEventHappened(Event{derivedEvtId, ContinousValueType{value}});
       }
+      if(evtDescr.keytrackEvtIdx)
+      {
+         EventId derivedEvtId(event.id);
+         derivedEvtId.eventId = evtDescr.keytrackEvtIdx.value();
+         static constexpr int NUM_NOTES = 128;
+         auto note = mpark::get_if<Note>(&derivedEvtId.widgetCoord);
+         if(note)
+         {
+            const float keytrackValue = float(note->number) / NUM_NOTES;
+            derivedEvtId.widgetCoord = mpark::monostate();
+            emitEventHappened(Event{derivedEvtId, ContinousValueType{keytrackValue}});
+         }
+         else
+         {
+            spdlog::error("Keytrack event found but widgetcoord is not of type Note");
+         }
+      }
       if(evtDescr.independent.value_or(false))
       {
          m_independentPressList.push_back(event.id);

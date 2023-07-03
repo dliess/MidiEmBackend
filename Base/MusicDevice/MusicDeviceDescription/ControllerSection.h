@@ -27,6 +27,7 @@ struct EventPressRelease
    std::vector<std::vector<midi::MidiMessageId>> releaseSource;
    std::optional<int> pressVelocityEvtIdx; // Dont Serialize, its a helper value
    std::optional<int> releaseVelocityEvtIdx; // Dont Serialize, its a helper value
+   std::optional<int> keytrackEvtIdx; // Dont Serialize, its a helper value
 };
 
 struct TwinData

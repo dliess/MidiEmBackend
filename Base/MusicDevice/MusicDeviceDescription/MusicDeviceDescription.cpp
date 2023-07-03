@@ -171,6 +171,18 @@ std::optional<int> createAdditionalControllerEventsForPressRelease(controller::W
                   "ReleaseVelocity", eventIdx};
                evt.releaseVelocityEvtIdx = eventIdx + step;
                widget.events.insert(widget.events.begin() + eventIdx + step, event2);
+               ++step;
+            }
+            auto willHaveNoteCoordinates = [&]() {
+               return (evt.pressSource.size() * evt.pressSource[0].size()) != 
+                      (widget.dimension.numColumns * widget.dimension.numRows);
+            };
+            if(willHaveNoteCoordinates())
+            {
+               const controller::Event event3 = controller::EventDerivedContinousValue{
+                  "Keytrack", eventIdx};
+               evt.keytrackEvtIdx = eventIdx + step;
+               widget.events.insert(widget.events.begin() + eventIdx + step, event3);
             }
          },
          CASE_DEFAULT {}
