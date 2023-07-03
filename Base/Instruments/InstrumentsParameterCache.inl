@@ -6,7 +6,10 @@
 namespace base::instruments
 {
 inline ParameterCache::ParameterCache(size_t size) :
-    data_(size), nonRtBackupData_(size), dirtyFlags_(size)
+    data_(size),
+    nonRtBackupData_(size),
+    dirtyFlags_(size),
+    dontOverwriteOnNextNoteOn_(size)
 {
 }
 
@@ -61,6 +64,23 @@ inline void ParameterCache::updateParameterUI()
 inline void ParameterCache::syncBackupToRt()
 {
    std::ranges::copy(nonRtBackupData_, data_.begin());
+}
+
+inline void ParameterCache::dontOverwriteOnNextNoteOn(
+    std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr)
+{
+   dontOverwriteOnNextNoteOn_.set(parameterIdx, parameterAttr);
+}
+
+inline bool ParameterCache::shouldBeOverwritten(std::size_t parameterIdx,
+       musicDevice::sound::ParameterAttr parameterAttr) const
+{
+    return !dontOverwriteOnNextNoteOn_.contains(parameterIdx, parameterAttr);
+}
+
+inline void ParameterCache::clearOverwriteList()
+{
+    dontOverwriteOnNextNoteOn_.reset();
 }
 
 }   // namespace base::instruments

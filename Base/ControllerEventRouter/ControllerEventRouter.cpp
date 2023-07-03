@@ -135,7 +135,17 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
           (desc->type == description::sound::Parameter::Type::ContinousBipolar
                ? 0.5f
                : 0.0f);
-      //param->descriptionCache.eventBound = controllerWidgetDescr->events
+      const auto pressReleaseEvtIdx = description::controller::getDependentPressReleaseEventIdx(*controllerWidgetDescr);
+      if(pressReleaseEvtIdx)
+      {
+         controller::EventIdExt prEventId = from;
+         prEventId.eventId.eventId = pressReleaseEvtIdx.value();
+         const auto it = m_map.nonRt().find(prEventId);
+         if(it != m_map.nonRt().end() && it->second.endpoint == destination.endpoint)
+         {
+            param->descriptionCache.eventBound = true;
+         }
+      }
    }
    initRtCache(destination);
    m_map.withNonRtLocked(

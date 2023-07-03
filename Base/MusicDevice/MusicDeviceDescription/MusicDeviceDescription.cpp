@@ -8,6 +8,8 @@
 #include "2DMatrixCheck.h"
 #include "Overload.h"
 
+
+
 using namespace base::musicDevice::description;
 
 template <typename T>
@@ -136,20 +138,6 @@ void Description::initCaches() noexcept
    }
 }
 
-inline std::optional<int> getDependentPressReleaseEventIdx(
-    const controller::Widget& widget)
-{
-   for (int i = 0; i < widget.events.size(); ++i)
-   {
-      const auto pressReleaseEvent = mpark::get_if<controller::EventPressRelease>(&widget.events[i]);
-      if (pressReleaseEvent && !pressReleaseEvent->independent.value_or(false))
-      {
-         return i;
-      }
-   }
-   return std::nullopt;
-}
-
 std::optional<int> createAdditionalControllerEventsForPressRelease(controller::Widget& widget)
 {
    std::optional<int> indepPressEvtIdx;
@@ -220,7 +208,7 @@ void createAdditionalControllerDerivedEvents(controller::Widget& widget)
          },
          MFCASE(controller::EventIncremental, evt)
          {
-            if(getDependentPressReleaseEventIdx(widget).has_value())
+            if(controller::getDependentPressReleaseEventIdx(widget).has_value())
             {
                const controller::Event event = controller::EventDerivedRelativeValue{
                   fmt::format("{}_Relative", evt.name), eventIdx};

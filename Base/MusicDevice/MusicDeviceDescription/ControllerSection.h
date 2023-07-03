@@ -103,6 +103,7 @@ struct Section
 
 } // namespace base::musicDevice::description::controller
 
+#include "ControllerSection.inl"
 #include "ControllerSectionMeta.h"
 
 #endif

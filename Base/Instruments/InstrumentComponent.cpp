@@ -59,6 +59,7 @@ void Component::incrementParameterValueDontCache(
       m_pSoundDevice->incrementParameterValue(
           m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
       m_pSoundDevice->lastplayerId = nullptr;
+      m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
 }
 
@@ -104,12 +105,13 @@ void Component::setParameterValue(
    {
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float limitedValue = musicDevice::sound::limitParameterValue(
-          value, false, valueRange);
+      const float limitedValue =
+          musicDevice::sound::limitParameterValue(value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
-      m_pParameterCache->setParameter(parameterIdx, parameterAttr, limitedValue);
+      m_pParameterCache->setParameter(parameterIdx, parameterAttr,
+                                      limitedValue);
    }
 }
 
@@ -121,12 +123,13 @@ void Component::setParameterValueDontCache(
    {
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
-      const float limitedValue = musicDevice::sound::limitParameterValue(
-          value, false, valueRange);
+      const float limitedValue =
+          musicDevice::sound::limitParameterValue(value, false, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
       m_pSoundDevice->lastplayerId = nullptr;
+      m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
 }
 
@@ -161,18 +164,40 @@ void Component::refreshParameters() const
    }
    for (int paramIdx = 0; paramIdx < m_pParameterCache->size(); ++paramIdx)
    {
-      m_pSoundDevice->setCommandedValue(
-          m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).commanded);
-      m_pSoundDevice->setLFOAmplitude(
-          m_sdVoiceIdx, paramIdx,
-          m_pParameterCache->at(paramIdx).lfo.amplitude);
-      m_pSoundDevice->setLFOFrequency(
-          m_sdVoiceIdx, paramIdx,
-          m_pParameterCache->at(paramIdx).lfo.frequency);
-      m_pSoundDevice->setLFOMultiplierExp(
-          m_sdVoiceIdx, paramIdx,
-          m_pParameterCache->at(paramIdx).lfo.multiplierExp);
-      m_pSoundDevice->setLFOWaveform(
-          m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).lfo.waveform);
+      if (m_pParameterCache->shouldBeOverwritten(
+              paramIdx, musicDevice::sound::ParameterAttr::Commanded))
+      {
+         m_pSoundDevice->setCommandedValue(
+             m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).commanded);
+      }
+      if (m_pParameterCache->shouldBeOverwritten(
+              paramIdx, musicDevice::sound::ParameterAttr::LfoAmplitude))
+      {
+         m_pSoundDevice->setLFOAmplitude(
+             m_sdVoiceIdx, paramIdx,
+             m_pParameterCache->at(paramIdx).lfo.amplitude);
+      }
+      if (m_pParameterCache->shouldBeOverwritten(
+              paramIdx, musicDevice::sound::ParameterAttr::LfoFrequency))
+      {
+         m_pSoundDevice->setLFOFrequency(
+             m_sdVoiceIdx, paramIdx,
+             m_pParameterCache->at(paramIdx).lfo.frequency);
+      }
+      if (m_pParameterCache->shouldBeOverwritten(
+              paramIdx, musicDevice::sound::ParameterAttr::LfoMultiplierExp))
+      {
+         m_pSoundDevice->setLFOMultiplierExp(
+             m_sdVoiceIdx, paramIdx,
+             m_pParameterCache->at(paramIdx).lfo.multiplierExp);
+      }
+      if (m_pParameterCache->shouldBeOverwritten(
+              paramIdx, musicDevice::sound::ParameterAttr::LfoWaveform))
+      {
+         m_pSoundDevice->setLFOWaveform(
+             m_sdVoiceIdx, paramIdx,
+             m_pParameterCache->at(paramIdx).lfo.waveform);
+      }
    }
+   m_pParameterCache->clearOverwriteList();
 }

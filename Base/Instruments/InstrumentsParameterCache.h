@@ -20,8 +20,9 @@ struct ParameterCache
    void setParameter(std::size_t parameterIdx,
                      musicDevice::sound::ParameterAttr parameterAttr,
                      float value);
-   [[nodiscard]] float getParameter(std::size_t parameterIdx,
-                     musicDevice::sound::ParameterAttr parameterAttr) const;
+   [[nodiscard]] float getParameter(
+       std::size_t parameterIdx,
+       musicDevice::sound::ParameterAttr parameterAttr) const;
 
    void setParameterBackup(std::size_t parameterIdx,
                            musicDevice::sound::ParameterAttr parameterAttr,
@@ -29,6 +30,14 @@ struct ParameterCache
 
    void updateParameterUI();
    void syncBackupToRt();
+
+   void dontOverwriteOnNextNoteOn(
+       std::size_t parameterIdx,
+       musicDevice::sound::ParameterAttr parameterAttr);
+   [[nodiscard]] bool shouldBeOverwritten(std::size_t parameterIdx,
+       musicDevice::sound::ParameterAttr parameterAttr) const;
+   void clearOverwriteList();
+
    CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
                                musicDevice::sound::ParameterAttr, float);
    friend auto meta::registerMembers<ParameterCache>();
@@ -37,6 +46,7 @@ private:
    std::vector<ParameterData> data_;
    std::vector<ParameterData> nonRtBackupData_;
    DirtyFlags dirtyFlags_;
+   DirtyFlags dontOverwriteOnNextNoteOn_;
 };
 
 static_assert(std::is_move_constructible_v<ParameterCache>,

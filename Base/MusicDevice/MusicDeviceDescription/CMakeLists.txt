@@ -8,6 +8,7 @@ set(SOURCES
 
 set(HEADERS
    "ControllerSection.h"
+   "ControllerSection.inl"
    "ControllerSectionMeta.h"
    "HubSection.h"
    "HubSectionMeta.h"
