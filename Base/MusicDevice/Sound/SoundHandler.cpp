@@ -243,6 +243,14 @@ void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
    }
 }
 
+void SoundHandler::incrementParameterValueEventBound(int voiceId, int parameterId,
+                                           ParameterAttr parameterAttr,
+                                           float increment,
+                                           bool roundRobin) noexcept
+{
+   // Not shure if I want to implement this
+}
+
 void SoundHandler::incCommandedValue(int voiceId, int parameterId,
                                            float increment,
                                            bool roundRobin) noexcept

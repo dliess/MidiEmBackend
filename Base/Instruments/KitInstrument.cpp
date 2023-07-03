@@ -58,6 +58,17 @@ void KitInstrument::incrementParameterValue(
    });
 }
 
+void KitInstrument::incrementParameterValueEventBound(
+    int voiceIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float increment,
+    bool roundRobin) const
+{
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      component.incrementParameterValueDontCache(parameterIdx, parameterAttr, increment,
+                                        roundRobin);
+   });
+}
+
 std::optional<float> KitInstrument::getParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const

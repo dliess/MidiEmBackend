@@ -107,7 +107,26 @@ void MelodicInstrument::incrementParameterValue(
    }
 }
 
-void MelodicInstrument::incrementParameterValue(
+void MelodicInstrument::incrementParameterValueEventBound(
+    int componentIdx, int parameterId,
+    musicDevice::sound::ParameterAttr parameterAttr, float increment,
+    bool rr) const
+{
+   for (auto& voice : m_voices)
+   {
+      if (util::vector_index_in_range(componentIdx, voice.components))
+      {
+         auto& component = voice.components[componentIdx];
+         if (component)
+         {
+            component->incrementParameterValueDontCache(parameterId, parameterAttr,
+                                               increment, rr);
+         }
+      }
+   }
+}
+
+void MelodicInstrument::incrementParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
     bool rr) const

@@ -132,7 +132,14 @@ void setParameterForIncrement(Dev& dev, const EventDestination::Parameter& param
                   MDCoords... mdCoords)
 {
    const float incr = calcIncrements(parameter, increment);
-   dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
+   if(parameter.descriptionCache.eventBound)
+   {
+      dev.incrementParameterValueEventBound(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
+   }
+   else
+   {
+      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
+   }
 }
 
 

@@ -67,6 +67,9 @@ public:
    void incrementParameterValue(int voiceId, int parameterId,
                                 ParameterAttr parameterAttr, float increment,
                                 bool roundRobin = false) noexcept;
+   void incrementParameterValueEventBound(int voiceId, int parameterId,
+                                ParameterAttr parameterAttr, float increment,
+                                bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;
    inline std::optional<std::string> getActualPresetOfVoice(
        int voiceId) const noexcept;
