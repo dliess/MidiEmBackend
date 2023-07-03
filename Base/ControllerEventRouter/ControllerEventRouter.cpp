@@ -116,6 +116,12 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
    if (auto param =
            mpark::get_if<EventDestination::Parameter>(&destination.controlType))
    {
+      auto controllerWidgetDescr = controlWidgetDescription(from);
+      if (!controllerWidgetDescr)
+      {
+         spdlog::error("Error getting controller widget description");
+         return;
+      }
       auto desc = parameterDescription(destination.endpoint, param->id);
       if (!desc)
       {
@@ -129,6 +135,7 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
           (desc->type == description::sound::Parameter::Type::ContinousBipolar
                ? 0.5f
                : 0.0f);
+      //param->descriptionCache.eventBound = controllerWidgetDescr->events
    }
    initRtCache(destination);
    m_map.withNonRtLocked(
@@ -198,6 +205,17 @@ void EventRouter::printMap() const noexcept
 void EventRouter::retriggerCallbacks()
 {
    for (const auto& [from, to] : m_map.nonRt()) { emitGotConnected(from, to); }
+}
+
+const description::controller::Widget* EventRouter::controlWidgetDescription(
+   const controller::EventIdExt& evtId) const
+{
+   const auto description = m_rMDFDataHolder.getDescription(evtId.uuid);
+   if(description && description->controllerSection)
+   {
+      return &description->controllerSection->widgets.at(evtId.eventId.widgetId);
+   }
+   return nullptr;
 }
 
 const description::sound::Parameter* EventRouter::parameterDescription(

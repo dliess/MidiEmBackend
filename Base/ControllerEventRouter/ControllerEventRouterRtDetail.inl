@@ -106,10 +106,17 @@ void setParameterForContinousValue(Dev& dev, const EventDestination::Parameter& 
                                    MDCoords... mdCoords)
 {
    const float val = dev.fromNormalizedValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value);
-   const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-   if(actualVal && isNearEnough(actualVal.value(), val))
+   if(parameter.descriptionCache.eventBound)
    {
       dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
+   }
+   else
+   {
+      const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+      if(actualVal && isNearEnough(actualVal.value(), val))
+      {
+         dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
+      }
    }
 }
 void setParameterMPEForContinousValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,

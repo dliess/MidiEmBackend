@@ -55,6 +55,7 @@ struct EventDestination
          int resolution{128};
          float zeroVal{0};
          bool upwards{true};
+         bool eventBound{false};
       };
       struct ValueCache
       {
