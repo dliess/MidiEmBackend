@@ -27,6 +27,7 @@ auto unpackEndpoint(
     const musicDevice::factory::DataHolder &rMDFDataHolder,
     const eventRouter::EventDestination::Endpoint &endpoint)
 {
+    static constexpr int UNUSED = -1;
    using RetType =
        std::tuple<::capnzero::Data<16>, ::capnzero::Int16, ::capnzero::Int16>;
    return R_SWITCH(endpoint)
@@ -37,12 +38,12 @@ auto unpackEndpoint(
         },
         FCASE(eventRouter::EventDestination::Melodic, melodic) 
         {
-            return RetType{melodic.uuid, 0, melodic.componentIdx};
+            return RetType{melodic.uuid, UNUSED, melodic.componentIdx};
         },
         FCASE(eventRouter::EventDestination::MusicDevice, musicDevice) 
         {
             return RetType{*rMDFDataHolder.getUUIDByMdId(musicDevice.mdid),
-                            musicDevice.voiceIdx, 0};
+                            musicDevice.voiceIdx, UNUSED};
         }
     R_END_SWITCH
 }
