@@ -27,6 +27,7 @@ private:
    std::unordered_map<midi::MidiMessageId, EventId> m_map;
    mutable std::array<EventId::Coord, midi::NUM_CHANNELS>
       m_mpeMap;
+   mutable std::array<std::array<std::optional<Event>, 2>, midi::NUM_CHANNELS> m_mpePrePressEvtCache;
    Cb m_drainCb;
    static std::string cache2Str(
       const std::unordered_map<midi::MidiMessageId, EventId>& map);

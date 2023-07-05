@@ -74,11 +74,6 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
 {
 
    const auto midiChannelNr = getMidiChannelFromMsg(midiMsg);
-   if (midiChannelNr && (TO_BE_FILLED_BY_MPE_MARKER == id.widgetCoord))
-   {
-      id.widgetCoord = m_mpeMap[midiChannelNr.value() - 1];
-   }
-
    const auto& eventDescr =
        m_rControllerSection.widgets[id.widgetId].events[id.eventId];
 
@@ -230,6 +225,10 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
          },
          CASE(midi::Message<midi::NoteOff>, msg)
          {
+            if (mpeMode)
+            { // TODO: see if it has no side-effects: evts coming after noteOff?
+               m_mpeMap[msg.channel() - 1] = mpark::monostate();
+            }
             return R_SWITCH(eventDescr)
                CASE(description::controller::EventPressRelease, evt) -> EventValue
                {
@@ -286,7 +285,41 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
    R_END_SWITCH
    if (!mpark::holds_alternative<mpark::monostate>(value))
    {
-      m_drainCb(Event{id, value});
+      if (midiChannelNr && (TO_BE_FILLED_BY_MPE_MARKER == id.widgetCoord))
+      {
+         const int channelIdx = midiChannelNr.value() - 1;
+         const auto storedWCoord = m_mpeMap[channelIdx];
+         if(mpark::holds_alternative<mpark::monostate>(storedWCoord)) 
+         {
+            auto it = std::ranges::find_if(m_mpePrePressEvtCache[channelIdx], [](const auto& e){ return !e.has_value(); });
+            if(it != m_mpePrePressEvtCache[channelIdx].end()) 
+            {
+               *it = Event{id, value};
+            }
+            else
+            {
+               spdlog::error("no space left for additional mpe evt in mpePrePressEvtCache");
+            }
+         }
+         else
+         {
+            for(auto &e : m_mpePrePressEvtCache[channelIdx])
+            {
+               if(e.has_value())
+               {
+                  e->id.widgetCoord = storedWCoord;
+                  m_drainCb(e.value());
+                  e.reset();
+               }
+            }
+            id.widgetCoord = storedWCoord;
+            m_drainCb(Event{id, value});
+         }
+      }
+      else
+      {
+         m_drainCb(Event{id, value});
+      }
    }
    
 }

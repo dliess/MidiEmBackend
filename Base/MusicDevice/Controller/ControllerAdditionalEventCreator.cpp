@@ -193,7 +193,6 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
          if(note)
          {
             const float keytrackValue = float(note->number) / NUM_NOTES;
-            derivedEvtId.widgetCoord = mpark::monostate();
             emitEventHappened(Event{derivedEvtId, ContinousValueType{keytrackValue}});
          }
          else

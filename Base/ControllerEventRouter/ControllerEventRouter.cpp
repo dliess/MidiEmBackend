@@ -165,7 +165,7 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
    END_SWITCH
 
    emitGotConnected(source, destination);
-   // printMap();
+   //printMap();
 }
 
 void EventRouter::removeConnectionToDestination(
