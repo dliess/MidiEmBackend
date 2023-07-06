@@ -68,7 +68,7 @@ void ParameterDumpRequest<MidiOutIf>::sendParameterDumpRequest(
                  mpark::visit(
                      util::overload{
                          [&sysexMsgToSend](
-                             const description::sound::midisysex::Bytes&
+                             const description::midisysex::Bytes&
                                  bytes) {
                             sysexMsgToSend.insert(sysexMsgToSend.end(),
                                                   bytes.values.begin(),

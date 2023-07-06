@@ -12,64 +12,10 @@
 #include "EnumReflect.h"
 #include "MidiMessageIds.h"
 #include "Parameter.h"
+#include "SoundSysExDescription.h"
 namespace base::musicDevice::description::sound
 {
 constexpr int GlobalSectionId = -1;
-
-namespace midisysex
-{
-struct OffsetCache
-{
-   static constexpr int UNSET = -1;
-   int offset{UNSET};   // For caching, do NOT REFLECT !!!!
-};
-
-struct Field : public OffsetCache
-{
-   constexpr int sizeInSysex() const noexcept { return 1; }
-};
-
-// We need this as a workaround because every struct has
-// to contain an element to work with json-stuff
-struct FieldWithSize : public OffsetCache
-{
-   int size;
-   constexpr int sizeInSysex() const noexcept { return size; }
-};
-
-struct Bytes : public Field
-{
-   std::vector<uint8_t> values;
-   int sizeInSysex() const noexcept { return values.size(); }
-};
-
-struct VoiceIdx : public FieldWithSize
-{
-   std::vector<int> mapping;
-};
-struct PatchNameStr : public FieldWithSize
-{
-};
-struct PatchCategory : public FieldWithSize
-{
-};
-struct PatchGenre : public FieldWithSize
-{
-};
-struct Reserved : public FieldWithSize
-{
-};
-
-struct ParameterLowRes : public Field
-{
-   std::string component;
-   std::string parameter;
-};
-
-using FieldDescr = mpark::variant<Bytes, VoiceIdx, PatchNameStr, PatchCategory,
-                                  PatchGenre, Reserved, ParameterLowRes>;
-
-}   // namespace midisysex
 
 using SysExDescriptors = std::vector<midisysex::FieldDescr>;
 struct ParameterDumpAnswer

@@ -7,8 +7,18 @@
 #include "MidiMessageIds.h"
 #include "MidiMessageIdsMeta.h"
 
+#include "ControllerSysExDescription.h"
+
+
 namespace base::musicDevice::description::controller
 {
+
+using SysExDescriptors = std::vector<midisysex::FieldDescr>;
+struct MidiSysexMsg
+{
+   SysExDescriptors sysexDescriptors;
+};
+
 struct WidgetDimension
 {
    int numRows;
@@ -100,6 +110,7 @@ struct Widget
 struct Section
 {
    std::vector<Widget> widgets;
+   std::optional<MidiSysexMsg> initMsg;
 };
 
 } // namespace base::musicDevice::description::controller

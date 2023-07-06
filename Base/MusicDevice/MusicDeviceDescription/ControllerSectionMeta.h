@@ -8,6 +8,15 @@ namespace meta
 {
 
 template <>
+inline auto registerMembers<base::musicDevice::description::controller::MidiSysexMsg>()
+{
+   return members(
+      member("sysexDescriptors", &base::musicDevice::description::controller::MidiSysexMsg::sysexDescriptors)
+   );
+}
+
+
+template <>
 inline auto registerMembers<base::musicDevice::description::controller::WidgetDimension>()
 {
    return members(
@@ -91,6 +100,12 @@ inline auto registerMembers<base::musicDevice::description::controller::EventRel
 }
 
 template <>
+inline auto getClassNameOrIndex<base::musicDevice::description::controller::MidiSysexMsg>(int i) noexcept
+{
+   return "MidiSysexMsg";
+}
+
+template <>
 inline auto getClassNameOrIndex<base::musicDevice::description::controller::EventDerivedContinousValue>(int i) noexcept
 {
    return "DerivedRelativeValue";
@@ -150,7 +165,8 @@ template <>
 inline auto registerMembers<base::musicDevice::description::controller::Section>()
 {
    return members(
-      member("widgets", &base::musicDevice::description::controller::Section::widgets)
+      member("widgets", &base::musicDevice::description::controller::Section::widgets),
+      member("initMsg", &base::musicDevice::description::controller::Section::initMsg)
    );
 }
 

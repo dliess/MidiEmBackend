@@ -10,6 +10,8 @@ set(HEADERS
    "ControllerSection.h"
    "ControllerSection.inl"
    "ControllerSectionMeta.h"
+   "ControllerSysExDescription.h"
+   "ControllerSysExDescriptionMeta.h"
    "HubSection.h"
    "HubSectionMeta.h"
    "MidiMessageIdsMeta.h"
@@ -21,6 +23,10 @@ set(HEADERS
    "SoundSection.h"
    "SoundSection.inl"
    "SoundSectionMeta.h"
+   "SoundSysExDescription.h"
+   "SoundSysExDescriptionMeta.h"
+   "SysExDescription.h"
+   "SysExDescriptionMeta.h"
 )
 
 add_library(MusicDeviceDescription STATIC ${SOURCES} ${HEADERS})
