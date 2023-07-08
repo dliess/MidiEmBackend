@@ -27,6 +27,7 @@ set(HEADERS
    "LFODataMeta.h"
    "ParameterData.h"
    "DirtyFlags.h"
+   "ValueModifier.h"
 )
 
 set(TARGET_NAME "MusicDeviceSound")

@@ -29,7 +29,7 @@ inline void ParameterStorageElement::applyModifier(
    {
       case ParameterAttr::Commanded:
       {
-         m_modifier += intensity * (destination - m_commanded);
+         m_modifier.addAbsoluteModifier(destination, intensity);
          break;
       }
       case ParameterAttr::LfoFrequency:
@@ -70,8 +70,7 @@ ParameterStorageElement::updateActualValue() noexcept
       return std::nullopt;
    }
    float actualBefore = m_actual;
-   m_actual           = m_commanded + m_modifier;
-   m_modifier         = 0;
+   m_actual           = calculateModifiedValue(m_commanded, m_modifier);
    const float range  = m_isListIndex ? m_resolution : 1.0;
    if (m_lfo.enabled())
    {
@@ -124,8 +123,9 @@ inline void ParameterStorageElement::incCommandedValue(float increment,
 
 inline void ParameterStorageElement::setValueFromDeviceRel(float value) noexcept
 {
+   // TODO this impl. is bad, it doesnt count in the modifier
    m_actual      = value;
-   m_commanded   = limitValue(m_actual - (m_cachedLfoValue + m_modifier));
+   m_commanded   = limitValue(m_actual - (m_cachedLfoValue));
    m_dirtyFlagUi = true;
 }
 

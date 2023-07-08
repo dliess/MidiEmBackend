@@ -21,6 +21,7 @@ set(HEADERS
     "DoubleBuffer.h"
     "Round1000.h"
     "StrongType.h"
+    "toIntegral.h"
 )
 
 set(TARGET_NAME Util)

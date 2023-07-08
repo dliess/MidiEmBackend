@@ -1,17 +1,19 @@
 #include <cmath>
+#include <magic_enum.hpp>
 #include <random>
 
 #include "BeatTick.h"
+#include "FloatEqual.h"
 #include "LFO.h"
 #include "Overload.h"
 #include "clip.h"
-#include "FloatEqual.h"
 
 namespace base::musicDevice::sound::lfo
 {
 inline bool LFO::enabled() const noexcept
 {
-   return (!util::floatEqual(m_actualAmplitude, 0.5f)) && (m_actualFrequency != 0.0);
+   return (!util::floatEqual(m_actualAmplitude, 0.5f)) &&
+          (m_actualFrequency != 0.0);
 }
 
 inline float LFO::calculateValue() noexcept
@@ -33,10 +35,11 @@ inline float LFO::calculateValue() noexcept
 
 inline void LFO::calculateValueMods() noexcept
 {
-   if(!dirty()) return;
-   const Waveform mWaveform = modifiedWaveform();
-   const float mAmplitude = modifiedAmplitude();
-   const float mFrequency = modifiedFrequency();
+   if (!dirty())
+      return;
+   const Waveform mWaveform      = modifiedWaveform();
+   const float mAmplitude        = modifiedAmplitude();
+   const float mFrequency        = modifiedFrequency();
    const uint32_t mMultiplierExp = modifiedMultiplierExp();
    clearModifiers();
 
@@ -66,7 +69,7 @@ inline void LFO::calculateValueMods() noexcept
    }
    if (m_actualMultiplierExp != mMultiplierExp)
    {
-      m_actualMultiplierExp        = mMultiplierExp;
+      m_actualMultiplierExp = mMultiplierExp;
       m_dirtyFlagsUi |= DirtyFlags::MultiplierExp;
    }
 }
@@ -75,7 +78,7 @@ inline void LFO::setWaveform(Waveform waveform) noexcept
 {
    if (m_waveform != waveform)
    {
-      m_waveform              = waveform;
+      m_waveform = waveform;
       m_dirtyFlagsUi |= DirtyFlags::Waveform;
    }
 }
@@ -98,7 +101,7 @@ inline void LFO::setAmplitude(float amplitude) noexcept
    amplitude = util::clip(amplitude, 0.0f, 1.0f);
    if (m_amplitude != amplitude)
    {
-      m_amplitude              = amplitude;
+      m_amplitude = amplitude;
       m_dirtyFlagsUi |= DirtyFlags::Amplitude;
    }
 }
@@ -108,7 +111,7 @@ inline void LFO::setFrequency(float frequency) noexcept
    frequency = util::clip(frequency, 0.0f, 1.0f);
    if (m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
    {
-      m_frequency              = frequency;
+      m_frequency = frequency;
       m_dirtyFlagsUi |= DirtyFlags::Frequency;
    }
 }
@@ -126,38 +129,37 @@ inline void LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
 inline void LFO::applyModifier2Waveform(float destination,
                                         float intensity) noexcept
 {
-   m_modifierWaveform +=
-       (destination - static_cast<int>(m_waveform)) * intensity;
+   m_waveformModifier.addAbsoluteModifier(destination, intensity);
 }
 
 inline void LFO::applyModifier2Amplitude(float destination,
                                          float intensity) noexcept
 {
-   m_modifierAmplitude += (destination - m_amplitude) * intensity;
+   m_amplitudeModifier.addAbsoluteModifier(destination, intensity);
 }
 
 inline void LFO::applyModifier2Frequency(float destination,
                                          float intensity) noexcept
 {
-   m_modifierFrequency += (destination - m_frequency) * intensity;
+   m_frequencyModifier.addAbsoluteModifier(destination, intensity);
 }
 
 inline void LFO::applyModifier2MultiplierExp(float destination,
                                              float intensity) noexcept
 {
-   m_modifierMultiplierExp += (destination - m_multiplierExp) * intensity;
+   m_multiplierExpModifier.addAbsoluteModifier(destination, intensity);
 }
 
-inline Waveform LFO::waveform() const noexcept
-{
-   return m_actualWaveform;
-}
+inline Waveform LFO::waveform() const noexcept { return m_actualWaveform; }
 
 inline float LFO::amplitude() const noexcept { return m_actualAmplitude; }
 
 inline float LFO::frequency() const noexcept { return m_actualFrequency; }
 
-inline uint32_t LFO::multiplierExp() const noexcept { return m_actualMultiplierExp; }
+inline uint32_t LFO::multiplierExp() const noexcept
+{
+   return m_actualMultiplierExp;
+}
 
 inline bool LFO::dirty() const noexcept
 {
@@ -181,33 +183,36 @@ inline bool LFO::getAndResetJustGotDisabled() noexcept
 
 inline Waveform LFO::modifiedWaveform() const noexcept
 {
-   return static_cast<Waveform>(util::clip(
-       float(static_cast<int>(m_waveform) + m_modifierWaveform), 0.0f,
-       float(mpark::variant_size_v<decltype(m_waveformVariant)> - 1)));
+   return Waveform(util::clip(
+       static_cast<int>(calculateModifiedValue(m_waveform, m_waveformModifier)),
+       0, int(magic_enum::enum_count<Waveform>() - 1)));
 }
 
 inline float LFO::modifiedAmplitude() const noexcept
 {
-   return util::clip(m_amplitude + m_modifierAmplitude, 0.0f, 1.0f);
+   return util::clip(calculateModifiedValue(m_amplitude, m_amplitudeModifier),
+                     0.0f, 1.0f);
 }
 
 inline float LFO::modifiedFrequency() const noexcept
 {
-   return util::clip(m_frequency + m_modifierFrequency, 0.0f, 1.0f);
+   return util::clip(calculateModifiedValue(m_frequency, m_frequencyModifier),
+                     0.0f, 1.0f);
 }
 
 inline uint32_t LFO::modifiedMultiplierExp() const noexcept
 {
-   return util::clip(int(m_multiplierExp + m_modifierMultiplierExp), 0,
-                     int(MAX_MULTIPLIER_EXP));
+   return util::clip(
+       calculateModifiedValue(m_multiplierExp, m_multiplierExpModifier), 0U,
+       MAX_MULTIPLIER_EXP);
 }
 
 inline void LFO::clearModifiers() noexcept
 {
-   m_modifierWaveform      = 0;
-   m_modifierAmplitude     = 0;
-   m_modifierFrequency     = 0;
-   m_modifierMultiplierExp = 0;
+   m_waveformModifier.clear();
+   m_amplitudeModifier.clear();
+   m_frequencyModifier.clear();
+   m_multiplierExpModifier.clear();
 }
 
 template <typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>
@@ -218,7 +223,7 @@ void LFO::uiAsksForChanges(CB_amp&& cbAmp, CB_freq&& cbFreq, CB_waw&& cbWaw,
    {
       cbAmp(m_actualAmplitude);
    }
-   if (m_dirtyFlagsUi  & DirtyFlags::Frequency)
+   if (m_dirtyFlagsUi & DirtyFlags::Frequency)
    {
       cbFreq(m_actualFrequency);
    }

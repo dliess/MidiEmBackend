@@ -3,6 +3,7 @@
 
 #include <mpark/variant.hpp>
 #include "LFOData.h"
+#include "ValueModifier.h"
 namespace base::musicDevice::sound::lfo
 {
 
@@ -90,10 +91,10 @@ private:
    Waveform m_actualWaveform{Waveform::Sine};
    WaveformVariant m_waveformVariant{Sine{}};
 
-   float m_modifierAmplitude{0};
-   float m_modifierFrequency{0};
-   float m_modifierMultiplierExp{0};
-   float m_modifierWaveform{0};
+   ValueModifier m_amplitudeModifier;
+   ValueModifier m_frequencyModifier;
+   ValueModifier m_multiplierExpModifier;
+   ValueModifier m_waveformModifier;
    [[nodiscard]] inline Waveform modifiedWaveform() const noexcept;
    [[nodiscard]] inline float modifiedAmplitude() const noexcept;
    [[nodiscard]] inline float modifiedFrequency() const noexcept;

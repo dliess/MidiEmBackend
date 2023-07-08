@@ -5,6 +5,7 @@
 
 #include "LFO.h"
 #include "ParameterAttr.h"
+#include "ValueModifier.h"
 
 namespace base::musicDevice::sound
 {
@@ -43,7 +44,7 @@ private:
    bool m_dirtyFlagUi{true};
    float m_actual{-1};
    bool m_dirtyFlagRt{false};
-   float m_modifier{0};
+   ValueModifier m_modifier;
    float m_commanded{0};
    lfo::LFO m_lfo;
    static constexpr float FUZZ {0.0001};
