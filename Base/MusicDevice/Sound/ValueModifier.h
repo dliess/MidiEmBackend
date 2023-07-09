@@ -3,11 +3,11 @@
 
 namespace base::musicDevice::sound
 {
+
 struct ValueModifier
 {
    void addAbsoluteModifier(float destination, float intensity);
    void addOffestModifier(float offset, float intensity);
-   float calculateModifiedValue(float commanded) const;
    void clear();
 
    template<typename T>
@@ -18,10 +18,11 @@ private:
    float intensity_{0};
 };
 
+
 template<typename T>
 T calculateModifiedValue(T commanded, const ValueModifier& modifier);
 
-}   // namespace base::musicDevice::sound
 
+}   // namespace base::musicDevice::sound
 #include "ValueModifier.inl"
 #endif

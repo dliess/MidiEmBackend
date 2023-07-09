@@ -21,16 +21,20 @@ void ValueModifier::addOffestModifier(float offset, float intensity)
 }
 
 template<typename T>
+concept EnumClass = std::is_enum_v<T> && !std::is_convertible_v<T, int>;
+
+template<typename T>
 T calculateModifiedValue(T commanded, const ValueModifier& modifier)
 {
-   return commanded + modifier.offset_ - (commanded * modifier.intensity_); 
-}
-
-template<> inline
-lfo::Waveform calculateModifiedValue(lfo::Waveform commanded, const ValueModifier& modifier)
-{
-   const auto c = util::to_integral(commanded);
-   return lfo::Waveform(c + modifier.offset_ - (c * modifier.intensity_)); 
+   if constexpr (EnumClass<T>)
+   {
+      const auto c = util::to_integral(commanded);
+      return T(c + modifier.offset_ - (c * modifier.intensity_));      
+   }
+   else
+   {
+      return commanded + modifier.offset_ - (commanded * modifier.intensity_); 
+   }
 }
 
 inline
