@@ -20,6 +20,7 @@ public:
 
    void setSceneName(int sceneIdx, std::string_view name) noexcept;
    void setSceneIntensity(int sceneIdx, float intensity) noexcept;
+   void nulloptZeroIntensityValues();
    void setModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
                             float value) noexcept;
    void incrementModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,

@@ -56,10 +56,83 @@ inline void ParameterStorageElement::applyModifier(
    m_dirtyFlagRt = true;
 }
 
+inline void ParameterStorageElement::resetModifier(ParameterAttr parameterAttr)
+{
+   switch (parameterAttr)
+   {
+      case ParameterAttr::Commanded:
+      {
+         m_modifier.clear();
+         break;
+      }
+      case ParameterAttr::LfoFrequency:
+      {
+         m_lfo.clearModifier2Frequency();
+         break;
+      }
+      case ParameterAttr::LfoAmplitude:
+      {
+         m_lfo.clearModifier2Amplitude();
+         break;
+      }
+      case ParameterAttr::LfoWaveform:
+      {
+         m_lfo.clearModifier2Waveform();
+         break;
+      }
+      case ParameterAttr::LfoMultiplierExp:
+      {
+         m_lfo.clearModifier2MultiplierExp();
+         break;
+      }
+   }
+   m_dirtyFlagRt = true;
+}
+
+inline void ParameterStorageElement::calcActualVal()
+{
+   if(!m_dirtyFlagRt)
+   {
+      return;
+   }
+   float actualBefore = m_actual;
+   m_actual           = calculateModifiedValue(m_commanded, m_modifier);
+   const float range  = m_isListIndex ? m_resolution : 1.0;
+   if (m_lfo.enabled())
+   {
+      m_cachedLfoValue = m_lfo.calculateValue() * range;
+      m_actual += m_cachedLfoValue;
+   }
+   else
+   {
+      m_cachedLfoValue = 0.0;
+   }
+   m_actual = limitValue(m_actual);
+   m_dirtyFlagRt = false;
+   if (m_isListIndex)
+   {
+      actualBefore = int(actualBefore);
+      m_actual = int(m_actual);
+      if (int(actualBefore) != int(m_actual))
+      {
+         m_dirtyFlagUi = true;
+         emitActualChanged(actualBefore, m_actual);
+      }
+   }
+   else
+   {
+      if (int(actualBefore * m_resolution) != int(m_actual * m_resolution))
+      {
+         m_dirtyFlagUi = true;
+         emitActualChanged(actualBefore, m_actual);
+      }
+   }
+}
+
+
 inline std::optional<std::pair<float, float>>
 ParameterStorageElement::updateActualValue() noexcept
 {
-   m_lfo.calculateValueMods();
    if (m_lfo.getAndResetJustGotDisabled() || m_lfo.dirty())
    {
       m_dirtyFlagRt = true;
@@ -110,6 +183,7 @@ inline void ParameterStorageElement::setCommandedValue(float value,
    m_commanded   = limitValue(value, roundRobin);
    m_dirtyFlagRt = true;
    m_dirtyFlagUi = true;
+
 }
 
 template <typename T> int sgn(T val) { return int(T(0) < val) - int(val < T(0)); }
@@ -213,6 +287,10 @@ inline const lfo::LFO& ParameterStorageElement::lfo() const noexcept
    return m_lfo;
 }
 
-inline lfo::LFO& ParameterStorageElement::lfo() noexcept { return m_lfo; }
+inline lfo::LFO& ParameterStorageElement::lfo() noexcept
+{ 
+   m_dirtyFlagRt = true;
+   return m_lfo;
+}
 
 }   // namespace base::musicDevice::sound

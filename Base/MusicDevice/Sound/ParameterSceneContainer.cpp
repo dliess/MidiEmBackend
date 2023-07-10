@@ -42,6 +42,17 @@ void ParameterSceneContainer::setSceneIntensity(int sceneIdx,
    }
 }
 
+void ParameterSceneContainer::nulloptZeroIntensityValues()
+{
+   for(auto& scene: m_data)
+   {
+      if(scene.intensity && scene.intensity.value() == 0.0f)
+      {
+         scene.intensity.reset();
+      }
+   }
+}
+
 void ParameterSceneContainer::setModifierEndValue(
     int sceneIdx, const ParameterCoordinate& paramCoord, float value) noexcept
 {

@@ -6,6 +6,7 @@
 #include "LFO.h"
 #include "ParameterAttr.h"
 #include "ValueModifier.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice::sound
 {
@@ -17,27 +18,31 @@ struct ParameterStorageElement
    uiAsksForChangedValues() noexcept;
    [[nodiscard]] inline std::optional<std::pair<float, float>>
    updateActualValue() noexcept;
-   inline void setCommandedValue(float value, bool roundRobin = false) noexcept;
-   inline void incCommandedValue(float increment,
+   void setCommandedValue(float value, bool roundRobin = false) noexcept;
+   void incCommandedValue(float increment,
                                  bool roundRobin = false) noexcept;
-   inline void setValueFromDeviceRel(float value) noexcept;
-   inline void setValueFromDevice(float value) noexcept;
-   inline void applyModifier(float destination, float intensity,
+   void setValueFromDeviceRel(float value) noexcept;
+   void setValueFromDevice(float value) noexcept;
+   void applyModifier(float destination, float intensity,
                              ParameterAttr parameterAttr) noexcept;
+   void resetModifier(ParameterAttr parameterAttr);
+   void calcActualVal();
 
-   inline void enable(bool enable) noexcept;
-   inline void incUiInterestCount() noexcept;
-   inline void decUiInterestCount() noexcept;
-   [[nodiscard]] inline bool isInSync() const noexcept;
-   [[nodiscard]] inline float commanded() const noexcept;
-   [[nodiscard]] inline const lfo::LFO& lfo() const noexcept;
-   [[nodiscard]] inline lfo::LFO& lfo() noexcept;
+   void enable(bool enable) noexcept;
+   void incUiInterestCount() noexcept;
+   void decUiInterestCount() noexcept;
+   [[nodiscard]] bool isInSync() const noexcept;
+   [[nodiscard]] float commanded() const noexcept;
+   [[nodiscard]] const lfo::LFO& lfo() const noexcept;
+   [[nodiscard]] lfo::LFO& lfo() noexcept;
+
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ActualChanged, float, float);
 
 private:
    const bool m_isListIndex;
    const int m_resolution;
    float m_cachedLfoValue{0.0};
-   inline float calcModified() const noexcept;
+   float calcModified() const noexcept;
 
    bool m_enabled{true};
    int m_uiInterestCount{0};
@@ -51,7 +56,7 @@ private:
 
    [[nodiscard]] inline float limitValue(
        float value, bool roundRobin = false) const noexcept;
-   inline void forceRecalculationAndSending() noexcept;
+   void forceRecalculationAndSending() noexcept;
 };
 
 }   // namespace base::musicDevice::sound

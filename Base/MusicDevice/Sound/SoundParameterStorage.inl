@@ -27,13 +27,20 @@ inline void ParameterStorage::resize() noexcept
                 m_rSoundSection.global->parameters[paramIdx]
                     .source.midi->sourceRanges;
             assert(sourceRanges.has_value());
-            m_globalData.parameters.emplace_back(true, sourceRanges->size());
+            auto& inserted = m_globalData.parameters.emplace_back(
+                true, sourceRanges->size());
+            inserted.onActualChanged([this, paramIdx](float oldVal, float newVal) {
+               emitActualChanged(-1, paramIdx, oldVal, newVal);
+            });
          }
          else
          {
-            m_globalData.parameters.emplace_back(
+            auto& inserted = m_globalData.parameters.emplace_back(
                 false, m_rSoundSection.global->parameters[paramIdx]
                            .getSourceResolution());
+            inserted.onActualChanged([this, paramIdx](float oldVal, float newVal) {
+               emitActualChanged(-1, paramIdx, oldVal, newVal);
+            });
          }
       }
    }
@@ -52,13 +59,21 @@ inline void ParameterStorage::resize() noexcept
             const auto& sourceRanges =
                 engineDescr.parameters[paramIdx].source.midi->sourceRanges;
             assert(sourceRanges.has_value());
-            m_voicesData[voiceIdx].parameters.emplace_back(
+            auto& inserted = m_voicesData[voiceIdx].parameters.emplace_back(
                 true, sourceRanges->size());
+            inserted.onActualChanged(
+                [this, voiceIdx, paramIdx](float oldVal, float newVal) {
+                   emitActualChanged(voiceIdx, paramIdx, oldVal, newVal);
+                });
          }
          else
          {
-            m_voicesData[voiceIdx].parameters.emplace_back(
+            auto& inserted = m_voicesData[voiceIdx].parameters.emplace_back(
                 false, engineDescr.parameters[paramIdx].getSourceResolution());
+            inserted.onActualChanged(
+                [this, voiceIdx, paramIdx](float oldVal, float newVal) {
+                   emitActualChanged(voiceIdx, paramIdx, oldVal, newVal);
+                });
          }
       }
    }
@@ -287,16 +302,16 @@ inline float ParameterStorage::getCommandedValue(
       case ParameterAttr::LfoWaveform:
       {
          return static_cast<float>(elementContainer(voiceIdx)
-             .parameters[parameterId]
-             .lfo()
-             .waveform());
+                                       .parameters[parameterId]
+                                       .lfo()
+                                       .waveform());
       }
       case ParameterAttr::LfoMultiplierExp:
       {
          return static_cast<float>(elementContainer(voiceIdx)
-             .parameters[parameterId]
-             .lfo()
-             .multiplierExp());
+                                       .parameters[parameterId]
+                                       .lfo()
+                                       .multiplierExp());
       }
    }
    return 0;
@@ -448,9 +463,18 @@ inline void ParameterStorage::applyModifier(int voiceIdx, int paramIdx,
                                             float destValue,
                                             float intensity) noexcept
 {
-   elementContainer(voiceIdx)
-       .parameters[paramIdx]
-       .applyModifier(destValue, intensity, parameterAttr);
+   elementContainer(voiceIdx).parameters[paramIdx].applyModifier(
+       destValue, intensity, parameterAttr);
 }
 
+inline void ParameterStorage::resetModifier(int voiceIdx, int paramIdx,
+                                            ParameterAttr parameterAttr)
+{
+   elementContainer(voiceIdx).parameters[paramIdx].resetModifier(parameterAttr);
+}
+
+inline void ParameterStorage::calcActualVal(int voiceIdx, int paramIdx)
+{
+   elementContainer(voiceIdx).parameters[paramIdx].calcActualVal();
+}
 }   // namespace base::musicDevice::sound

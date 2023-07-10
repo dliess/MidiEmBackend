@@ -68,8 +68,9 @@ public:
                                 ParameterAttr parameterAttr, float increment,
                                 bool roundRobin = false) noexcept;
    void incrementParameterValueEventBound(int voiceId, int parameterId,
-                                ParameterAttr parameterAttr, float increment,
-                                bool roundRobin = false) noexcept;
+                                          ParameterAttr parameterAttr,
+                                          float increment,
+                                          bool roundRobin = false) noexcept;
    void updateActualSoundStorageValues() noexcept;
    inline std::optional<std::string> getActualPresetOfVoice(
        int voiceId) const noexcept;
@@ -106,6 +107,8 @@ public:
 
    void applyModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr,
                       float destValue, float intensity) noexcept;
+   void resetModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr);
+   void calcActualVal(int voiceIdx, int paramIdx);
 
    // TODO: do we need this?
    // inline SoundPresetHandler* soundPresetHandler() noexcept;

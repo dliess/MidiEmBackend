@@ -10,6 +10,7 @@
 
 namespace base::musicDevice::sound
 {
+class SoundHandler;
 struct ParameterScene
 {
    ParameterScene(std::pmr::unsynchronized_pool_resource& pool) :
@@ -35,6 +36,7 @@ struct ParameterScene
         float range{1.0};
       };
       std::optional<GoalValue> goalValue;
+      SoundHandler* pCachedSoundHandler{nullptr};
    };
    std::pmr::list<Modifier> modifiers;
 };

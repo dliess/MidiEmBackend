@@ -130,25 +130,104 @@ inline void LFO::applyModifier2Waveform(float destination,
                                         float intensity) noexcept
 {
    m_waveformModifier.addAbsoluteModifier(destination, intensity);
+   calcActualVal2Waveform();
 }
 
 inline void LFO::applyModifier2Amplitude(float destination,
                                          float intensity) noexcept
 {
    m_amplitudeModifier.addAbsoluteModifier(destination, intensity);
+   calcActualVal2Amplitude();
 }
 
 inline void LFO::applyModifier2Frequency(float destination,
                                          float intensity) noexcept
 {
    m_frequencyModifier.addAbsoluteModifier(destination, intensity);
+   calcActualVal2Frequency();
 }
 
 inline void LFO::applyModifier2MultiplierExp(float destination,
                                              float intensity) noexcept
 {
    m_multiplierExpModifier.addAbsoluteModifier(destination, intensity);
+   calcActualVal2MultiplierExp();
 }
+
+inline void LFO::clearModifier2Waveform()
+{ 
+   m_waveformModifier.clear();
+   calcActualVal2Waveform();
+}
+
+inline void LFO::clearModifier2Amplitude()
+{ 
+   m_amplitudeModifier.clear();
+   calcActualVal2Amplitude();
+}
+
+inline void LFO::clearModifier2Frequency()
+{ 
+   m_frequencyModifier.clear();
+   calcActualVal2Frequency();
+}
+
+inline void LFO::clearModifier2MultiplierExp()
+{
+   m_multiplierExpModifier.clear();
+   calcActualVal2MultiplierExp();
+}
+
+
+inline void LFO::calcActualVal2Waveform()
+{
+   const Waveform mWaveform      = modifiedWaveform();
+   if (m_actualWaveform != mWaveform)
+   {
+      m_actualWaveform = mWaveform;
+      setWaveformVariant(m_actualWaveform);
+      m_dirtyFlagsUi |= DirtyFlags::Waveform;
+   }
+}
+
+inline void LFO::calcActualVal2Amplitude()
+{
+   const float mAmplitude        = modifiedAmplitude();
+   if (m_actualAmplitude != mAmplitude)
+   {
+      m_actualAmplitude = mAmplitude;
+      if (util::floatEqual(m_actualAmplitude, 0.5f))
+      {
+         m_justGotDisabled = true;
+      }
+      m_dirtyFlagsUi |= DirtyFlags::Amplitude;
+   }
+}
+
+inline void LFO::calcActualVal2Frequency()
+{
+   const float mFrequency        = modifiedFrequency();
+   if (m_actualFrequency != mFrequency)
+   {
+      m_actualFrequency = mFrequency;
+      if (m_actualFrequency == 0.0)
+      {
+         m_justGotDisabled = true;
+      }
+      m_dirtyFlagsUi |= DirtyFlags::Frequency;
+   }
+}
+
+inline void LFO::calcActualVal2MultiplierExp()
+{
+   const uint32_t mMultiplierExp = modifiedMultiplierExp();
+   if (m_actualMultiplierExp != mMultiplierExp)
+   {
+      m_actualMultiplierExp = mMultiplierExp;
+      m_dirtyFlagsUi |= DirtyFlags::MultiplierExp;
+   }
+}
+
 
 inline Waveform LFO::waveform() const noexcept { return m_actualWaveform; }
 

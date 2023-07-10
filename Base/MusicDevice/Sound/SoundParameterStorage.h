@@ -6,11 +6,11 @@
 #include <string>
 #include <vector>
 
-#include "CallbackSignal.h"
 #include "LFO.h"
 #include "ParameterAttr.h"
 #include "SoundParameterStorageElement.h"
 #include "SoundSection.h"
+#include "CallbackSignal.h"
 
 namespace base::musicDevice
 {
@@ -74,9 +74,10 @@ public:
    [[nodiscard]] inline uint32_t multiplierExp(int voiceId,
                                                int parameterId) const noexcept;
 
-   inline void applyModifier(int voiceIdx, int paramIdx,
-                             ParameterAttr parameterAttr, float destValue,
-                             float intensity) noexcept;
+   void applyModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr,
+                      float destValue, float intensity) noexcept;
+   void resetModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr);
+   void calcActualVal(int voiceIdx, int paramIdx);
 
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
@@ -95,6 +96,8 @@ public:
    template <typename Cb> void forEachElementContainer(Cb&& cb);
 
    inline int paramCount(int voiceIdx) const noexcept;
+
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ActualChanged, int, int, float, float);
 
 private:
    const description::sound::Section& m_rSoundSection;
