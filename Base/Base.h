@@ -14,6 +14,7 @@
 #include "MusicDeviceFactory.h"
 #include "MusicDeviceHolder.h"
 #include "ParameterSceneContainer.h"
+#include "ModifiersApplyer.h"
 #include "ThreadHelpers.h"
 #include "TransportControl.h"
 #include "Tracks.h"
@@ -37,6 +38,7 @@ public:
    session::Tracks tracks;
    eventRouter::EventRouter controllerEventRouter;
    musicDevice::sound::ParameterSceneContainer parameterSceneContainer;
+   musicDevice::ModifiersApplyer modifiersApplyer;
    void start();
    void waitForEnd();
 

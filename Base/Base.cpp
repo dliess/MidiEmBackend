@@ -10,7 +10,6 @@
 #include "FdSet.h"
 #include "InstrumentsMDChangeHandler.h"
 #include "LoaderServer.h"
-#include "ModifiersApplyer.h"
 #include "ReplaceAsteriskToLocalhost.h"
 #include "RtClient.h"
 #include "RtServer.h"
@@ -51,7 +50,9 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
     controllerEventRouter(instruments, musicDeviceHolder.musicDevices,
-                          musicDeviceFactory.dataHolder())
+                          musicDeviceFactory.dataHolder()),
+    modifiersApplyer(parameterSceneContainer, musicDeviceHolder.musicDevices)
+
 {
    // m_zmqContext.set(zmq::ctxopt::io_threads, 1);
    m_zmqContext.set(zmq::ctxopt::thread_name_prefix, 1);
@@ -159,7 +160,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        m_zmqContext, m_rtRpcBindAddr, m_rtSignalBindAddr, instruments,
        musicDeviceHolder, transportControl,
        tempo::BeatTick::instance().abletonLink(), midiRouter,
-       parameterSceneContainer, tracks);
+       parameterSceneContainer, modifiersApplyer, tracks);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
@@ -250,8 +251,6 @@ void base::Base::loopFn()
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
       tracks.update();
-      base::musicDevice::ModifiersApplyer(parameterSceneContainer,
-                                          musicDeviceHolder.musicDevices)();
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
    musicDeviceFactory.musicDeviceInserter().invokeQueueActions();

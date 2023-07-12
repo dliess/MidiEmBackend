@@ -143,6 +143,10 @@ private:
    ParameterStorage m_paramStorage;
    preset::PresetHandler m_presetHandler;
    std::vector<arp::Arpeggiator> m_arpeggiators;
+
+   void handleComponentSelectorParamChange(
+       const description::sound::Parameter& paramDescr, int voiceIdx,
+       float oldVal, float newVal);
 };
 
 template <typename Cb>

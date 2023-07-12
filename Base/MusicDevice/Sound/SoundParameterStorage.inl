@@ -29,18 +29,20 @@ inline void ParameterStorage::resize() noexcept
             assert(sourceRanges.has_value());
             auto& inserted = m_globalData.parameters.emplace_back(
                 true, sourceRanges->size());
-            inserted.onActualChanged([this, paramIdx](float oldVal, float newVal) {
-               emitActualChanged(-1, paramIdx, oldVal, newVal);
-            });
+            inserted.onActualChanged(
+                [this, paramIdx](float oldVal, float newVal) {
+                   emitActualChanged(-1, paramIdx, oldVal, newVal);
+                });
          }
          else
          {
             auto& inserted = m_globalData.parameters.emplace_back(
                 false, m_rSoundSection.global->parameters[paramIdx]
                            .getSourceResolution());
-            inserted.onActualChanged([this, paramIdx](float oldVal, float newVal) {
-               emitActualChanged(-1, paramIdx, oldVal, newVal);
-            });
+            inserted.onActualChanged(
+                [this, paramIdx](float oldVal, float newVal) {
+                   emitActualChanged(-1, paramIdx, oldVal, newVal);
+                });
          }
       }
    }
@@ -269,16 +271,11 @@ inline void ParameterStorage::setActualPresetOfVoice(
    }
 }
 
-template <typename Cb>
-void ParameterStorage::updateActualValues(Cb&& cb) noexcept
+inline void ParameterStorage::updateActualValuesIfLfoActive() noexcept
 {
    forEachParameter(
-       [cb](int voiceIdx, int paramIdx, ParameterStorageElement& element) {
-          const auto changed = element.updateActualValue();
-          if (changed)
-          {
-             cb(voiceIdx, paramIdx, changed->second, changed->first);
-          }
+       [](int voiceIdx, int paramIdx, ParameterStorageElement& element) {
+          element.calcActualValueIfLfoActive();
        });
 }
 

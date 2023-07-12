@@ -3,35 +3,16 @@
 
 #include "MidiEmRt_Server.h"
 
-namespace base::instruments
-{
-struct Instruments;
-}
-namespace base::musicDevice
-{
-struct Holder;
-}
-namespace base
-{
-class TransportControl;
-}
-namespace base
-{
-class AbletonLinkWrapper;
-}
-namespace base::midifriends
-{
-class Router;
-}
-namespace base::musicDevice::sound
-{
-class ParameterSceneContainer;
-}
-
-namespace base::session
-{
-struct Tracks;
-}
+// clang-format off
+namespace base::instruments { struct Instruments; }
+namespace base::musicDevice { struct Holder; }
+namespace base { class TransportControl; }
+namespace base { class AbletonLinkWrapper; }
+namespace base::midifriends { class Router; }
+namespace base::musicDevice::sound { class ParameterSceneContainer; }
+namespace base::musicDevice { class ModifiersApplyer; }
+namespace base::session { struct Tracks; }
+// clang-format on
 
 namespace uiadapter::capnzero
 {
@@ -47,6 +28,7 @@ public:
             base::midifriends::Router& rMidiRouter,
             base::musicDevice::sound::ParameterSceneContainer&
                 rParameterSceneContainer,
+            base::musicDevice::ModifiersApplyer& rModifiersApplyer,
             base::session::Tracks& rTracks);
    using Super    = ::capnzero::MidiEmRt::MidiEmRtServer;
    using WaitMode = Super::WaitMode;

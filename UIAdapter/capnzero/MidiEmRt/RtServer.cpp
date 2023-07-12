@@ -13,6 +13,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceHolder.h"
 #include "ParameterSceneContainer.h"
+#include "ModifiersApplyer.h"
 #include "ParameterSceneRpc.h"
 #include "SessionRpc.h"
 #include "SoundDevicesRpc.h"
@@ -32,6 +33,7 @@ RtServer::RtServer(
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
     base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
+    base::musicDevice::ModifiersApplyer& rModifiersApplyer,
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
@@ -41,7 +43,7 @@ RtServer::RtServer(
                                   rTracks),
         std::make_unique<InstrumentsPlayRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
-        std::make_unique<ParameterSceneRpc>(rParameterSceneContainer),
+        std::make_unique<ParameterSceneRpc>(rParameterSceneContainer, rModifiersApplyer),
         std::make_unique<ControllerDevicesRpc>(),
         std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
         std::make_unique<TransportControlRpc>(rTransportControl),

@@ -23,55 +23,55 @@ namespace sound
 class ParameterStorage
 {
 public:
-   inline ParameterStorage(const description::sound::Section& rSoundSection);
+   ParameterStorage(const description::sound::Section& rSoundSection);
    template <typename T>
    void setCommandedValuesOfVoice(int voiceId, const T& container) noexcept;
-   inline void incSoundParameterValue(int voiceId, int parameterId,
+   void incSoundParameterValue(int voiceId, int parameterId,
                                       float increment,
                                       bool roundRobin = false) noexcept;
-   inline void setSoundParameterValue(int voiceId, int parameterId, float value,
+   void setSoundParameterValue(int voiceId, int parameterId, float value,
                                       bool roundRobin = false) noexcept;
-   inline void setSoundParameterActualValue(int voiceId, int parameterId,
+   void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
 
-   inline void resetToInitialValue(int voiceIdx, int paramIdx) noexcept;
-   inline void resetToInitialValues(int voiceIdx) noexcept;
-   inline void resetToInitialValues() noexcept;
+   void resetToInitialValue(int voiceIdx, int paramIdx) noexcept;
+   void resetToInitialValues(int voiceIdx) noexcept;
+   void resetToInitialValues() noexcept;
 
-   inline std::optional<std::string> getActualPresetOfVoice(
+   std::optional<std::string> getActualPresetOfVoice(
        int voiceIdx) const noexcept;
-   inline void setActualPresetOfVoice(int voiceIdx,
+   void setActualPresetOfVoice(int voiceIdx,
                                       const std::string& presetName) noexcept;
 
-   template <typename Cb> void updateActualValues(Cb&& cb) noexcept;
+   void updateActualValuesIfLfoActive() noexcept;
 
-   inline float getCommandedValue(
+   float getCommandedValue(
        int voiceIdx, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
-   inline std::vector<float> getCommandedValuesOfVoice(
+   std::vector<float> getCommandedValuesOfVoice(
        int voiceIdx) const noexcept;
 
    constexpr static int ALL = -1;
-   inline void uiShowsInterestInParameter(int voiceId,
+   void uiShowsInterestInParameter(int voiceId,
                                           int parameterId = ALL) noexcept;
-   inline void uiLoosesInterestInParameter(int voiceId,
+   void uiLoosesInterestInParameter(int voiceId,
                                            int parameterId = ALL) noexcept;
-   inline void setWaveform(int voiceId, int parameterId,
+   void setWaveform(int voiceId, int parameterId,
                            lfo::Waveform waveform) noexcept;
-   inline void setAmplitude(int voiceId, int parameterId,
+   void setAmplitude(int voiceId, int parameterId,
                             float amplitude) noexcept;
-   inline void setFrequency(int voiceId, int parameterId,
+   void setFrequency(int voiceId, int parameterId,
                             float frequency) noexcept;
-   inline void setMultiplierExp(int voiceId, int parameterId,
+   void setMultiplierExp(int voiceId, int parameterId,
                                 uint32_t multiplierExp) noexcept;
 
-   [[nodiscard]] inline lfo::Waveform waveform(int voiceId,
+   [[nodiscard]] lfo::Waveform waveform(int voiceId,
                                                int parameterId) const noexcept;
-   [[nodiscard]] inline float amplitude(int voiceId,
+   [[nodiscard]] float amplitude(int voiceId,
                                         int parameterId) const noexcept;
-   [[nodiscard]] inline float frequency(int voiceId,
+   [[nodiscard]] float frequency(int voiceId,
                                         int parameterId) const noexcept;
-   [[nodiscard]] inline uint32_t multiplierExp(int voiceId,
+   [[nodiscard]] uint32_t multiplierExp(int voiceId,
                                                int parameterId) const noexcept;
 
    void applyModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr,
@@ -81,9 +81,9 @@ public:
 
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
-   inline const ParameterStorageElement& parameter(int voiceIdx,
+   const ParameterStorageElement& parameter(int voiceIdx,
                                                    int paramIdx) const;
-   inline ParameterStorageElement& parameter(int voiceIdx, int paramIdx);
+   ParameterStorageElement& parameter(int voiceIdx, int paramIdx);
 
    template <typename Cb> void forEachParameter(Cb&& cb) const noexcept;
    template <typename Cb> void forEachParameter(Cb&& cb) noexcept;
@@ -95,14 +95,14 @@ public:
 
    template <typename Cb> void forEachElementContainer(Cb&& cb);
 
-   inline int paramCount(int voiceIdx) const noexcept;
+   int paramCount(int voiceIdx) const noexcept;
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(ActualChanged, int, int, float, float);
 
 private:
    const description::sound::Section& m_rSoundSection;
-   inline lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
-   inline const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
+   lfo::LFO& lfoOf(int voiceId, int parameterId) noexcept;
+   const lfo::LFO& lfoOf(int voiceId, int parameterId) const noexcept;
    struct EngineData
    {
       std::vector<ParameterStorageElement> parameters;
@@ -111,11 +111,11 @@ private:
    EngineData m_globalData;
    std::vector<EngineData> m_voicesData;
 
-   inline const EngineData& elementContainer(int voiceIdx) const noexcept;
-   inline EngineData& elementContainer(int voiceIdx) noexcept;
-   inline void resize() noexcept;
+   const EngineData& elementContainer(int voiceIdx) const noexcept;
+   EngineData& elementContainer(int voiceIdx) noexcept;
+   void resize() noexcept;
 
-   inline void _resetToInitialValue(int voiceIdx, int paramIdx,
+   void _resetToInitialValue(int voiceIdx, int paramIdx,
                                     ParameterStorageElement& element) noexcept;
 };
 

@@ -1,13 +1,15 @@
 #include "ParameterSceneRpc.h"
 
+#include "ModifiersApplyer.h"
 #include "ParameterSceneContainer.h"
 
 using namespace uiadapter::capnzero;
 
 ParameterSceneRpc::ParameterSceneRpc(
-    base::musicDevice::sound::ParameterSceneContainer&
-        rParameterSceneContainer) :
-    m_rParameterSceneContainer(rParameterSceneContainer)
+    base::musicDevice::sound::ParameterSceneContainer& rParameterSceneContainer,
+    base::musicDevice::ModifiersApplyer& rModifiersApplyer) :
+    m_rParameterSceneContainer(rParameterSceneContainer),
+    m_rModifiersApplyer(rModifiersApplyer)
 {
 }
 
@@ -26,6 +28,7 @@ void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
       return;
    }
    m_rParameterSceneContainer.setSceneIntensity(sceneIdx, intensity);
+   m_rModifiersApplyer();
 }
 
 void ParameterSceneRpc::setModifierEndValue(
@@ -42,6 +45,7 @@ void ParameterSceneRpc::setModifierEndValue(
            deviceUuid_, voiceIdx, parameterIdx,
            static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        endValue);
+    m_rModifiersApplyer();
 }
 
 void ParameterSceneRpc::incrementModifierEndValue(
@@ -58,6 +62,7 @@ void ParameterSceneRpc::incrementModifierEndValue(
            deviceUuid_, voiceIdx, parameterIdx,
            static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        increment);
+    m_rModifiersApplyer();
 }
 
 void ParameterSceneRpc::removeModifier(
@@ -72,4 +77,5 @@ void ParameterSceneRpc::removeModifier(
                      deviceUuid_, voiceIdx, parameterIdx,
                      static_cast<base::musicDevice::sound::ParameterAttr>(
                          parameterAttr)});
+   m_rModifiersApplyer();
 }

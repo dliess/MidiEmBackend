@@ -3,28 +3,26 @@
 
 #include <optional>
 
+#include "CallbackSignal.h"
 #include "LFO.h"
 #include "ParameterAttr.h"
 #include "ValueModifier.h"
-#include "CallbackSignal.h"
 
 namespace base::musicDevice::sound
 {
 struct ParameterStorageElement
 {
-   inline ParameterStorageElement(bool isListIndex, int resolution) noexcept;
+   ParameterStorageElement(bool isListIndex, int resolution) noexcept;
 
-   [[nodiscard]] inline std::optional<std::pair<float, float>>
+   [[nodiscard]] std::optional<std::pair<float, float>>
    uiAsksForChangedValues() noexcept;
-   [[nodiscard]] inline std::optional<std::pair<float, float>>
-   updateActualValue() noexcept;
+   void calcActualValueIfLfoActive() noexcept;
    void setCommandedValue(float value, bool roundRobin = false) noexcept;
-   void incCommandedValue(float increment,
-                                 bool roundRobin = false) noexcept;
+   void incCommandedValue(float increment, bool roundRobin = false) noexcept;
    void setValueFromDeviceRel(float value) noexcept;
    void setValueFromDevice(float value) noexcept;
    void applyModifier(float destination, float intensity,
-                             ParameterAttr parameterAttr) noexcept;
+                      ParameterAttr parameterAttr) noexcept;
    void resetModifier(ParameterAttr parameterAttr);
    void calcActualVal();
 
@@ -52,10 +50,10 @@ private:
    ValueModifier m_modifier;
    float m_commanded{0};
    lfo::LFO m_lfo;
-   static constexpr float FUZZ {0.0001};
+   static constexpr float FUZZ{0.0001};
 
-   [[nodiscard]] inline float limitValue(
-       float value, bool roundRobin = false) const noexcept;
+   [[nodiscard]] float limitValue(float value,
+                                  bool roundRobin = false) const noexcept;
    void forceRecalculationAndSending() noexcept;
 };
 

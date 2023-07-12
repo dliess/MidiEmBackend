@@ -91,7 +91,7 @@ inline void ParameterStorageElement::resetModifier(ParameterAttr parameterAttr)
 
 inline void ParameterStorageElement::calcActualVal()
 {
-   if(!m_dirtyFlagRt)
+   if(!m_dirtyFlagRt || !m_enabled)
    {
       return;
    }
@@ -130,51 +130,15 @@ inline void ParameterStorageElement::calcActualVal()
 }
 
 
-inline std::optional<std::pair<float, float>>
-ParameterStorageElement::updateActualValue() noexcept
+inline void
+ParameterStorageElement::calcActualValueIfLfoActive() noexcept
 {
-   if (m_lfo.getAndResetJustGotDisabled() || m_lfo.dirty())
+   if (m_lfo.getAndResetJustGotDisabled() || m_lfo.enabled())
    {
       m_dirtyFlagRt = true;
       m_dirtyFlagUi = true;
    }
-   if (!m_enabled || (!m_dirtyFlagRt && !m_lfo.enabled()))
-   {
-      return std::nullopt;
-   }
-   float actualBefore = m_actual;
-   m_actual           = calculateModifiedValue(m_commanded, m_modifier);
-   const float range  = m_isListIndex ? m_resolution : 1.0;
-   if (m_lfo.enabled())
-   {
-      m_cachedLfoValue = m_lfo.calculateValue() * range;
-      m_actual += m_cachedLfoValue;
-   }
-   else
-   {
-      m_cachedLfoValue = 0.0;
-   }
-   m_actual = limitValue(m_actual);
-   m_dirtyFlagRt = false;
-   if (m_isListIndex)
-   {
-      actualBefore = int(actualBefore);
-      m_actual = int(m_actual);
-      if (int(actualBefore) != int(m_actual))
-      {
-         m_dirtyFlagUi = true;
-         return std::make_pair(actualBefore, m_actual);
-      }
-   }
-   else
-   {
-      if (int(actualBefore * m_resolution) != int(m_actual * m_resolution))
-      {
-         m_dirtyFlagUi = true;
-         return std::make_pair(actualBefore, m_actual);
-      }
-   }
-   return std::nullopt;
+   calcActualVal();
 }
 
 inline void ParameterStorageElement::setCommandedValue(float value,

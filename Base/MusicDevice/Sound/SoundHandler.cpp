@@ -36,51 +36,59 @@ SoundHandler::SoundHandler(
           });
       m_arpeggiators[voiceIdx].setRange(arp::RangeType::Octave, 1);
    }
-   m_paramStorage.onActualChanged([this](int voiceIdx, int paramIdx, float oldVal,
-                                     float newVal) {
-      const auto& paramDescr =
-          m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
-      if (paramDescr.role ==
-          description::sound::Parameter::Role::ComponentSelector)
-      {
-         assert(paramDescr.source.midi->sourceRanges);
-         const std::string compNamePrev =
-             (-1 == prevValue) ? ""
-                               : paramDescr.source.midi->sourceRanges
-                                     ->at(static_cast<int>(prevValue))
-                                     .name;
-         const std::string compName = (-1 == value)
-                                          ? ""
-                                          : paramDescr.source.midi->sourceRanges
-                                                ->at(static_cast<int>(value))
-                                                .name;
-
-         m_paramStorage.forEachParameter(
-             [this, voiceIdx, &compNamePrev, &compName](
-                 int paramIdx, ParameterStorageElement& element) {
-                const auto& descr =
-                    m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
-                if (descr.component && *descr.component == compNamePrev)
-                {
-                   element.enable(false);
-                }
-                if (descr.component && *descr.component == compName)
-                {
-                   element.enable(true);
-                }
-             },
-             voiceIdx);
-         if (m_midiInMsgHandler)
-         {
-            m_midiInMsgHandler->changeMapping(voiceIdx, compNamePrev, compName);
-         }
-      }
-      m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, value);
-   });
+   m_paramStorage.onActualChanged(
+       [this](int voiceIdx, int paramIdx, float oldVal, float newVal) {
+          if (const auto& paramDescr =
+                  m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
+              paramDescr.role ==
+              description::sound::Parameter::Role::ComponentSelector)
+          {
+             handleComponentSelectorParamChange(paramDescr, voiceIdx, oldVal,
+                                                newVal);
+          }
+          m_midiOutHandler->sendSoundParameter(voiceIdx, paramIdx, newVal);
+       });
    m_paramStorage.onActualPresetChanged(
        [this](int voiceIdx, const std::string& presetName) {
           emitActualPresetChanged(voiceIdx, presetName);
        });
+}
+
+void SoundHandler::handleComponentSelectorParamChange(
+    const description::sound::Parameter& paramDescr, int voiceIdx, float oldVal,
+    float newVal)
+{
+   assert(paramDescr.source.midi->sourceRanges);
+   const std::string compNamePrev =
+       (-1 == oldVal)
+           ? ""
+           : paramDescr.source.midi->sourceRanges->at(static_cast<int>(oldVal))
+                 .name;
+   const std::string compName =
+       (-1 == newVal)
+           ? ""
+           : paramDescr.source.midi->sourceRanges->at(static_cast<int>(newVal))
+                 .name;
+
+   m_paramStorage.forEachParameter(
+       [this, voiceIdx, &compNamePrev, &compName](
+           int paramIdx, ParameterStorageElement& element) {
+          const auto& descr =
+              m_rSoundSection.parameterDescription(voiceIdx, paramIdx);
+          if (descr.component && *descr.component == compNamePrev)
+          {
+             element.enable(false);
+          }
+          if (descr.component && *descr.component == compName)
+          {
+             element.enable(true);
+          }
+       },
+       voiceIdx);
+   if (m_midiInMsgHandler)
+   {
+      m_midiInMsgHandler->changeMapping(voiceIdx, compNamePrev, compName);
+   }
 }
 
 SoundHandler::~SoundHandler() =
@@ -355,11 +363,8 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
 {
    if (m_midiOutHandler)
    {
+      m_paramStorage.updateActualValuesIfLfoActive();
       for (auto& arp : m_arpeggiators) { arp.update(); }
-      m_paramStorage.updateActualValues(
-          [this](int voiceIdx, int paramIdx, float value, float prevValue) {
-
-          });
    }
 }
 
