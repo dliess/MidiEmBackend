@@ -50,7 +50,7 @@ private:
    ValueModifier m_modifier;
    float m_commanded{0};
    lfo::LFO m_lfo;
-   static constexpr float FUZZ{0.0001};
+   static constexpr float FUZZ{0.0001f};
 
    [[nodiscard]] float limitValue(float value,
                                   bool roundRobin = false) const noexcept;

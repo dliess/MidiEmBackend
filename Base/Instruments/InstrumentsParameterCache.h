@@ -7,6 +7,7 @@
 #include "CallbackSignal.h"
 #include "DirtyFlags.h"
 #include "ParameterData.h"
+#include "ValueModifier.h"
 
 namespace base::instruments
 {
@@ -15,6 +16,7 @@ struct ParameterCache
    explicit ParameterCache(size_t size);
    [[nodiscard]] std::size_t size() const;
    using ParameterData = base::musicDevice::sound::ParameterData;
+   using ValueModifier = base::musicDevice::sound::ParameterDataCustomType<base::musicDevice::sound::ValueModifier>;
    using DirtyFlags    = base::musicDevice::sound::DirtyFlagsVec;
    [[nodiscard]] const ParameterData& at(std::size_t pos) const;
    void setParameter(std::size_t parameterIdx,
@@ -23,7 +25,9 @@ struct ParameterCache
    [[nodiscard]] float getParameter(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-
+   [[nodiscard]] float getModifiedParameterValue(
+       std::size_t parameterIdx,
+       musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterBackup(std::size_t parameterIdx,
                            musicDevice::sound::ParameterAttr parameterAttr,
                            float value);
@@ -44,6 +48,7 @@ struct ParameterCache
 
 private:
    std::vector<ParameterData> data_;
+   std::vector<ValueModifier> valueModifier_;
    std::vector<ParameterData> nonRtBackupData_;
    DirtyFlags dirtyFlags_;
    DirtyFlags dontOverwriteOnNextNoteOn_;

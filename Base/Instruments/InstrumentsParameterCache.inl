@@ -7,6 +7,7 @@ namespace base::instruments
 {
 inline ParameterCache::ParameterCache(size_t size) :
     data_(size),
+    valueModifier_(size),
     nonRtBackupData_(size),
     dirtyFlags_(size),
     dontOverwriteOnNextNoteOn_(size)
@@ -36,6 +37,19 @@ inline float ParameterCache::getParameter(
 {
    return musicDevice::sound::getParameterData(data_.at(parameterIdx),
                                                parameterAttr);
+}
+
+inline float ParameterCache::getModifiedParameterValue(
+    std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr) const
+{
+   const auto commanded = getParameter(parameterIdx, parameterAttr);
+   const auto modifier =
+       musicDevice::sound::getParameterData<decltype(valueModifier_.at(
+                                                parameterIdx)),
+                                            musicDevice::sound::ValueModifier>(
+           valueModifier_.at(parameterIdx), parameterAttr);
+   return calculateModifiedValue(commanded, modifier);
 }
 
 inline void ParameterCache::setParameterBackup(
@@ -72,15 +86,16 @@ inline void ParameterCache::dontOverwriteOnNextNoteOn(
    dontOverwriteOnNextNoteOn_.set(parameterIdx, parameterAttr);
 }
 
-inline bool ParameterCache::shouldBeOverwritten(std::size_t parameterIdx,
-       musicDevice::sound::ParameterAttr parameterAttr) const
+inline bool ParameterCache::shouldBeOverwritten(
+    std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr) const
 {
-    return !dontOverwriteOnNextNoteOn_.contains(parameterIdx, parameterAttr);
+   return !dontOverwriteOnNextNoteOn_.contains(parameterIdx, parameterAttr);
 }
 
 inline void ParameterCache::clearOverwriteList()
 {
-    dontOverwriteOnNextNoteOn_.reset();
+   dontOverwriteOnNextNoteOn_.reset();
 }
 
 }   // namespace base::instruments

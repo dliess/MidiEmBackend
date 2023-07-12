@@ -107,11 +107,15 @@ void Component::setParameterValue(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float limitedValue =
           musicDevice::sound::limitParameterValue(value, false, valueRange);
-
-      m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
-                                        parameterAttr, limitedValue);
       m_pParameterCache->setParameter(parameterIdx, parameterAttr,
                                       limitedValue);
+      const float limitedModifiedValue =
+          musicDevice::sound::limitParameterValue(
+              m_pParameterCache->getModifiedParameterValue(parameterIdx,
+                                                           parameterAttr),
+              false, valueRange);
+      m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
+                                        parameterAttr, limitedModifiedValue);
    }
 }
 

@@ -21,6 +21,15 @@ struct LFOData
    int multiplierExp{DefaultMultiplierExp};
 };
 
+template<typename T>
+struct LFODataCustomType
+{
+   T amplitude{};
+   T frequency{};
+   T waveform{};
+   T multiplierExp{};
+};
+
 }   // namespace base::musicDevice::sound::lfo
 #include "LFODataMeta.h"
 #endif

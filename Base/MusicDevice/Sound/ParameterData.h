@@ -27,6 +27,13 @@ struct ParameterData
    lfo::LFOData lfo;
 };
 
+template<class T>
+struct ParameterDataCustomType
+{
+   T commanded{};
+   lfo::LFODataCustomType<T> lfo{};
+};
+
 using ParameterValue =
     mpark::variant<Parameter, ParameterLFOFreq, ParameterLFOAmp,
                    ParameterLFOWaveform, ParameterLFOMultiplExp>;
@@ -76,33 +83,69 @@ inline void setParameterData(ParameterData& pd, ParameterAttr parameterAttr,
    }
 }
 
-inline float getParameterData(const ParameterData& pd,
+template<typename ParameterDataType, typename ReturnType = float>
+ReturnType getParameterData(const ParameterDataType& pd,
                               ParameterAttr parameterAttr) noexcept
 {
    switch (parameterAttr)
    {
       case (ParameterAttr::Commanded):
       {
-         return pd.commanded;
+         if constexpr (std::is_same_v<ReturnType, decltype(pd.commanded)>)
+         {
+            return pd.commanded;
+         }
+         else
+         {
+            return ReturnType(pd.commanded);
+         }
       }
       case (ParameterAttr::LfoFrequency):
       {
-         return pd.lfo.frequency;
+         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.frequency)>)
+         {
+            return pd.lfo.frequency;
+         }
+         else
+         {
+            return ReturnType(pd.lfo.frequency);
+         }
       }
       case (ParameterAttr::LfoAmplitude):
       {
-         return pd.lfo.amplitude;
+         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.amplitude)>)
+         {
+            return pd.lfo.amplitude;
+         }
+         else
+         {
+            return ReturnType(pd.lfo.amplitude);
+         }
       }
       case (ParameterAttr::LfoWaveform):
       {
-         return float(pd.lfo.waveform);
+         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.waveform)>)
+         {
+            return pd.lfo.waveform;
+         }
+         else
+         {
+            return ReturnType(pd.lfo.waveform);
+         }
       }
       case (ParameterAttr::LfoMultiplierExp):
       {
-         return float(pd.lfo.multiplierExp);
+         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.multiplierExp)>)
+         {
+            return pd.lfo.multiplierExp;
+         }
+         else
+         {
+            return ReturnType(pd.lfo.multiplierExp);
+         }
       }
    }
-   return 0.0;
+   return ReturnType{};
 }
 
 static_assert(
