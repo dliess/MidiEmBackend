@@ -46,13 +46,15 @@ public:
    void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, bool roundRobin) const;
-   void incrementParameterValueEventBound(int componentIdx, int parameterId,
-                                musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, bool roundRobin) const;
+   void incrementParameterValueEventBound(
+       int componentIdx, int parameterId,
+       musicDevice::sound::ParameterAttr parameterAttr, float increment,
+       bool roundRobin) const;
 
-   void incrementParameterValueMPE(int note, int componentIdx, int parameterId,
-                                musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, bool roundRobin) const;
+   void incrementParameterValueMPE(
+       int note, int componentIdx, int parameterId,
+       musicDevice::sound::ParameterAttr parameterAttr, float increment,
+       bool roundRobin) const;
    [[nodiscard]] std::optional<float> getParameterValue(
        int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
@@ -77,6 +79,13 @@ public:
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
+
+   void clearModifier(int componentIdx, std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr) const;
+   void applyModifier(int componentIdx, std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr,
+                      float destination, float intensity) const;
+
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int componentIdx, int parameterIdx) const;
 

@@ -17,8 +17,8 @@ public:
    Component() = default;
    explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
                       std::shared_ptr<ParameterCache> pParameterCache,
-                      musicDevice::MusicDeviceId soundDeviceId,
-                      int sdVoiceIdx, int noteOffset) noexcept;
+                      musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
+                      int noteOffset) noexcept;
    void setParameterCache(std::shared_ptr<ParameterCache> p);
    [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
@@ -42,15 +42,21 @@ public:
    void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value) const;
-   void setParameterValueDontCache(int parameterIdx,
-                          musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) const;
+   void setParameterValueDontCache(
+       int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+       float value) const;
    [[nodiscard]] float fromNormalizedValue(
        int parameterId, musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 
    const musicDevice::description::sound::Parameter* parameterDescription(
        int parameterIdx) const;
+
+   void clearModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr) const;
+   void applyModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr,
+                      float destination, float intensity) const;
 
    friend auto meta::registerMembers<Component>();
    friend class MelodicInstrumentsParameterCacheCreator;

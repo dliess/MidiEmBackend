@@ -19,7 +19,7 @@ void MelodicInstrument::noteOn(int note, float velocity, void* token) const
    {
       return;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -73,7 +73,7 @@ void MelodicInstrument::pitchBendMPE(int note, float value) const
    {
       return;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -119,8 +119,8 @@ void MelodicInstrument::incrementParameterValueEventBound(
          auto& component = voice.components[componentIdx];
          if (component)
          {
-            component->incrementParameterValueDontCache(parameterId, parameterAttr,
-                                               increment, rr);
+            component->incrementParameterValueDontCache(
+                parameterId, parameterAttr, increment, rr);
          }
       }
    }
@@ -135,7 +135,7 @@ void MelodicInstrument::incrementParameterValueMPE(
    {
       return;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -171,7 +171,7 @@ std::optional<float> MelodicInstrument::getParameterValue(
    {
       return std::nullopt;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -218,7 +218,8 @@ void MelodicInstrument::setRelativeParameterValue(
             auto& component = voice.components[componentIdx];
             if (component)
             {
-               component->setParameterValueDontCache(parameterIdx, parameterAttr, actVal.value() + relValue);
+               component->setParameterValueDontCache(
+                   parameterIdx, parameterAttr, actVal.value() + relValue);
             }
          }
       }
@@ -233,7 +234,7 @@ void MelodicInstrument::setParameterValueMPE(
    {
       return;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -270,7 +271,7 @@ float MelodicInstrument::fromNormalizedValue(
    {
       return 0.0f;
    }
-   if(m_pRtData->noteAllocations[note] == RtData::FREE)
+   if (m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       m_pRtData->incrementVoiceIndex(m_voices.size());
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
@@ -284,6 +285,30 @@ float MelodicInstrument::fromNormalizedValue(
                                             percentageValue);
    }
    return 0.0f;   // TODO: exception?
+}
+
+void MelodicInstrument::clearModifier(
+    int componentIdx, std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr) const
+{
+   auto component = getFirstComponent(componentIdx);
+   if (component)
+   {
+      return component->clearModifier(parameterIdx, parameterAttr);
+   }
+}
+
+void MelodicInstrument::applyModifier(
+    int componentIdx, std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float destination,
+    float intensity) const
+{
+   auto component = getFirstComponent(componentIdx);
+   if (component)
+   {
+      return component->applyModifier(parameterIdx, parameterAttr, destination,
+                                      intensity);
+   }
 }
 
 const base::musicDevice::description::sound::Parameter*

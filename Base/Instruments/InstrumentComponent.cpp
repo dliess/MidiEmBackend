@@ -160,6 +160,20 @@ Component::parameterDescription(int parameterIdx) const
    return nullptr;
 }
 
+void Component::clearModifier(std::size_t parameterIdx,
+                              musicDevice::sound::ParameterAttr parameterAttr) const
+{
+   m_pParameterCache->clearModifier(parameterIdx, parameterAttr);
+}
+
+void Component::applyModifier(std::size_t parameterIdx,
+                              musicDevice::sound::ParameterAttr parameterAttr,
+                              float destination, float intensity) const
+{
+   m_pParameterCache->applyModifier(parameterIdx, parameterAttr, destination,
+                                    intensity);
+}
+
 void Component::refreshParameters() const
 {
    if (!m_pParameterCache || !m_pSoundDevice)

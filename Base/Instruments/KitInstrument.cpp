@@ -64,8 +64,8 @@ void KitInstrument::incrementParameterValueEventBound(
     bool roundRobin) const
 {
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.incrementParameterValueDontCache(parameterIdx, parameterAttr, increment,
-                                        roundRobin);
+      component.incrementParameterValueDontCache(parameterIdx, parameterAttr,
+                                                 increment, roundRobin);
    });
 }
 
@@ -98,7 +98,8 @@ void KitInstrument::setRelativeParameterValue(
    if (actVal)
    {
       withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-         component.setParameterValueDontCache(parameterIdx, parameterAttr, actVal.value() + relValue);
+         component.setParameterValueDontCache(parameterIdx, parameterAttr,
+                                              actVal.value() + relValue);
       });
    }
 }
@@ -114,6 +115,26 @@ float KitInstrument::fromNormalizedValue(
                                           percentageValue);
    });
    return ret;
+}
+
+void KitInstrument::clearModifier(
+    int voiceIdx, int componentIdx, std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr) const
+{
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      component.clearModifier(componentIdx, parameterAttr);
+   });
+}
+
+void KitInstrument::applyModifier(
+    int voiceIdx, int componentIdx, std::size_t parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float destination,
+    float intensity) const
+{
+   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+      component.applyModifier(parameterIdx, parameterAttr, destination,
+                              intensity);
+   });
 }
 
 const base::musicDevice::description::sound::Parameter*

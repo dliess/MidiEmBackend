@@ -56,6 +56,13 @@ public:
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 
+   void clearModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr) const;
+   void applyModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr,
+                      float destination, float intensity) const;
+
+
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
