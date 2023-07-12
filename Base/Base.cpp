@@ -51,7 +51,7 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     tracks(instruments),
     controllerEventRouter(instruments, musicDeviceHolder.musicDevices,
                           musicDeviceFactory.dataHolder()),
-    modifiersApplyer(parameterSceneContainer, musicDeviceHolder.musicDevices)
+    modifiersApplyer(musicDeviceHolder.musicDevices)
 
 {
    // m_zmqContext.set(zmq::ctxopt::io_threads, 1);
@@ -160,7 +160,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        m_zmqContext, m_rtRpcBindAddr, m_rtSignalBindAddr, instruments,
        musicDeviceHolder, transportControl,
        tempo::BeatTick::instance().abletonLink(), midiRouter,
-       parameterSceneContainer, modifiersApplyer, tracks);
+       modifiersApplyer, tracks);
 
    int timerFd           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto Period = std::chrono::milliseconds(1);
@@ -168,7 +168,7 @@ void base::Base::mainRtThreadFunction(const std::atomic<bool> &terminateRequest)
        std::chrono::duration_cast<std::chrono::nanoseconds>(Period);
    itimerspec t(
        {.it_interval = {0, PeriodNs.count()}, .it_value = {0, 1000000}});
-   timerfd_settime(timerFd, 0, &t, NULL);
+   timerfd_settime(timerFd, 0, &t, nullptr);
 
    int timerFdUIUpdate           = timerfd_create(CLOCK_MONOTONIC, 0);
    constexpr auto PeriodUIUpdate = std::chrono::milliseconds(50);

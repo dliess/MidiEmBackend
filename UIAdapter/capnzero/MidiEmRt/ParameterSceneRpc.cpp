@@ -1,14 +1,11 @@
 #include "ParameterSceneRpc.h"
 
 #include "ModifiersApplyer.h"
-#include "ParameterSceneContainer.h"
 
 using namespace uiadapter::capnzero;
 
 ParameterSceneRpc::ParameterSceneRpc(
-    base::musicDevice::sound::ParameterSceneContainer& rParameterSceneContainer,
     base::musicDevice::ModifiersApplyer& rModifiersApplyer) :
-    m_rParameterSceneContainer(rParameterSceneContainer),
     m_rModifiersApplyer(rModifiersApplyer)
 {
 }
@@ -16,7 +13,7 @@ ParameterSceneRpc::ParameterSceneRpc(
 void ParameterSceneRpc::setSceneName(::capnzero::Int16 sceneIdx,
                                      const ::capnzero::TextView& name)
 {
-   m_rParameterSceneContainer.setSceneName(sceneIdx, std::string(name));
+   m_rModifiersApplyer.setSceneName(sceneIdx, std::string(name));
 }
 
 void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
@@ -27,8 +24,7 @@ void ParameterSceneRpc::setSceneIntensity(::capnzero::Int16 sceneIdx,
       spdlog::error("intensity out of range");
       return;
    }
-   m_rParameterSceneContainer.setSceneIntensity(sceneIdx, intensity);
-   m_rModifiersApplyer();
+   m_rModifiersApplyer.setSceneIntensity(sceneIdx, intensity);
 }
 
 void ParameterSceneRpc::setModifierEndValue(
@@ -39,13 +35,12 @@ void ParameterSceneRpc::setModifierEndValue(
 {
    util::Identifiable::UUID deviceUuid_;
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
-   m_rParameterSceneContainer.setModifierEndValue(
+   m_rModifiersApplyer.setModifierEndValue(
        sceneIdx,
        base::musicDevice::sound::ParameterCoordinate{
            deviceUuid_, voiceIdx, parameterIdx,
            static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        endValue);
-    m_rModifiersApplyer();
 }
 
 void ParameterSceneRpc::incrementModifierEndValue(
@@ -56,13 +51,12 @@ void ParameterSceneRpc::incrementModifierEndValue(
 {
    util::Identifiable::UUID deviceUuid_;
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
-   m_rParameterSceneContainer.incrementModifierEndValue(
+   m_rModifiersApplyer.incrementModifierEndValue(
        sceneIdx,
        base::musicDevice::sound::ParameterCoordinate{
            deviceUuid_, voiceIdx, parameterIdx,
            static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr)},
        increment);
-    m_rModifiersApplyer();
 }
 
 void ParameterSceneRpc::removeModifier(
@@ -72,10 +66,9 @@ void ParameterSceneRpc::removeModifier(
 {
    util::Identifiable::UUID deviceUuid_;
    std::copy(uuid.begin(), uuid.end(), deviceUuid_.begin());
-   m_rParameterSceneContainer.removeModifier(
+   m_rModifiersApplyer.removeModifier(
        sceneIdx, base::musicDevice::sound::ParameterCoordinate{
                      deviceUuid_, voiceIdx, parameterIdx,
                      static_cast<base::musicDevice::sound::ParameterAttr>(
                          parameterAttr)});
-   m_rModifiersApplyer();
 }

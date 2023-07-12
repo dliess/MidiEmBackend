@@ -12,7 +12,6 @@
 #include "MidiRoutingRpc.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceHolder.h"
-#include "ParameterSceneContainer.h"
 #include "ModifiersApplyer.h"
 #include "ParameterSceneRpc.h"
 #include "SessionRpc.h"
@@ -32,18 +31,17 @@ RtServer::RtServer(
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
-    base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
     base::musicDevice::ModifiersApplyer& rModifiersApplyer,
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<MainRpc>(signals(), rMDHolder.musicDevices,
                                   rTransportControl, rAbletonLinkWrapper,
-                                  rMidiRouter, rParameterSceneContainer,
+                                  rMidiRouter, rModifiersApplyer,
                                   rTracks),
         std::make_unique<InstrumentsPlayRpc>(rInstruments),
         std::make_unique<SoundDevicesRpc>(rMDHolder.musicDevices),
-        std::make_unique<ParameterSceneRpc>(rParameterSceneContainer, rModifiersApplyer),
+        std::make_unique<ParameterSceneRpc>(rModifiersApplyer),
         std::make_unique<ControllerDevicesRpc>(),
         std::make_unique<TempoRpc>(Super::signals(), rMDHolder),
         std::make_unique<TransportControlRpc>(rTransportControl),
@@ -278,15 +276,15 @@ RtServer::RtServer(
               enabled);
        });
 
-   rParameterSceneContainer.onSceneNameChanged(
+   rModifiersApplyer.onSceneNameChanged(
        [this](int sceneIdx, const std::string &name) {
           signals().ParameterScene__sceneNameChanged(sceneIdx, name);
        });
-   rParameterSceneContainer.onSceneIntensityChanged(
+   rModifiersApplyer.onSceneIntensityChanged(
        [this](int sceneIdx, float intensity) {
           signals().ParameterScene__sceneIntensityChanged(sceneIdx, intensity);
        });
-   rParameterSceneContainer.onModifierEndValueChanged(
+   rModifiersApplyer.onModifierEndValueChanged(
        [this](int sceneIdx,
               const base::musicDevice::sound::ParameterCoordinate &paramCoord,
               float value) {
@@ -297,7 +295,7 @@ RtServer::RtServer(
                   paramCoord.parameterAttr),
               value);
        });
-   rParameterSceneContainer.onModifierRemoved(
+   rModifiersApplyer.onModifierRemoved(
        [this](int sceneIdx,
               const base::musicDevice::sound::ParameterCoordinate &paramCoord) {
           signals().ParameterScene__modifierRemoved(

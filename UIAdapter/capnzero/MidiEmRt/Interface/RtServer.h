@@ -9,7 +9,6 @@ namespace base::musicDevice { struct Holder; }
 namespace base { class TransportControl; }
 namespace base { class AbletonLinkWrapper; }
 namespace base::midifriends { class Router; }
-namespace base::musicDevice::sound { class ParameterSceneContainer; }
 namespace base::musicDevice { class ModifiersApplyer; }
 namespace base::session { struct Tracks; }
 // clang-format on
@@ -26,8 +25,6 @@ public:
             base::TransportControl& rTransportControl,
             base::AbletonLinkWrapper& rAbletonLinkWrapper,
             base::midifriends::Router& rMidiRouter,
-            base::musicDevice::sound::ParameterSceneContainer&
-                rParameterSceneContainer,
             base::musicDevice::ModifiersApplyer& rModifiersApplyer,
             base::session::Tracks& rTracks);
    using Super    = ::capnzero::MidiEmRt::MidiEmRtServer;

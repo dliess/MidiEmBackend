@@ -28,10 +28,10 @@ public:
    void removeModifier(int sceneIdx,
                        const ParameterCoordinate& paramCoord) noexcept;
 
-   CB_SIGNAL(SceneNameChanged, int, const std::string&);
-   CB_SIGNAL(SceneIntensityChanged, int, float);
-   CB_SIGNAL(ModifierEndValueChanged, int, const ParameterCoordinate&, float);
-   CB_SIGNAL(ModifierRemoved, int, const ParameterCoordinate&);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(SceneNameChanged, int, const std::string&);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(SceneIntensityChanged, int, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierEndValueChanged, int, const ParameterCoordinate&, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierRemoved, int, const ParameterCoordinate&);
 
    void retriggerCallbacks() noexcept;
 

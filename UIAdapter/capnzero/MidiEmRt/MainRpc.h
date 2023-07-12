@@ -7,7 +7,7 @@
 #include "RtServer.h"
 #include "TransportControl.h"
 #include "AbletonLinkWrapper.h"
-#include "ParameterSceneContainer.h"
+#include "ModifiersApplyer.h"
 #include "Tracks.h"
 
 namespace uiadapter::capnzero
@@ -20,7 +20,7 @@ public:
            base::TransportControl &rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router &rMidiRouter,
-           base::musicDevice::sound::ParameterSceneContainer &rParameterSceneContainer,
+           base::musicDevice::ModifiersApplyer &rModifiersApplyer,
            base::session::Tracks& rTracks);
    void reEmitSignals() override;
 
@@ -30,7 +30,7 @@ private:
    base::TransportControl &m_rTransportControl;
    base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
    base::midifriends::Router &m_rMidiRouter;
-   base::musicDevice::sound::ParameterSceneContainer &m_rParameterSceneContainer;
+   base::musicDevice::ModifiersApplyer &m_rModifiersApplyer;
    base::session::Tracks& m_rTracks;
 };
 
