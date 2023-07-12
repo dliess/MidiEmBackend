@@ -44,31 +44,27 @@ inline float ParameterCache::getModifiedParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
    const auto commanded = getParameter(parameterIdx, parameterAttr);
-   const auto modifier =
-       musicDevice::sound::getParameterData<decltype(valueModifier_.at(
-                                                parameterIdx)),
-                                            musicDevice::sound::ValueModifier>(
-           valueModifier_.at(parameterIdx), parameterAttr);
+   const auto& modifier = musicDevice::sound::getParameterDataConstRef(
+       valueModifier_.at(parameterIdx), parameterAttr);
+
    return calculateModifiedValue(commanded, modifier);
 }
 
-inline void ParameterCache::clearModifier(std::size_t parameterIdx,
-                      musicDevice::sound::ParameterAttr parameterAttr)
+inline void ParameterCache::clearModifier(
+    std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr)
 {
-    auto& modifier =
-       musicDevice::sound::getParameterDataRef(
-           valueModifier_.at(parameterIdx), parameterAttr);
-    modifier.clear();
+   auto& modifier = musicDevice::sound::getParameterDataRef(
+       valueModifier_.at(parameterIdx), parameterAttr);
+   modifier.clear();
 }
 
-inline void ParameterCache::applyModifier(std::size_t parameterIdx,
-                      musicDevice::sound::ParameterAttr parameterAttr,
-                      float destination, float intensity)
+inline void ParameterCache::applyModifier(
+    std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
+    float destination, float intensity)
 {
-    auto& modifier =
-       musicDevice::sound::getParameterDataRef(
-           valueModifier_.at(parameterIdx), parameterAttr);
-    modifier.addAbsoluteModifier(destination, intensity);
+   auto& modifier = musicDevice::sound::getParameterDataRef(
+       valueModifier_.at(parameterIdx), parameterAttr);
+   modifier.addAbsoluteModifier(destination, intensity);
 }
 
 inline void ParameterCache::setParameterBackup(
