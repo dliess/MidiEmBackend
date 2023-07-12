@@ -148,6 +148,40 @@ ReturnType getParameterData(const ParameterDataType& pd,
    return ReturnType{};
 }
 
+template<typename ReturnType>
+ReturnType& getParameterDataRef(auto& pd,
+                              ParameterAttr parameterAttr) noexcept
+{
+   switch (parameterAttr)
+   {
+      case (ParameterAttr::Commanded):
+      {
+         return pd.commanded;
+      }
+      case (ParameterAttr::LfoFrequency):
+      {
+         return pd.lfo.frequency;
+      }
+      case (ParameterAttr::LfoAmplitude):
+      {
+         return pd.lfo.amplitude;
+      }
+      case (ParameterAttr::LfoWaveform):
+      {
+         return pd.lfo.waveform;
+      }
+      case (ParameterAttr::LfoMultiplierExp):
+      {
+         return pd.lfo.multiplierExp;
+      }
+      default: 
+      {
+         return pd.commanded;
+      }
+   }
+}
+
+
 static_assert(
     std::is_same_v<Parameter, mpark::variant_alternative_t<
                                   static_cast<int>(ParameterAttr::Commanded),

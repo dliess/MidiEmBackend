@@ -16,8 +16,9 @@ struct ParameterCache
    explicit ParameterCache(size_t size);
    [[nodiscard]] std::size_t size() const;
    using ParameterData = base::musicDevice::sound::ParameterData;
-   using ValueModifier = base::musicDevice::sound::ParameterDataCustomType<base::musicDevice::sound::ValueModifier>;
-   using DirtyFlags    = base::musicDevice::sound::DirtyFlagsVec;
+   using ValueModifier = base::musicDevice::sound::ParameterDataCustomType<
+       base::musicDevice::sound::ValueModifier>;
+   using DirtyFlags = base::musicDevice::sound::DirtyFlagsVec;
    [[nodiscard]] const ParameterData& at(std::size_t pos) const;
    void setParameter(std::size_t parameterIdx,
                      musicDevice::sound::ParameterAttr parameterAttr,
@@ -28,6 +29,12 @@ struct ParameterCache
    [[nodiscard]] float getModifiedParameterValue(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
+
+   void clearModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr);
+   void applyModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr,
+                      float destination, float intensity);
    void setParameterBackup(std::size_t parameterIdx,
                            musicDevice::sound::ParameterAttr parameterAttr,
                            float value);
@@ -38,7 +45,8 @@ struct ParameterCache
    void dontOverwriteOnNextNoteOn(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr);
-   [[nodiscard]] bool shouldBeOverwritten(std::size_t parameterIdx,
+   [[nodiscard]] bool shouldBeOverwritten(
+       std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
    void clearOverwriteList();
 

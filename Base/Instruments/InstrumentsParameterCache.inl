@@ -52,6 +52,25 @@ inline float ParameterCache::getModifiedParameterValue(
    return calculateModifiedValue(commanded, modifier);
 }
 
+inline void ParameterCache::clearModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr)
+{
+    auto& modifier =
+       musicDevice::sound::getParameterDataRef<musicDevice::sound::ValueModifier>(
+           valueModifier_.at(parameterIdx), parameterAttr);
+    modifier.clear();
+}
+
+inline void ParameterCache::applyModifier(std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr,
+                      float destination, float intensity)
+{
+    auto& modifier =
+       musicDevice::sound::getParameterDataRef<musicDevice::sound::ValueModifier>(
+           valueModifier_.at(parameterIdx), parameterAttr);
+    modifier.addAbsoluteModifier(destination, intensity);
+}
+
 inline void ParameterCache::setParameterBackup(
     std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value)
