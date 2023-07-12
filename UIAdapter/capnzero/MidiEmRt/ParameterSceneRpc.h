@@ -4,14 +4,14 @@
 #include "MidiEmRtParameterSceneRpcIf.h"
 
 // clang-format off
-namespace base::musicDevice { class ModifiersApplyer; }
+namespace base::parameterScenes { class ModifiersApplyer; }
 // clang-format on
 namespace uiadapter::capnzero
 {
 class ParameterSceneRpc : public ::capnzero::MidiEmRt::ParameterSceneRpcIf
 {
 public:
-   ParameterSceneRpc(base::musicDevice::ModifiersApplyer& rModifiersApplyer);
+   ParameterSceneRpc(base::parameterScenes::ModifiersApplyer& rModifiersApplyer);
    void setSceneName(::capnzero::Int16 sceneIdx,
                      const ::capnzero::TextView& name) override;
    void setSceneIntensity(::capnzero::Int16 sceneIdx,
@@ -33,7 +33,7 @@ public:
        ::capnzero::MidiEmRt::SDParameterAttr parameterAttr) override;
 
 private:
-   base::musicDevice::ModifiersApplyer& m_rModifiersApplyer;
+   base::parameterScenes::ModifiersApplyer& m_rModifiersApplyer;
 };
 
 }   // namespace uiadapter::capnzero

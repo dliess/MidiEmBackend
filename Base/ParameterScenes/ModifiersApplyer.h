@@ -7,33 +7,33 @@
 // clang-format off
 namespace base::musicDevice::sound { struct ParameterCoordinate; }
 // clang-format on
-namespace base::musicDevice
+namespace base::parameterScenes
 {
 class ModifiersApplyer
 {
 public:
-   ModifiersApplyer(MusicDeviceContainer &rMusicDeviceContainer) noexcept;
+   ModifiersApplyer(musicDevice::MusicDeviceContainer &rMusicDeviceContainer) noexcept;
    void apply();
 
    void setSceneName(int sceneIdx, std::string_view name);
    void setSceneIntensity(int sceneIdx, float intensity);
-   void setModifierEndValue(int sceneIdx, const sound::ParameterCoordinate& paramCoord,
+   void setModifierEndValue(int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
                             float value);
-   void incrementModifierEndValue(int sceneIdx, const sound::ParameterCoordinate& paramCoord,
+   void incrementModifierEndValue(int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
                             float increment);
    void removeModifier(int sceneIdx,
-                       const sound::ParameterCoordinate& paramCoord);
+                       const musicDevice::sound::ParameterCoordinate& paramCoord);
 
    void retriggerCallbacks();
 
    CB_SIGNAL(SceneNameChanged, int, const std::string&);
    CB_SIGNAL(SceneIntensityChanged, int, float);
-   CB_SIGNAL(ModifierEndValueChanged, int, const sound::ParameterCoordinate&, float);
-   CB_SIGNAL(ModifierRemoved, int, const sound::ParameterCoordinate&);
+   CB_SIGNAL(ModifierEndValueChanged, int, const musicDevice::sound::ParameterCoordinate&, float);
+   CB_SIGNAL(ModifierRemoved, int, const musicDevice::sound::ParameterCoordinate&);
 
 private:
-   sound::ParameterSceneContainer m_parameterSceneContainer;
-   MusicDeviceContainer &m_rMusicDeviceContainer;
+   ParameterSceneContainer m_parameterSceneContainer;
+   musicDevice::MusicDeviceContainer &m_rMusicDeviceContainer;
    void clearReferenced();
 };
 

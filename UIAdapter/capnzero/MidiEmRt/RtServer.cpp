@@ -31,7 +31,7 @@ RtServer::RtServer(
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,
-    base::musicDevice::ModifiersApplyer& rModifiersApplyer,
+    base::parameterScenes::ModifiersApplyer& rModifiersApplyer,
     base::session::Tracks &rTracks) :
     MidiEmRtServer(
         rZmqContext, rpcBindAddr, signalBindAddr,

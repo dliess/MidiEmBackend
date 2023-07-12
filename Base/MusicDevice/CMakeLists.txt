@@ -8,7 +8,6 @@ add_subdirectory(PluginHandler)
 add_subdirectory(Sound)
 
 set(SOURCES
-   "ModifiersApplyer.cpp"
    "MusicDevice.cpp"
    "MusicDeviceLoader.cpp"
    "MusicDeviceFactory.cpp"
@@ -19,7 +18,6 @@ set(SOURCES
 )
 
 set(HEADERS
-   "ModifiersApplyer.h"
    "MusicDeviceContainer.h"
    "MusicDeviceContainer.inl"
    "MusicDeviceContainerRef.h"

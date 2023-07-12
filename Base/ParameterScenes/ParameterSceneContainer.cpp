@@ -1,20 +1,22 @@
 #include "ParameterSceneContainer.h"
+
 #include "VectorIndexInRange.h"
 #include "clip.h"
 
-#define CHECK_IN_RANGE(sceneIdx) \
-   if(!util::vector_index_in_range(sceneIdx, m_data))   \
-   {                                                    \
-      spdlog::error("Index out of range: {}", sceneIdx);\
-      return;                                           \
+#define CHECK_IN_RANGE(sceneIdx)                         \
+   if (!util::vector_index_in_range(sceneIdx, m_data))   \
+   {                                                     \
+      spdlog::error("Index out of range: {}", sceneIdx); \
+      return;                                            \
    }
 
-using namespace base::musicDevice::sound;
+using namespace base::parameterScenes;
+
 ParameterSceneContainer::ParameterSceneContainer() :
     m_memoryPool("ParameterSceneContainer")
 {
    m_data.reserve(MAX_NUM_SCENES);
-   for(int i = 0; i < MAX_NUM_SCENES; ++i)
+   for (int i = 0; i < MAX_NUM_SCENES; ++i)
    {
       m_data.emplace_back(m_memoryPool.pool());
    }
@@ -44,9 +46,9 @@ void ParameterSceneContainer::setSceneIntensity(int sceneIdx,
 
 void ParameterSceneContainer::nulloptZeroIntensityValues()
 {
-   for(auto& scene: m_data)
+   for (auto& scene : m_data)
    {
-      if(scene.intensity && scene.intensity.value() == 0.0f)
+      if (scene.intensity && scene.intensity.value() == 0.0f)
       {
          scene.intensity.reset();
       }
@@ -54,10 +56,12 @@ void ParameterSceneContainer::nulloptZeroIntensityValues()
 }
 
 void ParameterSceneContainer::setModifierEndValue(
-    int sceneIdx, const ParameterCoordinate& paramCoord, float value) noexcept
+    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
+    float value) noexcept
 {
    CHECK_IN_RANGE(sceneIdx);
-   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(),
+                             m_data[sceneIdx].modifiers.end(),
                              [&](const ParameterScene::Modifier& m) {
                                 return m.destParamCoord == paramCoord;
                              });
@@ -77,34 +81,41 @@ void ParameterSceneContainer::setModifierEndValue(
 }
 
 void ParameterSceneContainer::incrementModifierEndValue(
-    int sceneIdx, const ParameterCoordinate& paramCoord, float increment) noexcept
+    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
+    float increment) noexcept
 {
    CHECK_IN_RANGE(sceneIdx);
-   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(),
+                             m_data[sceneIdx].modifiers.end(),
                              [&](const ParameterScene::Modifier& m) {
                                 return m.destParamCoord == paramCoord;
                              });
    if (modIt == m_data[sceneIdx].modifiers.end())
    {
       m_data[sceneIdx].modifiers.emplace_back(paramCoord);
-      emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue->value);
+      emitModifierEndValueChanged(sceneIdx, paramCoord,
+                                  modIt->goalValue->value);
    }
    else
    {
-      if(modIt->goalValue)
+      if (modIt->goalValue)
       {
-         const float newVal = util::clip(modIt->goalValue->value + increment, 0.0f, modIt->goalValue->range);
+         const float newVal = util::clip(modIt->goalValue->value + increment,
+                                         0.0f, modIt->goalValue->range);
          modIt->goalValue->value = newVal;
-         emitModifierEndValueChanged(sceneIdx, paramCoord, modIt->goalValue->value);
+         emitModifierEndValueChanged(sceneIdx, paramCoord,
+                                     modIt->goalValue->value);
       }
    }
 }
 
 void ParameterSceneContainer::removeModifier(
-    int sceneIdx, const ParameterCoordinate& paramCoord) noexcept
+    int sceneIdx,
+    const musicDevice::sound::ParameterCoordinate& paramCoord) noexcept
 {
    CHECK_IN_RANGE(sceneIdx);
-   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(), m_data[sceneIdx].modifiers.end(),
+   auto modIt = std::find_if(m_data[sceneIdx].modifiers.begin(),
+                             m_data[sceneIdx].modifiers.end(),
                              [&](const ParameterScene::Modifier& m) {
                                 return m.destParamCoord == paramCoord;
                              });
@@ -119,20 +130,23 @@ void ParameterSceneContainer::retriggerCallbacks() noexcept
 {
    for (int sceneIdx = 0; sceneIdx < MAX_NUM_SCENES; ++sceneIdx)
    {
-      if(!m_data[sceneIdx].name.empty())
+      if (!m_data[sceneIdx].name.empty())
       {
          emitSceneNameChanged(sceneIdx, m_data[sceneIdx].name.c_str());
       }
-      if(m_data[sceneIdx].modifiers.size() > 0)
+      if (m_data[sceneIdx].modifiers.size() > 0)
       {
-         const float intensity = m_data[sceneIdx].intensity ? m_data[sceneIdx].intensity.value() : 0;
+         const float intensity = m_data[sceneIdx].intensity
+                                     ? m_data[sceneIdx].intensity.value()
+                                     : 0;
          emitSceneIntensityChanged(sceneIdx, intensity);
       }
       for (const auto& modifier : m_data[sceneIdx].modifiers)
       {
-         if(modifier.goalValue)
+         if (modifier.goalValue)
          {
-            emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord, modifier.goalValue->value); 
+            emitModifierEndValueChanged(sceneIdx, modifier.destParamCoord,
+                                        modifier.goalValue->value);
          }
       }
    }

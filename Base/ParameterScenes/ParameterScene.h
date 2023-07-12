@@ -8,12 +8,16 @@
 #include "stack_mempool.h"
 #include "ParameterCoordinate.h"
 
-namespace base::musicDevice::sound
+// clang-format off
+namespace base::musicDevice::sound { class SoundHandler; }
+// clang-format on
+
+namespace base::parameterScenes
 {
-class SoundHandler;
+
 struct ParameterScene
 {
-   ParameterScene(std::pmr::unsynchronized_pool_resource& pool) :
+   explicit ParameterScene(std::pmr::unsynchronized_pool_resource& pool) :
        name(&pool),
        modifiers(&pool)
    {
@@ -27,20 +31,20 @@ struct ParameterScene
    std::optional<float> intensity{0};
    struct Modifier
    {
-      Modifier(const ParameterCoordinate& pc, float val, float range) noexcept: destParamCoord(pc), goalValue({val, range}) {}
-      Modifier(const ParameterCoordinate& pc) noexcept: destParamCoord(pc), goalValue() {}
-      ParameterCoordinate destParamCoord;
+      Modifier(const musicDevice::sound::ParameterCoordinate& pc, float val, float range) noexcept: destParamCoord(pc), goalValue({val, range}) {}
+      Modifier(const musicDevice::sound::ParameterCoordinate& pc) noexcept: destParamCoord(pc), goalValue() {}
+      musicDevice::sound::ParameterCoordinate destParamCoord;
       struct GoalValue{
         GoalValue(float _value, float _range) noexcept : value(_value), range(_range) {}
         float value{0};
         float range{1.0};
       };
       std::optional<GoalValue> goalValue;
-      SoundHandler* pCachedSoundHandler{nullptr};
+      musicDevice::sound::SoundHandler* pCachedSoundHandler{nullptr};
    };
    std::pmr::list<Modifier> modifiers;
 };
 
-}   // namespace base::musicDevice::sound
+}   // namespace base::parameterScenes
 
 #endif

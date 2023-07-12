@@ -9,6 +9,7 @@ add_subdirectory(MidiFriends)
 add_subdirectory(MusicDevice)
 add_subdirectory(Transport)
 add_subdirectory(ControllerEventRouter)
+add_subdirectory(ParameterScenes)
 if(NOMIDI_BACKEND_BUILD_TESTS)
    add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 endif()
@@ -38,6 +39,7 @@ target_link_libraries(Base
    PUBLIC  Util
    PUBLIC  AbletonLinkWrapper
    PUBLIC  Session
+   PUBLIC  ParameterScenes
    PRIVATE spdlog::spdlog
    PRIVATE MIDI::usbmidi
    PRIVATE TimeMeasure::TimeMeasure

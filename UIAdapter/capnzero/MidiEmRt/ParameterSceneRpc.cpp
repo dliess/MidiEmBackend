@@ -5,7 +5,7 @@
 using namespace uiadapter::capnzero;
 
 ParameterSceneRpc::ParameterSceneRpc(
-    base::musicDevice::ModifiersApplyer& rModifiersApplyer) :
+    base::parameterScenes::ModifiersApplyer& rModifiersApplyer) :
     m_rModifiersApplyer(rModifiersApplyer)
 {
 }

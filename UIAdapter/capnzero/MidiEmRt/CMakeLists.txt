@@ -47,4 +47,5 @@ target_link_libraries(${TARGET_NAME}
     PRIVATE AbletonLinkWrapper
     PRIVATE MusicDeviceControllerEventRouter
     PRIVATE Session
+    PRIVATE ParameterScenes
 )

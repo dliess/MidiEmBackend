@@ -20,7 +20,7 @@ public:
            base::TransportControl &rTransportControl,
            base::AbletonLinkWrapper& rAbletonLinkWrapper,
            base::midifriends::Router &rMidiRouter,
-           base::musicDevice::ModifiersApplyer &rModifiersApplyer,
+           base::parameterScenes::ModifiersApplyer &rModifiersApplyer,
            base::session::Tracks& rTracks);
    void reEmitSignals() override;
 
@@ -30,7 +30,7 @@ private:
    base::TransportControl &m_rTransportControl;
    base::AbletonLinkWrapper& m_rAbletonLinkWrapper;
    base::midifriends::Router &m_rMidiRouter;
-   base::musicDevice::ModifiersApplyer &m_rModifiersApplyer;
+   base::parameterScenes::ModifiersApplyer &m_rModifiersApplyer;
    base::session::Tracks& m_rTracks;
 };
 

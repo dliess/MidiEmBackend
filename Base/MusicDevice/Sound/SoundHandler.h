@@ -12,20 +12,17 @@
 #include "SoundSection.h"
 
 // namespace midi { template<typename MessageDrain> class Midi1Input; }
-namespace base::musicDevice
+
+// clang-format off
+namespace base::musicDevice::description::sound { struct Section; }
+namespace base::musicDevice::sound { template <typename T> class MidiInMsgHandler; }
+namespace base::musicDevice::sound { template <typename T> class MidiOutMsgHandler; }
+namespace base::musicDevice::sound::preset { class DevicePresets; }
+// clang-format on
+
+namespace base::musicDevice::sound
 {
-namespace description::sound
-{
-struct Section;
-}
-namespace sound
-{
-template <typename T> class MidiInMsgHandler;
-template <typename T> class MidiOutMsgHandler;
-namespace preset
-{
-class DevicePresets;
-}   // namespace preset
+    
 class SoundHandler
 {
 public:
@@ -166,7 +163,6 @@ inline std::optional<std::string> SoundHandler::getActualPresetOfVoice(
    return m_paramStorage.getActualPresetOfVoice(voiceId);
 }
 
-}   // namespace sound
-}   // namespace base::musicDevice
+}   // namespace base::musicDevice::sound
 
 #endif

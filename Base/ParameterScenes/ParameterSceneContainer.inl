@@ -1,7 +1,7 @@
 #ifndef BASE_MUSIC_DEVICE_SOUND_PARAMETER_SCENE_CONTAINER_INL
 #define BASE_MUSIC_DEVICE_SOUND_PARAMETER_SCENE_CONTAINER_INL
 
-namespace base::musicDevice::sound
+namespace base::parameterScenes
 {
 template <typename CB>
 void ParameterSceneContainer::forEachActiveModifier(CB&& cb)

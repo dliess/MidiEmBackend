@@ -9,7 +9,7 @@
 #include "ParameterScene.h"
 #include "stack_mempool.h"
 
-namespace base::musicDevice::sound
+namespace base::parameterScenes
 {
 class ParameterSceneContainer
 {
@@ -21,17 +21,17 @@ public:
    void setSceneName(int sceneIdx, std::string_view name) noexcept;
    void setSceneIntensity(int sceneIdx, float intensity) noexcept;
    void nulloptZeroIntensityValues();
-   void setModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
+   void setModifierEndValue(int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
                             float value) noexcept;
-   void incrementModifierEndValue(int sceneIdx, const ParameterCoordinate& paramCoord,
+   void incrementModifierEndValue(int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
                             float increment) noexcept;
    void removeModifier(int sceneIdx,
-                       const ParameterCoordinate& paramCoord) noexcept;
+                       const musicDevice::sound::ParameterCoordinate& paramCoord) noexcept;
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(SceneNameChanged, int, const std::string&);
    CB_SIGNAL_SINGLE_SUBSCRIBER(SceneIntensityChanged, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierEndValueChanged, int, const ParameterCoordinate&, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierRemoved, int, const ParameterCoordinate&);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierEndValueChanged, int, const musicDevice::sound::ParameterCoordinate&, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ModifierRemoved, int, const musicDevice::sound::ParameterCoordinate&);
 
    void retriggerCallbacks() noexcept;
 

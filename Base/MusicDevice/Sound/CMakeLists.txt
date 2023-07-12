@@ -9,14 +9,11 @@ set(SOURCES
    "SoundPresetHandler.cpp"
    "SoundMidiInSysExDumpHandler.cpp"
    "PresetFetcher.cpp"
-   "ParameterSceneContainer.cpp"
 )
 
 set(HEADERS
    "ParameterAttr.h"
    "ParameterCoordinate.h"
-   "ParameterScene.h"
-   "ParameterSceneContainer.h"
    "SoundParameterStorage.h"
    "SoundParameterStorage.inl"
    "SoundParameterStorageElement.h"

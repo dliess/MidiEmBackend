@@ -37,7 +37,7 @@ public:
    midifriends::Router midiRouter;
    session::Tracks tracks;
    eventRouter::EventRouter controllerEventRouter;
-   musicDevice::ModifiersApplyer modifiersApplyer;
+   parameterScenes::ModifiersApplyer modifiersApplyer;
    void start();
    void waitForEnd();
 
