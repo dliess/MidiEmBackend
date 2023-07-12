@@ -56,7 +56,7 @@ inline void ParameterCache::clearModifier(std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr)
 {
     auto& modifier =
-       musicDevice::sound::getParameterDataRef<musicDevice::sound::ValueModifier>(
+       musicDevice::sound::getParameterDataRef(
            valueModifier_.at(parameterIdx), parameterAttr);
     modifier.clear();
 }
@@ -66,7 +66,7 @@ inline void ParameterCache::applyModifier(std::size_t parameterIdx,
                       float destination, float intensity)
 {
     auto& modifier =
-       musicDevice::sound::getParameterDataRef<musicDevice::sound::ValueModifier>(
+       musicDevice::sound::getParameterDataRef(
            valueModifier_.at(parameterIdx), parameterAttr);
     modifier.addAbsoluteModifier(destination, intensity);
 }

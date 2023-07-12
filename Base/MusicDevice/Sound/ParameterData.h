@@ -148,9 +148,9 @@ ReturnType getParameterData(const ParameterDataType& pd,
    return ReturnType{};
 }
 
-template<typename ReturnType>
-ReturnType& getParameterDataRef(auto& pd,
-                              ParameterAttr parameterAttr) noexcept
+template<typename T>
+T& getParameterDataRef(ParameterDataCustomType<T>& pd,
+                       ParameterAttr parameterAttr) noexcept
 {
    switch (parameterAttr)
    {
