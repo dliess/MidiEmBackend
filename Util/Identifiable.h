@@ -12,7 +12,8 @@
 #include <span>
 #include <string>
 #include <type_traits>
-
+#include <map>
+#include <unordered_map>
 #include "arrayCount.h"
 
 namespace util
@@ -35,15 +36,42 @@ protected:
 inline std::string uuid2Str(const Identifiable::UUID& uuid);
 inline std::string uuid2Str(Identifiable::UUIDView uuid);
 
+template<typename T>
+concept UuidMapType = 
+    std::same_as<typename T::key_type, Identifiable::UUID>;
+
 template <class Container, class Callable>
-void withUuid(const Container& container, Identifiable::UUIDView uuid,
+void withUuid(const Container& container, Identifiable::UUIDView uuidView,
               Callable&& cb)
 {
    auto it = std::ranges::find_if(
-       container, [uuid](const auto& e) { return e.idView() == uuid; });
+      container, [uuidView](const auto& e) { return e.idView() == uuidView; });
    if (it != container.end())
    {
       std::forward<Callable>(cb)(*it);
+   }
+}
+
+template <class Container, class Callable>
+void withUuid(const Container& container, const Identifiable::UUID& uuid,
+              Callable&& cb)
+{
+   if constexpr (UuidMapType<Container>)
+   {
+      auto it = container.find(uuid);
+      if (it != container.end())
+      {
+         std::forward<Callable>(cb)(it->second);
+      }
+   }
+   else
+   {
+      auto it = std::ranges::find_if(
+         container, [uuid](const auto& e) { return e.id() == uuid; });
+      if (it != container.end())
+      {
+         std::forward<Callable>(cb)(*it);
+      }
    }
 }
 

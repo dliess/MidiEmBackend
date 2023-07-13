@@ -12,17 +12,9 @@ struct ParameterCoordinate
    int voiceIdx{0};
    int parameterIdx{0};
    ParameterAttr parameterAttr{ParameterAttr::Commanded};
+   auto operator<=>(const ParameterCoordinate&) const = default;
 };
 
 }   // namespace base::musicDevice::sound
-
-inline bool operator==(
-    const base::musicDevice::sound::ParameterCoordinate& lhs,
-    const base::musicDevice::sound::ParameterCoordinate& rhs) noexcept
-{
-   return (lhs.uuid == rhs.uuid) && (lhs.voiceIdx == rhs.voiceIdx) &&
-          (lhs.parameterIdx == rhs.parameterIdx) &&
-          (lhs.parameterAttr == rhs.parameterAttr);
-}
 
 #endif

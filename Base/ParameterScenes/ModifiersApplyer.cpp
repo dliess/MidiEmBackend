@@ -78,22 +78,21 @@ void ModifiersApplyer::retriggerCallbacks()
 void ModifiersApplyer::clearReferenced()
 {
    m_parameterSceneContainer.forEachActiveModifier(
-       [this](ParameterScene::Modifier& modifier, float intensity) {
-          auto mdIter =
-              m_rMusicDeviceContainer.find(modifier.destParamCoord.uuid);
-          if (mdIter != m_rMusicDeviceContainer.end() &&
-              mdIter->second->soundHandler)
-          {
-             modifier.pCachedSoundHandler =
-                 &mdIter->second->soundHandler.value();
-             if (modifier.goalValue)
-             {
-                modifier.pCachedSoundHandler->resetModifier(
-                    modifier.destParamCoord.voiceIdx,
-                    modifier.destParamCoord.parameterIdx,
-                    modifier.destParamCoord.parameterAttr);
-             }
-          }
+       [this](ParameterScene::Modifier& modifier, float) {
+         util::withUuid(m_rMusicDeviceContainer, modifier.destParamCoord.uuid, 
+            [&modifier](const auto& md){
+               if(md->soundHandler)
+               {
+                  modifier.pCachedSoundHandler = &md->soundHandler.value();
+                  if (modifier.goalValue)
+                  {
+                     modifier.pCachedSoundHandler->resetModifier(
+                        modifier.destParamCoord.voiceIdx,
+                        modifier.destParamCoord.parameterIdx,
+                        modifier.destParamCoord.parameterAttr);
+                  }
+               }
+         });
        });
 }
 
