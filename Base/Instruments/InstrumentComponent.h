@@ -30,10 +30,10 @@ public:
 
    void incrementParameterValue(int parameterIdx,
                                 musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, bool roundRobin) const;
+                                float increment, musicDevice::sound::IncrementMode incrementMode) const;
    void incrementParameterValueDontCache(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
-       float increment, bool roundRobin) const;
+       float increment, musicDevice::sound::IncrementMode incrementMode) const;
 
    [[nodiscard]] std::optional<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;

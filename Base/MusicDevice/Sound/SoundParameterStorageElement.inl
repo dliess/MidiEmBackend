@@ -107,7 +107,7 @@ inline void ParameterStorageElement::calcActualVal()
    {
       m_cachedLfoValue = 0.0;
    }
-   m_actual = limitValue(m_actual);
+   m_actual = limitValue(m_actual, IncrementMode::Limit);
    m_dirtyFlagRt = false;
    if (m_isListIndex)
    {
@@ -142,9 +142,9 @@ ParameterStorageElement::calcActualValueIfLfoActive() noexcept
 }
 
 inline void ParameterStorageElement::setCommandedValue(float value,
-                                                       bool roundRobin) noexcept
+                                                       IncrementMode incrementMode) noexcept
 {
-   m_commanded   = limitValue(value, roundRobin);
+   m_commanded   = limitValue(value, incrementMode);
    m_dirtyFlagRt = true;
    m_dirtyFlagUi = true;
 
@@ -153,34 +153,34 @@ inline void ParameterStorageElement::setCommandedValue(float value,
 template <typename T> int sgn(T val) { return int(T(0) < val) - int(val < T(0)); }
 
 inline void ParameterStorageElement::incCommandedValue(float increment,
-                                                       bool roundRobin) noexcept
+                                                       IncrementMode incrementMode) noexcept
 {
    const float theIncrement = m_isListIndex ? float(sgn(increment)) : increment;
-   setCommandedValue(m_commanded + theIncrement, roundRobin);
+   setCommandedValue(m_commanded + theIncrement, incrementMode);
 }
 
 inline void ParameterStorageElement::setValueFromDeviceRel(float value) noexcept
 {
    // TODO this impl. is bad, it doesnt count in the modifier
    m_actual      = value;
-   m_commanded   = limitValue(m_actual - (m_cachedLfoValue));
+   m_commanded   = limitValue(m_actual - (m_cachedLfoValue), IncrementMode::Limit);
    m_dirtyFlagUi = true;
 }
 
 inline void ParameterStorageElement::setValueFromDevice(float value) noexcept
 {
-   m_commanded   = limitValue(value);
+   m_commanded   = limitValue(value, IncrementMode::Limit);
    m_actual      = m_commanded;
    m_dirtyFlagRt = true;
    m_dirtyFlagUi = true;
 }
 
 inline float ParameterStorageElement::limitValue(float value,
-                                                 bool roundRobin) const noexcept
+                                                 IncrementMode incrementMode) const noexcept
 {
    float ret = value;
    const float range = m_isListIndex ? m_resolution : 1.0;
-   if (roundRobin)
+   if (incrementMode == IncrementMode::RoundRobin)
    {
       if (value < 0.0)
       {

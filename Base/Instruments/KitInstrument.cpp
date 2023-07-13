@@ -50,22 +50,22 @@ void KitInstrument::noteOff(int voiceIdx, int note, float velocity,
 void KitInstrument::incrementParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    bool roundRobin) const
+    musicDevice::sound::IncrementMode incrementMode) const
 {
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
       component.incrementParameterValue(parameterIdx, parameterAttr, increment,
-                                        roundRobin);
+                                        incrementMode);
    });
 }
 
 void KitInstrument::incrementParameterValueEventBound(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    bool roundRobin) const
+    musicDevice::sound::IncrementMode incrementMode) const
 {
    withComponent(voiceIdx, componentIdx, [&](const Component& component) {
       component.incrementParameterValueDontCache(parameterIdx, parameterAttr,
-                                                 increment, roundRobin);
+                                                 increment, incrementMode);
    });
 }
 

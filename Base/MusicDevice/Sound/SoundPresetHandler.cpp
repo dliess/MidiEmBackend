@@ -79,7 +79,7 @@ void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
           }
           else
           {
-            param.setCommandedValue(from.commanded);
+            param.setCommandedValue(from.commanded, IncrementMode::Limit);
           }
           // we have to call them by ParameterStorage so cb_signals get emitted on change 
           m_rParameterStorage.setAmplitude(voiceIdx, paramIdx, from.lfo.amplitude);

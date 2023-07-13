@@ -36,7 +36,7 @@ void Component::pitchBend(float value) const
 
 void Component::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
-    float increment, bool roundRobin) const
+    float increment, musicDevice::sound::IncrementMode incrementMode) const
 {
    if (m_pSoundDevice)
    {
@@ -45,19 +45,19 @@ void Component::incrementParameterValue(
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float newParamValue = musicDevice::sound::limitParameterValue(
-          actualValue + increment, roundRobin, valueRange);
+          actualValue + increment, incrementMode, valueRange);
       setParameterValue(parameterIdx, parameterAttr, newParamValue);
    }
 }
 
 void Component::incrementParameterValueDontCache(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
-    float increment, bool roundRobin) const
+    float increment, musicDevice::sound::IncrementMode incrementMode) const
 {
    if (m_pSoundDevice)
    {
       m_pSoundDevice->incrementParameterValue(
-          m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
+          m_sdVoiceIdx, parameterIdx, parameterAttr, increment, incrementMode);
       m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
       m_pSoundDevice->lastplayerId = nullptr;
       m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
@@ -107,14 +107,14 @@ void Component::setParameterValue(
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float limitedValue =
-          musicDevice::sound::limitParameterValue(value, false, valueRange);
+          musicDevice::sound::limitParameterValue(value, musicDevice::sound::IncrementMode::Limit, valueRange);
       m_pParameterCache->setParameter(parameterIdx, parameterAttr,
                                       limitedValue);
       const float limitedModifiedValue =
           musicDevice::sound::limitParameterValue(
               m_pParameterCache->getModifiedParameterValue(parameterIdx,
                                                            parameterAttr),
-              false, valueRange);
+              musicDevice::sound::IncrementMode::Limit, valueRange);
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedModifiedValue);
       m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
@@ -130,7 +130,7 @@ void Component::setParameterValueDontCache(
       const auto valueRange = musicDevice::sound::getParamRangeEnd(
           m_sdVoiceIdx, parameterIdx, parameterAttr, *m_pSoundDevice);
       const float limitedValue =
-          musicDevice::sound::limitParameterValue(value, false, valueRange);
+          musicDevice::sound::limitParameterValue(value, musicDevice::sound::IncrementMode::Limit, valueRange);
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);

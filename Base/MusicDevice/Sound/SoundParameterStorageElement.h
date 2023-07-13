@@ -17,8 +17,8 @@ struct ParameterStorageElement
    [[nodiscard]] std::optional<std::pair<float, float>>
    uiAsksForChangedValues() noexcept;
    void calcActualValueIfLfoActive() noexcept;
-   void setCommandedValue(float value, bool roundRobin = false) noexcept;
-   void incCommandedValue(float increment, bool roundRobin = false) noexcept;
+   void setCommandedValue(float value, IncrementMode incrementMode) noexcept;
+   void incCommandedValue(float increment, IncrementMode incrementMode) noexcept;
    void setValueFromDeviceRel(float value) noexcept;
    void setValueFromDevice(float value) noexcept;
    void applyModifier(float destination, float intensity,
@@ -53,7 +53,7 @@ private:
    static constexpr float FUZZ{0.0001f};
 
    [[nodiscard]] float limitValue(float value,
-                                  bool roundRobin = false) const noexcept;
+                                  IncrementMode incrementMode) const noexcept;
    void forceRecalculationAndSending() noexcept;
 };
 

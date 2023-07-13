@@ -28,9 +28,9 @@ public:
    void setCommandedValuesOfVoice(int voiceId, const T& container) noexcept;
    void incSoundParameterValue(int voiceId, int parameterId,
                                       float increment,
-                                      bool roundRobin = false) noexcept;
+                                      IncrementMode incrementMode) noexcept;
    void setSoundParameterValue(int voiceId, int parameterId, float value,
-                                      bool roundRobin = false) noexcept;
+                                      IncrementMode incrementMode) noexcept;
    void setSoundParameterActualValue(int voiceId, int parameterId,
                                             float value) noexcept;
 

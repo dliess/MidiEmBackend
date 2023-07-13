@@ -45,16 +45,16 @@ public:
    void pitchBendMPE(int note, float value) const;
    void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, bool roundRobin) const;
+                                float increment, musicDevice::sound::IncrementMode incrementMode) const;
    void incrementParameterValueEventBound(
        int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr, float increment,
-       bool roundRobin) const;
+       musicDevice::sound::IncrementMode incrementMode) const;
 
    void incrementParameterValueMPE(
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr, float increment,
-       bool roundRobin) const;
+       musicDevice::sound::IncrementMode incrementMode) const;
    [[nodiscard]] std::optional<float> getParameterValue(
        int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;

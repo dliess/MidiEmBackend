@@ -45,62 +45,62 @@ public:
    void pitchBend(int voiceIdx, float value) noexcept;
    void afterTouchPoly(int voiceIdx, int note, float value) noexcept;
    void afterTouch(int voiceIdx, float value) noexcept;
-   void setParameterValue(int voiceId, int parameterId,
-                          ParameterAttr parameterAttr, float value) noexcept;
+   void setParameterValue(int voiceIdx, int parameterId,
+                          ParameterAttr parameterAttr, float value, bool callCalcActVal = true) noexcept;
    void setRelativeParameterValue(
        int voiceIdx, int parameterId,
-       musicDevice::sound::ParameterAttr parameterAttr, float relValue) const;
+       musicDevice::sound::ParameterAttr parameterAttr, float relValue, bool callCalcActVal = true) const;
    [[nodiscard]] std::optional<float> getParameterValue(
-       int voiceId, int parameterId,
+       int voiceIdx, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
    [[nodiscard]] ValueRangeEnd getParameterRangeEnd(
-       int voiceId, int parameterId,
+       int voiceIdx, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const;
    [[nodiscard]] float fromNormalizedValue(
-       int voiceId, int parameterId, ParameterAttr parameterAttr,
+       int voiceIdx, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter& parameterDescription(
        int voiceIdx, int parameterIdx) const;
-   void incrementParameterValue(int voiceId, int parameterId,
+   void incrementParameterValue(int voiceIdx, int parameterId,
                                 ParameterAttr parameterAttr, float increment,
-                                bool roundRobin = false) noexcept;
-   void incrementParameterValueEventBound(int voiceId, int parameterId,
+                                IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
+   void incrementParameterValueEventBound(int voiceIdx, int parameterId,
                                           ParameterAttr parameterAttr,
                                           float increment,
-                                          bool roundRobin = false) noexcept;
+                                          IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
    void updateActualSoundStorageValues() noexcept;
-   inline std::optional<std::string> getActualPresetOfVoice(
-       int voiceId) const noexcept;
+   std::optional<std::string> getActualPresetOfVoice(
+       int voiceIdx) const noexcept;
    std::shared_ptr<preset::DevicePresets> presets() const noexcept;
    constexpr static int ALL = ParameterStorage::ALL;
-   void uiShowsInterestInParameter(int voiceId, int parameterId = ALL) noexcept;
-   void uiLoosesInterestInParameter(int voiceId,
+   void uiShowsInterestInParameter(int voiceIdx, int parameterId = ALL) noexcept;
+   void uiLoosesInterestInParameter(int voiceIdx,
                                     int parameterId = ALL) noexcept;
    template <typename Cb> void forEachParameter(Cb&& cb) const noexcept;
    template <typename Cb> void forEachParameter(Cb&& cb) noexcept;
 
    uint8_t getMidiVoiceOffset() const noexcept;
 
-   void blankVoiceParameter(int voiceId, int paramIdx) noexcept;
-   void blankVoiceParameters(int voiceId) noexcept;
+   void blankVoiceParameter(int voiceIdx, int paramIdx) noexcept;
+   void blankVoiceParameters(int voiceIdx) noexcept;
    void blankAllVoiceParameters() noexcept;
 
-   void setCommandedValue(int voiceId, int parameterId, float value) noexcept;
-   void setLFOWaveform(int voiceId, int paramIdx,
-                       lfo::Waveform waveform) noexcept;
-   void setLFOAmplitude(int voiceIdx, int paramIdx, float amplitude) noexcept;
-   void setLFOFrequency(int voiceIdx, int paramIdx, float frequency) noexcept;
+   void setCommandedValue(int voiceIdx, int parameterId, float value, bool callCalcActVal = true) noexcept;
+   void setLFOWaveform(int voiceIdx, int paramIdx,
+                       lfo::Waveform waveform, bool callCalcActVal = true) noexcept;
+   void setLFOAmplitude(int voiceIdx, int paramIdx, float amplitude, bool callCalcActVal = true) noexcept;
+   void setLFOFrequency(int voiceIdx, int paramIdx, float frequency, bool callCalcActVal = true) noexcept;
    void setLFOMultiplierExp(int voiceIdx, int paramIdx,
-                            int multiplExp) noexcept;
+                            int multiplExp, bool callCalcActVal = true) noexcept;
 
-   void incCommandedValue(int voiceId, int parameterId, float increment,
-                          bool roundRobin) noexcept;
-   void incLFOWaveform(int voiceId, int paramIdx, int increment,
-                       bool roundRobin) noexcept;
-   void incLFOAmplitude(int voiceIdx, int paramIdx, float increment) noexcept;
-   void incLFOFrequency(int voiceIdx, int paramIdx, float increment) noexcept;
+   void incCommandedValue(int voiceIdx, int parameterId, float increment,
+                          IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
+   void incLFOWaveform(int voiceIdx, int paramIdx, int increment,
+                       IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
+   void incLFOAmplitude(int voiceIdx, int paramIdx, float increment, bool callCalcActVal = true) noexcept;
+   void incLFOFrequency(int voiceIdx, int paramIdx, float increment, bool callCalcActVal = true) noexcept;
    void incLFOMultiplierExp(int voiceIdx, int paramIdx, int increment,
-                            bool roundRobin) noexcept;
+                            IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
 
    void applyModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr,
                       float destValue, float intensity) noexcept;
@@ -110,8 +110,8 @@ public:
    void calcAllActualValues();
 
    // TODO: do we need this?
-   // inline SoundPresetHandler* soundPresetHandler() noexcept;
-   // inline const SoundPresetHandler* soundPresetHandler() const noexcept;
+   // SoundPresetHandler* soundPresetHandler() noexcept;
+   // const SoundPresetHandler* soundPresetHandler() const noexcept;
 
    void doParameterDumpRequest() noexcept;
 
@@ -160,9 +160,9 @@ template <typename Cb> void SoundHandler::forEachParameter(Cb&& cb) noexcept
 }
 
 inline std::optional<std::string> SoundHandler::getActualPresetOfVoice(
-    int voiceId) const noexcept
+    int voiceIdx) const noexcept
 {
-   return m_paramStorage.getActualPresetOfVoice(voiceId);
+   return m_paramStorage.getActualPresetOfVoice(voiceIdx);
 }
 
 }   // namespace base::musicDevice::sound

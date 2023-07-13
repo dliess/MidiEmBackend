@@ -95,19 +95,19 @@ void ParameterStorage::setCommandedValuesOfVoice(int voiceIdx,
 inline void ParameterStorage::incSoundParameterValue(int voiceIdx,
                                                      int parameterIdx,
                                                      float increment,
-                                                     bool roundRobin) noexcept
+                                                     IncrementMode incrementMode) noexcept
 {
    elementContainer(voiceIdx).parameters[parameterIdx].incCommandedValue(
-       increment, roundRobin);
+       increment, incrementMode);
 }
 
 inline void ParameterStorage::setSoundParameterValue(int voiceIdx,
                                                      int parameterIdx,
                                                      float value,
-                                                     bool roundRobin) noexcept
+                                                     IncrementMode incrementMode) noexcept
 {
    elementContainer(voiceIdx).parameters[parameterIdx].setCommandedValue(
-       value, roundRobin);
+       value, incrementMode);
 }
 
 inline void ParameterStorage::setSoundParameterActualValue(int voiceIdx,
@@ -224,7 +224,7 @@ inline void ParameterStorage::_resetToInitialValue(
    }
    element.lfo().reset();
    const float initVal = m_rSoundSection.getInitialValueFor(voiceIdx, paramIdx);
-   element.setCommandedValue(initVal);
+   element.setCommandedValue(initVal, IncrementMode::Limit);
 }
 
 inline void ParameterStorage::resetToInitialValue(int voiceIdx,

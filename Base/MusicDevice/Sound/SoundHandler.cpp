@@ -102,10 +102,10 @@ void SoundHandler::initMidiInHandler(std::shared_ptr<MidiInput> pMidiIn,
    assert(!m_midiInMsgHandler);
    m_midiInMsgHandler = std::make_unique<MidiInMsgHandlerT>(
        pMidiIn, m_rSoundSection, midiVoiceOffset,
-       [this](int voiceId, int parameterId, float value) {
-          // spdlog::info( "Received parameter values {} {} {}: ", voiceId,
+       [this](int voiceIdx, int parameterId, float value) {
+          // spdlog::info( "Received parameter values {} {} {}: ", voiceIdx,
           // parameterId, value);
-          m_paramStorage.setSoundParameterActualValue(voiceId, parameterId,
+          m_paramStorage.setSoundParameterActualValue(voiceIdx, parameterId,
                                                       value);
        });
    m_presetHandler.initMidiInHandler(m_midiInMsgHandler.get());
@@ -208,36 +208,37 @@ void SoundHandler::afterTouch(int voiceIdx, float value) noexcept
    m_midiOutHandler->afterTouch(voiceIdx, value);
 }
 
-void SoundHandler::setParameterValue(int voiceId, int parameterId,
-                                     ParameterAttr parameterAttr,
-                                     float value) noexcept
+void SoundHandler::setParameterValue(int voiceIdx, int parameterId,
+                                     ParameterAttr parameterAttr, float value,
+                                     bool callCalcActVal) noexcept
 {
    switch (parameterAttr)
    {
       case (ParameterAttr::Commanded):
       {
-         setCommandedValue(voiceId, parameterId, value);
+         setCommandedValue(voiceIdx, parameterId, value, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoFrequency):
       {
-         setLFOFrequency(voiceId, parameterId, value);
+         setLFOFrequency(voiceIdx, parameterId, value, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoAmplitude):
       {
-         setLFOAmplitude(voiceId, parameterId, value);
+         setLFOAmplitude(voiceIdx, parameterId, value, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoWaveform):
       {
-         setLFOWaveform(voiceId, parameterId,
-                        static_cast<lfo::Waveform>(value));
+         setLFOWaveform(voiceIdx, parameterId, static_cast<lfo::Waveform>(value),
+                        callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoMultiplierExp):
       {
-         setLFOMultiplierExp(voiceId, parameterId, static_cast<int>(value));
+         setLFOMultiplierExp(voiceIdx, parameterId, static_cast<int>(value),
+                             callCalcActVal);
          break;
       }
    }
@@ -245,37 +246,37 @@ void SoundHandler::setParameterValue(int voiceId, int parameterId,
 
 void SoundHandler::setRelativeParameterValue(
     int voiceIdx, int parameterId,
-    musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
+    musicDevice::sound::ParameterAttr parameterAttr, float relValue,
+    bool callCalcActVal) const
 {
    /*Not yet implemented, and I think its not so important*/
 }
 
-void SoundHandler::setCommandedValue(int voiceId, int parameterId,
-                                     float value) noexcept
+void SoundHandler::setCommandedValue(int voiceIdx, int parameterId, float value,
+                                     bool callCalcActVal) noexcept
 {
-   if (!m_midiOutHandler)
+   if (m_midiOutHandler)
    {
-      spdlog::error(
-          "setSoundParameterValue() called but there is no m_midiOutHandler in "
-          "device '{}'",
-          m_deviceName);
-      return;
+      m_paramStorage.setSoundParameterValue(voiceIdx, parameterId, value, IncrementMode::Limit);
+      if (callCalcActVal)
+      {
+         m_paramStorage.calcActualVal(voiceIdx, parameterId);
+      }
    }
-   m_paramStorage.setSoundParameterValue(voiceId, parameterId, value);
 }
 
 std::optional<float> SoundHandler::getParameterValue(
-    int voiceId, int parameterId, ParameterAttr parameterAttr) const noexcept
+    int voiceIdx, int parameterId, ParameterAttr parameterAttr) const noexcept
 {
-   return m_paramStorage.getCommandedValue(voiceId, parameterId, parameterAttr);
+   return m_paramStorage.getCommandedValue(voiceIdx, parameterId, parameterAttr);
 }
 
-float SoundHandler::fromNormalizedValue(int voiceId, int parameterId,
+float SoundHandler::fromNormalizedValue(int voiceIdx, int parameterId,
                                         ParameterAttr parameterAttr,
                                         float percentageValue) const noexcept
 {
    const auto valueRangeEnd =
-       getParameterRangeEnd(voiceId, parameterId, parameterAttr);
+       getParameterRangeEnd(voiceIdx, parameterId, parameterAttr);
    return R_SWITCH(valueRangeEnd) FCASE(ListRangeEnd, range)->float
    {
       return float(int(range.get() * percentageValue));
@@ -294,69 +295,72 @@ SoundHandler::parameterDescription(int voiceIdx, int parameterIdx) const
 }
 
 ValueRangeEnd SoundHandler::getParameterRangeEnd(
-    int voiceId, int parameterIdx, ParameterAttr parameterAttr) const
+    int voiceIdx, int parameterIdx, ParameterAttr parameterAttr) const
 {
-   return getParamRangeEnd(voiceId, parameterIdx, parameterAttr,
+   return getParamRangeEnd(voiceIdx, parameterIdx, parameterAttr,
                            m_rSoundSection);
 }
 
-void SoundHandler::incrementParameterValue(int voiceId, int parameterId,
+void SoundHandler::incrementParameterValue(int voiceIdx, int parameterId,
                                            ParameterAttr parameterAttr,
                                            float increment,
-                                           bool roundRobin) noexcept
+                                           IncrementMode incrementMode,
+                                           bool callCalcActVal) noexcept
 {
    switch (parameterAttr)
    {
       case (ParameterAttr::Commanded):
       {
-         incCommandedValue(voiceId, parameterId, increment, roundRobin);
+         incCommandedValue(voiceIdx, parameterId, increment, incrementMode,
+                           callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoFrequency):
       {
-         incLFOFrequency(voiceId, parameterId, increment);
+         incLFOFrequency(voiceIdx, parameterId, increment, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoAmplitude):
       {
-         incLFOAmplitude(voiceId, parameterId, increment);
+         incLFOAmplitude(voiceIdx, parameterId, increment, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoWaveform):
       {
-         incLFOWaveform(voiceId, parameterId, static_cast<int>(increment),
-                        roundRobin);
+         incLFOWaveform(voiceIdx, parameterId, static_cast<int>(increment),
+                        incrementMode, callCalcActVal);
          break;
       }
       case (ParameterAttr::LfoMultiplierExp):
       {
-         incLFOMultiplierExp(voiceId, parameterId, static_cast<int>(increment),
-                             roundRobin);
+         incLFOMultiplierExp(voiceIdx, parameterId, static_cast<int>(increment),
+                             incrementMode, callCalcActVal);
          break;
       }
    }
 }
 
 void SoundHandler::incrementParameterValueEventBound(
-    int voiceId, int parameterId, ParameterAttr parameterAttr, float increment,
-    bool roundRobin) noexcept
+    int voiceIdx, int parameterId, ParameterAttr parameterAttr, float increment,
+    IncrementMode incrementMode, bool callCalcActVal) noexcept
 {
    // Not shure if I want to implement this
 }
 
-void SoundHandler::incCommandedValue(int voiceId, int parameterId,
-                                     float increment, bool roundRobin) noexcept
+void SoundHandler::incCommandedValue(int voiceIdx, int parameterId,
+                                     float increment,
+                                     IncrementMode incrementMode,
+                                     bool callCalcActVal) noexcept
 {
-   if (!m_midiOutHandler)
+   if (m_midiOutHandler)
    {
-      spdlog::error(
-          "setSoundParameterValue() called but there is no m_midiOutHandler in "
-          "device '{}'",
-          m_deviceName);
-      return;
+      m_paramStorage.incSoundParameterValue(voiceIdx, parameterId, increment,
+                                            incrementMode);
+      if (callCalcActVal)
+      {
+         m_paramStorage.calcActualVal(voiceIdx, parameterId);
+      }
    }
-   m_paramStorage.incSoundParameterValue(voiceId, parameterId, increment,
-                                         roundRobin);
 }
 
 void SoundHandler::updateActualSoundStorageValues() noexcept
@@ -368,16 +372,16 @@ void SoundHandler::updateActualSoundStorageValues() noexcept
    }
 }
 
-void SoundHandler::uiShowsInterestInParameter(int voiceId,
+void SoundHandler::uiShowsInterestInParameter(int voiceIdx,
                                               int parameterId) noexcept
 {
-   m_paramStorage.uiShowsInterestInParameter(voiceId, parameterId);
+   m_paramStorage.uiShowsInterestInParameter(voiceIdx, parameterId);
 }
 
-void SoundHandler::uiLoosesInterestInParameter(int voiceId,
+void SoundHandler::uiLoosesInterestInParameter(int voiceIdx,
                                                int parameterId) noexcept
 {
-   m_paramStorage.uiLoosesInterestInParameter(voiceId, parameterId);
+   m_paramStorage.uiLoosesInterestInParameter(voiceIdx, parameterId);
 }
 
 uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
@@ -387,14 +391,14 @@ uint8_t SoundHandler::getMidiVoiceOffset() const noexcept
    return m_midiOutHandler->getMidiChannelOffset();
 }
 
-void SoundHandler::blankVoiceParameter(int voiceId, int paramIdx) noexcept
+void SoundHandler::blankVoiceParameter(int voiceIdx, int paramIdx) noexcept
 {
-   m_paramStorage.resetToInitialValue(voiceId, paramIdx);
+   m_paramStorage.resetToInitialValue(voiceIdx, paramIdx);
 }
 
-void SoundHandler::blankVoiceParameters(int voiceId) noexcept
+void SoundHandler::blankVoiceParameters(int voiceIdx) noexcept
 {
-   m_paramStorage.resetToInitialValues(voiceId);
+   m_paramStorage.resetToInitialValues(voiceIdx);
 }
 
 void SoundHandler::blankAllVoiceParameters() noexcept
@@ -402,37 +406,56 @@ void SoundHandler::blankAllVoiceParameters() noexcept
    m_paramStorage.resetToInitialValues();
 }
 
-void SoundHandler::setLFOWaveform(int voiceId, int paramIdx,
-                                  lfo::Waveform waveform) noexcept
+void SoundHandler::setLFOWaveform(int voiceIdx, int paramIdx,
+                                  lfo::Waveform waveform,
+                                  bool callCalcActVal) noexcept
 {
-   m_paramStorage.setWaveform(voiceId, paramIdx, waveform);
+   m_paramStorage.setWaveform(voiceIdx, paramIdx, waveform);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
-void SoundHandler::setLFOAmplitude(int voiceIdx, int paramIdx,
-                                   float amplitude) noexcept
+void SoundHandler::setLFOAmplitude(int voiceIdx, int paramIdx, float amplitude,
+                                   bool callCalcActVal) noexcept
 {
    m_paramStorage.setAmplitude(voiceIdx, paramIdx, amplitude);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
-void SoundHandler::setLFOFrequency(int voiceIdx, int paramIdx,
-                                   float frequency) noexcept
+void SoundHandler::setLFOFrequency(int voiceIdx, int paramIdx, float frequency,
+                                   bool callCalcActVal) noexcept
 {
    m_paramStorage.setFrequency(voiceIdx, paramIdx, frequency);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
 void SoundHandler::setLFOMultiplierExp(int voiceIdx, int paramIdx,
-                                       int multiplExp) noexcept
+                                       int multiplExp,
+                                       bool callCalcActVal) noexcept
 {
    m_paramStorage.setMultiplierExp(voiceIdx, paramIdx, multiplExp);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
 void SoundHandler::incLFOWaveform(int voiceIdx, int paramIdx, int increment,
-                                  bool roundRobin) noexcept
+                                  IncrementMode incrementMode,
+                                  bool callCalcActVal) noexcept
 {
    int idx = static_cast<int>(m_paramStorage.waveform(voiceIdx, paramIdx)) +
              increment;
    static constexpr int lastIdx = static_cast<int>(lfo::Waveform::Random) + 1;
-   if (roundRobin)
+   if (incrementMode == IncrementMode::RoundRobin)
    {
       idx = idx % lastIdx;
    }
@@ -440,35 +463,53 @@ void SoundHandler::incLFOWaveform(int voiceIdx, int paramIdx, int increment,
    {
       m_paramStorage.setWaveform(voiceIdx, paramIdx,
                                  static_cast<lfo::Waveform>(idx));
+      if (callCalcActVal)
+      {
+         m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+      }
    }
 }
 
-void SoundHandler::incLFOAmplitude(int voiceIdx, int paramIdx,
-                                   float increment) noexcept
+void SoundHandler::incLFOAmplitude(int voiceIdx, int paramIdx, float increment,
+                                   bool callCalcActVal) noexcept
 {
    m_paramStorage.setAmplitude(
        voiceIdx, paramIdx,
        m_paramStorage.amplitude(voiceIdx, paramIdx) + increment);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
-void SoundHandler::incLFOFrequency(int voiceIdx, int paramIdx,
-                                   float increment) noexcept
+void SoundHandler::incLFOFrequency(int voiceIdx, int paramIdx, float increment,
+                                   bool callCalcActVal) noexcept
 {
    m_paramStorage.setFrequency(
        voiceIdx, paramIdx,
        m_paramStorage.frequency(voiceIdx, paramIdx) + increment);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
 void SoundHandler::incLFOMultiplierExp(int voiceIdx, int paramIdx,
-                                       int increment, bool roundRobin) noexcept
+                                       int increment,
+                                       IncrementMode incrementMode,
+                                       bool callCalcActVal) noexcept
 {
    int newExponent =
        m_paramStorage.multiplierExp(voiceIdx, paramIdx) + increment;
-   if (roundRobin)
+   if (incrementMode == IncrementMode::RoundRobin)
    {
       newExponent = newExponent % (lfo::MAX_MULTIPLIER_EXP + 1);
    }
    m_paramStorage.setMultiplierExp(voiceIdx, paramIdx, newExponent);
+   if (callCalcActVal)
+   {
+      m_paramStorage.calcActualVal(voiceIdx, paramIdx);
+   }
 }
 
 std::shared_ptr<preset::DevicePresets> SoundHandler::presets() const noexcept
@@ -524,7 +565,6 @@ void SoundHandler::calcAllActualValues()
 {
    m_paramStorage.calcAllActualValues();
 }
-
 
 bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
 {

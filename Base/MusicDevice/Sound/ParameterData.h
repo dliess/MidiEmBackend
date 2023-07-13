@@ -14,6 +14,12 @@
 
 namespace base::musicDevice::sound
 {
+enum class IncrementMode 
+{ 
+   Limit = 0, 
+   RoundRobin = 1 
+};
+
 using Parameter            = FloatingPointType<struct ParameterTag>;
 using ParameterLFOAmp      = FloatingPointType<struct ParameterLFOAmpTag>;
 using ParameterLFOFreq     = FloatingPointType<struct ParameterLFOFreqTag>;
@@ -276,26 +282,29 @@ ValueRangeEnd getParamRangeEnd(
 }
 
 inline
-float limitParameterValue(float targetVal, bool roundRobin, const ValueRangeEnd& valueRange)
+float limitParameterValue(float targetVal, IncrementMode incrementMode, const ValueRangeEnd& valueRange)
 {
    return R_SWITCH(valueRange)
       FCASE(ListRangeEnd, range) -> float
       {
          const auto targetlistIdx = int(targetVal);
-         if (roundRobin)
+         switch(incrementMode)
          {
-            if (targetlistIdx < 0) 
+            case IncrementMode::RoundRobin:
             {
-               return float(range.get() + (targetlistIdx % range.get()));
+               if (targetlistIdx < 0) 
+               {
+                  return float(range.get() + (targetlistIdx % range.get()));
+               }
+               else
+               {
+                  return float(targetlistIdx % range.get());
+               }
             }
-            else
+            case IncrementMode::Limit:
             {
-               return float(targetlistIdx % range.get());
+               return float(util::clip(targetlistIdx, 0, int(range.get())));
             }
-         }
-         else
-         {
-            return float(util::clip(targetlistIdx, 0, int(range.get())));
          }
       },
       FCASE(FloatingPointRangeEnd, range) -> float

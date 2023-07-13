@@ -57,7 +57,7 @@ void InstrumentsPlayRpc::incrementKitParameterValue(
       ki.incrementParameterValue(
           voiceIdx, componentIdx, parameterIdx,
           static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr),
-          increment, false);
+          increment, base::musicDevice::sound::IncrementMode::Limit);
    });
 }
 void InstrumentsPlayRpc::setKitParameterValue(
@@ -91,7 +91,7 @@ void InstrumentsPlayRpc::incrementMelodicParameterValue(
               componentIdx, parameterIdx,
               static_cast<base::musicDevice::sound::ParameterAttr>(
                   parameterAttr),
-              increment, false);
+              increment, base::musicDevice::sound::IncrementMode::Limit);
        });
 }
 void InstrumentsPlayRpc::setMelodicParameterValue(

@@ -49,7 +49,8 @@ void setParameter4PressRelease(Dev& dev, const EventDestination::Parameter& para
    {
       const float incr =
             parameter.descriptionCache.upwards ? 1 : -1;
-      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, true);
+      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, 
+                                  musicDevice::sound::IncrementMode::RoundRobin);
    }
    else
    {
@@ -134,11 +135,13 @@ void setParameterForIncrement(Dev& dev, const EventDestination::Parameter& param
    const float incr = calcIncrements(parameter, increment);
    if(parameter.descriptionCache.eventBound)
    {
-      dev.incrementParameterValueEventBound(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
+      dev.incrementParameterValueEventBound(mdCoords..., parameter.id, parameter.parameterAttr, incr, 
+                                             musicDevice::sound::IncrementMode::Limit);
    }
    else
    {
-      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr, false);
+      dev.incrementParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, incr,
+                                 musicDevice::sound::IncrementMode::Limit);
    }
 }
 

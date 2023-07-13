@@ -91,7 +91,7 @@ void MelodicInstrument::pitchBendMPE(int note, float value) const
 void MelodicInstrument::incrementParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    bool rr) const
+    musicDevice::sound::IncrementMode incrementMode) const
 {
    for (auto& voice : m_voices)
    {
@@ -101,7 +101,7 @@ void MelodicInstrument::incrementParameterValue(
          if (component)
          {
             component->incrementParameterValue(parameterId, parameterAttr,
-                                               increment, rr);
+                                               increment, incrementMode);
          }
       }
    }
@@ -110,7 +110,7 @@ void MelodicInstrument::incrementParameterValue(
 void MelodicInstrument::incrementParameterValueEventBound(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    bool rr) const
+    musicDevice::sound::IncrementMode incrementMode) const
 {
    for (auto& voice : m_voices)
    {
@@ -120,7 +120,7 @@ void MelodicInstrument::incrementParameterValueEventBound(
          if (component)
          {
             component->incrementParameterValueDontCache(
-                parameterId, parameterAttr, increment, rr);
+                parameterId, parameterAttr, increment, incrementMode);
          }
       }
    }
@@ -129,7 +129,7 @@ void MelodicInstrument::incrementParameterValueEventBound(
 void MelodicInstrument::incrementParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    bool rr) const
+    musicDevice::sound::IncrementMode incrementMode) const
 {
    if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
@@ -146,7 +146,7 @@ void MelodicInstrument::incrementParameterValueMPE(
       if (voice.components[componentIdx])
       {
          voice.components[componentIdx]->incrementParameterValueDontCache(
-             parameterId, parameterAttr, increment, rr);
+             parameterId, parameterAttr, increment, incrementMode);
       }
    }
 }

@@ -64,9 +64,11 @@ void SoundDevicesRpc::registerForParameterChange(
     ::capnzero::Int16 paramIdx)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      if(!soundHandler.checkValidity(voiceIdx, paramIdx))
+      if (!soundHandler.checkValidity(voiceIdx, paramIdx))
       {
-         spdlog::error("SoundDevicesRpc: invalid Parameters: voiceIdx {}, parameterIdx {}", voiceIdx, paramIdx);
+         spdlog::error("SoundDevicesRpc: invalid Parameters: voiceIdx {}, "
+                       "parameterIdx {}",
+                       voiceIdx, paramIdx);
          return;
       }
       soundHandler.uiShowsInterestInParameter(voiceIdx, paramIdx);
@@ -87,7 +89,9 @@ void SoundDevicesRpc::incrementParameterValue(
     ::capnzero::Int16 paramIdx, ::capnzero::Float32 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incCommandedValue(voiceIdx, paramIdx, increment, false);
+      soundHandler.incCommandedValue(
+          voiceIdx, paramIdx, increment,
+          base::musicDevice::sound::IncrementMode::Limit);
       soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
@@ -150,7 +154,9 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
                                      ::capnzero::Int16 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incLFOWaveform(voiceIdx, paramIdx, increment, false);
+      soundHandler.incLFOWaveform(
+          voiceIdx, paramIdx, increment,
+          base::musicDevice::sound::IncrementMode::Limit);
       soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
@@ -216,7 +222,9 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
                                           ::capnzero::Int32 increment)
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
-      soundHandler.incLFOMultiplierExp(voiceIdx, paramIdx, increment, false);
+      soundHandler.incLFOMultiplierExp(
+          voiceIdx, paramIdx, increment,
+          base::musicDevice::sound::IncrementMode::Limit);
       soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
