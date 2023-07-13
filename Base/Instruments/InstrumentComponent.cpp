@@ -58,7 +58,6 @@ void Component::incrementParameterValueDontCache(
    {
       m_pSoundDevice->incrementParameterValue(
           m_sdVoiceIdx, parameterIdx, parameterAttr, increment, incrementMode);
-      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
       m_pSoundDevice->lastplayerId = nullptr;
       m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
@@ -117,7 +116,6 @@ void Component::setParameterValue(
               musicDevice::sound::IncrementMode::Limit, valueRange);
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedModifiedValue);
-      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
    }
 }
 
@@ -134,7 +132,6 @@ void Component::setParameterValueDontCache(
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
-      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
       m_pSoundDevice->lastplayerId = nullptr;
       m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
@@ -189,35 +186,35 @@ void Component::refreshParameters() const
               paramIdx, musicDevice::sound::ParameterAttr::Commanded))
       {
          m_pSoundDevice->setCommandedValue(
-             m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).commanded);
+             m_sdVoiceIdx, paramIdx, m_pParameterCache->at(paramIdx).commanded, false);
       }
       if (m_pParameterCache->shouldBeOverwritten(
               paramIdx, musicDevice::sound::ParameterAttr::LfoAmplitude))
       {
          m_pSoundDevice->setLFOAmplitude(
              m_sdVoiceIdx, paramIdx,
-             m_pParameterCache->at(paramIdx).lfo.amplitude);
+             m_pParameterCache->at(paramIdx).lfo.amplitude, false);
       }
       if (m_pParameterCache->shouldBeOverwritten(
               paramIdx, musicDevice::sound::ParameterAttr::LfoFrequency))
       {
          m_pSoundDevice->setLFOFrequency(
              m_sdVoiceIdx, paramIdx,
-             m_pParameterCache->at(paramIdx).lfo.frequency);
+             m_pParameterCache->at(paramIdx).lfo.frequency, false);
       }
       if (m_pParameterCache->shouldBeOverwritten(
               paramIdx, musicDevice::sound::ParameterAttr::LfoMultiplierExp))
       {
          m_pSoundDevice->setLFOMultiplierExp(
              m_sdVoiceIdx, paramIdx,
-             m_pParameterCache->at(paramIdx).lfo.multiplierExp);
+             m_pParameterCache->at(paramIdx).lfo.multiplierExp, false);
       }
       if (m_pParameterCache->shouldBeOverwritten(
               paramIdx, musicDevice::sound::ParameterAttr::LfoWaveform))
       {
          m_pSoundDevice->setLFOWaveform(
              m_sdVoiceIdx, paramIdx,
-             m_pParameterCache->at(paramIdx).lfo.waveform);
+             m_pParameterCache->at(paramIdx).lfo.waveform, false);
       }
       m_pSoundDevice->calcActualVal(m_sdVoiceIdx, paramIdx);
    }

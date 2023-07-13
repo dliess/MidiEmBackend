@@ -305,6 +305,11 @@ float limitParameterValue(float targetVal, IncrementMode incrementMode, const Va
             {
                return float(util::clip(targetlistIdx, 0, int(range.get())));
             }
+            default:
+            {
+               assert(false);
+               return 0.0f;
+            }
          }
       },
       FCASE(FloatingPointRangeEnd, range) -> float
