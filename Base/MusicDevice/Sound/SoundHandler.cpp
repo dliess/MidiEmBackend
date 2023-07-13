@@ -515,6 +515,17 @@ void SoundHandler::calcActualVal(int voiceIdx, int paramIdx)
    m_paramStorage.calcActualVal(voiceIdx, paramIdx);
 }
 
+void SoundHandler::calcActualValuesForVoice(int voiceIdx)
+{
+   m_paramStorage.calcActualValuesForVoice(voiceIdx);
+}
+
+void SoundHandler::calcAllActualValues()
+{
+   m_paramStorage.calcAllActualValues();
+}
+
+
 bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept
 {
    return (-1 <= voiceIdx && voiceIdx < int(m_rSoundSection.voices.size())) &&

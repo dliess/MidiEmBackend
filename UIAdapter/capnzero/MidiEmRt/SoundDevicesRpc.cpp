@@ -88,6 +88,7 @@ void SoundDevicesRpc::incrementParameterValue(
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.incCommandedValue(voiceIdx, paramIdx, increment, false);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -98,6 +99,7 @@ void SoundDevicesRpc::setParameterValue(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.setCommandedValue(voiceIdx, paramIdx, value);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -107,6 +109,7 @@ void SoundDevicesRpc::blankVoiceParameter(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.blankVoiceParameter(voiceIdx, paramIdx);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -115,6 +118,7 @@ void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.blankVoiceParameters(voiceIdx);
+      soundHandler.calcActualValuesForVoice(voiceIdx);
    });
 }
 
@@ -123,6 +127,7 @@ void SoundDevicesRpc::blankAllVoiceParameters(
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.blankAllVoiceParameters();
+      soundHandler.calcAllActualValues();
    });
 }
 
@@ -135,6 +140,7 @@ void SoundDevicesRpc::setLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
       soundHandler.setLFOWaveform(
           voiceIdx, paramIdx,
           static_cast<base::musicDevice::sound::lfo::Waveform>(waveform));
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -145,6 +151,7 @@ void SoundDevicesRpc::incLFOWaveform(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.incLFOWaveform(voiceIdx, paramIdx, increment, false);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -155,6 +162,7 @@ void SoundDevicesRpc::setLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.setLFOAmplitude(voiceIdx, paramIdx, amplitude);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -165,6 +173,7 @@ void SoundDevicesRpc::incLFOAmplitude(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.incLFOAmplitude(voiceIdx, paramIdx, increment);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -175,6 +184,7 @@ void SoundDevicesRpc::setLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.setLFOFrequency(voiceIdx, paramIdx, frequency);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -185,6 +195,7 @@ void SoundDevicesRpc::incLFOFrequency(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.incLFOFrequency(voiceIdx, paramIdx, increment);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -195,6 +206,7 @@ void SoundDevicesRpc::setLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.setLFOMultiplierExp(voiceIdx, paramIdx, exponent);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 
@@ -205,6 +217,7 @@ void SoundDevicesRpc::incLFOMultiplierExp(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.incLFOMultiplierExp(voiceIdx, paramIdx, increment, false);
+      soundHandler.calcActualVal(voiceIdx, paramIdx);
    });
 }
 

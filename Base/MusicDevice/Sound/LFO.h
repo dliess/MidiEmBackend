@@ -34,7 +34,6 @@ inline int operator & (DirtyFlags a, DirtyFlags b)
 class LFO
 {
 public:
-   void calculateValueMods() noexcept;
    [[nodiscard]] bool enabled() const noexcept;
    [[nodiscard]] float calculateValue() noexcept;
    void setWaveform(Waveform waveform) noexcept;
@@ -51,12 +50,10 @@ public:
    void clearModifier2Frequency();
    void clearModifier2MultiplierExp();
 
-
    [[nodiscard]] Waveform waveform() const noexcept;
    [[nodiscard]] float amplitude() const noexcept;
    [[nodiscard]] float frequency() const noexcept;
    [[nodiscard]] uint32_t multiplierExp() const noexcept;
-   [[nodiscard]] bool dirty() const noexcept;
 
    void reset() noexcept;
    bool getAndResetJustGotDisabled() noexcept;
@@ -116,7 +113,6 @@ private:
    void calcActualVal2MultiplierExp();
 
    void setWaveformVariant(Waveform waveform) noexcept;
-   void clearModifiers() noexcept;
 
    DirtyFlags m_dirtyFlagsUi{DirtyFlags::Empty};
 

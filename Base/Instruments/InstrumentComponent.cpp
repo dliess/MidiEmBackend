@@ -58,6 +58,7 @@ void Component::incrementParameterValueDontCache(
    {
       m_pSoundDevice->incrementParameterValue(
           m_sdVoiceIdx, parameterIdx, parameterAttr, increment, roundRobin);
+      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
       m_pSoundDevice->lastplayerId = nullptr;
       m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
@@ -116,6 +117,7 @@ void Component::setParameterValue(
               false, valueRange);
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedModifiedValue);
+      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
    }
 }
 
@@ -132,6 +134,7 @@ void Component::setParameterValueDontCache(
 
       m_pSoundDevice->setParameterValue(m_sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
+      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, parameterIdx);
       m_pSoundDevice->lastplayerId = nullptr;
       m_pParameterCache->dontOverwriteOnNextNoteOn(parameterIdx, parameterAttr);
    }
@@ -216,6 +219,7 @@ void Component::refreshParameters() const
              m_sdVoiceIdx, paramIdx,
              m_pParameterCache->at(paramIdx).lfo.waveform);
       }
+      m_pSoundDevice->calcActualVal(m_sdVoiceIdx, paramIdx);
    }
    m_pParameterCache->clearOverwriteList();
 }

@@ -6,7 +6,6 @@
 using namespace base::musicDevice;
 using namespace base::parameterScenes;
 
-
 ModifiersApplyer::ModifiersApplyer(
     MusicDeviceContainer& rMusicDeviceContainer) noexcept :
     m_rMusicDeviceContainer(rMusicDeviceContainer)
@@ -20,12 +19,14 @@ ModifiersApplyer::ModifiersApplyer(
           emitSceneIntensityChanged(sceneIdx, intensity);
        });
    m_parameterSceneContainer.onModifierEndValueChanged(
-       [this](int sceneIdx, const musicDevice::sound::ParameterCoordinate& coord,
+       [this](int sceneIdx,
+              const musicDevice::sound::ParameterCoordinate& coord,
               float value) {
           emitModifierEndValueChanged(sceneIdx, coord, value);
        });
    m_parameterSceneContainer.onModifierRemoved(
-       [this](int sceneIdx, const musicDevice::sound::ParameterCoordinate& coord) {
+       [this](int sceneIdx,
+              const musicDevice::sound::ParameterCoordinate& coord) {
           emitModifierRemoved(sceneIdx, coord);
        });
 }
@@ -43,7 +44,8 @@ void ModifiersApplyer::setSceneIntensity(int sceneIdx, float intensity)
 }
 
 void ModifiersApplyer::setModifierEndValue(
-    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord, float value)
+    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
+    float value)
 {
    clearReferenced();
    m_parameterSceneContainer.setModifierEndValue(sceneIdx, paramCoord, value);
@@ -51,10 +53,12 @@ void ModifiersApplyer::setModifierEndValue(
 }
 
 void ModifiersApplyer::incrementModifierEndValue(
-    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord, float increment)
+    int sceneIdx, const musicDevice::sound::ParameterCoordinate& paramCoord,
+    float increment)
 {
    clearReferenced();
-   m_parameterSceneContainer.incrementModifierEndValue(sceneIdx, paramCoord, increment);
+   m_parameterSceneContainer.incrementModifierEndValue(sceneIdx, paramCoord,
+                                                       increment);
    apply();
 }
 

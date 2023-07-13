@@ -474,4 +474,24 @@ inline void ParameterStorage::calcActualVal(int voiceIdx, int paramIdx)
 {
    elementContainer(voiceIdx).parameters[paramIdx].calcActualVal();
 }
+
+inline
+void ParameterStorage::calcActualValuesForVoice(int voiceIdx)
+{
+   forEachParameter(
+       [](int paramIdx, ParameterStorageElement& element) {
+          element.calcActualVal();
+       },
+       voiceIdx);
+}
+
+inline
+void ParameterStorage::calcAllActualValues()
+{
+   forEachParameter(
+       [](int, int, ParameterStorageElement& element) {
+          element.calcActualVal();
+       });
+}
+
 }   // namespace base::musicDevice::sound

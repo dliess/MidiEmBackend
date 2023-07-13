@@ -86,6 +86,7 @@ void PresetHandler::resetToActualSoundPreset(int voiceIdx) noexcept
           m_rParameterStorage.setFrequency(voiceIdx, paramIdx, from.lfo.frequency);
           m_rParameterStorage.setWaveform(voiceIdx, paramIdx, from.lfo.waveform);
           m_rParameterStorage.setMultiplierExp(voiceIdx, paramIdx, from.lfo.multiplierExp);
+          m_rParameterStorage.calcActualVal(voiceIdx, paramIdx);
        },
        voiceIdx);
    if (m_pMidiOutMsgHandler && presetData.slotOnDeviceIndex.has_value())

@@ -33,59 +33,17 @@ inline float LFO::calculateValue() noexcept
    return (m_actualAmplitude - 0.5f) * 2.0f * fnVal;
 };
 
-inline void LFO::calculateValueMods() noexcept
-{
-   if (!dirty())
-      return;
-   const Waveform mWaveform      = modifiedWaveform();
-   const float mAmplitude        = modifiedAmplitude();
-   const float mFrequency        = modifiedFrequency();
-   const uint32_t mMultiplierExp = modifiedMultiplierExp();
-   clearModifiers();
-
-   if (m_actualWaveform != mWaveform)
-   {
-      m_actualWaveform = mWaveform;
-      setWaveformVariant(m_actualWaveform);
-      m_dirtyFlagsUi |= DirtyFlags::Waveform;
-   }
-   if (m_actualAmplitude != mAmplitude)
-   {
-      m_actualAmplitude = mAmplitude;
-      if (util::floatEqual(m_actualAmplitude, 0.5f))
-      {
-         m_justGotDisabled = true;
-      }
-      m_dirtyFlagsUi |= DirtyFlags::Amplitude;
-   }
-   if (m_actualFrequency != mFrequency)
-   {
-      m_actualFrequency = mFrequency;
-      if (m_actualFrequency == 0.0)
-      {
-         m_justGotDisabled = true;
-      }
-      m_dirtyFlagsUi |= DirtyFlags::Frequency;
-   }
-   if (m_actualMultiplierExp != mMultiplierExp)
-   {
-      m_actualMultiplierExp = mMultiplierExp;
-      m_dirtyFlagsUi |= DirtyFlags::MultiplierExp;
-   }
-}
-
 inline void LFO::setWaveform(Waveform waveform) noexcept
 {
    if (m_waveform != waveform)
    {
       m_waveform = waveform;
-      m_dirtyFlagsUi |= DirtyFlags::Waveform;
+      calcActualVal2Waveform();
    }
 }
 
 inline void LFO::setWaveformVariant(Waveform waveform) noexcept
 {
-   m_dirtyFlagsUi |= DirtyFlags::Waveform;
    switch (waveform)
    {
       case Waveform::Sine: m_waveformVariant.emplace<Sine>(); break;
@@ -102,7 +60,7 @@ inline void LFO::setAmplitude(float amplitude) noexcept
    if (m_amplitude != amplitude)
    {
       m_amplitude = amplitude;
-      m_dirtyFlagsUi |= DirtyFlags::Amplitude;
+      calcActualVal2Amplitude();
    }
 }
 
@@ -112,7 +70,7 @@ inline void LFO::setFrequency(float frequency) noexcept
    if (m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
    {
       m_frequency = frequency;
-      m_dirtyFlagsUi |= DirtyFlags::Frequency;
+      calcActualVal2Frequency();
    }
 }
 
@@ -122,7 +80,7 @@ inline void LFO::setMultiplierExp(uint32_t multiplierExp) noexcept
    if (m_multiplierExp != multiplierExp)
    {
       m_multiplierExp = multiplierExp;
-      m_dirtyFlagsUi |= DirtyFlags::MultiplierExp;
+      calcActualVal2MultiplierExp();
    }
 }
 
@@ -240,11 +198,6 @@ inline uint32_t LFO::multiplierExp() const noexcept
    return m_actualMultiplierExp;
 }
 
-inline bool LFO::dirty() const noexcept
-{
-   return m_dirtyFlagsUi != DirtyFlags::Empty;
-}
-
 inline void LFO::reset() noexcept
 {
    setAmplitude(DefaultAmplitude);
@@ -284,14 +237,6 @@ inline uint32_t LFO::modifiedMultiplierExp() const noexcept
    return util::clip(
        calculateModifiedValue(m_multiplierExp, m_multiplierExpModifier), 0U,
        MAX_MULTIPLIER_EXP);
-}
-
-inline void LFO::clearModifiers() noexcept
-{
-   m_waveformModifier.clear();
-   m_amplitudeModifier.clear();
-   m_frequencyModifier.clear();
-   m_multiplierExpModifier.clear();
 }
 
 template <typename CB_amp, typename CB_freq, typename CB_waw, typename CB_mult>

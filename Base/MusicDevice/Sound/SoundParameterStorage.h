@@ -78,6 +78,8 @@ public:
                       float destValue, float intensity) noexcept;
    void resetModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr);
    void calcActualVal(int voiceIdx, int paramIdx);
+   void calcActualValuesForVoice(int voiceIdx);
+   void calcAllActualValues();
 
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 

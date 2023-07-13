@@ -106,6 +106,8 @@ public:
                       float destValue, float intensity) noexcept;
    void resetModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr);
    void calcActualVal(int voiceIdx, int paramIdx);
+   void calcActualValuesForVoice(int voiceIdx);
+   void calcAllActualValues();
 
    // TODO: do we need this?
    // inline SoundPresetHandler* soundPresetHandler() noexcept;
