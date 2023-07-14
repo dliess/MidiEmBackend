@@ -59,8 +59,6 @@ private:
        const musicDevice::controller::EventIdExt& eventIdExt) noexcept;
 
    void printMap() const noexcept;
-
-   static constexpr int ANY = -1;
 };
 
 }   // namespace base::eventRouter

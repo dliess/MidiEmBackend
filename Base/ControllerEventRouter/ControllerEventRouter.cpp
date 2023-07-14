@@ -11,6 +11,24 @@
 using namespace base::eventRouter;
 using namespace base::musicDevice;
 
+inline
+controller::EventIdExt changeNoteNumberToAnyIfDestIsMelodic(const controller::EventIdExt& from,
+                                                            const EventDestination& to)
+{
+   static constexpr int ANY = -1;
+   controller::EventIdExt source = from;
+   if (auto note = mpark::get_if<controller::Note>(&source.eventId.widgetCoord))
+   {
+      if (note->number != ANY &&
+          mpark::holds_alternative<EventDestination::Melodic>(
+              to.endpoint))
+      {
+         note->number = ANY;
+      }
+   }
+   return source;
+}
+
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
                          MusicDeviceContainerRef rMusicDeviceContainer,
                          musicDevice::factory::DataHolder& rMDFDataHolder) :
@@ -80,7 +98,8 @@ void EventRouter::createConnection(const musicDevice::controller::EventIdExt& fr
    auto mdId = m_rMDFDataHolder.getMdIdByUUID(from.uuid);
    if(mdId)
    {
-      m_loaderData.try_emplace({*mdId, from.eventId}, to);
+      const auto src = changeNoteNumberToAnyIfDestIsMelodic(from, to);
+      m_loaderData.try_emplace({*mdId, src.eventId}, to);
       m_persister.save(m_loaderData);
    }
 }
@@ -92,26 +111,27 @@ void EventRouter::removeConnection(
    auto mdId = m_rMDFDataHolder.getMdIdByUUID(from.uuid);
    if(mdId)
    {
-      auto it = m_loaderData.find({*mdId, from.eventId});
-      m_loaderData.erase(it);
-      m_persister.save(m_loaderData);
+      LoaderData::key_type key{*mdId, from.eventId};
+      /*
+      spdlog::info("Try to delete: {}" + nlohmann::json(key).dump());
+      for(const auto& [theKey, element] : m_loaderData) {
+         spdlog::info("Keys in container: {}" + nlohmann::json(theKey).dump());
+      }
+      */
+      auto it = m_loaderData.find(key);
+      if(it != m_loaderData.end())
+      {
+         m_loaderData.erase(it);
+         m_persister.save(m_loaderData);
+      }
    }
 }
 
 void EventRouter::_createConnection(const controller::EventIdExt& from,
-                                   const EventDestination& to) noexcept
+                                    const EventDestination& to) noexcept
 {
-   controller::EventIdExt source = from;
+   controller::EventIdExt source = changeNoteNumberToAnyIfDestIsMelodic(from, to);
    EventDestination destination  = to;
-   if (auto note = mpark::get_if<controller::Note>(&source.eventId.widgetCoord))
-   {
-      if (note->number != ANY &&
-          mpark::holds_alternative<EventDestination::Melodic>(
-              destination.endpoint))
-      {
-         note->number = ANY;
-      }
-   }
 
    if (auto param =
            mpark::get_if<EventDestination::Parameter>(&destination.controlType))
@@ -192,15 +212,19 @@ void EventRouter::_removeConnection(
          CASE(EventDestination::MusicDevice,_) {}
       END_SWITCH
    }
+   bool erased = false;
    m_map.withNonRtLocked([&](auto& map) {
       auto it = map.find(eventIdExt);
       if(it != map.end())
       {
+         erased = true;
          map.erase(it);
       }
    });
-
-   emitGotErased(eventIdExt);
+   if(erased) 
+   {
+      emitGotErased(eventIdExt);
+   }
 }
 
 void EventRouter::printMap() const noexcept
