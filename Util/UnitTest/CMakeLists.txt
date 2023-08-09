@@ -11,7 +11,6 @@ set(SOURCES
     "UT_JsonParseOptionals.cpp"
     "UT_JsonParseVariants.cpp"
     "UT_ReflectionWithNamespace.cpp"
-    "UT_Overload.cpp"
     "UT_Ringbuffer.cpp"
     "UT_ThreadHelpers.cpp"
 )

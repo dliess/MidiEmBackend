@@ -2,7 +2,7 @@
 #define UTIL_PARAMETER_H
 
 #include "StrongType.h"
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 template <typename Tag>
 using FloatingPointType =
@@ -12,6 +12,6 @@ using FloatingPointType =
 
 using ListRangeEnd = util::StrongType<std::size_t, struct ListRangeType>;
 using FloatingPointRangeEnd = util::StrongType<float, struct FloatingPointRangeType>;
-using ValueRangeEnd = mpark::variant<FloatingPointRangeEnd, ListRangeEnd>;
+using ValueRangeEnd = dl::variant<FloatingPointRangeEnd, ListRangeEnd>;
 
 #endif

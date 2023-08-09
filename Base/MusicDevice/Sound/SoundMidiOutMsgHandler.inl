@@ -33,8 +33,8 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
    {
       const int val =
           paramDescr.source.midi->sourceRanges->at(int(value)).range.from;
-      const auto midiMsg = mpark::visit(
-          midi::overload{
+      const auto midiMsg = dl::visit(
+          dl::overload{
               [midiChannel,
                val](const midi::MidiMsgId<midi::ControlChange>& msgId)
                   -> midi::MidiMessage {
@@ -65,8 +65,8 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
    }
    else
    {
-      const auto midiMsg = mpark::visit(
-          midi::overload{
+      const auto midiMsg = dl::visit(
+          dl::overload{
               [midiChannel, value,
                &valueRange](const midi::MidiMsgId<midi::ControlChange>& msgId)
                   -> midi::MidiMessage {

@@ -4,7 +4,6 @@
 #include <spdlog/spdlog.h>
 
 #include "JsonCast.h"
-#include "Overload.h"
 #include "SoundSection.h"
 #include "VectorIndexInRange.h"
 
@@ -595,8 +594,8 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
     int voiceId, int parameterId) const noexcept
 {
    const auto& paramDescr = parameterDescription(voiceId, parameterId);
-   return mpark::visit(
-       util::overload{
+   return dl::visit(
+       dl::overload{
            [this, paramDescr](const int& val) -> float { return val; },
            [this, paramDescr](const double& val) -> float { return val; },
            [this,
@@ -614,7 +613,7 @@ inline float base::musicDevice::description::sound::Section::getInitialValueFor(
        _getInitialValueFor(voiceId, parameterId));
 }
 
-inline mpark::variant<
+inline dl::variant<
     int, double,
     base::musicDevice::description::sound::ParameterSourceRangeBase::Role>
 base::musicDevice::description::sound::Section::_getInitialValueFor(
@@ -803,9 +802,9 @@ base::musicDevice::description::sound::Parameter::getSourceResolution()
                return source.midi->sourceValueRange->to -
                       source.midi->sourceValueRange->from;
             }
-            if (mpark::holds_alternative<midi::MidiMsgId<midi::NRPN>>(
+            if (dl::holds_alternative<midi::MidiMsgId<midi::NRPN>>(
                     source.midi->id) ||
-                mpark::holds_alternative<
+                dl::holds_alternative<
                     midi::MidiMsgId<midi::ControlChangeHighRes>>(
                     source.midi->id))
             {
@@ -876,7 +875,7 @@ inline void base::musicDevice::description::sound::Section::
    forEachEngineBase([](int engineIdx, EngineBase& rEngineBase) {
       if (rEngineBase.parameterDumpRequest)
       {
-         auto* pMsg = mpark::get_if<MidiSysexMsg>(
+         auto* pMsg = dl::get_if<MidiSysexMsg>(
              &rEngineBase.parameterDumpRequest->message);
          if (pMsg)
          {
@@ -884,7 +883,7 @@ inline void base::musicDevice::description::sound::Section::
             for (auto& fieldDescr : pMsg->sysexDescriptors)
             {
                accumSize +=
-                   mpark::visit(util::overload{[accumSize](auto&& val) -> int {
+                   dl::visit(dl::overload{[accumSize](auto&& val) -> int {
                                    val.offset = accumSize;
                                    return val.sizeInSysex();
                                 }},
@@ -899,7 +898,7 @@ inline void base::musicDevice::description::sound::Section::
               rEngineBase.parameterDumpAnswer->sysexDescriptors)
          {
             accumSize +=
-                mpark::visit(util::overload{[accumSize](auto&& val) -> int {
+                dl::visit(dl::overload{[accumSize](auto&& val) -> int {
                                 val.offset = accumSize;
                                 return val.sizeInSysex();
                              }},
@@ -1030,10 +1029,10 @@ base::musicDevice::description::sound::compInherit(
     const ComponentVar& parent, const ComponentVar& child) noexcept
 {
    ComponentVar ret = child;
-   mpark::visit(util::overload{
+   dl::visit(dl::overload{
                     [](const Component&) {},
                     [&parent](OneOfComponents& ret) {
-                       mpark::visit(util::overload{
+                       dl::visit(dl::overload{
                                         [](const Component&) {},
                                         [&ret](const OneOfComponents& parent) {
                                            if (parent.role && !ret.role)

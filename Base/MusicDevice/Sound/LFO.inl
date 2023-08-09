@@ -5,7 +5,6 @@
 #include "BeatTick.h"
 #include "FloatEqual.h"
 #include "LFO.h"
-#include "Overload.h"
 #include "clip.h"
 
 namespace base::musicDevice::sound::lfo
@@ -28,8 +27,8 @@ inline float LFO::calculateValue() noexcept
    }
    const auto t = deltaBeat / period;
 
-   const auto fnVal = mpark::visit(
-       util::overload{[t](auto&& f) { return f(t); }}, m_waveformVariant);
+   const auto fnVal = dl::visit(
+       dl::overload{[t](auto&& f) { return f(t); }}, m_waveformVariant);
    return (m_actualAmplitude - 0.5f) * 2.0f * fnVal;
 };
 

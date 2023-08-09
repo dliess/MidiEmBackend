@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "mpark/variant.hpp"
+#include "Variant.h"
 #include "Meta.h"
 #include "JsonCast.h"
 
@@ -40,15 +40,15 @@ struct PopLocker2 : public Person
 };
 
 
-using PopLocker12 = mpark::variant<PopLocker, PopLocker2>;
+using PopLocker12 = dl::variant<PopLocker, PopLocker2>;
 
 struct MainData
 {
    std::vector<std::vector<PopLocker12>> data;
 };
 
-using Dancer = mpark::variant<BreakDancer, PopLocker>;
-using Dancer2 = mpark::variant<mpark::monostate, BreakDancer, PopLocker>;
+using Dancer = dl::variant<BreakDancer, PopLocker>;
+using Dancer2 = dl::variant<dl::monostate, BreakDancer, PopLocker>;
 
 namespace meta
 {
@@ -160,7 +160,7 @@ TEST(JsonParseVariantsTest, VectorOfVariantToJson) {
    #if 0
    for(auto& folks : dancers)
    {
-      mpark::visit(overload{
+      dl::visit(overload{
          [](const BreakDancer& obj) { std::cout << obj.name << " numHeadspins " << obj.numHeadspins << std::endl; },
          [](const PopLocker& obj) { std::cout << obj.name << " locksPerSecond " << obj.locksPerSecond << std::endl; }
          /*, TODO: somehow always this gets activated even when one of the above would match
@@ -170,7 +170,7 @@ TEST(JsonParseVariantsTest, VectorOfVariantToJson) {
 
    for(auto& folks : dancersReadBack)
    {
-      mpark::visit(overload{
+      dl::visit(overload{
          [](const BreakDancer& obj) { std::cout << obj.name << " numHeadspins " << obj.numHeadspins << std::endl; },
          [](const PopLocker& obj) { std::cout << obj.name << " locksPerSecond " << obj.locksPerSecond << std::endl; }
          /*, TODO: somehow always this gets activated even when one of the above would match
@@ -190,7 +190,7 @@ TEST(JsonParseVariantsTest, NoMatchForVariant) {
 }
 
 TEST(JsonParseVariantsTest, TestSubsetOrder1) {
-   using ClassAndBaseClass = mpark::variant<BreakDancer, Person>;
+   using ClassAndBaseClass = dl::variant<BreakDancer, Person>;
    ClassAndBaseClass dancer;
    dancer.emplace<BreakDancer>("BboyBenny", 20, 300);
    nlohmann::json jDancer(dancer);
@@ -200,7 +200,7 @@ TEST(JsonParseVariantsTest, TestSubsetOrder1) {
 }
 
 TEST(JsonParseVariantsTest, TestSubsetOrder2) {
-   using ClassAndSubClass = mpark::variant<Person, BreakDancer>;
+   using ClassAndSubClass = dl::variant<Person, BreakDancer>;
    ClassAndSubClass dancer;
    dancer.emplace<BreakDancer>("BboyBenny", 20, 300);
    nlohmann::json jDancer(dancer);
@@ -227,8 +227,8 @@ TEST(JsonParseVariantsTest, TestType) {
    ASSERT_EQ( 2, mainData.data[0].size() );
    const auto& var1 = mainData.data[0][0];
    const auto& var2 = mainData.data[0][1];
-   ASSERT_TRUE( mpark::holds_alternative<PopLocker>(var1) );
-   ASSERT_TRUE( mpark::holds_alternative<PopLocker2>(var2) );
+   ASSERT_TRUE( dl::holds_alternative<PopLocker>(var1) );
+   ASSERT_TRUE( dl::holds_alternative<PopLocker2>(var2) );
 }
 
 TEST(JsonParseVariantsTest, BadType) {

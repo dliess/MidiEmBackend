@@ -1,6 +1,5 @@
 #include "NoteMapper.h"
 #include "spdlog/spdlog.h"
-#include <Overload.h>
 
 NoteMapper::NoteMapper(MusicDeviceHolder::MusicDevices& rControllerDevices,
                        Instruments&                     rInstruments) noexcept :
@@ -24,7 +23,7 @@ NoteMapper::Settings NoteMapper::getSettings() const noexcept
     Settings settings;
     for(auto& [src, dst] : m_mapping)
     {
-        auto destSettings = mpark::visit(util::overload{
+        auto destSettings = dl::visit(dl::overload{
             [this](const KitSoundId& rKitSndId) -> decltype(NoteMapperDescription::destination) {
                 decltype(NoteMapperDescription::destination) destination;
                 destination.emplace<KitSoundIdSettings>(KitSoundIdSettings{
@@ -52,7 +51,7 @@ void NoteMapper::setSettings(const Settings& settings) noexcept
     for(const auto& noteMapperDescr : settings)
     {
         try{
-            auto dest = mpark::visit(util::overload{
+            auto dest = dl::visit(dl::overload{
                 [this](const KitSoundIdSettings& rKitSndIdSettings) -> MappingDestination{
                     MappingDestination mappingDestination;
                     auto kitIndex = findIndexOfElementByName(m_rInstruments.kitInstruments, rKitSndIdSettings.kitInstrumentId);

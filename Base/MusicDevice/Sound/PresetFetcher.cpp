@@ -60,7 +60,7 @@ void PresetFetcher::fetchPresets()
          return;
       }
       const auto pSysEX =
-          mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMessage);
+          dl::get_if<midi::Message<midi::SystemExclusive>>(&midiMessage);
       if (pSysEX)
       {
          std::string presetName;

@@ -1,5 +1,5 @@
 #include <spdlog/spdlog.h>
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 #include "JsonCast.h"
 #include "MidiMessageIdsMeta.h"
@@ -34,7 +34,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
 
    m_pMidiInIf->registerMidiInCb([this](const midi::MidiMessage& midiMsg) {
       
-      const auto pSysEX = mpark::get_if<midi::Message<midi::SystemExclusive>>(&midiMsg);
+      const auto pSysEX = dl::get_if<midi::Message<midi::SystemExclusive>>(&midiMsg);
       if(pSysEX)
       {
          /*
@@ -63,7 +63,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
          //m_pMidiInIf->medium().getDeviceName(), midi::toString(midiMsg));  
          return;
       }
-      const auto pProgChange = mpark::get_if<midi::Message<midi::ProgramChange>>(&midiMsg);
+      const auto pProgChange = dl::get_if<midi::Message<midi::ProgramChange>>(&midiMsg);
       if(pProgChange)
       {
          emitProgramChange(*voiceIdx, pProgChange->programNumber());
@@ -71,7 +71,7 @@ sound::MidiInMsgHandler<MidiInIfPtr>::MidiInMsgHandler(
       }
       const auto& map   = m_maps[m_rSoundSection.voice2EngineIdx(*voiceIdx) + 1];
       const auto midiId = midiMessageToId(midiMsg);
-      if (mpark::holds_alternative<mpark::monostate>(midiId))
+      if (dl::holds_alternative<dl::monostate>(midiId))
       {
          return;
       }
@@ -94,8 +94,8 @@ template <typename MidiInIfPtr>
 std::optional<int> sound::MidiInMsgHandler<MidiInIfPtr>::getVoiceIdFromMidiMsg(
     const midi::MidiMessage& midiMsg) const noexcept
 {
-   int midiChannelNumber = mpark::visit(
-       util::overload{
+   int midiChannelNumber = dl::visit(
+       dl::overload{
            [](const midi::Message<midi::NoteOff>& msg) -> int {
               return msg.channel();
            },
@@ -136,8 +136,8 @@ float sound::MidiInMsgHandler<MidiInIfPtr>::getValueBy(
    const auto& descr = m_rSoundSection.parameterDescription(id);
    assert(descr.source.midi.has_value());
 
-   return mpark::visit(
-       midi::overload{
+   return dl::visit(
+       dl::overload{
            [this,
             &descr](const midi::Message<midi::ControlChange>& msg) -> float {
               if (descr.type == description::sound::Parameter::Type::List)
@@ -208,8 +208,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
        [this](const description::sound::ParameterId& paramId,
               const description::sound::Parameter& parameter) {
           assert(parameter.source.midi);
-          mpark::visit(
-              midi::overload{
+          dl::visit(
+              dl::overload{
                   [this](const midi::MidiMsgId<midi::ControlChangeHighRes>&
                              msgId) {
                      m_pMidiInIf->setCCHighResPair(msgId.idMsb, msgId.idLsb);
@@ -224,8 +224,8 @@ void sound::MidiInMsgHandler<MidiInIfPtr>::initCacheBySoundSection() noexcept
                  [&parameter, &found](
                      int componentIdx,
                      const description::sound::ComponentVar& component) {
-                    const std::string compName = mpark::visit(
-                        util::overload{
+                    const std::string compName = dl::visit(
+                        dl::overload{
                             [](const description::sound::Component& c)
                                 -> std::string { return c.name; },
                             [](const description::sound::OneOfComponents& c)

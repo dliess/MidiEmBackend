@@ -1,5 +1,4 @@
 add_subdirectory(itc)
-add_subdirectory(Serialize)
 if(NOMIDI_BACKEND_BUILD_TESTS)
     add_subdirectory(UnitTest EXCLUDE_FROM_ALL)
 endif()
@@ -31,9 +30,10 @@ target_include_directories(${TARGET_NAME}
     PUBLIC ${CMAKE_CURRENT_LIST_DIR}
 )
 target_link_libraries(${TARGET_NAME}
-    PUBLIC UtilSerialize
+    PUBLIC MetaStuff::Meta
+    PUBLIC MetaStuff::SerializeJson
     PUBLIC spdlog::spdlog
-    PUBLIC mpark_variant
+    PUBLIC Variant::Variant
     PUBLIC -lstdc++fs
     PUBLIC uuid
     PUBLIC UtilItc

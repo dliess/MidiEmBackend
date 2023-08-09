@@ -12,7 +12,7 @@ inline std::optional<int> getDependentPressReleaseEventIdx(
 {
    for (int i = 0; i < widget.events.size(); ++i)
    {
-      const auto pressReleaseEvent = mpark::get_if<controller::EventPressRelease>(&widget.events[i]);
+      const auto pressReleaseEvent = dl::get_if<controller::EventPressRelease>(&widget.events[i]);
       if (pressReleaseEvent && !pressReleaseEvent->independent.value_or(false))
       {
          return i;

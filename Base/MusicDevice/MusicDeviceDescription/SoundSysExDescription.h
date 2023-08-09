@@ -2,7 +2,7 @@
 #define SOUND_SYSEX_DESCRIPTION_H
 
 #include "SysExDescription.h"
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 namespace base::musicDevice::description::sound::midisysex
 {
@@ -30,7 +30,7 @@ struct ParameterLowRes : public base::musicDevice::description::midisysex::Field
    std::string parameter;
 };
 
-using FieldDescr = mpark::variant<base::musicDevice::description::midisysex::Bytes, 
+using FieldDescr = dl::variant<base::musicDevice::description::midisysex::Bytes, 
                                   VoiceIdx, PatchNameStr, PatchCategory,
                                   PatchGenre, Reserved, ParameterLowRes>;
 

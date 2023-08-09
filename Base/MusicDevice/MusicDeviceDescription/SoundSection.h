@@ -3,7 +3,7 @@
 
 #include <JsonCast.h>
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include <optional>
 #include <string>
 #include <unordered_map>
@@ -34,7 +34,7 @@ struct MidiSysexMsg
    SysExDescriptors sysexDescriptors;
 };
 
-using ParameterDumpRequestMsg = mpark::variant<MidiCCAndValue, MidiSysexMsg>;
+using ParameterDumpRequestMsg = dl::variant<MidiCCAndValue, MidiSysexMsg>;
 
 DECLARE_ENUM(ParameterDumpRequestEffect, uint, PerVoice, AllVoicesOfEngine);
 
@@ -120,7 +120,7 @@ struct OneOfComponents
    std::optional<Component::Role> role;
 };
 
-using ComponentVar = mpark::variant<Component, OneOfComponents>;
+using ComponentVar = dl::variant<Component, OneOfComponents>;
 
 template <typename T> struct ValueRange
 {
@@ -321,7 +321,7 @@ struct Section
 
    inline bool canDumpPresets() const noexcept;
 private:
-   inline mpark::variant<int, double, ParameterSourceRangeBase::Role>
+   inline dl::variant<int, double, ParameterSourceRangeBase::Role>
    _getInitialValueFor(int voiceId, int parameterId) const noexcept;
    inline Engine inherit(const Engine& parent, const Engine& child) noexcept;
 

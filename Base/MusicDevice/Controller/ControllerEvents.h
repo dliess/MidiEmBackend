@@ -1,10 +1,9 @@
 #ifndef CONTROLLER_EVENTS_H
 #define CONTROLLER_EVENTS_H
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include <string>
 #include "Identifiable.h"
-#include "Overload.h"
 
 namespace base::musicDevice::controller
 {
@@ -23,7 +22,7 @@ struct Note
 struct EventId
 {
    int widgetId;
-   using Coord = mpark::variant<mpark::monostate, WidgetCoord, Note>;
+   using Coord = dl::variant<dl::monostate, WidgetCoord, Note>;
    Coord widgetCoord;
    int eventId;
    int channelId{0};
@@ -49,7 +48,7 @@ struct RelativeValueType
    size_t fittingSemitones{2};
 };
 
-using EventValue = mpark::variant<mpark::monostate, PressReleaseType,
+using EventValue = dl::variant<dl::monostate, PressReleaseType,
                                   ContinousValueType, IncrementType, 
                                   RelativeValueType>;
 

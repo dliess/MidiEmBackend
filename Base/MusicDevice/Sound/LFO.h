@@ -1,7 +1,7 @@
 #ifndef BASE_MODULATION_LFO
 #define BASE_MODULATION_LFO
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 #include "LFOData.h"
 #include "ValueModifier.h"
@@ -94,7 +94,7 @@ private:
    uint32_t m_multiplierExp{DefaultMultiplierExp};
    uint32_t m_actualMultiplierExp{DefaultMultiplierExp};
    double m_beatAtWaveStart{0.0};
-   using WaveformVariant = mpark::variant<Sine, Square, Triangle, Saw, Random>;
+   using WaveformVariant = dl::variant<Sine, Square, Triangle, Saw, Random>;
    Waveform m_waveform{Waveform::Sine};
    Waveform m_actualWaveform{Waveform::Sine};
    WaveformVariant m_waveformVariant{Sine{}};

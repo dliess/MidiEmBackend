@@ -2,10 +2,9 @@
 #define BASE_SOUND_PARAMETER_DATA_H
 
 #include <magic_enum.hpp>
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 #include "LFOData.h"
-#include "Overload.h"
 #include "ParameterAttr.h"
 #include "SoundSection.h"
 #include "StrongType.h"
@@ -41,7 +40,7 @@ struct ParameterDataCustomType
 };
 
 using ParameterValue =
-    mpark::variant<Parameter, ParameterLFOFreq, ParameterLFOAmp,
+    dl::variant<Parameter, ParameterLFOFreq, ParameterLFOAmp,
                    ParameterLFOWaveform, ParameterLFOMultiplExp>;
 
 inline void setParameterData(ParameterData& pd,
@@ -222,24 +221,24 @@ const T& getParameterDataConstRef(const ParameterDataCustomType<T>& pd,
 
 
 static_assert(
-    std::is_same_v<Parameter, mpark::variant_alternative_t<
+    std::is_same_v<Parameter, dl::variant_alternative_t<
                                   static_cast<int>(ParameterAttr::Commanded),
                                   ParameterValue>>);
 static_assert(std::is_same_v<ParameterLFOFreq,
-                             mpark::variant_alternative_t<
+                             dl::variant_alternative_t<
                                  static_cast<int>(ParameterAttr::LfoFrequency),
                                  ParameterValue>>);
 static_assert(std::is_same_v<ParameterLFOAmp,
-                             mpark::variant_alternative_t<
+                             dl::variant_alternative_t<
                                  static_cast<int>(ParameterAttr::LfoAmplitude),
                                  ParameterValue>>);
 static_assert(std::is_same_v<ParameterLFOWaveform,
-                             mpark::variant_alternative_t<
+                             dl::variant_alternative_t<
                                  static_cast<int>(ParameterAttr::LfoWaveform),
                                  ParameterValue>>);
 static_assert(
     std::is_same_v<ParameterLFOMultiplExp,
-                   mpark::variant_alternative_t<
+                   dl::variant_alternative_t<
                        static_cast<int>(ParameterAttr::LfoMultiplierExp),
                        ParameterValue>>);
 

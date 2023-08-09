@@ -17,10 +17,10 @@ controller::EventIdExt changeNoteNumberToAnyIfDestIsMelodic(const controller::Ev
 {
    static constexpr int ANY = -1;
    controller::EventIdExt source = from;
-   if (auto note = mpark::get_if<controller::Note>(&source.eventId.widgetCoord))
+   if (auto note = dl::get_if<controller::Note>(&source.eventId.widgetCoord))
    {
       if (note->number != ANY &&
-          mpark::holds_alternative<EventDestination::Melodic>(
+          dl::holds_alternative<EventDestination::Melodic>(
               to.endpoint))
       {
          note->number = ANY;
@@ -134,7 +134,7 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
    EventDestination destination  = to;
 
    if (auto param =
-           mpark::get_if<EventDestination::Parameter>(&destination.controlType))
+           dl::get_if<EventDestination::Parameter>(&destination.controlType))
    {
       auto controllerWidgetDescr = controlWidgetDescription(from);
       if (!controllerWidgetDescr)

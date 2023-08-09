@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_SECTION_H
 #define CONTROLLER_SECTION_H
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include <string>
 
 #include "MidiMessageIds.h"
@@ -91,7 +91,7 @@ struct EventDerivedIncremental
    int sourceEventIdx; // Dont Serialize, its a helper value
 };
 
-using Event = mpark::variant<
+using Event = dl::variant<
    EventIncremental, EventPressRelease,
    EventContinousValue,
    EventDerivedContinousValue,

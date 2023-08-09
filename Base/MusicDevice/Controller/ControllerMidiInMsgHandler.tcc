@@ -143,7 +143,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                                           diffFromMiddleVal};
                   }
                },
-               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return dl::monostate(); }
          R_END_SWITCH
          },
          CASE(midi::Message<midi::ControlChangeHighRes>, msg)
@@ -173,7 +173,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                   return IncrementType{
                      msg.controllerValue() - (midi::Message<midi::ControlChangeHighRes>::RES_MAX / 2)};
                },
-               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return dl::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NRPN>, msg)
@@ -203,7 +203,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                   return IncrementType{
                      msg.getValue() - (midi::Message<midi::NRPN>::RES_MAX / 2)};
                },
-               CASE_DEFAULT -> EventValue { return mpark::monostate(); }
+               CASE_DEFAULT -> EventValue { return dl::monostate(); }
             R_END_SWITCH
          },
          CASE(midi::Message<midi::NoteOn>, msg)
@@ -219,7 +219,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                },
                CASE_DEFAULT -> EventValue 
                { 
-                  return mpark::monostate();
+                  return dl::monostate();
                }
             R_END_SWITCH
          },
@@ -227,7 +227,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
          {
             if (mpeMode)
             { // TODO: see if it has no side-effects: evts coming after noteOff?
-               m_mpeMap[msg.channel() - 1] = mpark::monostate();
+               m_mpeMap[msg.channel() - 1] = dl::monostate();
             }
             return R_SWITCH(eventDescr)
                CASE(description::controller::EventPressRelease, evt) -> EventValue
@@ -236,7 +236,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                },
                CASE_DEFAULT -> EventValue
                {
-                  return mpark::monostate();
+                  return dl::monostate();
                }
             R_END_SWITCH
          },
@@ -250,7 +250,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                CASE_DEFAULT -> EventValue
                {
                   spdlog::error("AfterTouchChannel should always be RelativeValue");
-                  return mpark::monostate(); 
+                  return dl::monostate(); 
                }
             R_END_SWITCH
          },
@@ -263,7 +263,7 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                },
                CASE_DEFAULT -> EventValue
                {
-                  return mpark::monostate();
+                  return dl::monostate();
                }
             R_END_SWITCH
          },
@@ -277,19 +277,19 @@ void MidiInMsgHandler<MidiInIfPtr>::handleRouting(
                CASE_DEFAULT -> EventValue 
                {
                   spdlog::error("<midi::PitchBend should result in an event type: EventRelativeValue");
-                  return mpark::monostate(); 
+                  return dl::monostate(); 
                }
             R_END_SWITCH
          },
-         CASE_DEFAULT -> EventValue { return mpark::monostate(); }
+         CASE_DEFAULT -> EventValue { return dl::monostate(); }
    R_END_SWITCH
-   if (!mpark::holds_alternative<mpark::monostate>(value))
+   if (!dl::holds_alternative<dl::monostate>(value))
    {
       if (midiChannelNr && (TO_BE_FILLED_BY_MPE_MARKER == id.widgetCoord))
       {
          const int channelIdx = midiChannelNr.value() - 1;
          const auto storedWCoord = m_mpeMap[channelIdx];
-         if(mpark::holds_alternative<mpark::monostate>(storedWCoord)) 
+         if(dl::holds_alternative<dl::monostate>(storedWCoord)) 
          {
             auto it = std::ranges::find_if(m_mpePrePressEvtCache[channelIdx], [](const auto& e){ return !e.has_value(); });
             if(it != m_mpePrePressEvtCache[channelIdx].end()) 
@@ -414,7 +414,7 @@ void fillMapByEventSourceNonPR(
    assert(source.size() > 0 && source[0].size() > 0);
    if(global)
    {
-      rMap[source[0][0]] = EventId{widgetId, mpark::monostate(), eventId};
+      rMap[source[0][0]] = EventId{widgetId, dl::monostate(), eventId};
    }
    else
    {

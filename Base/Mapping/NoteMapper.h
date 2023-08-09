@@ -6,7 +6,7 @@
 #include "MusicDeviceHolder.h"
 #include "Instruments.h"
 #include <unordered_map>
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 class NoteMapper : public utils::Settings<NoteMapper>
 {
@@ -30,7 +30,7 @@ private:
       int index{INVALID_IDX};
    };
 
-   using MappingDestination = mpark::variant<KitSoundId, MelodicInstrumentId>;
+   using MappingDestination = dl::variant<KitSoundId, MelodicInstrumentId>;
    using MapType = std::unordered_map<ControllerDeviceId, MappingDestination, ControllerDeviceId::HashFn>;
    MapType                          m_mapping;
    MusicDeviceHolder::MusicDevices& m_rControllerDevices;

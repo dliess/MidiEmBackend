@@ -1,13 +1,12 @@
 #ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_H
 #define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_H
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include <optional>
 #include <memory>
 #include "EnumReflect.h"
 #include "Identifiable.h"
 #include "MusicDeviceId.h"
-#include "Overload.h"
 #include "ParameterAttr.h"
 
 namespace base::eventRouter
@@ -38,7 +37,7 @@ struct EventDestination
       int voiceIdx;
       auto operator<=>(const MusicDevice&) const = default;
    };
-   using Endpoint = mpark::variant<DrumKit, Melodic, MusicDevice>;
+   using Endpoint = dl::variant<DrumKit, Melodic, MusicDevice>;
 
    // ControlType
    struct Note
@@ -67,7 +66,7 @@ struct EventDestination
       DescriptionCache descriptionCache;
       std::shared_ptr<ValueCache> valueCache;
    };
-   using ControlType = mpark::variant<Note, Parameter>;
+   using ControlType = dl::variant<Note, Parameter>;
 
    Endpoint endpoint;
    ControlType controlType;

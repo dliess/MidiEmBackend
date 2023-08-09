@@ -59,8 +59,8 @@ void Router::handleSpecialized(
     const midi::MidiMessage& midiMsg, const RoutingDataSpecialized& specialized,
     musicDevice::MusicDevice::MidiOutput& midiOut) noexcept
 {
-   mpark::visit(
-       midi::overload{
+   dl::visit(
+       dl::overload{
            [&specialized, &midiOut](const midi::Message<midi::Clock>& msg) {
               if (specialized.transmitClockMsg)
               {

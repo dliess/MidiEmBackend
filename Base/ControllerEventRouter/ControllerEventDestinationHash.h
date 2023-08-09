@@ -1,8 +1,7 @@
 #ifndef BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_HASH_H
 #define BASE_MUSIC_DEVICE_CONTROLLER_EVENT_DESTINATION_HASH_H
 
-#include <mpark/variant.hpp>
-#include "Overload.h"
+#include <Variant.h>
 
 namespace std
 {
@@ -11,8 +10,8 @@ template <> struct hash<base::eventRouter::EventDestination::Endpoint>
 {
    std::size_t operator()(const base::eventRouter::EventDestination::Endpoint& endpoint) const
    {
-      return mpark::visit(
-         util::overload{
+      return dl::visit(
+         dl::overload{
             [](const base::eventRouter::EventDestination::DrumKit drumKit) -> std::size_t {
                return util::IdentifiableHash{}(drumKit.uuid) ^
                       std::hash<int>{}(drumKit.voiceIdx) << 16 ^
@@ -35,8 +34,8 @@ template <> struct hash<base::eventRouter::EventDestination::ControlType>
 {
    std::size_t operator()(const base::eventRouter::EventDestination::ControlType& controllerType) const
    {
-      return mpark::visit(
-         util::overload{
+      return dl::visit(
+         dl::overload{
             [](const base::eventRouter::EventDestination::Note& note) -> std::size_t {
                return std::hash<int>{}(note.pitch);
             },

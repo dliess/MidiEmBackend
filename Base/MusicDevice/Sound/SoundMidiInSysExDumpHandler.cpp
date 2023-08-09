@@ -87,8 +87,8 @@ void MidiInSysExDumpHandler::handle(
    }
    for (const auto& fieldDescr : *pSysexMsgDescr)
    {
-      mpark::visit(
-          util::overload{
+      dl::visit(
+          dl::overload{
               [this, &voiceIdx, &sysexMsg](
                   const description::sound::midisysex::ParameterLowRes& param) {
                  const auto paramIdx = m_rSoundSection.getParameterIdx(
@@ -152,8 +152,8 @@ bool MidiInSysExDumpHandler::checkIfIsParameterDumpMsg(
    int accumSize = 0;
    for (const auto& fieldDescr : sysexMsgDescriptor)
    {
-      accumSize += mpark::visit(
-          util::overload{[](auto&& val) -> int { return val.sizeInSysex(); }},
+      accumSize += dl::visit(
+          dl::overload{[](auto&& val) -> int { return val.sizeInSysex(); }},
           fieldDescr);
    }
 
@@ -167,8 +167,8 @@ std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
 {
    for (const auto& fieldDescr : sysexMsgDescriptors)
    {
-      std::optional<int> ret = mpark::visit(
-          util::overload{
+      std::optional<int> ret = dl::visit(
+          dl::overload{
               [this, &sysexMsg](
                   const description::sound::midisysex::VoiceIdx& voiceIdx)
                   -> std::optional<int> {

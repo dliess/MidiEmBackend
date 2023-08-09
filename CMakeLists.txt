@@ -6,6 +6,7 @@ project(NomidiBackend LANGUAGES CXX)
 include(GNUInstallDirs)
 
 include(CTest)
+option (USE_MPARK_VARIANT "use mpark variant" ON)
 option (NOMIDI_BACKEND_BUILD_TESTS "build tests enabled" ON)
 if (${NOMIDI_BACKEND_BUILD_TESTS})
    message(STATUS "Build with Unit Tests")
@@ -19,7 +20,9 @@ CPMFindPackage(
   NAME midi
   GITHUB_REPOSITORY dliess/Midi
   #GIT_REPOSITORY git@danita-hp:app/Midi.git
-  GIT_TAG d64ac0fb3e79227ef2d26b3b7e0d24a4be48d8a7
+  GIT_TAG master
+  OPTIONS
+    "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
 if(midi_ADDED)
   add_library(MIDI::midi ALIAS midi)
@@ -33,9 +36,11 @@ CPMFindPackage(
 )
 
 CPMFindPackage(
-  NAME mpark_variant
-  GITHUB_REPOSITORY mpark/variant
-  VERSION 1.4.0
+  NAME variant
+  GITHUB_REPOSITORY dliess/variant
+  GIT_TAG a2a7bc986b25a3548e24ad66ed900f4aa9eb60ad
+  OPTIONS
+    "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
 
 find_package(spdlog 1.8.1 CONFIG REQUIRED)
@@ -68,10 +73,8 @@ CPMFindPackage(
   GIT_TAG develop
   OPTIONS
     "WITH_EXAMPLES OFF"
+    "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
-if(MetaStuff_ADDED)
-  add_library(MetaStuff::MetaStuff ALIAS MetaStuff)
-endif()
 
 CPMFindPackage(
   NAME TimeMeasure

@@ -55,11 +55,11 @@ void AdditionalEventCreator::createFromContinousToRelative(const Event& event, i
    }
    else
    {
-      const float diff = mpark::get<ContinousValueType>(event.value).value - lastVal;
+      const float diff = dl::get<ContinousValueType>(event.value).value - lastVal;
       if(std::fabs(diff) < VALUE_JUMP_THRESHOLD)
       {
-         const float vdiff = mpark::get<ContinousValueType>(event.value).value -
-                             mpark::get<ContinousValueType>(it->value).value;
+         const float vdiff = dl::get<ContinousValueType>(event.value).value -
+                             dl::get<ContinousValueType>(it->value).value;
          emitEventHappened(Event{destEvtId, RelativeValueType{vdiff}});
       }
       else
@@ -74,7 +74,7 @@ void AdditionalEventCreator::createFromContinousToIncremental(const Event& event
 {
    EventId destEvtId(event.id);
    destEvtId.eventId = destEvtIdx;
-   const float diff = mpark::get<ContinousValueType>(event.value).value - lastVal;
+   const float diff = dl::get<ContinousValueType>(event.value).value - lastVal;
    const auto incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
    if(std::fabs(diff) < VALUE_JUMP_THRESHOLD && incr != 0)
    {
@@ -85,7 +85,7 @@ void AdditionalEventCreator::createFromRelativeToIncremental(const Event& event,
 {
    EventId destEvtId(event.id);
    destEvtId.eventId = destEvtIdx;
-   const float diff = mpark::get<RelativeValueType>(event.value).value - lastVal;
+   const float diff = dl::get<RelativeValueType>(event.value).value - lastVal;
    const auto incr = int(diff * DERIVED_INCREMENT_RESOLUTION);
    if(std::fabs(diff) < VALUE_JUMP_THRESHOLD  && incr != 0)
    {
@@ -107,7 +107,7 @@ void AdditionalEventCreator::createFromIncrementalToRelative(const Event& event,
    }
    else
    {
-      const auto increment = mpark::get<IncrementType>(event.value);
+      const auto increment = dl::get<IncrementType>(event.value);
       const float diff = increment.value / float(increment.resolution) ;
       emitEventHappened(Event{destEvtId, RelativeValueType{diff}});
    }
@@ -175,7 +175,7 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
    const description::controller::EventPressRelease& evtDescr,
    const Event& event)
 {
-   const auto value = mpark::get<PressReleaseType>(event.value).value;
+   const auto value = dl::get<PressReleaseType>(event.value).value;
    if(value > 0.0)
    {
       if(evtDescr.pressVelocityEvtIdx)
@@ -189,7 +189,7 @@ void AdditionalEventCreator::createExtraEvents4PressReleaseEvent(
          EventId derivedEvtId(event.id);
          derivedEvtId.eventId = evtDescr.keytrackEvtIdx.value();
          static constexpr int NUM_NOTES = 128;
-         auto note = mpark::get_if<Note>(&derivedEvtId.widgetCoord);
+         auto note = dl::get_if<Note>(&derivedEvtId.widgetCoord);
          if(note)
          {
             const float keytrackValue = float(note->number) / NUM_NOTES;
@@ -246,13 +246,13 @@ void AdditionalEventCreator::eventReceived(const Event& event)
       },
       CASE(description::controller::EventContinousValue, evtDescr)
       {
-         const auto lastVal = mpark::get<ContinousValueType>(lastEvVal).value;
+         const auto lastVal = dl::get<ContinousValueType>(lastEvVal).value;
          const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
          createExtraEvents4ContinousEvent(eventsDescr, event, evtIdx, lastVal);
       },
       CASE(description::controller::EventRelativeValue, evtDescr)
       {
-         const auto lastVal = mpark::get<RelativeValueType>(lastEvVal).value;
+         const auto lastVal = dl::get<RelativeValueType>(lastEvVal).value;
          const int evtIdx = determineMainEvtIdx(evtDescr, event.id, m_independentPressList);
          createExtraEvents4RelativeEvent(eventsDescr, event, evtIdx, lastVal);
       },

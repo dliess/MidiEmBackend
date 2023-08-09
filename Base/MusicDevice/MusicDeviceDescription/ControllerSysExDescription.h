@@ -2,7 +2,7 @@
 #define CONTROLLER_SYSEX_DESCRIPTION_H
 
 #include "SysExDescription.h"
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 namespace base::musicDevice::description::controller::midisysex
 {

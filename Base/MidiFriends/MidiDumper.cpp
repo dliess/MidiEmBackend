@@ -32,7 +32,7 @@ void Dumper::handleMidiIn(const musicDevice::MidiHolder::Id& id,
    auto it = m_data.find(id);
    assert(it != m_data.end());
    auto& data = it->second;
-   if (mpark::holds_alternative<midi::Message<midi::Clock>>(midiMsg))
+   if (dl::holds_alternative<midi::Message<midi::Clock>>(midiMsg))
    {
       data.clockReceived = true;
    }

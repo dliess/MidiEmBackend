@@ -1,5 +1,5 @@
 #include <cstdint>
-#include <mpark/variant.hpp>
+#include <Variant.h>
 
 #include "ControllerColor.h"
 #include "ControllerEvents.h"
@@ -27,7 +27,7 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
             return evt.source[widgetCoord.row][widgetCoord.col];
       },
       CASE_DEFAULT -> midi::MidiMessageId {
-            return mpark::monostate();
+            return dl::monostate();
       }
    R_END_SWITCH
 
@@ -45,8 +45,8 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
    color |= (((colorARGB.g >> 7) & 0x01) << GREEN_0);
    color |= (((colorARGB.g >> 6) & 0x01) << GREEN_1);
 
-   midi::MidiMessage midiMsg = mpark::visit(
-      midi::overload{
+   midi::MidiMessage midiMsg = dl::visit(
+      dl::overload{
          [color](const midi::MidiMsgId<midi::NoteOn>& msgId) -> midi::MidiMessage {
             return midi::Message<midi::NoteOn>(0, msgId.note, color);
          },
@@ -57,7 +57,7 @@ std::optional<std::vector<midi::MidiMessage>> createEnlightLedMidiMsg(
             const midi::MidiMsgId<midi::ControlChange>& msgId) -> midi::MidiMessage {
             return midi::Message<midi::ControlChange>(0, msgId.id, color);
          },
-         [](auto &&) -> midi::MidiMessage { return mpark::monostate(); }},
+         [](auto &&) -> midi::MidiMessage { return dl::monostate(); }},
       midiMsgId);
 
    return std::vector<midi::MidiMessage>{midiMsg};

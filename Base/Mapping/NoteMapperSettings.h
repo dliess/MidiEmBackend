@@ -3,7 +3,7 @@
 
 #include <string>
 #include <optional>
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include "Settings.h"
 #include "MusicDeviceId.h"
 
@@ -42,7 +42,7 @@ struct ControllerDeviceId
 struct NoteMapperDescription
 {
    ControllerDeviceId                                      source;
-   mpark::variant<KitSoundIdSettings, MelodicInstrumentIdSettings> destination;
+   dl::variant<KitSoundIdSettings, MelodicInstrumentIdSettings> destination;
 };
 
 namespace meta

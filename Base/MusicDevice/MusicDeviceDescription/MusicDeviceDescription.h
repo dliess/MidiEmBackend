@@ -1,7 +1,7 @@
 #ifndef MUSIC_DEVICE_DESCRIPTION_H
 #define MUSIC_DEVICE_DESCRIPTION_H
 
-#include <mpark/variant.hpp>
+#include <Variant.h>
 #include <optional>
 #include <string>
 #include <vector>
