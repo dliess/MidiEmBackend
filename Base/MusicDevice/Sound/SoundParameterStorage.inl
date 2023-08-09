@@ -114,7 +114,7 @@ inline void ParameterStorage::setSoundParameterActualValue(int voiceIdx,
                                                            int parameterIdx,
                                                            float value) noexcept
 {
-   assert(util::vector_index_in_range(parameterIdx,
+   assert(mddescrutil::vector_index_in_range(parameterIdx,
                                       elementContainer(voiceIdx).parameters));
    elementContainer(voiceIdx).parameters[parameterIdx].setValueFromDeviceRel(
        value);
@@ -334,7 +334,7 @@ inline const ParameterStorage::EngineData& ParameterStorage::elementContainer(
    }
    else
    {
-      assert(util::vector_index_in_range(voiceIdx, m_voicesData));
+      assert(mddescrutil::vector_index_in_range(voiceIdx, m_voicesData));
       return m_voicesData[voiceIdx];
    }
 }
@@ -348,7 +348,7 @@ inline ParameterStorage::EngineData& ParameterStorage::elementContainer(
    }
    else
    {
-      assert(util::vector_index_in_range(voiceIdx, m_voicesData));
+      assert(mddescrutil::vector_index_in_range(voiceIdx, m_voicesData));
       return m_voicesData[voiceIdx];
    }
 }

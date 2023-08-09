@@ -10,7 +10,7 @@ target_link_libraries(${TARGET_NAME}
    PRIVATE MusicDevicePluginInterface
    PRIVATE util
    PRIVATE MusicDeviceController
-   PRIVATE MusicDeviceDescription
+   PRIVATE MusicDeviceDescriptions::MusicDeviceDescription
 )
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "plugin")
 

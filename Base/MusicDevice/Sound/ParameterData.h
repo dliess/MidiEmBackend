@@ -242,6 +242,31 @@ static_assert(
                        static_cast<int>(ParameterAttr::LfoMultiplierExp),
                        ParameterValue>>);
 
+
+
+inline 
+std::optional<ValueRangeEnd> getValueRange(const base::musicDevice::description::sound::Parameter& paramDescr)
+{
+   switch (paramDescr.type)
+   {
+      case base::musicDevice::description::sound::Parameter::Type::List:
+      {
+         if (paramDescr.source.midi->sourceRanges)
+         {
+            return ListRangeEnd(paramDescr.source.midi->sourceRanges->size());
+         }
+         break;
+      }
+      case base::musicDevice::description::sound::Parameter::Type::Continous:
+      case base::musicDevice::description::sound::Parameter::Type::
+          ContinousBipolar:
+      {
+         return FloatingPointRangeEnd(1.0f);
+      }
+   }
+   return std::nullopt;
+}
+
 template <typename ParamDescrProvider>
 ValueRangeEnd getParamRangeEnd(
     int voiceIdx, int parameterIdx, ParameterAttr parameterAttr,
@@ -253,7 +278,7 @@ ValueRangeEnd getParamRangeEnd(
       {
          const auto& paramDescr =
             paramDescrProvider.parameterDescription(voiceIdx, parameterIdx);
-         const auto vr = paramDescr.getValueRange();
+         const auto vr = getValueRange(paramDescr);
          if(vr)
          {
             return vr.value();

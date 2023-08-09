@@ -2,7 +2,7 @@
 
 #include "MusicDeviceHolder.h"
 #include "SoundSection.h"
-#include "VectorIndexInRange.h"
+#include "UtilVectorIndexInRange.h"
 
 using namespace base::instruments;
 
@@ -15,7 +15,7 @@ MelodicInstrument::MelodicInstrument(std::string name,
 
 void MelodicInstrument::noteOn(int note, float velocity, void* token) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
    }
@@ -36,7 +36,7 @@ void MelodicInstrument::noteOn(int note, float velocity, void* token) const
 
 void MelodicInstrument::noteOff(int note, float velocity, void* token) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations) ||
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] == RtData::FREE)
    {
       return;
@@ -69,7 +69,7 @@ void MelodicInstrument::pitchBend(float value) const
 
 void MelodicInstrument::pitchBendMPE(int note, float value) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
    }
@@ -95,7 +95,7 @@ void MelodicInstrument::incrementParameterValue(
 {
    for (auto& voice : m_voices)
    {
-      if (util::vector_index_in_range(componentIdx, voice.components))
+      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
       {
          auto& component = voice.components[componentIdx];
          if (component)
@@ -114,7 +114,7 @@ void MelodicInstrument::incrementParameterValueEventBound(
 {
    for (auto& voice : m_voices)
    {
-      if (util::vector_index_in_range(componentIdx, voice.components))
+      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
       {
          auto& component = voice.components[componentIdx];
          if (component)
@@ -131,7 +131,7 @@ void MelodicInstrument::incrementParameterValueMPE(
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
     musicDevice::sound::IncrementMode incrementMode) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
    }
@@ -141,7 +141,7 @@ void MelodicInstrument::incrementParameterValueMPE(
       m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
    }
    const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
-   if (util::vector_index_in_range(componentIdx, voice.components))
+   if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
    {
       if (voice.components[componentIdx])
       {
@@ -167,7 +167,7 @@ std::optional<float> MelodicInstrument::getParameterValue(
     int note, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return std::nullopt;
    }
@@ -192,7 +192,7 @@ void MelodicInstrument::setParameterValue(
 {
    for (auto& voice : m_voices)
    {
-      if (util::vector_index_in_range(componentIdx, voice.components))
+      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
       {
          auto& component = voice.components[componentIdx];
          if (component)
@@ -213,7 +213,7 @@ void MelodicInstrument::setRelativeParameterValue(
    {
       for (auto& voice : m_voices)
       {
-         if (util::vector_index_in_range(componentIdx, voice.components))
+         if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
          {
             auto& component = voice.components[componentIdx];
             if (component)
@@ -230,7 +230,7 @@ void MelodicInstrument::setParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return;
    }
@@ -267,7 +267,7 @@ float MelodicInstrument::fromNormalizedValue(
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   if (!util::vector_index_in_range(note, m_pRtData->noteAllocations))
+   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
    {
       return 0.0f;
    }

@@ -3,7 +3,6 @@ if(NOMIDI_BACKEND_BUILD_TESTS)
 endif()
 add_subdirectory(Common)
 add_subdirectory(Controller)
-add_subdirectory(MusicDeviceDescription)
 add_subdirectory(PluginHandler)
 add_subdirectory(Sound)
 
@@ -31,7 +30,7 @@ target_include_directories(MusicDevice PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(MusicDevice
    PUBLIC  MusicDeviceCommon
-   PUBLIC  MusicDeviceDescription
+   PUBLIC  MusicDeviceDescriptions::MusicDeviceDescription
    PUBLIC  MusicDeviceController
    PUBLIC  MusicDeviceSound
    PUBLIC  MIDI::midi

@@ -173,7 +173,7 @@ std::optional<int> MidiInSysExDumpHandler::getVoiceIdFromSysex(
                   const description::sound::midisysex::VoiceIdx& voiceIdx)
                   -> std::optional<int> {
                  const int idx = sysexMsg[voiceIdx.offset];
-                 if (!util::vector_index_in_range(idx, voiceIdx.mapping))
+                 if (!mddescrutil::vector_index_in_range(idx, voiceIdx.mapping))
                  {
                     return std::nullopt;
                  }

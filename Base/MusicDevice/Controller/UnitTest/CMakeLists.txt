@@ -10,7 +10,7 @@ set(TARGET_NAME "MusicDeviceControllerTest")
 add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    MusicDeviceController
-   MusicDeviceDescription
+   MusicDeviceDescriptions::MusicDeviceDescription
    GTest::GTest
    GTest::Main 
    pthread

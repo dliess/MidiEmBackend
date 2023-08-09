@@ -12,7 +12,7 @@ set(TARGET_NAME "MusicDeviceSoundTest")
 add_executable(${TARGET_NAME} ${SOURCES})
 target_link_libraries(${TARGET_NAME}
    MusicDeviceSound
-   MusicDeviceDescription
+   MusicDeviceDescriptions::MusicDeviceDescription
    GTest::GTest
    GTest::Main 
    pthread

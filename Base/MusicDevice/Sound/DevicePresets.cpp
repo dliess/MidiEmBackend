@@ -1,6 +1,6 @@
 #include "DevicePresets.h"
 
-#include "VectorIndexInRange.h"
+#include "UtilVectorIndexInRange.h"
 
 using namespace base::musicDevice::sound::preset;
 
@@ -17,7 +17,7 @@ DevicePresets::DevicePresets(MusicDeviceName musicDeviceName,
 std::optional<std::pair<Category, Genre>> DevicePresets::getPresetAttributes(
     int engineIdx, const std::string& presetName) const noexcept
 {
-   if (!util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets))
+   if (!mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets))
       return std::nullopt;
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    auto it                   = enginePresets.find(presetName);
@@ -29,7 +29,7 @@ std::optional<std::pair<Category, Genre>> DevicePresets::getPresetAttributes(
 const Preset& DevicePresets::preset(
     int engineIdx, const std::string& presetName) const noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    const auto it             = enginePresets.find(presetName);
    assert(it != enginePresets.end());
@@ -39,7 +39,7 @@ const Preset& DevicePresets::preset(
 std::optional<std::string> DevicePresets::getPresetNameByPresetSlot(
     int engineIdx, int slotIndex) const noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    const auto it =
        std::find_if(enginePresets.begin(), enginePresets.end(),
@@ -59,7 +59,7 @@ std::optional<std::string> DevicePresets::getPresetNameByPresetSlot(
 bool DevicePresets::hasPreset(int engineIdx,
                               const std::string& presetName) const noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
    return enginePresets.find(presetName) != enginePresets.end();
 }
@@ -67,7 +67,7 @@ bool DevicePresets::hasPreset(int engineIdx,
 void DevicePresets::savePreset(int engineIdx, const std::string& presetName,
                                Preset&& preset) noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
 
    auto it = enginePresets.find(presetName);
@@ -86,7 +86,7 @@ void DevicePresets::savePreset(int engineIdx, const std::string& presetName,
 std::string DevicePresets::incrementNameIdx(
     int engineIdx, const std::string& presetName) const noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    const auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
 
    static const std::string DELIM = "~";
@@ -119,7 +119,7 @@ std::string DevicePresets::incrementNameIdx(
 void DevicePresets::deletePreset(int engineIdx,
                                  const std::string& presetName) noexcept
 {
-   assert(util::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
+   assert(mddescrutil::vector_index_in_range(engine2VectorIdx(engineIdx), m_presets));
    auto& enginePresets = m_presets[engine2VectorIdx(engineIdx)];
 
    enginePresets.erase(presetName);

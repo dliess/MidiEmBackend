@@ -76,7 +76,7 @@ void PresetFetcher::fetchPresets()
                                          float value) {
                 if (voiceIdxInFocus == voiceId)
                 {
-                   if (util::vector_index_in_range(parameterId,
+                   if (mddescrutil::vector_index_in_range(parameterId,
                                                    preset.parameters))
                    {
                       preset.parameters[parameterId].commanded = value;

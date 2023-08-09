@@ -1,10 +1,10 @@
 #include "ParameterSceneContainer.h"
 
-#include "VectorIndexInRange.h"
+#include "UtilVectorIndexInRange.h"
 #include "clip.h"
 
 #define CHECK_IN_RANGE(sceneIdx)                         \
-   if (!util::vector_index_in_range(sceneIdx, m_data))   \
+   if (!mddescrutil::vector_index_in_range(sceneIdx, m_data))   \
    {                                                     \
       spdlog::error("Index out of range: {}", sceneIdx); \
       return;                                            \
