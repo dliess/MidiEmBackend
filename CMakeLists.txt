@@ -144,11 +144,6 @@ install(TARGETS ${TARGET_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-install(
-  DIRECTORY "MidiConfigs"
-  DESTINATION "/etc/nomidi-backend/"
-)
-
 set(SYSTEM_UNIT_FILES
    "systemd/nomidi-backend.service"
 )
