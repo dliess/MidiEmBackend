@@ -36,7 +36,7 @@ CPMFindPackage(
 )
 
 CPMFindPackage(
-  NAME variant
+  NAME Variant
   GITHUB_REPOSITORY dliess/variant
   GIT_TAG a2a7bc986b25a3548e24ad66ed900f4aa9eb60ad
   OPTIONS
