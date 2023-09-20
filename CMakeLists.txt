@@ -20,7 +20,7 @@ CPMFindPackage(
   NAME midi
   GITHUB_REPOSITORY dliess/Midi
   #GIT_REPOSITORY git@danita-hp:app/Midi.git
-  GIT_TAG master
+  GIT_TAG 5e9f3473dd9ab0bb88aed28c7fa61376ad2dc250
   OPTIONS
     "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
@@ -77,9 +77,9 @@ CPMFindPackage(
 )
 
 CPMFindPackage(
-  NAME MusicDeviceDescriptions
+  NAME MusicDeviceDescriptions 
   GITHUB_REPOSITORY dliess/musicdevicedescriptions
-  GIT_TAG 642aaf1af28635991c3d80b07db0490b791ed4b3
+  GIT_TAG 3dc6e4579746a8a15961ac3dca697a351c7e03cd
   OPTIONS
     "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
@@ -118,6 +118,8 @@ CPMFindPackage(
   NAME magic_enum
   GITHUB_REPOSITORY Neargye/magic_enum
   VERSION 0.9.0
+  OPTIONS
+    "MAGIC_ENUM_OPT_INSTALL ON"
 )
 
 add_subdirectory(3rdparty)
@@ -139,6 +141,11 @@ target_link_libraries(${TARGET_NAME}
   Base
   docopt_s
 )
+
+get_target_property(MIDI_CONFIGS_BASEDIR MusicDeviceDescriptions::MusicDeviceDescription CONFIG_FILES_BASEDIR)
+message("MIDI_CONFIGS_BASEDIR: " ${MIDI_CONFIGS_BASEDIR})
+target_compile_definitions(${TARGET_NAME} PRIVATE
+  MIDI_CONFIGS_BASEDIR="${MIDI_CONFIGS_BASEDIR}")
 
 install(TARGETS ${TARGET_NAME}  
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

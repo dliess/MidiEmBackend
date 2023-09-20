@@ -10,7 +10,7 @@ base::musicDevice::description::loadDescription(const std::string& configDir,
                                                 const std::string& deviceName)
 {
    const std::string devFilePath = fmt::format(
-       "{}/MidiConfigs/Devices/{}/Config.json", configDir, deviceName);
+       "{}/Devices/{}/Config.json", configDir, deviceName);
    std::ifstream devFile(devFilePath);
    if (devFile.fail())
    {

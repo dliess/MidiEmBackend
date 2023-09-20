@@ -12,7 +12,7 @@
 
 static const char USAGE[] = R"(
    Usage:
-      NomidiBackend CONFIGDIR [-v | --verbose]
+      NomidiBackend [CONFIGDIR] [-v | --verbose]
 
    Options:
       -v --verbose  Verbose Output
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
                       "NomidiBackend 0.1");   // version string
 
    const std::string configRoot(args["CONFIGDIR"] ? args["CONFIGDIR"].asString()
-                                                  : "");
+                                                  : std::string(MIDI_CONFIGS_BASEDIR));
    const std::string address(args["ADDRESS"] ? args["ADDRESS"].asString()
                                              : "tcp://*");
 

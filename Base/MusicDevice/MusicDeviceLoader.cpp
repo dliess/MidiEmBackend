@@ -15,7 +15,7 @@ using namespace base::musicDevice;
 Loader::Loader(const std::string &configDir) :
     m_configDir(configDir.empty() ? "." : configDir),
     m_mapFileName(
-        fmt::format("{}/MidiConfigs/usbMidiName2device.json", m_configDir)),
+        fmt::format("{}/usbMidiName2device.json", m_configDir)),
     m_deviceChainsFileName(fmt::format(
         "{}/nomidi/MidiConfigs/midiDeviceChains.json", getenv("HOME")))
 {
@@ -223,7 +223,7 @@ std::string Loader::getAllDevicesAsJson() const
 {
    std::vector<ManufacturerEntry> ret;
    const std::string devicesPath =
-       fmt::format("{}/MidiConfigs/Devices", m_configDir);
+       fmt::format("{}/Devices", m_configDir);
 
    for (const auto &manufacturerDir :
         std::filesystem::directory_iterator(devicesPath))
@@ -231,7 +231,7 @@ std::string Loader::getAllDevicesAsJson() const
       const std::string manufacturer =
           manufacturerDir.path().filename().string();
       const std::string devicePath =
-          fmt::format("{}/MidiConfigs/Devices/{}", m_configDir, manufacturer);
+          fmt::format("{}/Devices/{}", m_configDir, manufacturer);
 
       ManufacturerEntry manufacturerEntry;
       manufacturerEntry.manufacturer = manufacturer;

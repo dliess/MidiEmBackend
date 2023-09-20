@@ -47,6 +47,12 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                  return midi::Message<midi::ControlChangeHighRes>(
                      midiChannel, msgId.idMsb, msgId.idLsb, val);
               },
+              [midiChannel,
+               val](const midi::MidiMsgId<midi::ControlChangeDoubleRes>& msgId)
+                  -> midi::MidiMessage {
+                 return midi::Message<midi::ControlChangeDoubleRes>(
+                     midiChannel, msgId.bottomHalfId, msgId.topHalfId, val);
+              },
               [midiChannel, val](const midi::MidiMsgId<midi::NRPN>& msgId)
                   -> midi::MidiMessage {
                  return midi::Message<midi::NRPN>(midiChannel, msgId.idMsb,
@@ -98,6 +104,23 @@ void sound::MidiOutMsgHandler<MidiOutIfPtr>::sendSoundParameter(
                  {
                     return midi::Message<midi::ControlChangeHighRes>::
                         fromNormalizedValue(midiChannel, msgId.idMsb, msgId.idLsb,
+                                          value);
+                 }
+              },
+              [midiChannel, value, &valueRange](
+                  const midi::MidiMsgId<midi::ControlChangeDoubleRes>& msgId)
+                  -> midi::MidiMessage {
+                 if (valueRange)
+                 {
+                    return midi::Message<midi::ControlChangeDoubleRes>::
+                        fromNormalizedValue(midiChannel, msgId.bottomHalfId, msgId.topHalfId,
+                                          value, valueRange->from,
+                                          valueRange->to);
+                 }
+                 else
+                 {
+                    return midi::Message<midi::ControlChangeDoubleRes>::
+                        fromNormalizedValue(midiChannel, msgId.bottomHalfId, msgId.topHalfId,
                                           value);
                  }
               },

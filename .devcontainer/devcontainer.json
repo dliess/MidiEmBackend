@@ -16,27 +16,32 @@
       "type=bind,source=/dev,target=/dev",
       "type=bind,source=/opt,target=/opt"
    ],
-   "settings": { 
-      "terminal.integrated.shell.linux": "/bin/zsh",
-      "terminal.integrated.detectLocale": "off"
-   },
    "containerEnv": {
       "CPM_SOURCE_CACHE": "/home/build-user/CPM_DOWNLOADS"
    },
-   "extensions": [
-      "eamodio.gitlens",
-      "ms-vscode.cpptools",
-      "twxs.cmake",
-      "ms-vscode.cmake-tools",
-      "jebbs.plantuml",
-      "plex.vscode-protolint",
-      "xaver.clang-format",
-      "abronan.capnproto-syntax",
-      "be5invis.toml",
-      "mitaki28.vscode-clang",
-      "hbenl.vscode-test-explorer",
-      "redhat.vscode-xml",
-      "shd101wyy.markdown-preview-enhanced",
-      "sonarsource.sonarlint-vscode"
-   ]
+   "customizations": {
+      "vscode": {
+         "settings": { 
+            "terminal.integrated.shell.linux": "/bin/zsh",
+            "terminal.integrated.detectLocale": "off"
+         },     
+         "extensions": [
+            "eamodio.gitlens",
+            "ms-vscode.cpptools",
+            "twxs.cmake",
+            "ms-vscode.cmake-tools",
+            "jebbs.plantuml",
+            "plex.vscode-protolint",
+            "xaver.clang-format",
+            "abronan.capnproto-syntax",
+            "be5invis.toml",
+            "mitaki28.vscode-clang",
+            "hbenl.vscode-test-explorer",
+            "redhat.vscode-xml",
+            "shd101wyy.markdown-preview-enhanced",
+            "sonarsource.sonarlint-vscode",
+            "github.copilot"     
+         ]
+      }
+   }
 }
