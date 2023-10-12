@@ -1,5 +1,5 @@
 {
-   "name": "MidiEmBuildEnv",
+   "name": "MidiEmBackend",
    "build": {
 		"dockerfile": "Dockerfile"
    },

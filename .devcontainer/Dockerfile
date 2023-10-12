@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
 	sudo \
         cmake \
         clang \
+        clangd \
         clang-format \
         ninja-build \
         g++ \
@@ -58,18 +59,16 @@ RUN apt-get update && apt-get install -y \
 
 # some utilities for runtime
 RUN apt-get update && apt-get install -y \
-        vim \
         feedgnuplot \
         net-tools \
         curl \
         zsh \
         wget \
-        nginx-core \
         && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y \
         pkg-config \
-        libcapnp-dev \
+libcapnp-dev \
         capnproto \
         libzmq3-dev \
         python3-toml \
@@ -84,11 +83,21 @@ RUN usermod -aG sudo $BUILD_USER
 RUN mkdir -p /home/$BUILD_USER/s
 RUN mkdir -p /home/$BUILD_USER/CPM_DOWNLOADS
 
+RUN echo "export XDG_CONFIG_HOME=/home/$BUILD_USER/.config" >> /etc/profile.d/xdg_config.sh 
+
 USER $BUILD_USER:$BUILD_USER
 WORKDIR /home/build-user
 
 RUN wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh || true
 RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="gentoo"/g' ~/.zshrc
+RUN echo "alias vim=~/nvim-linux64/bin/nvim" >> ~/.zshrc
+RUN echo "alias vi=~/nvim-linux64/bin/nvim" >> ~/.zshrc
+RUN mkdir -p ~/.config/nvim
 
+COPY nvim/nvim-linux64.tar.gz nvim.tar.gz
+RUN tar -xzf ~/nvim.tar.gz
+#COPY nvim-config nvim-config
+#RUN cp -r ~/nvim-config/* ~/.config/nvim
+#RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 

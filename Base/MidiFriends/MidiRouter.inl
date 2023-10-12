@@ -63,25 +63,39 @@ namespace base::midifriends
 {
 
 inline 
-void NoteOnMap::setNoteOn(int voiceIdx, int note) noexcept
+void NoteOnMap::setNoteOn(int voiceIdx, int note)
 {
-   assert(voiceIdx >= 0);
-   assert(voiceIdx < midi::NUM_CHANNELS);
-   assert(note > 0);
-   assert(note < 128);
-   m_map[voiceIdx][note / 64] |= (1 << note % 64);
+   m_map[voiceIdx].set(note);
+}
+
+inline 
+void NoteOnMap::setNoteOff(int voiceIdx, int note)
+{
+   m_map[voiceIdx].reset(note);
 }
 
 template<typename Cb> 
 void NoteOnMap::forEachNoteOn(Cb&& cb)
 {
-
+   for (int x = 0; x < m_map.size(); ++x)
+   {
+      for (int y = 0; y < m_map[x].size(); ++y)
+      {
+         if (m_map[x][y])
+         {
+            cb(x, y);
+         }
+      }
+   }
 }
 
 inline 
 void NoteOnMap::clear() noexcept
 {
-
+   for (auto& bitset : m_map)
+   {
+      bitset.reset();
+   }
 }
 
 template<typename Msg>

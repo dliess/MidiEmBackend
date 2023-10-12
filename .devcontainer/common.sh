@@ -1,2 +1,2 @@
-DOCKER_IMAGE_TAG="midiem-image-build"
+DOCKER_IMAGE_TAG="midiem-backend"
 BUILD_USER="build-user"

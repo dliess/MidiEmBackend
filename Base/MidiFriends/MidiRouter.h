@@ -2,6 +2,7 @@
 #define MIDI_ROUTER_H
 
 #include <array>
+#include <bitset>
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -30,12 +31,13 @@ struct RoutingDataSpecialized
 class NoteOnMap
 {
 public:
-    inline void setNoteOn(int voiceIdx, int note) noexcept;
+    void setNoteOn(int voiceIdx, int note);
+    void setNoteOff(int voiceIdx, int note);
     template<typename Cb> void forEachNoteOn(Cb&& cb);
-    inline void clear() noexcept;
+    void clear() noexcept;
 private:
-   using NoteOnMapPerChannel = std::array<uint64_t, 2>;
-   using Map = std::array<NoteOnMapPerChannel, midi::NUM_CHANNELS>;
+   static constexpr int MIDI_MAX_NOTE = 128;
+   using Map = std::array<std::bitset<MIDI_MAX_NOTE>, midi::NUM_CHANNELS>;
    Map m_map{ 0 };
 };
 struct RoutingData
@@ -49,7 +51,7 @@ struct RoutingData
 class Router : public utils::Settings<Router>
 {
 public:
-   Router(musicDevice::MidiHolder& rMidiHolder) noexcept;
+   explicit Router(musicDevice::MidiHolder& rMidiHolder) noexcept;
    bool isRoutedTo(const musicDevice::MidiHolder::Id& source,
                    const musicDevice::MidiHolder::Id& dest) const noexcept;
    void toggleRouted(const musicDevice::MidiHolder::Id& source,

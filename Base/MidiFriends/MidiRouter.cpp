@@ -1,4 +1,5 @@
 #include "MidiRouter.h"
+#include "MidiMessage.h"
 
 using namespace base::midifriends;
 
@@ -36,13 +37,23 @@ void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
    {
       return;
    }
-   for (const auto& [outId, routingData] : itIn->second)
+   for (auto& [outId, routingData] : itIn->second)
    {
       assert(routingData.pMidiOut);
       if (!routingData.routed)
       {
          continue;
-      }
+      }    
+      SWITCH(midiMsg)
+         CASE(midi::Message<midi::NoteOn>, note) {
+            routingData.noteOnMap.setNoteOn(note.channel() - 1, note.noteNumber);
+         },
+         CASE(midi::Message<midi::NoteOff>, note) {
+            routingData.noteOnMap.setNoteOff(note.voiceIndex, note.value);
+         },
+         CASE_DEFAULT {}
+      END_SWITCH
+      
       if (routingData.specialized)
       {
          handleSpecialized(midiMsg, *routingData.specialized,

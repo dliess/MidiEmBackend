@@ -79,7 +79,7 @@ CPMFindPackage(
 CPMFindPackage(
   NAME MusicDeviceDescriptions 
   GITHUB_REPOSITORY dliess/musicdevicedescriptions
-  GIT_TAG 3dc6e4579746a8a15961ac3dca697a351c7e03cd
+  GIT_TAG 5d6ea7ce117a91062907220ab910dc470bc1ff9a
   OPTIONS
     "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )

@@ -6,3 +6,4 @@ Settings.json
 midiDeviceChains.json
 *.so
 CMakeLists.txt.user
+compile_commands.json
