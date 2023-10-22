@@ -42,7 +42,7 @@ target_link_libraries(Base
    PUBLIC  ParameterScenes
    PRIVATE spdlog::spdlog
    PRIVATE MIDI::usbmidi
-   PRIVATE TimeMeasure::TimeMeasure
+   # PRIVATE TimeMeasure::TimeMeasure
    PRIVATE capnzero-rt-server
    PRIVATE capnzero-loader-server
 )

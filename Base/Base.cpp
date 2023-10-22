@@ -16,24 +16,24 @@
 #include "ThreadHelpers.h"
 #include "UsbMidiPortNotifier.h"
 
-// ----- Time measuring -----
-#include "CyclicDataOutputterThread.h"
-#include "Histogram.h"
-#include "Measurer.h"
-#include "OutputterDestinationsZmq.h"
+// // ----- Time measuring -----
+// #include "CyclicDataOutputterThread.h"
+// #include "Histogram.h"
+// #include "Measurer.h"
+// #include "OutputterDestinationsZmq.h"
 
-using TenthMs           = std::chrono::duration<int, std::ratio<1, 10000>>;
-using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
-
-template <unsigned int Id>
-using MeasurerTenthMs = TimeMeasure::Measurer<Id, DataHolderTenthMs>;
-
-TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
-                                       TimeMeasure::Destination::Zmq>
-    outThreadZmq({
-        &MeasurerTenthMs<0>::instance().dataHolder(),
-        &MeasurerTenthMs<1>::instance().dataHolder(),
-    });
+// using TenthMs           = std::chrono::duration<int, std::ratio<1, 10000>>;
+// using DataHolderTenthMs = TimeMeasure::Histogram<TenthMs>;
+//
+// template <unsigned int Id>
+// using MeasurerTenthMs = TimeMeasure::Measurer<Id, DataHolderTenthMs>;
+//
+// TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
+//                                        TimeMeasure::Destination::Zmq>
+//     outThreadZmq({
+//         &MeasurerTenthMs<0>::instance().dataHolder(),
+//         &MeasurerTenthMs<1>::instance().dataHolder(),
+//     });
 // --------------------------
 
 base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
@@ -85,11 +85,11 @@ base::Base::~Base() noexcept = default;
 
 void base::Base::start()
 {
-   MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
-   MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
-
-   outThreadZmq.destination().bind("tcp://*:55570");
-   outThreadZmq.startThread(500);
+   // MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
+   // MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
+   //
+   // outThreadZmq.destination().bind("tcp://*:55570");
+   // outThreadZmq.startThread(500);
    if (!midi::PortNotifiers::instance().init())
    {
       // TODO: put this code to Midi lib
@@ -246,7 +246,7 @@ void base::Base::loopFn()
 
    const auto [deltaBeats, deltaTime] = tempo::BeatTick::instance().nextTick();
    {
-      MeasurerTenthMs<0>::Guard guard;
+      // MeasurerTenthMs<0>::Guard guard;
       transportControl.update();
       musicDeviceHolder.midiHolder.midiClock(deltaBeats, deltaTime);
       musicDeviceHolder.midiHolder.processMidiInBuffers();
@@ -254,5 +254,5 @@ void base::Base::loopFn()
       musicDeviceHolder.musicDevices.updateSoundParameterActualValues();
    }
    musicDeviceFactory.musicDeviceInserter().invokeQueueActions();
-   MeasurerTenthMs<1>::instance().sample();
+   // MeasurerTenthMs<1>::instance().sample();
 }

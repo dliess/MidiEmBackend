@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 # Users and passwords
 ARG BUILD_USER=build-user
@@ -25,7 +25,6 @@ RUN apt-get update && apt-get install -y \
 	      sudo \
         cmake \
         clang \
-        clangd \
         clang-format \
         ninja-build \
         g++ \
@@ -75,13 +74,21 @@ RUN apt-get update && apt-get install -y \
         python3-venv \
         && rm -rf /var/lib/apt/lists/*
 
+RUN     apt-get update && apt-get install -y \
+        ripgrep \
+        npm \
+        nodejs \
+        unzip \
+        python3-venv \
+        && rm -rf /var/lib/apt/lists/*
+
 # Create group and user
 RUN groupadd --gid=$GID $BUILD_USER
 RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $BUILD_USER
 RUN echo "$BUILD_USER:$BUILD_USER_PWD" | chpasswd
 RUN usermod -aG sudo $BUILD_USER
 
-RUN mkdir -p /home/$BUILD_USER/s
+RUN mkdir -p /home/$BUILD_USER/nomidi-backend
 RUN mkdir -p /home/$BUILD_USER/CPM_DOWNLOADS
 
 RUN echo "export XDG_CONFIG_HOME=/home/$BUILD_USER/.config" >> /etc/profile.d/xdg_config.sh 
@@ -93,13 +100,6 @@ RUN wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/ins
 RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="gentoo"/g' ~/.zshrc
 RUN echo "alias vim=~/nvim-linux64/bin/nvim" >> ~/.zshrc
 RUN echo "alias vi=~/nvim-linux64/bin/nvim" >> ~/.zshrc
-RUN mkdir -p ~/.config/nvim
 
-COPY nvim/nvim-linux64.tar.gz nvim.tar.gz
-RUN tar -xzf ~/nvim.tar.gz
-#COPY nvim-config nvim-config
-#RUN cp -r ~/nvim-config/* ~/.config/nvim
-#RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-WORKDIR /home/build-user/s
+WORKDIR /home/build-user/nomidi-backend
 

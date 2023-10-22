@@ -46,10 +46,10 @@ void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
       }    
       SWITCH(midiMsg)
          CASE(midi::Message<midi::NoteOn>, note) {
-            routingData.noteOnMap.setNoteOn(note.channel() - 1, note.noteNumber);
+            // routingData.noteOnMap.setNoteOn(note.channel() - 1, note.noteNumber);
          },
          CASE(midi::Message<midi::NoteOff>, note) {
-            routingData.noteOnMap.setNoteOff(note.voiceIndex, note.value);
+            // routingData.noteOnMap.setNoteOff(note.voiceIndex, note.value);
          },
          CASE_DEFAULT {}
       END_SWITCH

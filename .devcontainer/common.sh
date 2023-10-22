@@ -1,2 +1,2 @@
-DOCKER_IMAGE_TAG="midiem-backend"
+DOCKER_IMAGE_TAG="nomidi-backend"
 BUILD_USER="build-user"

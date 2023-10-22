@@ -84,25 +84,32 @@ CPMFindPackage(
     "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
 
-CPMFindPackage(
-  NAME TimeMeasure
-  GITHUB_REPOSITORY dliess/TimeMeasure
-  GIT_TAG develop
-)
-if(TimeMeasure_ADDED)
-  add_library(TimeMeasure::TimeMeasure ALIAS TimeMeasure)
-endif()
+# CPMFindPackage(
+#   NAME TimeMeasure
+#   GITHUB_REPOSITORY dliess/TimeMeasure
+#   GIT_TAG develop
+# )
+# if(TimeMeasure_ADDED)
+#   add_library(TimeMeasure::TimeMeasure ALIAS TimeMeasure)
+# endif()
 
 CPMFindPackage(
   NAME MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG a4852bb562c44ef68d2344a30649b594104b8479
+  GIT_TAG 84444eb40e8bd52a177af91ed543e7ef4d93e3f0
 )
 if(MidiEmCapnZero_ADDED)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader ALIAS midiem-capnzero-loader)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-rt ALIAS midiem-capnzero-rt)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader-qt-wc ALIAS midiem-capnzero-loader-qt-wc)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-rt-qt-wc ALIAS midiem-capnzero-rt-qt-wc)
+endif()
+
+find_package(cppzmq CONFIG REQUIRED VERSION 4.7.0)
+
+if(NOT TARGET cppzmq)
+  # print a critical message and stop cmake
+  message(FATAL_ERROR "cppzmq not found")
 endif()
 
 CPMFindPackage(
