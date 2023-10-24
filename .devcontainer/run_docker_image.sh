@@ -1,17 +1,8 @@
 #!/bin/bash
 
-function print_usage
-{
-	echo "usage: $0 <repo dir>"
-}
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+REPO_DIR=$(readlink -f $SCRIPT_DIR/..)
 
-if [[ $# != 1 ]]
-then
-	print_usage
-	exit 1
-fi
-
-REPO_DIR=$(readlink -f $1)
 
 AUDIO_GROUP_ID=$(getent group audio | awk -F: '{printf $3}')
 
