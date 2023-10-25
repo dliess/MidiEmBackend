@@ -99,20 +99,22 @@ void NoteOnMap::clear() noexcept
 }
 
 template<typename Msg>
-void Router::handleVoiceMsg(
+std::optional<int> Router::handleVoiceMsg(
    const RoutingDataSpecialized::ChannelMap& channelMap, const Msg& msg,
    musicDevice::MusicDevice::MidiOutput& midiOut) noexcept
 {
    const auto map = channelMap[msg.channel() - 1];
    if (0 == map)
-      return;
-   for (int x = 0; x < sizeof(map) * 8; ++x)
+      return std::nullopt;
+   for (int channelIdx = 0; channelIdx < sizeof(map) * 8; ++channelIdx)
    {
-      if (map & (1 << x))
+      if (map & (1 << channelIdx))
       {
-         midiOut.send(midi::createVoiceMsgOnChannel(msg, x + 1));
+         midiOut.send(midi::createVoiceMsgOnChannel(msg, channelIdx + 1));
+         return channelIdx;
       }
    }
+   return std::nullopt;
 }
 
 inline const RoutingData* Router::getRoutingData(

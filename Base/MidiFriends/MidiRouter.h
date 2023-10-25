@@ -110,11 +110,10 @@ private:
                      const midi::MidiMessage& midiMsg) noexcept;
    void handleSpecialized(
        const midi::MidiMessage& midiMsg,
-       const RoutingDataSpecialized& routingData,
-       musicDevice::MusicDevice::MidiOutput& midiOut) noexcept;
+          RoutingData& routingData) noexcept;
 
    template <typename Msg>
-   void handleVoiceMsg(const RoutingDataSpecialized::ChannelMap& channelMap,
+   std::optional<int> handleVoiceMsg(const RoutingDataSpecialized::ChannelMap& channelMap,
                        const Msg& msg,
                        musicDevice::MusicDevice::MidiOutput& midiOut) noexcept;
 

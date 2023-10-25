@@ -44,67 +44,66 @@ void Router::handleMidiIn(const musicDevice::MidiHolder::Id& id,
       {
          continue;
       }    
-      SWITCH(midiMsg)
-         CASE(midi::Message<midi::NoteOn>, note) {
-            // routingData.noteOnMap.setNoteOn(note.channel() - 1, note.noteNumber);
-         },
-         CASE(midi::Message<midi::NoteOff>, note) {
-            // routingData.noteOnMap.setNoteOff(note.voiceIndex, note.value);
-         },
-         CASE_DEFAULT {}
-      END_SWITCH
       
       if (routingData.specialized)
       {
-         handleSpecialized(midiMsg, *routingData.specialized,
-                           *routingData.pMidiOut);
+         handleSpecialized(midiMsg, routingData);
       }
       else
       {
          routingData.pMidiOut->send(midiMsg);
+         SWITCH(midiMsg)
+            CASE(midi::Message<midi::NoteOn>, note) {
+              routingData.noteOnMap.setNoteOn(note.channel() - 1, note.noteNumber());
+            },
+            CASE(midi::Message<midi::NoteOff>, note) {
+              routingData.noteOnMap.setNoteOff(note.channel() - 1, note.noteNumber());
+            },
+            CASE_DEFAULT {}
+         END_SWITCH
       }
    }
 }
 
 void Router::handleSpecialized(
-    const midi::MidiMessage& midiMsg, const RoutingDataSpecialized& specialized,
-    musicDevice::MusicDevice::MidiOutput& midiOut) noexcept
+    const midi::MidiMessage& midiMsg, RoutingData& routingData) noexcept
 {
    dl::visit(
        dl::overload{
-           [&specialized, &midiOut](const midi::Message<midi::Clock>& msg) {
-              if (specialized.transmitClockMsg)
+           [&routingData](const midi::Message<midi::Clock>& msg) {
+              if (routingData.specialized->transmitClockMsg)
               {
-                 midiOut.send(msg);
+                 routingData.pMidiOut->send(msg);
               }
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::NoteOn>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::NoteOn>& msg) {
+              const auto hasSentOnChannel = handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
+              if (hasSentOnChannel)
+              {
+                 routingData.noteOnMap.setNoteOn(*hasSentOnChannel, msg.noteNumber());
+              }
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::NoteOff>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::NoteOff>& msg) {
+               const auto hasSentOnChannel = handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
+               if (hasSentOnChannel)
+               {
+                  routingData.noteOnMap.setNoteOff(*hasSentOnChannel, msg.noteNumber());
+               }
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::AfterTouchPoly>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::AfterTouchPoly>& msg) {
+              handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::ControlChange>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::ControlChange>& msg) {
+              handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::ProgramChange>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::ProgramChange>& msg) {
+              handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::AfterTouchChannel>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::AfterTouchChannel>& msg) {
+              handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
            },
-           [this, &specialized,
-            &midiOut](const midi::Message<midi::PitchBend>& msg) {
-              handleVoiceMsg(specialized.channelMapping, msg, midiOut);
+           [this, &routingData](const midi::Message<midi::PitchBend>& msg) {
+              handleVoiceMsg(routingData.specialized->channelMapping, msg, *routingData.pMidiOut);
            },
            [](auto&& other) {}},
        midiMsg);
@@ -142,6 +141,15 @@ void Router::toggleRouted(const musicDevice::MidiHolder::Id& source,
       else
       {
          itDst->second.routed = !itDst->second.routed;
+         if (!itDst->second.routed)
+         {
+            itDst->second.noteOnMap.forEachNoteOn(
+                [this, &itDst](int channel, int note) {
+                   itDst->second.pMidiOut->send(
+                       midi::Message<midi::NoteOff>(channel + 1, note, 0));
+                });
+            itDst->second.noteOnMap.clear();
+         }
       }
    }
    for (auto& cb : m_routedChangedCBs)
@@ -251,6 +259,16 @@ void Router::toggleMappingForChannelIdx(
    {
       pRoutingData->specialized->channelMapping[sourceChannelIdx] &=
           ~(1 << destinationChannelIdx);
+      pRoutingData->noteOnMap.forEachNoteOn(
+          [this, &pRoutingData, sourceChannelIdx, destinationChannelIdx](
+              int channel, int note) {
+             if (channel == sourceChannelIdx)
+             {
+                pRoutingData->pMidiOut->send(midi::Message<midi::NoteOff>(
+                    destinationChannelIdx + 1, note, 0));
+             }
+          });
+      pRoutingData->noteOnMap.clear();
    }
    else
    {
