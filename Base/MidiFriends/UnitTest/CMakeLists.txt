@@ -1,6 +1,7 @@
 set(SOURCES
    "UT_MidiDumper.cpp"
    "UT_MidiRouter.cpp"
+   "UT_NoteOnMap.cpp"
 )
 
 set(TARGET_NAME "MidiFriendsTest")

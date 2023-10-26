@@ -58,33 +58,33 @@ struct DoubleBuffered
       return m_store[m_innerIdx];
    }
 
-   constexpr T& outer() noexcept
+   T& outer() noexcept
    {
-      std::unique_lock lock(m_outerLock);
+      std::scoped_lock lock(m_outerLock);
       return m_store[outerIdx()];
    }
 
-   constexpr const T& outer() const noexcept
+   const T& outer() const noexcept
    {
-      std::unique_lock lock(m_outerLock);
+      std::scoped_lock lock(m_outerLock);
       return m_store[outerIdx()];
    }
 
    template<typename Func>
-   constexpr decltype(auto) outerLocked(Func&& f)
+   decltype(auto) outerLocked(Func&& f)
    {
       std::unique_lock lock(m_outerLock);
       return std::invoke(std::forward<Func>(f), m_store[outerIdx()]);
    }
 
    template<typename Func>
-   constexpr decltype(auto) outerLocked(Func&& f) const
+   decltype(auto) outerLocked(Func&& f) const
    {
       std::unique_lock lock(m_outerLock);
       return std::invoke(std::forward<Func>(f), m_store[outerIdx()]);
    }
 
-   constexpr void swap() noexcept
+   void swap() noexcept
    {
       std::unique_lock lock(m_outerLock);
       m_innerIdx = outerIdx();
