@@ -38,7 +38,7 @@ CPMFindPackage(
 CPMFindPackage(
   NAME Variant
   GITHUB_REPOSITORY dliess/variant
-  GIT_TAG a2a7bc986b25a3548e24ad66ed900f4aa9eb60ad
+  GIT_TAG master
   OPTIONS
     "USE_MPARK_VARIANT ${USE_MPARK_VARIANT}"
 )
