@@ -8,8 +8,8 @@
      "--network=host"
    ],
    //"forwardPorts": [55555, 55556, 80],
-   "workspaceMount": "source=${localWorkspaceFolder},target=/home/build-user/s,type=bind,consistency=delegated",
-   "workspaceFolder": "/home/build-user/s",
+   "workspaceMount": "source=${localWorkspaceFolder},target=/home/build-user/nomidi-backend,type=bind,consistency=delegated",
+   "workspaceFolder": "/home/build-user/nomidi-backend",
    "mounts" : [
       "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
       "type=bind,source=${localWorkspaceFolder}/../CPM_DOWNLOADS,target=/home/build-user/CPM_DOWNLOADS",
