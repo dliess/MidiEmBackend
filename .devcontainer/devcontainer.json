@@ -12,13 +12,9 @@
    "workspaceFolder": "/home/build-user/nomidi-backend",
    "mounts" : [
       "type=bind,source=${env:HOME}/.ssh,target=/home/build-user/.ssh",
-      "type=bind,source=${localWorkspaceFolder}/../CPM_DOWNLOADS,target=/home/build-user/CPM_DOWNLOADS",
       "type=bind,source=/dev,target=/dev",
       "type=bind,source=/opt,target=/opt"
    ],
-   "containerEnv": {
-      "CPM_SOURCE_CACHE": "/home/build-user/CPM_DOWNLOADS"
-   },
    "customizations": {
       "vscode": {
          "settings": { 

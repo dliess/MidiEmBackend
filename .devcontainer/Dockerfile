@@ -22,7 +22,7 @@ ENV LANGUAGE en_US.UTF-8
 
 # Package installs
 RUN apt-get update && apt-get install -y \
-	      sudo \
+	     sudo \
         cmake \
         clang \
         clang-format \
@@ -46,16 +46,6 @@ RUN apt-get update && apt-get install -y \
         libqt5webchannel5-dev \
         && rm -rf /var/lib/apt/lists/*
 
-# install Qt build dependencies for frontend
-RUN apt-get update && apt-get install -y \
-        qml-module-qtquick-layouts \
-        qml-module-qtquick-controls \
-        qml-module-qtquick-controls2 \
-        qml-module-qtquick-dialogs \
-        qml-module-qtquick-shapes \
-        qml-module-qt-websockets \
-        && rm -rf /var/lib/apt/lists/*
-
 # some utilities for runtime
 RUN apt-get update && apt-get install -y \
         feedgnuplot \
@@ -69,7 +59,6 @@ RUN apt-get update && apt-get install -y \
         pkg-config \
         libcapnp-dev \
         capnproto \
-        libzmq3-dev \
         python3-toml \
         python3-venv \
         && rm -rf /var/lib/apt/lists/*

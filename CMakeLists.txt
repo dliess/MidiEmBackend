@@ -96,20 +96,13 @@ CPMFindPackage(
 CPMFindPackage(
   NAME MidiEmCapnZero
   GIT_REPOSITORY git@github.com:dliess/MidiEmCapnZero.git
-  GIT_TAG 6903e8461869cf58c7cf36fab3bac06d2b56b3ba
+  GIT_TAG develop 
 )
 if(MidiEmCapnZero_ADDED)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader ALIAS midiem-capnzero-loader)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-rt ALIAS midiem-capnzero-rt)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-loader-qt-wc ALIAS midiem-capnzero-loader-qt-wc)
   add_library(MIDIEMCAPNZERO::midiem-capnzero-rt-qt-wc ALIAS midiem-capnzero-rt-qt-wc)
-endif()
-
-find_package(cppzmq CONFIG REQUIRED VERSION 4.7.0)
-
-if(NOT TARGET cppzmq)
-  # print a critical message and stop cmake
-  message(FATAL_ERROR "cppzmq not found")
 endif()
 
 CPMFindPackage(
