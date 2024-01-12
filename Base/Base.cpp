@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <exception>
+#include <unistd.h>
 
 #include "BeatTick.h"
 #include "FdSet.h"
