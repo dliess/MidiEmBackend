@@ -119,7 +119,6 @@ void SoundDevicesRpc::blankVoiceParameters(const ::capnzero::SpanCL<16>& uuid,
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.blankVoiceParameters(voiceIdx);
-      soundHandler.calcActualValuesForVoice(voiceIdx);
    });
 }
 
@@ -128,7 +127,6 @@ void SoundDevicesRpc::blankAllVoiceParameters(
 {
    withSoundHandlerDo(uuid, [=](SoundHandler& soundHandler) {
       soundHandler.blankAllVoiceParameters();
-      soundHandler.calcAllActualValues();
    });
 }
 

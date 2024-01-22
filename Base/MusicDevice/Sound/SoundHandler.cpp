@@ -399,11 +399,13 @@ void SoundHandler::blankVoiceParameter(int voiceIdx, int paramIdx) noexcept
 void SoundHandler::blankVoiceParameters(int voiceIdx) noexcept
 {
    m_paramStorage.resetToInitialValues(voiceIdx);
+   m_paramStorage.calcActualValuesForVoice(voiceIdx);
 }
 
 void SoundHandler::blankAllVoiceParameters() noexcept
 {
    m_paramStorage.resetToInitialValues();
+   m_paramStorage.calcAllActualValues();
 }
 
 void SoundHandler::setLFOWaveform(int voiceIdx, int paramIdx,
@@ -554,16 +556,6 @@ void SoundHandler::resetModifier(int voiceIdx, int paramIdx,
 void SoundHandler::calcActualVal(int voiceIdx, int paramIdx)
 {
    m_paramStorage.calcActualVal(voiceIdx, paramIdx);
-}
-
-void SoundHandler::calcActualValuesForVoice(int voiceIdx)
-{
-   m_paramStorage.calcActualValuesForVoice(voiceIdx);
-}
-
-void SoundHandler::calcAllActualValues()
-{
-   m_paramStorage.calcAllActualValues();
 }
 
 bool SoundHandler::checkValidity(int voiceIdx, int parameterIdx) const noexcept

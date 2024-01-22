@@ -53,7 +53,6 @@ inline void ParameterStorageElement::applyModifier(
          break;
       }
    }
-   m_dirtyFlagRt = true;
 }
 
 inline void ParameterStorageElement::resetModifier(ParameterAttr parameterAttr)
@@ -86,12 +85,11 @@ inline void ParameterStorageElement::resetModifier(ParameterAttr parameterAttr)
          break;
       }
    }
-   m_dirtyFlagRt = true;
 }
 
 inline void ParameterStorageElement::calcActualVal()
 {
-   if(!m_dirtyFlagRt || !m_enabled)
+   if(!m_enabled)
    {
       return;
    }
@@ -108,7 +106,6 @@ inline void ParameterStorageElement::calcActualVal()
       m_cachedLfoValue = 0.0;
    }
    m_actual = limitValue(m_actual, IncrementMode::Limit);
-   m_dirtyFlagRt = false;
    if (m_isListIndex)
    {
       actualBefore = int(actualBefore);
@@ -135,17 +132,15 @@ ParameterStorageElement::calcActualValueIfLfoActive() noexcept
 {
    if (m_lfo.getAndResetJustGotDisabled() || m_lfo.enabled())
    {
-      m_dirtyFlagRt = true;
       m_dirtyFlagUi = true;
+      calcActualVal();
    }
-   calcActualVal();
 }
 
 inline void ParameterStorageElement::setCommandedValue(float value,
                                                        IncrementMode incrementMode) noexcept
 {
    m_commanded   = limitValue(value, incrementMode);
-   m_dirtyFlagRt = true;
    m_dirtyFlagUi = true;
 
 }
@@ -171,7 +166,6 @@ inline void ParameterStorageElement::setValueFromDevice(float value) noexcept
 {
    m_commanded   = limitValue(value, IncrementMode::Limit);
    m_actual      = m_commanded;
-   m_dirtyFlagRt = true;
    m_dirtyFlagUi = true;
 }
 
@@ -233,7 +227,6 @@ inline void ParameterStorageElement::decUiInterestCount() noexcept
 inline void ParameterStorageElement::forceRecalculationAndSending() noexcept
 {
    m_actual      = -1;
-   m_dirtyFlagRt = true;
 }
 
 inline bool ParameterStorageElement::isInSync() const noexcept
@@ -253,7 +246,6 @@ inline const lfo::LFO& ParameterStorageElement::lfo() const noexcept
 
 inline lfo::LFO& ParameterStorageElement::lfo() noexcept
 { 
-   m_dirtyFlagRt = true;
    return m_lfo;
 }
 

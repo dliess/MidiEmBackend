@@ -66,7 +66,7 @@ inline void LFO::setAmplitude(float amplitude) noexcept
 inline void LFO::setFrequency(float frequency) noexcept
 {
    frequency = util::clip(frequency, 0.0f, 1.0f);
-   if (m_frequency != frequency && frequency >= 0.0 && frequency <= 1.0)
+   if (m_frequency != frequency)
    {
       m_frequency = frequency;
       calcActualVal2Frequency();

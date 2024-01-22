@@ -58,6 +58,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
         pkg-config \
         libcapnp-dev \
+        libsodium-dev \
         capnproto \
         python3-toml \
         python3-venv \

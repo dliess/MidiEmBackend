@@ -39,7 +39,7 @@ public:
                           uint8_t midiVoiceOffset) noexcept;
    void initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
                            uint8_t midiVoiceOffset) noexcept;
-   void initEvdevHandler();
+   void initEvdevHandler(); // TODO: implement
    void noteOn(int voiceIdx, int note, float velocity) noexcept;
    void noteOff(int voiceIdx, int note, float velocity) noexcept;
    void pitchBend(int voiceIdx, float value) noexcept;
@@ -106,8 +106,6 @@ public:
                       float destValue, float intensity) noexcept;
    void resetModifier(int voiceIdx, int paramIdx, ParameterAttr parameterAttr);
    void calcActualVal(int voiceIdx, int paramIdx);
-   void calcActualValuesForVoice(int voiceIdx);
-   void calcAllActualValues();
 
    // TODO: do we need this?
    // SoundPresetHandler* soundPresetHandler() noexcept;

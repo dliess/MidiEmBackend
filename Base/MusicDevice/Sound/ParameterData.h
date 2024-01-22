@@ -11,296 +11,296 @@
 #include "clip.h"
 #include "Parameter.h"
 
-namespace base::musicDevice::sound
-{
-enum class IncrementMode 
-{ 
-   Limit = 0, 
-   RoundRobin = 1 
-};
-
-using Parameter            = FloatingPointType<struct ParameterTag>;
-using ParameterLFOAmp      = FloatingPointType<struct ParameterLFOAmpTag>;
-using ParameterLFOFreq     = FloatingPointType<struct ParameterLFOFreqTag>;
-using ParameterLFOWaveform = lfo::Waveform;
-using ParameterLFOMultiplExp =
-    util::StrongType<int, struct ParameterLFOMultiplExpTag>;
-
-struct ParameterData
-{
-   float commanded{0.0};
-   lfo::LFOData lfo;
-};
-
-template<class T>
-struct ParameterDataCustomType
-{
-   T commanded{};
-   lfo::LFODataCustomType<T> lfo{};
-};
-
-using ParameterValue =
-    dl::variant<Parameter, ParameterLFOFreq, ParameterLFOAmp,
-                   ParameterLFOWaveform, ParameterLFOMultiplExp>;
-
-inline void setParameterData(ParameterData& pd,
-                             const ParameterValue& value) noexcept
-{
-   SWITCH(value)
-   FCASE(Parameter, val) { pd.commanded = val.get(); }
-   , FCASE(ParameterLFOFreq, val) { pd.lfo.frequency = val.get(); }
-   , FCASE(ParameterLFOAmp, val) { pd.lfo.amplitude = val.get(); }
-   , FCASE(ParameterLFOWaveform, val) { pd.lfo.waveform = val; }
-   , FCASE(ParameterLFOMultiplExp, val) { pd.lfo.multiplierExp = val.get(); }
-   END_SWITCH
-}
-
-inline void setParameterData(ParameterData& pd, ParameterAttr parameterAttr,
-                             float value) noexcept
-{
-   switch (parameterAttr)
+   namespace base::musicDevice::sound
    {
-      case (ParameterAttr::Commanded):
+   enum class IncrementMode 
+   { 
+      Limit = 0, 
+      RoundRobin = 1 
+   };
+
+   using Parameter            = FloatingPointType<struct ParameterTag>;
+   using ParameterLFOAmp      = FloatingPointType<struct ParameterLFOAmpTag>;
+   using ParameterLFOFreq     = FloatingPointType<struct ParameterLFOFreqTag>;
+   using ParameterLFOWaveform = lfo::Waveform;
+   using ParameterLFOMultiplExp =
+       util::StrongType<int, struct ParameterLFOMultiplExpTag>;
+
+   struct ParameterData
+   {
+      float commanded{0.0};
+      lfo::LFOData lfo;
+   };
+
+   template<class T>
+   struct ParameterDataCustomType
+   {
+      T commanded{};
+      lfo::LFODataCustomType<T> lfo{};
+   };
+
+   using ParameterValue =
+       dl::variant<Parameter, ParameterLFOFreq, ParameterLFOAmp,
+                      ParameterLFOWaveform, ParameterLFOMultiplExp>;
+
+   inline void setParameterData(ParameterData& pd,
+                                const ParameterValue& value) noexcept
+   {
+      SWITCH(value)
+      FCASE(Parameter, val) { pd.commanded = val.get(); }
+      , FCASE(ParameterLFOFreq, val) { pd.lfo.frequency = val.get(); }
+      , FCASE(ParameterLFOAmp, val) { pd.lfo.amplitude = val.get(); }
+      , FCASE(ParameterLFOWaveform, val) { pd.lfo.waveform = val; }
+      , FCASE(ParameterLFOMultiplExp, val) { pd.lfo.multiplierExp = val.get(); }
+      END_SWITCH
+   }
+
+   inline void setParameterData(ParameterData& pd, ParameterAttr parameterAttr,
+                                float value) noexcept
+   {
+      switch (parameterAttr)
       {
-         pd.commanded = value;
-         break;
-      }
-      case (ParameterAttr::LfoFrequency):
-      {
-         pd.lfo.frequency = value;
-         break;
-      }
-      case (ParameterAttr::LfoAmplitude):
-      {
-         pd.lfo.amplitude = value;
-         break;
-      }
-      case (ParameterAttr::LfoWaveform):
-      {
-         pd.lfo.waveform = static_cast<lfo::Waveform>(value);
-         break;
-      }
-      case (ParameterAttr::LfoMultiplierExp):
-      {
-         pd.lfo.multiplierExp = static_cast<int>(value);
-         break;
+         case (ParameterAttr::Commanded):
+         {
+            pd.commanded = value;
+            break;
+         }
+         case (ParameterAttr::LfoFrequency):
+         {
+            pd.lfo.frequency = value;
+            break;
+         }
+         case (ParameterAttr::LfoAmplitude):
+         {
+            pd.lfo.amplitude = value;
+            break;
+         }
+         case (ParameterAttr::LfoWaveform):
+         {
+            pd.lfo.waveform = static_cast<lfo::Waveform>(value);
+            break;
+         }
+         case (ParameterAttr::LfoMultiplierExp):
+         {
+            pd.lfo.multiplierExp = static_cast<int>(value);
+            break;
+         }
       }
    }
-}
 
-template<typename ParameterDataType, typename ReturnType = float>
-ReturnType getParameterData(const ParameterDataType& pd,
-                              ParameterAttr parameterAttr) noexcept
-{
-   switch (parameterAttr)
+   template<typename ParameterDataType, typename ReturnType = float>
+   ReturnType getParameterData(const ParameterDataType& pd,
+                                 ParameterAttr parameterAttr) noexcept
    {
-      case (ParameterAttr::Commanded):
+      switch (parameterAttr)
       {
-         if constexpr (std::is_same_v<ReturnType, decltype(pd.commanded)>)
+         case (ParameterAttr::Commanded):
+         {
+            if constexpr (std::is_same_v<ReturnType, decltype(pd.commanded)>)
+            {
+               return pd.commanded;
+            }
+            else
+            {
+               return ReturnType(pd.commanded);
+            }
+         }
+         case (ParameterAttr::LfoFrequency):
+         {
+            if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.frequency)>)
+            {
+               return pd.lfo.frequency;
+            }
+            else
+            {
+               return ReturnType(pd.lfo.frequency);
+            }
+         }
+         case (ParameterAttr::LfoAmplitude):
+         {
+            if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.amplitude)>)
+            {
+               return pd.lfo.amplitude;
+            }
+            else
+            {
+               return ReturnType(pd.lfo.amplitude);
+            }
+         }
+         case (ParameterAttr::LfoWaveform):
+         {
+            if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.waveform)>)
+            {
+               return pd.lfo.waveform;
+            }
+            else
+            {
+               return ReturnType(pd.lfo.waveform);
+            }
+         }
+         case (ParameterAttr::LfoMultiplierExp):
+         {
+            if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.multiplierExp)>)
+            {
+               return pd.lfo.multiplierExp;
+            }
+            else
+            {
+               return ReturnType(pd.lfo.multiplierExp);
+            }
+         }
+      }
+      return ReturnType{};
+   }
+
+   template<typename T>
+   T& getParameterDataRef(ParameterDataCustomType<T>& pd,
+                          ParameterAttr parameterAttr) noexcept
+   {
+      switch (parameterAttr)
+      {
+         case (ParameterAttr::Commanded):
          {
             return pd.commanded;
          }
-         else
-         {
-            return ReturnType(pd.commanded);
-         }
-      }
-      case (ParameterAttr::LfoFrequency):
-      {
-         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.frequency)>)
+         case (ParameterAttr::LfoFrequency):
          {
             return pd.lfo.frequency;
          }
-         else
-         {
-            return ReturnType(pd.lfo.frequency);
-         }
-      }
-      case (ParameterAttr::LfoAmplitude):
-      {
-         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.amplitude)>)
+         case (ParameterAttr::LfoAmplitude):
          {
             return pd.lfo.amplitude;
          }
-         else
-         {
-            return ReturnType(pd.lfo.amplitude);
-         }
-      }
-      case (ParameterAttr::LfoWaveform):
-      {
-         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.waveform)>)
+         case (ParameterAttr::LfoWaveform):
          {
             return pd.lfo.waveform;
          }
-         else
-         {
-            return ReturnType(pd.lfo.waveform);
-         }
-      }
-      case (ParameterAttr::LfoMultiplierExp):
-      {
-         if constexpr (std::is_same_v<ReturnType, decltype(pd.lfo.multiplierExp)>)
+         case (ParameterAttr::LfoMultiplierExp):
          {
             return pd.lfo.multiplierExp;
          }
-         else
+         default: 
          {
-            return ReturnType(pd.lfo.multiplierExp);
+            return pd.commanded;
          }
       }
    }
-   return ReturnType{};
-}
 
-template<typename T>
-T& getParameterDataRef(ParameterDataCustomType<T>& pd,
-                       ParameterAttr parameterAttr) noexcept
-{
-   switch (parameterAttr)
+   template<typename T>
+   const T& getParameterDataConstRef(const ParameterDataCustomType<T>& pd,
+                                     ParameterAttr parameterAttr) noexcept
    {
-      case (ParameterAttr::Commanded):
+      switch (parameterAttr)
       {
-         return pd.commanded;
-      }
-      case (ParameterAttr::LfoFrequency):
-      {
-         return pd.lfo.frequency;
-      }
-      case (ParameterAttr::LfoAmplitude):
-      {
-         return pd.lfo.amplitude;
-      }
-      case (ParameterAttr::LfoWaveform):
-      {
-         return pd.lfo.waveform;
-      }
-      case (ParameterAttr::LfoMultiplierExp):
-      {
-         return pd.lfo.multiplierExp;
-      }
-      default: 
-      {
-         return pd.commanded;
-      }
-   }
-}
-
-template<typename T>
-const T& getParameterDataConstRef(const ParameterDataCustomType<T>& pd,
-                                  ParameterAttr parameterAttr) noexcept
-{
-   switch (parameterAttr)
-   {
-      case (ParameterAttr::Commanded):
-      {
-         return pd.commanded;
-      }
-      case (ParameterAttr::LfoFrequency):
-      {
-         return pd.lfo.frequency;
-      }
-      case (ParameterAttr::LfoAmplitude):
-      {
-         return pd.lfo.amplitude;
-      }
-      case (ParameterAttr::LfoWaveform):
-      {
-         return pd.lfo.waveform;
-      }
-      case (ParameterAttr::LfoMultiplierExp):
-      {
-         return pd.lfo.multiplierExp;
-      }
-      default: 
-      {
-         return pd.commanded;
-      }
-   }
-}
-
-
-static_assert(
-    std::is_same_v<Parameter, dl::variant_alternative_t<
-                                  static_cast<int>(ParameterAttr::Commanded),
-                                  ParameterValue>>);
-static_assert(std::is_same_v<ParameterLFOFreq,
-                             dl::variant_alternative_t<
-                                 static_cast<int>(ParameterAttr::LfoFrequency),
-                                 ParameterValue>>);
-static_assert(std::is_same_v<ParameterLFOAmp,
-                             dl::variant_alternative_t<
-                                 static_cast<int>(ParameterAttr::LfoAmplitude),
-                                 ParameterValue>>);
-static_assert(std::is_same_v<ParameterLFOWaveform,
-                             dl::variant_alternative_t<
-                                 static_cast<int>(ParameterAttr::LfoWaveform),
-                                 ParameterValue>>);
-static_assert(
-    std::is_same_v<ParameterLFOMultiplExp,
-                   dl::variant_alternative_t<
-                       static_cast<int>(ParameterAttr::LfoMultiplierExp),
-                       ParameterValue>>);
-
-
-
-inline 
-std::optional<ValueRangeEnd> getValueRange(const base::musicDevice::description::sound::Parameter& paramDescr)
-{
-   switch (paramDescr.type)
-   {
-      case base::musicDevice::description::sound::Parameter::Type::List:
-      {
-         if (paramDescr.source.midi->sourceRanges)
+         case (ParameterAttr::Commanded):
          {
-            return ListRangeEnd(paramDescr.source.midi->sourceRanges->size());
+            return pd.commanded;
          }
-         break;
-      }
-      case base::musicDevice::description::sound::Parameter::Type::Continous:
-      case base::musicDevice::description::sound::Parameter::Type::
-          ContinousBipolar:
-      {
-         return FloatingPointRangeEnd(1.0f);
+         case (ParameterAttr::LfoFrequency):
+         {
+            return pd.lfo.frequency;
+         }
+         case (ParameterAttr::LfoAmplitude):
+         {
+            return pd.lfo.amplitude;
+         }
+         case (ParameterAttr::LfoWaveform):
+         {
+            return pd.lfo.waveform;
+         }
+         case (ParameterAttr::LfoMultiplierExp):
+         {
+            return pd.lfo.multiplierExp;
+         }
+         default: 
+         {
+            return pd.commanded;
+         }
       }
    }
-   return std::nullopt;
-}
 
-template <typename ParamDescrProvider>
-ValueRangeEnd getParamRangeEnd(
-    int voiceIdx, int parameterIdx, ParameterAttr parameterAttr,
-    const ParamDescrProvider& paramDescrProvider)
-{
-   switch (parameterAttr)
+
+   static_assert(
+       std::is_same_v<Parameter, dl::variant_alternative_t<
+                                     static_cast<int>(ParameterAttr::Commanded),
+                                     ParameterValue>>);
+   static_assert(std::is_same_v<ParameterLFOFreq,
+                                dl::variant_alternative_t<
+                                    static_cast<int>(ParameterAttr::LfoFrequency),
+                                    ParameterValue>>);
+   static_assert(std::is_same_v<ParameterLFOAmp,
+                                dl::variant_alternative_t<
+                                    static_cast<int>(ParameterAttr::LfoAmplitude),
+                                    ParameterValue>>);
+   static_assert(std::is_same_v<ParameterLFOWaveform,
+                                dl::variant_alternative_t<
+                                    static_cast<int>(ParameterAttr::LfoWaveform),
+                                    ParameterValue>>);
+   static_assert(
+       std::is_same_v<ParameterLFOMultiplExp,
+                      dl::variant_alternative_t<
+                          static_cast<int>(ParameterAttr::LfoMultiplierExp),
+                          ParameterValue>>);
+
+
+
+   inline 
+   std::optional<ValueRangeEnd> getValueRange(const base::musicDevice::description::sound::Parameter& paramDescr)
    {
-      case (ParameterAttr::Commanded):
+      switch (paramDescr.type)
       {
-         const auto& paramDescr =
-            paramDescrProvider.parameterDescription(voiceIdx, parameterIdx);
-         const auto vr = getValueRange(paramDescr);
-         if(vr)
+         case base::musicDevice::description::sound::Parameter::Type::List:
          {
-            return vr.value();
+            if (paramDescr.source.midi->sourceRanges)
+            {
+               return ListRangeEnd(paramDescr.source.midi->sourceRanges->size());
+            }
+            break;
          }
-         break;
+         case base::musicDevice::description::sound::Parameter::Type::Continous:
+         case base::musicDevice::description::sound::Parameter::Type::
+             ContinousBipolar:
+         {
+            return FloatingPointRangeEnd(1.0f);
+         }
       }
-      case (ParameterAttr::LfoFrequency):
+      return std::nullopt;
+   }
+
+   template <typename ParamDescrProvider>
+   ValueRangeEnd getParamRangeEnd(
+       int voiceIdx, int parameterIdx, ParameterAttr parameterAttr,
+       const ParamDescrProvider& paramDescrProvider)
+   {
+      switch (parameterAttr)
       {
-         return FloatingPointRangeEnd{1.0f};
-      }
-      case (ParameterAttr::LfoAmplitude):
-      {
-         return FloatingPointRangeEnd{1.0f};
-      }
-      case (ParameterAttr::LfoWaveform):
-      {
-         return ListRangeEnd{magic_enum::enum_count<lfo::Waveform>()};
-      }
-      case (ParameterAttr::LfoMultiplierExp):
-      {
-         return ListRangeEnd{lfo::MAX_MULTIPLIER_EXP + 1};
-      }
+         case (ParameterAttr::Commanded):
+         {
+            const auto& paramDescr =
+               paramDescrProvider.parameterDescription(voiceIdx, parameterIdx);
+            const auto vr = getValueRange(paramDescr);
+            if(vr)
+            {
+               return vr.value();
+            }
+            break;
+         }
+         case (ParameterAttr::LfoFrequency):
+         {
+            return FloatingPointRangeEnd{1.0f};
+         }
+         case (ParameterAttr::LfoAmplitude):
+         {
+            return FloatingPointRangeEnd{1.0f};
+         }
+         case (ParameterAttr::LfoWaveform):
+         {
+            return ListRangeEnd{magic_enum::enum_count<lfo::Waveform>()};
+         }
+         case (ParameterAttr::LfoMultiplierExp):
+         {
+            return ListRangeEnd{lfo::MAX_MULTIPLIER_EXP + 1};
+         }
    }
    assert(false);
 }
