@@ -33,9 +33,6 @@ public:
    void removeVoiceFromMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
        ::capnzero::Int16 voiceIdx) override;
-   void setNoteOffsetInMelodicInstrumentComponent(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
-       ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset) override;
    void setVoiceNameInMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
        const ::capnzero::TextView& name) override;
@@ -66,6 +63,12 @@ public:
        ::capnzero::Int16 voiceIdx) override;
    void setNoteOffsetInKitInstrumentComponent(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset) override;
+   void setNoteOffsetInKitInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 noteOffset) override;
+   void setNoteOffsetInMelodicInstrumentComponent(
+       const ::capnzero::SpanCL<16>& instrumentUuid, 
        ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset) override;
    void setVoiceNameInKitInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,

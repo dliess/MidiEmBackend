@@ -246,14 +246,14 @@ void Instruments::removeVoiceFromMelodicInstrument(
 }
 
 void Instruments::setNoteOffsetInMelodicInstrumentComponent(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    const util::Identifiable::UUID& instrumentUuid,
     int componentIdx, int noteOffset)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, 
                                          componentIdx,
                                          noteOffset](auto& nonRtData) {
       InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, voiceIdx,
+          .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, 
                                                      componentIdx, noteOffset);
    });
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
@@ -368,8 +368,21 @@ void Instruments::setNoteOffsetInKitInstrumentComponent(
           .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx,
                                                  componentIdx, noteOffset);
    });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   // emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
+void Instruments::setNoteOffsetInKitInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int noteOffset)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
+                                         noteOffset](auto& nonRtData) {
+      // InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          // .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx,
+                                             // noteOffset);
+   });
+   // emitDataChanged(m_doubleBufferedData.nonRt(), true); 
+}
+
 
 void Instruments::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,

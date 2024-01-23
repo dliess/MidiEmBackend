@@ -39,7 +39,7 @@ struct InstrumentsModifier
    void removeVoiceFromMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
    void setNoteOffsetInMelodicInstrumentComponent(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& instrumentUuid,
        int componentIdx, int noteOffset) noexcept;
    void setVoiceNameInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,

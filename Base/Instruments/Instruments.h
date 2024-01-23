@@ -57,7 +57,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    void removeVoiceFromMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx);
    void setNoteOffsetInMelodicInstrumentComponent(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       const util::Identifiable::UUID& instrumentUuid,
        int componentIdx, int noteOffset);
    void setVoiceNameInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
@@ -81,6 +81,9 @@ struct Instruments   //: public utils::Settings<Instruments>
    void setNoteOffsetInKitInstrumentComponent(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx, int noteOffset);
+   void setNoteOffsetInKitInstrumentVoice(
+       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+       int noteOffset);
    void setVoiceNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string& name);

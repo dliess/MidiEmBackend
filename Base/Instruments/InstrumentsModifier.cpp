@@ -145,17 +145,15 @@ void InstrumentsModifier::removeVoiceFromMelodicInstrument(
 }
 
 void InstrumentsModifier::setNoteOffsetInMelodicInstrumentComponent(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    const util::Identifiable::UUID& instrumentUuid, 
     int componentIdx, int noteOffset) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto& component =
-       instrumentIt->voices().at(voiceIdx).components[componentIdx];
-   if (component)
-   {
-      component->setNoteOffset(noteOffset);
-      instrumentIt->unmarkAsDefaultCreated();
-   }
+   instrumentIt->forEachComponent(
+       [&noteOffset](Component& component) { 
+         component.setNoteOffset(noteOffset); 
+      });
+   instrumentIt->unmarkAsDefaultCreated();
 }
 
 void InstrumentsModifier::setVoiceNameInMelodicInstrument(

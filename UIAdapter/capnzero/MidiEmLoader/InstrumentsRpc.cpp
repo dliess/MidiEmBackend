@@ -118,7 +118,7 @@ void InstrumentsRpc::removeVoiceFromMelodicInstrument(
 }
 
 void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
-    const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+    const ::capnzero::SpanCL<16>& instrumentUuid, 
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset)
 {
    util::Identifiable::UUID instrumentUuid_;
@@ -126,7 +126,7 @@ void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
    try
    {
       m_rInstruments.setNoteOffsetInMelodicInstrumentComponent(
-          instrumentUuid_, voiceIdx, componentIdx, noteOffset);
+          instrumentUuid_, componentIdx, noteOffset);
    }
    catch (std::exception& e)
    {
