@@ -79,9 +79,10 @@ public:
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
-
+   // unused yet
    void clearModifier(int componentIdx, std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr) const;
+   // unused yet
    void applyModifier(int componentIdx, std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr,
                       float destination, float intensity) const;

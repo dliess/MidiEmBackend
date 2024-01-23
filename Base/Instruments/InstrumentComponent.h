@@ -5,9 +5,11 @@
 #include <memory>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "InstrumentsParameterCache.h"
 #include "MusicDevice.h"
 #include "SoundHandler.h"
+#include "CallbackSignal.h"
 
 namespace base::instruments
 {
@@ -24,6 +26,7 @@ public:
    [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
    void setNoteOffset(int noteOffset);
+   void setAmp(float amp, float prevAmp);
    void noteOn(int note, float velocity) const;
    void noteOff(int note, float velocity) const;
    void pitchBend(float value) const;
@@ -68,12 +71,16 @@ public:
    ParameterCache* parameterCache();
    ParameterCache* parameterCache() const;
 
+   CB_SIGNAL_SINGLE_SUBSCRIBER(NoteOffsetChanged, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(AmpChanged, float);
+
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
    std::shared_ptr<ParameterCache> m_pParameterCache;
    musicDevice::MusicDeviceId m_soundDeviceId;
    int m_sdVoiceIdx{0};
    int m_noteOffset{0};
+   float m_amp{1.0f};
    void refreshParameters() const;
 };
 

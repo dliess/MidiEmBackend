@@ -119,6 +119,12 @@ struct Instruments   //: public utils::Settings<Instruments>
    CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicInstrumentParamChanged,
                                util::Identifiable::UUIDView, int, int,
                                musicDevice::sound::ParameterAttr, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceAmpChanged, util::Identifiable::UUIDView, int, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
 
    // loop it back here to Loader
    void kitParamChanged(const util::Identifiable::UUID& uuid, int voiceIdx,

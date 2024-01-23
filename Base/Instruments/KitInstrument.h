@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "CallbackSignal.h"
 #include "Instrument.h"
 #include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
@@ -68,6 +69,7 @@ public:
 
    template <typename T> void addVoice(int padIdx, T&& voice);
 
+
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
@@ -85,6 +87,11 @@ public:
    friend void from_json(const nlohmann::json& j, KitInstrument& instr);
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
+
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentNoteOffsetChanged,int, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceNoteOffsetChanged, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentAmpChanged,int, int, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceAmpChanged, int, float);
 
 private:
    std::string m_name;

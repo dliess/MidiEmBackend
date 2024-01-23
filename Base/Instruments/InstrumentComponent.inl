@@ -41,7 +41,24 @@ inline void Component::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
 
 inline void Component::setNoteOffset(int noteOffset)
 {
-   m_noteOffset = noteOffset;
+   if(m_noteOffset != noteOffset)
+   {
+      m_noteOffset = noteOffset;
+      emitNoteOffsetChanged(m_noteOffset);
+   }
+}
+
+inline void Component::setAmp(float amp, float prevAmp)
+{
+   if(m_amp != amp)
+   {
+      m_amp = amp;
+      emitAmpChanged(m_amp);
+   }
+   if(m_pSoundDevice)
+   {
+      m_pSoundDevice->setAmp(m_sdVoiceIdx, prevAmp * m_amp);
+   }
 }
 
 inline bool Component::operator==(const Component& rhs) const

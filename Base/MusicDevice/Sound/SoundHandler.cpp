@@ -135,6 +135,27 @@ void SoundHandler::initEvdevHandler()
    // TODO
 }
 
+void SoundHandler::setAmp(int voiceIdx, float amp) noexcept
+{
+   if (!m_midiOutHandler)
+   {
+      spdlog::error(
+          "setAmp() called but there is no m_midiOutHandler in device '{}'",
+          m_deviceName);
+      return;
+   }
+   const auto engineIdx = m_rSoundSection.voice2EngineIdx(voiceIdx);
+   m_rSoundSection.forEachParameterDescr(engineIdx,
+       [this, voiceIdx, amp](int paramIdx, const auto& paramDescr) {
+          if (paramDescr.role == description::sound::ParameterRole::Volume)
+          {
+            setParameterValue(voiceIdx, paramIdx, ParameterAttr::Commanded,
+                               amp);
+            return;
+          }
+       });
+}
+
 void SoundHandler::noteOn(int voiceIdx, int note, float velocity) noexcept
 {
    if (!m_midiOutHandler)

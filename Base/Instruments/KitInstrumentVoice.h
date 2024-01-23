@@ -23,6 +23,7 @@ struct KitVoice   //: public util::Identifiable
       }
    };
    Components components;
+   float amp{1.0f};
    bool operator==(const KitVoice& rhs) const;
 };
 

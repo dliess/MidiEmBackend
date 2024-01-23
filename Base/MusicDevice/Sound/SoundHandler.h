@@ -40,6 +40,7 @@ public:
    void initMidiOutHandler(std::shared_ptr<MidiOutput> pMidiOut,
                            uint8_t midiVoiceOffset) noexcept;
    void initEvdevHandler(); // TODO: implement
+   void setAmp(int voiceIdx, float amp) noexcept;
    void noteOn(int voiceIdx, int note, float velocity) noexcept;
    void noteOff(int voiceIdx, int note, float velocity) noexcept;
    void pitchBend(int voiceIdx, float value) noexcept;
