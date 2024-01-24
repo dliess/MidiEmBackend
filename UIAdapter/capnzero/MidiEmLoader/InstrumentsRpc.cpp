@@ -117,6 +117,22 @@ void InstrumentsRpc::removeVoiceFromMelodicInstrument(
    }
 }
 
+void InstrumentsRpc::setNoteOffsetInKitInstrumentVoice(
+       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
+       ::capnzero::Int16 noteOffset)
+{
+   util::Identifiable::UUID instrumentUuid_;
+   std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
+   try
+   {
+       m_rInstruments.setNoteOffsetInKitInstrumentVoice(instrumentUuid_, voiceIdx, noteOffset);
+   }
+   catch (std::exception& e)
+   {
+       spdlog::error("InstrumentsRpc exception occured: {}", e.what());
+   }
+}
+
 void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
     const ::capnzero::SpanCL<16>& instrumentUuid, 
     ::capnzero::Int16 componentIdx, ::capnzero::Int16 noteOffset)

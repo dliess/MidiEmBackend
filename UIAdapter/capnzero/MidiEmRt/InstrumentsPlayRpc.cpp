@@ -114,3 +114,25 @@ void InstrumentsPlayRpc::blancMelodicParameterValues(
 {
    // TODO
 }
+   
+void InstrumentsPlayRpc::setKitComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                           ::capnzero::Int16 voiceIdx,
+                           ::capnzero::Int16 componentIdx,
+                           ::capnzero::Float32 amp)
+{
+
+}
+
+   
+void InstrumentsPlayRpc::setKitVoiceAmp(const ::capnzero::SpanCL<16>& uuid,
+                       ::capnzero::Int16 voiceIdx, ::capnzero::Float32 amp)
+{
+
+}
+   
+void InstrumentsPlayRpc::setMelodicComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                               ::capnzero::Int16 componentIdx,
+                               ::capnzero::Float32 amp) 
+{
+
+}
