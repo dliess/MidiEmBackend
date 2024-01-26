@@ -167,6 +167,8 @@ inline bool operator!=(util::Identifiable::UUIDView lhs,
 }
 }   // namespace std
 
+#define VIEW2CONSTREF(view) *reinterpret_cast<const util::Identifiable::UUID*>(view.data())
+
 #include "Identifiable.inl"
 //#include "IdentifiableMeta.h"
 

@@ -113,6 +113,12 @@ struct Instruments   //: public utils::Settings<Instruments>
    [[nodiscard]] bool hasMelodicInstrument(
        util::Identifiable::UUIDView uuid) const;
 
+   void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
+                           int componentIdx, float amp);
+   void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);
+   void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
+                               int componentIdx, float amp);
+
    void updateParameterUI();
 
    CB_SIGNAL(DataChanged, const Data&, bool);
@@ -126,7 +132,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceAmpChanged, util::Identifiable::UUIDView, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int, int);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
 
    // loop it back here to Loader

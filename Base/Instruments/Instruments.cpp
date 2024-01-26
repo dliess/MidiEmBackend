@@ -256,7 +256,33 @@ void Instruments::setNoteOffsetInMelodicInstrumentComponent(
           .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, 
                                                      componentIdx, noteOffset);
    });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   emitMelodicComponentNoteOffsetChanged(instrumentUuid, componentIdx, noteOffset); // TODO: emit from here or connect to signal?
+}
+
+void Instruments::setNoteOffsetInKitInstrumentComponent(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int componentIdx, int noteOffset)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
+                                         componentIdx,
+                                         noteOffset](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx,
+                                                 componentIdx, noteOffset);
+   });
+   emitKitComponentNoteOffsetChanged(instrumentUuid, voiceIdx, componentIdx,
+                                     noteOffset); // TODO: emit from here or connect to signal? 
+}
+void Instruments::setNoteOffsetInKitInstrumentVoice(
+    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
+    int noteOffset)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
+                                         noteOffset](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx, noteOffset);
+   });
+   emitKitVoiceNoteOffsetChanged(instrumentUuid, voiceIdx, noteOffset); // TODO: emit from here or connect to signal?
 }
 
 void Instruments::setVoiceNameInMelodicInstrument(
@@ -357,31 +383,6 @@ void Instruments::removeVoiceFromKitInstrument(
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
-void Instruments::setNoteOffsetInKitInstrumentComponent(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    int componentIdx, int noteOffset)
-{
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         componentIdx,
-                                         noteOffset](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx,
-                                                 componentIdx, noteOffset);
-   });
-   // emitDataChanged(m_doubleBufferedData.nonRt(), true);
-}
-void Instruments::setNoteOffsetInKitInstrumentVoice(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    int noteOffset)
-{
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         noteOffset](auto& nonRtData) {
-      // InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          // .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx,
-                                             // noteOffset);
-   });
-   // emitDataChanged(m_doubleBufferedData.nonRt(), true); 
-}
 
 
 void Instruments::setVoiceNameInKitInstrument(
@@ -525,5 +526,34 @@ void Instruments::saveIfDirty()
       m_persister.save(m_doubleBufferedData.nonRt());
       m_parameterCacheDirty = false;
    }
+}
+
+void Instruments::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
+                        int componentIdx, float amp)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid, voiceIdx, componentIdx, amp](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setKitComponentAmp(uuid, voiceIdx, componentIdx, amp);
+   });
+   emitKitComponentAmpChanged(uuid, voiceIdx, componentIdx, amp); // TODO emit from here or connect to signal?
+}
+
+void Instruments::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid, voiceIdx, amp](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setKitVoiceAmp(uuid, voiceIdx, amp);
+   });
+   emitKitVoiceAmpChanged(uuid, voiceIdx, amp); // TODO emit from here or connect to signal?
+}
+
+void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
+                               int componentIdx, float amp)
+{
+   m_doubleBufferedData.withNonRtLocked([this, &uuid, componentIdx, amp](auto& nonRtData) {
+      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+          .setMelodicComponentAmp(uuid, componentIdx, amp);
+   });
+   // emitMelodicComponentAmpChanged(uuid, componentIdx, amp); // TODO emit from here or connect to signal?
 }
 

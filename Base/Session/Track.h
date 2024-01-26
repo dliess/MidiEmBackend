@@ -31,7 +31,8 @@ public:
    void update();
    inline void setName(std::string_view name);
    void toggleMute() noexcept;
-   inline void createClip(int row);
+   void setVolume(float volume) noexcept;
+      inline void createClip(int row);
    inline void createClip(int row, const Clip& clip);
    inline void deleteClip(int row);
    inline void startClip(int row);

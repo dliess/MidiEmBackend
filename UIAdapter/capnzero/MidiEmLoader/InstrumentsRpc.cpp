@@ -331,3 +331,25 @@ void InstrumentsRpc::setVoiceNameInKitInstrument(
       spdlog::error("InstrumentsRpc exception occured: {}", e.what());
    }
 }
+
+void InstrumentsRpc::setKitComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                           ::capnzero::Int16 voiceIdx,
+                           ::capnzero::Int16 componentIdx,
+                           ::capnzero::Float32 amp)
+{
+   m_rInstruments.setKitComponentAmp(uuid, voiceIdx, componentIdx, amp);
+}
+
+   
+void InstrumentsRpc::setKitVoiceAmp(const ::capnzero::SpanCL<16>& uuid,
+                       ::capnzero::Int16 voiceIdx, ::capnzero::Float32 amp)
+{
+   m_rInstruments.setKitVoiceAmp(uuid, voiceIdx, amp);
+}
+   
+void InstrumentsRpc::setMelodicComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                               ::capnzero::Int16 componentIdx,
+                               ::capnzero::Float32 amp) 
+{
+   m_rInstruments.setMelodicComponentAmp(uuid, componentIdx, amp);
+}

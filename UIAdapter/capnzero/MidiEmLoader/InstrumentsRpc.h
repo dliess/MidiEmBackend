@@ -73,6 +73,15 @@ public:
    void setVoiceNameInKitInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
        const ::capnzero::TextView& name) override;
+   void setKitComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                           ::capnzero::Int16 voiceIdx,
+                           ::capnzero::Int16 componentIdx,
+                           ::capnzero::Float32 amp) override;
+   void setKitVoiceAmp(const ::capnzero::SpanCL<16>& uuid,
+                       ::capnzero::Int16 voiceIdx, ::capnzero::Float32 amp) override;
+   void setMelodicComponentAmp(const ::capnzero::SpanCL<16>& uuid,
+                               ::capnzero::Int16 componentIdx,
+                               ::capnzero::Float32 amp) override;
 
 private:
    base::instruments::Instruments& m_rInstruments;

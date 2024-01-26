@@ -262,6 +262,17 @@ void InstrumentsModifier::setNoteOffsetInKitInstrumentComponent(
    instrumentIt->unmarkAsDefaultCreated();
 }
 
+void InstrumentsModifier::setNoteOffsetInKitInstrumentVoice(const util::Identifiable::UUID& instrumentUuid,
+                                       int voiceIdx, int noteOffset) noexcept
+{
+   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
+   if (noteOffset != instrumentIt->voices().at(voiceIdx).noteOffset)
+   {
+      instrumentIt->voices().at(voiceIdx).noteOffset = noteOffset;
+      instrumentIt->unmarkAsDefaultCreated();
+   }
+}
+
 void InstrumentsModifier::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string& name) noexcept
@@ -269,6 +280,27 @@ void InstrumentsModifier::setVoiceNameInKitInstrument(
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    instrumentIt->voices().operator[](voiceIdx).name = name;
    instrumentIt->unmarkAsDefaultCreated();
+}
+void InstrumentsModifier::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
+                        int componentIdx, float amp)
+{
+   GET_KIT_INSTR_OR_RETURN(uuid);
+   instrumentIt->setComponentAmp(voiceIdx, componentIdx, amp);
+}
+
+void InstrumentsModifier::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp)
+{
+   GET_KIT_INSTR_OR_RETURN(uuid);
+   instrumentIt->setVoiceAmp(voiceIdx, amp);
+}
+
+void InstrumentsModifier::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
+                            int componentIdx, float amp)
+{
+   GET_MELODIC_INSTR_OR_RETURN(uuid);
+   instrumentIt->forEachComponent([&amp](Component& component) {
+      // TODO component.setAmp(amp, instrumentIt->rtD externalAmp());
+   });
 }
 
 void InstrumentsModifier::incKitInstrumentRefCount(

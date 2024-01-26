@@ -32,7 +32,7 @@ void KitInstrument::noteOn(int voiceIdx, int note, float velocity,
 {
    for (auto& component : m_voices[voiceIdx].components)
    {
-      component.noteOn(note, velocity);
+      component.noteOn(note + m_voices[voiceIdx].noteOffset, velocity);
    }
    rtData->emitNoteOnPlayed(voiceIdx + 64, velocity, token);
 }
@@ -156,4 +156,39 @@ std::optional<int> KitInstrument::toVoiceIndex(int note) const
       return noteAdjusted;
    }
    return std::nullopt;
+}
+
+void KitInstrument::setVoiceNoteOffset(int voiceIdx, int offset)
+{
+   if(offset != m_voices[voiceIdx].noteOffset)
+   {
+      m_voices[voiceIdx].noteOffset = offset;
+      emitVoiceNoteOffsetChanged(voiceIdx, offset);
+   }
+}
+void KitInstrument::setComponentNoteOffset(int voiceIdx, int componentIdx, int offset) 
+{
+   if(offset != m_voices[voiceIdx].components[componentIdx].noteOffset())
+   {
+      m_voices[voiceIdx].components[componentIdx].setNoteOffset(offset);
+      emitComponentNoteOffsetChanged(voiceIdx, componentIdx, offset);
+   }
+}
+
+void KitInstrument::setVoiceAmp(int voiceIdx, float amp)
+{
+   if(amp != m_voices[voiceIdx].amp)
+   {
+      m_voices[voiceIdx].amp = amp;
+      emitVoiceAmpChanged(voiceIdx, amp);
+   }
+}
+
+void KitInstrument::setComponentAmp(int voiceIdx, int componentIdx, float amp)
+{
+   if(amp != m_voices[voiceIdx].components[componentIdx].amp())
+   {
+      m_voices[voiceIdx].components[componentIdx].setAmp(amp, 0);
+      //TODO: really emit from here? emitComponentAmpChanged(voiceIdx, componentIdx, amp);
+   }
 }

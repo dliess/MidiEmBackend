@@ -65,9 +65,16 @@ struct InstrumentsModifier
    void setNoteOffsetInKitInstrumentComponent(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx, int noteOffset) noexcept;
+   void setNoteOffsetInKitInstrumentVoice(const util::Identifiable::UUID& instrumentUuid,
+                                          int voiceIdx, int noteOffset) noexcept;
    void setVoiceNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const std::string& name) noexcept;
+   void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
+                           int componentIdx, float amp);
+   void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);
+   void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
+                               int componentIdx, float amp);
 
    void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);

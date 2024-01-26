@@ -308,47 +308,45 @@ RtServer::RtServer(
    rTracks.onTrackAdded([this](util::Identifiable::UUIDView uuid,
                                std::string_view name, int position) {
       signals().Session__trackAdded(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+          VIEW2CONSTREF(uuid),
           std::string(name));
    });
    rTracks.onTrackRemoved([this](util::Identifiable::UUIDView uuid) {
       signals().Session__trackRemoved(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()));
+          VIEW2CONSTREF(uuid));
    });
    rTracks.onTrackDuplicated(
        [this](util::Identifiable::UUIDView uuidOriginal,
               util::Identifiable::UUIDView uuidDuplicate) {
           signals().Session__trackDuplicated(
-              *reinterpret_cast<const util::Identifiable::UUID *>(
-                  uuidOriginal.data()),
-              *reinterpret_cast<const util::Identifiable::UUID *>(
-                  uuidDuplicate.data()));
+              VIEW2CONSTREF(uuidOriginal),
+              VIEW2CONSTREF(uuidDuplicate));
        });
    rTracks.onTrackMoved([this](util::Identifiable::UUIDView uuid, int dest) {
       signals().Session__trackMoved(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+          VIEW2CONSTREF(uuid),
           dest);
    });
    rTracks.onTrackMuted([this](util::Identifiable::UUIDView uuid, bool muted) {
       signals().Session__trackMuted(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+          VIEW2CONSTREF(uuid),
           muted);
    });
 
    rTracks.onTrackNameChanged(
        [this](util::Identifiable::UUIDView uuid, std::string_view name) {
           signals().Session__trackNameChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               std::string(name));
        });
    rTracks.onTrackInstrumentChanged(
        [this](util::Identifiable::UUIDView trackUuid,
               util::Identifiable::UUIDView instrumentUuid) {
           signals().Session__trackInstrumentChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(
-                  trackUuid.data()),
-              *reinterpret_cast<const util::Identifiable::UUID *>(
-                  instrumentUuid.data()));
+              VIEW2CONSTREF(
+                  trackUuid),
+              VIEW2CONSTREF(
+                  instrumentUuid));
        });
    rTracks.onTrackClipCreated([this, &rTracks](
                                   util::Identifiable::UUIDView uuid, int row) {
@@ -356,13 +354,13 @@ RtServer::RtServer(
       rTracks.withClip(
           uuid, row, [&clipName](const auto &clip) { clipName = clip.name(); });
       signals().Session__clipAdded(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          VIEW2CONSTREF(uuid), row,
           clipName);
    });
    rTracks.onTrackClipDeleted(
        [this](util::Identifiable::UUIDView uuid, int row) {
           signals().Session__clipRemoved(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row);
        });
    rTracks.onTrackClipStartedChanged([this](util::Identifiable::UUIDView uuid,
@@ -370,26 +368,26 @@ RtServer::RtServer(
       if (started)
       {
          signals().Session__clipStateChanged(
-             *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+             VIEW2CONSTREF(uuid),
              row, ::capnzero::MidiEmRt::SessionClipState::RUNNING);
       }
       else
       {
          signals().Session__clipStateChanged(
-             *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+             VIEW2CONSTREF(uuid),
              row, ::capnzero::MidiEmRt::SessionClipState::STOPPED);
       }
    });
    rTracks.onTrackClipAboutToStart(
        [this](util::Identifiable::UUIDView uuid, int row) {
           signals().Session__clipStateChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, ::capnzero::MidiEmRt::SessionClipState::ABOUT_TO_RUN);
        });
    rTracks.onTrackClipNameChanged([this](util::Identifiable::UUIDView uuid,
                                          int row, std::string_view name) {
       signals().Session__clipRenamed(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          VIEW2CONSTREF(uuid), row,
           std::string(name));
    });
    rTracks.onTrackClipNoteAdded(
@@ -397,55 +395,55 @@ RtServer::RtServer(
               base::sequencer::NoteId noteId, base::sequencer::Beat startBeat,
               base::sequencer::Beat length, int note, float velocity) {
           signals().Session__clipNoteAdded(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, noteId, startBeat, length, note, velocity);
        });
    rTracks.onTrackClipNoteVelocityChanged(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::NoteId noteId, float velocity) {
           signals().Session__clipNoteVelocityChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, noteId, velocity);
        });
    rTracks.onTrackClipNoteLengthChanged(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::NoteId noteId, base::sequencer::Beat length) {
           signals().Session__clipNoteLengthChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, noteId, length);
        });
    rTracks.onTrackClipNoteStartBeatChanged(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::NoteId noteId, base::sequencer::Beat startBeat) {
           signals().Session__clipNoteStartBeatChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, noteId, startBeat);
        });
    rTracks.onTrackClipNoteRemoved([this](util::Identifiable::UUIDView uuid,
                                          int row,
                                          base::sequencer::NoteId noteId) {
       signals().Session__clipNoteRemoved(
-          *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()), row,
+          VIEW2CONSTREF(uuid), row,
           noteId);
    });
    rTracks.onTrackClipAllNotesRemoved(
        [this](util::Identifiable::UUIDView uuid, int row) {
           signals().Session__clipAllNotesRemoved(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row);
        });
    rTracks.onTrackClipSequenceLengthChanged(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::Beat seqLen) {
           signals().Session__clipSequenceLengthChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, seqLen);
        });
    rTracks.onTrackClipActualBeatChanged(
        [this](util::Identifiable::UUIDView uuid, int row,
               base::sequencer::Beat beat) {
           signals().Session__clipActualBeatChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               row, beat);
        });
    rInstruments.onKitInstrumentParamChanged(
@@ -454,7 +452,7 @@ RtServer::RtServer(
               base::musicDevice::sound::ParameterAttr parameterAttr,
               float value) {
           signals().InstrumentsPlay__kitParamChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               voiceIdx, componentIdx, parameterIdx,
               static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
               value);
@@ -465,7 +463,7 @@ RtServer::RtServer(
               base::musicDevice::sound::ParameterAttr parameterAttr,
               float value) {
           signals().InstrumentsPlay__melodicParamChanged(
-              *reinterpret_cast<const util::Identifiable::UUID *>(uuid.data()),
+              VIEW2CONSTREF(uuid),
               componentIdx, parameterIdx,
               static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
               value);

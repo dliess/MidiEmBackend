@@ -114,6 +114,11 @@ void session::Track::toggleMute() noexcept
    // TODO
 }
 
+void session::Track::setVolume(float volume) noexcept
+{
+   // TODO
+}
+
 void session::Track::registerCbs(int row)
 {
    m_clips[row]->onNameChanged(

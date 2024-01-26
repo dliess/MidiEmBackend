@@ -88,6 +88,12 @@ public:
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
 
+   void setVoiceNoteOffset(int voiceIdx, int offset);
+   void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
+
+   void setVoiceAmp(int voiceIdx, float amp);
+   void setComponentAmp(int voiceIdx, int componentIdx, float amp);
+
    CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentNoteOffsetChanged,int, int, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceNoteOffsetChanged, int, int);
    CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentAmpChanged,int, int, float);

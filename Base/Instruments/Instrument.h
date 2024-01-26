@@ -19,6 +19,7 @@ public:
    struct RtNoteData {
       CB_SIGNAL_SINGLE_SUBSCRIBER(NoteOnPlayed, int, float, void*);
       CB_SIGNAL_SINGLE_SUBSCRIBER(NoteOffPlayed, int, float, void*);
+      float externalAmp{1.0f};
       friend class KitInstrument;
       friend class MelodicInstrument;
    };

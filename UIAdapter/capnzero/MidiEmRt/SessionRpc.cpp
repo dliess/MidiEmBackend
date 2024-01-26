@@ -187,3 +187,11 @@ void SessionRpc::startClipRow(::capnzero::Int16 row)
 {
    m_rTracks.startClipRow(row);
 }
+
+void SessionRpc::setTrackVolume(const ::capnzero::SpanCL<16>& trackUuid,
+                                ::capnzero::Float32 volume)
+{
+   m_rTracks.withTrack(trackUuid, [volume](auto& track) {
+      track.setVolume(volume);
+   });
+}

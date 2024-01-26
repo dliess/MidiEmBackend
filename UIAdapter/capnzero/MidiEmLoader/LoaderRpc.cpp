@@ -5,6 +5,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactory.h"
 
+
 using namespace uiadapter::capnzero;
 using namespace base;
 using namespace base::musicDevice;
@@ -36,6 +37,21 @@ LoaderRpc::LoaderRpc(LoaderServer::Signals& rSignals,
               nlohmann::json(data.kitInstruments).dump().c_str());
           m_rSignals.Instruments__melodicInstrumentsChanged(
               nlohmann::json(data.melodicInstruments).dump().c_str());
+       });
+   m_rInstruments.onMelodicComponentNoteOffsetChanged(
+       [this](util::Identifiable::UUIDView id, int componentIdx, int offset) {
+          m_rSignals.Instruments__melodicComponentNoteOffsetChanged(
+            VIEW2CONSTREF(id), componentIdx, offset);
+       });
+   m_rInstruments.onKitComponentNoteOffsetChanged(
+       [this](util::Identifiable::UUIDView id, int voiceIdx, int componentIdx, int offset) {
+          m_rSignals.Instruments__kitComponentNoteOffsetChanged(
+              VIEW2CONSTREF(id), voiceIdx, componentIdx, offset);
+       });
+   m_rInstruments.onKitVoiceNoteOffsetChanged(
+       [this](util::Identifiable::UUIDView id, int voiceIdx, int offset) {
+          m_rSignals.Instruments__kitVoiceNoteOffsetChanged(
+              VIEW2CONSTREF(id), voiceIdx, offset);
        });
 }
 

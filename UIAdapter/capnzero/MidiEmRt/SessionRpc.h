@@ -73,6 +73,9 @@ public:
    void stopTrack(const ::capnzero::SpanCL<16>& trackUuid) override;
    void startClipRow(::capnzero::Int16 row) override;
 
+   void setTrackVolume(const ::capnzero::SpanCL<16>& trackUuid,
+                       ::capnzero::Float32 volume) override;
+
 private:
    base::session::Tracks& m_rTracks;
 };

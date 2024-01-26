@@ -67,6 +67,9 @@ public:
 
    bool operator==(const Component& rhs) const;
 
+   [[nodiscard]] int noteOffset() const { return m_noteOffset; };
+   [[nodiscard]] float amp() const { return m_amp; };
+
    void updateParameterUI() const;
    ParameterCache* parameterCache();
    ParameterCache* parameterCache() const;
