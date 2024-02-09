@@ -29,7 +29,7 @@ public:
 
    void setParameterValue(int componentIdx, int parameterId,
                           musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) const;
+                          float value);
 
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int componentIdx, int parameterIdx) const;
@@ -42,9 +42,6 @@ public:
    const VoiceContainer& voices() const noexcept;
 
    friend auto meta::registerMembers<MelodicInstrument>();
-   // friend void to_json(nlohmann::json& j, const MelodicInstrument& instr);
-   // friend void from_json(const nlohmann::json& j, MelodicInstrument& instr);
-
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
 

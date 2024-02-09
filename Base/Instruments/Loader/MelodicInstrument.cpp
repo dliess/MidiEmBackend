@@ -13,7 +13,7 @@ MelodicInstrument::MelodicInstrument(std::string name) noexcept :
 
 void MelodicInstrument::setParameterValue(
     int componentIdx, int parameterId,
-    musicDevice::sound::ParameterAttr parameterAttr, float value) const
+    musicDevice::sound::ParameterAttr parameterAttr, float value)
 {
    for (auto& voice : m_voices)
    {
