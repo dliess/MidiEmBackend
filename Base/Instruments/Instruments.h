@@ -14,7 +14,8 @@
 #include "Meta.h"
 #include "Settings_old.h"
 #include "function_ref.h"
-
+#include "farbot/AsyncCaller.hpp"
+#include "function.h"
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
 // clang-format on
@@ -150,12 +151,16 @@ struct Instruments   //: public utils::Settings<Instruments>
 
    friend class MelodicInstrumentsParameterCacheCreator;
    friend class KitInstrumentsParameterCacheCreator;
-
+   void invokeQueueActions();
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
    util::DoubleBuffer<Data> m_doubleBufferedData;
+   Data m_rtData;
+   Data m_loaderData;
    Persister m_persister;
    bool m_parameterCacheDirty {false};
+   farbot::AsyncCaller<farbot::fifo_options::concurrency::single,
+   util::functionTriv<120, void()>> m_asyncCaller;
 };
 
 }   // namespace base::instruments

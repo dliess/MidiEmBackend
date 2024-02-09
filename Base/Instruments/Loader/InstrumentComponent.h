@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_H
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_H
+#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
+#define INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
 
 #include <magic_enum.hpp>
 #include <memory>
@@ -11,7 +11,7 @@
 #include "SoundHandler.h"
 #include "CallbackSignal.h"
 
-namespace base::instruments
+namespace base::instruments::loader
 {
 class Component
 {
@@ -87,7 +87,7 @@ private:
    void refreshParameters() const;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::loader
 
 #include "InstrumentComponent.inl"
 #include "InstrumentComponentMeta.h"

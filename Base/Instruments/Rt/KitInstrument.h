@@ -1,5 +1,5 @@
-#ifndef KIT_INSTRUMENT_H
-#define KIT_INSTRUMENT_H
+#ifndef KIT_INSTRUMENT_RT_H
+#define KIT_INSTRUMENT_RT_H
 
 #include <array>
 #include <memory>
@@ -22,6 +22,8 @@ struct Holder;
 
 namespace instruments
 {
+
+namespace rt {
 class KitInstrument : public Instrument
 {
 public:
@@ -76,28 +78,13 @@ public:
    std::vector<KitVoice>& voices() noexcept;
    const std::vector<KitVoice>& voices() const noexcept;
 
-   template <typename Cb> void forEachComponent(Cb&& cb);
-   template <typename Cb> void forEachComponent(Cb&& cb) const;
-   template <typename Cb> void forEachComponentExt(Cb&& cb);
-   template <typename Cb> void forEachComponentExt(Cb&& cb) const;
-
    void updateParameterUI() const;
-
-   friend void to_json(nlohmann::json& j, const KitInstrument& instr);
-   friend void from_json(const nlohmann::json& j, KitInstrument& instr);
-   friend bool isSameInstrument(const KitInstrument& lhs,
-                                const KitInstrument& rhs);
 
    void setVoiceNoteOffset(int voiceIdx, int offset);
    void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
 
    void setVoiceAmp(int voiceIdx, float amp);
    void setComponentAmp(int voiceIdx, int componentIdx, float amp);
-
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentNoteOffsetChanged,int, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceNoteOffsetChanged, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentAmpChanged,int, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceAmpChanged, int, float);
 
 private:
    std::string m_name;
@@ -107,11 +94,12 @@ private:
        int voiceIdx, int componentIdx,
        util::function_ref<void(const Component&)> cb) const;
 };
+} // namespace rt
+
 
 }   // namespace instruments
 }   // namespace base
 
 #include "KitInstrument.inl"
-#include "KitInstrumentMeta.h"
 
 #endif   // KIT_INSTRUMENT_H

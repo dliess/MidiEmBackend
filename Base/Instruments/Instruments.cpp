@@ -10,6 +10,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "SoundSection.h"
+#include "FixedSizeString.h"
 
 using namespace base;
 using namespace base::instruments;
@@ -383,18 +384,19 @@ void Instruments::removeVoiceFromKitInstrument(
    emitDataChanged(m_doubleBufferedData.nonRt(), true);
 }
 
-
-
 void Instruments::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string& name)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx, &name](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
+   InstrumentsModifier(m_loaderData, m_rFactoryDataHolder)
               .setVoiceNameInKitInstrument(instrumentUuid, voiceIdx, name);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   static constexpr size_t MaxStringSize = 64;
+   m_asyncCaller.callAsync([this, &instrumentUuid, voiceIdx, fsName = util::FixedSizeString<MaxStringSize>(name)]() {
+      // InstrumentsModifier(m_rtData, m_rFactoryDataHolder)
+      //            .setVoiceNameInKitInstrument(instrumentUuid, voiceIdx, fsName);
+   });
+
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
@@ -557,3 +559,7 @@ void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
    // emitMelodicComponentAmpChanged(uuid, componentIdx, amp); // TODO emit from here or connect to signal?
 }
 
+void Instruments::invokeQueueActions()
+{
+   m_asyncCaller.process();
+}

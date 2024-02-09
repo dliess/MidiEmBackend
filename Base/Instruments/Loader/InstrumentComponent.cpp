@@ -1,6 +1,6 @@
 #include "InstrumentComponent.h"
 using namespace base;
-using namespace base::instruments;
+using namespace base::instruments::loader;
 
 void Component::noteOn(int note, float velocity) const
 {

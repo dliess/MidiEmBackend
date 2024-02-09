@@ -6,7 +6,7 @@
 
 #include "KitInstrumentVoice.h"
 
-namespace base::instruments {
+namespace base::instruments::loader {
 /*
 inline
 void to_json(nlohmann::json& j, const KitVoice::Components& data)
@@ -20,16 +20,16 @@ void from_json(const nlohmann::json& j, KitVoice::Components& data)
     
 }
 */
-} // namespace base::instruments
+} // namespace base::instruments::loader
 
 
 namespace meta
 {
 
 template<>
-inline auto registerMembers<base::instruments::KitVoice>()
+inline auto registerMembers<base::instruments::loader::KitVoice>()
 {
-   return members(member("components", &base::instruments::KitVoice::components));
+   return members(member("components", &base::instruments::loader::KitVoice::components));
 }
 
 } // namespace meta

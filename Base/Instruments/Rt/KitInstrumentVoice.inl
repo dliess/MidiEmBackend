@@ -1,9 +1,10 @@
-#ifndef INSTRUMENTS_KIT_INSTRUMENTS_VOICE_INL
-#define INSTRUMENTS_KIT_INSTRUMENTS_VOICE_INL
+#ifndef INSTRUMENTS_KIT_INSTRUMENTS_RT_LOADER_INL
+#define INSTRUMENTS_KIT_INSTRUMENTS_RT_LOADER_INL
 
 #include "KitInstrumentVoice.h"
 
-namespace base::instruments
+namespace base::instruments::rt
+{
 {
 inline KitVoice::KitVoice(std::string name) noexcept :
     name(std::move(name))
@@ -18,6 +19,6 @@ bool KitVoice::operator==(const KitVoice& rhs) const
 }
 
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
 #endif

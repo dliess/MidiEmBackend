@@ -1,9 +1,9 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_INL
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_INL
+#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_RT_INL
+#define INSTRUMENTS_INSTRUMENT_COMPONENT_RT_INL
 
 #include "InstrumentComponent.h"
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 
 inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
@@ -86,6 +86,6 @@ inline ParameterCache* Component::parameterCache() const
    return m_pParameterCache.get();
 }
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
 #endif

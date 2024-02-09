@@ -3,7 +3,7 @@
 
 #include <nlohmann/json.hpp>
 
-namespace base::instruments
+namespace base::instruments::loader
 {
 inline void to_json(nlohmann::json& j, const KitInstrument& instr)
 {

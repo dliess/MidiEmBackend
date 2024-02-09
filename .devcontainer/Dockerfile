@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
         pkg-config \
         libcapnp-dev \
-        libsodium-dev \
+
         capnproto \
         python3-toml \
         python3-venv \
@@ -77,6 +77,7 @@ RUN groupadd --gid=$GID $BUILD_USER
 RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $BUILD_USER
 RUN echo "$BUILD_USER:$BUILD_USER_PWD" | chpasswd
 RUN usermod -aG sudo $BUILD_USER
+RUN echo "$BUILD_USER ALL=(ALL) ALL" >> /etc/sudoers
 
 RUN mkdir -p /home/$BUILD_USER/nomidi-backend
 RUN mkdir -p /home/$BUILD_USER/CPM_DOWNLOADS

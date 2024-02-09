@@ -5,36 +5,36 @@ endif()
 set(SOURCES
    "Instruments.cpp"
    "InstrumentsMDChangeHandler.cpp"
-   "KitInstrument.cpp"
+   #   "KitInstrument.cpp"
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"
-   "InstrumentComponent.cpp"
+   #   "InstrumentComponent.cpp"
    "InstrumentComponentParameterCacheCreator.cpp"
    "InstrumentsMDRefSetter.cpp"
    "InstrumentsPersister.cpp"
 )
 
 set(HEADERS
-   "KitInstrumentVoice.h"
-   "KitInstrumentVoice.inl"
-   "KitInstrumentVoiceMeta.h"
-   "MelodicInstrumentVoice.h"
-   "MelodicInstrumentVoice.inl"
-   "MelodicInstrumentVoiceMeta.h"
-   "InstrumentComponent.h"
-   "InstrumentComponent.inl"
-   "InstrumentComponentMeta.h"
-   "InstrumentComponentParameterCacheCreator.h"
-   "InstrumentComponentParameterCacheCreator.inl"
-   "INotePlayer.h"
-   "Instruments.h"
-   "Instruments.inl"
-   "InstrumentsRef.h"
-   "InstrumentsModifier.h"
-   "InstrumentsMDRefSetter.h"
-   "InstrumentsPersister.h"
-   "InstrumentsParameterCache.h"
-   "InstrumentsParameterCache.inl"
+#   "KitInstrumentVoice.h"
+#   "KitInstrumentVoice.inl"
+#  "KitInstrumentVoiceMeta.h"
+#  "MelodicInstrumentVoice.h"
+#  "MelodicInstrumentVoice.inl"
+#  "MelodicInstrumentVoiceMeta.h"
+#   "InstrumentComponent.h"
+#   "InstrumentComponent.inl"
+#   "InstrumentComponentMeta.h"
+#   "InstrumentComponentParameterCacheCreator.h"
+#   "InstrumentComponentParameterCacheCreator.inl"
+#   "INotePlayer.h"
+    "Instruments.h"
+#   "Instruments.inl"
+#   "InstrumentsRef.h"
+#   "InstrumentsModifier.h"
+#   "InstrumentsMDRefSetter.h"
+#   "InstrumentsPersister.h"
+#   "InstrumentsParameterCache.h"
+#   "InstrumentsParameterCache.inl"
 )
 
 set(TARGET_NAME "Instruments")
@@ -49,4 +49,7 @@ target_link_libraries(${TARGET_NAME}
    PRIVATE spdlog::spdlog
    PUBLIC  util
    PUBLIC  magic_enum::magic_enum
+   PUBLIC  farbot::farbot
 )
+
+add_subdirectory(Loader)

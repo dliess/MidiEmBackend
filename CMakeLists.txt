@@ -122,6 +122,15 @@ CPMFindPackage(
     "MAGIC_ENUM_OPT_INSTALL ON"
 )
 
+CPMFindPackage(
+  NAME farbot
+  GITHUB_REPOSITORY dliess/farbot
+  GIT_TAG master
+  OPTIONS
+   "BUILD_TESTS OFF"
+)
+
+
 add_subdirectory(3rdparty)
 add_subdirectory(Base)
 add_subdirectory(Util)

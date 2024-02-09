@@ -1,7 +1,7 @@
-#ifndef INSTRUMENTS_KIT_INSTRUMENTS_INL
-#define INSTRUMENTS_KIT_INSTRUMENTS_INL
+#ifndef INSTRUMENTS_KIT_INSTRUMENTS_RT_INL
+#define INSTRUMENTS_KIT_INSTRUMENTS_RT_INL
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 template <typename T> void KitInstrument::addVoice(int padIdx, T&& voice)
 {
@@ -80,10 +80,6 @@ inline void KitInstrument::withComponent(
    cb(m_voices.at(voiceIdx).components.at(componentIdx));
 }
 
-inline bool isSameInstrument(const KitInstrument& lhs, const KitInstrument& rhs)
-{
-   return lhs.m_name == rhs.m_name && lhs.m_voices == rhs.m_voices;
-}
 
 }   // namespace base::instruments
 

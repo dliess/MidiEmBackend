@@ -24,7 +24,7 @@ public:
    explicit Clip(const allocator_type& alloc) noexcept;
    Clip(const Clip& other, const allocator_type& alloc);
    Clip(Clip&& other, const allocator_type& alloc) noexcept;
-   void update(const instruments::Instrument* instrument);
+   void update(const instruments::rt::Instrument* instrument);
    void setName(std::string_view nameV);
    std::string_view name() const;
    void addNote(sequencer::Beat beatInSeq, sequencer::Beat length, int note,

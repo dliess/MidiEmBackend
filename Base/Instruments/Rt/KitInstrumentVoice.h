@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_KIT_INSTRUMENTS_VOICE_H
-#define INSTRUMENTS_KIT_INSTRUMENTS_VOICE_H
+#ifndef INSTRUMENTS_KIT_INSTRUMENTS_VOICE_RT_H
+#define INSTRUMENTS_KIT_INSTRUMENTS_VOICE_RT_H
 
 #include <string>
 
@@ -7,7 +7,7 @@
 #include "InstrumentComponent.h"
 #include <vector>
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 struct KitVoice   //: public util::Identifiable
 {
@@ -28,9 +28,8 @@ struct KitVoice   //: public util::Identifiable
    bool operator==(const KitVoice& rhs) const;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
 #include "KitInstrumentVoice.inl"
-#include "KitInstrumentVoiceMeta.h"
 
 #endif

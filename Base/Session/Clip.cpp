@@ -30,7 +30,7 @@ session::Clip::Clip(const Clip& other, const allocator_type& alloc) :
 {
 }
 
-void session::Clip::update(const instruments::Instrument* instrument)
+void session::Clip::update(const instruments::rt::Instrument* instrument)
 {
    sequencer::Beat clipBeat =
        tempo::BeatTick::instance().getLocalBeat() - m_startBeat;
