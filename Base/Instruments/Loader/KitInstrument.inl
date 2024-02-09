@@ -62,18 +62,13 @@ template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb) const
    }
 }
 
-inline void KitInstrument::updateParameterUI() const
-{
-   for (auto& sound : m_voices)
-   {
-      for (auto& component : sound.components)
-      {
-         component.updateParameterUI();
-      }
-   }
-}
-
 inline void KitInstrument::withComponent(
+    int voiceIdx, int componentIdx,
+    util::function_ref<void(Component&)> cb)
+{
+   cb(m_voices.at(voiceIdx).components.at(componentIdx));
+}
+inline void KitInstrument::withConstComponent(
     int voiceIdx, int componentIdx,
     util::function_ref<void(const Component&)> cb) const
 {

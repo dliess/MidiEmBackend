@@ -34,14 +34,7 @@ public:
        musicDevice::sound::ParameterAttr parameterAttr) const;
    void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) const;
-
-   void clearModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
-                      musicDevice::sound::ParameterAttr parameterAttr) const;
-   void applyModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
-                      musicDevice::sound::ParameterAttr parameterAttr,
-                      float destination, float intensity) const;
-
+                          float value);
 
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
@@ -60,8 +53,7 @@ public:
    template <typename Cb> void forEachComponentExt(Cb&& cb);
    template <typename Cb> void forEachComponentExt(Cb&& cb) const;
 
-   friend void to_json(nlohmann::json& j, const KitInstrument& instr);
-   friend void from_json(const nlohmann::json& j, KitInstrument& instr);
+   friend auto meta::registerMembers<KitInstrument>();
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
 
@@ -81,6 +73,9 @@ private:
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
    inline void withComponent(
+       int voiceIdx, int componentIdx,
+       util::function_ref<void(Component&)> cb);
+   inline void withConstComponent(
        int voiceIdx, int componentIdx,
        util::function_ref<void(const Component&)> cb) const;
 };

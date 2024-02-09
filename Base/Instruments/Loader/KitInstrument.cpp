@@ -14,7 +14,7 @@ std::optional<float> KitInstrument::getParameterValue(
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
    std::optional<float> ret;
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+   withConstComponent(voiceIdx, componentIdx, [&](const Component& component) {
       ret = component.getParameterValue(parameterIdx, parameterAttr);
    });
    return ret;
@@ -22,30 +22,10 @@ std::optional<float> KitInstrument::getParameterValue(
 
 void KitInstrument::setParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float value) const
+    musicDevice::sound::ParameterAttr parameterAttr, float value) 
 {
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+   withComponent(voiceIdx, componentIdx, [&](Component& component) {
       component.setParameterValue(parameterIdx, parameterAttr, value);
-   });
-}
-
-void KitInstrument::clearModifier(
-    int voiceIdx, int componentIdx, std::size_t parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr) const
-{
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.clearModifier(componentIdx, parameterAttr);
-   });
-}
-
-void KitInstrument::applyModifier(
-    int voiceIdx, int componentIdx, std::size_t parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float destination,
-    float intensity) const
-{
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.applyModifier(parameterIdx, parameterAttr, destination,
-                              intensity);
    });
 }
 
@@ -54,7 +34,7 @@ KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
                                     int parameterIdx) const
 {
    const base::musicDevice::description::sound::Parameter* ret{nullptr};
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
+   withConstComponent(voiceIdx, componentIdx, [&](const Component& component) {
       ret = component.parameterDescription(parameterIdx);
    });
    return ret;

@@ -3,10 +3,10 @@
 
 #include "KitInstrumentVoice.h"
 
-namespace base::instruments::loader
-{
-{
-inline KitVoice::KitVoice(std::string name) noexcept :
+namespace base::instruments::loader {
+
+inline 
+KitVoice::KitVoice(std::string name) noexcept :
     name(std::move(name))
 {
 }
@@ -17,7 +17,6 @@ bool KitVoice::operator==(const KitVoice& rhs) const
     return name == rhs.name &&
            components == rhs.components;
 }
-
 
 }   // namespace base::instruments::loader
 
