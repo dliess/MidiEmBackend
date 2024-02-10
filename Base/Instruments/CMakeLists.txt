@@ -5,13 +5,6 @@ endif()
 set(SOURCES
    "Instruments.cpp"
    "InstrumentsMDChangeHandler.cpp"
-   #   "KitInstrument.cpp"
-   "MelodicInstrument.cpp"
-   "InstrumentsModifier.cpp"
-   #   "InstrumentComponent.cpp"
-   "InstrumentComponentParameterCacheCreator.cpp"
-   "InstrumentsMDRefSetter.cpp"
-   "InstrumentsPersister.cpp"
 )
 
 set(HEADERS
@@ -32,6 +25,7 @@ set(HEADERS
 #   "InstrumentsRef.h"
 #   "InstrumentsModifier.h"
 #   "InstrumentsMDRefSetter.h"
+     "InstrumentsMDChangeHandler.h"
 #   "InstrumentsPersister.h"
 #   "InstrumentsParameterCache.h"
 #   "InstrumentsParameterCache.inl"

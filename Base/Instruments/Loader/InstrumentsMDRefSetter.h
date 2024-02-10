@@ -1,9 +1,9 @@
-#ifndef INSTRUMENTS_MD_REF_SETTER_H
-#define INSTRUMENTS_MD_REF_SETTER_H
+#ifndef INSTRUMENTS_MD_REF_SETTER_LOADER_H
+#define INSTRUMENTS_MD_REF_SETTER_LOADER_H
 
 #include "InstrumentsData.h"
 
-namespace base::instruments
+namespace base::instruments::loader
 {
 class InstrumentsMDRefSetter
 {
@@ -19,6 +19,6 @@ private:
    Data& m_rData;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::loader
 
 #endif

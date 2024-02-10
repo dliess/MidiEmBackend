@@ -1,9 +1,9 @@
 #include "InstrumentsPersister.h"
 
-#include "InstrumentComponentParameterCacheCreator.h"
+// #include "InstrumentComponentParameterCacheCreator.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
-using namespace base::instruments;
+using namespace base::instruments::loader;
 
 namespace detail
 {

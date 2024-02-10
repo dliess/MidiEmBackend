@@ -1,16 +1,15 @@
-#ifndef INSTRUMENTS_PERSISTER_H
-#define INSTRUMENTS_PERSISTER_H
+#ifndef INSTRUMENTS_PERSISTER_LOADER_H
+#define INSTRUMENTS_PERSISTER_LOADER_H
 
 #include <memory>
 
 #include "IDataPersister.h"
 #include "InstrumentsData.h"
-
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
 // clang-format on
 
-namespace base::instruments
+namespace base::instruments::loader
 {
 class Persister
 {
@@ -25,6 +24,6 @@ private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::loader
 
 #endif

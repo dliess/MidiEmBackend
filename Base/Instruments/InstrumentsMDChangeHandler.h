@@ -1,12 +1,12 @@
-#ifndef INSTRUMENTS_MD_CHANGE_HANDLER_H
-#define INSTRUMENTS_MD_CHANGE_HANDLER_H
+#ifndef INSTRUMENTS_MD_CHANGE_HANDLER_LOADER_H
+#define INSTRUMENTS_MD_CHANGE_HANDLER_LOADER_H
 
 #include "InstrumentsData.h"
 
 // clang-format off
 namespace base::musicDevice { class MusicDevice; }
 // clang-format on
-namespace base::instruments
+namespace base::instruments::loader
 {
 class Instruments;
 class InstrumentsMDChangeHandler
@@ -28,5 +28,5 @@ private:
        musicDevice::MusicDevice* pMusicDevice);
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::loader
 #endif

@@ -1,9 +1,9 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_INL
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_INL
+#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_RT_INL
+#define INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_RT_INL
 
 #include "InstrumentComponentParameterCacheCreator.h"
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 inline MelodicInstrumentsParameterCacheCreator::
     MelodicInstrumentsParameterCacheCreator(
@@ -317,6 +317,6 @@ KitInstrumentsParameterCacheCreator::createParameterCacheForComponent(
    return parameterCache;
 }
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
 #endif

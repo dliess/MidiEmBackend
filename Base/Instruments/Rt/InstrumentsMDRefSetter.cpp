@@ -1,7 +1,7 @@
 #include "InstrumentsMDRefSetter.h"
 
 using namespace base;
-using namespace base::instruments;
+using namespace base::instruments::rt;
 
 InstrumentsMDRefSetter::InstrumentsMDRefSetter(Data& rData) : m_rData(rData) {}
 

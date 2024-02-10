@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_H
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_H
+#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_RT_H
+#define INSTRUMENTS_INSTRUMENT_COMPONENT_PARAMETER_CACHE_CREATOR_RT_H
 
 #include "InstrumentComponent.h"
 #include "KitInstrument.h"
@@ -7,7 +7,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 std::shared_ptr<ParameterCache> createParameterCache(
     const musicDevice::description::Description* pDescription, int sdVoiceIdx);
@@ -104,7 +104,7 @@ private:
        ParameterChangeEmitter& rParameterChangeEmitter) const;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
 #include "InstrumentComponentParameterCacheCreator.inl"
 

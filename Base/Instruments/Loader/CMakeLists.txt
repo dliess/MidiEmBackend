@@ -3,15 +3,12 @@
 #endif()
 
 set(SOURCES
-#   "Instruments.cpp"
-#   "InstrumentsMDChangeHandler.cpp"
    "KitInstrument.cpp"
    "MelodicInstrument.cpp"
-#   "InstrumentsModifier.cpp"
+   "InstrumentsModifier.cpp"
    "InstrumentComponent.cpp"
-#   "InstrumentComponentParameterCacheCreator.cpp"
-#   "InstrumentsMDRefSetter.cpp"
-#   "InstrumentsPersister.cpp"
+   "InstrumentsMDRefSetter.cpp"
+   "InstrumentsPersister.cpp"
 )
 
 set(HEADERS
@@ -30,18 +27,12 @@ set(HEADERS
    "InstrumentComponent.h"
    "InstrumentComponent.inl"
    "InstrumentComponentMeta.h"
-#   "InstrumentComponentParameterCacheCreator.h"
-#   "InstrumentComponentParameterCacheCreator.inl"
-#   "INotePlayer.h"
    "Instrument.h"
-#   "Instruments.h"
-#   "Instruments.inl"
-#   "InstrumentsRef.h"
-#   "InstrumentsModifier.h"
-#   "InstrumentsMDRefSetter.h"
-#   "InstrumentsPersister.h"
-#   "InstrumentsParameterCache.h"
-#   "InstrumentsParameterCache.inl"
+   "InstrumentsData.h"
+   "InstrumentsDataMeta.h"
+   "InstrumentsModifier.h"
+   "InstrumentsMDRefSetter.h"
+   "InstrumentsPersister.h"
 )
 
 set(TARGET_NAME "InstrumentsLoader")

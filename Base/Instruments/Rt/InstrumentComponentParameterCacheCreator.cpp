@@ -4,7 +4,7 @@
 using namespace base;
 
 std::shared_ptr<instruments::ParameterCache>
-instruments::createParameterCache(
+instruments::rt::createParameterCache(
     const musicDevice::description::Description* descr, int sdVoiceIdx)
 {
    if (descr && descr->soundSection)

@@ -1,12 +1,12 @@
-#ifndef INSTRUMENTS_DATA_H
-#define INSTRUMENTS_DATA_H
+#ifndef INSTRUMENTS_DATA_RT_H
+#define INSTRUMENTS_DATA_RT_H
 
 #include <vector>
 
 #include "KitInstrument.h"
 #include "MelodicInstrument.h"
 
-namespace base::instruments
+namespace base::instruments::rt
 {
     
 using KitInstruments     = std::vector<KitInstrument>;
@@ -17,8 +17,7 @@ struct Data
    MelodicInstruments melodicInstruments;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::rt
 
-#include "InstrumentsDataMeta.h"
 
 #endif

@@ -1,10 +1,10 @@
-#ifndef INSTRUMENTS_MODIFIER_H
-#define INSTRUMENTS_MODIFIER_H
+#ifndef INSTRUMENTS_MODIFIER_RT_H
+#define INSTRUMENTS_MODIFIER_RT_H
 
 #include "InstrumentsData.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
-namespace base::instruments
+namespace base::instruments::rt
 {
 struct InstrumentsModifier
 {
@@ -86,5 +86,5 @@ private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
 };
 
-}   // namespace base::instruments
+}   // namespace base::instruments::loader
 #endif

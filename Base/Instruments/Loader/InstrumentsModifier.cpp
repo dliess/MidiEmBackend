@@ -4,7 +4,7 @@
 
 #include "InstrumentComponentParameterCacheCreator.h"
 
-using namespace base::instruments;
+using namespace base::instruments::loader;
 
 #define GET_MELODIC_INSTR_OR_RETURN(instrumentUuid)                          \
    auto instrumentIt = std::find_if(                                         \
