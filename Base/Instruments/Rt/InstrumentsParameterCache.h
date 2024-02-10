@@ -57,7 +57,6 @@ struct ParameterCache
 private:
    std::vector<ParameterData> data_;
    std::vector<ValueModifier> valueModifier_;
-   std::vector<ParameterData> nonRtBackupData_;
    DirtyFlags dirtyFlags_;
    DirtyFlags dontOverwriteOnNextNoteOn_;
 };
