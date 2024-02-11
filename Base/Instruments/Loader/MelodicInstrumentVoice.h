@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Identifiable.h"
-#include "InstrumentComponent.h"
+#include "MelodicInstrumentComponent.h"
 #include <array>
 
 namespace base::instruments::loader
@@ -15,7 +15,7 @@ struct MelodicVoice   //: public util::Identifiable
    explicit MelodicVoice(std::string name) noexcept;
    std::string name;
    static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
-   struct Components : public std::array<std::optional<Component>, NUM_MAX_COMPONENTS_PER_VOICE>
+   struct Components : public std::array<std::optional<MelodicComponent>, NUM_MAX_COMPONENTS_PER_VOICE>
    {
       [[nodiscard]] bool containsComponent(size_t componentIdx) const noexcept
       {

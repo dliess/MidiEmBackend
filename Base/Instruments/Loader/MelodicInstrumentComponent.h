@@ -1,5 +1,5 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
+#ifndef MELODIC_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
+#define MELODIC_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_H
 
 #include <magic_enum.hpp>
 #include <memory>
@@ -12,11 +12,11 @@
 
 namespace base::instruments::loader
 {
-class Component
+class MelodicComponent
 {
 public:
-   Component() = default;
-   explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
+   MelodicComponent() = default;
+   explicit MelodicComponent(musicDevice::sound::SoundHandler* pSoundDevice,
                       musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
                       int noteOffset) noexcept;
    // [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
@@ -34,11 +34,11 @@ public:
    const musicDevice::description::sound::Parameter* parameterDescription(
        int parameterIdx) const;
 
-   friend auto meta::registerMembers<Component>();
+   friend auto meta::registerMembers<MelodicComponent>();
    friend class MelodicInstrumentsParameterCacheCreator;
    friend class KitInstrumentsParameterCacheCreator;
 
-   bool operator==(const Component& rhs) const;
+   bool operator==(const MelodicComponent& rhs) const;
 
    [[nodiscard]] int noteOffset() const { return m_noteOffset; };
    [[nodiscard]] float amp() const { return m_amp; };
@@ -48,17 +48,12 @@ public:
 
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};
-   using ParameterData = musicDevice::sound::ParameterData;
-   std::vector<ParameterData> m_parameterData;
    musicDevice::MusicDeviceId m_soundDeviceId;
-   int m_sdVoiceIdx{0};
-   int m_noteOffset{0};
-   float m_amp{1.0f};
 };
 
 }   // namespace base::instruments::loader
 
-#include "InstrumentComponent.inl"
-#include "InstrumentComponentMeta.h"
+#include "MelodicInstrumentComponent.inl"
+#include "MelodicInstrumentComponentMeta.h"
 
 #endif

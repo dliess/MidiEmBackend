@@ -1,8 +1,8 @@
-#include "InstrumentComponent.h"
+#include "KitInstrumentComponent.h"
 using namespace base;
 using namespace base::instruments::loader;
 
-std::optional<float> Component::getParameterValue(
+std::optional<float> KitComponent::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
    switch (parameterAttr)
@@ -22,7 +22,7 @@ std::optional<float> Component::getParameterValue(
    return std::nullopt;
 }
 
-void Component::setParameterValue(
+void KitComponent::setParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value) 
 {
@@ -32,7 +32,7 @@ void Component::setParameterValue(
 
 
 const musicDevice::description::sound::Parameter*
-Component::parameterDescription(int parameterIdx) const
+KitComponent::parameterDescription(int parameterIdx) const
 {
    if (m_pSoundDevice)
    {

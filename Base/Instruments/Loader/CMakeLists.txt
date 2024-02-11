@@ -6,7 +6,8 @@ set(SOURCES
    "KitInstrument.cpp"
    "MelodicInstrument.cpp"
    "InstrumentsModifier.cpp"
-   "InstrumentComponent.cpp"
+   "KitInstrumentComponent.cpp"
+   "MelodicInstrumentComponent.cpp"
    "InstrumentsMDRefSetter.cpp"
    "InstrumentsPersister.cpp"
 )
@@ -24,15 +25,20 @@ set(HEADERS
    "MelodicInstrumentVoice.h"
    "MelodicInstrumentVoice.inl"
    "MelodicInstrumentVoiceMeta.h"
-   "InstrumentComponent.h"
-   "InstrumentComponent.inl"
-   "InstrumentComponentMeta.h"
+   "KitInstrumentComponent.h"
+   "KitInstrumentComponent.inl"
+   "KitInstrumentComponentMeta.h"
    "Instrument.h"
    "InstrumentsData.h"
    "InstrumentsDataMeta.h"
    "InstrumentsModifier.h"
    "InstrumentsMDRefSetter.h"
    "InstrumentsPersister.h"
+   "MelodicInstrumentComponent.h"
+   "MelodicInstrumentComponent.inl"
+   "MelodicInstrumentComponentMeta.h"
+   "InstrumentComponentParameterCacheCreator.h"
+   "InstrumentComponentParameterCacheCreator.inl"
 )
 
 set(TARGET_NAME "InstrumentsLoader")

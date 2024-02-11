@@ -1,12 +1,12 @@
-#ifndef INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
-#define INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
+#ifndef KIT_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
+#define KIT_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
 
 #include "InstrumentComponent.h"
 
 namespace base::instruments::loader
 {
 
-inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
+inline KitComponent::KitComponent(musicDevice::sound::SoundHandler* pSoundDevice,
                             musicDevice::MusicDeviceId soundDeviceId,
                             int sdVoiceIdx, int noteOffset) noexcept :
     m_pSoundDevice(pSoundDevice),
@@ -27,12 +27,12 @@ inline Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
 //    return m_pSoundDevice;
 // }
 
-inline void Component::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
+inline void KitComponent::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
 {
    m_pSoundDevice = ptr;
 }
 
-inline void Component::setNoteOffset(int noteOffset)
+inline void KitComponent::setNoteOffset(int noteOffset)
 {
    if(m_noteOffset != noteOffset)
    {
@@ -41,7 +41,7 @@ inline void Component::setNoteOffset(int noteOffset)
    }
 }
 
-inline void Component::setAmp(float amp, float prevAmp)
+inline void KitComponent::setAmp(float amp, float prevAmp)
 {
    if(m_amp != amp)
    {
@@ -54,7 +54,7 @@ inline void Component::setAmp(float amp, float prevAmp)
    }
 }
 
-inline bool Component::operator==(const Component& rhs) const
+inline bool KitComponent::operator==(const KitComponent& rhs) const
 {
    return m_soundDeviceId == rhs.m_soundDeviceId &&
           m_sdVoiceIdx == rhs.m_sdVoiceIdx &&

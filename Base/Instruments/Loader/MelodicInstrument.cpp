@@ -15,19 +15,10 @@ void MelodicInstrument::setParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value)
 {
-   for (auto& voice : m_voices)
-   {
-      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
-      {
-         auto& component = voice.components[componentIdx];
-         if (component)
-         {
-            component->setParameterValue(parameterId, parameterAttr, value);
-         }
-      }
-   }
+   musicDevice::sound::setParameterData(m_parameters.at(componentIdx)
+                                                    .at(parameterId), 
+                                        parameterAttr, value);
 }
-
 
 const base::musicDevice::description::sound::Parameter*
 MelodicInstrument::parameterDescription(int componentIdx,

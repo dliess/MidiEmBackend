@@ -38,6 +38,9 @@ public:
    void setName(const std::string& name) noexcept;
 
    using VoiceContainer = std::vector<MelodicVoice>;
+   using ParameterData = musicDevice::sound::ParameterData;
+   static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
+   using ParameterContainer = std::array<std::vector<ParameterData>, NUM_MAX_COMPONENTS_PER_VOICE>;
    VoiceContainer& voices() noexcept;
    const VoiceContainer& voices() const noexcept;
 
@@ -56,6 +59,7 @@ public:
 
 private:
    VoiceContainer m_voices;
+   ParameterContainer m_parameters;
    std::string m_name;
 };
 

@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Identifiable.h"
-#include "InstrumentComponent.h"
+#include "KitInstrumentComponent.h"
 #include <vector>
 
 namespace base::instruments::loader
@@ -15,7 +15,7 @@ struct KitVoice   //: public util::Identifiable
    explicit KitVoice(std::string name) noexcept;
    std::string name;
    static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
-   struct Components : public std::vector<Component>
+   struct Components : public std::vector<KitComponent>
    {
       [[nodiscard]] bool containsComponent(size_t componentIdx) const noexcept
       {
