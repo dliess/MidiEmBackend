@@ -6,7 +6,6 @@ set(SOURCES
    "UT_InstrumentsMDChangeHandler.cpp"
    "UT_InstrumentsDataSerialization.cpp"
    "UT_KitInstrument.cpp"
-   "UT_MelodicInstrument.cpp"
 )
 
 set(TARGET_NAME InstrumentsTest)

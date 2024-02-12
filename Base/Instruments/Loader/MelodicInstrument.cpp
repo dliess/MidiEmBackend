@@ -15,21 +15,23 @@ void MelodicInstrument::setParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float value)
 {
-   musicDevice::sound::setParameterData(m_parameters.at(componentIdx)
-                                                    .at(parameterId), 
-                                        parameterAttr, value);
+   if(m_parameters.at(componentIdx))
+   {
+      musicDevice::sound::setParameterData(m_parameters.at(componentIdx)->deviceParameters
+                                                       .at(parameterId), 
+                                           parameterAttr, value);
+   }
 }
 
 const base::musicDevice::description::sound::Parameter*
 MelodicInstrument::parameterDescription(int componentIdx,
                                         int parameterIdx) const
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
+   if(m_parameters.at(componentIdx))
    {
-      return component->parameterDescription(parameterIdx);
+      return &m_parameters.at(componentIdx)->pDescription->parameters.at(parameterIdx);
    }
-   return nullptr;   // TODO: exception?
+   return nullptr;
 }
 
 std::string MelodicInstrument::name() const noexcept { return m_name; }
@@ -38,3 +40,4 @@ void MelodicInstrument::setName(const std::string& name) noexcept
 {
    m_name = name;
 }
+

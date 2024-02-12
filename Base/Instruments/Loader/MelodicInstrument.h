@@ -6,19 +6,13 @@
 #include <vector>
 
 #include "Instrument.h"
-#include "MelodicInstrumentVoice.h"
 #include "MusicDeviceId.h"
+#include "SoundSection.h"
+#include "ParameterData.h"
 
 class MusicDevice;
 
-namespace base
-{
-namespace musicDevice
-{
-struct Holder;
-struct MusicDevice;
-}   // namespace musicDevice
-namespace instruments::loader
+namespace base::instruments::loader
 {
 class MelodicInstrument : public Instrument
 {
@@ -37,36 +31,48 @@ public:
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   using VoiceContainer = std::vector<MelodicVoice>;
-   using ParameterData = musicDevice::sound::ParameterData;
-   static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
-   using ParameterContainer = std::array<std::vector<ParameterData>, NUM_MAX_COMPONENTS_PER_VOICE>;
-   VoiceContainer& voices() noexcept;
-   const VoiceContainer& voices() const noexcept;
 
-   friend auto meta::registerMembers<MelodicInstrument>();
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
 
-   template <typename Cb> void forEachComponent(Cb&& cb);
-   template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
-   template <typename Cb> void forEachComponentExt(Cb&& cb);
-   template <typename Cb> void forEachLeadComponent(Cb&& cb);
-   template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
-   template <typename Cb> void forEachLeadComponentExt(Cb&& cb) const;
+   // template <typename Cb> void forEachComponent(Cb&& cb);
+   // template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
+   // template <typename Cb> void forEachComponentExt(Cb&& cb);
+   // template <typename Cb> void forEachLeadComponent(Cb&& cb);
+   // template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
+   // template <typename Cb> void forEachLeadComponentExt(Cb&& cb) const;
 
-   [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
 
 private:
-   VoiceContainer m_voices;
-   ParameterContainer m_parameters;
+   static constexpr int NUM_COMPONENTS = 4;
+   struct Voice 
+   {
+      struct Component
+      {
+         musicDevice::MusicDeviceId soundDeviceId;
+         int sdVoiceIdx{0};
+      };
+      std::array<std::optional<Component>, NUM_COMPONENTS> components;
+   };
+   struct ParameterData {
+      musicDevice::description::sound::Engine* pDescription{nullptr}; // TODO: maybe music device type would be enough
+      std::vector<musicDevice::sound::ParameterData> deviceParameters;
+      int noteOffset{0};
+      float amp{1.0f};
+   };      
    std::string m_name;
+   std::vector<Voice> m_voices;
+   std::array<std::optional<ParameterData>, NUM_COMPONENTS> m_parameters;
+
+   friend auto meta::registerMembers<MelodicInstrument>();
+   friend auto meta::registerMembers<MelodicInstrument::ParameterData>();
+   friend auto meta::registerMembers<MelodicInstrument::Voice>();
+   friend auto meta::registerMembers<MelodicInstrument::Voice::Component>();
 };
 
-}   // namespace instruments::loader
-}   // namespace base
+}   // namespace base::instruments::loader
 
 #include "MelodicInstrument.inl"
-#include "MelodicInstrumentMeta.h"
+//#include "MelodicInstrumentMeta.h"
 
 #endif   // MELODIC_INSTRUMENT_H

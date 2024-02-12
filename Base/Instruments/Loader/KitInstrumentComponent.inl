@@ -1,7 +1,7 @@
 #ifndef KIT_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
 #define KIT_INSTRUMENTS_INSTRUMENT_COMPONENT_LOADER_INL
 
-#include "InstrumentComponent.h"
+#include "KitInstrumentComponent.h"
 
 namespace base::instruments::loader
 {
