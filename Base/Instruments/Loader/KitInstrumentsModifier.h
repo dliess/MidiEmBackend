@@ -1,16 +1,14 @@
-#ifndef INSTRUMENTS_MODIFIER_LOADER_H
-#define INSTRUMENTS_MODIFIER_LOADER_H
+#ifndef KIT_INSTRUMENTS_MODIFIER_LOADER_H
+#define KIT_INSTRUMENTS_MODIFIER_LOADER_H
 
 #include "InstrumentsData.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
 namespace base::instruments::loader
 {
-struct InstrumentsModifier
+struct KitInstrumentsModifier
 {
-   InstrumentsModifier(
-       Data& rData,
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   KitInstrumentsModifier(KitInstruments& rKitInstruments) noexcept;
 
    void insertKitInstrument(KitInstrument kitInstrument) noexcept;
    void removeKitInstrument(
@@ -18,9 +16,11 @@ struct InstrumentsModifier
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name) noexcept;
    void createNewVoiceInKitInstrument(
+       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    void addComponentToKitInstrumentVoice(
+       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    void moveKitInstrumentComponent(
@@ -46,40 +46,8 @@ struct InstrumentsModifier
    void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
 
-   void insertMelodicInstrument(MelodicInstrument melodicInstrument) noexcept;
-   void removeMelodicInstrument(
-       const util::Identifiable::UUID& instrumentId) noexcept;
-   void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
-                                std::string name) noexcept;
-
-   void createNewVoiceInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid,
-       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-
-   void addComponentToMelodicInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   void removeComponentFromMelodicInstrumentVoice(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       int componentIdx) noexcept;
-   void removeVoiceFromMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
-   void setNoteOffsetInMelodicInstrumentComponent(
-       const util::Identifiable::UUID& instrumentUuid,
-       int componentIdx, int noteOffset) noexcept;
-   void setVoiceNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const std::string name) noexcept;
-
-   void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
-                               int componentIdx, float amp);
-
-   void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
-   void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
-
 private:
-   Data& m_rData;
-   base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   KitInstruments& m_rKitInstruments;
 };
 
 }   // namespace base::instruments::loader

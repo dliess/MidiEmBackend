@@ -17,8 +17,9 @@ class KitComponent
 public:
    KitComponent() = default;
    explicit KitComponent(musicDevice::sound::SoundHandler* pSoundDevice,
-                      musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
-                      int noteOffset) noexcept;
+                         std::size_t numParameter,
+                         musicDevice::MusicDeviceId soundDeviceId,
+                         int sdVoiceIdx, int noteOffset) noexcept;
    // [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    // [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
@@ -34,11 +35,11 @@ public:
    const musicDevice::description::sound::Parameter* parameterDescription(
        int parameterIdx) const;
 
-   friend auto meta::registerMembers<Component>();
+   friend auto meta::registerMembers<KitComponent>();
    friend class MelodicInstrumentsParameterCacheCreator;
    friend class KitInstrumentsParameterCacheCreator;
 
-   bool operator==(const Component& rhs) const;
+   bool operator==(const KitComponent& rhs) const;
 
    [[nodiscard]] int noteOffset() const { return m_noteOffset; };
    [[nodiscard]] float amp() const { return m_amp; };

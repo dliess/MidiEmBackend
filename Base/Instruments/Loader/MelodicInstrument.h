@@ -73,6 +73,6 @@ private:
 }   // namespace base::instruments::loader
 
 #include "MelodicInstrument.inl"
-//#include "MelodicInstrumentMeta.h"
+#include "MelodicInstrumentMeta.h"
 
 #endif   // MELODIC_INSTRUMENT_H

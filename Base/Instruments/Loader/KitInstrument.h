@@ -12,15 +12,7 @@
 #include "MusicDeviceId.h"
 #include "function_ref.h"
 
-namespace base
-{
-namespace musicDevice
-{
-struct MusicDevice;
-struct Holder;
-}   // namespace musicDevice
-
-namespace instruments::loader
+namespace base::instruments::loader
 {
 
 class KitInstrument : public Instrument
@@ -40,7 +32,6 @@ public:
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
    template <typename T> void addVoice(int padIdx, T&& voice);
-
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
@@ -74,14 +65,13 @@ private:
    std::optional<int> toVoiceIndex(int note) const;
    inline void withComponent(
        int voiceIdx, int componentIdx,
-       util::function_ref<void(Component&)> cb);
+       util::function_ref<void(KitComponent&)> cb);
    inline void withConstComponent(
        int voiceIdx, int componentIdx,
-       util::function_ref<void(const Component&)> cb) const;
+       util::function_ref<void(const KitComponent&)> cb) const;
 };
 
-}   // namespace instruments::loader
-}   // namespace base
+}   // namespace base::instruments::loader
 
 #include "KitInstrument.inl"
 #include "KitInstrumentMeta.h"

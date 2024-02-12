@@ -7,14 +7,15 @@ namespace base::instruments::loader
 {
 
 inline KitComponent::KitComponent(musicDevice::sound::SoundHandler* pSoundDevice,
+                            std::size_t numParameter,
                             musicDevice::MusicDeviceId soundDeviceId,
                             int sdVoiceIdx, int noteOffset) noexcept :
+    m_parameterData(numParameter),
     m_pSoundDevice(pSoundDevice),
     m_soundDeviceId(std::move(soundDeviceId)),
     m_sdVoiceIdx(sdVoiceIdx),
     m_noteOffset(noteOffset)
 {
-   // TODO create m_parameterData
 }
 
 // inline const musicDevice::MusicDeviceId& Component::soundDeviceId() const

@@ -1,6 +1,8 @@
 #ifndef INSTRUMENTS_KIT_INSTRUMENTS_LOADER_INL
 #define INSTRUMENTS_KIT_INSTRUMENTS_LOADER_INL
 
+#include "KitInstrument.h"
+
 namespace base::instruments::loader
 {
 template <typename T> void KitInstrument::addVoice(int padIdx, T&& voice)
@@ -64,13 +66,13 @@ template <typename Cb> void KitInstrument::forEachComponentExt(Cb&& cb) const
 
 inline void KitInstrument::withComponent(
     int voiceIdx, int componentIdx,
-    util::function_ref<void(Component&)> cb)
+    util::function_ref<void(KitComponent&)> cb)
 {
    cb(m_voices.at(voiceIdx).components.at(componentIdx));
 }
 inline void KitInstrument::withConstComponent(
     int voiceIdx, int componentIdx,
-    util::function_ref<void(const Component&)> cb) const
+    util::function_ref<void(const KitComponent&)> cb) const
 {
    cb(m_voices.at(voiceIdx).components.at(componentIdx));
 }

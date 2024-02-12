@@ -4,7 +4,8 @@ endif()
 
 set(SOURCES
 #   "InstrumentsMDRefSetter.cpp"
-#   "InstrumentsModifier.cpp"
+   "KitInstrumentsModifier.cpp"
+   "MelodicInstrumentsModifier.cpp"
 #   "InstrumentsPersister.cpp"
 #   "KitInstrument.cpp"
 #   "KitInstrumentComponent.cpp"
@@ -15,7 +16,7 @@ set(HEADERS
 #   "Instrument.h"
 #   "InstrumentsData.h"
 #   "InstrumentsDataMeta.h"
-#   "InstrumentsModifier.h"
+   "KitInstrumentsModifier.h"
 #   "InstrumentsMDRefSetter.h"
 #   "InstrumentsPersister.h"
 #   "InstrumentComponentParameterCacheCreator.h"
@@ -32,6 +33,7 @@ set(HEADERS
    "MelodicInstrument.h"
    "MelodicInstrument.inl"
    "MelodicInstrumentMeta.h"
+   "MelodicInstrumentsModifier.h"
 )
 
 set(TARGET_NAME "InstrumentsLoader")

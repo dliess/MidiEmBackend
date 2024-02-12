@@ -6,6 +6,7 @@
 #include <Meta.h>
 #include <JsonCast.h>
 
+/*
 namespace base::instruments::loader
 {
 inline void to_json(nlohmann::json& j, const MelodicVoice::Components& data)
@@ -43,7 +44,7 @@ inline void from_json(const nlohmann::json& j, MelodicVoice::Components& data)
 }
 
 }   // namespace base::instruments::loader
-
+*/
 namespace meta
 {
 
@@ -63,11 +64,19 @@ template <> inline auto registerMembers<base::instruments::loader::MelodicInstru
        member("components", &base::instruments::loader::MelodicInstrument::Voice::components));
 }
 
+template <> inline auto registerMembers<base::instruments::loader::MelodicInstrument::Voice::Component>()
+{
+   return members(
+       member("soundDeviceId", &base::instruments::loader::MelodicInstrument::Voice::Component::soundDeviceId),
+       member("sdVoiceIdx", &base::instruments::loader::MelodicInstrument::Voice::Component::sdVoiceIdx)
+   );
+}
+
 template<>
 inline auto registerMembers<base::instruments::loader::MelodicInstrument::ParameterData>()
 {
    return members(member("deviceParameters", &base::instruments::loader::MelodicInstrument::ParameterData::deviceParameters),
-                  member("noteOffset", &base::instruments::loader::MelodicInstrument::ParameterData::noteOffset)
+                  member("noteOffset", &base::instruments::loader::MelodicInstrument::ParameterData::noteOffset),
                   member("amp", &base::instruments::loader::MelodicInstrument::ParameterData::amp)
    );
 }
