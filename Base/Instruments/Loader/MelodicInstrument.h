@@ -34,7 +34,7 @@ public:
 
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
-
+   friend class MelodicInstrumentsModifier;
    // template <typename Cb> void forEachComponent(Cb&& cb);
    // template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
    // template <typename Cb> void forEachComponentExt(Cb&& cb);
@@ -42,8 +42,6 @@ public:
    // template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
    // template <typename Cb> void forEachLeadComponentExt(Cb&& cb) const;
 
-
-private:
    static constexpr int NUM_COMPONENTS = 4;
    struct Voice 
    {
@@ -60,6 +58,8 @@ private:
       int noteOffset{0};
       float amp{1.0f};
    };      
+
+private:
    std::string m_name;
    std::vector<Voice> m_voices;
    std::array<std::optional<ParameterData>, NUM_COMPONENTS> m_parameters;

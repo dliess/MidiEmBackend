@@ -1,8 +1,11 @@
 #ifndef MELODIC_INSTRUMENTS_MODIFIER_LOADER_H
 #define MELODIC_INSTRUMENTS_MODIFIER_LOADER_H
 
+#include "FixedSizeString.h"
 #include "InstrumentsData.h"
 #include "MusicDeviceFactoryDataHolder.h"
+#include "ErrorHandling.h"
+
 
 namespace base::instruments::loader
 {
@@ -12,15 +15,16 @@ struct MelodicInstrumentsModifier
        MelodicInstruments& rMelodicInstruments) noexcept;
 
    void insertMelodicInstrument(MelodicInstrument melodicInstrument) noexcept;
-   void removeMelodicInstrument(
+   Void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
-   void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
+   Void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 std::string name) noexcept;
 
-   void createNewVoiceInMelodicInstrument(
+   Void createNewVoiceInMelodicInstrument(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
+   /*
 
    void addComponentToMelodicInstrumentVoice(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
@@ -43,9 +47,10 @@ struct MelodicInstrumentsModifier
 
    void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
    void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
-
+*/
 private:
    MelodicInstruments& m_rMelodicInstruments;
+   Ret<MelodicInstruments::iterator> getInstrument(util::Identifiable::UUIDView instrumentUuid) noexcept;
 };
 
 }   // namespace base::instruments::loader

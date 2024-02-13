@@ -130,6 +130,13 @@ CPMFindPackage(
    "BUILD_TESTS OFF"
 )
 
+CPMFindPackage(
+  NAME expected 
+  GITHUB_REPOSITORY TartanLlama/expected
+  GIT_TAG v1.1.0
+  OPTIONS
+   "EXPECTED_BUILD_PACKAGE OFF"
+)
 
 add_subdirectory(3rdparty)
 add_subdirectory(Base)

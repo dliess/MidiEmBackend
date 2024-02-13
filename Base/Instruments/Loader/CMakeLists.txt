@@ -6,6 +6,7 @@ set(SOURCES
 #   "InstrumentsMDRefSetter.cpp"
    "KitInstrumentsModifier.cpp"
    "MelodicInstrumentsModifier.cpp"
+   "MelodicInstrumentModifier.cpp"
 #   "InstrumentsPersister.cpp"
 #   "KitInstrument.cpp"
 #   "KitInstrumentComponent.cpp"
@@ -34,6 +35,7 @@ set(HEADERS
    "MelodicInstrument.inl"
    "MelodicInstrumentMeta.h"
    "MelodicInstrumentsModifier.h"
+   "MelodicInstrumentModifier.h"
 )
 
 set(TARGET_NAME "InstrumentsLoader")
@@ -49,4 +51,5 @@ target_link_libraries(${TARGET_NAME}
    PUBLIC  util
    PUBLIC  magic_enum::magic_enum
    PUBLIC  farbot::farbot
+   PUBLIC  tl::expected
 )
