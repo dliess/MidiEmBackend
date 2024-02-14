@@ -48,12 +48,12 @@ void KitInstrumentsModifier::createNewVoiceInKitInstrument(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto md = rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
-   if (md && md->soundHandler)
+   if (md && md.value()->soundHandler)
    {
-      KitVoice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
-      voice.components.emplace_back(&md->soundHandler.value(),
-                                    md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-                                    md->deviceId(),
+      KitVoice voice(md.value()->description()->soundSection->voices[sdVoiceIdx].name);
+      voice.components.emplace_back(&md.value()->soundHandler.value(),
+                                    md.value()->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
+                                    md.value()->deviceId(),
                                     sdVoiceIdx, 0);
       instrumentIt->voices().push_back(std::move(voice));
       instrumentIt->unmarkAsDefaultCreated();
@@ -67,7 +67,7 @@ void KitInstrumentsModifier::addComponentToKitInstrumentVoice(
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
    auto md = rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
-   if (md && md->soundHandler)
+   if (md && md.value()->soundHandler)
    {
       if (instrumentIt->voices().operator[](voiceIdx).components.size() >=
           KitVoice::NUM_MAX_COMPONENTS_PER_VOICE)
@@ -75,9 +75,9 @@ void KitInstrumentsModifier::addComponentToKitInstrumentVoice(
          return;
       }
       instrumentIt->voices().operator[](voiceIdx).components.emplace_back(
-          &md->soundHandler.value(),
-          md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-          md->deviceId(),
+          &md.value()->soundHandler.value(),
+          md.value()->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
+          md.value()->deviceId(),
           sdVoiceIdx, 0);
       instrumentIt->unmarkAsDefaultCreated();
    }

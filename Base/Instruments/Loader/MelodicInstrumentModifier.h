@@ -11,26 +11,35 @@ namespace base::instruments::loader
 {
 struct MelodicInstrumentModifier
 {
+   using Engine = base::musicDevice::description::sound::EngineBase;
    MelodicInstrumentModifier(
        MelodicInstrument& rMelodicInstrument) noexcept;
 
    Void renameMelodicInstrument(std::string name) noexcept;
 
-   [[nodiscard]] Ret<size_t> findComponentIdxToPlaceNewComponent(
+   [[nodiscard]] Ret<size_t> 
+   findComponentIdxToPlaceNewComponent(
+       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
-   [[nodiscard]] Ret<size_t>
-   findComponentIdxToPlaceNewComponentInVoice(
-       int voiceIdx,
-       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
+   //
+   // [[nodiscard]] Ret<size_t>
+   // findComponentIdxToPlaceNewComponentInVoice(
+   //     int voiceIdx,
+   //     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
    
-   [[nodiscard]] Ret<std::pair<musicDevice::MusicDeviceName, int>>
+   [[nodiscard]] Ret<const Engine*>
    determineComponentEngineType(
       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
    
-   [[nodiscard]] Ret<std::pair<musicDevice::MusicDeviceName, int>>
-   getComponentEngineType(base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-    const MelodicInstrument& melodicInstrument, size_t componentIdx) const;
+   // [[nodiscard]] Ret<std::pair<musicDevice::MusicDeviceName, int>>
+   // getComponentEngineType(base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+   //  const MelodicInstrument& melodicInstrument, size_t componentIdx) const;
+
+
+
+
+
    /*
    void createNewVoiceInMelodicInstrument(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,

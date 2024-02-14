@@ -35,6 +35,7 @@ public:
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
    friend class MelodicInstrumentsModifier;
+   friend class MelodicInstrumentModifier;
    // template <typename Cb> void forEachComponent(Cb&& cb);
    // template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
    // template <typename Cb> void forEachComponentExt(Cb&& cb);
@@ -53,7 +54,10 @@ public:
       std::array<std::optional<Component>, NUM_COMPONENTS> components;
    };
    struct ParameterData {
-      musicDevice::description::sound::Engine* pDescription{nullptr}; // TODO: maybe music device type would be enough
+      using Engine = musicDevice::description::sound::EngineBase;
+      explicit ParameterData(const Engine* pEngineDescr, size_t numParameters) : 
+            pEngineDescr(pEngineDescr), deviceParameters(numParameters) {}
+      const Engine* pEngineDescr{nullptr}; // TODO: maybe music device type would be enough
       std::vector<musicDevice::sound::ParameterData> deviceParameters;
       int noteOffset{0};
       float amp{1.0f};

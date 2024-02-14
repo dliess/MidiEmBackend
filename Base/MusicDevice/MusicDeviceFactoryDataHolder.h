@@ -12,6 +12,7 @@
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
 #include "VectorPlusOne.h"
+#include "ErrorHandling.h"
 
 namespace base::musicDevice::factory
 {
@@ -26,7 +27,7 @@ struct DataHolder
 
    std::shared_ptr<description::Description> getDescription(
        const MusicDeviceName& deviceName) noexcept;
-   const description::Description* getDescription(
+   Ret<const description::Description*> getDescription(
        util::Identifiable::UUIDView uuid) const noexcept;
 
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
@@ -37,7 +38,7 @@ struct DataHolder
    std::optional<util::Identifiable::UUID> getUUIDByMdId(
        const MusicDeviceId& mdId) const noexcept;
 
-   MusicDevice* getMusicDeviceByUUID(
+   Ret<MusicDevice*> getMusicDeviceByUUID(
        util::Identifiable::UUIDView uuid) const noexcept;
 
    void addUuid2MdId(const util::Identifiable::UUID& uuid,

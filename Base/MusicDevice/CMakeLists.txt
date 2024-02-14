@@ -36,6 +36,7 @@ target_link_libraries(MusicDevice
    PUBLIC  MIDI::midi
    PUBLIC  MusicDevicePluginHandler
    PUBLIC  Tempo
+   PUBLIC  tl::expected
    PRIVATE MIDI::usbmidi
    PRIVATE spdlog::spdlog
 )

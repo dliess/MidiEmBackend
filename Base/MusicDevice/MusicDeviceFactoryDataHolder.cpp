@@ -71,15 +71,15 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
    return pDescr;
 }
 
-const description::Description* factory::DataHolder::getDescription(
+Ret<const description::Description*> factory::DataHolder::getDescription(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto pMdId = getMdIdByUUID(uuid);
    if (!pMdId)
-      return nullptr;
+      return tl::unexpected(Error::uuidNotFound);
    const auto itDescr = m_descriptionCache.find(pMdId->deviceName());
    if (itDescr == m_descriptionCache.end())
-      return nullptr;
+      return tl::unexpected(Error::descriptionNotFound);
    return itDescr->second.get();
 }
 
@@ -224,13 +224,13 @@ std::optional<util::Identifiable::UUID> factory::DataHolder::getUUIDByMdId(
    return it->first;
 }
 
-MusicDevice* factory::DataHolder::getMusicDeviceByUUID(
+Ret<MusicDevice*> factory::DataHolder::getMusicDeviceByUUID(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto it = m_musicDevices.find(util::deepCopy(uuid));
    if (it == m_musicDevices.end())
    {
-      return nullptr;
+      return tl::unexpected(Error::uuidNotFound);
    }
    return it->second;
 }
@@ -251,7 +251,7 @@ void factory::DataHolder::removeEntryForUuid(
    auto md = getMusicDeviceByUUID(uuid);
    if(md)
    {
-      emitMusicDeviceAboutToRemove(md);
+      emitMusicDeviceAboutToRemove(md.value());
       m_musicDevices.erase(uuid);
    }
 }

@@ -24,12 +24,12 @@ struct MelodicInstrumentsModifier
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   /*
 
-   void addComponentToMelodicInstrumentVoice(
+   Void addComponentToMelodicInstrumentVoice(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
+   /*
    void removeComponentFromMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx) noexcept;
