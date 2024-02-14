@@ -29,10 +29,10 @@ struct MelodicInstrumentsModifier
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   /*
-   void removeComponentFromMelodicInstrumentVoice(
+   Void removeComponentFromMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx) noexcept;
+   /*
    void removeVoiceFromMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
    void setNoteOffsetInMelodicInstrumentComponent(

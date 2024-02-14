@@ -95,7 +95,7 @@ Void MelodicInstrumentsModifier::addComponentToMelodicInstrumentVoice(
                      {
                         return tl::unexpected(Error::indexOutOfRange);
                      }
-                     instrumentIt->m_voices.at(voiceIdx).components[componentIdx] =
+                     instrumentIt->m_voices[voiceIdx].components[componentIdx] =
                          MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
                      if(!instrumentIt->m_parameters[componentIdx].has_value())
                      {
@@ -108,34 +108,32 @@ Void MelodicInstrumentsModifier::addComponentToMelodicInstrumentVoice(
                   });
          });
    });
-   // GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   // auto md = rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
-   // if (md && md->soundHandler)
-   // {
-   //    auto componentIdx =
-   //        MelodicInstrumentsParameterCacheCreator(rFactoryDataHolder)
-   //            .findComponentIdxToPlaceNewComponentInVoice(
-   //                *instrumentIt, voiceIdx, sdUuid, sdVoiceIdx);
-   //    if (componentIdx)
-   //    {
-   //       instrumentIt->voices().operator[](voiceIdx).components[componentIdx
-   //                                                                  .value()] =
-   //           Component(&md->soundHandler.value(), std::move(parameterCache),
-   //                     md->deviceId(), sdVoiceIdx, 0);
-   //       instrumentIt->unmarkAsDefaultCreated();
-   //    }
-   // }
 }
-/*
-void MelodicInstrumentsModifier::removeComponentFromMelodicInstrumentVoice(
+
+Void MelodicInstrumentsModifier::removeComponentFromMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx) noexcept
 {
-   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().at(voiceIdx).components.at(componentIdx).reset();
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return safe_at(instrumentIt->m_voices, voiceIdx).and_then(
+            [&](auto voice) -> Void {
+               return safe_at(voice->components, componentIdx).map(
+                  [&](auto component) -> void {
+                     component->reset();
+                     instrumentIt->unmarkAsDefaultCreated();
+                     auto it = std::ranges::find_if(instrumentIt->m_voices, [componentIdx](auto& voice){
+                        return voice.components[componentIdx].has_value();   
+                     });
+                     if(it == instrumentIt->m_voices.end())
+                     {
+                        instrumentIt->m_parameters[componentIdx].reset();
+                     }
+                  });
+            });
+   });
 }
-
+/*
 void MelodicInstrumentsModifier::removeVoiceFromMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept
 {
