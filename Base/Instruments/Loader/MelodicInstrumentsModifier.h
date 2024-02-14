@@ -32,21 +32,18 @@ struct MelodicInstrumentsModifier
    Void removeComponentFromMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        int componentIdx) noexcept;
-   /*
-   void removeVoiceFromMelodicInstrument(
+   Void removeVoiceFromMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept;
-   void setNoteOffsetInMelodicInstrumentComponent(
+   Void setNoteOffsetInMelodicInstrumentComponent(
        const util::Identifiable::UUID& instrumentUuid,
        int componentIdx, int noteOffset) noexcept;
-   void setVoiceNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const std::string name) noexcept;
 
-   void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
+   Void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
                                int componentIdx, float amp);
 
-   void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
-   void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   /*
+   Void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   Void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
 */
 private:
    MelodicInstruments& m_rMelodicInstruments;

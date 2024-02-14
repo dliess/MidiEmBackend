@@ -13,11 +13,126 @@ MelodicInstrumentModifier::MelodicInstrumentModifier(MelodicInstrument& rMelodic
 {
 }
 
-Void MelodicInstrumentModifier::renameMelodicInstrument(std::string name) noexcept
+void MelodicInstrumentModifier::renameMelodicInstrument(std::string name) noexcept
 {
    m_rMelodicInstrument.setName(std::move(name));
    m_rMelodicInstrument.unmarkAsDefaultCreated();
-   return Void();
+}
+
+Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
+{
+   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+      [&,this](auto md) -> Void {
+         return findComponentIdxToPlaceNewComponent(rFactoryDataHolder, sdUuid, sdVoiceIdx).map(
+            [&,this](auto componentIdx) -> void {
+               MelodicInstrument::Voice voice;
+               voice.components[componentIdx] =
+                   MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
+               m_rMelodicInstrument.m_voices.push_back(std::move(voice));
+               if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
+               {
+                  m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
+                     md->description()->soundSection->engineBase(sdVoiceIdx),
+                     md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
+               }
+               m_rMelodicInstrument.unmarkAsDefaultCreated();
+            });
+   });
+}
+
+Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    int voiceIdx,
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
+{
+   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+      [&,this](auto md) -> Void {
+         return findComponentIdxToPlaceNewComponent(rFactoryDataHolder, sdUuid, sdVoiceIdx).and_then(
+            [&,this](auto componentIdx) -> Void {
+               return safe_at(m_rMelodicInstrument.m_voices, voiceIdx).map(
+                  [&,this](auto voice) -> void {
+                     voice->components[componentIdx] =
+                         MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
+                     if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
+                     {
+                        m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
+                           md->description()->soundSection->engineBase(sdVoiceIdx),
+                           md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
+                     }
+                     m_rMelodicInstrument.unmarkAsDefaultCreated();
+                  });
+            });
+   });
+}
+
+Void MelodicInstrumentModifier::removeComponentFromMelodicInstrumentVoice(
+   int voiceIdx, int componentIdx) noexcept
+{
+   return safe_at(m_rMelodicInstrument.m_voices, voiceIdx).and_then(
+      [&](auto voice) -> Void {
+         return safe_at(voice->components, componentIdx).map(
+            [&](auto component) -> void {
+               component->reset();
+               m_rMelodicInstrument.unmarkAsDefaultCreated();
+               auto it = std::ranges::find_if(m_rMelodicInstrument.m_voices, [componentIdx](auto& voice){
+                  return voice.components[componentIdx].has_value();   
+               });
+               if(it == m_rMelodicInstrument.m_voices.end())
+               {
+                  m_rMelodicInstrument.m_parameters[componentIdx].reset();
+               }
+            });
+      });
+}
+
+Void MelodicInstrumentModifier::removeVoiceFromMelodicInstrument(int voiceIdx) noexcept
+{
+   return safe_at(m_rMelodicInstrument.m_voices, voiceIdx).map(
+      [&,this](auto voice) -> void {
+         m_rMelodicInstrument.m_voices.erase(m_rMelodicInstrument.m_voices.begin() + voiceIdx);
+         m_rMelodicInstrument.unmarkAsDefaultCreated();
+         for(auto it = m_rMelodicInstrument.m_parameters.begin(); it != m_rMelodicInstrument.m_parameters.end(); ++it)
+         {
+            if(!it->has_value())
+            {
+               continue;
+            }
+            if(!std::ranges::any_of(m_rMelodicInstrument.m_voices, [it,this](auto& voice){
+               return voice.components[std::distance(m_rMelodicInstrument.m_parameters.begin(), it)].has_value();
+            }))
+            {
+               it->reset();
+            }
+         }
+      });
+}
+
+Void MelodicInstrumentModifier::setNoteOffsetInMelodicInstrumentComponent(
+    int componentIdx, int noteOffset) noexcept
+{
+    return safe_at(m_rMelodicInstrument.m_parameters, componentIdx).map(
+         [&](auto parameterData) -> void {
+            if(parameterData->has_value())
+            {
+               parameterData->value().noteOffset = noteOffset;
+               m_rMelodicInstrument.unmarkAsDefaultCreated();
+            }
+         });
+}
+
+Void MelodicInstrumentModifier::setMelodicComponentAmp(
+                            int componentIdx, float amp) noexcept
+{
+  return safe_at(m_rMelodicInstrument.m_parameters, componentIdx).map(
+      [&](auto parameterData) -> void {
+         if(parameterData->has_value())
+         {
+            parameterData->value().amp = amp;
+            m_rMelodicInstrument.unmarkAsDefaultCreated();
+         }
+      });
 }
 
 Ret<size_t>
@@ -51,38 +166,3 @@ MelodicInstrumentModifier::determineComponentEngineType(
    });
 }
 
-/*
-const Component* MelodicInstrument::getFirstComponent(
-   const MelodicInstrument& melodicInstrument, size_t componentIdx) const
-{
-   for (const auto& voice : melodicInstrument.m_voices)
-   {
-      if (voice.components[componentIdx].has_value())
-      {
-         return &voice.components[componentIdx].value();
-      }
-   }
-   return nullptr;
-}
-
-Ret<std::pair<musicDevice::MusicDeviceName, int>>
-MelodicInstrumentsParameterCacheCreator::getComponentEngineType(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-    const MelodicInstrument& melodicInstrument, size_t componentIdx) const
-{
-   auto pComponent = melodicInstrument.getFirstComponent(componentIdx);
-   if (!pComponent)
-   {
-      return std::nullopt;
-   }
-   const auto mdName = pComponent->m_soundDeviceId.deviceName();
-   const auto descr  = rFactoryDataHolder.getDescription(
-       pComponent->m_soundDeviceId.deviceName());
-   if (!descr)
-   {
-      return std::nullopt;
-   }
-   return std::make_pair(
-       mdName, descr->soundSection->voice2EngineIdx(pComponent->m_sdVoiceIdx));
-}
-*/
