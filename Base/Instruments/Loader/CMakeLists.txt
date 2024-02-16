@@ -9,8 +9,8 @@ set(SOURCES
    "MelodicInstrumentsModifier.cpp"
    "MelodicInstrumentModifier.cpp"
 #   "InstrumentsPersister.cpp"
-#   "KitInstrument.cpp"
-#   "KitInstrumentComponent.cpp"
+   "KitInstrument.cpp"
+   "KitInstrumentComponent.cpp"
    "MelodicInstrument.cpp"
 )
 
@@ -24,9 +24,9 @@ set(HEADERS
 #   "InstrumentsPersister.h"
 #   "InstrumentComponentParameterCacheCreator.h"
 #   "InstrumentComponentParameterCacheCreator.inl"
-#   "KitInstrument.h"
-#   "KitInstrument.inl"
-#   "KitInstrumentMeta.h"
+   "KitInstrument.h"
+   "KitInstrument.inl"
+   "KitInstrumentMeta.h"
 #   "KitInstrumentVoice.h"
 #   "KitInstrumentVoice.inl"
 #   "KitInstrumentVoiceMeta.h"

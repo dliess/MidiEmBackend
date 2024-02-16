@@ -2,42 +2,34 @@
 using namespace base;
 using namespace base::instruments::loader;
 
-std::optional<float> KitComponent::getParameterValue(
+Ret<float> KitComponent::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   switch (parameterAttr)
-   {
-      case musicDevice::sound::ParameterAttr::Commanded:
-         return m_parameterData.at(parameterIdx).commanded;
-      case musicDevice::sound::ParameterAttr::LfoAmplitude:
-         return m_parameterData.at(parameterIdx).lfo.amplitude;
-      case musicDevice::sound::ParameterAttr::LfoFrequency:
-         return m_parameterData.at(parameterIdx).lfo.frequency;
-      case musicDevice::sound::ParameterAttr::LfoMultiplierExp:
-         return float(m_parameterData.at(parameterIdx).lfo.multiplierExp);
-      case musicDevice::sound::ParameterAttr::LfoWaveform:
-         return float(static_cast<int>(
-             m_parameterData.at(parameterIdx).lfo.waveform));
-   }
-   return std::nullopt;
+   return safe_at(m_parameterData, parameterIdx).map(
+      [parameterAttr](auto p) -> float{ 
+         return getParameterData(*p, parameterAttr);
+      });
+   return tl::unexpected(Error::invalidParameterAttr);
 }
 
-void KitComponent::setParameterValue(
+Void KitComponent::setParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value) 
 {
-    musicDevice::sound::setParameterData(m_parameterData.at(parameterIdx), parameterAttr,
-                                        value);
+   return safe_at(m_parameterData, parameterIdx).map(
+      [parameterAttr, value](auto p) -> void {
+         setParameterData(*p, parameterAttr, value);
+      });
 }
 
 
-const musicDevice::description::sound::Parameter*
+Ret<const musicDevice::description::sound::Parameter*>
 KitComponent::parameterDescription(int parameterIdx) const
 {
    if (m_pSoundDevice)
    {
       return &m_pSoundDevice->parameterDescription(m_sdVoiceIdx, parameterIdx);
    }
-   return nullptr;
+   return tl::unexpected(Error::soundHandlerNotAvailable);
 }
 

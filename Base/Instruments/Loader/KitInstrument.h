@@ -11,6 +11,7 @@
 #include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
+#include "ErrorHandling.h"
 
 namespace base::instruments::loader
 {
@@ -21,14 +22,14 @@ public:
    KitInstrument() = default;
    explicit KitInstrument(std::string name) noexcept;
 
-   [[nodiscard]] std::optional<float> getParameterValue(
+   [[nodiscard]] Ret<float> getParameterValue(
        int voiceIdx, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
+   Void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value);
 
-   [[nodiscard]] const musicDevice::description::sound::Parameter*
+   [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
    template <typename T> void addVoice(int padIdx, T&& voice);
@@ -64,12 +65,6 @@ private:
    std::string m_name;
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
-   inline void withComponent(
-       int voiceIdx, int componentIdx,
-       util::function_ref<void(KitComponent&)> cb);
-   inline void withConstComponent(
-       int voiceIdx, int componentIdx,
-       util::function_ref<void(const KitComponent&)> cb) const;
 };
 
 }   // namespace base::instruments::loader

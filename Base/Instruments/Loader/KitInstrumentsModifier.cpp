@@ -14,7 +14,7 @@ KitInstrumentsModifier::getInstrument(util::Identifiable::UUIDView instrumentUui
        });                                                                   
    if (instrumentIt == m_rKitInstruments.end())                          
    {                                                                         
-      return tl::unexpected(Error::uuidNotFound);                                                            \
+      return tl::unexpected(Error::uuidNotFound);                                                            
    }
    return instrumentIt;
 }
@@ -81,9 +81,9 @@ Void KitInstrumentsModifier::moveKitInstrumentComponent(
                   [&](auto srcVoice) -> Void {
                      return safe_at(dstInstrumentIt->voices(), dstVoiceIdx).and_then(
                         [&](auto dstVoice) -> Void {
-                           return safe_at(dstVoice->components, dstVoice->components.size()).and_then(
-                              [&](auto dstComponent) -> Void {
-                                 dstVoice->components.push_back(*dstComponent);
+                           return safe_at(srcVoice->components, srcComponentIdx).and_then(
+                              [&](auto srcComponent) -> Void {
+                                 dstVoice->components.push_back(*srcComponent);
                                  srcInstrumentIt->unmarkAsDefaultCreated();
                                  dstInstrumentIt->unmarkAsDefaultCreated();
                                  return removeComponentFromKitInstrumentVoice(srcInstrumentUuid, srcVoiceIdx, srcComponentIdx);

@@ -9,10 +9,18 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-std::optional<float> KitInstrument::getParameterValue(
+Ret<float> KitInstrument::getParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
+   return safe_at(m_voices, voiceIdx).and_then(
+      [componentIdx, parameterIdx, parameterAttr](auto voice) -> Ret<float> {
+         return safe_at(voice.components, componentIdx).map(
+            [parameterIdx, parameterAttr](auto component) -> float {
+               return component->getParameterValue(parameterIdx, parameterAttr).value_or(0.0f);
+            });
+      });
+      });
    std::optional<float> ret;
    withConstComponent(voiceIdx, componentIdx, [&](const Component& component) {
       ret = component.getParameterValue(parameterIdx, parameterAttr);

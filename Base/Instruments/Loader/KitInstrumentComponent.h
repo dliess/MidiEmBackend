@@ -9,6 +9,7 @@
 #include "MusicDevice.h"
 #include "SoundHandler.h"
 #include "CallbackSignal.h"
+#include "ErrorHandling.h"
 
 namespace base::instruments::loader
 {
@@ -26,13 +27,13 @@ public:
    void setNoteOffset(int noteOffset);
    void setAmp(float amp, float prevAmp);
 
-   [[nodiscard]] std::optional<float> getParameterValue(
+   [[nodiscard]] Ret<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int parameterIdx,
+   Void setParameterValue(int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value);
 
-   const musicDevice::description::sound::Parameter* parameterDescription(
+   Ret<const musicDevice::description::sound::Parameter*> parameterDescription(
        int parameterIdx) const;
 
    friend auto meta::registerMembers<KitComponent>();

@@ -18,7 +18,7 @@ MelodicInstrumentsModifier::getInstrument(util::Identifiable::UUIDView instrumen
        });                                                                   
    if (instrumentIt == m_rMelodicInstruments.end())                          
    {                                                                         
-      return tl::unexpected(Error::uuidNotFound);                                                            \
+      return tl::unexpected(Error::uuidNotFound);
    }
    return instrumentIt;
 }
