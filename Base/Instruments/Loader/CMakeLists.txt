@@ -5,6 +5,7 @@ endif()
 set(SOURCES
 #   "InstrumentsMDRefSetter.cpp"
    "KitInstrumentsModifier.cpp"
+   "KitInstrumentModifier.cpp"
    "MelodicInstrumentsModifier.cpp"
    "MelodicInstrumentModifier.cpp"
 #   "InstrumentsPersister.cpp"
@@ -18,6 +19,7 @@ set(HEADERS
 #   "InstrumentsData.h"
 #   "InstrumentsDataMeta.h"
    "KitInstrumentsModifier.h"
+   "KitInstrumentModifier.h"
 #   "InstrumentsMDRefSetter.h"
 #   "InstrumentsPersister.h"
 #   "InstrumentComponentParameterCacheCreator.h"

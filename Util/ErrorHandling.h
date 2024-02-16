@@ -14,9 +14,11 @@ enum class Error
 {
    uuidNotFound,
    melodicVoicesFull,
+   maxComponentsPerVoiceReached,
    mdDescrNotFound,
    descriptionNotFound,
    indexOutOfRange,
+   soundHandlerNotAvailable,
 };
 template<typename T>
 using Ret = tl::expected<T, Error>;

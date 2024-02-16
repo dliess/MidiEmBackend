@@ -1,19 +1,23 @@
 #include "KitInstrumentsModifier.h"
-
+#include "KitInstrumentModifier.h"
 #include <spdlog/spdlog.h>
 
 using namespace base::instruments::loader;
 
-#define GET_KIT_INSTR_OR_RETURN(instrumentUuid)                      \
-   auto instrumentIt = std::ranges::find_if(                         \
-       m_rKitInstruments,                                            \
-       [&instrumentUuid](const KitInstrument& instr) {               \
-          return instr.id() == instrumentUuid;                       \
-       });                                                           \
-   if (instrumentIt == m_rKitInstruments.end())                      \
-   {                                                                 \
-      return;                                                        \
+Ret<KitInstruments::iterator> 
+KitInstrumentsModifier::getInstrument(util::Identifiable::UUIDView instrumentUuid) noexcept
+{
+   auto instrumentIt = std::ranges::find_if(                                 
+       m_rKitInstruments,                                                
+       [&instrumentUuid](const KitInstrument& instr) {                   
+          return instr.id() == instrumentUuid;                               
+       });                                                                   
+   if (instrumentIt == m_rKitInstruments.end())                          
+   {                                                                         
+      return tl::unexpected(Error::uuidNotFound);                                                            \
    }
+   return instrumentIt;
+}
 
 KitInstrumentsModifier::KitInstrumentsModifier(KitInstruments& rKitInstruments) noexcept :
     m_rKitInstruments(rKitInstruments)
@@ -26,162 +30,143 @@ void KitInstrumentsModifier::insertKitInstrument(
    m_rKitInstruments.push_back(std::move(kitInstrument));
 }
 
-void KitInstrumentsModifier::removeKitInstrument(
+Void KitInstrumentsModifier::removeKitInstrument(
     const util::Identifiable::UUID& instrumentId) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentId);
-   m_rKitInstruments.erase(instrumentIt);
+   return getInstrument(instrumentId).map([this](auto instrumentIt) -> void {
+      m_rKitInstruments.erase(instrumentIt);
+   });
 }
 
-void KitInstrumentsModifier::renameKitInstrument(
+Void KitInstrumentsModifier::renameKitInstrument(
     const util::Identifiable::UUID& instrumentId, std::string name) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentId);
-   instrumentIt->setName(std::move(name));
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentId).map([this, name = std::move(name)](auto instrumentIt) -> void {
+      KitInstrumentModifier(*instrumentIt).renameKitInstrument(std::move(name));
+   });
 }
 
-void KitInstrumentsModifier::createNewVoiceInKitInstrument(
+Void KitInstrumentsModifier::createNewVoiceInKitInstrument(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder,
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
-   if (md && md.value()->soundHandler)
-   {
-      KitVoice voice(md.value()->description()->soundSection->voices[sdVoiceIdx].name);
-      voice.components.emplace_back(&md.value()->soundHandler.value(),
-                                    md.value()->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-                                    md.value()->deviceId(),
-                                    sdVoiceIdx, 0);
-      instrumentIt->voices().push_back(std::move(voice));
-      instrumentIt->unmarkAsDefaultCreated();
-   }
+   return getInstrument(instrumentUuid).and_then(
+      [&,this](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).createNewVoiceInKitInstrument(rFactoryDataHolder, sdUuid, sdVoiceIdx);
+      });
 }
 
-void KitInstrumentsModifier::addComponentToKitInstrumentVoice(
+Void KitInstrumentsModifier::addComponentToKitInstrumentVoice(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder,
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
-   if (md && md.value()->soundHandler)
-   {
-      if (instrumentIt->voices().operator[](voiceIdx).components.size() >=
-          KitVoice::NUM_MAX_COMPONENTS_PER_VOICE)
-      {
-         return;
-      }
-      instrumentIt->voices().operator[](voiceIdx).components.emplace_back(
-          &md.value()->soundHandler.value(),
-          md.value()->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-          md.value()->deviceId(),
-          sdVoiceIdx, 0);
-      instrumentIt->unmarkAsDefaultCreated();
-   }
+   return getInstrument(instrumentUuid).and_then(
+      [&,this](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).addComponentToKitInstrumentVoice(rFactoryDataHolder, voiceIdx, sdUuid, sdVoiceIdx);
+      });
 }
 
-void KitInstrumentsModifier::moveKitInstrumentComponent(
+Void KitInstrumentsModifier::moveKitInstrumentComponent(
     const util::Identifiable::UUID& srcInstrumentUuid, int srcVoiceIdx,
     int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,
     int dstVoiceIdx) noexcept
 {
-   KitInstruments::iterator srcInstrumentIt;
-   {
-      GET_KIT_INSTR_OR_RETURN(srcInstrumentUuid);
-      srcInstrumentIt = instrumentIt;
-   }
-   KitInstruments::iterator dstInstrumentIt;
-   {
-      GET_KIT_INSTR_OR_RETURN(dstInstrumentUuid);
-      dstInstrumentIt = instrumentIt;
-   }
-   const auto& srcVoice = srcInstrumentIt->voices()
-                              .
-                              operator[](srcVoiceIdx)
-                              .components[srcComponentIdx];
-   dstInstrumentIt->voices()
-       .
-       operator[](dstVoiceIdx)
-       .components.push_back(srcVoice);
-   removeComponentFromKitInstrumentVoice(srcInstrumentUuid, srcVoiceIdx,
-                                         srcComponentIdx);
-   srcInstrumentIt->unmarkAsDefaultCreated();
-   dstInstrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(srcInstrumentUuid).and_then(
+      [&](auto srcInstrumentIt) -> Void {
+         return getInstrument(dstInstrumentUuid).and_then(
+            [&](auto dstInstrumentIt) -> Void {
+               return safe_at(srcInstrumentIt->voices(), srcVoiceIdx).and_then(
+                  [&](auto srcVoice) -> Void {
+                     return safe_at(dstInstrumentIt->voices(), dstVoiceIdx).and_then(
+                        [&](auto dstVoice) -> Void {
+                           return safe_at(dstVoice->components, dstVoice->components.size()).and_then(
+                              [&](auto dstComponent) -> Void {
+                                 dstVoice->components.push_back(*dstComponent);
+                                 srcInstrumentIt->unmarkAsDefaultCreated();
+                                 dstInstrumentIt->unmarkAsDefaultCreated();
+                                 return removeComponentFromKitInstrumentVoice(srcInstrumentUuid, srcVoiceIdx, srcComponentIdx);
+                              });
+                        });
+                  }); 
+            });
+      });
 }
 
-void KitInstrumentsModifier::removeComponentFromKitInstrumentVoice(
+Void KitInstrumentsModifier::removeComponentFromKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto& components = instrumentIt->voices().at(voiceIdx).components;
-   components.erase(components.begin() + componentIdx);
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).removeComponentFromKitInstrumentVoice(voiceIdx, componentIdx);
+      });
 }
 
-void KitInstrumentsModifier::removeVoiceFromKitInstrument(
+Void KitInstrumentsModifier::removeVoiceFromKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().erase(instrumentIt->voices().begin() + voiceIdx);
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).removeVoiceFromKitInstrument(voiceIdx);
+      });
 }
 
-void KitInstrumentsModifier::setNoteOffsetInKitInstrumentComponent(
+Void KitInstrumentsModifier::setNoteOffsetInKitInstrumentComponent(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx, int noteOffset) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().at(voiceIdx)
-       .components[componentIdx]
-       .setNoteOffset(noteOffset);
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).setNoteOffsetInKitInstrumentComponent(voiceIdx, componentIdx, noteOffset);
+      });
 }
 
-void KitInstrumentsModifier::setNoteOffsetInKitInstrumentVoice(const util::Identifiable::UUID& instrumentUuid,
+Void KitInstrumentsModifier::setNoteOffsetInKitInstrumentVoice(const util::Identifiable::UUID& instrumentUuid,
                                        int voiceIdx, int noteOffset) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   if (noteOffset != instrumentIt->voices().at(voiceIdx).noteOffset)
-   {
-      instrumentIt->voices().at(voiceIdx).noteOffset = noteOffset;
-      instrumentIt->unmarkAsDefaultCreated();
-   }
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).setNoteOffsetInKitInstrumentVoice(voiceIdx, noteOffset);
+      });
 }
 
-void KitInstrumentsModifier::setVoiceNameInKitInstrument(
+Void KitInstrumentsModifier::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string& name) noexcept
 {
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().operator[](voiceIdx).name = name;
-   instrumentIt->unmarkAsDefaultCreated();
+   return getInstrument(instrumentUuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).setVoiceNameInKitInstrument(voiceIdx, name);
+      });
 }
-void KitInstrumentsModifier::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
+Void KitInstrumentsModifier::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
                         int componentIdx, float amp)
 {
-   GET_KIT_INSTR_OR_RETURN(uuid);
-   instrumentIt->setComponentAmp(voiceIdx, componentIdx, amp);
+   return getInstrument(uuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).setKitComponentAmp(voiceIdx, componentIdx, amp);
+      });
 }
 
-void KitInstrumentsModifier::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp)
+Void KitInstrumentsModifier::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp)
 {
-   GET_KIT_INSTR_OR_RETURN(uuid);
-   instrumentIt->setVoiceAmp(voiceIdx, amp);
+   return getInstrument(uuid).and_then(
+      [&](auto instrumentIt) -> Void {
+         return KitInstrumentModifier(*instrumentIt).setKitVoiceAmp(voiceIdx, amp);
+      });
 }
 
-void KitInstrumentsModifier::incKitInstrumentRefCount(
-    const util::Identifiable::UUID& instrumentUuid)
-{
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->incRefCount();
-}
-void KitInstrumentsModifier::decKitInstrumentRefCount(
-    const util::Identifiable::UUID& instrumentUuid)
-{
-   GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->decRefCount();
-}
+// void KitInstrumentsModifier::incKitInstrumentRefCount(
+//     const util::Identifiable::UUID& instrumentUuid)
+// {
+//    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
+//    instrumentIt->incRefCount();
+// }
+// void KitInstrumentsModifier::decKitInstrumentRefCount(
+//     const util::Identifiable::UUID& instrumentUuid)
+// {
+//    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
+//    instrumentIt->decRefCount();
+// }

@@ -44,6 +44,7 @@ public:
    template <typename Cb> void forEachComponentExt(Cb&& cb);
    template <typename Cb> void forEachComponentExt(Cb&& cb) const;
 
+   friend class KitInstrumentModifier;
    friend auto meta::registerMembers<KitInstrument>();
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
