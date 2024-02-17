@@ -25,7 +25,7 @@ public:
    // [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
    void setNoteOffset(int noteOffset);
-   void setAmp(float amp, float prevAmp);
+   void setAmp(float amp);
 
    [[nodiscard]] Ret<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
@@ -44,9 +44,6 @@ public:
 
    [[nodiscard]] int noteOffset() const { return m_noteOffset; };
    [[nodiscard]] float amp() const { return m_amp; };
-
-   CB_SIGNAL_SINGLE_SUBSCRIBER(NoteOffsetChanged, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(AmpChanged, float);
 
 private:
    musicDevice::sound::SoundHandler* m_pSoundDevice{nullptr};

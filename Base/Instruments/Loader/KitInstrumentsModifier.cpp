@@ -77,9 +77,9 @@ Void KitInstrumentsModifier::moveKitInstrumentComponent(
       [&](auto srcInstrumentIt) -> Void {
          return getInstrument(dstInstrumentUuid).and_then(
             [&](auto dstInstrumentIt) -> Void {
-               return safe_at(srcInstrumentIt->voices(), srcVoiceIdx).and_then(
+               return safe_at(srcInstrumentIt->m_voices, srcVoiceIdx).and_then(
                   [&](auto srcVoice) -> Void {
-                     return safe_at(dstInstrumentIt->voices(), dstVoiceIdx).and_then(
+                     return safe_at(dstInstrumentIt->m_voices, dstVoiceIdx).and_then(
                         [&](auto dstVoice) -> Void {
                            return safe_at(srcVoice->components, srcComponentIdx).and_then(
                               [&](auto srcComponent) -> Void {

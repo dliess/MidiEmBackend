@@ -43,7 +43,7 @@ Ret<typename Container::value_type*> safe_at(Container& container, size_t index)
 }
 
 template<Indexable Container>
-Ret<typename const Container::value_type*> safe_at(const Container& container, size_t index) {
+Ret<const typename Container::value_type*> safe_at(const Container& container, size_t index) {
     if (index < container.size()) {
         return &container[index]; // Return a pointer to the value if in range.
     } else {

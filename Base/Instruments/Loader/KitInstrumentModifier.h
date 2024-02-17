@@ -35,6 +35,7 @@ struct KitInstrumentModifier
    //void incKitInstrumentRefCount();
    //void decKitInstrumentRefCount();
 
+   Void addVoice(int padIdx, KitVoice voice) noexcept;
 private:
    KitInstrument& m_rKitInstrument;
 };

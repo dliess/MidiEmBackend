@@ -2,6 +2,7 @@
 
 // #include "InstrumentComponentParameterCacheCreator.h"
 #include "Instruments.h"
+#include "Loader/KitInstrumentModifier.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
@@ -59,7 +60,7 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
           nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
-      kitInstrument.addVoice(voiceIdx, voice);
+      loader::KitInstrumentModifier(kitInstrument).addVoice(voiceIdx, voice);
    }
    if (!m_rInstruments.hasSameInstrument(kitInstrument))
    {

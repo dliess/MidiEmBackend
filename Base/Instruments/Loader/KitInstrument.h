@@ -32,39 +32,29 @@ public:
    [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
-   template <typename T> void addVoice(int padIdx, T&& voice);
-
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   std::vector<KitVoice>& voices() noexcept;
-   const std::vector<KitVoice>& voices() const noexcept;
-
-   template <typename Cb> void forEachComponent(Cb&& cb);
-   template <typename Cb> void forEachComponent(Cb&& cb) const;
-   template <typename Cb> void forEachComponentExt(Cb&& cb);
-   template <typename Cb> void forEachComponentExt(Cb&& cb) const;
-
    friend class KitInstrumentModifier;
+   friend class KitInstrumentsModifier;
    friend auto meta::registerMembers<KitInstrument>();
    friend bool isSameInstrument(const KitInstrument& lhs,
                                 const KitInstrument& rhs);
 
-   void setVoiceNoteOffset(int voiceIdx, int offset);
-   void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
+   Void setVoiceNoteOffset(int voiceIdx, int offset);
+   Void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
 
-   void setVoiceAmp(int voiceIdx, float amp);
-   void setComponentAmp(int voiceIdx, int componentIdx, float amp);
+   Void setVoiceAmp(int voiceIdx, float amp);
+   Void setComponentAmp(int voiceIdx, int componentIdx, float amp);
 
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentNoteOffsetChanged,int, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceNoteOffsetChanged, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(ComponentAmpChanged,int, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(VoiceAmpChanged, int, float);
+   static constexpr int MAX_VOICES = 16;
 
 private:
    std::string m_name;
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
+   Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;
+   Ret<const KitComponent*> getConstComponent(int voiceIdx, int componentIdx) const noexcept;
 };
 
 }   // namespace base::instruments::loader

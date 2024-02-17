@@ -133,3 +133,11 @@ Void KitInstrumentModifier::setKitVoiceAmp(int voiceIdx, float amp)
 // {
 //    instrumentIt->decRefCount();
 // }
+
+Void KitInstrumentModifier::addVoice(int padIdx, KitVoice voice) noexcept
+{
+   return safe_at(m_rKitInstrument.m_voices, padIdx).map(
+      [this, padIdx, srcVoice = std::move(voice) ](auto dstVoice) {
+         *dstVoice = std::move(srcVoice);
+      });
+}

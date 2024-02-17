@@ -38,20 +38,14 @@ inline void KitComponent::setNoteOffset(int noteOffset)
    if(m_noteOffset != noteOffset)
    {
       m_noteOffset = noteOffset;
-      emitNoteOffsetChanged(m_noteOffset);
    }
 }
 
-inline void KitComponent::setAmp(float amp, float prevAmp)
+inline void KitComponent::setAmp(float amp)
 {
    if(m_amp != amp)
    {
       m_amp = amp;
-      emitAmpChanged(m_amp);
-   }
-   if(m_pSoundDevice)
-   {
-      m_pSoundDevice->setAmp(m_sdVoiceIdx, prevAmp * m_amp);
    }
 }
 
