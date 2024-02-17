@@ -110,6 +110,15 @@ Void MelodicInstrumentsModifier::setMelodicComponentAmp(util::Identifiable::UUID
          return MelodicInstrumentModifier(*instrumentIt).setMelodicComponentAmp(componentIdx, amp);
       });
 }
+
+void MelodicInstrumentsModifier::fillReferences(
+    musicDevice::MusicDevice* pMusicDevice)
+{
+   for(auto& instrument : m_rMelodicInstruments)
+   {
+      MelodicInstrumentModifier(instrument).fillReferences(pMusicDevice);
+   }
+}
 /*
 Void MelodicInstrumentsModifier::incMelodicInstrumentRefCount(
     const util::Identifiable::UUID& instrumentUuid)

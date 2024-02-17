@@ -158,6 +158,13 @@ Void KitInstrumentsModifier::setKitVoiceAmp(util::Identifiable::UUIDView uuid, i
       });
 }
 
+void KitInstrumentsModifier::fillReferences(musicDevice::MusicDevice* pMusicDevice)
+{
+   for (auto& kitInstrument : m_rKitInstruments)
+   {
+      KitInstrumentModifier(kitInstrument).fillReferences(pMusicDevice);
+   }
+}
 // void KitInstrumentsModifier::incKitInstrumentRefCount(
 //     const util::Identifiable::UUID& instrumentUuid)
 // {

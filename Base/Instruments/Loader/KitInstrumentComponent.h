@@ -24,8 +24,8 @@ public:
    // [[nodiscard]] const musicDevice::MusicDeviceId& soundDeviceId() const;
    // [[nodiscard]] const musicDevice::sound::SoundHandler* pSoundDevice() const;
    void setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr);
-   void setNoteOffset(int noteOffset);
-   void setAmp(float amp);
+   bool setNoteOffset(int noteOffset);
+   bool setAmp(float amp);
 
    [[nodiscard]] Ret<float> getParameterValue(
        int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
@@ -37,8 +37,7 @@ public:
        int parameterIdx) const;
 
    friend auto meta::registerMembers<KitComponent>();
-   friend class MelodicInstrumentsParameterCacheCreator;
-   friend class KitInstrumentsParameterCacheCreator;
+   friend class KitInstrumentModifier;
 
    bool operator==(const KitComponent& rhs) const;
 

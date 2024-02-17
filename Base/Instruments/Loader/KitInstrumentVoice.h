@@ -17,10 +17,6 @@ struct KitVoice   //: public util::Identifiable
    static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
    struct Components : public std::vector<KitComponent>
    {
-      [[nodiscard]] bool containsComponent(size_t componentIdx) const noexcept
-      {
-         return componentIdx < size();
-      }
    };
    Components components;
    int noteOffset{0};

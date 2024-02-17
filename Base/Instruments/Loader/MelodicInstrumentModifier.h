@@ -33,6 +33,7 @@ struct MelodicInstrumentModifier
 
    Void setMelodicComponentAmp(int componentIdx, float amp) noexcept;
 
+   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    
 private:
    MelodicInstrument& m_rMelodicInstrument;

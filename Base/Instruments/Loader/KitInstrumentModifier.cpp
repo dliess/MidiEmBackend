@@ -141,3 +141,27 @@ Void KitInstrumentModifier::addVoice(int padIdx, KitVoice voice) noexcept
          *dstVoice = std::move(srcVoice);
       });
 }
+
+void KitInstrumentModifier::forEachComponent(
+    util::function_ref<void(KitComponent&)> f)
+{
+   for (auto& voice : m_rKitInstrument.m_voices)
+   {
+      for (auto& component : voice.components)
+      {
+         f(component);
+      }
+   }
+}
+
+void KitInstrumentModifier::fillReferences(musicDevice::MusicDevice* pMusicDevice)
+{
+   forEachComponent([&pMusicDevice](KitComponent& component) {
+      if (component.m_soundDeviceId == pMusicDevice->deviceId())
+      {
+         component.setSoundDevicePtr(
+             pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
+                                        : nullptr);
+      }
+   });
+}

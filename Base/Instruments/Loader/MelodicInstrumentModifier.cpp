@@ -166,3 +166,22 @@ MelodicInstrumentModifier::determineComponentEngineType(
    });
 }
 
+void MelodicInstrumentModifier::fillReferences(
+    musicDevice::MusicDevice* pMusicDevice)
+{
+   for(int i = 0; i < m_rMelodicInstrument.m_parameters.size(); ++i)
+   {
+      auto& parameterData = m_rMelodicInstrument.m_parameters[i];
+      if (parameterData.has_value() && parameterData->pEngineDescr == nullptr)
+      {
+         auto it = std::ranges::find_if(m_rMelodicInstrument.m_voices, [i, pMusicDevice](auto& voice){
+            return voice.components[i].has_value() && 
+            voice.components[i]->soundDeviceId == pMusicDevice->deviceId();
+         });
+         if(it != m_rMelodicInstrument.m_voices.end())
+         {
+            parameterData->pEngineDescr = pMusicDevice->description()->soundSection->engineBase(it->components[i]->sdVoiceIdx);
+         }
+      }
+   }
+}

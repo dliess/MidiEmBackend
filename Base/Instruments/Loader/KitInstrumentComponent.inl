@@ -18,35 +18,29 @@ inline KitComponent::KitComponent(musicDevice::sound::SoundHandler* pSoundDevice
 {
 }
 
-// inline const musicDevice::MusicDeviceId& Component::soundDeviceId() const
-// {
-//    return m_soundDeviceId;
-// }
-//
-// inline const musicDevice::sound::SoundHandler* Component::pSoundDevice() const
-// {
-//    return m_pSoundDevice;
-// }
-
 inline void KitComponent::setSoundDevicePtr(musicDevice::sound::SoundHandler* ptr)
 {
    m_pSoundDevice = ptr;
 }
 
-inline void KitComponent::setNoteOffset(int noteOffset)
+inline bool KitComponent::setNoteOffset(int noteOffset)
 {
    if(m_noteOffset != noteOffset)
    {
       m_noteOffset = noteOffset;
+      return true;
    }
+   return false;
 }
 
-inline void KitComponent::setAmp(float amp)
+inline bool KitComponent::setAmp(float amp)
 {
    if(m_amp != amp)
    {
       m_amp = amp;
+      return true;
    }
+   return false;
 }
 
 inline bool KitComponent::operator==(const KitComponent& rhs) const

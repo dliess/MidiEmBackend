@@ -36,8 +36,10 @@ struct KitInstrumentModifier
    //void decKitInstrumentRefCount();
 
    Void addVoice(int padIdx, KitVoice voice) noexcept;
+   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
 private:
    KitInstrument& m_rKitInstrument;
+   void forEachComponent(util::function_ref<void(KitComponent&)> f);
 };
 
 }   // namespace base::instruments::loader

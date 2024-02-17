@@ -41,6 +41,7 @@ struct MelodicInstrumentsModifier
    Void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
                                int componentIdx, float amp);
 
+   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    /*
    Void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
    Void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
