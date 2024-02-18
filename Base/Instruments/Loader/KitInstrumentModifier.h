@@ -37,6 +37,7 @@ struct KitInstrumentModifier
 
    Void addVoice(int padIdx, KitVoice voice) noexcept;
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
+   bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
 private:
    KitInstrument& m_rKitInstrument;
    void forEachComponent(util::function_ref<void(KitComponent&)> f);

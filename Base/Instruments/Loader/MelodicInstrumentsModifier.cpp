@@ -119,17 +119,19 @@ void MelodicInstrumentsModifier::fillReferences(
       MelodicInstrumentModifier(instrument).fillReferences(pMusicDevice);
    }
 }
-/*
-Void MelodicInstrumentsModifier::incMelodicInstrumentRefCount(
-    const util::Identifiable::UUID& instrumentUuid)
+
+void MelodicInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* pMusicDevice)
 {
-   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->incRefCount();
+   auto it = m_rMelodicInstruments.begin();
+   while (it != m_rMelodicInstruments.end())
+   {
+      if (MelodicInstrumentModifier(*it).isUnreferencedAndDefaultCreatedFor(pMusicDevice))
+      {
+         it = m_rMelodicInstruments.erase(it);
+      }
+      else
+      {
+         ++it;
+      }
+   }
 }
-void MelodicInstrumentsModifier::decMelodicInstrumentRefCount(
-    const util::Identifiable::UUID& instrumentUuid)
-{
-   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->decRefCount();
-}
-*/

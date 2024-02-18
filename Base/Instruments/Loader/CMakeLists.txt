@@ -3,12 +3,11 @@ if(NOMIDI_BACKEND_BUILD_TESTS)
 endif()
 
 set(SOURCES
-#   "InstrumentsMDRefSetter.cpp"
    "KitInstrumentsModifier.cpp"
    "KitInstrumentModifier.cpp"
    "MelodicInstrumentsModifier.cpp"
    "MelodicInstrumentModifier.cpp"
-#   "InstrumentsPersister.cpp"
+   "InstrumentsPersister.cpp"
    "KitInstrument.cpp"
    "KitInstrumentComponent.cpp"
    "MelodicInstrument.cpp"
@@ -20,7 +19,6 @@ set(HEADERS
    "InstrumentsDataMeta.h"
    "KitInstrumentsModifier.h"
    "KitInstrumentModifier.h"
-   "InstrumentsMDRefSetter.h"
    "InstrumentsPersister.h"
    "KitInstrument.h"
    "KitInstrument.inl"

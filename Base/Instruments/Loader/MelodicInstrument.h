@@ -69,7 +69,6 @@ private:
    std::string m_name;
    std::vector<Voice> m_voices;
    std::array<std::optional<ParameterData>, NUM_COMPONENTS> m_parameters;
-   int refCount{0};
 
    friend auto meta::registerMembers<MelodicInstrument>();
    friend auto meta::registerMembers<MelodicInstrument::ParameterData>();

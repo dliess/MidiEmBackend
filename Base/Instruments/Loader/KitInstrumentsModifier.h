@@ -47,6 +47,7 @@ struct KitInstrumentsModifier
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    // void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    // void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void removeKitInstruments(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    KitInstruments& m_rKitInstruments;

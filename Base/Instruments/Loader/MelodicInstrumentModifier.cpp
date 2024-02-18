@@ -191,3 +191,17 @@ void MelodicInstrumentModifier::fillReferences(
       }
    });
 }
+
+bool MelodicInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const
+{
+   auto hasComponentWith = [this](const musicDevice::MusicDeviceId& deviceId) {
+      return std::ranges::any_of(m_rMelodicInstrument.m_voices, [deviceId](auto& voice) {
+         return std::ranges::any_of(voice.components, [deviceId](auto& component) {
+            return component.has_value() ? component->soundDeviceId == deviceId : false;
+         });
+      });
+   };
+   return m_rMelodicInstrument.refCount() == 0 && 
+          m_rMelodicInstrument.isDefaultCreated() && 
+          hasComponentWith(pMusicDevice->deviceId());
+}

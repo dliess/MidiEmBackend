@@ -165,15 +165,19 @@ void KitInstrumentsModifier::fillReferences(musicDevice::MusicDevice* pMusicDevi
       KitInstrumentModifier(kitInstrument).fillReferences(pMusicDevice);
    }
 }
-// void KitInstrumentsModifier::incKitInstrumentRefCount(
-//     const util::Identifiable::UUID& instrumentUuid)
-// {
-//    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-//    instrumentIt->incRefCount();
-// }
-// void KitInstrumentsModifier::decKitInstrumentRefCount(
-//     const util::Identifiable::UUID& instrumentUuid)
-// {
-//    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-//    instrumentIt->decRefCount();
-// }
+
+void KitInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* pMusicDevice)
+{
+   auto it = m_rKitInstruments.begin();
+   while (it != m_rKitInstruments.end())
+   {
+      if (KitInstrumentModifier(*it).isUnreferencedAndDefaultCreatedFor(pMusicDevice))
+      {
+         it = m_rKitInstruments.erase(it);
+      }
+      else
+      {
+         ++it;
+      }
+   }
+}

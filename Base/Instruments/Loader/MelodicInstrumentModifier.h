@@ -35,6 +35,7 @@ struct MelodicInstrumentModifier
    Void setMelodicComponentAmp(int componentIdx, float amp) noexcept;
 
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
+   bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
    
 private:
    MelodicInstrument& m_rMelodicInstrument;
