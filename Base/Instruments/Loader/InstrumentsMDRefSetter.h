@@ -9,9 +9,6 @@ class InstrumentsMDRefSetter
 {
 public:
    InstrumentsMDRefSetter(Data& rData);
-   void fillReferencesKitInstruments(musicDevice::MusicDevice* pMusicDevice);
-   void fillReferencesMelodicInstruments(
-       musicDevice::MusicDevice* pMusicDevice);
    void removeKitInstruments(musicDevice::MusicDevice* pMusicDevice);
    void removeMelodicInstruments(musicDevice::MusicDevice* pMusicDevice);
 

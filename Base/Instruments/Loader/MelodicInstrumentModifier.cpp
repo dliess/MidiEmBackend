@@ -34,6 +34,8 @@ Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
                if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
                {
                   m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
+                     { md->deviceId().deviceName(), 
+                       md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
                      md->description()->soundSection->engineBase(sdVoiceIdx),
                      md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
                }
@@ -58,6 +60,8 @@ Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
                      if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
                      {
                         m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
+                           { md->deviceId().deviceName(), 
+                             md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
                            md->description()->soundSection->engineBase(sdVoiceIdx),
                            md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
                      }
@@ -140,11 +144,11 @@ MelodicInstrumentModifier::findComponentIdxToPlaceNewComponent(
     base::musicDevice::factory::DataHolder& rFactoryDataHolder,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const
 {
-   auto searchFreePlaceOrEnginePtr = [this, &rFactoryDataHolder, sdUuid, sdVoiceIdx](auto enginePtr) -> Ret<size_t>
+   auto searchFreePlaceOrEnginePtr = [&,this](auto engineId) -> Ret<size_t>
    {
-      auto it = std::ranges::find_if(m_rMelodicInstrument.m_parameters, [enginePtr](auto& parameterData){
+      auto it = std::ranges::find_if(m_rMelodicInstrument.m_parameters, [&engineId](auto& parameterData){
          return !parameterData.has_value() ||  
-                parameterData->pEngineDescr == enginePtr;
+                parameterData->engineId == engineId;
       });
       if (it == m_rMelodicInstrument.m_parameters.end())
       {
@@ -152,18 +156,20 @@ MelodicInstrumentModifier::findComponentIdxToPlaceNewComponent(
       }
       return std::distance(m_rMelodicInstrument.m_parameters.begin(), it);
    };
-   return determineComponentEngineType(rFactoryDataHolder, sdUuid, sdVoiceIdx).
+   return determineComponentEngineId(rFactoryDataHolder, sdUuid, sdVoiceIdx).
       and_then(searchFreePlaceOrEnginePtr);
 }
 
-Ret<const MelodicInstrumentModifier::Engine*>
-MelodicInstrumentModifier::determineComponentEngineType(
+Ret<MelodicInstrument::ParameterData::EngineId>
+MelodicInstrumentModifier::determineComponentEngineId(
    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const
 {
-   return rFactoryDataHolder.getDescription(sdUuid).map([sdVoiceIdx](auto descr) {
-      return descr->soundSection->engineBase(sdVoiceIdx);
-   });
+   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).map(
+      [sdVoiceIdx](auto md) -> MelodicInstrument::ParameterData::EngineId {
+         return { md->deviceId().deviceName(), 
+                  md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) };
+      });
 }
 
 void MelodicInstrumentModifier::fillReferences(

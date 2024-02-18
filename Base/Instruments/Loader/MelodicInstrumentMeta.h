@@ -73,6 +73,14 @@ template <> inline auto registerMembers<base::instruments::loader::MelodicInstru
 }
 
 template<>
+inline auto registerMembers<base::instruments::loader::MelodicInstrument::ParameterData::EngineId>()
+{
+   return members(member("mdName", &base::instruments::loader::MelodicInstrument::ParameterData::EngineId::mdName),
+                  member("engineIdx", &base::instruments::loader::MelodicInstrument::ParameterData::EngineId::engineIdx)
+   );
+}
+
+template<>
 inline auto registerMembers<base::instruments::loader::MelodicInstrument::ParameterData>()
 {
    return members(member("deviceParameters", &base::instruments::loader::MelodicInstrument::ParameterData::deviceParameters),

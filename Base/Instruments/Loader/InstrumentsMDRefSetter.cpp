@@ -5,43 +5,6 @@ using namespace base::instruments::loader;
 
 InstrumentsMDRefSetter::InstrumentsMDRefSetter(Data& rData) : m_rData(rData) {}
 
-void InstrumentsMDRefSetter::fillReferencesKitInstruments(
-    musicDevice::MusicDevice* pMusicDevice)
-{
-   for (auto& kitInstrument : m_rData.kitInstruments)
-   {
-      kitInstrument.forEachComponent([&pMusicDevice](Component& component) {
-         if (component.soundDeviceId() == pMusicDevice->deviceId())
-         {
-            component.setSoundDevicePtr(
-                pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
-                                           : nullptr);
-         }
-      });
-   }
-}
-
-void InstrumentsMDRefSetter::fillReferencesMelodicInstruments(
-    musicDevice::MusicDevice* pMusicDevice)
-{
-   for (auto& melodicInstrument : m_rData.melodicInstruments)
-   {
-      std::ranges::for_each(
-          melodicInstrument.voices(), [&pMusicDevice](MelodicVoice& voice) {
-             std::ranges::for_each(
-                 voice.components, [&pMusicDevice](auto& component) {
-                    if (component &&
-                        (component->soundDeviceId() == pMusicDevice->deviceId()))
-                    {
-                       component->setSoundDevicePtr(
-                           pMusicDevice->soundHandler
-                               ? &pMusicDevice->soundHandler.value()
-                               : nullptr);
-                    }
-                 });
-          });
-   }
-}
 
 namespace detail
 {

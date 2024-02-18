@@ -36,12 +36,6 @@ public:
                                 const MelodicInstrument& rhs);
    friend class MelodicInstrumentsModifier;
    friend class MelodicInstrumentModifier;
-   // template <typename Cb> void forEachComponent(Cb&& cb);
-   // template <typename Cb> void forEachComponent(size_t componentIdx, Cb&& cb);
-   // template <typename Cb> void forEachComponentExt(Cb&& cb);
-   // template <typename Cb> void forEachLeadComponent(Cb&& cb);
-   // template <typename Cb> void forEachLeadComponent(Cb&& cb) const;
-   // template <typename Cb> void forEachLeadComponentExt(Cb&& cb) const;
 
    static constexpr int NUM_COMPONENTS = 4;
    struct Voice 
@@ -54,9 +48,17 @@ public:
       std::array<std::optional<Component>, NUM_COMPONENTS> components;
    };
    struct ParameterData {
+      struct EngineId {
+         musicDevice::MusicDeviceName mdName;
+         int engineIdx{0};
+         bool operator==(const EngineId& rhs) const = default;
+      };
       using Engine = musicDevice::description::sound::EngineBase;
-      explicit ParameterData(const Engine* pEngineDescr, size_t numParameters) : 
-            pEngineDescr(pEngineDescr), deviceParameters(numParameters) {}
+      explicit ParameterData(EngineId engineId, const Engine* pEngineDescr, size_t numParameters) : 
+            engineId(std::move(engineId)), 
+            pEngineDescr(pEngineDescr), 
+            deviceParameters(numParameters) {}
+      EngineId engineId;
       const Engine* pEngineDescr{nullptr}; // TODO: maybe music device type would be enough
       std::vector<musicDevice::sound::ParameterData> deviceParameters;
       int noteOffset{0};

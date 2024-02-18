@@ -3,6 +3,7 @@
 
 #include "FixedSizeString.h"
 #include "InstrumentsData.h"
+#include "MelodicInstrument.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "ErrorHandling.h"
 
@@ -42,8 +43,8 @@ private:
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
    
-   [[nodiscard]] Ret<const Engine*>
-   determineComponentEngineType(
+   [[nodiscard]] Ret<MelodicInstrument::ParameterData::EngineId>
+   determineComponentEngineId(
       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
       const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
 };
