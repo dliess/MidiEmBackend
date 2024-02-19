@@ -7,12 +7,12 @@
 #include "CallbackSignal.h"
 #include "DoubleBuffer.h"
 #include "Identifiable.h"
-#include "InstrumentsData.h"
-#include "InstrumentsPersister.h"
-#include "KitInstrument.h"
-#include "MelodicInstrument.h"
-#include "Meta.h"
-#include "Settings_old.h"
+#include "Loader/InstrumentsPersister.h"
+#include "Loader/InstrumentsData.h"
+#include "Loader/KitInstrument.h"
+#include "Loader/MelodicInstrument.h"
+// #include "Meta.h"
+// #include "Settings_old.h"
 #include "function_ref.h"
 #include "farbot/AsyncCaller.hpp"
 #include "function.h"
@@ -29,18 +29,21 @@ struct Instruments   //: public utils::Settings<Instruments>
 
    void reEmitSignals();
 
+   // -----------------
+   // NON-rt methods:
+   // -----------------
    void createKitInstrument(std::string name);
-   void insertKitInstrument(KitInstrument& kitInstrument);
+   void insertKitInstrument(loader::KitInstrument& kitInstrument);
    [[nodiscard]] bool hasSameInstrument(
-       const KitInstrument& kitInstrument) const;
+       const loader::KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
    void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             const std::string& name);
 
    void createMelodicInstrument(std::string name);
    [[nodiscard]] bool hasSameInstrument(
-       const MelodicInstrument& melodicInstrument) const;
-   void insertMelodicInstrument(MelodicInstrument& melodicInstrument);
+       const loader::MelodicInstrument& melodicInstrument) const;
+   void insertMelodicInstrument(loader::MelodicInstrument& melodicInstrument);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 const std::string& name);
@@ -96,33 +99,38 @@ struct Instruments   //: public utils::Settings<Instruments>
    std::string serializeKitInstruments() const;
    std::string serializeMelodicInstruments() const;
 
-   [[nodiscard]] const Instrument* getInstrumentByUuid(
+   [[nodiscard]] const loader::Instrument* getInstrumentByUuid(
        util::Identifiable::UUIDView);
 
+   /*
    void withInstrumentRt(util::Identifiable::UUIDView uuid,
-                         util::function_ref<void(const Instrument&)> cb);
+                         util::function_ref<void(const rt::Instrument&)> cb);
    void withKitInstrumentRt(util::Identifiable::UUIDView uuid,
-                            util::function_ref<void(const KitInstrument&)> cb);
+                            util::function_ref<void(const rt::KitInstrument&)> cb);
    void withMelodicInstrumentRt(
        util::Identifiable::UUIDView uuid,
-       util::function_ref<void(const MelodicInstrument&)> cb);
-
+       util::function_ref<void(const rt::MelodicInstrument&)> cb);
+*/
    void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
    void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 
+   /*
    [[nodiscard]] bool hasKitInstrument(util::Identifiable::UUIDView uuid) const;
    [[nodiscard]] bool hasMelodicInstrument(
        util::Identifiable::UUIDView uuid) const;
+   */
 
+   // TODO: maybe move these to rt
    void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
                            int componentIdx, float amp);
    void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);
    void setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
                                int componentIdx, float amp);
 
+   // rt? or loader ?
    void updateParameterUI();
 
-   CB_SIGNAL(DataChanged, const Data&, bool);
+   CB_SIGNAL(DataChanged, const loader::Data&, bool);
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged,
                                util::Identifiable::UUIDView, int, int, int,
                                musicDevice::sound::ParameterAttr, float);
@@ -154,13 +162,13 @@ struct Instruments   //: public utils::Settings<Instruments>
    void invokeQueueActions();
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
-   util::DoubleBuffer<Data> m_doubleBufferedData;
-   Data m_rtData;
-   Data m_loaderData;
-   Persister m_persister;
+   // TODO rt::Data m_rtData;
+   loader::Data m_loaderData;
+   loader::Persister m_persister;
    bool m_parameterCacheDirty {false};
-   farbot::AsyncCaller<farbot::fifo_options::concurrency::single,
-   util::functionTriv<120, void()>> m_asyncCaller;
+   using AsyncCaller = farbot::AsyncCaller<farbot::fifo_options::concurrency::single,
+      util::functionTriv<120, void()>>; 
+   AsyncCaller m_asyncCaller;
 };
 
 }   // namespace base::instruments
