@@ -2,6 +2,8 @@
 
 set(SOURCES
    "UT_MelodicInstrument.cpp"
+   "UT_MelodicSerialization.cpp"
+   "UT_KitSerialization.cpp"
 )
 
 set(TARGET_NAME InstrumentsLoaderTest)

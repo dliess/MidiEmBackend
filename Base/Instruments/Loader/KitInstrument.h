@@ -32,9 +32,6 @@ public:
    [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
 
-   std::string name() const noexcept;
-   void setName(const std::string& name) noexcept;
-
    friend class KitInstrumentModifier;
    friend class KitInstrumentsModifier;
    friend auto meta::registerMembers<KitInstrument>();
@@ -50,7 +47,7 @@ public:
    static constexpr int MAX_VOICES = 16;
 
 private:
-   std::string m_name;
+   // std::string m_name;
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
    Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;

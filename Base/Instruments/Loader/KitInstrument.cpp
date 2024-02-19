@@ -20,7 +20,7 @@ Ret<const KitComponent*> KitInstrument::getConstComponent(int voiceIdx, int comp
 }
 
 KitInstrument::KitInstrument(std::string name) noexcept :
-    m_name(std::move(name)), m_voices(MAX_VOICES)
+    Instrument(std::move(name)), m_voices(MAX_VOICES)
 {
 }
 

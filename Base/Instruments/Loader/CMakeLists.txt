@@ -5,12 +5,12 @@ endif()
 set(SOURCES
    "KitInstrumentsModifier.cpp"
    "KitInstrumentModifier.cpp"
-   "MelodicInstrumentsModifier.cpp"
-   "MelodicInstrumentModifier.cpp"
-   "InstrumentsPersister.cpp"
    "KitInstrument.cpp"
    "KitInstrumentComponent.cpp"
+   "MelodicInstrumentsModifier.cpp"
+   "MelodicInstrumentModifier.cpp"
    "MelodicInstrument.cpp"
+   "InstrumentsPersister.cpp"
 )
 
 set(HEADERS

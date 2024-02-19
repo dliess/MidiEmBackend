@@ -28,10 +28,6 @@ public:
    [[nodiscard]] const musicDevice::description::sound::Parameter*
    parameterDescription(int componentIdx, int parameterIdx) const;
 
-   std::string name() const noexcept;
-   void setName(const std::string& name) noexcept;
-
-
    friend bool isSameInstrument(const MelodicInstrument& lhs,
                                 const MelodicInstrument& rhs);
    friend class MelodicInstrumentsModifier;
@@ -58,6 +54,7 @@ public:
             engineId(std::move(engineId)), 
             pEngineDescr(pEngineDescr), 
             deviceParameters(numParameters) {}
+      ParameterData() = default;
       EngineId engineId;
       const Engine* pEngineDescr{nullptr}; // TODO: maybe music device type would be enough
       std::vector<musicDevice::sound::ParameterData> deviceParameters;
@@ -66,7 +63,7 @@ public:
    };      
 
 private:
-   std::string m_name;
+   // std::string m_name;
    std::vector<Voice> m_voices;
    std::array<std::optional<ParameterData>, NUM_COMPONENTS> m_parameters;
 

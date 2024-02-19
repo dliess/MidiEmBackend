@@ -115,24 +115,13 @@ Void KitInstrumentModifier::setVoiceNameInKitInstrument(int voiceIdx,
 Void KitInstrumentModifier::setKitComponentAmp(int voiceIdx,
                         int componentIdx, float amp)
 {
-   m_rKitInstrument.setComponentAmp(voiceIdx, componentIdx, amp);
-   return Void{}; // TODO
+   return m_rKitInstrument.setComponentAmp(voiceIdx, componentIdx, amp);
 }
 
 Void KitInstrumentModifier::setKitVoiceAmp(int voiceIdx, float amp)
 {
-   m_rKitInstrument.setVoiceAmp(voiceIdx, amp);
-   return Void{}; // TODO
+   return m_rKitInstrument.setVoiceAmp(voiceIdx, amp);
 }
-
-// void KitInstrumentModifier::incKitInstrumentRefCount()
-// {
-//    instrumentIt->incRefCount();
-// }
-// void KitInstrumentModifier::decKitInstrumentRefCount()
-// {
-//    instrumentIt->decRefCount();
-// }
 
 Void KitInstrumentModifier::addVoice(int padIdx, KitVoice voice) noexcept
 {

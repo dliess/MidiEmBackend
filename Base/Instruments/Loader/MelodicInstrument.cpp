@@ -7,7 +7,7 @@
 using namespace base::instruments::loader;
 
 MelodicInstrument::MelodicInstrument(std::string name) noexcept :
-    m_name(std::move(name))
+    Instrument(std::move(name))
 {
 }
 
@@ -33,11 +33,3 @@ MelodicInstrument::parameterDescription(int componentIdx,
    }
    return nullptr;
 }
-
-std::string MelodicInstrument::name() const noexcept { return m_name; }
-
-void MelodicInstrument::setName(const std::string& name) noexcept
-{
-   m_name = name;
-}
-

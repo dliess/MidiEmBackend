@@ -32,8 +32,6 @@ struct KitInstrumentModifier
        const std::string& name) noexcept;
    Void setKitComponentAmp(int voiceIdx, int componentIdx, float amp);
    Void setKitVoiceAmp(int voiceIdx, float amp);
-   //void incKitInstrumentRefCount();
-   //void decKitInstrumentRefCount();
 
    Void addVoice(int padIdx, KitVoice voice) noexcept;
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
