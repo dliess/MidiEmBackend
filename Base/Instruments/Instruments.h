@@ -27,11 +27,10 @@ struct Instruments   //: public utils::Settings<Instruments>
    explicit Instruments(
        musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
 
-   void reEmitSignals();
-
    // -----------------
    // NON-rt methods:
    // -----------------
+   void reEmitSignals();
    void createKitInstrument(std::string name);
    void insertKitInstrument(loader::KitInstrument& kitInstrument);
    [[nodiscard]] bool hasSameInstrument(
@@ -63,9 +62,6 @@ struct Instruments   //: public utils::Settings<Instruments>
    void setNoteOffsetInMelodicInstrumentComponent(
        const util::Identifiable::UUID& instrumentUuid,
        int componentIdx, int noteOffset);
-   void setVoiceNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const std::string& name);
 
    void createNewVoiceInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,
@@ -99,9 +95,6 @@ struct Instruments   //: public utils::Settings<Instruments>
    std::string serializeKitInstruments() const;
    std::string serializeMelodicInstruments() const;
 
-   [[nodiscard]] const loader::Instrument* getInstrumentByUuid(
-       util::Identifiable::UUIDView);
-
    /*
    void withInstrumentRt(util::Identifiable::UUIDView uuid,
                          util::function_ref<void(const rt::Instrument&)> cb);
@@ -114,11 +107,11 @@ struct Instruments   //: public utils::Settings<Instruments>
    void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
    void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 
-   /*
+   
    [[nodiscard]] bool hasKitInstrument(util::Identifiable::UUIDView uuid) const;
    [[nodiscard]] bool hasMelodicInstrument(
        util::Identifiable::UUIDView uuid) const;
-   */
+   
 
    // TODO: maybe move these to rt
    void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
@@ -142,7 +135,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceAmpChanged, util::Identifiable::UUIDView, int, float);
    CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
+   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, float);
 
    // loop it back here to Loader
    void kitParamChanged(const util::Identifiable::UUID& uuid, int voiceIdx,

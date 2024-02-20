@@ -4,6 +4,7 @@
 
 using namespace base::instruments::loader;
 
+
 Ret<KitInstruments::iterator> 
 KitInstrumentsModifier::getInstrument(util::Identifiable::UUIDView instrumentUuid) noexcept
 {
@@ -22,6 +23,11 @@ KitInstrumentsModifier::getInstrument(util::Identifiable::UUIDView instrumentUui
 KitInstrumentsModifier::KitInstrumentsModifier(KitInstruments& rKitInstruments) noexcept :
     m_rKitInstruments(rKitInstruments)
 {
+}
+
+void KitInstrumentsModifier::createKitInstrument(std::string name) noexcept
+{
+   m_rKitInstruments.push_back(KitInstrument(std::move(name)));
 }
 
 void KitInstrumentsModifier::insertKitInstrument(
@@ -166,7 +172,7 @@ void KitInstrumentsModifier::fillReferences(musicDevice::MusicDevice* pMusicDevi
    }
 }
 
-void KitInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* pMusicDevice)
+void KitInstrumentsModifier::removeReferences(musicDevice::MusicDevice* pMusicDevice)
 {
    auto it = m_rKitInstruments.begin();
    while (it != m_rKitInstruments.end())
@@ -180,4 +186,18 @@ void KitInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* pMus
          ++it;
       }
    }
+}
+
+Void  KitInstrumentsModifier::incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   return getInstrument(uuid).map([](auto instrumentIt) -> void {
+      instrumentIt->incRefCount();
+   });
+}
+
+Void KitInstrumentsModifier::decKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   return getInstrument(uuid).map([](auto instrumentIt) -> void {
+      instrumentIt->decRefCount();
+   });
 }

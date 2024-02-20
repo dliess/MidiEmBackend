@@ -14,6 +14,7 @@ struct MelodicInstrumentsModifier
    MelodicInstrumentsModifier(
        MelodicInstruments& rMelodicInstruments) noexcept;
 
+   void createMelodicInstrument(std::string name) noexcept;
    void insertMelodicInstrument(MelodicInstrument melodicInstrument) noexcept;
    Void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
@@ -42,11 +43,9 @@ struct MelodicInstrumentsModifier
                                int componentIdx, float amp);
 
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
-   void removeKitInstruments(musicDevice::MusicDevice* pMusicDevice);
-   /*
+   void removeReferences(musicDevice::MusicDevice* pMusicDevice);
    Void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
    Void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid);
-*/
 private:
    MelodicInstruments& m_rMelodicInstruments;
    Ret<MelodicInstruments::iterator> getInstrument(util::Identifiable::UUIDView instrumentUuid) noexcept;

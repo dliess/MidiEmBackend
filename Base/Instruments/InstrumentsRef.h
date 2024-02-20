@@ -32,10 +32,6 @@ public:
                static_cast<Instruments*>(obj)->withMelodicInstrumentRt(uuid,
                                                                        cb);
             },
-            [](void* obj,
-               util::Identifiable::UUIDView uuid) -> const Instrument* {
-               return static_cast<Instruments*>(obj)->getInstrumentByUuid(uuid);
-            },
             [](void* obj, const util::Identifiable::UUID& uuid){
                return static_cast<Instruments*>(obj)->incKitInstrumentRefCount(uuid);
             },
@@ -67,11 +63,6 @@ public:
    {
       m_vtable.fn_withMelodicInstrumentRt(m_pTypeErasedObj, uuid, cb);
    }
-   [[nodiscard]] const Instrument* getInstrumentByUuid(
-       util::Identifiable::UUIDView uuid)
-   {
-      return m_vtable.fn_getInstrumentByUuid(m_pTypeErasedObj, uuid);
-   }
    void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
    {
       return m_vtable.fn_incKitInstrumentRefCount(m_pTypeErasedObj, uuid);
@@ -102,8 +93,6 @@ private:
       void (*fn_withMelodicInstrumentRt)(
           void* obj, util::Identifiable::UUIDView,
           util::function_ref<void(const MelodicInstrument&)>) = nullptr;
-      const Instrument* (*fn_getInstrumentByUuid)(
-          void* obj, util::Identifiable::UUIDView uuid) = nullptr;
       void (*fn_incKitInstrumentRefCount)(
           void* obj, const util::Identifiable::UUID& uuid) = nullptr;
       void (*fn_decKitInstrumentRefCount)(

@@ -28,6 +28,11 @@ MelodicInstrumentsModifier::MelodicInstrumentsModifier(MelodicInstruments& rMelo
 {
 }
 
+void MelodicInstrumentsModifier::createMelodicInstrument(std::string name) noexcept
+{
+   m_rMelodicInstruments.push_back(MelodicInstrument(std::move(name)));
+}
+
 void MelodicInstrumentsModifier::insertMelodicInstrument(
     MelodicInstrument melodicInstrument) noexcept
 {
@@ -120,7 +125,7 @@ void MelodicInstrumentsModifier::fillReferences(
    }
 }
 
-void MelodicInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* pMusicDevice)
+void MelodicInstrumentsModifier::removeReferences(musicDevice::MusicDevice* pMusicDevice)
 {
    auto it = m_rMelodicInstruments.begin();
    while (it != m_rMelodicInstruments.end())
@@ -134,4 +139,18 @@ void MelodicInstrumentsModifier::removeKitInstruments(musicDevice::MusicDevice* 
          ++it;
       }
    }
+}
+
+Void MelodicInstrumentsModifier::incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   return getInstrument(uuid).map([](auto instrumentIt) -> void {
+      instrumentIt->incRefCount();
+   });
+}
+
+Void MelodicInstrumentsModifier::decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
+{
+   return getInstrument(uuid).map([](auto instrumentIt) -> void {
+      instrumentIt->decRefCount();
+   });
 }

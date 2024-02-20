@@ -21,7 +21,7 @@ set(HEADERS
 #   "InstrumentComponentParameterCacheCreator.inl"
 #   "INotePlayer.h"
     "Instruments.h"
-#   "Instruments.inl"
+    "Instruments.inl"
 #   "InstrumentsRef.h"
 #   "InstrumentsModifier.h"
 #   "InstrumentsMDRefSetter.h"

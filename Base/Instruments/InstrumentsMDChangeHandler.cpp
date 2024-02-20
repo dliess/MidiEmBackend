@@ -3,12 +3,14 @@
 // #include "InstrumentComponentParameterCacheCreator.h"
 #include "Instruments.h"
 #include "Loader/KitInstrumentModifier.h"
+#include "Loader/MelodicInstrumentModifier.h"
 #include "MusicDevice.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceId.h"
 
 using namespace base;
 using namespace base::instruments;
+using namespace base::instruments::loader;
 
 InstrumentsMDChangeHandler::InstrumentsMDChangeHandler(
     Instruments& rInstruments) noexcept :
@@ -59,7 +61,8 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
       voice.components.emplace_back(
           pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
                                      : nullptr,
-          nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
+          pMusicDevice->description()->soundSection->engineBase(voiceIdx)->parameters.size(),
+          pMusicDevice->deviceId(), voiceIdx, 0);
       loader::KitInstrumentModifier(kitInstrument).addVoice(voiceIdx, voice);
    }
    if (!m_rInstruments.hasSameInstrument(kitInstrument))
@@ -72,22 +75,17 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForInstrumentPerVoice(
     musicDevice::MusicDevice* pMusicDevice)
 {
    const auto& voiceDescr = pMusicDevice->description()->soundSection->voices;
-   for (int voiceIdx = 0; voiceIdx < voiceDescr.size(); ++voiceIdx)
+   for (int sdvoiceIdx = 0; sdvoiceIdx < voiceDescr.size(); ++sdvoiceIdx)
    {
       std::string name = pMusicDevice->description()->productName;
       if (voiceDescr.size() > 1)
       {
-         name = name + " - " + std::to_string(voiceIdx + 1);
+         name = name + " - " + std::to_string(sdvoiceIdx + 1);
       }
-      MelodicInstrument melodicInstrument(
-          name, std::make_shared<MelodicInstrument::RtData>());
+      MelodicInstrument melodicInstrument(name);
+      MelodicInstrumentModifier(melodicInstrument).createNewVoiceInMelodicInstrument(
+          pMusicDevice, sdvoiceIdx);
       melodicInstrument.markAsDefaultCreated();
-      MelodicVoice voice(voiceDescr[voiceIdx].name);
-      voice.components[0] = Component(
-          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
-                                     : nullptr,
-          nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
-      melodicInstrument.voices().push_back(std::move(voice));
 
       if (!m_rInstruments.hasSameInstrument(melodicInstrument))
       {
@@ -101,19 +99,13 @@ void InstrumentsMDChangeHandler::
         musicDevice::MusicDevice* pMusicDevice)
 {
    const auto& voiceDescr = pMusicDevice->description()->soundSection->voices;
-   MelodicInstrument melodicInstrument(
-       pMusicDevice->description()->productName,
-       std::make_shared<MelodicInstrument::RtData>());
-   melodicInstrument.markAsDefaultCreated();
-   for (int voiceIdx = 0; voiceIdx < voiceDescr.size(); ++voiceIdx)
+   MelodicInstrument melodicInstrument(pMusicDevice->description()->productName);
+   for (int sdvoiceIdx = 0; sdvoiceIdx < voiceDescr.size(); ++sdvoiceIdx)
    {
-      MelodicVoice voice(voiceDescr[voiceIdx].name);
-      voice.components[0] = Component(
-          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
-                                     : nullptr,
-          nullptr, pMusicDevice->deviceId(), voiceIdx, 0);
-      melodicInstrument.voices().push_back(std::move(voice));
+      MelodicInstrumentModifier(melodicInstrument).createNewVoiceInMelodicInstrument(
+          pMusicDevice, sdvoiceIdx);
    }
+   melodicInstrument.markAsDefaultCreated();
    if (!m_rInstruments.hasSameInstrument(melodicInstrument))
    {
       m_rInstruments.insertMelodicInstrument(melodicInstrument);

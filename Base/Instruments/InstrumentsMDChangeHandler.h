@@ -1,14 +1,15 @@
 #ifndef INSTRUMENTS_MD_CHANGE_HANDLER_LOADER_H
 #define INSTRUMENTS_MD_CHANGE_HANDLER_LOADER_H
 
-#include "InstrumentsData.h"
+#include "Loader/InstrumentsData.h"
 
 // clang-format off
 namespace base::musicDevice { class MusicDevice; }
+namespace base::instruments { class Instruments; }
 // clang-format on
+
 namespace base::instruments::loader
 {
-class Instruments;
 class InstrumentsMDChangeHandler
 {
 public:

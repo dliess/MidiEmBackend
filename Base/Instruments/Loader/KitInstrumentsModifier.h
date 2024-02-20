@@ -11,6 +11,7 @@ struct KitInstrumentsModifier
 {
    KitInstrumentsModifier(KitInstruments& rKitInstruments) noexcept;
 
+   void createKitInstrument(std::string name) noexcept;
    void insertKitInstrument(KitInstrument kitInstrument) noexcept;
    Void removeKitInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;
@@ -45,9 +46,9 @@ struct KitInstrumentsModifier
                            int componentIdx, float amp);
    Void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
-   // void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
-   // void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
-   void removeKitInstruments(musicDevice::MusicDevice* pMusicDevice);
+   Void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   Void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
+   void removeReferences(musicDevice::MusicDevice* pMusicDevice);
 
 private:
    KitInstruments& m_rKitInstruments;

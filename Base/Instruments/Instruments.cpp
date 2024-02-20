@@ -3,9 +3,8 @@
 #include <spdlog/spdlog.h>
 
 #include "FilePersister.h"
-#include "InstrumentComponentParameterCacheCreator.h"
-#include "InstrumentsMDRefSetter.h"
-#include "InstrumentsModifier.h"
+#include "Loader/KitInstrumentsModifier.h"
+#include "Loader/MelodicInstrumentsModifier.h"
 #include "MusicDeviceContainer.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
@@ -22,6 +21,7 @@ Instruments::Instruments(
         std::make_unique<util::FilePersister>("Instruments", "settings.json"),
         rFactoryDataHolder)
 {
+   /*
    onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
       if (doSaveToFile)
       {
@@ -54,35 +54,26 @@ Instruments::Instruments(
           "Error loading Instruments settings, its maybe the first run: {}",
           e.what());
    }
+*/
 }
 
 void Instruments::createKitInstrument(std::string name)
 {
-   KitInstrument kitInstrument(std::move(name));
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &kitInstrument](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .insertKitInstrument(kitInstrument);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).createKitInstrument(
+       std::move(name));
+   emitDataChanged(m_loaderData, true);
 }
 
-void Instruments::insertKitInstrument(KitInstrument& kitInstrument)
+void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
 {
-   spdlog::info("Inserting KitInstrument with uuid: {}", util::uuid2Str(kitInstrument.id()));
-   KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-       .initParameterCaches(kitInstrument, *this);
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &kitInstrument](auto& nonRtData) {
-          nonRtData.kitInstruments.push_back(kitInstrument);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .insertKitInstrument(kitInstrument);
+   emitDataChanged(m_loaderData, true);
 }
 
-bool Instruments::hasSameInstrument(const KitInstrument& kitInstrument) const
+bool Instruments::hasSameInstrument(const loader::KitInstrument& kitInstrument) const
 {
-   const auto& data = m_doubleBufferedData.nonRt();
-   for (const auto& e : data.kitInstruments)
+   for (const auto& e : m_loaderData.kitInstruments)
    {
       if (isSameInstrument(kitInstrument, e))
       {
@@ -95,41 +86,29 @@ bool Instruments::hasSameInstrument(const KitInstrument& kitInstrument) const
 void Instruments::removeKitInstrument(
     const util::Identifiable::UUID& instrumentId)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .removeKitInstrument(instrumentId);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).removeKitInstrument(instrumentId);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::renameKitInstrument(
     const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentId, &name](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .renameKitInstrument(instrumentId, name);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .renameKitInstrument(instrumentId, name);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::createMelodicInstrument(std::string name)
 {
-   MelodicInstrument melodicInstrument(
-       std::move(name), std::make_shared<MelodicInstrument::RtData>());
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &melodicInstrument](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .insertMelodicInstrument(melodicInstrument);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .createMelodicInstrument(std::move(name));
+   emitDataChanged(m_loaderData, true);
 }
 
 bool Instruments::hasSameInstrument(
-    const MelodicInstrument& melodicInstrument) const
+    const loader::MelodicInstrument& melodicInstrument) const
 {
-   const auto& data = m_doubleBufferedData.nonRt();
-   for (const auto& e : data.melodicInstruments)
+   for (const auto& e : m_loaderData.melodicInstruments)
    {
       if (isSameInstrument(melodicInstrument, e))
       {
@@ -139,124 +118,70 @@ bool Instruments::hasSameInstrument(
    return false;
 }
 
-void Instruments::insertMelodicInstrument(MelodicInstrument& melodicInstrument)
+void Instruments::insertMelodicInstrument(loader::MelodicInstrument& melodicInstrument)
 {
-   spdlog::info("Inserting MelodicInstrument with uuid: {}", util::uuid2Str(melodicInstrument.id()));
-   MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-       .initParameterCaches(melodicInstrument, *this);
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &melodicInstrument](auto& nonRtData) {
-          nonRtData.melodicInstruments.push_back(melodicInstrument);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .insertMelodicInstrument(melodicInstrument);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::removeMelodicInstrument(
     const util::Identifiable::UUID& instrumentId)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentId](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .removeMelodicInstrument(instrumentId);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .removeMelodicInstrument(instrumentId);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::renameMelodicInstrument(
     const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentId, name](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .renameMelodicInstrument(instrumentId, name);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .renameMelodicInstrument(instrumentId, name);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto instrIt = std::ranges::find_if(
-       m_doubleBufferedData.nonRt().melodicInstruments,
-       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
-   if (instrIt == m_doubleBufferedData.nonRt().melodicInstruments.end())
-   {
-      return;
-   }
-   auto paramCache =
-       MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-           .createParameterCacheForNextMatchingComponentInNextVoice(
-               *instrIt, sdUuid, sdVoiceIdx, *this);
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, &sdUuid,
-                                         sdVoiceIdx,
-                                         &paramCache](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .createNewVoiceInMelodicInstrument(instrumentUuid, sdUuid, sdVoiceIdx,
-                                             paramCache);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .createNewVoiceInMelodicInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::addComponentToMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto instrIt = std::ranges::find_if(
-       m_doubleBufferedData.nonRt().melodicInstruments,
-       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
-   if (instrIt == m_doubleBufferedData.nonRt().melodicInstruments.end())
-   {
-      return;
-   }
-   auto paramCache =
-       MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-           .createParameterCacheForNextMatchingComponentInVoice(
-               *instrIt, voiceIdx, sdUuid, sdVoiceIdx, *this);
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         &sdUuid, sdVoiceIdx,
-                                         &paramCache](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .addComponentToMelodicInstrumentVoice(instrumentUuid, voiceIdx,
-                                                sdUuid, sdVoiceIdx, paramCache);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .addComponentToMelodicInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::removeComponentFromMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx, componentIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .removeComponentFromMelodicInstrumentVoice(
-                  instrumentUuid, voiceIdx, componentIdx);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .removeComponentFromMelodicInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::removeVoiceFromMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .removeVoiceFromMelodicInstrument(instrumentUuid, voiceIdx);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .removeVoiceFromMelodicInstrument(instrumentUuid, voiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::setNoteOffsetInMelodicInstrumentComponent(
     const util::Identifiable::UUID& instrumentUuid,
     int componentIdx, int noteOffset)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, 
-                                         componentIdx,
-                                         noteOffset](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, 
-                                                     componentIdx, noteOffset);
-   });
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, componentIdx, noteOffset);
    emitMelodicComponentNoteOffsetChanged(instrumentUuid, componentIdx, noteOffset); // TODO: emit from here or connect to signal?
 }
 
@@ -264,86 +189,36 @@ void Instruments::setNoteOffsetInKitInstrumentComponent(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx, int noteOffset)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         componentIdx,
-                                         noteOffset](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx,
-                                                 componentIdx, noteOffset);
-   });
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx, componentIdx, noteOffset);
    emitKitComponentNoteOffsetChanged(instrumentUuid, voiceIdx, componentIdx,
-                                     noteOffset); // TODO: emit from here or connect to signal? 
+                                     noteOffset);  
 }
 void Instruments::setNoteOffsetInKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int noteOffset)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         noteOffset](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx, noteOffset);
-   });
-   emitKitVoiceNoteOffsetChanged(instrumentUuid, voiceIdx, noteOffset); // TODO: emit from here or connect to signal?
-}
-
-void Instruments::setVoiceNameInMelodicInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    const std::string& name)
-{
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx, &name](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .setVoiceNameInMelodicInstrument(instrumentUuid, voiceIdx, name);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx, noteOffset);
+   emitKitVoiceNoteOffsetChanged(instrumentUuid, voiceIdx, noteOffset);
 }
 
 void Instruments::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto instrIt = std::ranges::find_if(
-       m_doubleBufferedData.nonRt().kitInstruments,
-       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
-   if (instrIt == m_doubleBufferedData.nonRt().kitInstruments.end())
-   {
-      return;
-   }
-   auto paramCache = KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-                         .createParameterCacheForNewComponentInNextVoice(
-                             *instrIt, sdUuid, sdVoiceIdx, *this);
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, sdUuid,
-                                         sdVoiceIdx,
-                                         &paramCache](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .createNewVoiceInKitInstrument(instrumentUuid, sdUuid, sdVoiceIdx,
-                                         paramCache);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .createNewVoiceInKitInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::addComponentToKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   auto instrIt = std::ranges::find_if(
-       m_doubleBufferedData.nonRt().kitInstruments,
-       [&instrumentUuid](const auto& e) { return e.id() == instrumentUuid; });
-   if (instrIt == m_doubleBufferedData.nonRt().kitInstruments.end())
-   {
-      return;
-   }
-   auto paramCache = KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-                         .createParameterCacheForNewComponentInVoice(
-                             *instrIt, voiceIdx, sdUuid, sdVoiceIdx, *this);
-   m_doubleBufferedData.withNonRtLocked([this, &instrumentUuid, voiceIdx,
-                                         sdUuid, sdVoiceIdx,
-                                         &paramCache](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .addComponentToKitInstrumentVoice(instrumentUuid, voiceIdx, sdUuid,
-                                            sdVoiceIdx, paramCache);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .addComponentToKitInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::moveKitInstrumentComponent(
@@ -351,83 +226,63 @@ void Instruments::moveKitInstrumentComponent(
     int srcComponentIdx, const util::Identifiable::UUID& dstInstrumentUuid,
     int dstSlotIdx)
 {
-   m_doubleBufferedData.withNonRtLocked([&, this](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .moveKitInstrumentComponent(srcInstrumentUuid, srcVoiceIdx,
-                                      srcComponentIdx, dstInstrumentUuid,
-                                      dstSlotIdx);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .moveKitInstrumentComponent(srcInstrumentUuid, srcVoiceIdx, srcComponentIdx,
+                                  dstInstrumentUuid, dstSlotIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::removeComponentFromKitInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     int componentIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx, componentIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .removeComponentFromKitInstrumentVoice(instrumentUuid, voiceIdx,
-                                                     componentIdx);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .removeComponentFromKitInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::removeVoiceFromKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx)
 {
-   m_doubleBufferedData.withNonRtLocked(
-       [this, &instrumentUuid, voiceIdx](auto& nonRtData) {
-          InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-              .removeVoiceFromKitInstrument(instrumentUuid, voiceIdx);
-       });
-   emitDataChanged(m_doubleBufferedData.nonRt(), true);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .removeVoiceFromKitInstrument(instrumentUuid, voiceIdx);
+   emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const std::string& name)
 {
-   InstrumentsModifier(m_loaderData, m_rFactoryDataHolder)
-              .setVoiceNameInKitInstrument(instrumentUuid, voiceIdx, name);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).setVoiceNameInKitInstrument(
+       instrumentUuid, voiceIdx, name);
    static constexpr size_t MaxStringSize = 64;
    m_asyncCaller.callAsync([this, &instrumentUuid, voiceIdx, fsName = util::FixedSizeString<MaxStringSize>(name)]() {
-      // InstrumentsModifier(m_rtData, m_rFactoryDataHolder)
-      //            .setVoiceNameInKitInstrument(instrumentUuid, voiceIdx, fsName);
+      // TODO
    });
-
    emitDataChanged(m_loaderData, true);
 }
 
 void Instruments::incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .incKitInstrumentRefCount(uuid);
-   });
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .incKitInstrumentRefCount(uuid);
 }
 void Instruments::decKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .decKitInstrumentRefCount(uuid);
-   });
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .decKitInstrumentRefCount(uuid);
 }
 void Instruments::incMelodicInstrumentRefCount(
     const util::Identifiable::UUID& uuid)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .incMelodicInstrumentRefCount(uuid);
-   });
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .incMelodicInstrumentRefCount(uuid);
 }
 void Instruments::decMelodicInstrumentRefCount(
     const util::Identifiable::UUID& uuid)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .decMelodicInstrumentRefCount(uuid);
-   });
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .decMelodicInstrumentRefCount(uuid);
 }
 
 template <typename Container>
@@ -440,92 +295,44 @@ auto elementWithUuid(Container& container,
                        });
 }
 
-const Instrument* Instruments::getInstrumentByUuid(
-    util::Identifiable::UUIDView uuid)
-{
-   auto it1 =
-       elementWithUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
-   if (it1 != m_doubleBufferedData.nonRt().kitInstruments.end())
-   {
-      return &(*it1);
-   }
-   auto it2 =
-       elementWithUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
-   if (it2 != m_doubleBufferedData.nonRt().melodicInstruments.end())
-   {
-      return &(*it2);
-   }
-   return nullptr;
-}
-
 std::string Instruments::serializeKitInstruments() const
 {
-   return nlohmann::json(m_doubleBufferedData.nonRt().kitInstruments)
+   return nlohmann::json(m_loaderData.kitInstruments)
        .dump()
        .c_str();
 }
 
 std::string Instruments::serializeMelodicInstruments() const
 {
-   return nlohmann::json(m_doubleBufferedData.nonRt().melodicInstruments)
+   return nlohmann::json(m_loaderData.melodicInstruments)
        .dump()
        .c_str();
 }
 
 void Instruments::fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
 {
-   m_doubleBufferedData.withNonRtLocked([this, pMusicDevice](auto& nonRtData) {
-      InstrumentsMDRefSetter(nonRtData).fillReferencesKitInstruments(
-          pMusicDevice);
-      InstrumentsMDRefSetter(nonRtData).fillReferencesMelodicInstruments(
-          pMusicDevice);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), false);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).fillReferences(pMusicDevice);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).fillReferences(pMusicDevice);
+   emitDataChanged(m_loaderData, false);
 }
 
 void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
 {
-   m_doubleBufferedData.withNonRtLocked([this, pMusicDevice](auto& nonRtData) {
-      InstrumentsMDRefSetter(nonRtData).removeKitInstruments(pMusicDevice);
-      InstrumentsMDRefSetter(nonRtData).removeMelodicInstruments(pMusicDevice);
-   });
-   emitDataChanged(m_doubleBufferedData.nonRt(), false);
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).removeReferences(pMusicDevice);
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).removeReferences(pMusicDevice);
+   emitDataChanged(m_loaderData, false);
 }
 
 void Instruments::reEmitSignals()
 {
-   emitDataChanged(m_doubleBufferedData.nonRt(), false);
-}
-
-void Instruments::kitParamChanged(
-    const util::Identifiable::UUID& uuid, int voiceIdx, int componentIdx,
-    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
-    float value)
-{
-   auto& instr = util::getByUuid(m_doubleBufferedData.nonRt().kitInstruments, uuid);
-   auto parameterCache = instr.voices().at(voiceIdx).components.at(componentIdx).parameterCache();
-   parameterCache->setParameterBackup(parameterIdx, parameterAttr, value);
-   m_parameterCacheDirty = true;
-}
-
-void Instruments::melodicParamChanged(
-    const util::Identifiable::UUID& uuid, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float value)
-{
-   auto& instr = util::getByUuid(m_doubleBufferedData.nonRt().melodicInstruments, uuid);
-   auto component = instr.getFirstComponent(componentIdx);
-   if(component)
-   {
-      component->parameterCache()->setParameterBackup(parameterIdx, parameterAttr, value);
-   }
-   m_parameterCacheDirty = true;
+   emitDataChanged(m_loaderData, false);
 }
 
 void Instruments::saveIfDirty()
 {
    if(m_parameterCacheDirty)
    {
-      m_persister.save(m_doubleBufferedData.nonRt());
+      m_persister.save(m_loaderData);
       m_parameterCacheDirty = false;
    }
 }
@@ -533,30 +340,24 @@ void Instruments::saveIfDirty()
 void Instruments::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
                         int componentIdx, float amp)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid, voiceIdx, componentIdx, amp](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setKitComponentAmp(uuid, voiceIdx, componentIdx, amp);
-   });
-   emitKitComponentAmpChanged(uuid, voiceIdx, componentIdx, amp); // TODO emit from here or connect to signal?
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .setKitComponentAmp(uuid, voiceIdx, componentIdx, amp);
+   emitKitComponentAmpChanged(uuid, voiceIdx, componentIdx, amp);
 }
 
 void Instruments::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid, voiceIdx, amp](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setKitVoiceAmp(uuid, voiceIdx, amp);
-   });
-   emitKitVoiceAmpChanged(uuid, voiceIdx, amp); // TODO emit from here or connect to signal?
+   loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
+       .setKitVoiceAmp(uuid, voiceIdx, amp);
+   emitKitVoiceAmpChanged(uuid, voiceIdx, amp); 
 }
 
 void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
                                int componentIdx, float amp)
 {
-   m_doubleBufferedData.withNonRtLocked([this, &uuid, componentIdx, amp](auto& nonRtData) {
-      InstrumentsModifier(nonRtData, m_rFactoryDataHolder)
-          .setMelodicComponentAmp(uuid, componentIdx, amp);
-   });
-   // emitMelodicComponentAmpChanged(uuid, componentIdx, amp); // TODO emit from here or connect to signal?
+   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .setMelodicComponentAmp(uuid, componentIdx, amp);
+   emitMelodicComponentAmpChanged(uuid, componentIdx, amp);
 }
 
 void Instruments::invokeQueueActions()
@@ -568,32 +369,30 @@ bool Instruments::hasKitInstrument(
     util::Identifiable::UUIDView uuid) const
 {
    const auto it = std::ranges::find_if(
-       m_doubleBufferedData.nonRt().kitInstruments,
-       [&uuid](const KitInstrument& instr) { return uuid == instr.idView(); });
-   return it != m_doubleBufferedData.nonRt().kitInstruments.end();
+       m_loaderData.kitInstruments,
+       [&uuid](const loader::KitInstrument& instr) { return uuid == instr.idView(); });
+   return it != m_loaderData.kitInstruments.end();
 }
 
 bool Instruments::hasMelodicInstrument(
     util::Identifiable::UUIDView uuid) const
 {
    const auto it =
-       std::ranges::find_if(m_doubleBufferedData.nonRt().melodicInstruments,
-                            [&uuid](const MelodicInstrument& instr) {
+       std::ranges::find_if(m_loaderData.melodicInstruments,
+                            [&uuid](const loader::MelodicInstrument& instr) {
                                return uuid == instr.idView();
                             });
-   return it != m_doubleBufferedData.nonRt().melodicInstruments.end();
+   return it != m_loaderData.melodicInstruments.end();
 }
 
 void Instruments::updateParameterUI()
 {
-   m_doubleBufferedData.withRtLocked([](const auto& rtData) {
-      for(const auto& instr : rtData.kitInstruments) 
-      { 
-         instr.updateParameterUI();
-      }
-      for(const auto& instr : rtData.melodicInstruments) 
-      { 
-         instr.updateParameterUI();
-      }
-   });
+   for(const auto& instr : m_loaderData.kitInstruments) 
+   { 
+      //TODO instr.updateParameterUI();
+   }
+   for(const auto& instr : m_loaderData.melodicInstruments) 
+   { 
+      // TODO instr.updateParameterUI();
+   }
 }

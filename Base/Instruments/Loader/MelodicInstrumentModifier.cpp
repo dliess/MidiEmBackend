@@ -25,12 +25,52 @@ Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
 {
    return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Void {
-         return findComponentIdxToPlaceNewComponent(rFactoryDataHolder, sdUuid, sdVoiceIdx).map(
-            [&,this](auto componentIdx) -> void {
-               MelodicInstrument::Voice voice;
-               voice.components[componentIdx] =
+         return createNewVoiceInMelodicInstrument(md, sdUuid, sdVoiceIdx);
+   });
+}
+
+Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
+    base::musicDevice::MusicDevice* md, int sdVoiceIdx) noexcept
+{
+   return findComponentIdxToPlaceNewComponent(md, sdVoiceIdx).map(
+      [&,this](auto componentIdx) -> void {
+         MelodicInstrument::Voice voice;
+         voice.components[componentIdx] =
+             MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
+         m_rMelodicInstrument.m_voices.push_back(std::move(voice));
+         if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
+         {
+            m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
+               { md->deviceId().deviceName(), 
+                 md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
+               md->description()->soundSection->engineBase(sdVoiceIdx),
+               md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
+         }
+         m_rMelodicInstrument.unmarkAsDefaultCreated();
+      });
+}
+
+Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
+    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    int voiceIdx,
+    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
+{
+   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+      [&,this](auto md) -> Void {
+         return addComponentToMelodicInstrumentVoice(md, voiceIdx, sdUuid, sdVoiceIdx);
+   });
+}
+
+Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
+    base::musicDevice::MusicDevice* md,
+    int voiceIdx, int sdVoiceIdx) noexcept
+{
+   return findComponentIdxToPlaceNewComponent(md, sdVoiceIdx).and_then(
+      [&,this](auto componentIdx) -> Void {
+         return safe_at(m_rMelodicInstrument.m_voices, voiceIdx).map(
+            [&,this](auto voice) -> void {
+               voice->components[componentIdx] =
                    MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
-               m_rMelodicInstrument.m_voices.push_back(std::move(voice));
                if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
                {
                   m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
@@ -41,34 +81,7 @@ Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
                }
                m_rMelodicInstrument.unmarkAsDefaultCreated();
             });
-   });
-}
-
-Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-    int voiceIdx,
-    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
-{
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
-      [&,this](auto md) -> Void {
-         return findComponentIdxToPlaceNewComponent(rFactoryDataHolder, sdUuid, sdVoiceIdx).and_then(
-            [&,this](auto componentIdx) -> Void {
-               return safe_at(m_rMelodicInstrument.m_voices, voiceIdx).map(
-                  [&,this](auto voice) -> void {
-                     voice->components[componentIdx] =
-                         MelodicInstrument::Voice::Component{ md->deviceId(), sdVoiceIdx };
-                     if(!m_rMelodicInstrument.m_parameters[componentIdx].has_value())
-                     {
-                        m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
-                           { md->deviceId().deviceName(), 
-                             md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
-                           md->description()->soundSection->engineBase(sdVoiceIdx),
-                           md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
-                     }
-                     m_rMelodicInstrument.unmarkAsDefaultCreated();
-                  });
-            });
-   });
+      });
 }
 
 Void MelodicInstrumentModifier::removeComponentFromMelodicInstrumentVoice(
@@ -141,8 +154,7 @@ Void MelodicInstrumentModifier::setMelodicComponentAmp(
 
 Ret<size_t>
 MelodicInstrumentModifier::findComponentIdxToPlaceNewComponent(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-    const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const
+    base::musicDevice::MusicDevice* md, int sdVoiceIdx) const
 {
    auto searchFreePlaceOrEnginePtr = [&,this](auto engineId) -> Ret<size_t>
    {
@@ -156,20 +168,16 @@ MelodicInstrumentModifier::findComponentIdxToPlaceNewComponent(
       }
       return std::distance(m_rMelodicInstrument.m_parameters.begin(), it);
    };
-   return determineComponentEngineId(rFactoryDataHolder, sdUuid, sdVoiceIdx).
-      and_then(searchFreePlaceOrEnginePtr);
+   return determineComponentEngineId(md, sdVoiceIdx).and_then(searchFreePlaceOrEnginePtr);
 }
 
 Ret<MelodicInstrument::ParameterData::EngineId>
 MelodicInstrumentModifier::determineComponentEngineId(
-   base::musicDevice::factory::DataHolder& rFactoryDataHolder,
-   const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const
+   base::musicDevice::MusicDevice* md,
+   int sdVoiceIdx) const
 {
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).map(
-      [sdVoiceIdx](auto md) -> MelodicInstrument::ParameterData::EngineId {
-         return { md->deviceId().deviceName(), 
-                  md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) };
-      });
+   return { md->deviceId().deviceName(), 
+            md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) };
 }
 
 void MelodicInstrumentModifier::fillReferences(
