@@ -21,6 +21,7 @@ enum class Error
    soundHandlerNotAvailable,
    invalidParameterAttr,
    invalidParameterIndex,
+   noSoundDeviceCached
 };
 template<typename T>
 using Ret = tl::expected<T, Error>;

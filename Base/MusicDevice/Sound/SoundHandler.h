@@ -62,6 +62,7 @@ public:
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter& parameterDescription(
        int voiceIdx, int parameterIdx) const;
+   [[nodiscard]] const description::sound::Section& description() const noexcept;
    void incrementParameterValue(int voiceIdx, int parameterId,
                                 ParameterAttr parameterAttr, float increment,
                                 IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
@@ -130,7 +131,7 @@ public:
    CB_SIGNAL(LFOMultiplierExpChanged, int, int, uint32_t);
    CB_SIGNAL(ActualPresetChanged, int, const std::string&);
 
-   void* lastplayerId{nullptr};
+   const void* lastplayerId{nullptr};
 
 private:
    std::string m_deviceName;

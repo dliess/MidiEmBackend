@@ -309,6 +309,11 @@ float SoundHandler::fromNormalizedValue(int voiceIdx, int parameterId,
    R_END_SWITCH
 }
 
+const base::musicDevice::description::sound::Section& SoundHandler::description() const noexcept
+{
+   return m_rSoundSection;
+}
+
 const base::musicDevice::description::sound::Parameter&
 SoundHandler::parameterDescription(int voiceIdx, int parameterIdx) const
 {

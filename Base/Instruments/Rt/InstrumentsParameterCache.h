@@ -8,6 +8,7 @@
 #include "DirtyFlags.h"
 #include "ParameterData.h"
 #include "ValueModifier.h"
+#include "ErrorHandling.h"
 
 namespace base::instruments::rt
 {
@@ -19,28 +20,24 @@ struct ParameterCache
    using ValueModifier = base::musicDevice::sound::ParameterDataCustomType<
        base::musicDevice::sound::ValueModifier>;
    using DirtyFlags = base::musicDevice::sound::DirtyFlagsVec;
-   [[nodiscard]] const ParameterData& at(std::size_t pos) const;
-   void setParameter(std::size_t parameterIdx,
+   [[nodiscard]] Ret<const ParameterData*> at(std::size_t pos) const;
+   Void setParameter(std::size_t parameterIdx,
                      musicDevice::sound::ParameterAttr parameterAttr,
                      float value);
-   [[nodiscard]] float getParameter(
+   [[nodiscard]] Ret<float> getParameter(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   [[nodiscard]] float getModifiedParameterValue(
+   [[nodiscard]] Ret<float> getModifiedParameterValue(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
 
-   void clearModifier(std::size_t parameterIdx,
+   Void clearModifier(std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr);
-   void applyModifier(std::size_t parameterIdx,
+   Void applyModifier(std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr,
                       float destination, float intensity);
-   void setParameterBackup(std::size_t parameterIdx,
-                           musicDevice::sound::ParameterAttr parameterAttr,
-                           float value);
 
    void updateParameterUI();
-   void syncBackupToRt();
 
    void dontOverwriteOnNextNoteOn(
        std::size_t parameterIdx,
@@ -48,7 +45,7 @@ struct ParameterCache
    [[nodiscard]] bool shouldBeOverwritten(
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   void clearOverwriteList();
+   void clearOverwriteList() const;
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
                                musicDevice::sound::ParameterAttr, float);
@@ -57,8 +54,8 @@ struct ParameterCache
 private:
    std::vector<ParameterData> data_;
    std::vector<ValueModifier> valueModifier_;
-   DirtyFlags dirtyFlags_;
-   DirtyFlags dontOverwriteOnNextNoteOn_;
+   mutable DirtyFlags dirtyFlags_;
+   mutable DirtyFlags dontOverwriteOnNextNoteOn_;
 };
 
 static_assert(std::is_move_constructible_v<ParameterCache>,

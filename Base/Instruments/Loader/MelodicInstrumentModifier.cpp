@@ -25,7 +25,7 @@ Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
 {
    return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Void {
-         return createNewVoiceInMelodicInstrument(md, sdUuid, sdVoiceIdx);
+         return createNewVoiceInMelodicInstrument(md, sdVoiceIdx);
    });
 }
 
@@ -57,7 +57,7 @@ Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
 {
    return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Void {
-         return addComponentToMelodicInstrumentVoice(md, voiceIdx, sdUuid, sdVoiceIdx);
+         return addComponentToMelodicInstrumentVoice(md, voiceIdx, sdVoiceIdx);
    });
 }
 
@@ -176,8 +176,10 @@ MelodicInstrumentModifier::determineComponentEngineId(
    base::musicDevice::MusicDevice* md,
    int sdVoiceIdx) const
 {
-   return { md->deviceId().deviceName(), 
-            md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) };
+   return MelodicInstrument::ParameterData::EngineId { 
+      md->deviceId().deviceName(), 
+      md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) 
+   };
 }
 
 void MelodicInstrumentModifier::fillReferences(

@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <vector>
-
 #include "CallbackSignal.h"
 #include "DoubleBuffer.h"
 #include "Identifiable.h"
