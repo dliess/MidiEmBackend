@@ -3,6 +3,7 @@
 #include "MusicDeviceHolder.h"
 #include "SoundSection.h"
 #include "UtilVectorIndexInRange.h"
+#include "InstrumentParameterHandler.h"
 
 using namespace base::instruments::rt;
 
@@ -14,46 +15,50 @@ MelodicInstrument::MelodicInstrument(std::string name) noexcept :
 Void MelodicInstrument::noteOn(int note, float velocity, void* token) 
 {
    return m_noteAllocation.allocateVoice(note, m_voices.size()).map([&,this](int voiceIdx) {
-      std::ranges::for_each(m_voices[voiceIdx].components,
-                            [note, velocity](const auto& component) {
-                               if (component)
-                               {
-                                  // TODO
-                                  component->soundHandler->noteOn(component->sdVoiceIdx, note, velocity);
-                               }
-                            });
+      for(int i = 0; i < m_voices[voiceIdx].size(); ++i)
+      {
+         auto& sdVoiceRef = m_voices[voiceIdx][i];
+          if (sdVoiceRef)
+          {
+             if(sdVoiceRef->soundHandler->lastplayerId !=
+                static_cast<const void*>(this))
+             {
+                assert(m_engines[i]);
+                ParameterHandler(m_engines[i].value(), sdVoiceRef.value()).refreshParameters();
+                sdVoiceRef->soundHandler->lastplayerId =
+                    static_cast<const void*>(this);
+             }
+             sdVoiceRef->soundHandler->noteOn(sdVoiceRef->sdVoiceIdx, note, velocity);
+          }
+      }
       emitNoteOnPlayed(note, velocity, token);
    });
 }
 
 Void MelodicInstrument::noteOff(int note, float velocity, void* token) 
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations) ||
-       m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      return;
-   }
-   auto& voice = m_voices[m_pRtData->noteAllocations[note]];
-   std::ranges::for_each(voice.components,
-                         [note, velocity](const auto& component) {
-                            if (component)
-                            {
-                               component->noteOff(note, velocity);
-                            }
-                         });
-   m_pRtData->noteAllocations[note] = RtData::FREE;
-   rtData->emitNoteOffPlayed(note, velocity, token);
+   return m_noteAllocation.freeVoice(note).map([&,this](int voiceIdx) {
+      for(int i = 0; i < m_voices[voiceIdx].size(); ++i)
+      {
+         auto& sdVoiceRef = m_voices[voiceIdx][i];
+         if (sdVoiceRef)
+         {
+            sdVoiceRef->soundHandler->noteOff(sdVoiceRef->sdVoiceIdx, note, velocity);
+         }
+      }
+      emitNoteOffPlayed(note, velocity, token);
+   });
 }
 
 void MelodicInstrument::pitchBend(float value) const
 {
    for (auto& voice : m_voices)
    {
-      for (const auto& component : voice.components)
+      for (const auto& sdVoiceRef : voice)
       {
-         if (component)
+         if (sdVoiceRef)
          {
-            component->pitchBend(value);
+            sdVoiceRef->soundHandler->pitchBend(sdVoiceRef->sdVoiceIdx, value);
          }
       }
    }

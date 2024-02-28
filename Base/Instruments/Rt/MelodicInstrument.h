@@ -10,6 +10,8 @@
 #include "MelodicInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "NoteAlloction.h"
+#include "ComponentData.h"
+#include "SdVoiceRef.h"
 
 namespace base::instruments::rt
 {
@@ -78,26 +80,12 @@ public:
 
    // [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
    
-   static constexpr std::size_t NUM_COMPONENTS = 4;
-   struct Voice 
-   {
-      struct Component
-      {
-         musicDevice::MusicDeviceId soundDeviceId;
-         int sdVoiceIdx{0};
-         musicDevice::sound::SoundHandler* soundHandler{nullptr};
-      };
-      std::array<std::optional<Component>, NUM_COMPONENTS> components;
-   };
-
-   struct EngineData
-   {
-      ParameterCache parameterCache;
-   };
 
 private:
+   static constexpr std::size_t NUM_COMPONENTS = 4;
+   using Voice = std::array<std::optional<SdVoiceRef>, NUM_COMPONENTS>;
    std::vector<Voice> m_voices;
-   std::array<std::optional<EngineData>, NUM_COMPONENTS> m_engines;
+   std::array<std::optional<ComponentData>, NUM_COMPONENTS> m_engines;
    std::string m_name;
    NoteAllocation m_noteAllocation;
 };

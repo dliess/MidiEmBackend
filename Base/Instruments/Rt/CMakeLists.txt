@@ -9,7 +9,7 @@ set(SOURCES
    "KitInstrumentComponent.cpp"
    #   "MelodicInstrumentsModifier.cpp"
    #   "MelodicInstrumentModifier.cpp"
-   #   "MelodicInstrument.cpp"
+   "MelodicInstrument.cpp"
    #   "InstrumentsPersister.cpp"
    "InstrumentParameterHandler.cpp"
 )

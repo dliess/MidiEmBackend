@@ -42,5 +42,20 @@ Ret<int> NoteAllocation::allocateVoice(int note, std::size_t numVoices) noexcept
    });
 }
 
+inline
+Ret<int> NoteAllocation::freeVoice(int note) noexcept
+{
+   return safe_at(m_noteAllocations, note).map([this](int* noteVoice) {
+      if (*noteVoice == FREE)
+      {
+         return tl::unexpected(Error::voiceIsAlreadyFree);
+      }
+      *noteVoice = FREE;
+      return *noteVoice;
+   });
+}
+
+}   // namespace base::instruments::rt
+
 } // namespace base::instruments::rt
 #endif
