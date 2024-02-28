@@ -215,7 +215,7 @@ Ret<float> MelodicInstrument::fromNormalizedValue(
          auto& sdVoiceRef = voice[componentIdx];
          if(!sdVoiceRef.has_value()) continue;
          return sdVoiceRef.value().soundHandler->
-            fromNormalizedValue(sdVoiceRef.value().sdVoiceIdx, parameterId, parameterAttr, percentageValue).value_or(0.0f);
+            fromNormalizedValue(sdVoiceRef.value().sdVoiceIdx, parameterId, parameterAttr, percentageValue);
       }//TODO
       return tl::unexpected(Error::elementEmpty);
    });
@@ -231,49 +231,52 @@ Ret<float> MelodicInstrument::fromNormalizedValue(
          return safe_at(*voice, componentIdx).and_then([&,this](auto sdVoiceRef) -> Ret<float> {
             if (*sdVoiceRef)
             { // TODO
-               return sdVoiceRef->value().soundHandler->fromNormalizedValue(sdVoiceRef->value().sdVoiceIdx, parameterId, parameterAttr, percentageValue).value_or(0.0f);
+               return sdVoiceRef->value().soundHandler->
+                  fromNormalizedValue(sdVoiceRef->value().sdVoiceIdx, parameterId, parameterAttr, percentageValue);
             }
             return tl::unexpected(Error::elementEmpty);
          });
       });
    });
 }
-/*
 
-void MelodicInstrument::clearModifier(
+Void MelodicInstrument::clearModifier(
     int componentIdx, std::size_t parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr) const
+    musicDevice::sound::ParameterAttr parameterAttr)
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
-   {
-      return component->clearModifier(parameterIdx, parameterAttr);
-   }
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      return engine->value().parameterCache.clearModifier(parameterIdx, parameterAttr);
+   });
 }
 
-void MelodicInstrument::applyModifier(
+Void MelodicInstrument::applyModifier(
     int componentIdx, std::size_t parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float destination,
-    float intensity) const
+    float intensity)
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
-   {
-      return component->applyModifier(parameterIdx, parameterAttr, destination,
-                                      intensity);
-   }
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      return engine->value().parameterCache.applyModifier(parameterIdx, parameterAttr, destination, intensity);
+   });
 }
 
-const base::musicDevice::description::sound::Parameter*
+Ret<const base::musicDevice::description::sound::Parameter*>
 MelodicInstrument::parameterDescription(int componentIdx,
                                         int parameterIdx) const
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
-   {
-      return component->parameterDescription(parameterIdx);
-   }
-   return nullptr;   // TODO: exception?
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Ret<const base::musicDevice::description::sound::Parameter*> {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      for (const auto& voice : m_voices)
+      {
+         const auto& sdVoiceRef = voice[componentIdx];
+         if (sdVoiceRef)
+         {
+            return &sdVoiceRef->soundHandler->parameterDescription(sdVoiceRef->sdVoiceIdx, parameterIdx);
+         }
+      }
+      return tl::unexpected(Error::elementEmpty);
+   });
 }
 
 std::string MelodicInstrument::name() const noexcept { return m_name; }
@@ -283,20 +286,14 @@ void MelodicInstrument::setName(const std::string& name) noexcept
    m_name = name;
 }
 
-void MelodicInstrument::updateParameterUI() const
+void MelodicInstrument::updateParameterUI() 
 {
-   if (m_voices.size())
+   for (auto& engine : m_engines)
    {
-      for(size_t componentIdx = 0; componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+      if (engine)
       {
-         const auto component = getFirstComponent(componentIdx);
-         if (component)
-         {
-            component->updateParameterUI();
-         }
+         engine->parameterCache.updateParameterUI();
       }
    }
 }
 
-
-*/

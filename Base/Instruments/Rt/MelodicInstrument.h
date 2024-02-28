@@ -62,7 +62,6 @@ public:
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
- /*     
    // unused yet
    Void clearModifier(int componentIdx, std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr);
@@ -77,11 +76,10 @@ public:
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   void updateParameterUI() const;
+   void updateParameterUI();
 
    // [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
    
-*/
 private:
    static constexpr std::size_t NUM_COMPONENTS = 4;
    using Voice = std::array<std::optional<SdVoiceRef>, NUM_COMPONENTS>;
