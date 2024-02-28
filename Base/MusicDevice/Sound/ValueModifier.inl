@@ -38,6 +38,12 @@ T calculateModifiedValue(T commanded, const ValueModifier& modifier)
 }
 
 inline
+float calculateModifiedValueFloat(const ValueAndModifier& valueAndModifier)
+{
+   return calculateModifiedValue(valueAndModifier.value, valueAndModifier.modifier);
+}
+
+inline
 void ValueModifier::clear()
 {
    offset_ = 0.0f;

@@ -11,95 +11,77 @@
 #include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
+#include "ErrorHandling.h"
 
-namespace base
-{
-namespace musicDevice
-{
-struct MusicDevice;
-struct Holder;
-}   // namespace musicDevice
 
-namespace instruments
+namespace base::instruments::rt
 {
 
-namespace rt {
 class KitInstrument : public Instrument
 {
 public:
    KitInstrument() = default;
    explicit KitInstrument(std::string name) noexcept;
-   void noteOn(int note, float velocity, void* token = nullptr) const override;
-   void noteOff(int note, float velocity, void* token = nullptr) const override;
+   void noteOn(int note, float velocity, void* token = nullptr);
+   void noteOff(int note, float velocity, void* token = nullptr);
    void noteOn(int voiceIdx, int note, float velocity,
-               void* token = nullptr) const;
+               void* token = nullptr);
    void noteOff(int voiceIdx, int note, float velocity,
-                void* token = nullptr) const;
-   void incrementParameterValue(int voiceIdx, int componentIdx,
-                                int parameterIdx,
-                                musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, musicDevice::sound::IncrementMode incrementMode) const;
-   void incrementParameterValueEventBound(int voiceIdx, int componentIdx,
-                                int parameterIdx,
-                                musicDevice::sound::ParameterAttr parameterAttr,
-                                float increment, musicDevice::sound::IncrementMode incrementMode) const;
+                void* token = nullptr);
 
-   [[nodiscard]] std::optional<float> getParameterValue(
+   Void incrementParameterValue(int voiceIdx, int componentIdx,
+                                int parameterIdx,
+                                musicDevice::sound::ParameterAttr parameterAttr,
+                                float increment, musicDevice::sound::IncrementMode incrementMode);
+   Void incrementParameterValueEventBound(int voiceIdx, int componentIdx,
+                                int parameterIdx,
+                                musicDevice::sound::ParameterAttr parameterAttr,
+                                float increment, musicDevice::sound::IncrementMode incrementMode);
+
+   [[nodiscard]] Ret<float> getParameterValue(
        int voiceIdx, int componentIdx, int parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
-   void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
+   Void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
-                          float value) const;
-   void setRelativeParameterValue(
+                          float value);
+   Void setRelativeParameterValue(
        int voiceIdx, int componentIdx, int parameterId,
-       musicDevice::sound::ParameterAttr parameterAttr, float relValue) const;
+       musicDevice::sound::ParameterAttr parameterAttr, float relValue);
 
-   [[nodiscard]] float fromNormalizedValue(
+   [[nodiscard]] Ret<float> fromNormalizedValue(
        int voiceIdx, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
 
-   void clearModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
-                      musicDevice::sound::ParameterAttr parameterAttr) const;
-   void applyModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
+   Void clearModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
+                      musicDevice::sound::ParameterAttr parameterAttr);
+   Void applyModifier(int voiceIdx, int componentIdx, std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr,
-                      float destination, float intensity) const;
+                      float destination, float intensity);
 
-
-   [[nodiscard]] const musicDevice::description::sound::Parameter*
+   [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
-
-   template <typename T> void addVoice(int padIdx, T&& voice);
-
+      
 
    std::string name() const noexcept;
    void setName(const std::string& name) noexcept;
 
-   std::vector<KitVoice>& voices() noexcept;
-   const std::vector<KitVoice>& voices() const noexcept;
+   void updateParameterUI();
 
-   void updateParameterUI() const;
+   Void setVoiceNoteOffset(int voiceIdx, int offset);
+   Void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
 
-   void setVoiceNoteOffset(int voiceIdx, int offset);
-   void setComponentNoteOffset(int voiceIdx, int componentIdx, int offset);
-
-   void setVoiceAmp(int voiceIdx, float amp);
-   void setComponentAmp(int voiceIdx, int componentIdx, float amp);
+   Void setVoiceAmp(int voiceIdx, float amp);
+   Void setComponentAmp(int voiceIdx, int componentIdx, float amp);
 
 private:
    std::string m_name;
    std::vector<KitVoice> m_voices;
-   std::optional<int> toVoiceIndex(int note) const;
-   inline void withComponent(
-       int voiceIdx, int componentIdx,
-       util::function_ref<void(const Component&)> cb) const;
+   Ret<int> toVoiceIndex(int note) const;
+   Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;
+   Ret<const KitComponent*> getComponent(int voiceIdx, int componentIdx) const noexcept;
 };
-} // namespace rt
 
+} // namespace base::instruments::rt
 
-}   // namespace instruments
-}   // namespace base
-
-#include "KitInstrument.inl"
-
-#endif   // KIT_INSTRUMENT_H
+#endif   // KIT_INSTRUMENT_RT_H

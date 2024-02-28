@@ -6,35 +6,27 @@
 
 using namespace base::instruments::rt;
 
-MelodicInstrument::MelodicInstrument(std::string name,
-                                     std::shared_ptr<RtData> rtData) noexcept :
-    m_name(std::move(name)), m_pRtData(std::move(rtData))
+MelodicInstrument::MelodicInstrument(std::string name) noexcept :
+    m_name(std::move(name))
 {
-   for (auto& e : m_pRtData->noteAllocations) { e = RtData::FREE; }
 }
 
-void MelodicInstrument::noteOn(int note, float velocity, void* token) const
+Void MelodicInstrument::noteOn(int note, float velocity, void* token) 
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-   std::ranges::for_each(m_voices[m_pRtData->currentVoiceIndex()].components,
-                         [note, velocity](const auto& component) {
-                            if (component)
-                            {
-                               component->noteOn(note, velocity);
-                            }
-                         });
-   rtData->emitNoteOnPlayed(note, velocity, token);
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).map([&,this](int voiceIdx) {
+      std::ranges::for_each(m_voices[voiceIdx].components,
+                            [note, velocity](const auto& component) {
+                               if (component)
+                               {
+                                  // TODO
+                                  component->soundHandler->noteOn(component->sdVoiceIdx, note, velocity);
+                               }
+                            });
+      emitNoteOnPlayed(note, velocity, token);
+   });
 }
 
-void MelodicInstrument::noteOff(int note, float velocity, void* token) const
+Void MelodicInstrument::noteOff(int note, float velocity, void* token) 
 {
    if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations) ||
        m_pRtData->noteAllocations[note] == RtData::FREE)
@@ -328,4 +320,19 @@ std::string MelodicInstrument::name() const noexcept { return m_name; }
 void MelodicInstrument::setName(const std::string& name) noexcept
 {
    m_name = name;
+}
+
+void MelodicInstrument::updateParameterUI() const
+{
+   if (m_voices.size())
+   {
+      for(size_t componentIdx = 0; componentIdx < MelodicVoice::NUM_MAX_COMPONENTS_PER_VOICE; ++componentIdx)
+      {
+         const auto component = getFirstComponent(componentIdx);
+         if (component)
+         {
+            component->updateParameterUI();
+         }
+      }
+   }
 }

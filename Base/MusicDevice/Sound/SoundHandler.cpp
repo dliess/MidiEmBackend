@@ -323,8 +323,8 @@ SoundHandler::parameterDescription(int voiceIdx, int parameterIdx) const
 ValueRangeEnd SoundHandler::getParameterRangeEnd(
     int voiceIdx, int parameterIdx, ParameterAttr parameterAttr) const
 {
-   return getParamRangeEnd(voiceIdx, parameterIdx, parameterAttr,
-                           m_rSoundSection);
+   return getParamRangeEnd(parameterAttr, m_rSoundSection.parameterDescription(
+                                              voiceIdx, parameterIdx));
 }
 
 void SoundHandler::incrementParameterValue(int voiceIdx, int parameterId,

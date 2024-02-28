@@ -48,15 +48,19 @@ inline Ret<float> ParameterCache::getModifiedParameterValue(
     std::size_t parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   return getParameter(parameterIdx, parameterAttr).and_then(
-      [&,this](float commanded) {
-         return safe_at(valueModifier_, parameterIdx).map(
-            [&](auto modifier) -> float {
-               return base::musicDevice::sound::calculateModifiedValue<float>(commanded, *modifier);
-            }
-         );
-      }
-   );
+   auto getValueAndModifier = [this](std::size_t parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) -> Ret<musicDevice::sound::ValueAndModifier> {
+      return getParameter(parameterIdx, parameterAttr).and_then(
+         [&,this](float value) {
+            return safe_at(valueModifier_, parameterIdx).map(
+               [&](auto modifier) -> musicDevice::sound::ValueAndModifier {
+                   return { value, musicDevice::sound::getParameterDataConstRef(*modifier, parameterAttr) };
+               }
+            );
+         }
+      );
+   };
+   return getValueAndModifier(parameterIdx, parameterAttr).
+             map(musicDevice::sound::calculateModifiedValueFloat);
 }
 
 inline Void ParameterCache::clearModifier(

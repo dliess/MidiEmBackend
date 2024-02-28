@@ -1,6 +1,8 @@
 #include "KitInstrument.h"
 
+#include "ErrorHandling.h"
 #include "MusicDeviceHolder.h"
+#include "InstrumentParameterHandler.h"
 
 using namespace base::instruments::rt;
 
@@ -9,7 +11,7 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-void KitInstrument::noteOn(int note, float velocity, void* token) const
+void KitInstrument::noteOn(int note, float velocity, void* token) 
 {
    auto vi = toVoiceIndex(note);
    if (vi)
@@ -18,7 +20,7 @@ void KitInstrument::noteOn(int note, float velocity, void* token) const
    }
 }
 
-void KitInstrument::noteOff(int note, float velocity, void* token) const
+void KitInstrument::noteOff(int note, float velocity, void* token)
 {
    auto vi = toVoiceIndex(note);
    if (vi)
@@ -28,167 +30,202 @@ void KitInstrument::noteOff(int note, float velocity, void* token) const
 }
 
 void KitInstrument::noteOn(int voiceIdx, int note, float velocity,
-                           void* token) const
+                           void* token)
 {
    for (auto& component : m_voices[voiceIdx].components)
    {
-      component.noteOn(note + m_voices[voiceIdx].noteOffset, velocity);
+      ParameterHandler ph(component.data, component.sdVoiceRef);
+      component.noteOn(note + m_voices[voiceIdx].noteOffset, velocity, [&ph] {
+         ph.refreshParameters();
+      });
    }
-   rtData->emitNoteOnPlayed(voiceIdx + 64, velocity, token);
+   emitNoteOnPlayed(voiceIdx + 64, velocity, token);
 }
 
 void KitInstrument::noteOff(int voiceIdx, int note, float velocity,
-                            void* token) const
+                            void* token) 
 {
    for (auto& component : m_voices[voiceIdx].components)
    {
       component.noteOff(note, velocity);
    }
-   rtData->emitNoteOffPlayed(voiceIdx + 64, velocity, token);
+   emitNoteOffPlayed(voiceIdx + 64, velocity, token);
 }
 
-void KitInstrument::incrementParameterValue(
+Void KitInstrument::incrementParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    musicDevice::sound::IncrementMode incrementMode) const
+    musicDevice::sound::IncrementMode incrementMode) 
 {
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.incrementParameterValue(parameterIdx, parameterAttr, increment,
-                                        incrementMode);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return ParameterHandler(component->data, component->sdVoiceRef).
+         incrementParameterValue(parameterIdx, parameterAttr, increment, incrementMode);
    });
 }
 
-void KitInstrument::incrementParameterValueEventBound(
+Void KitInstrument::incrementParameterValueEventBound(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    musicDevice::sound::IncrementMode incrementMode) const
+    musicDevice::sound::IncrementMode incrementMode) 
 {
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.incrementParameterValueDontCache(parameterIdx, parameterAttr,
-                                                 increment, incrementMode);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return ParameterHandler(component->data, component->sdVoiceRef).
+         incrementParameterValueDontCache(parameterIdx, parameterAttr, increment, incrementMode);
    });
 }
 
-std::optional<float> KitInstrument::getParameterValue(
+Ret<float> KitInstrument::getParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   std::optional<float> ret;
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      ret = component.getParameterValue(parameterIdx, parameterAttr);
-   });
-   return ret;
-}
-
-void KitInstrument::setParameterValue(
-    int voiceIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float value) const
-{
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.setParameterValue(parameterIdx, parameterAttr, value);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->getParameterValue(parameterIdx, parameterAttr);
    });
 }
 
-void KitInstrument::setRelativeParameterValue(
+Void KitInstrument::setParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
+    musicDevice::sound::ParameterAttr parameterAttr, float value) 
 {
-   const auto actVal =
-       getParameterValue(voiceIdx, componentIdx, parameterIdx, parameterAttr);
-   if (actVal)
-   {
-      withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-         component.setParameterValueDontCache(parameterIdx, parameterAttr,
-                                              actVal.value() + relValue);
-      });
-   }
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return ParameterHandler(component->data, component->sdVoiceRef).
+         setParameterValue(parameterIdx, parameterAttr, value);
+   });
 }
 
-float KitInstrument::fromNormalizedValue(
+Void KitInstrument::setRelativeParameterValue(
+    int voiceIdx, int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float relValue) 
+{
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->getParameterValue(parameterIdx, parameterAttr).and_then([&](float actVal) {
+          return ParameterHandler(component->data, component->sdVoiceRef).
+             setParameterValueDontCache(parameterIdx, parameterAttr, actVal + relValue);
+          });
+   });
+}
+
+Ret<float> KitInstrument::fromNormalizedValue(
     int voiceIdx, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   float ret = 0.0;
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      ret = component.fromNormalizedValue(parameterId, parameterAttr,
-                                          percentageValue);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->fromNormalizedValue(parameterId, parameterAttr,
+                                        percentageValue);
    });
-   return ret;
 }
 
-void KitInstrument::clearModifier(
+Void KitInstrument::clearModifier(
     int voiceIdx, int componentIdx, std::size_t parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr) const
+    musicDevice::sound::ParameterAttr parameterAttr) 
 {
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.clearModifier(componentIdx, parameterAttr);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->clearModifier(parameterIdx, parameterAttr);
    });
 }
 
-void KitInstrument::applyModifier(
+Void KitInstrument::applyModifier(
     int voiceIdx, int componentIdx, std::size_t parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr, float destination,
-    float intensity) const
+    float intensity)
 {
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      component.applyModifier(parameterIdx, parameterAttr, destination,
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->applyModifier(parameterIdx, parameterAttr, destination,
                               intensity);
    });
 }
 
-const base::musicDevice::description::sound::Parameter*
+Ret<const base::musicDevice::description::sound::Parameter*>
 KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
                                     int parameterIdx) const
 {
-   const base::musicDevice::description::sound::Parameter* ret{nullptr};
-   withComponent(voiceIdx, componentIdx, [&](const Component& component) {
-      ret = component.parameterDescription(parameterIdx);
+   return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
+      return component->parameterDescription(parameterIdx);
    });
-   return ret;
 }
 
-std::optional<int> KitInstrument::toVoiceIndex(int note) const
+std::string KitInstrument::name() const noexcept { return m_name; }
+
+void KitInstrument::setName(const std::string& name) noexcept
+{
+   m_name = name;
+}
+
+Ret<int> KitInstrument::toVoiceIndex(int note) const
 {
    const int noteAdjusted = note - 64;
    if (0 <= noteAdjusted && noteAdjusted < m_voices.size())
    {
       return noteAdjusted;
    }
-   return std::nullopt;
+   return tl::unexpected(Error::indexOutOfRange);
 }
 
-void KitInstrument::setVoiceNoteOffset(int voiceIdx, int offset)
+Void KitInstrument::setVoiceNoteOffset(int voiceIdx, int offset)
 {
-   if(offset != m_voices[voiceIdx].noteOffset)
-   {
-      m_voices[voiceIdx].noteOffset = offset;
-      emitVoiceNoteOffsetChanged(voiceIdx, offset);
-   }
+   return safe_at(m_voices, voiceIdx).map([&,this](auto voice) {
+      if(voice->noteOffset != offset)
+      {
+         voice->noteOffset = offset;
+      }
+   });
 }
-void KitInstrument::setComponentNoteOffset(int voiceIdx, int componentIdx, int offset) 
+
+Void KitInstrument::setComponentNoteOffset(int voiceIdx, int componentIdx, int offset) 
 {
-   if(offset != m_voices[voiceIdx].components[componentIdx].noteOffset())
+   return getComponent(voiceIdx, componentIdx).map([&,this](auto component) {
+      if(component->noteOffset() != offset)
+      {
+         component->setNoteOffset(offset);
+      }
+   });
+}
+
+Void KitInstrument::setVoiceAmp(int voiceIdx, float amp)
+{
+   return safe_at(m_voices, voiceIdx).map([&,this](auto voice) {
+      if(amp != voice->amp)
+      {
+         voice->amp = amp;
+      }
+   });
+}
+
+Void KitInstrument::setComponentAmp(int voiceIdx, int componentIdx, float amp)
+{
+   return getComponent(voiceIdx, componentIdx).map([&,this](auto component) {
+      if(amp != component->amp())
+      {
+         component->setAmp(amp, 0);
+      }
+   });
+}
+
+void KitInstrument::updateParameterUI() 
+{
+   for (auto& sound : m_voices)
    {
-      m_voices[voiceIdx].components[componentIdx].setNoteOffset(offset);
-      emitComponentNoteOffsetChanged(voiceIdx, componentIdx, offset);
+      for (auto& component : sound.components)
+      {
+         component.updateParameterUI();
+      }
    }
 }
 
-void KitInstrument::setVoiceAmp(int voiceIdx, float amp)
+Ret<KitComponent*> KitInstrument::getComponent(int voiceIdx, int componentIdx) noexcept
 {
-   if(amp != m_voices[voiceIdx].amp)
-   {
-      m_voices[voiceIdx].amp = amp;
-      emitVoiceAmpChanged(voiceIdx, amp);
-   }
+   return safe_at(m_voices, voiceIdx).and_then(
+       [&](KitVoice* voice) -> Ret<KitComponent*>{
+          return safe_at(voice->components, componentIdx);
+       });
 }
 
-void KitInstrument::setComponentAmp(int voiceIdx, int componentIdx, float amp)
+Ret<const KitComponent*> KitInstrument::getComponent(int voiceIdx, int componentIdx) const noexcept
 {
-   if(amp != m_voices[voiceIdx].components[componentIdx].amp())
-   {
-      m_voices[voiceIdx].components[componentIdx].setAmp(amp, 0);
-      //TODO: really emit from here? emitComponentAmpChanged(voiceIdx, componentIdx, amp);
-   }
+   return safe_at(m_voices, voiceIdx).and_then(
+       [&](const KitVoice* voice) -> Ret<const KitComponent*>{
+          return safe_at(voice->components, componentIdx);
+       });
 }
+

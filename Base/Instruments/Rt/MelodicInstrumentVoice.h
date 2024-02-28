@@ -4,30 +4,26 @@
 #include <string>
 
 #include "Identifiable.h"
-#include "InstrumentComponent.h"
+#include "MusicDeviceId.h"
+#include "SoundHandler.h"
 #include <array>
 
 namespace base::instruments::rt
 {
 struct MelodicVoice   //: public util::Identifiable
 {
-   MelodicVoice() noexcept = default;
-   explicit MelodicVoice(std::string name) noexcept;
-   std::string name;
-   static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
-   struct Components : public std::array<std::optional<Component>, NUM_MAX_COMPONENTS_PER_VOICE>
+   struct Component
    {
-      [[nodiscard]] bool containsComponent(size_t componentIdx) const noexcept
-      {
-         return at(componentIdx).has_value();
-      }
+      musicDevice::MusicDeviceId soundDeviceId;
+      int sdVoiceIdx{0};
+      musicDevice::sound::SoundHandler* soundHandler{nullptr};
    };
+   static constexpr std::size_t NUM_MAX_COMPONENTS = 4;
+   using Components = std::array<std::optional<Component>, NUM_MAX_COMPONENTS>;
+
    Components components;
-   bool operator==(const MelodicVoice& rhs) const;
 };
 
 }   // namespace base::instruments::rt
-
-#include "MelodicInstrumentVoice.inl"
 
 #endif

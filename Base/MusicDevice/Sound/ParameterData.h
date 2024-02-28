@@ -267,17 +267,15 @@
       return std::nullopt;
    }
 
-   template <typename ParamDescrProvider>
-   ValueRangeEnd getParamRangeEnd(
-       int voiceIdx, int parameterIdx, ParameterAttr parameterAttr,
-       const ParamDescrProvider& paramDescrProvider)
+inline
+ValueRangeEnd getParamRangeEnd(
+       ParameterAttr parameterAttr,
+       const base::musicDevice::description::sound::Parameter& paramDescr)
    {
       switch (parameterAttr)
       {
          case (ParameterAttr::Commanded):
          {
-            const auto& paramDescr =
-               paramDescrProvider.parameterDescription(voiceIdx, parameterIdx);
             const auto vr = getValueRange(paramDescr);
             if(vr)
             {

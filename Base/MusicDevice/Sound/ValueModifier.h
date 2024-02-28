@@ -19,9 +19,17 @@ private:
 };
 
 
+struct ValueAndModifier
+{
+   float value;
+   ValueModifier modifier;
+};
+
 template<typename T>
 T calculateModifiedValue(T commanded, const ValueModifier& modifier);
 
+inline
+float calculateModifiedValueFloat(const ValueAndModifier& valueAndModifier);
 
 }   // namespace base::musicDevice::sound
 #include "ValueModifier.inl"
