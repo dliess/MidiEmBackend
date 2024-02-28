@@ -9,7 +9,7 @@
 #include "InstrumentsParameterCache.h"
 #include "MelodicInstrumentVoice.h"
 #include "MusicDeviceId.h"
-#include "NoteAlloction.h"
+#include "NoteAllocation.h"
 #include "ComponentData.h"
 #include "SdVoiceRef.h"
 
@@ -25,7 +25,7 @@ public:
    Void noteOff(int note, float velocity, void* token = nullptr);
 
    void pitchBend(float value) const;
-   void pitchBendMPE(int note, float value) const;
+   Void pitchBendMPE(int note, float value);
    Void incrementParameterValue(int componentIdx, int parameterId,
                                 musicDevice::sound::ParameterAttr parameterAttr,
                                 float increment, musicDevice::sound::IncrementMode incrementMode);
@@ -51,7 +51,7 @@ public:
        int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr, float relValue);
 
-   void setParameterValueMPE(int note, int componentIdx, int parameterId,
+   Void setParameterValueMPE(int note, int componentIdx, int parameterId,
                              musicDevice::sound::ParameterAttr parameterAttr,
                              float value);
    [[nodiscard]] Ret<float> fromNormalizedValue(
@@ -62,6 +62,7 @@ public:
        int note, int componentIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr,
        float percentageValue) const;
+ /*     
    // unused yet
    Void clearModifier(int componentIdx, std::size_t parameterIdx,
                       musicDevice::sound::ParameterAttr parameterAttr);
@@ -80,14 +81,14 @@ public:
 
    // [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
    
-
+*/
 private:
    static constexpr std::size_t NUM_COMPONENTS = 4;
    using Voice = std::array<std::optional<SdVoiceRef>, NUM_COMPONENTS>;
    std::vector<Voice> m_voices;
    std::array<std::optional<ComponentData>, NUM_COMPONENTS> m_engines;
    std::string m_name;
-   NoteAllocation m_noteAllocation;
+   mutable NoteAllocation m_noteAllocation;
 };
 
 }   // namespace base::instruments::rt

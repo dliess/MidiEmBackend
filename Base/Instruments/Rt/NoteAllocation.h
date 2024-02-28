@@ -17,6 +17,7 @@ public:
    [[nodiscard]] int currentVoiceIndex() const noexcept;
    Ret<int> allocateVoice(int note, std::size_t numVoices) noexcept;
    Ret<int> freeVoice(int note) noexcept;
+   Ret<int> getVoice(int note) noexcept;
 private:
    int m_currentVoiceIndex{-1};
    std::array<int, NUM_NOTES> m_noteAllocations;

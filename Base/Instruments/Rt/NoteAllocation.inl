@@ -1,6 +1,8 @@
 #ifndef NOTEALLOCATION_INL
 #define NOTEALLOCATION_INL
 
+#include "NoteAllocation.h"
+
 namespace base::instruments::rt
 {
 
@@ -31,30 +33,41 @@ Ret<int> NoteAllocation::allocateVoice(int note, std::size_t numVoices) noexcept
 {
    if(numVoices == 0)
    {
-      return tl::unexpected(Error::numVoicesIsZero);
+      return tl::unexpected(Error::invalidSize);
    }
    return safe_at(m_noteAllocations, note).map([numVoices, this](int* noteVoice) {
-      if (*noteVoice == RtData::FREE)
+      if (*noteVoice == FREE)
       {
          *noteVoice = incrementVoiceIndex(numVoices);
-         return *noteVoice;
       }
+      return *noteVoice;
    });
 }
 
 inline
 Ret<int> NoteAllocation::freeVoice(int note) noexcept
 {
-   return safe_at(m_noteAllocations, note).map([this](int* noteVoice) {
+   return safe_at(m_noteAllocations, note).and_then([](int* noteVoice) -> Ret<int> {
       if (*noteVoice == FREE)
       {
-         return tl::unexpected(Error::voiceIsAlreadyFree);
+         return tl::unexpected(Error::elementEmpty);
       }
+      int tmp = *noteVoice;
       *noteVoice = FREE;
-      return *noteVoice;
+      return tmp;
    });
 }
 
+inline
+Ret<int> NoteAllocation::getVoice(int note) noexcept
+{
+   return safe_at(m_noteAllocations, note).and_then([](int* noteVoice) -> Ret<int>{
+      if (*noteVoice == FREE)
+      {
+         return tl::unexpected(Error::elementEmpty);
+      }
+      return *noteVoice;
+   });
 }   // namespace base::instruments::rt
 
 } // namespace base::instruments::rt

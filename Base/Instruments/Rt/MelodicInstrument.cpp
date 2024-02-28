@@ -64,225 +64,181 @@ void MelodicInstrument::pitchBend(float value) const
    }
 }
 
-void MelodicInstrument::pitchBendMPE(int note, float value) const
+Void MelodicInstrument::pitchBendMPE(int note, float value)
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-   const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
-   for (const auto& component : voice.components)
-   {
-      if (component)
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).map([&,this](int voiceIdx) {
+      for (const auto& sdVoiceRef : m_voices[voiceIdx])
       {
-         component->pitchBend(value);
-      }
-   }
-}
-
-void MelodicInstrument::incrementParameterValue(
-    int componentIdx, int parameterId,
-    musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    musicDevice::sound::IncrementMode incrementMode) const
-{
-   for (auto& voice : m_voices)
-   {
-      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
-      {
-         auto& component = voice.components[componentIdx];
-         if (component)
+         if (sdVoiceRef)
          {
-            component->incrementParameterValue(parameterId, parameterAttr,
-                                               increment, incrementMode);
+            sdVoiceRef->soundHandler->pitchBend(sdVoiceRef->sdVoiceIdx, value);
          }
       }
-   }
+   });
 }
 
-void MelodicInstrument::incrementParameterValueEventBound(
+Void MelodicInstrument::incrementParameterValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    musicDevice::sound::IncrementMode incrementMode) const
+    musicDevice::sound::IncrementMode incrementMode) 
 {
-   for (auto& voice : m_voices)
-   {
-      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::indexOutOfRange);
+      for (auto& voice : m_voices)
       {
-         auto& component = voice.components[componentIdx];
-         if (component)
-         {
-            component->incrementParameterValueDontCache(
-                parameterId, parameterAttr, increment, incrementMode);
-         }
+         auto& sdVoiceRef = voice[componentIdx];
+         if(!sdVoiceRef.has_value()) continue;
+         ParameterHandler(engine->value(), sdVoiceRef.value()).
+            incrementParameterValue(parameterId, parameterAttr, increment, incrementMode);
       }
-   }
+      return Void{};
+   });
 }
 
-void MelodicInstrument::incrementParameterValueMPE(
+Void MelodicInstrument::incrementParameterValueEventBound(
+    int componentIdx, int parameterId,
+    musicDevice::sound::ParameterAttr parameterAttr, float increment,
+    musicDevice::sound::IncrementMode incrementMode)
+{
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::indexOutOfRange);
+      for (auto& voice : m_voices)
+      {
+         auto& sdVoiceRef = voice[componentIdx];
+         if(!sdVoiceRef.has_value()) continue;
+         ParameterHandler(engine->value(), sdVoiceRef.value()).
+            incrementParameterValueDontCache(parameterId, parameterAttr, increment, incrementMode);
+      }
+      return Void{};
+   });
+}
+
+Void MelodicInstrument::incrementParameterValueMPE(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float increment,
-    musicDevice::sound::IncrementMode incrementMode) const
+    musicDevice::sound::IncrementMode incrementMode)
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-   const auto& voice = m_voices[m_pRtData->noteAllocations[note]];
-   if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
-   {
-      if (voice.components[componentIdx])
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).map([&,this](int voiceIdx) {
+      auto& sdVoiceRef = m_voices[voiceIdx][componentIdx];
+      if (sdVoiceRef)
       {
-         voice.components[componentIdx]->incrementParameterValueDontCache(
-             parameterId, parameterAttr, increment, incrementMode);
+         ParameterHandler(m_engines[componentIdx].value(), sdVoiceRef.value()).
+            incrementParameterValueDontCache(parameterId, parameterAttr, increment, incrementMode);
       }
-   }
+   });
 }
 
-std::optional<float> MelodicInstrument::getParameterValue(
+Ret<float> MelodicInstrument::getParameterValue(
     int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
-   {
-      return component->getSDParameterValue(parameterIdx, parameterAttr);
-   }
-   return std::nullopt;
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Ret<float> {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      return engine->value().parameterCache.getParameter(parameterIdx, parameterAttr);
+   });
 }
 
-std::optional<float> MelodicInstrument::getParameterValue(
+Ret<float> MelodicInstrument::getParameterValue(
     int note, int componentIdx, int parameterIdx,
     musicDevice::sound::ParameterAttr parameterAttr) const
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return std::nullopt;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-
-   auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
-                         .components.at(componentIdx);
-   if (component)
-   {
-      return component->getParameterValue(parameterIdx, parameterAttr);
-   }
-   return std::nullopt;
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).and_then([&,this](int voiceIdx) -> Ret<float> {
+      return safe_at(m_voices, voiceIdx).and_then([&,this](auto voice) -> Ret<float> {
+         return safe_at(*voice, componentIdx).and_then([&,this](auto sdVoiceRef) -> Ret<float> {
+            if (*sdVoiceRef)
+            { // TODO
+               return sdVoiceRef->value().soundHandler->getParameterValue(sdVoiceRef->value().sdVoiceIdx, parameterIdx, parameterAttr).value_or(0.0f);
+            }
+            return tl::unexpected(Error::elementEmpty);
+         });
+      });
+   });
 }
 
-void MelodicInstrument::setParameterValue(
+Void MelodicInstrument::setParameterValue(
     int componentIdx, int parameterId,
-    musicDevice::sound::ParameterAttr parameterAttr, float value) const
+    musicDevice::sound::ParameterAttr parameterAttr, float value)
 {
-   for (auto& voice : m_voices)
-   {
-      if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
-      {
-         auto& component = voice.components[componentIdx];
-         if (component)
-         {
-            component->setParameterValue(parameterId, parameterAttr, value);
-         }
-      }
-   }
-}
-
-void MelodicInstrument::setRelativeParameterValue(
-    int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr, float relValue) const
-{
-   const auto actVal =
-       getParameterValue(componentIdx, parameterIdx, parameterAttr);
-   if (actVal)
-   {
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
       for (auto& voice : m_voices)
       {
-         if (mddescrutil::vector_index_in_range(componentIdx, voice.components))
-         {
-            auto& component = voice.components[componentIdx];
-            if (component)
-            {
-               component->setParameterValueDontCache(
-                   parameterIdx, parameterAttr, actVal.value() + relValue);
-            }
-         }
+         auto& sdVoiceRef = voice[componentIdx];
+         if(!sdVoiceRef.has_value()) continue;
+         ParameterHandler(engine->value(), sdVoiceRef.value()).
+            setParameterValue(parameterId, parameterAttr, value);
       }
-   }
+      return Void{};
+   });
 }
 
-void MelodicInstrument::setParameterValueMPE(
-    int note, int componentIdx, int parameterId,
-    musicDevice::sound::ParameterAttr parameterAttr, float value) const
+Void MelodicInstrument::setRelativeParameterValue(
+    int componentIdx, int parameterIdx,
+    musicDevice::sound::ParameterAttr parameterAttr, float relValue)
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-
-   const auto voiceIdx = m_pRtData->noteAllocations.at(note);
-   auto& component     = m_voices.at(voiceIdx).components.at(componentIdx);
-   if (component)
-   {
-      component->setParameterValueDontCache(parameterId, parameterAttr, value);
-   }
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Void {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      for (auto& voice : m_voices)
+      {
+         auto& sdVoiceRef = voice[componentIdx];
+         if(!sdVoiceRef.has_value()) continue;
+         ParameterHandler(engine->value(), sdVoiceRef.value()).
+            setParameterValueDontCache(parameterIdx, parameterAttr, relValue);
+      }
+      return Void{};
+   });
 }
 
-float MelodicInstrument::fromNormalizedValue(
+Void MelodicInstrument::setParameterValueMPE(
+    int note, int componentIdx, int parameterId,
+    musicDevice::sound::ParameterAttr parameterAttr, float value)
+{
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).map([&,this](int voiceIdx) {
+      auto& sdVoiceRef = m_voices[voiceIdx][componentIdx];
+      if (sdVoiceRef)
+      {
+         ParameterHandler(m_engines[componentIdx].value(), sdVoiceRef.value()).
+            setParameterValueDontCache(parameterId, parameterAttr, value);
+      }
+   });
+}
+
+Ret<float> MelodicInstrument::fromNormalizedValue(
     int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   auto component = getFirstComponent(componentIdx);
-   if (component)
-   {
-      return component->fromNormalizedValue(parameterId, parameterAttr,
-                                            percentageValue);
-   }
-   return 0.0;   // TODO: exception?
+   return safe_at(m_engines, componentIdx).and_then([&,this](auto engine) -> Ret<float> {
+      if(!engine->has_value()) return tl::unexpected(Error::elementEmpty);
+      for (auto& voice : m_voices)
+      {
+         auto& sdVoiceRef = voice[componentIdx];
+         if(!sdVoiceRef.has_value()) continue;
+         return sdVoiceRef.value().soundHandler->
+            fromNormalizedValue(sdVoiceRef.value().sdVoiceIdx, parameterId, parameterAttr, percentageValue).value_or(0.0f);
+      }//TODO
+      return tl::unexpected(Error::elementEmpty);
+   });
 }
 
-float MelodicInstrument::fromNormalizedValue(
+Ret<float> MelodicInstrument::fromNormalizedValue(
     int note, int componentIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr,
     float percentageValue) const
 {
-   if (!mddescrutil::vector_index_in_range(note, m_pRtData->noteAllocations))
-   {
-      return 0.0f;
-   }
-   if (m_pRtData->noteAllocations[note] == RtData::FREE)
-   {
-      m_pRtData->incrementVoiceIndex(m_voices.size());
-      m_pRtData->noteAllocations[note] = m_pRtData->currentVoiceIndex();
-   }
-
-   auto& component = m_voices.at(m_pRtData->noteAllocations.at(note))
-                         .components.at(componentIdx);
-   if (component)
-   {
-      return component->fromNormalizedValue(parameterId, parameterAttr,
-                                            percentageValue);
-   }
-   return 0.0f;   // TODO: exception?
+   return m_noteAllocation.allocateVoice(note, m_voices.size()).and_then([&,this](int voiceIdx) -> Ret<float> {
+      return safe_at(m_voices, voiceIdx).and_then([&,this](auto voice) -> Ret<float> {
+         return safe_at(*voice, componentIdx).and_then([&,this](auto sdVoiceRef) -> Ret<float> {
+            if (*sdVoiceRef)
+            { // TODO
+               return sdVoiceRef->value().soundHandler->fromNormalizedValue(sdVoiceRef->value().sdVoiceIdx, parameterId, parameterAttr, percentageValue).value_or(0.0f);
+            }
+            return tl::unexpected(Error::elementEmpty);
+         });
+      });
+   });
 }
+/*
 
 void MelodicInstrument::clearModifier(
     int componentIdx, std::size_t parameterIdx,
@@ -341,3 +297,6 @@ void MelodicInstrument::updateParameterUI() const
       }
    }
 }
+
+
+*/
