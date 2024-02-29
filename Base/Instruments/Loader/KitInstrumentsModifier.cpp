@@ -1,4 +1,5 @@
 #include "KitInstrumentsModifier.h"
+#include "Identifiable.h"
 #include "KitInstrumentModifier.h"
 #include <spdlog/spdlog.h>
 
@@ -25,9 +26,10 @@ KitInstrumentsModifier::KitInstrumentsModifier(KitInstruments& rKitInstruments) 
 {
 }
 
-void KitInstrumentsModifier::createKitInstrument(std::string name) noexcept
+util::Identifiable::UUID KitInstrumentsModifier::createKitInstrument(std::string name) noexcept
 {
    m_rKitInstruments.push_back(KitInstrument(std::move(name)));
+   return m_rKitInstruments.back().id();
 }
 
 void KitInstrumentsModifier::insertKitInstrument(

@@ -3,6 +3,7 @@
 set(SOURCES 
     "UT_2DMatrixCheck.cpp"
     "UT_FixedSizeVector.cpp"
+    "UT_Function.cpp"
     "UT_FunctionRef.cpp"
     "UT_Identifiable.cpp"
     "UT_KeyValueVector.cpp"

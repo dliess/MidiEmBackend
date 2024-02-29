@@ -1,6 +1,7 @@
 #ifndef KIT_INSTRUMENTS_MODIFIER_LOADER_H
 #define KIT_INSTRUMENTS_MODIFIER_LOADER_H
 
+#include "Identifiable.h"
 #include "InstrumentsData.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "ErrorHandling.h"
@@ -11,7 +12,7 @@ struct KitInstrumentsModifier
 {
    KitInstrumentsModifier(KitInstruments& rKitInstruments) noexcept;
 
-   void createKitInstrument(std::string name) noexcept;
+   util::Identifiable::UUID createKitInstrument(std::string name) noexcept;
    void insertKitInstrument(KitInstrument kitInstrument) noexcept;
    Void removeKitInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;

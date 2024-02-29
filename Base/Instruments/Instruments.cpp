@@ -59,8 +59,13 @@ Instruments::Instruments(
 
 void Instruments::createKitInstrument(std::string name)
 {
-   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).createKitInstrument(
+   auto uuid = loader::KitInstrumentsModifier(m_loaderData.kitInstruments).createKitInstrument(
        std::move(name));
+   static constexpr size_t MaxStringSize = 64;
+   m_asyncCaller.callAsync([this, uuid, 
+                           fsName = util::FixedSizeString<MaxStringSize>(name)]() {
+                              m_rtData.kitInstruments.emplace_back(uuid, fsName);
+                           });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -68,6 +73,10 @@ void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
        .insertKitInstrument(kitInstrument);
+   auto copy = std::make_unique<loader::KitInstrument>(kitInstrument);
+   m_asyncCaller.callAsync([this, copy = std::move(copy)]() {
+      
+   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -79,7 +88,7 @@ bool Instruments::hasSameInstrument(const loader::KitInstrument& kitInstrument) 
       {
          return true;
       }
-   }
+   }:
    return false;
 }
 
@@ -90,7 +99,7 @@ void Instruments::removeKitInstrument(
    emitDataChanged(m_loaderData, true);
 }
 
-void Instruments::renameKitInstrument(
+void Instruments::renameKitInstrument(É
     const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)

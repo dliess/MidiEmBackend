@@ -5,8 +5,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <string_view>
 
 #include "CallbackSignal.h"
+#include "Identifiable.h"
 #include "Instrument.h"
 #include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
@@ -20,8 +22,8 @@ namespace base::instruments::rt
 class KitInstrument : public Instrument
 {
 public:
-   KitInstrument() = default;
-   explicit KitInstrument(std::string name) noexcept;
+   static constexpr std::size_t NUM_VOICES = 16;
+   explicit KitInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept;
    void noteOn(int note, float velocity, void* token = nullptr);
    void noteOff(int note, float velocity, void* token = nullptr);
    void noteOn(int voiceIdx, int note, float velocity,

@@ -7,6 +7,7 @@
 namespace util
 {
 inline Identifiable::Identifiable() noexcept { uuid_generate(m_uuid.data()); };
+inline Identifiable::Identifiable(UUIDView uuid) noexcept { std::copy(uuid.begin(), uuid.end(), m_uuid.begin()); };
 
 inline const Identifiable::UUID& Identifiable::id() const noexcept
 {

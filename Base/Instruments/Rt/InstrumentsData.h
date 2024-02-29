@@ -19,5 +19,4 @@ struct Data
 
 }   // namespace base::instruments::rt
 
-
 #endif

@@ -1,13 +1,16 @@
 #include "KitInstrument.h"
 
 #include "ErrorHandling.h"
+#include "Identifiable.h"
 #include "MusicDeviceHolder.h"
 #include "InstrumentParameterHandler.h"
 
 using namespace base::instruments::rt;
 
-KitInstrument::KitInstrument(std::string name) noexcept :
-    m_name(std::move(name)), m_voices(16)
+KitInstrument::KitInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept :
+   Instrument(uuid),
+   m_name(name), 
+   m_voices(NUM_VOICES)
 {
 }
 

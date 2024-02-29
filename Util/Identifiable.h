@@ -20,9 +20,6 @@ namespace util
 {
 class Identifiable
 {
-protected:
-   inline Identifiable() noexcept;
-
 public:
    using UUID     = std::array<uint8_t, util::array_count_v<uuid_t>>;
    using UUIDView = std::span<const uint8_t, util::array_count_v<uuid_t>>;
@@ -30,6 +27,8 @@ public:
    inline UUIDView idView() const noexcept;
 
 protected:
+   Identifiable() noexcept;
+   Identifiable(UUIDView uuid) noexcept;
    UUID m_uuid;
 };
 

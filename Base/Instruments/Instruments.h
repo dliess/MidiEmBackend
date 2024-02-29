@@ -10,6 +10,7 @@
 #include "Loader/InstrumentsData.h"
 #include "Loader/KitInstrument.h"
 #include "Loader/MelodicInstrument.h"
+#include "Rt/InstrumentsData.h"
 // #include "Meta.h"
 // #include "Settings_old.h"
 #include "function_ref.h"
@@ -154,7 +155,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    void invokeQueueActions();
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
-   // TODO rt::Data m_rtData;
+   rt::Data m_rtData;
    loader::Data m_loaderData;
    loader::Persister m_persister;
    bool m_parameterCacheDirty {false};
