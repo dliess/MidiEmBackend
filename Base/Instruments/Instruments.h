@@ -15,7 +15,7 @@
 // #include "Settings_old.h"
 #include "function_ref.h"
 #include "farbot/AsyncCaller.hpp"
-#include "function.h"
+#include "functionMv.h"
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
 // clang-format on
@@ -160,8 +160,9 @@ private:
    loader::Persister m_persister;
    bool m_parameterCacheDirty {false};
    using AsyncCaller = farbot::AsyncCaller<farbot::fifo_options::concurrency::single,
-      util::functionTriv<120, void()>>; 
-   AsyncCaller m_asyncCaller;
+      util::functionMv<120, void()>>; 
+   AsyncCaller m_deferToRt;
+   AsyncCaller m_deferToLoader;
 };
 
 }   // namespace base::instruments

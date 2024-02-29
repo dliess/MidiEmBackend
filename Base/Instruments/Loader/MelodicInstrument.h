@@ -10,7 +10,7 @@
 #include "SoundSection.h"
 #include "ParameterData.h"
 
-class MusicDevice;
+namespace base::instruments { class MelodicInstrumentCopyer; }
 
 namespace base::instruments::loader
 {
@@ -71,6 +71,7 @@ private:
    friend auto meta::registerMembers<MelodicInstrument::ParameterData>();
    friend auto meta::registerMembers<MelodicInstrument::Voice>();
    friend auto meta::registerMembers<MelodicInstrument::Voice::Component>();
+   friend class base::instruments::MelodicInstrumentCopyer;
 };
 
 }   // namespace base::instruments::loader

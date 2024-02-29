@@ -15,6 +15,7 @@
 #include "function_ref.h"
 #include "ErrorHandling.h"
 
+namespace base::instruments { class KitInstrumentCopyer; }
 
 namespace base::instruments::rt
 {
@@ -76,7 +77,9 @@ public:
    Void setVoiceAmp(int voiceIdx, float amp);
    Void setComponentAmp(int voiceIdx, int componentIdx, float amp);
 
+
 private:
+   friend class base::instruments::KitInstrumentCopyer;
    std::string m_name;
    std::vector<KitVoice> m_voices;
    Ret<int> toVoiceIndex(int note) const;

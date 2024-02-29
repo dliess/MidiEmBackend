@@ -13,6 +13,8 @@
 #include "ComponentData.h"
 #include "SdVoiceRef.h"
 
+namespace base::instruments { class MelodicInstrumentCopyer; }
+
 namespace base::instruments::rt
 {
 class MelodicInstrument : public Instrument
@@ -81,6 +83,7 @@ public:
    // [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
    
 private:
+   friend class base::instruments::MelodicInstrumentCopyer;
    static constexpr std::size_t NUM_COMPONENTS = 4;
    using Voice = std::array<std::optional<SdVoiceRef>, NUM_COMPONENTS>;
    std::vector<Voice> m_voices;

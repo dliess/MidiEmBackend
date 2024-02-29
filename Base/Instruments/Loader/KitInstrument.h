@@ -13,6 +13,8 @@
 #include "function_ref.h"
 #include "ErrorHandling.h"
 
+namespace base::instruments { class KitInstrumentCopyer; }
+
 namespace base::instruments::loader
 {
 
@@ -48,6 +50,7 @@ public:
 
 private:
    // std::string m_name;
+   friend class base::instruments::KitInstrumentCopyer;
    std::vector<KitVoice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
    Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;

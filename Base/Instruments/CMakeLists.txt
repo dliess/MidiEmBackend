@@ -5,7 +5,9 @@ endif()
 set(SOURCES
    "Instruments.cpp"
    "InstrumentsMDChangeHandler.cpp"
-)
+   "KitInstrumentCopyer.cpp"
+   "MelodicInstrumentCopyer.cpp"
+   )
 
 set(HEADERS
 #   "KitInstrumentVoice.h"
@@ -29,6 +31,8 @@ set(HEADERS
 #   "InstrumentsPersister.h"
 #   "InstrumentsParameterCache.h"
 #   "InstrumentsParameterCache.inl"
+   "KitInstrumentCopyer.h"
+   "MelodicInstrumentCopyer.h"
 )
 
 set(TARGET_NAME "Instruments")

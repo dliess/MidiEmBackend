@@ -10,6 +10,7 @@
 #include "MusicDeviceFactoryDataHolder.h"
 #include "SoundSection.h"
 #include "FixedSizeString.h"
+#include "KitInstrumentCopyer.h"
 
 using namespace base;
 using namespace base::instruments;
@@ -62,7 +63,7 @@ void Instruments::createKitInstrument(std::string name)
    auto uuid = loader::KitInstrumentsModifier(m_loaderData.kitInstruments).createKitInstrument(
        std::move(name));
    static constexpr size_t MaxStringSize = 64;
-   m_asyncCaller.callAsync([this, uuid, 
+   m_deferToRt.callAsync([this, uuid, 
                            fsName = util::FixedSizeString<MaxStringSize>(name)]() {
                               m_rtData.kitInstruments.emplace_back(uuid, fsName);
                            });
@@ -73,22 +74,23 @@ void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
        .insertKitInstrument(kitInstrument);
-   auto copy = std::make_unique<loader::KitInstrument>(kitInstrument);
-   m_asyncCaller.callAsync([this, copy = std::move(copy)]() {
-      
+   m_deferToRt.callAsync([this, copy = std::make_unique<loader::KitInstrument>(kitInstrument)]() mutable { 
+      m_rtData.kitInstruments.push_back(KitInstrumentCopyer::copy(*copy));
+      m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
    });
+      
    emitDataChanged(m_loaderData, true);
 }
 
 bool Instruments::hasSameInstrument(const loader::KitInstrument& kitInstrument) const
 {
-   for (const auto& e : m_loaderData.kitInstruments)
-   {
-      if (isSameInstrument(kitInstrument, e))
-      {
-         return true;
-      }
-   }:
+   // for (const auto& e : m_loaderData.kitInstruments)
+   // {
+   //    if (isSameInstrument(kitInstrument, e))
+   //    {
+   //       return true;
+   //    }
+   // }:
    return false;
 }
 
@@ -96,10 +98,20 @@ void Instruments::removeKitInstrument(
     const util::Identifiable::UUID& instrumentId)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments).removeKitInstrument(instrumentId);
+   m_deferToRt.callAsync([this, instrumentId]() {
+      auto it = std::ranges::find_if(m_rtData.kitInstruments, 
+                                     [instrumentId](const auto& e) {
+                                        return e.idView() == instrumentId;
+                                     });
+      if(it != m_rtData.kitInstruments.end())
+      {
+         m_rtData.kitInstruments.erase(it);
+      }
+   });
    emitDataChanged(m_loaderData, true);
 }
 
-void Instruments::renameKitInstrument(É
+void Instruments::renameKitInstrument(
     const util::Identifiable::UUID& instrumentId, const std::string& name)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
@@ -265,7 +277,7 @@ void Instruments::setVoiceNameInKitInstrument(
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments).setVoiceNameInKitInstrument(
        instrumentUuid, voiceIdx, name);
    static constexpr size_t MaxStringSize = 64;
-   m_asyncCaller.callAsync([this, &instrumentUuid, voiceIdx, fsName = util::FixedSizeString<MaxStringSize>(name)]() {
+   m_deferToRt.callAsync([this, &instrumentUuid, voiceIdx, fsName = util::FixedSizeString<MaxStringSize>(name)]() {
       // TODO
    });
    emitDataChanged(m_loaderData, true);
@@ -371,7 +383,7 @@ void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
 
 void Instruments::invokeQueueActions()
 {
-   m_asyncCaller.process();
+   m_deferToRt.process();
 }
 
 bool Instruments::hasKitInstrument(

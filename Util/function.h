@@ -1,5 +1,5 @@
-#ifndef UTILS_FUNCTION_H
-#define UTILS_FUNCTION_H
+#ifndef UTIL_FUNCTION_H
+#define UTIL_FUNCTION_H
 
 #include <cstddef>
 #include <array>
@@ -25,60 +25,57 @@ public:
       : 
       callback_([](void *obj, Args... args) -> R {
          return std::invoke(
-             *reinterpret_cast<typename std::add_pointer<F>::type>(obj),
+             *reinterpret_cast<typename std::add_pointer<std::decay_t<F>>::type>(obj),
              args...);
       }),
-      destructor_([](void* obj){std::destroy_at(reinterpret_cast<F*>(obj));}),
-      clone_([](const void* srcObj, void* dstObj){std::construct_at(reinterpret_cast<F*>(dstObj), *reinterpret_cast<const F*>(srcObj));}),
-      move_([](void* srcObj, void* dstObj){std::construct_at(reinterpret_cast<F*>(dstObj), std::move(*reinterpret_cast<F*>(srcObj)));})      
+      destructor_([](void* obj){
+            std::destroy_at(reinterpret_cast<std::decay_t<F>*>(obj));
+      }),
+      clone_([](const void* srcObj, void* dstObj){
+            if constexpr(std::is_copy_constructible_v<std::decay_t<F>>) {
+               std::construct_at(reinterpret_cast<std::decay_t<F>*>(dstObj), *reinterpret_cast<const std::decay_t<F>*>(srcObj));
+            } else {
+               assert(false && "function object not copy constructible");
+            //   std::construct_at(reinterpret_cast<std::decay_t<F>*>(dstObj), std::forward<F>(*reinterpret_cast<const std::decay_t<F>*>(srcObj)));
+            }
+      }),
+      move_([](void* srcObj, void* dstObj){
+            std::construct_at(reinterpret_cast<std::decay_t<F>*>(dstObj), std::move(*reinterpret_cast<std::decay_t<F>*>(srcObj)));
+      })      
       {
-        static_assert(sizeof(F) <= Size, "buffer not big enough for function object");
-        std::construct_at(reinterpret_cast<F*>(buffer_.data()), std::forward<F>(f));
+        static_assert(sizeof(std::decay_t<F>) <= Size, "buffer not big enough for function object");
+        std::construct_at(reinterpret_cast<std::decay_t<F>*>(buffer_.data()), std::forward<F>(f));
       }
   constexpr ~function() { if(destructor_) destructor_(buffer_.data()); }
   function() noexcept = default;
-  function& operator=(const function<Size, R(Args...)&>) = delete;
-  function& operator=(function<Size, R(Args...)&&> rhs) noexcept { swap(rhs); return *this; }
-  function(const function<Size, R(Args...)&> rhs) { clone_(rhs.buffer_.data(), buffer_.data()); }
-  function(function<Size, R(Args...)&&> rhs) noexcept { move_(rhs.buffer_.data(), buffer_.data()); }
-
-  constexpr R operator()(Args... args)
-  {
-      return callback_(buffer_.data(), std::forward<Args>(args)...);
+  function& operator=(const function<Size, R(Args...)>& rhs) {
+         destructor_ = rhs.destructor_;
+         callback_ = rhs.callback_;
+         move_ = rhs.move_;
+         clone_ = rhs.clone_;
+         if(clone_) clone_(rhs.buffer_.data(), buffer_.data());
+         return *this; 
   }
-private:
-   static constexpr std::size_t alignment = 16UL;
-   alignas(alignment) std::array<std::byte, Size> buffer_;
-   R (*callback_)(void *, Args...){nullptr};
-   void (*destructor_)(void*){nullptr};
-   void (*clone_)(const void*, void*){nullptr};
-   void (*move_)(void*, void*){nullptr};
-};
-
-
-template <size_t Size, class F> 
-class functionTriv;
-template <size_t Size, typename R, typename... Args>
-class functionTriv<Size, R(Args...)>
-{
-public:
-    template <typename F>
-    requires (!std::is_same_v<std::decay_t<F>, functionTriv>  // should not be confused with the copy constructor
-          &&  std::is_invocable_r_v<R, F&&, Args...> 
-          &&  std::is_trivially_copyable_v<std::decay_t<F>> 
-          &&  std::is_trivially_destructible_v<std::decay_t<F>> 
-   )
-    constexpr functionTriv(F &&f) noexcept(std::is_nothrow_move_constructible_v<F>)
-        : callback_([](void *obj, Args... args) -> R {
-         return std::invoke(
-             *reinterpret_cast<typename std::add_pointer<F>::type>(obj),
-             args...);
-      })
-      {
-        static_assert(sizeof(F) <= Size, "buffer not big enough for function object");
-        std::construct_at(reinterpret_cast<F*>(buffer_.data()), std::forward<F>(f));
-      }
-  functionTriv() noexcept = default;
+  function& operator=(function<Size, R(Args...)>&& rhs) noexcept {
+         std::swap(rhs, *this); 
+         return *this; 
+  }
+  function(const function<Size, R(Args...)>& rhs) : 
+         callback_(rhs.callback_), 
+         destructor_(rhs.destructor_), 
+         clone_(rhs.clone_), 
+         move_(rhs.move_) 
+  {
+         if(clone_) clone_(rhs.buffer_.data(), buffer_.data()); 
+  }
+  function(function<Size, R(Args...)>&& rhs) noexcept : 
+         callback_(rhs.callback_),
+         destructor_(rhs.destructor_),
+         clone_(rhs.clone_),
+         move_(rhs.move_)
+  {
+         if(move_) move_(rhs.buffer_.data(), buffer_.data()); 
+  }
 
   constexpr R operator()(Args... args)
   {
@@ -89,7 +86,11 @@ private:
    static constexpr std::size_t alignment = 16UL;
    alignas(alignment) std::array<std::byte, Size> buffer_;
    R (*callback_)(void *, Args...){nullptr};
+   void (*destructor_)(void*){nullptr};
+   void (*clone_)(const void*, void*){nullptr};
+   void (*move_)(void*, void*){nullptr};
 };
-}   // namespace utils
 
-#endif // UTILS_FUNCTION_H
+}   // namespace util
+
+#endif // UTIL_FUNCTION_H
