@@ -10,6 +10,7 @@
 #include "MusicDevice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
+#include "ErrorHandling.h"
 
 namespace base::musicDevice
 {
@@ -34,27 +35,28 @@ public:
    using value_type     = Super::value_type;
    using size_type      = Super::size_type;
 
-   inline iterator begin() noexcept;
-   inline const_iterator begin() const noexcept;
-   inline iterator end() noexcept;
-   inline const_iterator end() const noexcept;
-   inline iterator find(const key_type& key) noexcept;
-   inline const_iterator findByDeviceId(
+   iterator begin() noexcept;
+   const_iterator begin() const noexcept;
+   iterator end() noexcept;
+   const_iterator end() const noexcept;
+   iterator find(const key_type& key) noexcept;
+   const_iterator findByDeviceId(
        const MusicDeviceId& mdId) const noexcept;
-   inline iterator findByDeviceId(const MusicDeviceId& mdId) noexcept;
-   inline const_iterator find(const key_type& key) const noexcept;
-   inline std::pair<iterator, bool> insert(const value_type& val);
-   inline size_type erase(const key_type& k);
-   inline size_type eraseByDeviceId(const MusicDeviceId& mdId);
+   iterator findByDeviceId(const MusicDeviceId& mdId) noexcept;
+   const_iterator find(const key_type& key) const noexcept;
+   std::pair<iterator, bool> insert(const value_type& val);
+   size_type erase(const key_type& k);
+   size_type eraseByDeviceId(const MusicDeviceId& mdId);
 
-   inline size_t size() const noexcept;
+   size_t size() const noexcept;
 
-   inline void withSoundHandler(
+   void withSoundHandler(
        const musicDevice::MusicDeviceId& mdId,
        util::function_ref<void(sound::SoundHandler&)> cb);
 
-   inline MusicDeviceId uuid2mdId(util::Identifiable::UUIDView uuid) const noexcept;
-
+   MusicDeviceId uuid2mdId(util::Identifiable::UUIDView uuid) const noexcept;
+   Ret<const MusicDevice*> getMusicDeviceByUUID(util::Identifiable::UUIDView uuid) const noexcept;
+   Ret<MusicDevice*> getMusicDeviceByUUID(util::Identifiable::UUIDView uuid) noexcept;
    CB_SIGNAL(AboutToAdd, const MusicDevice&);
    CB_SIGNAL(Added, std::shared_ptr<MusicDevice>);
    CB_SIGNAL(AboutToRemove, std::shared_ptr<MusicDevice>);

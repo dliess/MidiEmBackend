@@ -18,6 +18,7 @@
 #include "functionMv.h"
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
+namespace base::musicDevice { class MusicDeviceContainer; }
 // clang-format on
 
 namespace base::instruments
@@ -25,7 +26,8 @@ namespace base::instruments
 struct Instruments   //: public utils::Settings<Instruments>
 {
    explicit Instruments(
-       musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+       musicDevice::factory::DataHolder& rFactoryDataHolder,
+       musicDevice::MusicDeviceContainer& rMDContainer) noexcept;
 
    // -----------------
    // NON-rt methods:
@@ -155,6 +157,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    void invokeQueueActions();
 private:
    base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   base::musicDevice::MusicDeviceContainer& m_rMDContainer;
    rt::Data m_rtData;
    loader::Data m_loaderData;
    loader::Persister m_persister;

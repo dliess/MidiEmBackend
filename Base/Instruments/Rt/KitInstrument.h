@@ -67,7 +67,7 @@ public:
       
 
    std::string name() const noexcept;
-   void setName(const std::string& name) noexcept;
+   void setName(std::string_view name) noexcept;
 
    void updateParameterUI();
 
@@ -80,6 +80,8 @@ public:
 
 private:
    friend class base::instruments::KitInstrumentCopyer;
+   friend class KitInstrumentsModifier;
+   friend class KitInstrumentModifier;
    std::string m_name;
    std::vector<KitVoice> m_voices;
    Ret<int> toVoiceIndex(int note) const;

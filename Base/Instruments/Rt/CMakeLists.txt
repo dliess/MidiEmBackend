@@ -3,14 +3,13 @@
 # endif()
 
 set(SOURCES
-#   "KitInstrumentsModifier.cpp"
-#   "KitInstrumentModifier.cpp"
+   "KitInstrumentsModifier.cpp"
+   "KitInstrumentModifier.cpp"
    "KitInstrument.cpp"
    "KitInstrumentComponent.cpp"
-   #   "MelodicInstrumentsModifier.cpp"
-   #   "MelodicInstrumentModifier.cpp"
+   "MelodicInstrumentsModifier.cpp"
+   "MelodicInstrumentModifier.cpp"
    "MelodicInstrument.cpp"
-   #   "InstrumentsPersister.cpp"
    "InstrumentParameterHandler.cpp"
 )
 
@@ -18,22 +17,18 @@ set(HEADERS
    # "Instrument.h"
    # "InstrumentsData.h"
    # "InstrumentsDataMeta.h"
-   # "KitInstrumentsModifier.h"
-   # "KitInstrumentModifier.h"
-   # "InstrumentsPersister.h"
+    "KitInstrumentsModifier.h"
+    "KitInstrumentModifier.h"
     "InstrumentParameterHandler.h"
     "KitInstrument.h"
-   # "KitInstrumentMeta.h"
    # "KitInstrumentVoice.h"
    # "KitInstrumentVoice.inl"
    # "KitInstrumentVoiceMeta.h"
     "KitInstrumentComponent.h"
-   # "KitInstrumentComponentMeta.h"
     "MelodicInstrument.h"
    # "MelodicInstrument.inl"
-   # "MelodicInstrumentMeta.h"
-   # "MelodicInstrumentsModifier.h"
-   # "MelodicInstrumentModifier.h"
+    "MelodicInstrumentsModifier.h"
+    "MelodicInstrumentModifier.h"
 )
 
 set(TARGET_NAME "InstrumentsRt")

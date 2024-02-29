@@ -150,7 +150,7 @@ KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
 
 std::string KitInstrument::name() const noexcept { return m_name; }
 
-void KitInstrument::setName(const std::string& name) noexcept
+void KitInstrument::setName(std::string_view name) noexcept
 {
    m_name = name;
 }

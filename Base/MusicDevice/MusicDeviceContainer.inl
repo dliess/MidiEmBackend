@@ -252,6 +252,28 @@ inline MusicDeviceId MusicDeviceContainer::uuid2mdId(
    return {};
 }
 
+inline
+Ret<const MusicDevice*> MusicDeviceContainer::getMusicDeviceByUUID(util::Identifiable::UUIDView uuid) const noexcept
+{
+   auto it = find(util::deepCopy(uuid));
+   if (it != end())
+   {
+      return it->second.get();
+   }
+   return tl::unexpected(Error::mdNotFound);
+}
+
+inline
+Ret<MusicDevice*> MusicDeviceContainer::getMusicDeviceByUUID(util::Identifiable::UUIDView uuid) noexcept
+{
+   auto it = find(util::deepCopy(uuid));
+   if (it != end())
+   {
+      return it->second.get();
+   }
+   return tl::unexpected(Error::mdNotFound);
+}
+
 }   // namespace base::musicDevice
 
 #endif

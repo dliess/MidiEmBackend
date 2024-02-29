@@ -13,6 +13,7 @@ struct ErrorDescr
 enum class Error
 {
    uuidNotFound,
+   mdNotFound,
    melodicVoicesFull,
    maxComponentsPerVoiceReached,
    mdDescrNotFound,
