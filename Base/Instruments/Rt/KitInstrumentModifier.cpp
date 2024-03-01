@@ -93,7 +93,7 @@ Void KitInstrumentModifier::setNoteOffsetInKitInstrumentVoice(
 }
 
 Void KitInstrumentModifier::setVoiceNameInKitInstrument(int voiceIdx,
-    const std::string& name) noexcept
+    std::string_view name) noexcept
 {
    return safe_at(m_rKitInstrument.m_voices, voiceIdx).map(
       [&,this](auto voice) -> void {

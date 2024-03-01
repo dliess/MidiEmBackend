@@ -4,7 +4,9 @@
 #include <array>
 #include <memory>
 #include <vector>
+#include <string_view>
 
+#include "Identifiable.h"
 #include "Instrument.h"
 #include "InstrumentsParameterCache.h"
 #include "MelodicInstrumentVoice.h"
@@ -21,7 +23,7 @@ class MelodicInstrument : public Instrument
 {
 public:
 
-   MelodicInstrument(std::string name) noexcept;
+   MelodicInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept;
 
    Void noteOn(int note, float velocity, void* token = nullptr);
    Void noteOff(int note, float velocity, void* token = nullptr);

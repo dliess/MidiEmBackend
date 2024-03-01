@@ -140,7 +140,7 @@ Void KitInstrumentsModifier::setNoteOffsetInKitInstrumentVoice(const util::Ident
 
 Void KitInstrumentsModifier::setVoiceNameInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    const std::string& name) noexcept
+    std::string_view name) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&](auto instrumentIt) -> Void {

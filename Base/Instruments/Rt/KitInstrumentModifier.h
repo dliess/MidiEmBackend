@@ -29,8 +29,7 @@ struct KitInstrumentModifier
        int voiceIdx,
        int componentIdx, int noteOffset) noexcept;
    Void setNoteOffsetInKitInstrumentVoice(int voiceIdx, int noteOffset) noexcept;
-   Void setVoiceNameInKitInstrument(int voiceIdx,
-       const std::string& name) noexcept;
+   Void setVoiceNameInKitInstrument(int voiceIdx, std::string_view name) noexcept;
    Void setKitComponentAmp(int voiceIdx, int componentIdx, float amp);
    Void setKitVoiceAmp(int voiceIdx, float amp);
 

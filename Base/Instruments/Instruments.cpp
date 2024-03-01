@@ -22,6 +22,7 @@ Instruments::Instruments(
     musicDevice::factory::DataHolder& rFactoryDataHolder,
     musicDevice::MusicDeviceContainer& rMDContainer) noexcept :
     m_rFactoryDataHolder(rFactoryDataHolder),
+    m_rMDContainer(rMDContainer),
     m_persister(
         std::make_unique<util::FilePersister>("Instruments", "settings.json"),
         rFactoryDataHolder)
@@ -87,13 +88,13 @@ void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
 
 bool Instruments::hasSameInstrument(const loader::KitInstrument& kitInstrument) const
 {
-   // for (const auto& e : m_loaderData.kitInstruments)
-   // {
-   //    if (isSameInstrument(kitInstrument, e))
-   //    {
-   //       return true;
-   //    }
-   // }:
+   for (const auto& e : m_loaderData.kitInstruments)
+   {
+      if (isSameInstrument(kitInstrument, e))
+      {
+         return true;
+      }
+   }
    return false;
 }
 
@@ -120,8 +121,11 @@ void Instruments::renameKitInstrument(
 
 void Instruments::createMelodicInstrument(std::string name)
 {
-   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+   auto uuid = loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .createMelodicInstrument(std::move(name));
+   m_deferToRt.callAsync([this, uuid, fsName = util::FixedSizeString<64>(name)]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments).createMelodicInstrument(uuid, fsName);
+   });
    emitDataChanged(m_loaderData, true);
 }
 

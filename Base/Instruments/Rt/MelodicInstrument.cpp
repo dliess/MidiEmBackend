@@ -1,5 +1,6 @@
 #include "MelodicInstrument.h"
 
+#include "Identifiable.h"
 #include "MusicDeviceHolder.h"
 #include "SoundSection.h"
 #include "UtilVectorIndexInRange.h"
@@ -7,8 +8,9 @@
 
 using namespace base::instruments::rt;
 
-MelodicInstrument::MelodicInstrument(std::string name) noexcept :
-    m_name(std::move(name))
+MelodicInstrument::MelodicInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept :
+    Instrument(uuid),
+    m_name(name)
 {
 }
 

@@ -28,9 +28,10 @@ MelodicInstrumentsModifier::MelodicInstrumentsModifier(MelodicInstruments& rMelo
 {
 }
 
-void MelodicInstrumentsModifier::createMelodicInstrument(std::string name) noexcept
+util::Identifiable::UUID MelodicInstrumentsModifier::createMelodicInstrument(std::string name) noexcept
 {
    m_rMelodicInstruments.push_back(MelodicInstrument(std::move(name)));
+   return m_rMelodicInstruments.back().id();
 }
 
 void MelodicInstrumentsModifier::insertMelodicInstrument(

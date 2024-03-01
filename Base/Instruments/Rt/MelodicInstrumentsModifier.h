@@ -2,6 +2,7 @@
 #define MELODIC_INSTRUMENTS_MODIFIER_RT_H
 
 #include "FixedSizeString.h"
+#include "Identifiable.h"
 #include "InstrumentsData.h"
 #include "MusicDeviceFactoryDataHolder.h"
 #include "ErrorHandling.h"
@@ -14,7 +15,7 @@ struct MelodicInstrumentsModifier
    MelodicInstrumentsModifier(
        MelodicInstruments& rMelodicInstruments) noexcept;
 
-   void createMelodicInstrument(std::string name) noexcept;
+   void createMelodicInstrument(util::Identifiable::UUIDView uuid) noexcept;
    void insertMelodicInstrument(MelodicInstrument melodicInstrument) noexcept;
    Void removeMelodicInstrument(
        const util::Identifiable::UUID& instrumentId) noexcept;

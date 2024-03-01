@@ -44,7 +44,7 @@ struct KitInstrumentsModifier
                                           int voiceIdx, int noteOffset) noexcept;
    Void setVoiceNameInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const std::string& name) noexcept;
+       std::string_view name) noexcept;
    Void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
                            int componentIdx, float amp);
    Void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);

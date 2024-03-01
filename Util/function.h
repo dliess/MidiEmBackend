@@ -35,8 +35,7 @@ public:
             if constexpr(std::is_copy_constructible_v<std::decay_t<F>>) {
                std::construct_at(reinterpret_cast<std::decay_t<F>*>(dstObj), *reinterpret_cast<const std::decay_t<F>*>(srcObj));
             } else {
-               assert(false && "function object not copy constructible");
-            //   std::construct_at(reinterpret_cast<std::decay_t<F>*>(dstObj), std::forward<F>(*reinterpret_cast<const std::decay_t<F>*>(srcObj)));
+               static_assert(false, "function object is not copy constructible");
             }
       }),
       move_([](void* srcObj, void* dstObj){
