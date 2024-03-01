@@ -11,6 +11,8 @@
 #include "CallbackSignal.h"
 #include "ErrorHandling.h"
 
+namespace base::instruments {class KitInstrumentCopyer;}
+
 namespace base::instruments::loader
 {
 class KitComponent
@@ -38,7 +40,7 @@ public:
 
    friend auto meta::registerMembers<KitComponent>();
    friend class KitInstrumentModifier;
-
+   friend class base::instruments::KitInstrumentCopyer;
    bool operator==(const KitComponent& rhs) const;
 
    [[nodiscard]] int noteOffset() const { return m_noteOffset; };

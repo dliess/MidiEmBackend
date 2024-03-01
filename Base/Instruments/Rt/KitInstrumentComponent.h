@@ -24,7 +24,7 @@ public:
    friend class ParameterHandler;
    explicit KitComponent(musicDevice::sound::SoundHandler* pSoundDevice,
                       musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
-                      int noteOffset) noexcept;
+                      int noteOffset, float amp) noexcept;
    bool setNoteOffset(int noteOffset);
    bool setAmp(float amp, float prevAmp);
    void noteOn(int note, float velocity, util::function_ref<void()> refreshParameters) const;

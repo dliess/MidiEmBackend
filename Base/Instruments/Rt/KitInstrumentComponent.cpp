@@ -5,11 +5,12 @@ using namespace base::instruments::rt;
 
 KitComponent::KitComponent(musicDevice::sound::SoundHandler* pSoundDevice,
                             musicDevice::MusicDeviceId soundDeviceId,
-                            int sdVoiceIdx, int noteOffset) noexcept :
+                            int sdVoiceIdx, int noteOffset, float amp) noexcept :
     sdVoiceRef(soundDeviceId, sdVoiceIdx, pSoundDevice),
     data(pSoundDevice->description().engineBase(sdVoiceIdx))
 {
    data.noteOffset = noteOffset;
+   data.amp = amp;
 }
 
 bool KitComponent::setNoteOffset(int noteOffset)

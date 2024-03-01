@@ -11,8 +11,6 @@ namespace base::instruments::rt
 {
 struct KitVoice   //: public util::Identifiable
 {
-   KitVoice() noexcept = default;
-   explicit KitVoice(std::string name) noexcept;
    static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
    std::vector<KitComponent> components;
    int noteOffset{0};
