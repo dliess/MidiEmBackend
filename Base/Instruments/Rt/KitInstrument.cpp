@@ -7,9 +7,8 @@
 
 using namespace base::instruments::rt;
 
-KitInstrument::KitInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept :
+KitInstrument::KitInstrument(util::Identifiable::UUIDView uuid) noexcept :
    Instrument(uuid),
-   m_name(name), 
    m_voices(NUM_VOICES)
 {
 }
@@ -146,13 +145,6 @@ KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
    return getComponent(voiceIdx, componentIdx).and_then([&](auto component) {
       return component->parameterDescription(parameterIdx);
    });
-}
-
-std::string KitInstrument::name() const noexcept { return m_name; }
-
-void KitInstrument::setName(std::string_view name) noexcept
-{
-   m_name = name;
 }
 
 Ret<int> KitInstrument::toVoiceIndex(int note) const

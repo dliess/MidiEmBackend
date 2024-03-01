@@ -12,7 +12,6 @@ struct KitInstrumentModifier
 {
    KitInstrumentModifier(KitInstrument& rKitInstrument) noexcept;
 
-   void renameKitInstrument(std::string_view name) noexcept;
    Void createNewVoiceInKitInstrument(
        base::musicDevice::MusicDeviceContainer& rMDContainer,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
@@ -29,7 +28,6 @@ struct KitInstrumentModifier
        int voiceIdx,
        int componentIdx, int noteOffset) noexcept;
    Void setNoteOffsetInKitInstrumentVoice(int voiceIdx, int noteOffset) noexcept;
-   Void setVoiceNameInKitInstrument(int voiceIdx, std::string_view name) noexcept;
    Void setKitComponentAmp(int voiceIdx, int componentIdx, float amp);
    Void setKitVoiceAmp(int voiceIdx, float amp);
 

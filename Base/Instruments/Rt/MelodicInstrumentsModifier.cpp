@@ -28,17 +28,17 @@ MelodicInstrumentsModifier::MelodicInstrumentsModifier(MelodicInstruments& rMelo
 {
 }
 
-void MelodicInstrumentsModifier::createMelodicInstrument(std::string name) noexcept
+void MelodicInstrumentsModifier::createMelodicInstrument(util::Identifiable::UUIDView uuid) noexcept
 {
-   m_rMelodicInstruments.push_back(MelodicInstrument(std::move(name)));
+   m_rMelodicInstruments.push_back(MelodicInstrument(uuid));
 }
 
-void MelodicInstrumentsModifier::insertMelodicInstrument(
-    MelodicInstrument melodicInstrument) noexcept
-{
-   m_rMelodicInstruments.push_back(std::move(melodicInstrument));
-}
-
+// void MelodicInstrumentsModifier::insertMelodicInstrument(
+//     MelodicInstrument melodicInstrument) noexcept
+// {
+//    m_rMelodicInstruments.push_back(std::move(melodicInstrument));
+// }
+//
 Void MelodicInstrumentsModifier::removeMelodicInstrument(
     const util::Identifiable::UUID& instrumentId) noexcept
 {
@@ -47,34 +47,27 @@ Void MelodicInstrumentsModifier::removeMelodicInstrument(
    });
 }
 
-Void MelodicInstrumentsModifier::renameMelodicInstrument(
-    const util::Identifiable::UUID& instrumentId, std::string name) noexcept
-{
-   return getInstrument(instrumentId).map([this, name = std::move(name)](auto instrumentIt) -> void {
-      MelodicInstrumentModifier(*instrumentIt).renameMelodicInstrument(std::move(name));
-   });
-}
-
-
 Void MelodicInstrumentsModifier::createNewVoiceInMelodicInstrument(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::MusicDeviceContainer& rMDContainer,
+    int componentIdx,
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Void {
-        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rFactoryDataHolder, sdUuid, sdVoiceIdx);
+        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rMDContainer, sdUuid, sdVoiceIdx);
    });
 }
 
 Void MelodicInstrumentsModifier::addComponentToMelodicInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::MusicDeviceContainer& rMDContainer,
+    int componentIdx,
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Void {
-         return MelodicInstrumentModifier(*instrumentIt).addComponentToMelodicInstrumentVoice(rFactoryDataHolder, voiceIdx, sdUuid, sdVoiceIdx);
+         return MelodicInstrumentModifier(*instrumentIt).addComponentToMelodicInstrumentVoice(rMDContainer, componentIdx, voiceIdx, sdUuid, sdVoiceIdx);
    });
 }
 
@@ -116,41 +109,41 @@ Void MelodicInstrumentsModifier::setMelodicComponentAmp(util::Identifiable::UUID
       });
 }
 
-void MelodicInstrumentsModifier::fillReferences(
-    musicDevice::MusicDevice* pMusicDevice)
-{
-   for(auto& instrument : m_rMelodicInstruments)
-   {
-      MelodicInstrumentModifier(instrument).fillReferences(pMusicDevice);
-   }
-}
-
-void MelodicInstrumentsModifier::removeReferences(musicDevice::MusicDevice* pMusicDevice)
-{
-   auto it = m_rMelodicInstruments.begin();
-   while (it != m_rMelodicInstruments.end())
-   {
-      if (MelodicInstrumentModifier(*it).isUnreferencedAndDefaultCreatedFor(pMusicDevice))
-      {
-         it = m_rMelodicInstruments.erase(it);
-      }
-      else
-      {
-         ++it;
-      }
-   }
-}
-
-Void MelodicInstrumentsModifier::incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
-{
-   return getInstrument(uuid).map([](auto instrumentIt) -> void {
-      instrumentIt->incRefCount();
-   });
-}
-
-Void MelodicInstrumentsModifier::decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
-{
-   return getInstrument(uuid).map([](auto instrumentIt) -> void {
-      instrumentIt->decRefCount();
-   });
-}
+// void MelodicInstrumentsModifier::fillReferences(
+//     musicDevice::MusicDevice* pMusicDevice)
+// {
+//    for(auto& instrument : m_rMelodicInstruments)
+//    {
+//       MelodicInstrumentModifier(instrument).fillReferences(pMusicDevice);
+//    }
+// }
+//
+// void MelodicInstrumentsModifier::removeReferences(musicDevice::MusicDevice* pMusicDevice)
+// {
+//    auto it = m_rMelodicInstruments.begin();
+//    while (it != m_rMelodicInstruments.end())
+//    {
+//       if (MelodicInstrumentModifier(*it).isUnreferencedAndDefaultCreatedFor(pMusicDevice))
+//       {
+//          it = m_rMelodicInstruments.erase(it);
+//       }
+//       else
+//       {
+//          ++it;
+//       }
+//    }
+// }
+//
+// Void MelodicInstrumentsModifier::incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
+// {
+//    return getInstrument(uuid).map([](auto instrumentIt) -> void {
+//       instrumentIt->incRefCount();
+//    });
+// }
+//
+// Void MelodicInstrumentsModifier::decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
+// {
+//    return getInstrument(uuid).map([](auto instrumentIt) -> void {
+//       instrumentIt->decRefCount();
+//    });
+// }

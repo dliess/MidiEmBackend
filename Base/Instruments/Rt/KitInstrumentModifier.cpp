@@ -9,18 +9,13 @@ KitInstrumentModifier::KitInstrumentModifier(KitInstrument& rKitInstrument) noex
 {
 }
 
-void KitInstrumentModifier::renameKitInstrument(std::string_view name) noexcept
-{
-   m_rKitInstrument.setName(name);
-}
-
 Void KitInstrumentModifier::createNewVoiceInKitInstrument(
     base::musicDevice::MusicDeviceContainer& rMDContainer,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return rMDContainer.getMusicDeviceByUUID(sdUuid).map(
       [&,this](auto md) -> void {
-         KitVoice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
+         KitVoice voice;
          voice.components.emplace_back(&md->soundHandler.value(),
                                        md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
                                        md->deviceId(),
@@ -88,18 +83,6 @@ Void KitInstrumentModifier::setNoteOffsetInKitInstrumentVoice(
          if(voice->noteOffset != noteOffset)
          {
             voice->noteOffset = noteOffset;
-         }
-      });
-}
-
-Void KitInstrumentModifier::setVoiceNameInKitInstrument(int voiceIdx,
-    std::string_view name) noexcept
-{
-   return safe_at(m_rKitInstrument.m_voices, voiceIdx).map(
-      [&,this](auto voice) -> void {
-         if(voice->name != name)
-         {
-            voice->name = name;
          }
       });
 }

@@ -17,16 +17,16 @@ struct MelodicInstrumentModifier
        MelodicInstrument& rMelodicInstrument) noexcept;
 
    void renameMelodicInstrument(std::string name) noexcept;
-   Void createNewVoiceInMelodicInstrument(
+   Ret<int> createNewVoiceInMelodicInstrument(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   Void createNewVoiceInMelodicInstrument(
+   Ret<int> createNewVoiceInMelodicInstrument(
        base::musicDevice::MusicDevice* pMusicDevice, int sdVoiceIdx) noexcept;
 
-   Void addComponentToMelodicInstrumentVoice(
+   Ret<int> addComponentToMelodicInstrumentVoice(
        base::musicDevice::factory::DataHolder& rFactoryDataHolder, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   Void addComponentToMelodicInstrumentVoice(
+   Ret<int> addComponentToMelodicInstrumentVoice(
        base::musicDevice::MusicDevice* pMusicDevice, int voiceIdx, int sdVoiceIdx) noexcept;
    Void removeComponentFromMelodicInstrumentVoice(
        int voiceIdx,

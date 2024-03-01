@@ -6,7 +6,7 @@ using namespace base::instruments;
 
 rt::KitInstrument KitInstrumentCopyer::copy(const loader::KitInstrument& src) noexcept
 {
-   rt::KitInstrument dst(src.id(), src.name());
+   rt::KitInstrument dst(src.id());
    for (const auto& voice : src.m_voices)
    {
       //dst.addVoice(voice);

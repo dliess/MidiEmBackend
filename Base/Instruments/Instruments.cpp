@@ -13,6 +13,7 @@
 #include "SoundSection.h"
 #include "FixedSizeString.h"
 #include "KitInstrumentCopyer.h"
+#include "MelodicInstrumentCopyer.h"
 #include "MusicDeviceContainer.h"
 
 using namespace base;
@@ -68,10 +69,7 @@ void Instruments::createKitInstrument(std::string name)
    auto uuid = loader::KitInstrumentsModifier(m_loaderData.kitInstruments).createKitInstrument(
        std::move(name));
    static constexpr size_t MaxStringSize = 64;
-   m_deferToRt.callAsync([this, uuid, 
-                           fsName = util::FixedSizeString<MaxStringSize>(name)]() {
-                              m_rtData.kitInstruments.emplace_back(uuid, fsName);
-                           });
+   m_deferToRt.callAsync([this, uuid]() { m_rtData.kitInstruments.emplace_back(uuid); });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -113,9 +111,6 @@ void Instruments::renameKitInstrument(
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
        .renameKitInstrument(instrumentId, name);
-   m_deferToRt.callAsync([this, instrumentId, fsName = util::FixedSizeString<64>(name)]() {
-      rt::KitInstrumentsModifier(m_rtData.kitInstruments).renameKitInstrument(instrumentId, fsName);
-   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -123,8 +118,8 @@ void Instruments::createMelodicInstrument(std::string name)
 {
    auto uuid = loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .createMelodicInstrument(std::move(name));
-   m_deferToRt.callAsync([this, uuid, fsName = util::FixedSizeString<64>(name)]() {
-      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments).createMelodicInstrument(uuid, fsName);
+   m_deferToRt.callAsync([this, uuid]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments).createMelodicInstrument(uuid);
    });
    emitDataChanged(m_loaderData, true);
 }
@@ -146,6 +141,10 @@ void Instruments::insertMelodicInstrument(loader::MelodicInstrument& melodicInst
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .insertMelodicInstrument(melodicInstrument);
+   m_deferToRt.callAsync([this, copy = std::make_unique<loader::MelodicInstrument>(melodicInstrument)]() mutable {
+      m_rtData.melodicInstruments.push_back(MelodicInstrumentCopyer::copy(*copy));
+      m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
+   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -154,6 +153,10 @@ void Instruments::removeMelodicInstrument(
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .removeMelodicInstrument(instrumentId);
+   m_deferToRt.callAsync([this, instrumentId]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+          .removeMelodicInstrument(instrumentId);
+   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -165,22 +168,34 @@ void Instruments::renameMelodicInstrument(
    emitDataChanged(m_loaderData, true);
 }
 
-void Instruments::createNewVoiceInMelodicInstrument(
+Void Instruments::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
-       .createNewVoiceInMelodicInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx);
-   emitDataChanged(m_loaderData, true);
+   return loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .createNewVoiceInMelodicInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx).map(
+      [&,this](int componentIdx){
+         m_deferToRt.callAsync([this, componentIdx, instrumentUuid, sdUuid, sdVoiceIdx]() {
+            rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+                .createNewVoiceInMelodicInstrument(m_rMDContainer, componentIdx, instrumentUuid, sdUuid, sdVoiceIdx);
+      });
+      emitDataChanged(m_loaderData, true);
+   });
 }
 
-void Instruments::addComponentToMelodicInstrumentVoice(
+Void Instruments::addComponentToMelodicInstrumentVoice(
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
-   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
-       .addComponentToMelodicInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
-   emitDataChanged(m_loaderData, true);
+   return loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
+       .addComponentToMelodicInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx).map(
+      [&,this](int componentIdx){
+         m_deferToRt.callAsync([this, componentIdx, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx]() {
+            rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+                .addComponentToMelodicInstrumentVoice(m_rMDContainer, componentIdx, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
+      });
+      emitDataChanged(m_loaderData, true);
+   });
 }
 
 void Instruments::removeComponentFromMelodicInstrumentVoice(
@@ -189,6 +204,10 @@ void Instruments::removeComponentFromMelodicInstrumentVoice(
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .removeComponentFromMelodicInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
+   m_deferToRt.callAsync([this, instrumentUuid, voiceIdx, componentIdx]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+          .removeComponentFromMelodicInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
+   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -197,6 +216,10 @@ void Instruments::removeVoiceFromMelodicInstrument(
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .removeVoiceFromMelodicInstrument(instrumentUuid, voiceIdx);
+   m_deferToRt.callAsync([this, instrumentUuid, voiceIdx]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+          .removeVoiceFromMelodicInstrument(instrumentUuid, voiceIdx);
+   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -206,6 +229,10 @@ void Instruments::setNoteOffsetInMelodicInstrumentComponent(
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, componentIdx, noteOffset);
+   m_deferToRt.callAsync([this, instrumentUuid, componentIdx, noteOffset]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+          .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, componentIdx, noteOffset);
+   });
    emitMelodicComponentNoteOffsetChanged(instrumentUuid, componentIdx, noteOffset); // TODO: emit from here or connect to signal?
 }
 
@@ -309,10 +336,6 @@ void Instruments::setVoiceNameInKitInstrument(
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments).setVoiceNameInKitInstrument(
        instrumentUuid, voiceIdx, name);
-   static constexpr size_t MaxStringSize = 64;
-   m_deferToRt.callAsync([this, &instrumentUuid, voiceIdx, fsName = util::FixedSizeString<MaxStringSize>(name)]() {
-      rt::KitInstrumentsModifier(m_rtData.kitInstruments).setVoiceNameInKitInstrument(instrumentUuid, voiceIdx, fsName);
-   });
    emitDataChanged(m_loaderData, true);
 }
 
@@ -421,6 +444,10 @@ void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .setMelodicComponentAmp(uuid, componentIdx, amp);
+   m_deferToRt.callAsync([this, uuid, componentIdx, amp]() {
+      rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
+          .setMelodicComponentAmp(uuid, componentIdx, amp);
+   });
    emitMelodicComponentAmpChanged(uuid, componentIdx, amp);
 }
 

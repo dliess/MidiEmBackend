@@ -4,7 +4,6 @@
 #include <array>
 #include <memory>
 #include <vector>
-#include <string_view>
 
 #include "Identifiable.h"
 #include "Instrument.h"
@@ -23,7 +22,7 @@ class MelodicInstrument : public Instrument
 {
 public:
 
-   MelodicInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept;
+   MelodicInstrument(util::Identifiable::UUIDView uuid) noexcept;
 
    Void noteOn(int note, float velocity, void* token = nullptr);
    Void noteOff(int note, float velocity, void* token = nullptr);
@@ -77,20 +76,17 @@ public:
    [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
       parameterDescription(int componentIdx, int parameterIdx) const;
 
-   std::string name() const noexcept;
-   void setName(const std::string& name) noexcept;
-
    void updateParameterUI();
 
    // [[nodiscard]] const Component* getFirstComponent(size_t componentIdx) const;
    
 private:
    friend class base::instruments::MelodicInstrumentCopyer;
+   friend class MelodicInstrumentModifier;
    static constexpr std::size_t NUM_COMPONENTS = 4;
    using Voice = std::array<std::optional<SdVoiceRef>, NUM_COMPONENTS>;
    std::vector<Voice> m_voices;
    std::array<std::optional<ComponentData>, NUM_COMPONENTS> m_engines;
-   std::string m_name;
    mutable NoteAllocation m_noteAllocation;
 };
 

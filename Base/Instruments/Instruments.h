@@ -49,11 +49,11 @@ struct Instruments   //: public utils::Settings<Instruments>
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 const std::string& name);
 
-   void createNewVoiceInMelodicInstrument(
+   Void createNewVoiceInMelodicInstrument(
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
 
-   void addComponentToMelodicInstrumentVoice(
+   Void addComponentToMelodicInstrumentVoice(
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx);
    void removeComponentFromMelodicInstrumentVoice(

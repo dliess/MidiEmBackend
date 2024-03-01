@@ -8,9 +8,8 @@
 
 using namespace base::instruments::rt;
 
-MelodicInstrument::MelodicInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept :
-    Instrument(uuid),
-    m_name(name)
+MelodicInstrument::MelodicInstrument(util::Identifiable::UUIDView uuid) noexcept :
+    Instrument(uuid)
 {
 }
 
@@ -279,13 +278,6 @@ MelodicInstrument::parameterDescription(int componentIdx,
       }
       return tl::unexpected(Error::elementEmpty);
    });
-}
-
-std::string MelodicInstrument::name() const noexcept { return m_name; }
-
-void MelodicInstrument::setName(const std::string& name) noexcept
-{
-   m_name = name;
 }
 
 void MelodicInstrument::updateParameterUI() 

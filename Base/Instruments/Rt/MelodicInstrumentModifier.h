@@ -4,7 +4,7 @@
 #include "FixedSizeString.h"
 #include "InstrumentsData.h"
 #include "MelodicInstrument.h"
-#include "MusicDeviceFactoryDataHolder.h"
+#include "MusicDeviceContainer.h"
 #include "ErrorHandling.h"
 
 
@@ -12,22 +12,23 @@ namespace base::instruments::rt
 {
 struct MelodicInstrumentModifier
 {
-   using Engine = base::musicDevice::description::sound::EngineBase;
+   // using Engine = base::musicDevice::description::sound::EngineBase;
    MelodicInstrumentModifier(
        MelodicInstrument& rMelodicInstrument) noexcept;
 
-   void renameMelodicInstrument(std::string name) noexcept;
    Void createNewVoiceInMelodicInstrument(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::MusicDeviceContainer& rMDContainer, int componentIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
-   Void createNewVoiceInMelodicInstrument(
+   Void createNewVoiceInMelodicInstrument( int componentIdx,
        base::musicDevice::MusicDevice* pMusicDevice, int sdVoiceIdx) noexcept;
 
    Void addComponentToMelodicInstrumentVoice(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder, int voiceIdx,
+       base::musicDevice::MusicDeviceContainer& rMDContainer,
+       int componentIdx,
+       int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void addComponentToMelodicInstrumentVoice(
-       base::musicDevice::MusicDevice* pMusicDevice, int voiceIdx, int sdVoiceIdx) noexcept;
+       int componentIdx, base::musicDevice::MusicDevice* pMusicDevice, int voiceIdx, int sdVoiceIdx) noexcept;
    Void removeComponentFromMelodicInstrumentVoice(
        int voiceIdx,
        int componentIdx) noexcept;
@@ -37,19 +38,11 @@ struct MelodicInstrumentModifier
 
    Void setMelodicComponentAmp(int componentIdx, float amp) noexcept;
 
-   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
-   bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
+   // void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
+   // bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
    
 private:
    MelodicInstrument& m_rMelodicInstrument;
-   [[nodiscard]] Ret<size_t> 
-   findComponentIdxToPlaceNewComponent(
-       base::musicDevice::MusicDevice* pMusicDevice, int sdVoiceIdx) const;
-   
-   [[nodiscard]] Ret<MelodicInstrument::ParameterData::EngineId>
-   determineComponentEngineId(
-      base::musicDevice::MusicDevice* pMusicDevice,
-      int sdVoiceIdx) const;
 };
 
 }   // namespace base::instruments::rt

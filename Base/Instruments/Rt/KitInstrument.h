@@ -5,7 +5,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <string_view>
 
 #include "CallbackSignal.h"
 #include "Identifiable.h"
@@ -24,7 +23,7 @@ class KitInstrument : public Instrument
 {
 public:
    static constexpr std::size_t NUM_VOICES = 16;
-   explicit KitInstrument(util::Identifiable::UUIDView uuid, std::string_view name) noexcept;
+   explicit KitInstrument(util::Identifiable::UUIDView uuid) noexcept;
    void noteOn(int note, float velocity, void* token = nullptr);
    void noteOff(int note, float velocity, void* token = nullptr);
    void noteOn(int voiceIdx, int note, float velocity,
@@ -65,10 +64,6 @@ public:
    [[nodiscard]] Ret<const musicDevice::description::sound::Parameter*>
    parameterDescription(int voiceIdx, int componentIdx, int parameterIdx) const;
       
-
-   std::string name() const noexcept;
-   void setName(std::string_view name) noexcept;
-
    void updateParameterUI();
 
    Void setVoiceNoteOffset(int voiceIdx, int offset);
@@ -82,7 +77,6 @@ private:
    friend class base::instruments::KitInstrumentCopyer;
    friend class KitInstrumentsModifier;
    friend class KitInstrumentModifier;
-   std::string m_name;
    std::vector<KitVoice> m_voices;
    Ret<int> toVoiceIndex(int note) const;
    Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;
