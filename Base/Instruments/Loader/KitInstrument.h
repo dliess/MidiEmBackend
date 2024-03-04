@@ -8,10 +8,11 @@
 
 #include "CallbackSignal.h"
 #include "Instrument.h"
-#include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
 #include "ErrorHandling.h"
+#include "ParameterData.h"
+
 
 namespace base::instruments { class KitInstrumentCopyer; }
 
@@ -24,9 +25,10 @@ public:
    KitInstrument() = default;
    explicit KitInstrument(std::string name) noexcept;
 
-   [[nodiscard]] Ret<float> getParameterValue(
-       int voiceIdx, int componentIdx, int parameterIdx,
-       musicDevice::sound::ParameterAttr parameterAttr) const;
+      // TODO: maybe remove this
+   // [[nodiscard]] Ret<float> getParameterValue(
+   //     int voiceIdx, int componentIdx, int parameterIdx,
+   //     musicDevice::sound::ParameterAttr parameterAttr) const;
    Void setParameterValue(int voiceIdx, int componentIdx, int parameterIdx,
                           musicDevice::sound::ParameterAttr parameterAttr,
                           float value);
@@ -48,13 +50,40 @@ public:
 
    static constexpr int MAX_VOICES = 16;
 
+   struct Component
+   {
+      Component() = default;
+      explicit Component(const std::vector<musicDevice::description::sound::Parameter>& paramDescr,
+                            musicDevice::MusicDeviceId soundDeviceId,
+                            int sdVoiceIdx) noexcept;
+
+      bool operator==(const Component& rhs) const;
+
+      const std::vector<musicDevice::description::sound::Parameter>* paramDescr{nullptr};
+      std::vector<musicDevice::sound::ParameterData> parameterData;
+      musicDevice::MusicDeviceId soundDeviceId;
+      int sdVoiceIdx{0};
+      int noteOffset{0};
+      float amp{1.0f};
+   };
+   struct Voice   //: public util::Identifiable
+   {
+      Voice() noexcept = default;
+      explicit Voice(std::string name) noexcept : name(std::move(name)) {};
+      std::string name;
+      static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
+      std::vector<Component> components;
+      int noteOffset{0};
+      float amp{1.0f};
+      bool operator==(const Voice& rhs) const noexcept = default;
+   };
 private:
    // std::string m_name;
    friend class base::instruments::KitInstrumentCopyer;
-   std::vector<KitVoice> m_voices;
+   std::vector<Voice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
-   Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;
-   Ret<const KitComponent*> getConstComponent(int voiceIdx, int componentIdx) const noexcept;
+   Ret<Component*> getComponent(int voiceIdx, int componentIdx) noexcept;
+   Ret<const Component*> getConstComponent(int voiceIdx, int componentIdx) const noexcept;
 };
 
 }   // namespace base::instruments::loader

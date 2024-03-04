@@ -389,8 +389,8 @@ std::string Instruments::serializeMelodicInstruments() const
 void Instruments::fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
 {
    //TODO
-   loader::KitInstrumentsModifier(m_loaderData.kitInstruments).fillReferences(pMusicDevice);
-   loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).fillReferences(pMusicDevice);
+   // loader::KitInstrumentsModifier(m_loaderData.kitInstruments).fillReferences(pMusicDevice);
+   // loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).fillReferences(pMusicDevice);
    emitDataChanged(m_loaderData, false);
 }
 

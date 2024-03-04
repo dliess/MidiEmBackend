@@ -57,12 +57,10 @@ void InstrumentsMDChangeHandler::addDefaultInstrumentsForDrumKit(
    kitInstrument.markAsDefaultCreated();
    for (int voiceIdx = 0; voiceIdx < voiceDescr.size(); ++voiceIdx)
    {
-      KitVoice voice(voiceDescr[voiceIdx].name);
+      KitInstrument::Voice voice(voiceDescr[voiceIdx].name);
       voice.components.emplace_back(
-          pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
-                                     : nullptr,
-          pMusicDevice->description()->soundSection->engineBase(voiceIdx)->parameters.size(),
-          pMusicDevice->deviceId(), voiceIdx, 0);
+          pMusicDevice->description()->soundSection->engineBase(voiceIdx)->parameters,
+          pMusicDevice->deviceId(), voiceIdx);
       loader::KitInstrumentModifier(kitInstrument).addVoice(voiceIdx, voice);
    }
    if (!m_rInstruments.hasSameInstrument(kitInstrument))

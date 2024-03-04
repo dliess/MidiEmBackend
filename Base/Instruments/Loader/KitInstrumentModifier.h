@@ -33,12 +33,11 @@ struct KitInstrumentModifier
    Void setKitComponentAmp(int voiceIdx, int componentIdx, float amp);
    Void setKitVoiceAmp(int voiceIdx, float amp);
 
-   Void addVoice(int padIdx, KitVoice voice) noexcept;
-   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
+   Void addVoice(int padIdx, KitInstrument::Voice voice) noexcept;
    bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
 private:
    KitInstrument& m_rKitInstrument;
-   void forEachComponent(util::function_ref<void(KitComponent&)> f);
+   void forEachComponent(util::function_ref<void(KitInstrument::Component&)> f);
 };
 
 }   // namespace base::instruments::loader

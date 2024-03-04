@@ -21,11 +21,10 @@ Void KitInstrumentModifier::createNewVoiceInKitInstrument(
 {
    return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).map(
       [&,this](auto md) -> void {
-         KitVoice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
-         voice.components.emplace_back(&md->soundHandler.value(),
-                                       md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
+         KitInstrument::Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
+         voice.components.emplace_back(md->description()->soundSection->engineBase(sdVoiceIdx)->parameters,
                                        md->deviceId(),
-                                       sdVoiceIdx, 0);
+                                       sdVoiceIdx);
          m_rKitInstrument.m_voices.push_back(std::move(voice));
          m_rKitInstrument.unmarkAsDefaultCreated();
       });
@@ -43,15 +42,14 @@ Void KitInstrumentModifier::addComponentToKitInstrumentVoice(
             return tl::unexpected(Error::soundHandlerNotAvailable);
          }
          if (m_rKitInstrument.m_voices.operator[](voiceIdx).components.size() >=
-             KitVoice::NUM_MAX_COMPONENTS_PER_VOICE)
+             KitInstrument::Voice::NUM_MAX_COMPONENTS_PER_VOICE)
          {
             return tl::unexpected(Error::maxComponentsPerVoiceReached);
          }
          m_rKitInstrument.m_voices.operator[](voiceIdx).components.emplace_back(
-             &md->soundHandler.value(),
-             md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
+             md->description()->soundSection->engineBase(sdVoiceIdx)->parameters,
              md->deviceId(),
-             sdVoiceIdx, 0);
+             sdVoiceIdx);
          m_rKitInstrument.unmarkAsDefaultCreated();
          return Void{};
       });
@@ -81,7 +79,7 @@ Void KitInstrumentModifier::setNoteOffsetInKitInstrumentComponent(int voiceIdx,
 {
    return safe_at(m_rKitInstrument.m_voices, voiceIdx).map(
       [&,this](auto voice) -> void {
-         voice->components[componentIdx].setNoteOffset(noteOffset);
+         voice->components[componentIdx].noteOffset = noteOffset;
          m_rKitInstrument.unmarkAsDefaultCreated();
       });
 }
@@ -123,7 +121,7 @@ Void KitInstrumentModifier::setKitVoiceAmp(int voiceIdx, float amp)
    return m_rKitInstrument.setVoiceAmp(voiceIdx, amp);
 }
 
-Void KitInstrumentModifier::addVoice(int padIdx, KitVoice voice) noexcept
+Void KitInstrumentModifier::addVoice(int padIdx, KitInstrument::Voice voice) noexcept
 {
    return safe_at(m_rKitInstrument.m_voices, padIdx).map(
       [this, padIdx, srcVoice = std::move(voice) ](auto dstVoice) {
@@ -132,7 +130,7 @@ Void KitInstrumentModifier::addVoice(int padIdx, KitVoice voice) noexcept
 }
 
 void KitInstrumentModifier::forEachComponent(
-    util::function_ref<void(KitComponent&)> f)
+    util::function_ref<void(KitInstrument::Component&)> f)
 {
    for (auto& voice : m_rKitInstrument.m_voices)
    {
@@ -143,24 +141,12 @@ void KitInstrumentModifier::forEachComponent(
    }
 }
 
-void KitInstrumentModifier::fillReferences(musicDevice::MusicDevice* pMusicDevice)
-{
-   forEachComponent([&pMusicDevice](KitComponent& component) {
-      if (component.m_soundDeviceId == pMusicDevice->deviceId())
-      {
-         component.setSoundDevicePtr(
-             pMusicDevice->soundHandler ? &pMusicDevice->soundHandler.value()
-                                        : nullptr);
-      }
-   });
-}
-
 bool KitInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const
 {
    auto hasComponentWith = [this](const musicDevice::MusicDeviceId& deviceId) {
       return std::ranges::any_of(m_rKitInstrument.m_voices, [deviceId](auto& voice) {
          return std::ranges::any_of(voice.components, [deviceId](auto& component) {
-            return component.m_soundDeviceId == deviceId;
+            return component.soundDeviceId == deviceId;
          });
       });
    };

@@ -46,7 +46,6 @@ struct KitInstrumentsModifier
    Void setKitComponentAmp(util::Identifiable::UUIDView uuid, int voiceIdx,
                            int componentIdx, float amp);
    Void setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx, float amp);
-   void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    Void incKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    Void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid);
    void removeReferences(musicDevice::MusicDevice* pMusicDevice);

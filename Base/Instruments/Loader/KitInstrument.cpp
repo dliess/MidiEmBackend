@@ -4,17 +4,17 @@
 
 using namespace base::instruments::loader;
 
-Ret<KitComponent*> KitInstrument::getComponent(int voiceIdx, int componentIdx) noexcept
+Ret<KitInstrument::Component*> KitInstrument::getComponent(int voiceIdx, int componentIdx) noexcept
 {
    return safe_at(m_voices, voiceIdx).and_then(
-      [componentIdx](auto voice) -> Ret<KitComponent*> {
+      [componentIdx](auto voice) -> Ret<KitInstrument::Component*> {
          return safe_at(voice->components, componentIdx);
       });
 }
-Ret<const KitComponent*> KitInstrument::getConstComponent(int voiceIdx, int componentIdx) const noexcept
+Ret<const KitInstrument::Component*> KitInstrument::getConstComponent(int voiceIdx, int componentIdx) const noexcept
 {
    return safe_at(m_voices, voiceIdx).and_then(
-      [componentIdx](auto voice) -> Ret<const KitComponent*> {
+      [componentIdx](auto voice) -> Ret<const KitInstrument::Component*> {
          return safe_at(voice->components, componentIdx);
       });
 }
@@ -24,15 +24,19 @@ KitInstrument::KitInstrument(std::string name) noexcept :
 {
 }
 
-Ret<float> KitInstrument::getParameterValue(
-    int voiceIdx, int componentIdx, int parameterIdx,
-    musicDevice::sound::ParameterAttr parameterAttr) const
-{
-   return getConstComponent(voiceIdx, componentIdx).and_then(
-      [parameterIdx, parameterAttr](auto component) {
-         return component->getParameterValue(parameterIdx, parameterAttr);
-   });
-}
+// Todo: maybe remove
+// Ret<float> KitInstrument::getParameterValue(
+//     int voiceIdx, int componentIdx, int parameterIdx,
+//     musicDevice::sound::ParameterAttr parameterAttr) const
+// {
+//    return getConstComponent(voiceIdx, componentIdx).and_then(
+//       [parameterIdx, parameterAttr](auto component) {
+//          return safe_at(component->parameterData, parameterIdx).map(
+//             [parameterAttr](auto p) -> float{ 
+//                return getParameterData(*p, parameterAttr);
+//             });
+//    });
+// }
 
 Void KitInstrument::setParameterValue(
     int voiceIdx, int componentIdx, int parameterIdx,
@@ -40,7 +44,10 @@ Void KitInstrument::setParameterValue(
 {
    return getComponent(voiceIdx, componentIdx).and_then(
       [parameterIdx, parameterAttr, value](auto component) {
-         return component->setParameterValue(parameterIdx, parameterAttr, value);
+         return safe_at(component->parameterData, parameterIdx).map(
+            [parameterAttr, value](auto p) -> void {
+               setParameterData(*p, parameterAttr, value);
+            });
       });
 }
 
@@ -50,7 +57,7 @@ KitInstrument::parameterDescription(int voiceIdx, int componentIdx,
 {
    return getConstComponent(voiceIdx, componentIdx).and_then(
       [parameterIdx](auto component) {
-         return component->parameterDescription(parameterIdx);
+         return safe_at(*component->paramDescr, parameterIdx);
       });
 }
 
@@ -68,9 +75,9 @@ Void KitInstrument::setComponentNoteOffset(int voiceIdx, int componentIdx, int o
 {
    return getComponent(voiceIdx, componentIdx).map(
       [this,voiceIdx, componentIdx, offset](auto component) {
-         if(offset != component->noteOffset())
+         if(offset != component->noteOffset)
          {
-            component->setNoteOffset(offset);
+            component->noteOffset = offset;
          }
       });
 }
@@ -90,9 +97,9 @@ Void KitInstrument::setComponentAmp(int voiceIdx, int componentIdx, float amp)
 {
    return getComponent(voiceIdx, componentIdx).map(
       [this,voiceIdx, componentIdx, amp](auto component) {
-         if(amp != component->amp())
+         if(amp != component->amp)
          {
-             component->setAmp(amp); 
+             component->amp = amp;
         }
       });
 }

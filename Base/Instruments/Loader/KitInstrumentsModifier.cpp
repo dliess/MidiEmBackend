@@ -166,14 +166,6 @@ Void KitInstrumentsModifier::setKitVoiceAmp(util::Identifiable::UUIDView uuid, i
       });
 }
 
-void KitInstrumentsModifier::fillReferences(musicDevice::MusicDevice* pMusicDevice)
-{
-   for (auto& kitInstrument : m_rKitInstruments)
-   {
-      KitInstrumentModifier(kitInstrument).fillReferences(pMusicDevice);
-   }
-}
-
 void KitInstrumentsModifier::removeReferences(musicDevice::MusicDevice* pMusicDevice)
 {
    auto it = m_rKitInstruments.begin();
