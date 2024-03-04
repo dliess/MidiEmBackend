@@ -46,6 +46,8 @@ struct ParameterCache
        std::size_t parameterIdx,
        musicDevice::sound::ParameterAttr parameterAttr) const;
    void clearOverwriteList() const;
+   Ret<float> getParameterValue(
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const;
 
    CB_SIGNAL_SINGLE_SUBSCRIBER(DataChangedUI, int,
                                musicDevice::sound::ParameterAttr, float);

@@ -121,6 +121,25 @@ inline void ParameterCache::clearOverwriteList() const
    dontOverwriteOnNextNoteOn_.reset();
 }
 
+Ret<float> ParameterCache::getParameterValue(
+    int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
+{
+      switch (parameterAttr)
+      {
+         case musicDevice::sound::ParameterAttr::Commanded:
+            return at(parameterIdx).map([](auto p){ return p->commanded; });
+         case musicDevice::sound::ParameterAttr::LfoAmplitude:
+            return at(parameterIdx).map([](auto p){ return p->lfo.amplitude; });
+         case musicDevice::sound::ParameterAttr::LfoFrequency:
+            return at(parameterIdx).map([](auto p){ return p->lfo.frequency; });
+         case musicDevice::sound::ParameterAttr::LfoMultiplierExp:
+            return at(parameterIdx).map([](auto p) { return float(p->lfo.multiplierExp); });
+         case musicDevice::sound::ParameterAttr::LfoWaveform:
+            return at(parameterIdx).map([](auto p){ return float(static_cast<int>(p->lfo.waveform)); });
+      }
+   return tl::unexpected(Error::indexOutOfRange);
+}
+
 }   // namespace base::instruments::rt
 
 #endif

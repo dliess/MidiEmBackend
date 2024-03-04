@@ -11,6 +11,7 @@
 #include "Loader/KitInstrument.h"
 #include "Loader/MelodicInstrument.h"
 #include "Rt/InstrumentsData.h"
+#include "MusicDevice.h"
 // #include "Meta.h"
 // #include "Settings_old.h"
 #include "function_ref.h"

@@ -9,10 +9,12 @@
 #include "CallbackSignal.h"
 #include "Identifiable.h"
 #include "Instrument.h"
-#include "KitInstrumentVoice.h"
 #include "MusicDeviceId.h"
 #include "function_ref.h"
 #include "ErrorHandling.h"
+#include "SdVoiceRef.h"
+#include "ComponentData.h"
+#include "ParameterData.h"
 
 namespace base::instruments { class KitInstrumentCopyer; }
 
@@ -77,10 +79,25 @@ private:
    friend class base::instruments::KitInstrumentCopyer;
    friend class KitInstrumentsModifier;
    friend class KitInstrumentModifier;
-   std::vector<KitVoice> m_voices;
+   struct Voice   //: public util::Identifiable
+   {
+      struct Component
+      {
+         explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
+                            musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
+                            int noteOffset, float amp) noexcept;
+         SdVoiceRef sdVoiceRef;
+         ComponentData data;
+      };
+      static constexpr int NUM_MAX_COMPONENTS_PER_VOICE = 4;
+      std::vector<Component> components;
+      int noteOffset{0};
+      float amp{1.0f};
+   };
+   std::vector<Voice> m_voices;
    Ret<int> toVoiceIndex(int note) const;
-   Ret<KitComponent*> getComponent(int voiceIdx, int componentIdx) noexcept;
-   Ret<const KitComponent*> getComponent(int voiceIdx, int componentIdx) const noexcept;
+   Ret<Voice::Component*> getComponent(int voiceIdx, int componentIdx) noexcept;
+   Ret<const Voice::Component*> getComponent(int voiceIdx, int componentIdx) const noexcept;
 };
 
 } // namespace base::instruments::rt
