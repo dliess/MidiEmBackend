@@ -6,7 +6,7 @@
 namespace base::instruments::loader
 {
 
-inline KitInstrument::Component::Component(const std::vector<musicDevice::description::sound::Parameter>& paramDescr,
+inline KitInstrument::Voice::Component::Component(const std::vector<musicDevice::description::sound::Parameter>& paramDescr,
                          musicDevice::MusicDeviceId soundDeviceId,
                          int sdVoiceIdx) noexcept
     : 
@@ -17,7 +17,7 @@ inline KitInstrument::Component::Component(const std::vector<musicDevice::descri
 {
 }
 
-inline bool KitInstrument::Component::operator==(const Component& rhs) const
+inline bool KitInstrument::Voice::Component::operator==(const Component& rhs) const
 {
    return soundDeviceId == rhs.soundDeviceId &&
           sdVoiceIdx == rhs.sdVoiceIdx &&

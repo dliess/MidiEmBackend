@@ -9,12 +9,12 @@ namespace meta
 {
 
 template<>
-inline auto registerMembers<base::instruments::loader::KitInstrument::Component>()
+inline auto registerMembers<base::instruments::loader::KitInstrument::Voice::Component>()
 {
-   return members(member("parameterData", &base::instruments::loader::KitInstrument::Component::parameterData),
-                  member("soundDeviceId", &base::instruments::loader::KitInstrument::Component::soundDeviceId),
-                  member("sdVoiceIdx", &base::instruments::loader::KitInstrument::Component::sdVoiceIdx),
-                  member("noteOffset", &base::instruments::loader::KitInstrument::Component::noteOffset)
+   return members(member("parameterData", &base::instruments::loader::KitInstrument::Voice::Component::parameterData),
+                  member("soundDeviceId", &base::instruments::loader::KitInstrument::Voice::Component::soundDeviceId),
+                  member("sdVoiceIdx", &base::instruments::loader::KitInstrument::Voice::Component::sdVoiceIdx),
+                  member("noteOffset", &base::instruments::loader::KitInstrument::Voice::Component::noteOffset)
    );
 }
 

@@ -50,24 +50,24 @@ public:
 
    static constexpr int MAX_VOICES = 16;
 
-   struct Component
-   {
-      Component() = default;
-      explicit Component(const std::vector<musicDevice::description::sound::Parameter>& paramDescr,
-                            musicDevice::MusicDeviceId soundDeviceId,
-                            int sdVoiceIdx) noexcept;
-
-      bool operator==(const Component& rhs) const;
-
-      const std::vector<musicDevice::description::sound::Parameter>* paramDescr{nullptr};
-      std::vector<musicDevice::sound::ParameterData> parameterData;
-      musicDevice::MusicDeviceId soundDeviceId;
-      int sdVoiceIdx{0};
-      int noteOffset{0};
-      float amp{1.0f};
-   };
    struct Voice   //: public util::Identifiable
    {
+      struct Component
+      {
+         Component() = default;
+         explicit Component(const std::vector<musicDevice::description::sound::Parameter>& paramDescr,
+                               musicDevice::MusicDeviceId soundDeviceId,
+                               int sdVoiceIdx) noexcept;
+
+         bool operator==(const Component& rhs) const;
+
+         const std::vector<musicDevice::description::sound::Parameter>* paramDescr{nullptr};
+         std::vector<musicDevice::sound::ParameterData> parameterData;
+         musicDevice::MusicDeviceId soundDeviceId;
+         int sdVoiceIdx{0};
+         int noteOffset{0};
+         float amp{1.0f};
+      };
       Voice() noexcept = default;
       explicit Voice(std::string name) noexcept : name(std::move(name)) {};
       std::string name;
@@ -82,8 +82,8 @@ private:
    friend class base::instruments::KitInstrumentCopyer;
    std::vector<Voice> m_voices;
    std::optional<int> toVoiceIndex(int note) const;
-   Ret<Component*> getComponent(int voiceIdx, int componentIdx) noexcept;
-   Ret<const Component*> getConstComponent(int voiceIdx, int componentIdx) const noexcept;
+   Ret<Voice::Component*> getComponent(int voiceIdx, int componentIdx) noexcept;
+   Ret<const Voice::Component*> getConstComponent(int voiceIdx, int componentIdx) const noexcept;
 };
 
 }   // namespace base::instruments::loader

@@ -4,17 +4,17 @@
 
 using namespace base::instruments::loader;
 
-Ret<KitInstrument::Component*> KitInstrument::getComponent(int voiceIdx, int componentIdx) noexcept
+Ret<KitInstrument::Voice::Component*> KitInstrument::getComponent(int voiceIdx, int componentIdx) noexcept
 {
    return safe_at(m_voices, voiceIdx).and_then(
-      [componentIdx](auto voice) -> Ret<KitInstrument::Component*> {
+      [componentIdx](auto voice) -> Ret<KitInstrument::Voice::Component*> {
          return safe_at(voice->components, componentIdx);
       });
 }
-Ret<const KitInstrument::Component*> KitInstrument::getConstComponent(int voiceIdx, int componentIdx) const noexcept
+Ret<const KitInstrument::Voice::Component*> KitInstrument::getConstComponent(int voiceIdx, int componentIdx) const noexcept
 {
    return safe_at(m_voices, voiceIdx).and_then(
-      [componentIdx](auto voice) -> Ret<const KitInstrument::Component*> {
+      [componentIdx](auto voice) -> Ret<const KitInstrument::Voice::Component*> {
          return safe_at(voice->components, componentIdx);
       });
 }

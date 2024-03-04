@@ -130,7 +130,7 @@ Void KitInstrumentModifier::addVoice(int padIdx, KitInstrument::Voice voice) noe
 }
 
 void KitInstrumentModifier::forEachComponent(
-    util::function_ref<void(KitInstrument::Component&)> f)
+    util::function_ref<void(KitInstrument::Voice::Component&)> f)
 {
    for (auto& voice : m_rKitInstrument.m_voices)
    {
