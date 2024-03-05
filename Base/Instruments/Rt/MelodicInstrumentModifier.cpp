@@ -33,7 +33,7 @@ Void MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
       if(!m_rMelodicInstrument.m_engines[componentIdx].has_value())
       {
          m_rMelodicInstrument.m_engines[componentIdx].emplace(
-            md->description()->soundSection->engineBase(sdVoiceIdx));
+            md->description()->soundSection->engineBase(sdVoiceIdx)->parameters);
       }
       return Void{};
 }
@@ -60,7 +60,7 @@ Void MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
          if(!m_rMelodicInstrument.m_engines[componentIdx].has_value())
          {
             m_rMelodicInstrument.m_engines[componentIdx].emplace(
-               md->description()->soundSection->engineBase(sdVoiceIdx));
+               md->description()->soundSection->engineBase(sdVoiceIdx)->parameters);
          }
       });
 }

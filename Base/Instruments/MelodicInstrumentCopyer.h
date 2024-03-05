@@ -3,6 +3,7 @@
 
 #include "Loader/MelodicInstrument.h"
 #include "Rt/MelodicInstrument.h"
+#include "MusicDeviceContainer.h"
 
 namespace base::instruments
 {
@@ -11,7 +12,8 @@ namespace base::instruments
 class MelodicInstrumentCopyer
 {
 public:
-   static rt::MelodicInstrument copy(const loader::MelodicInstrument& src) noexcept;
+   static rt::MelodicInstrument copy(const base::musicDevice::MusicDeviceContainer& mdContainer,
+                                     const loader::MelodicInstrument& src) noexcept;
 };
 
 }   // namespace base::instruments

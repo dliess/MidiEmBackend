@@ -7,14 +7,22 @@
 
 using namespace base::instruments::rt;
 
+
 KitInstrument::Voice::Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
-                            musicDevice::MusicDeviceId soundDeviceId,
-                            int sdVoiceIdx, int noteOffset, float amp) noexcept :
+                            musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
+                            const ParametersDescr& parametersDescr) noexcept :
     sdVoiceRef(soundDeviceId, sdVoiceIdx, pSoundDevice),
-    data(pSoundDevice->description().engineBase(sdVoiceIdx))
+    data(parametersDescr)
 {
-   data.noteOffset = noteOffset;
-   data.amp = amp;
+}
+
+KitInstrument::Voice::Component::Component(musicDevice::sound::SoundHandler* pSoundDevice,
+                            musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
+                            const ParametersDescr& parametersDescr,
+                            const ParameterData& paramData) noexcept :
+    sdVoiceRef(soundDeviceId, sdVoiceIdx, pSoundDevice),
+    data(parametersDescr, paramData)
+{
 }
 
 KitInstrument::KitInstrument(util::Identifiable::UUIDView uuid) noexcept :

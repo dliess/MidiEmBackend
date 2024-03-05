@@ -78,7 +78,7 @@ void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
        .insertKitInstrument(kitInstrument);
    m_deferToRt.callAsync([this, copy = std::make_unique<loader::KitInstrument>(kitInstrument)]() mutable { 
-      m_rtData.kitInstruments.push_back(KitInstrumentCopyer::copy(*copy));
+      m_rtData.kitInstruments.push_back(KitInstrumentCopyer::copy(m_rMDContainer, *copy));
       m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
    });
    emitDataChanged(m_loaderData, true);
@@ -142,7 +142,7 @@ void Instruments::insertMelodicInstrument(loader::MelodicInstrument& melodicInst
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .insertMelodicInstrument(melodicInstrument);
    m_deferToRt.callAsync([this, copy = std::make_unique<loader::MelodicInstrument>(melodicInstrument)]() mutable {
-      m_rtData.melodicInstruments.push_back(MelodicInstrumentCopyer::copy(*copy));
+      m_rtData.melodicInstruments.push_back(MelodicInstrumentCopyer::copy(m_rMDContainer, *copy));
       m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
    });
    emitDataChanged(m_loaderData, true);

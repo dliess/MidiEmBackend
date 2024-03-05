@@ -46,14 +46,6 @@ Void KitInstrumentsModifier::removeKitInstrument(
    });
 }
 
-Void KitInstrumentsModifier::renameKitInstrument(
-    const util::Identifiable::UUID& instrumentId, std::string_view name) noexcept
-{
-   return getInstrument(instrumentId).map([this, name = std::move(name)](auto instrumentIt) -> void {
-      KitInstrumentModifier(*instrumentIt).renameKitInstrument(name);
-   });
-}
-
 Void KitInstrumentsModifier::createNewVoiceInKitInstrument(
     base::musicDevice::MusicDeviceContainer& rMDContainer,
     const util::Identifiable::UUID& instrumentUuid,
@@ -135,16 +127,6 @@ Void KitInstrumentsModifier::setNoteOffsetInKitInstrumentVoice(const util::Ident
    return getInstrument(instrumentUuid).and_then(
       [&](auto instrumentIt) -> Void {
          return KitInstrumentModifier(*instrumentIt).setNoteOffsetInKitInstrumentVoice(voiceIdx, noteOffset);
-      });
-}
-
-Void KitInstrumentsModifier::setVoiceNameInKitInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    std::string_view name) noexcept
-{
-   return getInstrument(instrumentUuid).and_then(
-      [&](auto instrumentIt) -> Void {
-         return KitInstrumentModifier(*instrumentIt).setVoiceNameInKitInstrument(voiceIdx, name);
       });
 }
 

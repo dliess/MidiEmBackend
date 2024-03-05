@@ -9,11 +9,17 @@ namespace base::instruments::rt
 
 struct ComponentData
 {
-   ComponentData(const musicDevice::description::sound::EngineBase* pEngineDescr) noexcept : 
-      parameterCache(pEngineDescr->parameters.size()), 
-      parameterLimiter(pEngineDescr) {}
+   using ParametersDescr = std::vector<musicDevice::description::sound::Parameter>;
+   using ParameterData = std::vector<musicDevice::sound::ParameterData>;
+   explicit ComponentData(const ParametersDescr& parametersDescr) noexcept : 
+      parameterCache(parametersDescr.size()), 
+      parametersDescr(&parametersDescr) {}
+   explicit ComponentData(const ParametersDescr& parametersDescr, 
+                          const ParameterData& parameterData) noexcept :
+      parameterCache(parameterData), 
+      parametersDescr(&parametersDescr) {}
    ParameterCache parameterCache;
-   ParameterLimiter parameterLimiter;
+   const ParametersDescr* parametersDescr;
    int noteOffset{0};
    float amp{1.0f};
 };

@@ -43,7 +43,7 @@ Ret<int> MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
             m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
                { md->deviceId().deviceName(), 
                  md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
-               md->description()->soundSection->engineBase(sdVoiceIdx),
+               md->description()->soundSection->engineBase(sdVoiceIdx)->parameters,
                md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
          }
          m_rMelodicInstrument.unmarkAsDefaultCreated();
@@ -77,7 +77,7 @@ Ret<int> MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
                   m_rMelodicInstrument.m_parameters[componentIdx] = MelodicInstrument::ParameterData(
                      { md->deviceId().deviceName(), 
                        md->description()->soundSection->voice2EngineIdx(sdVoiceIdx) },
-                     md->description()->soundSection->engineBase(sdVoiceIdx),
+                     md->description()->soundSection->engineBase(sdVoiceIdx)->parameters,
                      md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size());
                }
                m_rMelodicInstrument.unmarkAsDefaultCreated();
@@ -176,7 +176,7 @@ void MelodicInstrumentModifier::fillReferences(
 {
    std::ranges::for_each(m_rMelodicInstrument.m_parameters, [pMusicDevice](auto& parameterData){
       if (parameterData.has_value() && 
-         parameterData->pEngineDescr == nullptr &&
+         parameterData->parametersDescr == nullptr &&
          parameterData->engineId.mdName == pMusicDevice->deviceId().deviceName())
       {
          auto engine = safe_at(pMusicDevice->description()->soundSection->engines, 
@@ -186,7 +186,7 @@ void MelodicInstrumentModifier::fillReferences(
             spdlog::error("Engine not found in MusicDeviceDescription");
             return;
          }
-         parameterData->pEngineDescr = engine.value();
+         parameterData->parametersDescr = &engine.value()->parameters;
       }
    });
 }

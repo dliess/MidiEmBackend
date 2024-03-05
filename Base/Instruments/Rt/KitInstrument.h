@@ -79,13 +79,19 @@ private:
    friend class base::instruments::KitInstrumentCopyer;
    friend class KitInstrumentsModifier;
    friend class KitInstrumentModifier;
-   struct Voice   //: public util::Identifiable
+   struct Voice
    {
       struct Component
       {
+         using ParametersDescr = std::vector<musicDevice::description::sound::Parameter>;
+         using ParameterData = std::vector<musicDevice::sound::ParameterData>;
          explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
                             musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
-                            int noteOffset, float amp) noexcept;
+                            const ParametersDescr& parametersDescr) noexcept;
+         explicit Component(musicDevice::sound::SoundHandler* pSoundDevice,
+                            musicDevice::MusicDeviceId soundDeviceId, int sdVoiceIdx,
+                            const ParametersDescr& parametersDescr,
+                            const ParameterData& paramData) noexcept;
          SdVoiceRef sdVoiceRef;
          ComponentData data;
       };

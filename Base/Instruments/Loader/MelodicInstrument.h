@@ -49,14 +49,14 @@ public:
          int engineIdx{0};
          bool operator==(const EngineId& rhs) const = default;
       };
-      using Engine = musicDevice::description::sound::EngineBase;
-      explicit ParameterData(EngineId engineId, const Engine* pEngineDescr, size_t numParameters) : 
+      using ParametersDescr = std::vector<musicDevice::description::sound::Parameter>;
+      explicit ParameterData(EngineId engineId, const ParametersDescr& parametersDescr, size_t numParameters) : 
             engineId(std::move(engineId)), 
-            pEngineDescr(pEngineDescr), 
+            parametersDescr(&parametersDescr), 
             deviceParameters(numParameters) {}
       ParameterData() = default;
       EngineId engineId;
-      const Engine* pEngineDescr{nullptr}; // TODO: maybe music device type would be enough
+      const ParametersDescr* parametersDescr{nullptr}; // TODO: maybe music device type would be enough
       std::vector<musicDevice::sound::ParameterData> deviceParameters;
       int noteOffset{0};
       float amp{1.0f};

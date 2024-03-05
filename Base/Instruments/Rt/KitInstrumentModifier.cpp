@@ -15,11 +15,11 @@ Void KitInstrumentModifier::createNewVoiceInKitInstrument(
 {
    return rMDContainer.getMusicDeviceByUUID(sdUuid).map(
       [&,this](auto md) -> void {
-         KitVoice voice;
+         KitInstrument::Voice voice;
          voice.components.emplace_back(&md->soundHandler.value(),
-                                       md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-                                       md->deviceId(),
-                                       sdVoiceIdx, 0);
+                                       md->deviceId(), sdVoiceIdx, 
+                                       md->description()->soundSection->engineBase(sdVoiceIdx)->parameters);
+
          m_rKitInstrument.m_voices.push_back(std::move(voice));
       });
 }
@@ -36,15 +36,14 @@ Void KitInstrumentModifier::addComponentToKitInstrumentVoice(
             return tl::unexpected(Error::soundHandlerNotAvailable);
          }
          if (m_rKitInstrument.m_voices[voiceIdx].components.size() >=
-             KitVoice::NUM_MAX_COMPONENTS_PER_VOICE)
+             KitInstrument::Voice::NUM_MAX_COMPONENTS_PER_VOICE)
          {
             return tl::unexpected(Error::maxComponentsPerVoiceReached);
          }
          m_rKitInstrument.m_voices[voiceIdx].components.emplace_back(
              &md->soundHandler.value(),
-             md->description()->soundSection->engineBase(sdVoiceIdx)->parameters.size(),
-             md->deviceId(),
-             sdVoiceIdx, 0);
+             md->deviceId(), sdVoiceIdx,
+             md->description()->soundSection->engineBase(sdVoiceIdx)->parameters);
          return Void{};
       });
 }
@@ -71,7 +70,7 @@ Void KitInstrumentModifier::setNoteOffsetInKitInstrumentComponent(int voiceIdx,
 {
    return safe_at(m_rKitInstrument.m_voices, voiceIdx).map(
       [&,this](auto voice) -> void {
-         voice->components[componentIdx].setNoteOffset(noteOffset);
+         voice->components[componentIdx].data.noteOffset = noteOffset;
       });
 }
 

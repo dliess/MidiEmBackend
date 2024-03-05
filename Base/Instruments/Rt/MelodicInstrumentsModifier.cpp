@@ -55,7 +55,7 @@ Void MelodicInstrumentsModifier::createNewVoiceInMelodicInstrument(
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Void {
-        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rMDContainer, sdUuid, sdVoiceIdx);
+        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rMDContainer, componentIdx, sdUuid, sdVoiceIdx);
    });
 }
 

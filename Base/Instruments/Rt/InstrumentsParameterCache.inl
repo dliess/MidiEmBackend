@@ -13,6 +13,15 @@ inline ParameterCache::ParameterCache(size_t size) :
 {
 }
 
+inline ParameterCache::ParameterCache(const std::vector<ParameterData> &data) :
+    data_(data),
+    valueModifier_(data.size()),
+    dirtyFlags_(data.size()),
+    dontOverwriteOnNextNoteOn_(data.size())
+{
+   std::copy(data.begin(), data.end(), std::back_inserter(data_));
+}
+
 inline std::size_t ParameterCache::size() const { return data_.size(); }
 
 inline Ret<const ParameterCache::ParameterData*> ParameterCache::at(

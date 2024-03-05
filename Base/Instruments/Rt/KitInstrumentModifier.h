@@ -36,7 +36,7 @@ struct KitInstrumentModifier
    // bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
 private:
    KitInstrument& m_rKitInstrument;
-   void forEachComponent(util::function_ref<void(KitComponent&)> f);
+   void forEachComponent(util::function_ref<void(KitInstrument::Voice::Component&)> f);
 };
 
 }   // namespace base::instruments::rt

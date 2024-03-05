@@ -14,9 +14,10 @@ namespace base::instruments::rt
 {
 struct ParameterCache
 {
-   explicit ParameterCache(size_t size);
-   [[nodiscard]] std::size_t size() const;
    using ParameterData = base::musicDevice::sound::ParameterData;
+   explicit ParameterCache(size_t size);
+   explicit ParameterCache(const std::vector<ParameterData>& data);
+   [[nodiscard]] std::size_t size() const;
    using ValueModifier = base::musicDevice::sound::ParameterDataCustomType<
        base::musicDevice::sound::ValueModifier>;
    using DirtyFlags = base::musicDevice::sound::DirtyFlagsVec;

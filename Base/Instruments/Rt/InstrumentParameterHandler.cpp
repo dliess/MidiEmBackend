@@ -19,7 +19,7 @@ Void ParameterHandler::refreshParameters() const
    {
       for(auto parameterAttr : magic_enum::enum_values<musicDevice::sound::ParameterAttr>())
       {
-         auto limitParameterValue = [&](float value) { return m_componentData.parameterLimiter.limitValue(parameterIdx, parameterAttr, value); };
+         auto limitParameterValue = [&](float value) { return ParameterLimiter(*m_componentData.parametersDescr).limitValue(parameterIdx, parameterAttr, value); };
          auto sendParameterValue = [&](float value) { m_sdVoiceRef.soundHandler->setParameterValue(m_sdVoiceRef.sdVoiceIdx, parameterIdx, parameterAttr, value, false); };
          if (m_componentData.parameterCache.shouldBeOverwritten(parameterIdx, parameterAttr))
          {
@@ -36,7 +36,7 @@ Void ParameterHandler::incrementParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float increment, musicDevice::sound::IncrementMode incrementMode)
 {
-   auto limitParameterValue = [&](float value) { return m_componentData.parameterLimiter.limitValue(parameterIdx, parameterAttr, value, incrementMode); };
+   auto limitParameterValue = [&](float value) { return ParameterLimiter(*m_componentData.parametersDescr).limitValue(parameterIdx, parameterAttr, value, incrementMode); };
 
    return m_componentData.parameterCache.getParameter(parameterIdx, parameterAttr).and_then([&,this](float actualValue) {
          return limitParameterValue(actualValue + increment).and_then([&,this](float limitedParamValue) {
@@ -69,7 +69,7 @@ Void ParameterHandler::setParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr,
     float value)
 {
-   auto limitParameterValue = [&](float value) { return m_componentData.parameterLimiter.limitValue(parameterIdx, parameterAttr, value); };
+   auto limitParameterValue = [&](float value) { return ParameterLimiter(*m_componentData.parametersDescr).limitValue(parameterIdx, parameterAttr, value); };
 
    return limitParameterValue(value).and_then([&,this](float limitedParamValue) {
           m_componentData.parameterCache.setParameter(parameterIdx, parameterAttr, limitedParamValue);
@@ -87,7 +87,7 @@ Void ParameterHandler::setParameterValueDontCache(
 {
    if (m_sdVoiceRef.soundHandler)
    {
-      return m_componentData.parameterLimiter.limitValue(parameterIdx, parameterAttr, value).map([&,this](float limitedValue) {
+      return ParameterLimiter(*m_componentData.parametersDescr).limitValue(parameterIdx, parameterAttr, value).map([&,this](float limitedValue) {
           m_sdVoiceRef.soundHandler->setParameterValue(m_sdVoiceRef.sdVoiceIdx, parameterIdx,
                                         parameterAttr, limitedValue);
           m_sdVoiceRef.soundHandler->lastplayerId = nullptr;

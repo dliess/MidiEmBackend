@@ -11,18 +11,18 @@ namespace base::instruments::rt
 class ParameterLimiter
 {
 public:
-   using Engine = musicDevice::description::sound::EngineBase;
-   explicit ParameterLimiter(const Engine* pEngineDescr) noexcept : pEngineDescr(pEngineDescr) {}
+   using ParametersDescr = std::vector<musicDevice::description::sound::Parameter>;
+   explicit ParameterLimiter(const ParametersDescr& parametersDescr) noexcept : parametersDescr_(parametersDescr) {}
    Ret<float> limitValue(int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr, float value, 
                          musicDevice::sound::IncrementMode mode = musicDevice::sound::IncrementMode::Limit) const
    {
-       return safe_at(pEngineDescr->parameters, parameterIdx).map([&](const auto paramDescr) {
+       return safe_at(parametersDescr_, parameterIdx).map([&](const auto paramDescr) {
            const auto valueRange = musicDevice::sound::getParamRangeEnd(parameterAttr, *paramDescr);
            return musicDevice::sound::limitParameterValue(value, mode, valueRange);
        });
    }
 private:
-   const Engine* pEngineDescr; 
+   const ParametersDescr& parametersDescr_; 
 };
 
 }   // namespace base::instruments::rt

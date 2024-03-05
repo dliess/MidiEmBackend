@@ -29,7 +29,7 @@ MelodicInstrument::parameterDescription(int componentIdx,
 {
    if(m_parameters.at(componentIdx))
    {
-      return &m_parameters.at(componentIdx)->pEngineDescr->parameters.at(parameterIdx);
+      return &m_parameters.at(componentIdx)->parametersDescr->at(parameterIdx);
    }
    return nullptr;
 }
