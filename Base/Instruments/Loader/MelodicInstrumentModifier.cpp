@@ -204,3 +204,23 @@ bool MelodicInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDe
           m_rMelodicInstrument.isDefaultCreated() && 
           hasComponentWith(pMusicDevice->deviceId());
 }
+
+void MelodicInstrumentModifier::fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept
+{
+   std::ranges::for_each(m_rMelodicInstrument.m_parameters, [&](auto& parameterData){
+      if (parameterData.has_value() && 
+         parameterData->parametersDescr == nullptr)
+      {
+         rFactoryDataHolder.getDescriptionByMdName(parameterData->engineId.mdName).map(
+            [&](auto description) {
+               parameterData->parametersDescr = &description->soundSection->engineBase(
+                  parameterData->engineId.engineIdx)->parameters;
+               if(parameterData->parametersDescr->size() != parameterData->deviceParameters.size())
+               {
+                  spdlog::error("Device parameters size mismatch");
+                  parameterData->deviceParameters.resize(parameterData->parametersDescr->size());
+               }
+            });
+      }
+   });
+}

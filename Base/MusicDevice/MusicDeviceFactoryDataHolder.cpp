@@ -82,6 +82,16 @@ Ret<const description::Description*> factory::DataHolder::getDescription(
       return tl::unexpected(Error::descriptionNotFound);
    return itDescr->second.get();
 }
+Ret<const description::Description*> factory::DataHolder::getDescriptionByMdName(
+       const MusicDeviceName& deviceName) noexcept
+{
+   auto descr = getDescription(deviceName);
+   if (!descr)
+   {
+      return tl::unexpected(Error::descriptionNotFound);
+   }
+   return descr.get();
+}
 
 std::shared_ptr<sound::preset::DevicePresets>
 factory::DataHolder::getDevicePresets(

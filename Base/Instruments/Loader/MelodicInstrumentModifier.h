@@ -39,6 +39,7 @@ struct MelodicInstrumentModifier
 
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
+   void fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
    
 private:
    MelodicInstrument& m_rMelodicInstrument;

@@ -154,3 +154,27 @@ bool KitInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDevice
           m_rKitInstrument.isDefaultCreated() && 
           hasComponentWith(pMusicDevice->deviceId());
 }
+   
+void KitInstrumentModifier::fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept
+{
+   for (auto& voice : m_rKitInstrument.m_voices)
+   {
+      for (auto& component : voice.components)
+      {
+         auto mdDescr = rFactoryDataHolder.getDescriptionByMdName(component.soundDeviceId.deviceName());
+         if (mdDescr)
+         {
+            component.paramDescr = &mdDescr.value()->soundSection->engineBase(component.sdVoiceIdx)->parameters;
+         }
+         else
+         {
+            spdlog::error("KitInstrumentModifier::fillDescrReferences: MusicDevice description not found for {}", component.soundDeviceId.deviceName());
+         }
+         if(component.paramDescr->size() != component.parameterData.size())
+         {
+            spdlog::error("KitInstrumentModifier::fillDescrReferences: Parameter cache size mismatch for {} ... RESIZING", component.soundDeviceId.deviceName());
+            component.parameterData.resize(component.paramDescr->size());
+         }
+      }
+   }
+}

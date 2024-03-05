@@ -29,6 +29,8 @@ struct DataHolder
        const MusicDeviceName& deviceName) noexcept;
    Ret<const description::Description*> getDescription(
        util::Identifiable::UUIDView uuid) const noexcept;
+   Ret<const description::Description*> getDescriptionByMdName(
+       const MusicDeviceName& deviceName) noexcept;
 
    std::shared_ptr<sound::preset::DevicePresets> getDevicePresets(
        const MusicDeviceName& deviceName) noexcept;

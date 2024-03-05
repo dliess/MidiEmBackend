@@ -15,6 +15,8 @@
 #include "KitInstrumentCopyer.h"
 #include "MelodicInstrumentCopyer.h"
 #include "MusicDeviceContainer.h"
+#include "KitInstrumentModifier.h"
+#include "MelodicInstrumentModifier.h"
 
 using namespace base;
 using namespace base::instruments;
@@ -28,32 +30,19 @@ Instruments::Instruments(
         std::make_unique<util::FilePersister>("Instruments", "settings.json"),
         rFactoryDataHolder)
 {
-   /*
-   onDataChanged([this](const instruments::Data& data, bool doSaveToFile) {
-      if (doSaveToFile)
-      {
-         m_persister.save(data);
-         m_parameterCacheDirty = false;
-      }
-   });
-
    try
    {
       auto data = m_persister.load();
-      for (auto& instr : data.kitInstruments)
+      for(auto& kitInstrument : data.kitInstruments)
       {
-         KitInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-             .initParameterCaches(instr, *this);
-         spdlog::info("Loaded KitInstrument with uuid: {}", util::uuid2Str(instr.id()));
+         loader::KitInstrumentModifier(kitInstrument).fillDescrReferences(m_rFactoryDataHolder);
+         insertKitInstrument(kitInstrument);
       }
-      for (auto& instr : data.melodicInstruments)
+      for(auto& melodicInstrument : data.melodicInstruments)
       {
-         MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
-             .initParameterCaches(instr, *this);
-         spdlog::info("Loaded MelodicInstrument with uuid: {}", util::uuid2Str(instr.id()));
+         loader::MelodicInstrumentModifier(melodicInstrument).fillDescrReferences(m_rFactoryDataHolder);
+         insertMelodicInstrument(melodicInstrument);
       }
-      m_doubleBufferedData.withNonRtLocked(
-          [&data](auto& nonRtData) { nonRtData = data; });
    }
    catch (std::exception& e)
    {
@@ -61,7 +50,6 @@ Instruments::Instruments(
           "Error loading Instruments settings, its maybe the first run: {}",
           e.what());
    }
-*/
 }
 
 void Instruments::createKitInstrument(std::string name)
@@ -70,7 +58,8 @@ void Instruments::createKitInstrument(std::string name)
        std::move(name));
    static constexpr size_t MaxStringSize = 64;
    m_deferToRt.callAsync([this, uuid]() { m_rtData.kitInstruments.emplace_back(uuid); });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
@@ -81,7 +70,8 @@ void Instruments::insertKitInstrument(loader::KitInstrument& kitInstrument)
       m_rtData.kitInstruments.push_back(KitInstrumentCopyer::copy(m_rMDContainer, *copy));
       m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 bool Instruments::hasSameInstrument(const loader::KitInstrument& kitInstrument) const
@@ -103,7 +93,8 @@ void Instruments::removeKitInstrument(
    m_deferToRt.callAsync([this, instrumentId]() {
       rt::KitInstrumentsModifier(m_rtData.kitInstruments).removeKitInstrument(instrumentId);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::renameKitInstrument(
@@ -111,7 +102,8 @@ void Instruments::renameKitInstrument(
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
        .renameKitInstrument(instrumentId, name);
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::createMelodicInstrument(std::string name)
@@ -121,7 +113,8 @@ void Instruments::createMelodicInstrument(std::string name)
    m_deferToRt.callAsync([this, uuid]() {
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments).createMelodicInstrument(uuid);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 bool Instruments::hasSameInstrument(
@@ -145,7 +138,8 @@ void Instruments::insertMelodicInstrument(loader::MelodicInstrument& melodicInst
       m_rtData.melodicInstruments.push_back(MelodicInstrumentCopyer::copy(m_rMDContainer, *copy));
       m_deferToLoader.callAsync([c = std::move(copy)]() mutable { c.reset(); });
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::removeMelodicInstrument(
@@ -157,7 +151,8 @@ void Instruments::removeMelodicInstrument(
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
           .removeMelodicInstrument(instrumentId);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::renameMelodicInstrument(
@@ -165,7 +160,8 @@ void Instruments::renameMelodicInstrument(
 {
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
        .renameMelodicInstrument(instrumentId, name);
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 Void Instruments::createNewVoiceInMelodicInstrument(
@@ -179,7 +175,8 @@ Void Instruments::createNewVoiceInMelodicInstrument(
             rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
                 .createNewVoiceInMelodicInstrument(m_rMDContainer, componentIdx, instrumentUuid, sdUuid, sdVoiceIdx);
       });
-      emitDataChanged(m_loaderData, true);
+      m_dirty = true;
+      emitDataChanged(m_loaderData);
    });
 }
 
@@ -194,7 +191,8 @@ Void Instruments::addComponentToMelodicInstrumentVoice(
             rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
                 .addComponentToMelodicInstrumentVoice(m_rMDContainer, componentIdx, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
       });
-      emitDataChanged(m_loaderData, true);
+      m_dirty = true;
+      emitDataChanged(m_loaderData);
    });
 }
 
@@ -208,7 +206,8 @@ void Instruments::removeComponentFromMelodicInstrumentVoice(
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
           .removeComponentFromMelodicInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::removeVoiceFromMelodicInstrument(
@@ -220,7 +219,8 @@ void Instruments::removeVoiceFromMelodicInstrument(
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
           .removeVoiceFromMelodicInstrument(instrumentUuid, voiceIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::setNoteOffsetInMelodicInstrumentComponent(
@@ -233,6 +233,7 @@ void Instruments::setNoteOffsetInMelodicInstrumentComponent(
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
           .setNoteOffsetInMelodicInstrumentComponent(instrumentUuid, componentIdx, noteOffset);
    });
+   m_dirty = true;
    emitMelodicComponentNoteOffsetChanged(instrumentUuid, componentIdx, noteOffset); // TODO: emit from here or connect to signal?
 }
 
@@ -246,6 +247,7 @@ void Instruments::setNoteOffsetInKitInstrumentComponent(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .setNoteOffsetInKitInstrumentComponent(instrumentUuid, voiceIdx, componentIdx, noteOffset);
    });
+   m_dirty = true;
    emitKitComponentNoteOffsetChanged(instrumentUuid, voiceIdx, componentIdx,
                                      noteOffset);  
 }
@@ -259,6 +261,7 @@ void Instruments::setNoteOffsetInKitInstrumentVoice(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .setNoteOffsetInKitInstrumentVoice(instrumentUuid, voiceIdx, noteOffset);
    });
+   m_dirty = true;
    emitKitVoiceNoteOffsetChanged(instrumentUuid, voiceIdx, noteOffset);
 }
 
@@ -272,7 +275,8 @@ void Instruments::createNewVoiceInKitInstrument(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .createNewVoiceInKitInstrument(m_rMDContainer, instrumentUuid, sdUuid, sdVoiceIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::addComponentToKitInstrumentVoice(
@@ -285,7 +289,8 @@ void Instruments::addComponentToKitInstrumentVoice(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .addComponentToKitInstrumentVoice(m_rMDContainer, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::moveKitInstrumentComponent(
@@ -302,7 +307,8 @@ void Instruments::moveKitInstrumentComponent(
           .moveKitInstrumentComponent(srcInstrumentUuid, srcVoiceIdx, srcComponentIdx,
                                       dstInstrumentUuid, dstSlotIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::removeComponentFromKitInstrumentVoice(
@@ -315,7 +321,8 @@ void Instruments::removeComponentFromKitInstrumentVoice(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .removeComponentFromKitInstrumentVoice(instrumentUuid, voiceIdx, componentIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::removeVoiceFromKitInstrument(
@@ -327,7 +334,8 @@ void Instruments::removeVoiceFromKitInstrument(
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .removeVoiceFromKitInstrument(instrumentUuid, voiceIdx);
    });
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::setVoiceNameInKitInstrument(
@@ -336,7 +344,8 @@ void Instruments::setVoiceNameInKitInstrument(
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments).setVoiceNameInKitInstrument(
        instrumentUuid, voiceIdx, name);
-   emitDataChanged(m_loaderData, true);
+   m_dirty = true;
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::incKitInstrumentRefCount(const util::Identifiable::UUID& uuid)
@@ -391,7 +400,7 @@ void Instruments::fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
    //TODO
    // loader::KitInstrumentsModifier(m_loaderData.kitInstruments).fillReferences(pMusicDevice);
    // loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).fillReferences(pMusicDevice);
-   emitDataChanged(m_loaderData, false);
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
@@ -399,20 +408,20 @@ void Instruments::removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice)
    //TODO
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments).removeReferences(pMusicDevice);
    loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments).removeReferences(pMusicDevice);
-   emitDataChanged(m_loaderData, false);
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::reEmitSignals()
 {
-   emitDataChanged(m_loaderData, false);
+   emitDataChanged(m_loaderData);
 }
 
 void Instruments::saveIfDirty()
 {
-   if(m_parameterCacheDirty)
+   if(m_dirty)
    {
       m_persister.save(m_loaderData);
-      m_parameterCacheDirty = false;
+      m_dirty = false;
    }
 }
 
@@ -425,6 +434,7 @@ void Instruments::setKitComponentAmp(util::Identifiable::UUIDView uuid, int voic
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .setKitComponentAmp(uuid, voiceIdx, componentIdx, amp);
    });
+   m_dirty = true;
    emitKitComponentAmpChanged(uuid, voiceIdx, componentIdx, amp);
 }
 
@@ -436,6 +446,7 @@ void Instruments::setKitVoiceAmp(util::Identifiable::UUIDView uuid, int voiceIdx
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .setKitVoiceAmp(uuid, voiceIdx, amp);
    });
+   m_dirty = true;
    emitKitVoiceAmpChanged(uuid, voiceIdx, amp); 
 }
 
@@ -448,6 +459,7 @@ void Instruments::setMelodicComponentAmp(util::Identifiable::UUIDView uuid,
       rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
           .setMelodicComponentAmp(uuid, componentIdx, amp);
    });
+   m_dirty = true;
    emitMelodicComponentAmpChanged(uuid, componentIdx, amp);
 }
 

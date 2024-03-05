@@ -126,7 +126,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    // rt? or loader ?
    void updateParameterUI();
 
-   CB_SIGNAL(DataChanged, const loader::Data&, bool);
+   CB_SIGNAL(DataChanged, const loader::Data&);
    CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged,
                                util::Identifiable::UUIDView, int, int, int,
                                musicDevice::sound::ParameterAttr, float);
@@ -162,7 +162,7 @@ private:
    rt::Data m_rtData;
    loader::Data m_loaderData;
    loader::Persister m_persister;
-   bool m_parameterCacheDirty {false};
+   bool m_dirty {false};
    using AsyncCaller = farbot::AsyncCaller<farbot::fifo_options::concurrency::single,
       util::functionMv<120, void()>>; 
    AsyncCaller m_deferToRt;
