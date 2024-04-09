@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
 	     sudo \
         cmake \
         clang \
+        clangd \
         clang-format \
         ninja-build \
         g++ \

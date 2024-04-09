@@ -15,16 +15,20 @@ void InstrumentsPlayRpc::melodicNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                        ::capnzero::Int16 note,
                                        ::capnzero::Float32 velocity)
 {
-   m_rInstruments.withMelodicInstrumentRt(
-       uuid, [&](const MelodicInstrument& mi) { mi.noteOn(note, velocity); });
+   m_rInstruments.getMelodicInstrumentRtRef(uuid).map(
+       [&](auto mi) { 
+          mi.noteOn(note, velocity, nullptr); 
+      });
 }
 
 void InstrumentsPlayRpc::melodicNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                         ::capnzero::Int16 note,
                                         ::capnzero::Float32 velocity)
 {
-   m_rInstruments.withMelodicInstrumentRt(
-       uuid, [&](const MelodicInstrument& mi) { mi.noteOff(note, velocity); });
+   m_rInstruments.getMelodicInstrumentRtRef(uuid).map(
+      [&](auto mi) { 
+         mi.noteOff(note, velocity); 
+      });
 }
 
 void InstrumentsPlayRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
@@ -32,7 +36,7 @@ void InstrumentsPlayRpc::kitNoteOn(const ::capnzero::SpanCL<16>& uuid,
                                    ::capnzero::Int16 note,
                                    ::capnzero::Float32 velocity)
 {
-   m_rInstruments.withKitInstrumentRt(uuid, [&](const KitInstrument& ki) {
+   m_rInstruments.getKitInstrumentRtRef(uuid).map([&](auto ki) {
       ki.noteOn(soundIndex, note, velocity);
    });
 }
@@ -42,7 +46,7 @@ void InstrumentsPlayRpc::kitNoteOff(const ::capnzero::SpanCL<16>& uuid,
                                     ::capnzero::Int16 note,
                                     ::capnzero::Float32 velocity)
 {
-   m_rInstruments.withKitInstrumentRt(uuid, [&](const KitInstrument& ki) {
+   m_rInstruments.getKitInstrumentRtRef(uuid).map([&](auto ki) {
       ki.noteOff(soundIndex, note, velocity);
    });
 }
@@ -53,7 +57,7 @@ void InstrumentsPlayRpc::incrementKitParameterValue(
     ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
     ::capnzero::Float32 increment)
 {
-   m_rInstruments.withKitInstrumentRt(uuid, [&](const KitInstrument& ki) {
+   m_rInstruments.getKitInstrumentRtRef(uuid).map([&](auto ki) {
       ki.incrementParameterValue(
           voiceIdx, componentIdx, parameterIdx,
           static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr),
@@ -66,7 +70,7 @@ void InstrumentsPlayRpc::setKitParameterValue(
     ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
     ::capnzero::Float32 value)
 {
-   m_rInstruments.withKitInstrumentRt(uuid, [&](const KitInstrument& ki) {
+   m_rInstruments.getKitInstrumentRtRef(uuid).map([&](auto ki) {
       ki.setParameterValue(
           voiceIdx, componentIdx, parameterIdx,
           static_cast<base::musicDevice::sound::ParameterAttr>(parameterAttr),
@@ -85,8 +89,7 @@ void InstrumentsPlayRpc::incrementMelodicParameterValue(
     ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
     ::capnzero::Float32 increment)
 {
-   m_rInstruments.withMelodicInstrumentRt(
-       uuid, [&](const MelodicInstrument& mi) {
+   m_rInstruments.getMelodicInstrumentRtRef(uuid).map([&](auto mi) {
           mi.incrementParameterValue(
               componentIdx, parameterIdx,
               static_cast<base::musicDevice::sound::ParameterAttr>(
@@ -100,8 +103,7 @@ void InstrumentsPlayRpc::setMelodicParameterValue(
     ::capnzero::MidiEmRt::SDParameterAttr parameterAttr,
     ::capnzero::Float32 value)
 {
-   m_rInstruments.withMelodicInstrumentRt(
-       uuid, [&](const MelodicInstrument& mi) {
+   m_rInstruments.getMelodicInstrumentRtRef(uuid).map([&](auto mi) {
           mi.setParameterValue(
               componentIdx, parameterIdx,
               static_cast<base::musicDevice::sound::ParameterAttr>(

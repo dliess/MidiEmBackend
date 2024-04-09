@@ -41,9 +41,6 @@ struct InstrumentsModifier
    void setNoteOffsetInMelodicInstrumentComponent(
        const util::Identifiable::UUID& instrumentUuid,
        int componentIdx, int noteOffset) noexcept;
-   void setVoiceNameInMelodicInstrument(
-       const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-       const std::string name) noexcept;
 
    void createNewVoiceInKitInstrument(
        const util::Identifiable::UUID& instrumentUuid,

@@ -127,7 +127,7 @@ void EventRouter::removeConnection(
    }
 }
 
-void EventRouter::_createConnection(const controller::EventIdExt& from,
+Void EventRouter::_createConnection(const controller::EventIdExt& from,
                                     const EventDestination& to) noexcept
 {
    controller::EventIdExt source = changeNoteNumberToAnyIfDestIsMelodic(from, to);
@@ -136,36 +136,30 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
    if (auto param =
            dl::get_if<EventDestination::Parameter>(&destination.controlType))
    {
-      auto controllerWidgetDescr = controlWidgetDescription(from);
-      if (!controllerWidgetDescr)
-      {
-         spdlog::error("Error getting controller widget description");
-         return;
-      }
-      auto desc = parameterDescription(destination.endpoint, param->id);
-      if (!desc)
-      {
-         spdlog::error("Error getting parameter description");
-         return;
-      }
-      param->descriptionCache.isList =
-          (desc->type == description::sound::Parameter::Type::List);
-      param->descriptionCache.resolution = desc->getSourceResolution();
-      param->descriptionCache.zeroVal =
-          (desc->type == description::sound::Parameter::Type::ContinousBipolar
-               ? 0.5f
-               : 0.0f);
-      const auto pressReleaseEvtIdx = description::controller::getDependentPressReleaseEventIdx(*controllerWidgetDescr);
-      if(pressReleaseEvtIdx)
-      {
-         controller::EventIdExt prEventId = from;
-         prEventId.eventId.eventId = pressReleaseEvtIdx.value();
-         const auto it = m_map.nonRt().find(prEventId);
-         if(it != m_map.nonRt().end() && it->second.endpoint == destination.endpoint)
-         {
-            param->descriptionCache.eventBound = true;
-         }
-      }
+      return controlWidgetDescription(from).and_then(
+          [&](const auto controllerWidgetDescr) {
+            return parameterDescription(destination.endpoint, param->id)
+                .map([&](const auto paramDesc) {
+                   param->descriptionCache.isList =
+                       (paramDesc->type == description::sound::Parameter::Type::List);
+                   param->descriptionCache.resolution = paramDesc->getSourceResolution();
+                   param->descriptionCache.zeroVal =
+                       (paramDesc->type == description::sound::Parameter::Type::ContinousBipolar
+                            ? 0.5f
+                            : 0.0f);
+                   const auto pressReleaseEvtIdx = description::controller::getDependentPressReleaseEventIdx(*controllerWidgetDescr);
+                   if(pressReleaseEvtIdx)
+                   {
+                      controller::EventIdExt prEventId = from;
+                      prEventId.eventId.eventId = pressReleaseEvtIdx.value();
+                      const auto it = m_map.nonRt().find(prEventId);
+                      if(it != m_map.nonRt().end() && it->second.endpoint == destination.endpoint)
+                      {
+                         param->descriptionCache.eventBound = true;
+                      }
+                   }
+                });
+          });
    }
    initRtCache(destination);
    m_map.withNonRtLocked(
@@ -185,6 +179,7 @@ void EventRouter::_createConnection(const controller::EventIdExt& from,
    END_SWITCH
 
    emitGotConnected(source, destination);
+   return Void();
    //printMap();
 }
 
@@ -241,47 +236,40 @@ void EventRouter::retriggerCallbacks()
    for (const auto& [from, to] : m_map.nonRt()) { emitGotConnected(from, to); }
 }
 
-const description::controller::Widget* EventRouter::controlWidgetDescription(
+Ret<const description::controller::Widget*> EventRouter::controlWidgetDescription(
    const controller::EventIdExt& evtId) const
 {
-   const auto description = m_rMDFDataHolder.getDescription(evtId.uuid);
-   if(description && description->controllerSection)
-   {
-      return &description->controllerSection->widgets.at(evtId.eventId.widgetId);
-   }
-   return nullptr;
+   return m_rMDFDataHolder.getDescription(evtId.uuid).and_then([&](auto desc) -> Ret<const description::controller::Widget*> {
+      if(desc->controllerSection)
+      {
+         return safe_at(desc->controllerSection->widgets, 
+                        evtId.eventId.widgetId).map(
+                [](auto widget) { return widget; });
+      }
+      return tl::unexpected(Error::descriptionNotFound);
+   });
 }
 
-const description::sound::Parameter* EventRouter::parameterDescription(
+Ret<const description::sound::Parameter*> EventRouter::parameterDescription(
     const EventDestination::Endpoint& endpoint, int paramIdx)
 {
-   const description::sound::Parameter* ret{nullptr};
-   SWITCH(endpoint)
-      CASE(EventDestination::DrumKit, drumKit)
+   return R_SWITCH(endpoint)
+      CASE(EventDestination::DrumKit, drumKit) -> Ret<const description::sound::Parameter*>
       {
-         m_rInstruments.withKitInstrumentRt(
-            drumKit.uuid, [&](const auto& instr) {
-               ret = instr.parameterDescription(
-                  drumKit.voiceIdx,
-                  drumKit.componentIdx, paramIdx);
-            });
+         return m_rInstruments.getParameterDescriptionOfKit(drumKit.uuid, drumKit.voiceIdx,
+                                                            drumKit.componentIdx, paramIdx);
       },
-      CASE(EventDestination::Melodic, melodic)
+      CASE(EventDestination::Melodic, melodic) -> Ret<const description::sound::Parameter*>
       {
-         m_rInstruments.withMelodicInstrumentRt(
-            melodic.uuid, [&](const auto& instr) {
-               ret = instr.parameterDescription(
-                  melodic.componentIdx, paramIdx);
-            });
+         return m_rInstruments.getParameterDescriptionOfMelodic(melodic.uuid, 
+                                                                melodic.componentIdx, paramIdx);
       },
-      CASE(EventDestination::MusicDevice, musicDevice)
+      CASE(EventDestination::MusicDevice, musicDevice) -> Ret<const description::sound::Parameter*>
       {
-         m_rMusicDeviceContainer.withSoundHandler(
-            musicDevice.mdid, [&](const auto& sd) {
-               ret = &sd.parameterDescription(
-                  musicDevice.voiceIdx, paramIdx);
+         return m_rMusicDeviceContainer.getSoundHandler(musicDevice.mdid).map(
+            [&](auto sd) {
+               return &sd->parameterDescription(musicDevice.voiceIdx, paramIdx);
             });
       }
-   END_SWITCH
-   return ret;
+   R_END_SWITCH
 }

@@ -52,7 +52,7 @@ void Tracks::updateActiveClipBeatsUI()
 
 Track& Tracks::pushBackTrack(std::string_view name)
 {
-   auto& track = m_tracks.emplace_back(name, m_rInstruments);
+   auto& track = m_tracks.emplace_back(name);
    registerCbs(track);
    emitTrackAdded(track.idView(), name, m_tracks.size());
    return track;
@@ -62,13 +62,13 @@ void Tracks::pushBackTrack(std::string_view name,
                            util::Identifiable::UUIDView instrumentUuid)
 {
    auto& track = pushBackTrack(name);
-   track.setInstrumentUUID(instrumentUuid);
+   track.setInstrumentUUID(m_rInstruments, instrumentUuid);
 }
 
 Track& Tracks::addTrack(std::string_view name, int position)
 {
    const auto it       = std::next(m_tracks.begin(), position);
-   const auto insertIt = m_tracks.emplace(it, name, m_rInstruments);
+   const auto insertIt = m_tracks.emplace(it, name);
    registerCbs(*insertIt);
    emitTrackAdded(insertIt->idView(), name, position);
    return *insertIt;
@@ -78,7 +78,7 @@ void Tracks::addTrack(std::string_view name, int position,
                       util::Identifiable::UUIDView instrumentUuid)
 {
    auto& track = addTrack(name, position);
-   track.setInstrumentUUID(instrumentUuid);
+   track.setInstrumentUUID(m_rInstruments, instrumentUuid);
 }
 
 void Tracks::duplicateTrack(util::Identifiable::UUIDView uuid)
@@ -108,8 +108,8 @@ void Tracks::renameTrack(util::Identifiable::UUIDView uuid,
 void Tracks::setTrackInstrument(util::Identifiable::UUIDView trackUuid,
                                 util::Identifiable::UUIDView instrumentUuid)
 {
-   withTrackIter(trackUuid, [instrumentUuid](auto it) {
-      it->setInstrumentUUID(instrumentUuid);
+   withTrackIter(trackUuid, [this, instrumentUuid](auto it) {
+      it->setInstrumentUUID(m_rInstruments, instrumentUuid);
    });
 }
 

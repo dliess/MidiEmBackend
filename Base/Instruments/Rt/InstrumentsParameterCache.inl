@@ -130,6 +130,7 @@ inline void ParameterCache::clearOverwriteList() const
    dontOverwriteOnNextNoteOn_.reset();
 }
 
+inline
 Ret<float> ParameterCache::getParameterValue(
     int parameterIdx, musicDevice::sound::ParameterAttr parameterAttr) const
 {

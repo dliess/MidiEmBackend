@@ -115,7 +115,6 @@ void InstrumentsMDChangeHandler::add(musicDevice::MusicDevice* pMusicDevice)
    assert(pMusicDevice);
    if (pMusicDevice->soundHandler)
    {
-      m_rInstruments.fillReferencesToMD(pMusicDevice);
       addDefaultInstrumentsFor(pMusicDevice);
    }
 }

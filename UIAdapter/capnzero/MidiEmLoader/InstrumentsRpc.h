@@ -33,9 +33,6 @@ public:
    void removeVoiceFromMelodicInstrument(
        const ::capnzero::SpanCL<16>& instrumentUuid,
        ::capnzero::Int16 voiceIdx) override;
-   void setVoiceNameInMelodicInstrument(
-       const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
-       const ::capnzero::TextView& name) override;
 
    void createKitInstrument(const ::capnzero::TextView& name) override;
    void removeKitInstrument(

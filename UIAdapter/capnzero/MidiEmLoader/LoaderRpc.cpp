@@ -32,7 +32,7 @@ LoaderRpc::LoaderRpc(LoaderServer::Signals& rSignals,
                                             id.presetName);
        });
    m_rInstruments.onDataChanged(
-       [this](const instruments::Data& data, bool doSaveToFile) {
+       [this](auto& data) {
           m_rSignals.Instruments__kitInstrumentsChanged(
               nlohmann::json(data.kitInstruments).dump().c_str());
           m_rSignals.Instruments__melodicInstrumentsChanged(

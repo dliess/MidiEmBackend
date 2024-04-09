@@ -232,7 +232,7 @@ void EventRouterRt::playNoteOnDrumKit(
     const EventDestination::Note& note,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
       detail::playNoteOnOff(kitInstr, note.pitch, value.value,
                             drumKit.voiceIdx);
    });
@@ -243,9 +243,9 @@ void EventRouterRt::setParameterOnDrumKit(
     const EventDestination::Parameter& parameter,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
       detail::setParameter4PressRelease(kitInstr, parameter, value,
-                           drumKit.voiceIdx, drumKit.componentIdx);
+                            drumKit.voiceIdx, drumKit.componentIdx);
    });
 }
 
@@ -254,11 +254,10 @@ void EventRouterRt::setParameterOnMelodic(
     const EventDestination::Parameter& parameter,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withMelodicInstrumentRt(
-       melodic.uuid, [&](auto& melodicInstr) {
+   m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
           detail::setParameter4PressRelease(melodicInstr, parameter,
                                value, melodic.componentIdx);
-       });
+   });
 }
 
 void EventRouterRt::playNoteOnMusicDevice(
@@ -322,7 +321,7 @@ void EventRouterRt::playLayoutMappedDrumKit(
     const EventDestination::DrumKit& drumKit,
     const controller::PressReleaseType& value) noexcept
 {
-   m_rInstruments.withKitInstrumentRt(drumKit.uuid, [&](auto& kitInstr) {
+   m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
       detail::playNoteOnOff(kitInstr, 64, value.value,
                             widgetCoord.row * 8 + widgetCoord.col);
    });
@@ -356,16 +355,14 @@ void EventRouterRt::handleAnyNotePressRelease(
             {
                if (drumKit.voiceIdx == ANY)
                {
-                  m_rInstruments.withKitInstrumentRt(
-                     drumKit.uuid, [&](auto& kitInstr) {
+                  m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
                         detail::playNoteOnOff(kitInstr, note,
                                              value.value);
                      });
                }
                else
                {
-                  m_rInstruments.withKitInstrumentRt(
-                     drumKit.uuid, [&](auto& kitInstr) {
+                  m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
                         detail::playNoteOnOff(kitInstr, note,
                                              value.value,
                                              drumKit.voiceIdx);
@@ -380,8 +377,7 @@ void EventRouterRt::handleAnyNotePressRelease(
          SWITCH(eventDestination.controlType)
             CASE(EventDestination::Note, dstNote)
             {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      detail::playNoteOnOff(melodicInstr, note,
                                           value.value);
                   });
@@ -418,8 +414,7 @@ void EventRouterRt::handleContinousValue(
             CASE(EventDestination::Note,_) {},
             CASE(EventDestination::Parameter, parameter)
             {
-               m_rInstruments.withKitInstrumentRt(
-                  drumKit.uuid, [&](auto& kitInstr) {
+               m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
                      detail::setParameterForContinousValue(kitInstr, parameter, value,
                                                             drumKit.voiceIdx,
                                                             drumKit.componentIdx);
@@ -433,8 +428,7 @@ void EventRouterRt::handleContinousValue(
             CASE(EventDestination::Note,_) {},
             CASE(EventDestination::Parameter, parameter)
             {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      detail::setParameterForContinousValue(melodicInstr, parameter,
                                                             value,
                                                             melodic.componentIdx);
@@ -472,8 +466,9 @@ void EventRouterRt::sendMPEContinousValue(
             CASE(EventDestination::Note,_) {},
             CASE(EventDestination::Parameter, parameter) 
             {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               auto instr = m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid);
+               if(instr)
+                instr.map([&](auto& melodicInstr) {
                      detail::setParameterMPEForContinousValue(melodicInstr, parameter,
                                                               value, note,
                                                               melodic.componentIdx);
@@ -497,8 +492,7 @@ void EventRouterRt::handleIncrement(
          SWITCH(eventDestination.controlType)
             CASE(EventDestination::Note,_) {},
             CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withKitInstrumentRt(
-                  drumKit.uuid, [&](auto& kitInstr) {
+               m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
                      detail::setParameterForIncrement(
                         kitInstr, parameter, 
                         increment, drumKit.voiceIdx,
@@ -512,8 +506,7 @@ void EventRouterRt::handleIncrement(
          SWITCH(eventDestination.controlType)
             CASE(EventDestination::Note,_) {},
             CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      detail::setParameterForIncrement(melodicInstr, parameter,
                                           increment,
                                           melodic.componentIdx);
@@ -550,8 +543,7 @@ void EventRouterRt::handleRelativeValue(
                spdlog::error("for now we dont do pitchbend on drumkit");
             },
             CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withKitInstrumentRt(
-                  drumKit.uuid, [&](auto& kitInstr) {
+               m_rInstruments.getKitInstrumentRtRef(drumKit.uuid).map([&](auto kitInstr) {
                      detail::setParameterForRelativeValue(kitInstr, parameter,
                                           value, drumKit.voiceIdx,
                                           drumKit.componentIdx);
@@ -562,14 +554,12 @@ void EventRouterRt::handleRelativeValue(
       CASE(EventDestination::Melodic, melodic) {
          SWITCH(eventDestination.controlType)
             CASE(EventDestination::Note,_) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      melodicInstr.pitchBend(value.value * float(value.fittingSemitones));
                   });
             },
             CASE(EventDestination::Parameter, parameter) {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      detail::setParameterForRelativeValue(melodicInstr, parameter,
                                           value,
                                           melodic.componentIdx);
@@ -611,15 +601,13 @@ void EventRouterRt::sendMPERelativeValue(
          SWITCH(eventDestination.controlType)
             CASE(EventDestination::Note,_) 
             {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) {
                      melodicInstr.pitchBendMPE(note, value.value * float(value.fittingSemitones));
                });
             },
             CASE(EventDestination::Parameter, parameter) 
             {
-               m_rInstruments.withMelodicInstrumentRt(
-                  melodic.uuid, [&](auto& melodicInstr) {
+               m_rInstruments.getMelodicInstrumentRtRef(melodic.uuid).map([&](auto melodicInstr) mutable {
                      detail::setParameterMPERelativeValue(melodicInstr, parameter,                                                    
                                              value, note,
                                              melodic.componentIdx);

@@ -12,8 +12,8 @@ TEST(TrackTest, instrumentsRef)
    util::StackMempool<101024> memoryPool("mempool");
    std::pmr::polymorphic_allocator<std::byte> allocator(&memoryPool.pool());
 
-   Track track("MyAwesomeTrack", instruments, allocator);
+   Track track("MyAwesomeTrack", allocator);
    util::Identifiable::UUID uuid;
    uuid_generate(uuid.data());
-   track.setInstrumentUUID(uuid);
+   track.setInstrumentUUID(instruments, uuid);
 }

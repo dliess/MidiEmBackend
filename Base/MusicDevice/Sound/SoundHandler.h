@@ -10,6 +10,7 @@
 #include "SoundParameterStorage.h"
 #include "SoundPresetHandler.h"
 #include "SoundSection.h"
+#include "ErrorHandling.h"
 
 // namespace midi { template<typename MessageDrain> class Midi1Input; }
 
@@ -48,25 +49,25 @@ public:
    void afterTouch(int voiceIdx, float value) noexcept;
    void setParameterValue(int voiceIdx, int parameterId,
                           ParameterAttr parameterAttr, float value, bool callCalcActVal = true) noexcept;
-   void setRelativeParameterValue(
+   Void setRelativeParameterValue(
        int voiceIdx, int parameterId,
        musicDevice::sound::ParameterAttr parameterAttr, float relValue, bool callCalcActVal = true) const;
-   [[nodiscard]] std::optional<float> getParameterValue(
+   [[nodiscard]] Ret<float> getParameterValue(
        int voiceIdx, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const noexcept;
    [[nodiscard]] ValueRangeEnd getParameterRangeEnd(
        int voiceIdx, int parameterId,
        ParameterAttr parameterAttr = ParameterAttr::Commanded) const;
-   [[nodiscard]] float fromNormalizedValue(
+   [[nodiscard]] Ret<float> fromNormalizedValue(
        int voiceIdx, int parameterId, ParameterAttr parameterAttr,
        float percentageValue) const noexcept;
    [[nodiscard]] const description::sound::Parameter& parameterDescription(
        int voiceIdx, int parameterIdx) const;
    [[nodiscard]] const description::sound::Section& description() const noexcept;
-   void incrementParameterValue(int voiceIdx, int parameterId,
+   Void incrementParameterValue(int voiceIdx, int parameterId,
                                 ParameterAttr parameterAttr, float increment,
                                 IncrementMode incrementMode, bool callCalcActVal = true) noexcept;
-   void incrementParameterValueEventBound(int voiceIdx, int parameterId,
+   Void incrementParameterValueEventBound(int voiceIdx, int parameterId,
                                           ParameterAttr parameterAttr,
                                           float increment,
                                           IncrementMode incrementMode, bool callCalcActVal = true) noexcept;

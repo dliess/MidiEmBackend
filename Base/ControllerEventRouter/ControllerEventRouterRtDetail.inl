@@ -5,7 +5,7 @@
 
 #include "ControllerHandler.h"
 #include "KitInstrument.h"
-#include "MelodicInstrument.h"
+#include "Rt/MelodicInstrument.h"
 #include "SoundHandler.h"
 
 using namespace base;
@@ -70,7 +70,7 @@ void setParameter4PressRelease(Dev& dev, const EventDestination::Parameter& para
       }
       else
       {
-         parameter.valueCache->valueAtPress = actualVal;
+         parameter.valueCache->valueAtPress = actualVal.value();
          dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr,
                                  parameter.descriptionCache.zeroVal);
       }
@@ -106,25 +106,27 @@ void setParameterForContinousValue(Dev& dev, const EventDestination::Parameter& 
                                    const controller::ContinousValueType& value,
                                    MDCoords... mdCoords)
 {
-   const float val = dev.fromNormalizedValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value);
-   if(parameter.descriptionCache.eventBound)
-   {
-      dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
-   }
-   else
-   {
-      const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
-      if(actualVal && isNearEnough(actualVal.value(), val))
+   dev.fromNormalizedValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value).map([&](float val) {
+      if(parameter.descriptionCache.eventBound)
       {
          dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
       }
-   }
+      else
+      {
+         const auto actualVal = dev.getParameterValue(mdCoords..., parameter.id, parameter.parameterAttr);
+         if(actualVal && isNearEnough(actualVal.value(), val))
+         {
+            dev.setParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, val);
+         }
+      }
+   });
 }
-void setParameterMPEForContinousValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+void setParameterMPEForContinousValue(instruments::MelodicInstrumentRtRef dev, const EventDestination::Parameter& parameter,
                      const controller::ContinousValueType& value, int note, int componentIdx)
 {
-   const float val = dev.fromNormalizedValue(note, componentIdx, parameter.id, parameter.parameterAttr, value.value);
-   dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, val);
+   dev.fromNormalizedValue(note, componentIdx, parameter.id, parameter.parameterAttr, value.value).map([&dev, note, componentIdx, parameter](float val) {
+      dev.setParameterValueMPE(note, componentIdx, parameter.id, parameter.parameterAttr, val);
+   });
 }
 
 template <typename Dev, typename... MDCoords>
@@ -154,7 +156,7 @@ void setParameterForRelativeValue(Dev& dev, const EventDestination::Parameter& p
    dev.setRelativeParameterValue(mdCoords..., parameter.id, parameter.parameterAttr, value.value);
 }
 
-void setParameterMPERelativeValue(const instruments::MelodicInstrument& dev, const EventDestination::Parameter& parameter,
+void setParameterMPERelativeValue(instruments::MelodicInstrumentRtRef dev, const EventDestination::Parameter& parameter,
                      const controller::RelativeValueType& value, int note,
                      int componentIdx)
 {

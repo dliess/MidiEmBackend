@@ -17,6 +17,9 @@
 #include "function_ref.h"
 #include "farbot/AsyncCaller.hpp"
 #include "functionMv.h"
+#include "Refs/InstrumentRtRef.h"
+#include "Refs/KitInstrumentRtRef.h"
+#include "Refs/MelodicInstrumentRtRef.h"
 // clang-format off
 namespace base::musicDevice::factory { class DataHolder; }
 namespace base::musicDevice { class MusicDeviceContainer; }
@@ -35,7 +38,9 @@ struct Instruments   //: public utils::Settings<Instruments>
    // -----------------
    void reEmitSignals();
    void createKitInstrument(std::string name);
-   void insertKitInstrument(loader::KitInstrument& kitInstrument);
+   enum class DoEmitChanged { Yes, No };
+   void insertKitInstrument(loader::KitInstrument& kitInstrument,
+                            DoEmitChanged doEmitChanged = DoEmitChanged::Yes);
    [[nodiscard]] bool hasSameInstrument(
        const loader::KitInstrument& kitInstrument) const;
    void removeKitInstrument(const util::Identifiable::UUID& instrumentId);
@@ -45,7 +50,8 @@ struct Instruments   //: public utils::Settings<Instruments>
    void createMelodicInstrument(std::string name);
    [[nodiscard]] bool hasSameInstrument(
        const loader::MelodicInstrument& melodicInstrument) const;
-   void insertMelodicInstrument(loader::MelodicInstrument& melodicInstrument);
+   void insertMelodicInstrument(loader::MelodicInstrument& melodicInstrument, 
+                                DoEmitChanged doEmitChanged = DoEmitChanged::Yes);
    void removeMelodicInstrument(const util::Identifiable::UUID& instrumentId);
    void renameMelodicInstrument(const util::Identifiable::UUID& instrumentId,
                                 const std::string& name);
@@ -107,7 +113,6 @@ struct Instruments   //: public utils::Settings<Instruments>
        util::Identifiable::UUIDView uuid,
        util::function_ref<void(const rt::MelodicInstrument&)> cb);
 */
-   void fillReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
    void removeReferencesToMD(musicDevice::MusicDevice* pMusicDevice);
 
    
@@ -127,31 +132,30 @@ struct Instruments   //: public utils::Settings<Instruments>
    void updateParameterUI();
 
    CB_SIGNAL(DataChanged, const loader::Data&);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(KitInstrumentParamChanged,
-                               util::Identifiable::UUIDView, int, int, int,
-                               musicDevice::sound::ParameterAttr, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicInstrumentParamChanged,
-                               util::Identifiable::UUIDView, int, int,
-                               musicDevice::sound::ParameterAttr, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(KitComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(KitVoiceAmpChanged, util::Identifiable::UUIDView, int, float);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
-   CB_SIGNAL_SINGLE_SUBSCRIBER(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, float);
+   CB_SIGNAL(KitInstrumentParamChanged,
+             util::Identifiable::UUIDView, int, int, int,
+             musicDevice::sound::ParameterAttr, float);
+   CB_SIGNAL(MelodicInstrumentParamChanged,
+             util::Identifiable::UUIDView, int, int,
+             musicDevice::sound::ParameterAttr, float);
+   CB_SIGNAL(KitComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int, int);
+   CB_SIGNAL(KitVoiceNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
+   CB_SIGNAL(KitComponentAmpChanged, util::Identifiable::UUIDView, int, int, float);
+   CB_SIGNAL(KitVoiceAmpChanged, util::Identifiable::UUIDView, int, float);
+   CB_SIGNAL(MelodicComponentNoteOffsetChanged, util::Identifiable::UUIDView, int, int);
+   CB_SIGNAL(MelodicComponentAmpChanged, util::Identifiable::UUIDView, int, float);
 
-   // loop it back here to Loader
-   void kitParamChanged(const util::Identifiable::UUID& uuid, int voiceIdx,
-                        int componentIdx, int parameterIdx,
-                        musicDevice::sound::ParameterAttr parameterAttr,
-                        float value);
-
-   void melodicParamChanged(const util::Identifiable::UUID& uuid,
-                            int componentIdx, int parameterIdx,
-                            musicDevice::sound::ParameterAttr parameterAttr,
-                            float value);
+   Ret<InstrumentRtRef> getInstrumentRtRef(util::Identifiable::UUIDView uuid);
+   Ret<KitInstrumentRtRef> getKitInstrumentRtRef(util::Identifiable::UUIDView uuid);
+   Ret<MelodicInstrumentRtRef> getMelodicInstrumentRtRef(util::Identifiable::UUIDView uuid);
 
     void saveIfDirty();
+
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfKit(util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx, int ParameterIdx);
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfMelodic(util::Identifiable::UUIDView uuid, int componentIdx, int ParameterIdx);
+   
 
    friend class MelodicInstrumentsParameterCacheCreator;
    friend class KitInstrumentsParameterCacheCreator;

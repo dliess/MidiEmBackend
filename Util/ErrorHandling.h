@@ -24,7 +24,7 @@ enum class Error
    invalidParameterIndex,
    noSoundDeviceCached,
    invalidSize,
-   elementEmpty,
+   elementEmpty
 };
 template<typename T>
 using Ret = tl::expected<T, Error>;

@@ -31,60 +31,68 @@ KitInstrument::KitInstrument(util::Identifiable::UUIDView uuid) noexcept :
 {
 }
 
-void KitInstrument::noteOn(int note, float velocity, void* token) 
+Void KitInstrument::noteOn(int note, float velocity, void* token) 
 {
    auto vi = toVoiceIndex(note);
    if (vi)
    {
       noteOn(*vi, 64, velocity, token);
+      return Void{};
    }
+   return tl::unexpected(Error::indexOutOfRange);
 }
 
-void KitInstrument::noteOff(int note, float velocity, void* token)
+Void KitInstrument::noteOff(int note, float velocity, void* token)
 {
    auto vi = toVoiceIndex(note);
    if (vi)
    {
       noteOff(*vi, 64, velocity, token);
+      return Void{};
    }
+   return tl::unexpected(Error::indexOutOfRange);
 }
 
-void KitInstrument::noteOn(int voiceIdx, int note, float velocity,
+Void KitInstrument::noteOn(int voiceIdx, int note, float velocity,
                            void* token)
 {
-   for (auto& component : m_voices[voiceIdx].components)
-   {
-      ParameterHandler ph(component.data, component.sdVoiceRef);
-      if (component.sdVoiceRef.soundHandler)
+   return safe_at(m_voices, voiceIdx).map([&,this](auto voice) {
+      for (auto& component : voice->components)
       {
-         if (component.sdVoiceRef.soundHandler->lastplayerId !=
-             static_cast<const void*>(this))
+         ParameterHandler ph(component.data, component.sdVoiceRef);
+         if (component.sdVoiceRef.soundHandler)
          {
-            ph.refreshParameters();
-            component.sdVoiceRef.soundHandler->lastplayerId =
-                static_cast<const void*>(this);
+            if (component.sdVoiceRef.soundHandler->lastplayerId !=
+                static_cast<const void*>(this))
+            {
+               ph.refreshParameters();
+               component.sdVoiceRef.soundHandler->lastplayerId =
+                   static_cast<const void*>(this);
+            }
+            component.sdVoiceRef.soundHandler->noteOn(component.sdVoiceRef.sdVoiceIdx, 
+                                                      note + voice->noteOffset + component.data.noteOffset,
+                                                      velocity);
          }
-         component.sdVoiceRef.soundHandler->noteOn(component.sdVoiceRef.sdVoiceIdx, 
-                                                   note + m_voices[voiceIdx].noteOffset + component.data.noteOffset,
-                                                   velocity);
       }
-   }
-   emitNoteOnPlayed(voiceIdx + 64, velocity, token);
+      emitNoteOnPlayed(voiceIdx + 64, velocity, token);
+   });
 }
 
-void KitInstrument::noteOff(int voiceIdx, int note, float velocity,
+Void KitInstrument::noteOff(int voiceIdx, int note, float velocity,
                             void* token) 
 {
-   for (auto& component : m_voices[voiceIdx].components)
-   {
-      if (component.sdVoiceRef.soundHandler)
+   return safe_at(m_voices, voiceIdx).map([&,this](auto voice) {
+      for (auto& component : voice->components)
       {
-         component.sdVoiceRef.soundHandler->noteOff(component.sdVoiceRef.sdVoiceIdx, 
-                                                    note + m_voices[voiceIdx].noteOffset + component.data.noteOffset, 
-                                                    velocity);
+         if (component.sdVoiceRef.soundHandler)
+         {
+            component.sdVoiceRef.soundHandler->noteOff(component.sdVoiceRef.sdVoiceIdx, 
+                                                       note + voice->noteOffset + component.data.noteOffset, 
+                                                       velocity);
+         }
       }
-   }
-   emitNoteOffPlayed(voiceIdx + 64, velocity, token);
+      emitNoteOffPlayed(voiceIdx + 64, velocity, token);
+   });
 }
 
 Void KitInstrument::incrementParameterValue(

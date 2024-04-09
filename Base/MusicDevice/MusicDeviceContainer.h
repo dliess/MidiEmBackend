@@ -50,6 +50,10 @@ public:
 
    size_t size() const noexcept;
 
+   Ret<sound::SoundHandler*> getSoundHandler(
+       const MusicDeviceId& mdId) noexcept;
+   Ret<const sound::SoundHandler*> getSoundHandler(
+       const MusicDeviceId& mdId) const noexcept;
    void withSoundHandler(
        const musicDevice::MusicDeviceId& mdId,
        util::function_ref<void(sound::SoundHandler&)> cb);

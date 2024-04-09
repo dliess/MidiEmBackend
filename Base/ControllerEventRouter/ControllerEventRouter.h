@@ -8,10 +8,11 @@
 #include "ControllerEventRouterRt.h"
 #include "ControllerEvents.h"
 #include "DoubleBuffer.h"
-#include "InstrumentsRef.h"
+#include "Refs/InstrumentsRef.h"
 #include "MusicDeviceContainerRef.h"
 #include "MusicDeviceDescription.h"
 #include "MusicDeviceFactoryDataHolder.h"
+#include "ErrorHandling.h"
 
 namespace base::eventRouter
 {
@@ -47,13 +48,13 @@ private:
    Persister m_persister;
    LoaderData m_loaderData;
 
-   const musicDevice::description::controller::Widget* controlWidgetDescription(
+   Ret<const musicDevice::description::controller::Widget*> controlWidgetDescription(
        const musicDevice::controller::EventIdExt& evtId) const;
 
-   const musicDevice::description::sound::Parameter* parameterDescription(
+   Ret<const musicDevice::description::sound::Parameter*> parameterDescription(
        const EventDestination::Endpoint& endpoint, int paramIdx);
 
-   void _createConnection(const musicDevice::controller::EventIdExt& from,
+   Void _createConnection(const musicDevice::controller::EventIdExt& from,
                           const EventDestination& to) noexcept;
    void _removeConnection(
        const musicDevice::controller::EventIdExt& eventIdExt) noexcept;

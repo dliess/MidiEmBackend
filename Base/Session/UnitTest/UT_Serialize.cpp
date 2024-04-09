@@ -22,7 +22,7 @@ TEST(SerializeTest, track)
    base::instruments::mock::MockInstruments instruments;
    util::StackMempool<101024> memoryPool("mempool");
    std::pmr::polymorphic_allocator<std::byte> allocator(&memoryPool.pool());
-   base::session::Track track("TestTrack", instruments, allocator);
+   base::session::Track track("TestTrack", allocator);
    track.createClip(4);
    track.clip(4)->addNote(1.0, 1.0, 64, 1.0);
    track.clip(4)->addNote(2.0, 1.0, 66, 1.0);

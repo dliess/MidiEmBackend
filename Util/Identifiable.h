@@ -90,7 +90,7 @@ auto withUuidRet(const Container& container, Identifiable::UUIDView uuid,
 }
 
 template <class Container>
-const Container::value_type& getByUuid(const Container& container,
+const typename Container::value_type& getByUuid(const Container& container,
                                        Identifiable::UUIDView uuid)
 {
    auto it = std::ranges::find_if(container, [uuid](const auto& e) {
@@ -104,7 +104,7 @@ const Container::value_type& getByUuid(const Container& container,
 }
 
 template <class Container>
-Container::value_type& getByUuid(Container& container,
+typename Container::value_type& getByUuid(Container& container,
                                  Identifiable::UUIDView uuid)
 {
    auto it = std::ranges::find_if(container, [uuid](const auto& e) {

@@ -265,12 +265,13 @@ void SoundHandler::setParameterValue(int voiceIdx, int parameterId,
    }
 }
 
-void SoundHandler::setRelativeParameterValue(
+Void SoundHandler::setRelativeParameterValue(
     int voiceIdx, int parameterId,
     musicDevice::sound::ParameterAttr parameterAttr, float relValue,
     bool callCalcActVal) const
 {
    /*Not yet implemented, and I think its not so important*/
+   return Void{};
 }
 
 void SoundHandler::setCommandedValue(int voiceIdx, int parameterId, float value,
@@ -286,13 +287,13 @@ void SoundHandler::setCommandedValue(int voiceIdx, int parameterId, float value,
    }
 }
 
-std::optional<float> SoundHandler::getParameterValue(
+Ret<float> SoundHandler::getParameterValue(
     int voiceIdx, int parameterId, ParameterAttr parameterAttr) const noexcept
 {
    return m_paramStorage.getCommandedValue(voiceIdx, parameterId, parameterAttr);
 }
 
-float SoundHandler::fromNormalizedValue(int voiceIdx, int parameterId,
+Ret<float> SoundHandler::fromNormalizedValue(int voiceIdx, int parameterId,
                                         ParameterAttr parameterAttr,
                                         float percentageValue) const noexcept
 {
@@ -327,7 +328,7 @@ ValueRangeEnd SoundHandler::getParameterRangeEnd(
                                               voiceIdx, parameterIdx));
 }
 
-void SoundHandler::incrementParameterValue(int voiceIdx, int parameterId,
+Void SoundHandler::incrementParameterValue(int voiceIdx, int parameterId,
                                            ParameterAttr parameterAttr,
                                            float increment,
                                            IncrementMode incrementMode,
@@ -364,13 +365,15 @@ void SoundHandler::incrementParameterValue(int voiceIdx, int parameterId,
          break;
       }
    }
+   return Void{};
 }
 
-void SoundHandler::incrementParameterValueEventBound(
+Void SoundHandler::incrementParameterValueEventBound(
     int voiceIdx, int parameterId, ParameterAttr parameterAttr, float increment,
     IncrementMode incrementMode, bool callCalcActVal) noexcept
 {
    // Not shure if I want to implement this
+   return Void{};
 }
 
 void SoundHandler::incCommandedValue(int voiceIdx, int parameterId,

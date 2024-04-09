@@ -6,7 +6,7 @@
 namespace base::instruments::rt
 {
 
-
+inline
 NoteAllocation::NoteAllocation() noexcept
 {
    m_noteAllocations.fill(FREE);
@@ -23,7 +23,8 @@ int NoteAllocation::incrementVoiceIndex(std::size_t maxSize) noexcept
    return m_currentVoiceIndex;
 }
 
-inline int NoteAllocation::currentVoiceIndex() const noexcept
+inline 
+int NoteAllocation::currentVoiceIndex() const noexcept
 {
    return m_currentVoiceIndex;
 }

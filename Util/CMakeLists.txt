@@ -40,4 +40,5 @@ target_link_libraries(${TARGET_NAME}
     PUBLIC -lstdc++fs
     PUBLIC uuid
     PUBLIC UtilItc
+    PUBLIC tl::expected
 )

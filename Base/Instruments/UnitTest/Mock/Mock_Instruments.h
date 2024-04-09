@@ -3,22 +3,26 @@
 
 #include "gmock/gmock.h"
 #include "Identifiable.h"
-#include "function_ref.h"
-#include "KitInstrument.h"
-#include "MelodicInstrument.h"
+#include "Refs/InstrumentRtRef.h"
+#include "Refs/KitInstrumentRtRef.h"
+#include "Refs/MelodicInstrumentRtRef.h"
+#include "SoundSection.h"
+#include "ErrorHandling.h"
 
 namespace base::instruments::mock
 {
 class MockInstruments
 {
 public:
-   MOCK_METHOD(void, withInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const Instrument&)>));
-   MOCK_METHOD(void, withKitInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const KitInstrument&)>));
-   MOCK_METHOD(void, withMelodicInstrumentRt, (util::Identifiable::UUIDView, util::function_ref<void(const MelodicInstrument&)>));
    MOCK_METHOD(void, incKitInstrumentRefCount, (const util::Identifiable::UUID&));
    MOCK_METHOD(void, decKitInstrumentRefCount, (const util::Identifiable::UUID&));
    MOCK_METHOD(void, incMelodicInstrumentRefCount, (const util::Identifiable::UUID&));
    MOCK_METHOD(void, decMelodicInstrumentRefCount, (const util::Identifiable::UUID&));
+   MOCK_METHOD(Ret<InstrumentRtRef>, getInstrumentRtRef, (util::Identifiable::UUIDView));
+   MOCK_METHOD(Ret<KitInstrumentRtRef>, getKitInstrumentRtRef, (util::Identifiable::UUIDView));
+   MOCK_METHOD(Ret<MelodicInstrumentRtRef>, getMelodicInstrumentRtRef, (util::Identifiable::UUIDView));
+   MOCK_METHOD(Ret<const base::musicDevice::description::sound::Parameter*>, getParameterDescriptionOfKit, (util::Identifiable::UUIDView, int, int, int));
+   MOCK_METHOD(Ret<const base::musicDevice::description::sound::Parameter*>, getParameterDescriptionOfMelodic, (util::Identifiable::UUIDView, int, int));
 };
 
 }   // namespace mock

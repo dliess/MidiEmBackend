@@ -150,23 +150,6 @@ void InstrumentsRpc::setNoteOffsetInMelodicInstrumentComponent(
    }
 }
 
-void InstrumentsRpc::setVoiceNameInMelodicInstrument(
-    const ::capnzero::SpanCL<16>& instrumentUuid, ::capnzero::Int16 voiceIdx,
-    const ::capnzero::TextView& name)
-{
-   util::Identifiable::UUID instrumentUuid_;
-   std::ranges::copy(instrumentUuid, instrumentUuid_.begin());
-   try
-   {
-      m_rInstruments.setVoiceNameInMelodicInstrument(instrumentUuid_, voiceIdx,
-                                                     std::string(name));
-   }
-   catch (std::exception& e)
-   {
-      spdlog::error("InstrumentsRpc exception occured: {}", e.what());
-   }
-}
-
 void InstrumentsRpc::createKitInstrument(const ::capnzero::TextView& name)
 {
    try

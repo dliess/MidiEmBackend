@@ -11,9 +11,9 @@
 #include "CallbackSignal.h"
 #include "Clip.h"
 #include "Identifiable.h"
-#include "InstrumentsRef.h"
 #include "Memory.h"
 #include "NoteCollector.h"
+#include "Refs/InstrumentsRef.h"
 
 namespace base::session
 {
@@ -21,8 +21,7 @@ class Track : public util::Identifiable
 {
 public:
    using allocator_type = std::pmr::polymorphic_allocator<std::byte>;
-   explicit Track(std::string_view name,
-                  instruments::InstrumentsRef instrumentsRef,
+   explicit Track(std::string_view name, 
                   const allocator_type& alloc = {}) noexcept;
    Track duplicate(const allocator_type& alloc) const noexcept;
    Track(Track&& rhs, const allocator_type& alloc) noexcept;
@@ -33,15 +32,16 @@ public:
    void toggleMute() noexcept;
    void setVolume(float volume) noexcept;
       inline void createClip(int row);
-   inline void createClip(int row, const Clip& clip);
-   inline void deleteClip(int row);
-   inline void startClip(int row);
-   inline void stopClip();
-   inline Clip* clip(int row) noexcept;
-   inline const Clip* clip(int row) const noexcept;
-   inline std::optional<int> startedClipIdx() const noexcept;
-   inline std::string_view name() const;
-   inline void setInstrumentUUID(util::Identifiable::UUIDView instrumentUUID);
+   void createClip(int row, const Clip& clip);
+   void deleteClip(int row);
+   void startClip(int row);
+   void stopClip();
+   Clip* clip(int row) noexcept;
+   const Clip* clip(int row) const noexcept;
+   std::optional<int> startedClipIdx() const noexcept;
+   std::string_view name() const;
+   void setInstrumentUUID(instruments::InstrumentsRef instrumentsRef,
+                          util::Identifiable::UUIDView instrumentUUID);
 
    /* TODO: do we need this?
       inline void noteOn(int note, float velocity) noexcept;
@@ -73,8 +73,7 @@ private:
    std::pmr::string m_name;
    static constexpr size_t NumClips = 64;
    std::pmr::vector<util::pmr::unique_ptr<Clip>> m_clips;
-   instruments::InstrumentsRef m_instrumentsRef;
-   std::optional<util::Identifiable::UUID> m_instrumentUUID;
+   std::optional<instruments::InstrumentRtRef> m_instrumentRef;
    static constexpr int StopperIdx = -1;
    std::optional<int> m_activeClipIdx;
    std::optional<int> m_toStartClipIdx;

@@ -156,15 +156,6 @@ void InstrumentsModifier::setNoteOffsetInMelodicInstrumentComponent(
    instrumentIt->unmarkAsDefaultCreated();
 }
 
-void InstrumentsModifier::setVoiceNameInMelodicInstrument(
-    const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
-    const std::string name) noexcept
-{
-   GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   instrumentIt->voices().operator[](voiceIdx).name = name;
-   instrumentIt->unmarkAsDefaultCreated();
-}
-
 void InstrumentsModifier::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx,

@@ -74,12 +74,14 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
               const musicDevice::controller::Event &event) {
           controllerEventRouter.onControllerDevEventOccured(uuid, event);
        });
+   /* TODO
    musicDeviceFactory.dataHolder().onMusicDeviceAdded([this](auto md) {
       instruments::InstrumentsMDChangeHandler(instruments).add(md);
    });
    musicDeviceFactory.dataHolder().onMusicDeviceAboutToRemove([this](auto md) {
       instruments::InstrumentsMDChangeHandler(instruments).remove(md);
    });
+   */
 }
 
 base::Base::~Base() noexcept = default;

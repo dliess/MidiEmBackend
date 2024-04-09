@@ -1,6 +1,8 @@
 #ifndef BASE_SESSION_TRACK_INL
 #define BASE_SESSION_TRACK_INL
 
+#include "Track.h"
+
 #include "Instrument.h"
 
 namespace base
@@ -39,13 +41,9 @@ inline void session::Track::deleteClip(int row)
       m_activeClipIdx.reset();
    if (m_clips[row])
    {
-      if (m_instrumentUUID)
+      if (m_instrumentRef)
       {
-         m_instrumentsRef.withInstrumentRt(
-             *m_instrumentUUID,
-             [this, row](const instruments::Instrument& instrument) {
-                m_clips[row]->stop(&instrument);
-             });
+          m_clips[row]->stop(m_instrumentRef.value());
       }
       m_clips[row].reset();
       emitClipDeleted(row);
@@ -84,50 +82,6 @@ inline const session::Clip* session::Track::clip(int row) const noexcept
 
 inline std::string_view session::Track::name() const { return m_name; }
 
-inline void session::Track::setInstrumentUUID(
-    util::Identifiable::UUIDView instrumentUUID)
-{
-   if (!m_instrumentUUID || (m_instrumentUUID != instrumentUUID))
-   {
-      if(m_instrumentUUID)
-      {
-         m_instrumentsRef.withInstrumentRt(
-            *m_instrumentUUID,
-            [this](const instruments::Instrument& instrument) {
-               instrument.rtData->onNoteOnPlayed(nullptr);
-               instrument.rtData->onNoteOffPlayed(nullptr);
-            });
-         m_noteCollector.reset();
-         if (m_activeClipIdx)
-         {
-            m_instrumentsRef.withInstrumentRt(
-               *m_instrumentUUID,
-               [this](const instruments::Instrument& instrument) {
-                  m_clips[*m_activeClipIdx]->stop(&instrument);
-               });
-         }
-      }
-      m_instrumentUUID = util::deepCopy(instrumentUUID);
-      m_instrumentsRef.withInstrumentRt(
-            *m_instrumentUUID,
-            [this](const instruments::Instrument& instrument) {
-               instrument.rtData->onNoteOnPlayed([this](int note, float velocity, void* token){
-                  if(token == nullptr)
-                  {
-                     m_noteCollector.noteOn(note, velocity);
-                  }
-               });
-               instrument.rtData->onNoteOffPlayed([this](int note, float velocity, void* token){
-                  if(token == nullptr)
-                  {
-                     m_noteCollector.noteOff(note, velocity);
-                  }                  
-               });
-            });
-
-      emitInstrumentChanged(*m_instrumentUUID);
-   }
-}
 
 inline std::optional<int> session::Track::startedClipIdx() const noexcept
 {

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "Instruments.h"
-#include "InstrumentsRef.h"
+#include "Refs/InstrumentsRef.h"
 #include "MusicDeviceFactoryDataHolder.h"
 
 using namespace base::musicDevice;

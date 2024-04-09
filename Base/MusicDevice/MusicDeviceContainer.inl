@@ -230,6 +230,30 @@ inline size_t MusicDeviceContainer::size() const noexcept
    return Super::size();
 }
 
+inline
+Ret<sound::SoundHandler*> MusicDeviceContainer::getSoundHandler(
+    const MusicDeviceId& mdId) noexcept
+{
+   auto mdIter = findByDeviceId(mdId);
+   if (mdIter != end() && mdIter->second->soundHandler)
+   {
+      return &mdIter->second->soundHandler.value();
+   }
+   return tl::unexpected(Error::mdNotFound);
+}
+  
+inline
+Ret<const sound::SoundHandler*> MusicDeviceContainer::getSoundHandler(
+    const MusicDeviceId& mdId) const noexcept
+{
+   auto mdIter = findByDeviceId(mdId);
+   if (mdIter != end() && mdIter->second->soundHandler)
+   {
+      return &mdIter->second->soundHandler.value();
+   }
+   return tl::unexpected(Error::mdNotFound);
+}
+
 inline void MusicDeviceContainer::withSoundHandler(
     const musicDevice::MusicDeviceId& mdId,
     util::function_ref<void(sound::SoundHandler&)> cb)

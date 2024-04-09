@@ -7,7 +7,7 @@
 #include "ControllerEventDestination.h"
 #include "ControllerEvents.h"
 #include "DoubleBuffer.h"
-#include "InstrumentsRef.h"
+#include "Refs/InstrumentsRef.h"
 #include "MusicDeviceContainerRef.h"
 #include "MusicDeviceDescription.h"
 

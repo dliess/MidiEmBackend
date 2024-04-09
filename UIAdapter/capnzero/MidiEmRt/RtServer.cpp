@@ -446,26 +446,4 @@ RtServer::RtServer(
               VIEW2CONSTREF(uuid),
               row, beat);
        });
-   rInstruments.onKitInstrumentParamChanged(
-       [this](util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx,
-              int parameterIdx,
-              base::musicDevice::sound::ParameterAttr parameterAttr,
-              float value) {
-          signals().InstrumentsPlay__kitParamChanged(
-              VIEW2CONSTREF(uuid),
-              voiceIdx, componentIdx, parameterIdx,
-              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
-              value);
-       });
-   rInstruments.onMelodicInstrumentParamChanged(
-       [this](util::Identifiable::UUIDView uuid, int componentIdx,
-              int parameterIdx,
-              base::musicDevice::sound::ParameterAttr parameterAttr,
-              float value) {
-          signals().InstrumentsPlay__melodicParamChanged(
-              VIEW2CONSTREF(uuid),
-              componentIdx, parameterIdx,
-              static_cast<::capnzero::MidiEmRt::SDParameterAttr>(parameterAttr),
-              value);
-       });
 }

@@ -5,11 +5,9 @@
 using namespace base;
 
 session::Track::Track(std::string_view name,
-                      instruments::InstrumentsRef instrumentsRef,
                       const allocator_type& alloc) noexcept :
     m_name(name, alloc),
-    m_clips(NumClips, alloc),
-    m_instrumentsRef(instrumentsRef)
+    m_clips(NumClips, alloc)
 {
    m_noteCollector.onNoteOccured([this](const sequencer::Note& note) {
       if (m_activeClipIdx)   // TODO: add record condition here
@@ -21,7 +19,7 @@ session::Track::Track(std::string_view name,
 }
 
 session::Track::Track(const Track& rhs, const allocator_type& alloc) :
-    m_name(rhs.m_name, alloc), m_instrumentsRef(rhs.m_instrumentsRef)
+    m_name(rhs.m_name, alloc), m_instrumentRef(rhs.m_instrumentRef)
 {
    m_clips.resize(rhs.m_clips.size());
    for (int i = 0; i < rhs.m_clips.size(); ++i)
@@ -37,7 +35,7 @@ session::Track::Track(const Track& rhs, const allocator_type& alloc) :
 session::Track::Track(Track&& rhs, const allocator_type& alloc) noexcept :
     m_name(std::move(rhs.m_name), alloc),
     m_clips(std::move(rhs.m_clips), alloc),
-    m_instrumentsRef(std::move(rhs.m_instrumentsRef))
+    m_instrumentRef(std::move(rhs.m_instrumentRef))
 {
 }
 
@@ -57,12 +55,9 @@ void session::Track::resetActiveClip()
 
 void session::Track::stop()
 {
-   if (m_activeClipIdx && m_instrumentUUID)
+   if (m_activeClipIdx && m_instrumentRef)
    {
-      m_instrumentsRef.withInstrumentRt(
-          *m_instrumentUUID, [this](const instruments::Instrument& instrument) {
-             m_clips[m_activeClipIdx.value()]->stop(&instrument);
-          });
+       m_clips[m_activeClipIdx.value()]->stop(m_instrumentRef.value());
    }
 }
 
@@ -76,13 +71,9 @@ void session::Track::update()
       {
          if (m_activeClipIdx)
          {
-            if (m_instrumentUUID)
+            if (m_instrumentRef)
             {
-               m_instrumentsRef.withInstrumentRt(
-                   *m_instrumentUUID,
-                   [this](const instruments::Instrument& instrument) {
-                      m_clips[m_activeClipIdx.value()]->stop(&instrument);
-                   });
+               m_clips[m_activeClipIdx.value()]->stop(m_instrumentRef.value());
             }
             emitClipStartedChanged(*m_activeClipIdx, false);
          }
@@ -100,12 +91,9 @@ void session::Track::update()
          m_toStartClipIdx.reset();
       }
    }
-   if (m_activeClipIdx && m_instrumentUUID)
+   if (m_activeClipIdx && m_instrumentRef)
    {
-      m_instrumentsRef.withInstrumentRt(
-          *m_instrumentUUID, [this](const instruments::Instrument& instrument) {
-             m_clips[m_activeClipIdx.value()]->update(&instrument);
-          });
+      m_clips[m_activeClipIdx.value()]->update(m_instrumentRef.value());
    }
 }
 
@@ -148,4 +136,40 @@ void session::Track::registerCbs(int row)
    m_clips[row]->onSequenceLengthChanged([this, row](sequencer::Beat seqLen) {
       emitClipSequenceLengthChanged(row, seqLen);
    });
+}
+
+void session::Track::setInstrumentUUID(
+    instruments::InstrumentsRef instrumentsRef,
+    util::Identifiable::UUIDView instrumentUUID)
+{
+   instrumentsRef.getInstrumentRtRef(instrumentUUID).map(
+       [this](instruments::InstrumentRtRef instrumentRef) {
+         if(instrumentRef != m_instrumentRef)
+         {
+            if(m_instrumentRef)
+            {
+               m_instrumentRef->onNoteOnPlayed(nullptr);
+               m_instrumentRef->onNoteOffPlayed(nullptr);
+               m_noteCollector.reset();
+            }
+            m_instrumentRef = instrumentRef;
+            if (m_activeClipIdx)
+            {
+               m_clips[*m_activeClipIdx]->stop(instrumentRef);
+            }
+            instrumentRef.onNoteOnPlayed([this](int note, float velocity, void* token){
+               if(token == nullptr)
+               {
+                  m_noteCollector.noteOn(note, velocity);
+               }
+            });
+            instrumentRef.onNoteOffPlayed([this](int note, float velocity, void* token){
+               if(token == nullptr)
+               {
+                  m_noteCollector.noteOff(note, velocity);
+               }                  
+            });
+            emitInstrumentChanged(instrumentRef.uuid());
+         }
+       });
 }

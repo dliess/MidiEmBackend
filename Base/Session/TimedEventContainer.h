@@ -15,8 +15,8 @@ template <typename Container> struct TimedEventContainer : public Container
    void forNoteEvents(sequencer::Beat fromBeat, sequencer::Beat toBeat, Cb&& cb)
    {
       // [start, end[
-      const auto itStart = Container::lower_bound(fromBeat);
-      const auto itEnd   = Container::upper_bound(toBeat);
+      auto itStart = Container::lower_bound(fromBeat);
+      auto itEnd   = Container::upper_bound(toBeat);
       if (fromBeat > toBeat)   // wrapped
       {
          for (auto it = itStart; it != Container::end(); ++it) { cb(it); }

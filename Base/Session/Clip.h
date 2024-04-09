@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "CallbackSignal.h"
-#include "Instrument.h"
+#include "Refs/InstrumentRtRef.h"
 #include "NoteEvent.h"
 #include "ParameterEvent.h"
 #include "TimedEventContainer.h"
@@ -24,7 +24,7 @@ public:
    explicit Clip(const allocator_type& alloc) noexcept;
    Clip(const Clip& other, const allocator_type& alloc);
    Clip(Clip&& other, const allocator_type& alloc) noexcept;
-   void update(const instruments::rt::Instrument* instrument);
+   void update(instruments::InstrumentRtRef instrument);
    void setName(std::string_view nameV);
    std::string_view name() const;
    void addNote(sequencer::Beat beatInSeq, sequencer::Beat length, int note,
@@ -38,7 +38,7 @@ public:
    void removeNote(sequencer::NoteId noteId);
    void removeAllNotes();
    void reset();
-   void stop(const instruments::Instrument* instrument);
+   void stop(instruments::InstrumentRtRef instrument);
    void setSequenceLength(sequencer::Beat);
    sequencer::Beat getSequenceLength() const noexcept;
    [[nodiscard]] sequencer::Beat getPrevClipBeat() const noexcept;

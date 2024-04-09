@@ -3,6 +3,13 @@
 
 #include "Identifiable.h"
 #include <cstddef>
+#include <memory>
+#include <array>
+#include "Refs/InstrumentRtRef.h"
+#include "Refs/KitInstrumentRtRef.h"
+#include "Refs/MelodicInstrumentRtRef.h"
+#include "ErrorHandling.h"
+#include "SoundSection.h"
 
 namespace base::instruments
 {
@@ -17,6 +24,13 @@ public:
    virtual void decKitInstrumentRefCount(const util::Identifiable::UUID& uuid) = 0;
    virtual void incMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid) = 0;
    virtual void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid) = 0;
+   virtual Ret<InstrumentRtRef> getInstrumentRtRef(util::Identifiable::UUIDView uuid) = 0;
+   virtual Ret<KitInstrumentRtRef> getKitInstrumentRtRef(util::Identifiable::UUIDView uuid) = 0;
+   virtual Ret<MelodicInstrumentRtRef> getMelodicInstrumentRtRef(util::Identifiable::UUIDView uuid) = 0;
+   virtual Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfKit(util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx, int ParameterIdx) = 0;
+   virtual Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfMelodic(util::Identifiable::UUIDView uuid, int componentIdx, int ParameterIdx) = 0;
 };
 
 template <class InstrumentsRefImpl>
@@ -39,6 +53,28 @@ public:
    void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid) override
    {
       m_obj->decMelodicInstrumentRefCount(uuid);
+   }
+   Ret<InstrumentRtRef> getInstrumentRtRef(util::Identifiable::UUIDView uuid) override
+   {
+      return m_obj->getInstrumentRtRef(uuid);
+   }
+   Ret<KitInstrumentRtRef> getKitInstrumentRtRef(util::Identifiable::UUIDView uuid) override
+   {
+      return m_obj->getKitInstrumentRtRef(uuid);
+   }
+   Ret<MelodicInstrumentRtRef> getMelodicInstrumentRtRef(util::Identifiable::UUIDView uuid) override
+   {
+      return m_obj->getMelodicInstrumentRtRef(uuid);
+   }
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfKit(util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx, int ParameterIdx) override
+   {
+      return m_obj->getParameterDescriptionOfKit(uuid, voiceIdx, componentIdx, ParameterIdx);
+   }
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfMelodic(util::Identifiable::UUIDView uuid, int componentIdx, int ParameterIdx) override
+   {
+      return m_obj->getParameterDescriptionOfMelodic(uuid, componentIdx, ParameterIdx);
    }
 
 private:
@@ -70,6 +106,28 @@ public:
    void decMelodicInstrumentRefCount(const util::Identifiable::UUID& uuid)
    {
       getImpl().decMelodicInstrumentRefCount(uuid);
+   }
+   Ret<InstrumentRtRef> getInstrumentRtRef(util::Identifiable::UUIDView uuid)
+   {
+      return getImpl().getInstrumentRtRef(uuid);
+   }
+   Ret<KitInstrumentRtRef> getKitInstrumentRtRef(util::Identifiable::UUIDView uuid)
+   {
+      return getImpl().getKitInstrumentRtRef(uuid);
+   }
+   Ret<MelodicInstrumentRtRef> getMelodicInstrumentRtRef(util::Identifiable::UUIDView uuid)
+   {
+      return getImpl().getMelodicInstrumentRtRef(uuid);
+   }
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfKit(util::Identifiable::UUIDView uuid, int voiceIdx, int componentIdx, int ParameterIdx)
+   {
+      return getImpl().getParameterDescriptionOfKit(uuid, voiceIdx, componentIdx, ParameterIdx);
+   }
+   Ret<const base::musicDevice::description::sound::Parameter*> 
+      getParameterDescriptionOfMelodic(util::Identifiable::UUIDView uuid, int componentIdx, int ParameterIdx)
+   {
+      return getImpl().getParameterDescriptionOfMelodic(uuid, componentIdx, ParameterIdx);
    }
 
 private:

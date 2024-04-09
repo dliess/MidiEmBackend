@@ -30,7 +30,7 @@ session::Clip::Clip(const Clip& other, const allocator_type& alloc) :
 {
 }
 
-void session::Clip::update(const instruments::rt::Instrument* instrument)
+void session::Clip::update(instruments::InstrumentRtRef instrument)
 {
    sequencer::Beat clipBeat =
        tempo::BeatTick::instance().getLocalBeat() - m_startBeat;
@@ -45,10 +45,7 @@ void session::Clip::update(const instruments::rt::Instrument* instrument)
                        : (clipBeat >= endStamp);
       if (turnNoteOff)
       {
-         if (instrument)
-         {
-            instrument->noteOff((*it)->note, (*it)->velocity, this);
-         }
+         instrument.noteOff((*it)->note, (*it)->velocity, this);
          it = m_activeNotes.erase(it);
       }
       else
@@ -57,12 +54,9 @@ void session::Clip::update(const instruments::rt::Instrument* instrument)
       }
    }
    m_noteEvents.forNoteEvents(
-       m_prevClipBeat, clipBeat, [this, instrument](const auto& noteEventIt) {
-          if (instrument)
-          {
-             instrument->noteOn(noteEventIt->second.note,
+       m_prevClipBeat, clipBeat, [this, instrument](const auto& noteEventIt) mutable {
+          instrument.noteOn(noteEventIt->second.note,
                            noteEventIt->second.velocity, this);
-          }
           m_activeNotes.push_back(&noteEventIt->second);
        });
    m_prevClipBeat = clipBeat;
@@ -74,14 +68,11 @@ void session::Clip::reset()
    m_prevClipBeat = m_startBeat;
 }
 
-void session::Clip::stop(const instruments::Instrument* instrument)
+void session::Clip::stop(instruments::InstrumentRtRef instrument)
 {
    for (auto& activeNote : m_activeNotes)
    {
-      if (instrument)
-      {
-         instrument->noteOff(activeNote->note, activeNote->velocity, this);
-      }
+     instrument.noteOff(activeNote->note, activeNote->velocity, this);
    }
    m_activeNotes.clear();
 }

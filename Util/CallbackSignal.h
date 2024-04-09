@@ -14,6 +14,11 @@ private: \
     std::vector<cbName##Cb> m_##cbName##s; \
 public:
 
+#define CB_SIGNAL_INTERFACE(cbName, ...) \
+public:                    \
+    using cbName##Cb = std::function<void(__VA_ARGS__)>; \
+    virtual void on##cbName(cbName##Cb cb) = 0;
+
 #define CB_SIGNAL_IF(cbName, ...) \
 public:                    \
     using cbName##Cb = std::function<void(__VA_ARGS__)>; \

@@ -1,4 +1,4 @@
-#add_subdirectory(Mock)
+add_subdirectory(Mock)
 
 set(SOURCES
    "UT_Instruments.cpp"

@@ -26,11 +26,11 @@ class KitInstrument : public Instrument
 public:
    static constexpr std::size_t NUM_VOICES = 16;
    explicit KitInstrument(util::Identifiable::UUIDView uuid) noexcept;
-   void noteOn(int note, float velocity, void* token = nullptr);
-   void noteOff(int note, float velocity, void* token = nullptr);
-   void noteOn(int voiceIdx, int note, float velocity,
+   Void noteOn(int note, float velocity, void* token = nullptr);
+   Void noteOff(int note, float velocity, void* token = nullptr);
+   Void noteOn(int voiceIdx, int note, float velocity,
                void* token = nullptr);
-   void noteOff(int voiceIdx, int note, float velocity,
+   Void noteOff(int voiceIdx, int note, float velocity,
                 void* token = nullptr);
 
    Void incrementParameterValue(int voiceIdx, int componentIdx,
