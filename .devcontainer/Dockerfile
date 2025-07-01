@@ -16,9 +16,9 @@ RUN apt-get update \
 
 RUN locale-gen --purge en_US.UTF-8
 RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
 
 # Package installs
 RUN apt-get update && apt-get install -y \
@@ -74,8 +74,8 @@ RUN     apt-get update && apt-get install -y \
         && rm -rf /var/lib/apt/lists/*
 
 # Create group and user
-RUN groupadd --gid=$GID $BUILD_USER
-RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $BUILD_USER
+RUN getent group ${GID} || groupadd -g ${GID} 
+RUN useradd --create-home --shell /bin/bash $BUILD_USER --uid=$UID -g $GID
 RUN echo "$BUILD_USER:$BUILD_USER_PWD" | chpasswd
 RUN usermod -aG sudo $BUILD_USER
 RUN echo "$BUILD_USER ALL=(ALL) ALL" >> /etc/sudoers
@@ -85,7 +85,7 @@ RUN mkdir -p /home/$BUILD_USER/CPM_DOWNLOADS
 
 RUN echo "export XDG_CONFIG_HOME=/home/$BUILD_USER/.config" >> /etc/profile.d/xdg_config.sh 
 
-USER $BUILD_USER:$BUILD_USER
+USER $BUILD_USER:$GID
 WORKDIR /home/build-user
 
 RUN wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh || true
