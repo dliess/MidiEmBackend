@@ -24,7 +24,7 @@ static_assert(int(::capnzero::MidiEmLoader::SDParameterAttr::L_F_O_MULTIPLIER_EX
               int(base::musicDevice::sound::ParameterAttr::LfoMultiplierExp));
 
 auto unpackEndpoint(
-    const musicDevice::factory::DataHolder &rMDFDataHolder,
+    const musicDevice::factory::MusicDevices &rMDFDataHolder,
     const eventRouter::EventDestination::Endpoint &endpoint)
 {
     static constexpr int UNUSED = -1;
@@ -62,11 +62,11 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
         rZmqContext, rpcBindAddr, signalBindAddr,
         std::make_unique<LoaderRpc>(signals(), rInstruments, rMDFactory,
                                     rCtrlEventRouter),
-        std::make_unique<MusicDevicesRpc>(rMDFactory.dataHolder()),
+        std::make_unique<MusicDevicesRpc>(rMDFactory.musicDevices()),
         std::make_unique<InstrumentsRpc>(rInstruments),
         std::make_unique<LdControllerEventRouterRpc>(rCtrlEventRouter,
                                                      rInstruments,
-                                                     rMDFactory.dataHolder()))
+                                                     rMDFactory.musicDevices()))
 {
    rCtrlEventRouter.onGotConnected([this, &rMDFactory](
                                        const musicDevice::controller::
@@ -74,7 +74,7 @@ LoaderServer::LoaderServer(zmq::context_t &rZmqContext,
                                        const eventRouter::EventDestination
                                            &to) {
       auto [e_uuid, e_voiceIdx, e_comIdx] =
-          unpackEndpoint(rMDFactory.dataHolder(), to.endpoint);
+          unpackEndpoint(rMDFactory.musicDevices(), to.endpoint);
       SWITCH(from.eventId.widgetCoord)
             CASE_MONOSTATE 
             { /* TODO */

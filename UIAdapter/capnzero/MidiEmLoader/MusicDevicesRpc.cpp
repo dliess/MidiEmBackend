@@ -7,8 +7,8 @@
 using namespace uiadapter::capnzero;
 
 MusicDevicesRpc::MusicDevicesRpc(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
-    m_rFactoryDataHolder(rFactoryDataHolder)
+    base::musicDevice::factory::MusicDevices& rMusicDevices) :
+    m_rMusicDevices(rMusicDevices)
 {
 }
 
@@ -16,7 +16,7 @@ MusicDevicesRpc::MusicDevicesRpc(
     const ::capnzero::TextView& musicDeviceName)
 {
    auto pDescr =
-       m_rFactoryDataHolder.getDescription(std::string(musicDeviceName));
+       m_rMusicDevices.getDescription(std::string(musicDeviceName));
    if (pDescr)
    {
       return nlohmann::json(*pDescr).dump();

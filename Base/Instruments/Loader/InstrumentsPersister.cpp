@@ -40,9 +40,9 @@ Data filterOutDefaultInstruments(const Data& rData)
 
 Persister::Persister(
     std::unique_ptr<util::IDataPersister> dataPersister,
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) :
+    base::musicDevice::factory::MusicDevices& rMusicDevices) :
     m_dataPersister(std::move(dataPersister)),
-    m_rFactoryDataHolder(rFactoryDataHolder)
+    m_rMusicDevices(rMusicDevices)
 {
 }
 void Persister::save(const Data& data)

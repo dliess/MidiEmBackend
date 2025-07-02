@@ -16,10 +16,10 @@ void KitInstrumentModifier::renameKitInstrument(std::string name) noexcept
 }
 
 Void KitInstrumentModifier::createNewVoiceInKitInstrument(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).map(
+   return rMusicDevices.getMusicDeviceByUUID(sdUuid).map(
       [&,this](auto md) -> void {
          KitInstrument::Voice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
          voice.components.emplace_back(md->description()->soundSection->engineBase(sdVoiceIdx)->parameters,
@@ -31,11 +31,11 @@ Void KitInstrumentModifier::createNewVoiceInKitInstrument(
 }
 
 Void KitInstrumentModifier::addComponentToKitInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+   return rMusicDevices.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Void {
          if(!md->soundHandler)
          {
@@ -155,13 +155,13 @@ bool KitInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDevice
           hasComponentWith(pMusicDevice->deviceId());
 }
    
-void KitInstrumentModifier::fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept
+void KitInstrumentModifier::fillDescrReferences(base::musicDevice::factory::MusicDevices& rMusicDevices) noexcept
 {
    for (auto& voice : m_rKitInstrument.m_voices)
    {
       for (auto& component : voice.components)
       {
-         auto mdDescr = rFactoryDataHolder.getDescriptionByMdName(component.soundDeviceId.deviceName());
+         auto mdDescr = rMusicDevices.getDescriptionByMdName(component.soundDeviceId.deviceName());
          if (mdDescr)
          {
             component.paramDescr = &mdDescr.value()->soundSection->engineBase(component.sdVoiceIdx)->parameters;

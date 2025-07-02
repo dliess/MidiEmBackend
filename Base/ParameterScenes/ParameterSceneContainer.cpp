@@ -1,7 +1,7 @@
 #include "ParameterSceneContainer.h"
 
 #include "UtilVectorIndexInRange.h"
-#include "clip.h"
+#include "clip.hpp"
 
 #define CHECK_IN_RANGE(sceneIdx)                         \
    if (!mddescrutil::vector_index_in_range(sceneIdx, m_data))   \

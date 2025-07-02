@@ -16,9 +16,9 @@
 
 namespace base::musicDevice::factory
 {
-struct DataHolder
+struct MusicDevices
 {
-   DataHolder(std::string configDir) noexcept;
+   MusicDevices(std::string configDir) noexcept;
 
    void soundDevicesPresetChanged(const sound::preset::Id& enginePresetId);
    void soundDeviceActualPresetNameChanged(

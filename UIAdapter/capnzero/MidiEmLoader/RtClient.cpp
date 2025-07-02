@@ -21,7 +21,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
                            const ::capnzero::TextView& presetName) {
           const sound::preset::Id presetId(
               {std::string(deviceName), engineIdx, std::string(presetName)});
-          rMDFactory.dataHolder().soundDevicesPresetChanged(presetId);
+          rMDFactory.musicDevices().soundDevicesPresetChanged(presetId);
        });
 
    onMusicDevicesDeviceAdded(
@@ -34,7 +34,7 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
            ::capnzero::Data<16> uuidData;
            std::copy(uuid.begin(), uuid.end(), uuidData.begin());
            const MusicDeviceId mdId{std::string(type), std::string(port)};
-           //rMDFactory.dataHolder().addUuid2MdId(uuidData, mdId);
+           //rMDFactory.musicDevices().addUuid2MdId(uuidData, mdId);
            // TODO m_rEventRoutes.musicDeviceAppeared(mdId);
            */
        });
@@ -42,8 +42,8 @@ RtClient::RtClient(zmq::context_t& rZmqContext,
        [&rMDFactory, &rSignals, this](const ::capnzero::SpanCL<16>& uuid) {
           ::capnzero::Data<16> uuidData;
           std::copy(uuid.begin(), uuid.end(), uuidData.begin());
-          rMDFactory.dataHolder().removeEntryForUuid(uuidData);
-          const auto pMdId = rMDFactory.dataHolder().getMdIdByUUID(uuidData);
+          rMDFactory.musicDevices().removeEntryForUuid(uuidData);
+          const auto pMdId = rMDFactory.musicDevices().getMdIdByUUID(uuidData);
           if (pMdId)
           {
              // TODO m_rEventRoutes.musicDeviceDisappeared(*pMdId);

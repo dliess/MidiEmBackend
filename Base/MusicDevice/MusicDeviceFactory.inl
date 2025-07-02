@@ -7,15 +7,15 @@ namespace base::musicDevice::factory
 {
 
 inline
-const DataHolder& Factory::dataHolder() const noexcept
+const MusicDevices& Factory::musicDevices() const noexcept
 {
-   return m_dataHolder;
+   return m_musicDevices;
 }
 
 inline
-DataHolder& Factory::dataHolder() noexcept
+MusicDevices& Factory::musicDevices() noexcept
 {
-   return m_dataHolder;
+   return m_musicDevices;
 }
 
 template<typename MidiType, typename MidiMediumType>

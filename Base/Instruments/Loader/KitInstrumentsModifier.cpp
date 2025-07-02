@@ -55,24 +55,24 @@ Void KitInstrumentsModifier::renameKitInstrument(
 }
 
 Void KitInstrumentsModifier::createNewVoiceInKitInstrument(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Void {
-         return KitInstrumentModifier(*instrumentIt).createNewVoiceInKitInstrument(rFactoryDataHolder, sdUuid, sdVoiceIdx);
+         return KitInstrumentModifier(*instrumentIt).createNewVoiceInKitInstrument(rMusicDevices, sdUuid, sdVoiceIdx);
       });
 }
 
 Void KitInstrumentsModifier::addComponentToKitInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Void {
-         return KitInstrumentModifier(*instrumentIt).addComponentToKitInstrumentVoice(rFactoryDataHolder, voiceIdx, sdUuid, sdVoiceIdx);
+         return KitInstrumentModifier(*instrumentIt).addComponentToKitInstrumentVoice(rMusicDevices, voiceIdx, sdUuid, sdVoiceIdx);
       });
 }
 

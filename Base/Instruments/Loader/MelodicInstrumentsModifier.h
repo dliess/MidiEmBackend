@@ -23,12 +23,12 @@ struct MelodicInstrumentsModifier
                                 std::string name) noexcept;
 
    Ret<int> createNewVoiceInMelodicInstrument(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
 
    Ret<int> addComponentToMelodicInstrumentVoice(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void removeComponentFromMelodicInstrumentVoice(

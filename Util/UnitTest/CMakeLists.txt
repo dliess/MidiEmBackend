@@ -4,6 +4,7 @@ set(SOURCES
     "UT_2DMatrixCheck.cpp"
     "UT_FixedSizeVector.cpp"
     "UT_Function.cpp"
+    "UT_FunctionMv.cpp"
     "UT_FunctionRef.cpp"
     "UT_Identifiable.cpp"
     "UT_KeyValueVector.cpp"
@@ -14,6 +15,7 @@ set(SOURCES
     "UT_ReflectionWithNamespace.cpp"
     "UT_Ringbuffer.cpp"
     "UT_ThreadHelpers.cpp"
+    "UT_Farbot.cpp"
 )
 
 add_executable(UtilsTest ${SOURCES})
@@ -23,5 +25,6 @@ target_link_libraries(UtilsTest
     pthread 
     Util 
     MIDI::midi
+    farbot::farbot
 )
 

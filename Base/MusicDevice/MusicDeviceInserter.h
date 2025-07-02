@@ -23,33 +23,33 @@ namespace base::musicDevice::factory
 class MusicDeviceInserter
 {
 public:
-   MusicDeviceInserter(Holder& rRtDataHolder, DataHolder& rDataHolder,
+   MusicDeviceInserter(Holder& rRtDataHolder, MusicDevices& rDataHolder,
                        const std::string& resourceRootDir) noexcept;
    void handleMidiInInsert(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames);
    void handleMidiOutInsert(
        MusicDeviceId deviceId,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames);
    void handleMidiInInsertChained(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames);
    void handleMidiOutInsertChained(
        MusicDeviceId deviceId,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames);
    void eraseFromDevices(const MusicDeviceId& deviceId);
    void eraseFromMidiInHolder(const MidiHolder::Id& holderId);
@@ -59,7 +59,7 @@ public:
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames,
        uint8_t midiVoiceOffset);
 
@@ -107,14 +107,14 @@ public:
 
 private:
    Holder& m_rRtDataHolder;
-   DataHolder& m_rDataHolder;
+   MusicDevices& m_rDataHolder;
    std::string m_resourceRootDir;
    util::itc::Queue m_actionQueue;
    bool findOrCreateDevice(
        const MusicDeviceId& deviceId,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames,
        std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
        std::shared_ptr<MusicDevice::MidiOutput> pMidiOut) noexcept;
@@ -122,7 +122,7 @@ private:
        const MusicDeviceId& deviceId, const MusicDeviceId& midiDeviceId,
        std::shared_ptr<description::Description> pDescr,
        std::shared_ptr<sound::preset::DevicePresets> pPresets,
-       std::shared_ptr<factory::DataHolder::ActualPresetNames>
+       std::shared_ptr<factory::MusicDevices::ActualPresetNames>
            pActualPresetNames);
    static MusicDeviceId getMidiDevIdFrom(
        const std::shared_ptr<MusicDevice::MidiInput>& pMidiIn,

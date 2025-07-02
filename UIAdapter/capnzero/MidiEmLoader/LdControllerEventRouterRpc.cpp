@@ -11,7 +11,7 @@ using namespace base::musicDevice;
 
 eventRouter::EventDestination::Endpoint toEndpoint(
     const base::instruments::Instruments& rInstrumnets,
-    const base::musicDevice::factory::DataHolder& rMDFDataHolder,
+    const base::musicDevice::factory::MusicDevices& rMDFDataHolder,
     const ::capnzero::SpanCL<16>& destUUID, ::capnzero::Int16 voiceIdx,
     ::capnzero::Int16 componentIdx =
         eventRouter::EventDestination::DrumKit::NOT_SET)
@@ -50,7 +50,7 @@ std::pair<int, int> extractWidgetCoordsXY(::capnzero::UInt32 widgetCoord)
 LdControllerEventRouterRpc::LdControllerEventRouterRpc(
     base::eventRouter::EventRouter& rCtrlEventRouter,
     base::instruments::Instruments& rInstruments,
-    base::musicDevice::factory::DataHolder& rMDFDataHolder) noexcept :
+    base::musicDevice::factory::MusicDevices& rMDFDataHolder) noexcept :
     m_rCtrlEventRouter(rCtrlEventRouter),
     m_rInstruments(rInstruments),
     m_rMDFDataHolder(rMDFDataHolder)

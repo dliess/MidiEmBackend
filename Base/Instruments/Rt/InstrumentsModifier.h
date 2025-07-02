@@ -10,7 +10,7 @@ struct InstrumentsModifier
 {
    InstrumentsModifier(
        Data& rData,
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+       base::musicDevice::factory::DataHolder& rMusicDevices) noexcept;
 
    void insertKitInstrument(KitInstrument kitInstrument) noexcept;
    void removeKitInstrument(
@@ -80,7 +80,7 @@ struct InstrumentsModifier
 
 private:
    Data& m_rData;
-   base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   base::musicDevice::factory::DataHolder& m_rMusicDevices;
 };
 
 }   // namespace base::instruments::loader

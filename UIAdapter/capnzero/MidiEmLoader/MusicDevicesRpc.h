@@ -4,7 +4,7 @@
 #include "MidiEmLoaderMusicDevicesRpcIf.h"
 
 // clang-format off
-namespace base::musicDevice::factory { class DataHolder; }
+namespace base::musicDevice::factory { class MusicDevices; }
 // clang-format on
 
 namespace uiadapter::capnzero
@@ -13,13 +13,13 @@ class MusicDevicesRpc : public ::capnzero::MidiEmLoader::MusicDevicesRpcIf
 {
 public:
    explicit MusicDevicesRpc(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder);
+       base::musicDevice::factory::MusicDevices& rMusicDevices);
 
    ::capnzero::Text requestMusicDeviceDescription(
        const ::capnzero::TextView& musicDeviceName) override;
 
 private:
-   base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   base::musicDevice::factory::MusicDevices& m_rMusicDevices;
 };
 
 }   // namespace uiadapter::capnzero

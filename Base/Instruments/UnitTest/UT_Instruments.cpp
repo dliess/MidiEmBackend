@@ -9,7 +9,7 @@ using namespace base::instruments;
 
 TEST(InstrumentsTest, test)
 {
-   factory::DataHolder factoryDataHolder("~");
+   factory::MusicDevices factoryDataHolder("~");
    Instruments instruments(factoryDataHolder);
    InstrumentsRef instrumentsRef(instruments);
 }

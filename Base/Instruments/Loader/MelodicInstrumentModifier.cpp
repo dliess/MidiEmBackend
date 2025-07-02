@@ -20,10 +20,10 @@ void MelodicInstrumentModifier::renameMelodicInstrument(std::string name) noexce
 }
 
 Ret<int> MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+   return rMusicDevices.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Ret<int> {
          return createNewVoiceInMelodicInstrument(md, sdVoiceIdx);
    });
@@ -52,11 +52,11 @@ Ret<int> MelodicInstrumentModifier::createNewVoiceInMelodicInstrument(
 }
 
 Ret<int> MelodicInstrumentModifier::addComponentToMelodicInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
-   return rFactoryDataHolder.getMusicDeviceByUUID(sdUuid).and_then(
+   return rMusicDevices.getMusicDeviceByUUID(sdUuid).and_then(
       [&,this](auto md) -> Ret<int> {
          return addComponentToMelodicInstrumentVoice(md, voiceIdx, sdVoiceIdx);
    });
@@ -205,13 +205,13 @@ bool MelodicInstrumentModifier::isUnreferencedAndDefaultCreatedFor(base::musicDe
           hasComponentWith(pMusicDevice->deviceId());
 }
 
-void MelodicInstrumentModifier::fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept
+void MelodicInstrumentModifier::fillDescrReferences(base::musicDevice::factory::MusicDevices& rMusicDevices) noexcept
 {
    std::ranges::for_each(m_rMelodicInstrument.m_parameters, [&](auto& parameterData){
       if (parameterData.has_value() && 
          parameterData->parametersDescr == nullptr)
       {
-         rFactoryDataHolder.getDescriptionByMdName(parameterData->engineId.mdName).map(
+         rMusicDevices.getDescriptionByMdName(parameterData->engineId.mdName).map(
             [&](auto description) {
                parameterData->parametersDescr = &description->soundSection->engineBase(
                   parameterData->engineId.engineIdx)->parameters;

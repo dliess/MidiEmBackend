@@ -10,7 +10,7 @@ namespace base::eventRouter
 class DataConverter
 {
 public:
-explicit DataConverter(const base::musicDevice::factory::DataHolder& rMDFDataHolder) :
+explicit DataConverter(const base::musicDevice::factory::MusicDevices& rMDFDataHolder) :
     m_rMDFDataHolder(rMDFDataHolder)
     {}
 
@@ -42,7 +42,7 @@ LoaderData convertToLoaded(const Data& data)
     return ret;
 }
 private:
-    const base::musicDevice::factory::DataHolder& m_rMDFDataHolder;
+    const base::musicDevice::factory::MusicDevices& m_rMDFDataHolder;
 };
 
 }   // namespace base::eventRouter

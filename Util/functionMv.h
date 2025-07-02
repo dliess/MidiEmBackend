@@ -42,8 +42,11 @@ public:
   functionMv() noexcept = default;
   functionMv& operator=(const functionMv<Size, R(Args...)>& rhs) = delete;   
   functionMv& operator=(functionMv<Size, R(Args...)>&& rhs) noexcept {
-         std::swap(rhs, *this);
-         return *this; 
+         callback_=rhs.callback_;
+         destructor_=rhs.destructor_;
+         move_=rhs.move_;
+         if(move_) move_(rhs.buffer_.data(), buffer_.data());
+         return *this;
   }
   functionMv(const functionMv<Size, R(Args...)>& rhs) = delete;
   functionMv(functionMv<Size, R(Args...)>&& rhs) noexcept : 

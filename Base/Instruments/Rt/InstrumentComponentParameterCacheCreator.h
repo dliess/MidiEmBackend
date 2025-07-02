@@ -16,7 +16,7 @@ class MelodicInstrumentsParameterCacheCreator
 {
 public:
    explicit MelodicInstrumentsParameterCacheCreator(
-       musicDevice::factory::DataHolder& rFactoryDataHolder);
+       musicDevice::factory::DataHolder& rMusicDevices);
 
    template <typename ParameterChangeEmitter>
    void initParameterCaches(MelodicInstrument& rMelodicInstrument,
@@ -45,7 +45,7 @@ public:
        const MelodicInstrument& melodicInstrument, int voiceIdx,
        const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const;
 private:
-   musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   musicDevice::factory::DataHolder& m_rMusicDevices;
 
    [[nodiscard]] std::shared_ptr<ParameterCache>
    getParameterCacheForComponent(const MelodicInstrument& rMelodicInstrument,
@@ -73,7 +73,7 @@ class KitInstrumentsParameterCacheCreator
 {
 public:
    explicit KitInstrumentsParameterCacheCreator(
-       musicDevice::factory::DataHolder& rFactoryDataHolder);
+       musicDevice::factory::DataHolder& rMusicDevices);
 
    template <typename ParameterChangeEmitter>
    void initParameterCaches(KitInstrument& kitInstrument,
@@ -94,7 +94,7 @@ public:
        ParameterChangeEmitter& rParameterChangeEmitter) const;
 
 private:
-   musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   musicDevice::factory::DataHolder& m_rMusicDevices;
 
    template <typename ParameterChangeEmitter>
    [[nodiscard]] std::shared_ptr<ParameterCache>

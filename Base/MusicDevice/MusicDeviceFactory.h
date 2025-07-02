@@ -40,14 +40,14 @@ public:
                                const MusicDeviceName& deviceName,
                                uint8_t midiVoiceOffset);
    void removeLastMusicDeviceFromChain(const MusicDeviceId& chainRoot);
-   inline const DataHolder& dataHolder() const noexcept;
-   inline DataHolder& dataHolder() noexcept;
+   inline const MusicDevices& musicDevices() const noexcept;
+   inline MusicDevices& musicDevices() noexcept;
    void createVirtualMidiDevices() noexcept;
 
     MusicDeviceInserter& musicDeviceInserter() { return m_musicDeviceInserter; }
 private:
    Holder& m_rHolder;
-   DataHolder m_dataHolder;
+   MusicDevices m_musicDevices;
    Loader m_loader;
    std::unordered_map<MusicDeviceId, sound::PresetFetcher>
        m_soundPresetFetchers;

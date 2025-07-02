@@ -22,25 +22,25 @@ using namespace base;
 using namespace base::instruments;
 
 Instruments::Instruments(
-    musicDevice::factory::DataHolder& rFactoryDataHolder,
+    musicDevice::factory::MusicDevices& rMusicDevices,
     musicDevice::MusicDeviceContainer& rMDContainer) noexcept :
-    m_rFactoryDataHolder(rFactoryDataHolder),
+    m_rMusicDevices(rMusicDevices),
     m_rMDContainer(rMDContainer),
     m_persister(
         std::make_unique<util::FilePersister>("Instruments", "settings.json"),
-        rFactoryDataHolder)
+        rMusicDevices)
 {
    try
    {
       auto data = m_persister.load();
       for(auto& kitInstrument : data.kitInstruments)
       {
-         loader::KitInstrumentModifier(kitInstrument).fillDescrReferences(m_rFactoryDataHolder);
+         loader::KitInstrumentModifier(kitInstrument).fillDescrReferences(m_rMusicDevices);
          insertKitInstrument(kitInstrument, DoEmitChanged::No);
       }
       for(auto& melodicInstrument : data.melodicInstruments)
       {
-         loader::MelodicInstrumentModifier(melodicInstrument).fillDescrReferences(m_rFactoryDataHolder);
+         loader::MelodicInstrumentModifier(melodicInstrument).fillDescrReferences(m_rMusicDevices);
          insertMelodicInstrument(melodicInstrument, DoEmitChanged::No);
       }
       emitDataChanged(m_loaderData);
@@ -186,7 +186,7 @@ Void Instruments::createNewVoiceInMelodicInstrument(
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
    return loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
-       .createNewVoiceInMelodicInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx).map(
+       .createNewVoiceInMelodicInstrument(m_rMusicDevices, instrumentUuid, sdUuid, sdVoiceIdx).map(
       [&,this](int componentIdx){
          m_deferToRt.callAsync([this, componentIdx, instrumentUuid, sdUuid, sdVoiceIdx]() {
             rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
@@ -201,7 +201,7 @@ Void Instruments::addComponentToMelodicInstrumentVoice(
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
    return loader::MelodicInstrumentsModifier(m_loaderData.melodicInstruments)
-       .addComponentToMelodicInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx).map(
+       .addComponentToMelodicInstrumentVoice(m_rMusicDevices, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx).map(
       [&,this](int componentIdx){
          m_deferToRt.callAsync([this, componentIdx, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx]() {
             rt::MelodicInstrumentsModifier(m_rtData.melodicInstruments)
@@ -280,7 +280,7 @@ void Instruments::createNewVoiceInKitInstrument(
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
-       .createNewVoiceInKitInstrument(m_rFactoryDataHolder, instrumentUuid, sdUuid, sdVoiceIdx);
+       .createNewVoiceInKitInstrument(m_rMusicDevices, instrumentUuid, sdUuid, sdVoiceIdx);
    m_deferToRt.callAsync([this, instrumentUuid, sdUuid, sdVoiceIdx]() {
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .createNewVoiceInKitInstrument(m_rMDContainer, instrumentUuid, sdUuid, sdVoiceIdx);
@@ -293,7 +293,7 @@ void Instruments::addComponentToKitInstrumentVoice(
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx)
 {
    loader::KitInstrumentsModifier(m_loaderData.kitInstruments)
-       .addComponentToKitInstrumentVoice(m_rFactoryDataHolder, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
+       .addComponentToKitInstrumentVoice(m_rMusicDevices, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);
    m_deferToRt.callAsync([this, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx]() {
       rt::KitInstrumentsModifier(m_rtData.kitInstruments)
           .addComponentToKitInstrumentVoice(m_rMDContainer, instrumentUuid, voiceIdx, sdUuid, sdVoiceIdx);

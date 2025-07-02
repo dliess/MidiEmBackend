@@ -5,7 +5,7 @@
 #include "BeatTick.h"
 #include "FloatEqual.h"
 #include "LFO.h"
-#include "clip.h"
+#include "clip.hpp"
 
 namespace base::musicDevice::sound::lfo
 {

@@ -17,7 +17,7 @@ ParameterStorageElement::uiAsksForChangedValues() noexcept
    if (m_dirtyFlagUi && m_uiInterestCount)
    {
       m_dirtyFlagUi = false;
-      return std::make_pair(m_commanded, m_actual);
+      return std::pair<float, float>(m_commanded, m_actual);
    }
    return std::nullopt;
 }

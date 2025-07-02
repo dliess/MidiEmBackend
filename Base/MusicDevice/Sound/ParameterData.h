@@ -8,7 +8,7 @@
 #include "ParameterAttr.h"
 #include "SoundSection.h"
 #include "StrongType.h"
-#include "clip.h"
+#include "clip.hpp"
 #include "Parameter.h"
 
    namespace base::musicDevice::sound

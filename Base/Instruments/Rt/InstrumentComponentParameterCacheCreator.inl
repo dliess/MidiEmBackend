@@ -7,8 +7,8 @@ namespace base::instruments::rt
 {
 inline MelodicInstrumentsParameterCacheCreator::
     MelodicInstrumentsParameterCacheCreator(
-        musicDevice::factory::DataHolder& rFactoryDataHolder) :
-    m_rFactoryDataHolder(rFactoryDataHolder)
+        musicDevice::factory::DataHolder& rMusicDevices) :
+    m_rMusicDevices(rMusicDevices)
 {
 }
 
@@ -29,7 +29,7 @@ void MelodicInstrumentsParameterCacheCreator::initParameterCaches(
       if (!parameterCache)
       {
          parameterCache = createParameterCache(
-             m_rFactoryDataHolder
+             m_rMusicDevices
                  .getDescription(pComponent->m_soundDeviceId.deviceName())
                  .get(),
              pComponent->m_sdVoiceIdx);
@@ -117,7 +117,7 @@ MelodicInstrumentsParameterCacheCreator::createParameterCacheForComponent(
    if (!parameterCache)
    {
       parameterCache = createParameterCache(
-          m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
+          m_rMusicDevices.getDescription(sdUuid), sdVoiceIdx);
    }
    const auto uuid = melodicInstrument.id();
    parameterCache->onDataChangedUI(
@@ -201,7 +201,7 @@ MelodicInstrumentsParameterCacheCreator::getComponentEngineType(
       return std::nullopt;
    }
    const auto mdName = pComponent->m_soundDeviceId.deviceName();
-   const auto descr  = m_rFactoryDataHolder.getDescription(
+   const auto descr  = m_rMusicDevices.getDescription(
        pComponent->m_soundDeviceId.deviceName());
    if (!descr)
    {
@@ -215,12 +215,12 @@ inline std::optional<std::pair<musicDevice::MusicDeviceName, int>>
 MelodicInstrumentsParameterCacheCreator::determineComponentEngineType(
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) const
 {
-   auto musicDeviceId = m_rFactoryDataHolder.getMdIdByUUID(sdUuid);
+   auto musicDeviceId = m_rMusicDevices.getMdIdByUUID(sdUuid);
    if (!musicDeviceId)
    {
       return std::nullopt;
    }
-   const auto descr = m_rFactoryDataHolder.getDescription(sdUuid);
+   const auto descr = m_rMusicDevices.getDescription(sdUuid);
    if (!descr)
    {
       return std::nullopt;
@@ -232,8 +232,8 @@ MelodicInstrumentsParameterCacheCreator::determineComponentEngineType(
 //------------------------------------------------------------------------------------
 
 inline KitInstrumentsParameterCacheCreator::KitInstrumentsParameterCacheCreator(
-    musicDevice::factory::DataHolder& rFactoryDataHolder) :
-    m_rFactoryDataHolder(rFactoryDataHolder)
+    musicDevice::factory::DataHolder& rMusicDevices) :
+    m_rMusicDevices(rMusicDevices)
 {
 }
 
@@ -247,7 +247,7 @@ void KitInstrumentsParameterCacheCreator::initParameterCaches(
       if (!component.m_pParameterCache)
       {
          component.m_pParameterCache = createParameterCache(
-             m_rFactoryDataHolder
+             m_rMusicDevices
                  .getDescription(component.m_soundDeviceId.deviceName())
                  .get(),
              component.m_sdVoiceIdx);
@@ -301,7 +301,7 @@ KitInstrumentsParameterCacheCreator::createParameterCacheForComponent(
     ParameterChangeEmitter& rParameterChangeEmitter) const
 {
    auto parameterCache = createParameterCache(
-       m_rFactoryDataHolder.getDescription(sdUuid), sdVoiceIdx);
+       m_rMusicDevices.getDescription(sdUuid), sdVoiceIdx);
    if (!parameterCache)
    {
       return nullptr;

@@ -19,11 +19,11 @@ struct KitInstrumentsModifier
    Void renameKitInstrument(const util::Identifiable::UUID& instrumentId,
                             std::string name) noexcept;
    Void createNewVoiceInKitInstrument(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& instrumentUuid,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void addComponentToKitInstrumentVoice(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void moveKitInstrumentComponent(

@@ -24,6 +24,7 @@ set(HEADERS
     "StrongType.h"
     "toIntegral.h"
     "ErrorHandling.h"
+    "clip.hpp"
 )
 
 set(TARGET_NAME Util)

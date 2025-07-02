@@ -31,7 +31,7 @@ controller::EventIdExt changeNoteNumberToAnyIfDestIsMelodic(const controller::Ev
 
 EventRouter::EventRouter(instruments::InstrumentsRef rInstruments,
                          MusicDeviceContainerRef rMusicDeviceContainer,
-                         musicDevice::factory::DataHolder& rMDFDataHolder) :
+                         musicDevice::factory::MusicDevices& rMDFDataHolder) :
     m_rInstruments(rInstruments),
     m_rMusicDeviceContainer(rMusicDeviceContainer),
     m_rMDFDataHolder(rMDFDataHolder),

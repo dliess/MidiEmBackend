@@ -32,8 +32,8 @@
 // TimeMeasure::CyclicDataOutputterThread<DataHolderTenthMs,
 //                                        TimeMeasure::Destination::Zmq>
 //     outThreadZmq({
-//         &MeasurerTenthMs<0>::instance().dataHolder(),
-//         &MeasurerTenthMs<1>::instance().dataHolder(),
+//         &MeasurerTenthMs<0>::instance().musicDevices(),
+//         &MeasurerTenthMs<1>::instance().musicDevices(),
 //     });
 // --------------------------
 
@@ -47,11 +47,11 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
     musicDeviceHolder(),
     musicDeviceFactory(musicDeviceHolder, configDir),
     transportControl(musicDeviceHolder),
-    instruments(musicDeviceFactory.dataHolder(), musicDeviceHolder.musicDevices),
+    instruments(musicDeviceFactory.musicDevices(), musicDeviceHolder.musicDevices),
     midiRouter(musicDeviceHolder.midiHolder),
     tracks(instruments),
     controllerEventRouter(instruments, musicDeviceHolder.musicDevices,
-                          musicDeviceFactory.dataHolder()),
+                          musicDeviceFactory.musicDevices()),
     modifiersApplyer(musicDeviceHolder.musicDevices)
 
 {
@@ -75,10 +75,10 @@ base::Base::Base(const std::string &configDir, std::string rtRpcBindAddr,
           controllerEventRouter.onControllerDevEventOccured(uuid, event);
        });
    /* TODO
-   musicDeviceFactory.dataHolder().onMusicDeviceAdded([this](auto md) {
+   musicDeviceFactory.musicDevices().onMusicDeviceAdded([this](auto md) {
       instruments::InstrumentsMDChangeHandler(instruments).add(md);
    });
-   musicDeviceFactory.dataHolder().onMusicDeviceAboutToRemove([this](auto md) {
+   musicDeviceFactory.musicDevices().onMusicDeviceAboutToRemove([this](auto md) {
       instruments::InstrumentsMDChangeHandler(instruments).remove(md);
    });
    */
@@ -88,8 +88,8 @@ base::Base::~Base() noexcept = default;
 
 void base::Base::start()
 {
-   // MeasurerTenthMs<0>::instance().dataHolder().setHistogramRange(1000);
-   // MeasurerTenthMs<1>::instance().dataHolder().setHistogramRange(1000);
+   // MeasurerTenthMs<0>::instance().musicDevices().setHistogramRange(1000);
+   // MeasurerTenthMs<1>::instance().musicDevices().setHistogramRange(1000);
    //
    // outThreadZmq.destination().bind("tcp://*:55570");
    // outThreadZmq.startThread(500);

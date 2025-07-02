@@ -18,13 +18,13 @@ struct MelodicInstrumentModifier
 
    void renameMelodicInstrument(std::string name) noexcept;
    Ret<int> createNewVoiceInMelodicInstrument(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Ret<int> createNewVoiceInMelodicInstrument(
        base::musicDevice::MusicDevice* pMusicDevice, int sdVoiceIdx) noexcept;
 
    Ret<int> addComponentToMelodicInstrumentVoice(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder, int voiceIdx,
+       base::musicDevice::factory::MusicDevices& rMusicDevices, int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Ret<int> addComponentToMelodicInstrumentVoice(
        base::musicDevice::MusicDevice* pMusicDevice, int voiceIdx, int sdVoiceIdx) noexcept;
@@ -39,7 +39,7 @@ struct MelodicInstrumentModifier
 
    void fillReferences(base::musicDevice::MusicDevice* pMusicDevice);
    bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
-   void fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   void fillDescrReferences(base::musicDevice::factory::MusicDevices& rMusicDevices) noexcept;
    
 private:
    MelodicInstrument& m_rMelodicInstrument;

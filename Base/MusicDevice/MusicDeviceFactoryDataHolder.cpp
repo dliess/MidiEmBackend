@@ -4,12 +4,12 @@
 
 using namespace base::musicDevice;
 
-factory::DataHolder::DataHolder(std::string configDir) noexcept :
+factory::MusicDevices::MusicDevices(std::string configDir) noexcept :
     m_configDir(std::move(configDir.empty() ? "." : configDir))
 {
 }
 
-void factory::DataHolder::soundDevicesPresetChanged(
+void factory::MusicDevices::soundDevicesPresetChanged(
     const sound::preset::Id& enginePresetId)
 {
    auto it = m_presetCache.find(enginePresetId.musicDeviceName);
@@ -29,7 +29,7 @@ void factory::DataHolder::soundDevicesPresetChanged(
    }
 }
 
-void factory::DataHolder::soundDeviceActualPresetNameChanged(
+void factory::MusicDevices::soundDeviceActualPresetNameChanged(
     const util::Identifiable::UUID& uuid, int voiceIdx,
     const std::string& newPresetName) noexcept
 {
@@ -49,7 +49,7 @@ void factory::DataHolder::soundDeviceActualPresetNameChanged(
    emitActualPresetNameChanged(uuid, voiceIdx, newPresetName);
 }
 
-std::shared_ptr<description::Description> factory::DataHolder::getDescription(
+std::shared_ptr<description::Description> factory::MusicDevices::getDescription(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<description::Description> pDescr;
@@ -71,7 +71,7 @@ std::shared_ptr<description::Description> factory::DataHolder::getDescription(
    return pDescr;
 }
 
-Ret<const description::Description*> factory::DataHolder::getDescription(
+Ret<const description::Description*> factory::MusicDevices::getDescription(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto pMdId = getMdIdByUUID(uuid);
@@ -82,7 +82,7 @@ Ret<const description::Description*> factory::DataHolder::getDescription(
       return tl::unexpected(Error::descriptionNotFound);
    return itDescr->second.get();
 }
-Ret<const description::Description*> factory::DataHolder::getDescriptionByMdName(
+Ret<const description::Description*> factory::MusicDevices::getDescriptionByMdName(
        const MusicDeviceName& deviceName) noexcept
 {
    auto descr = getDescription(deviceName);
@@ -94,7 +94,7 @@ Ret<const description::Description*> factory::DataHolder::getDescriptionByMdName
 }
 
 std::shared_ptr<sound::preset::DevicePresets>
-factory::DataHolder::getDevicePresets(
+factory::MusicDevices::getDevicePresets(
     const MusicDeviceName& deviceName) noexcept
 {
    std::shared_ptr<sound::preset::DevicePresets> pPresets;
@@ -126,8 +126,8 @@ factory::DataHolder::getDevicePresets(
    return std::move(pPresets);
 }
 
-std::shared_ptr<factory::DataHolder::ActualPresetNames>
-factory::DataHolder::getActualDevicePresetNames(
+std::shared_ptr<factory::MusicDevices::ActualPresetNames>
+factory::MusicDevices::getActualDevicePresetNames(
     const MusicDeviceId& id) noexcept
 {
    auto it = m_actualPresetNames.find(id);
@@ -165,7 +165,7 @@ factory::DataHolder::getActualDevicePresetNames(
    return it->second;
 }
 
-void factory::DataHolder::reEmitSignals()
+void factory::MusicDevices::reEmitSignals()
 {
    for (const auto& e : m_descriptionCache)
    {
@@ -201,7 +201,7 @@ void factory::DataHolder::reEmitSignals()
    */
 }
 
-std::optional<MusicDeviceId> factory::DataHolder::getMdIdByUUID(
+std::optional<MusicDeviceId> factory::MusicDevices::getMdIdByUUID(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto it = m_musicDevices.find(util::deepCopy(uuid));
@@ -212,7 +212,7 @@ std::optional<MusicDeviceId> factory::DataHolder::getMdIdByUUID(
    return it->second->deviceId();
 }
 
-std::optional<util::Identifiable::UUID> factory::DataHolder::getUUIDByMdId(
+std::optional<util::Identifiable::UUID> factory::MusicDevices::getUUIDByMdId(
     const MusicDeviceId& mdId) const noexcept
 {
    const auto it = std::find_if(
@@ -234,7 +234,7 @@ std::optional<util::Identifiable::UUID> factory::DataHolder::getUUIDByMdId(
    return it->first;
 }
 
-Ret<MusicDevice*> factory::DataHolder::getMusicDeviceByUUID(
+Ret<MusicDevice*> factory::MusicDevices::getMusicDeviceByUUID(
     util::Identifiable::UUIDView uuid) const noexcept
 {
    const auto it = m_musicDevices.find(util::deepCopy(uuid));
@@ -245,7 +245,7 @@ Ret<MusicDevice*> factory::DataHolder::getMusicDeviceByUUID(
    return it->second;
 }
 
-void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
+void factory::MusicDevices::addUuid2MdId(const util::Identifiable::UUID& uuid,
                                        MusicDevice* md) noexcept
 {
    auto [iter, success] = m_musicDevices.emplace(uuid, md);
@@ -255,7 +255,7 @@ void factory::DataHolder::addUuid2MdId(const util::Identifiable::UUID& uuid,
    }
 }
 
-void factory::DataHolder::removeEntryForUuid(
+void factory::MusicDevices::removeEntryForUuid(
     const util::Identifiable::UUID& uuid) noexcept
 {
    auto md = getMusicDeviceByUUID(uuid);

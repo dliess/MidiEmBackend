@@ -30,8 +30,8 @@ using namespace base::instruments::rt;
 
 InstrumentsModifier::InstrumentsModifier(
     Data& rData,
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept :
-    m_rData(rData), m_rFactoryDataHolder(rFactoryDataHolder)
+    base::musicDevice::factory::DataHolder& rMusicDevices) noexcept :
+    m_rData(rData), m_rMusicDevices(rMusicDevices)
 {
 }
 
@@ -83,13 +83,13 @@ void InstrumentsModifier::createNewVoiceInMelodicInstrument(
     std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
+   auto md = m_rMusicDevices.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
       MelodicVoice voice(
           md->description()->soundSection->voices[sdVoiceIdx].name);
       auto componentIdx =
-          MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+          MelodicInstrumentsParameterCacheCreator(m_rMusicDevices)
               .findComponentIdxToPlaceNewComponent(*instrumentIt, sdUuid,
                                                    sdVoiceIdx);
       if (componentIdx)
@@ -109,11 +109,11 @@ void InstrumentsModifier::addComponentToMelodicInstrumentVoice(
     std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_MELODIC_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
+   auto md = m_rMusicDevices.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
       auto componentIdx =
-          MelodicInstrumentsParameterCacheCreator(m_rFactoryDataHolder)
+          MelodicInstrumentsParameterCacheCreator(m_rMusicDevices)
               .findComponentIdxToPlaceNewComponentInVoice(
                   *instrumentIt, voiceIdx, sdUuid, sdVoiceIdx);
       if (componentIdx)
@@ -162,7 +162,7 @@ void InstrumentsModifier::createNewVoiceInKitInstrument(
     std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
+   auto md = m_rMusicDevices.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
       KitVoice voice(md->description()->soundSection->voices[sdVoiceIdx].name);
@@ -180,7 +180,7 @@ void InstrumentsModifier::addComponentToKitInstrumentVoice(
     std::shared_ptr<ParameterCache> parameterCache) noexcept
 {
    GET_KIT_INSTR_OR_RETURN(instrumentUuid);
-   auto md = m_rFactoryDataHolder.getMusicDeviceByUUID(sdUuid);
+   auto md = m_rMusicDevices.getMusicDeviceByUUID(sdUuid);
    if (md && md->soundHandler)
    {
       if (instrumentIt->voices().operator[](voiceIdx).components.size() >=

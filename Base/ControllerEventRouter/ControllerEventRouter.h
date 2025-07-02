@@ -21,7 +21,7 @@ class EventRouter
 public:
    EventRouter(instruments::InstrumentsRef rInstruments,
                musicDevice::MusicDeviceContainerRef rMusicDeviceContainer,
-               musicDevice::factory::DataHolder& rMDFDataHolder);
+               musicDevice::factory::MusicDevices& rMDFDataHolder);
    void createConnection(const musicDevice::controller::EventIdExt& from,
                          const EventDestination& to) noexcept;
    void removeConnection(
@@ -43,7 +43,7 @@ public:
 private:
    instruments::InstrumentsRef m_rInstruments;
    musicDevice::MusicDeviceContainerRef m_rMusicDeviceContainer;
-   musicDevice::factory::DataHolder& m_rMDFDataHolder;
+   musicDevice::factory::MusicDevices& m_rMDFDataHolder;
    util::DoubleBuffer<Data> m_map;
    Persister m_persister;
    LoaderData m_loaderData;

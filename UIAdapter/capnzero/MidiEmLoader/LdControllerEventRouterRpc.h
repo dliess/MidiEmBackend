@@ -10,7 +10,7 @@ class EventRouter;
 }
 namespace base::musicDevice::factory
 {
-class DataHolder;
+class MusicDevices;
 }
 namespace base::instruments { class Instruments; }
 namespace uiadapter::capnzero
@@ -22,7 +22,7 @@ public:
    LdControllerEventRouterRpc(
        base::eventRouter::EventRouter& rCtrlEventRouter,
        base::instruments::Instruments& rInstruments,
-       base::musicDevice::factory::DataHolder& rMDFDataHolder) noexcept;
+       base::musicDevice::factory::MusicDevices& rMDFDataHolder) noexcept;
    void connectNotes2Notes(const ::capnzero::SpanCL<16>& controllerUUID,
                            ::capnzero::Int16 widgetIdx, ::capnzero::Int16 note,
                            ::capnzero::Int16 eventIdx,
@@ -75,7 +75,7 @@ public:
 private:
    base::eventRouter::EventRouter& m_rCtrlEventRouter;
    base::instruments::Instruments& m_rInstruments;
-   base::musicDevice::factory::DataHolder& m_rMDFDataHolder;
+   base::musicDevice::factory::MusicDevices& m_rMDFDataHolder;
 };
 
 }   // namespace uiadapter::capnzero

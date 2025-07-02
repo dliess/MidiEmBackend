@@ -21,7 +21,7 @@
 #include "Refs/KitInstrumentRtRef.h"
 #include "Refs/MelodicInstrumentRtRef.h"
 // clang-format off
-namespace base::musicDevice::factory { class DataHolder; }
+namespace base::musicDevice::factory { class MusicDevices; }
 namespace base::musicDevice { class MusicDeviceContainer; }
 // clang-format on
 
@@ -30,7 +30,7 @@ namespace base::instruments
 struct Instruments   //: public utils::Settings<Instruments>
 {
    explicit Instruments(
-       musicDevice::factory::DataHolder& rFactoryDataHolder,
+       musicDevice::factory::MusicDevices& rMusicDevices,
        musicDevice::MusicDeviceContainer& rMDContainer) noexcept;
 
    // -----------------
@@ -161,7 +161,7 @@ struct Instruments   //: public utils::Settings<Instruments>
    friend class KitInstrumentsParameterCacheCreator;
    void invokeQueueActions();
 private:
-   base::musicDevice::factory::DataHolder& m_rFactoryDataHolder;
+   base::musicDevice::factory::MusicDevices& m_rMusicDevices;
    base::musicDevice::MusicDeviceContainer& m_rMDContainer;
    rt::Data m_rtData;
    loader::Data m_loaderData;

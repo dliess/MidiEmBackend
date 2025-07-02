@@ -58,24 +58,24 @@ Void MelodicInstrumentsModifier::renameMelodicInstrument(
 
 
 Ret<int> MelodicInstrumentsModifier::createNewVoiceInMelodicInstrument(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& instrumentUuid,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Ret<int> {
-        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rFactoryDataHolder, sdUuid, sdVoiceIdx);
+        return MelodicInstrumentModifier(*instrumentIt).createNewVoiceInMelodicInstrument(rMusicDevices, sdUuid, sdVoiceIdx);
    });
 }
 
 Ret<int> MelodicInstrumentsModifier::addComponentToMelodicInstrumentVoice(
-    base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+    base::musicDevice::factory::MusicDevices& rMusicDevices,
     const util::Identifiable::UUID& instrumentUuid, int voiceIdx,
     const util::Identifiable::UUID& sdUuid, int sdVoiceIdx) noexcept
 {
    return getInstrument(instrumentUuid).and_then(
       [&,this](auto instrumentIt) -> Ret<int> {
-         return MelodicInstrumentModifier(*instrumentIt).addComponentToMelodicInstrumentVoice(rFactoryDataHolder, voiceIdx, sdUuid, sdVoiceIdx);
+         return MelodicInstrumentModifier(*instrumentIt).addComponentToMelodicInstrumentVoice(rMusicDevices, voiceIdx, sdUuid, sdVoiceIdx);
    });
 }
 

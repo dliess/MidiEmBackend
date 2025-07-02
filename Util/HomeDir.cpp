@@ -24,7 +24,7 @@ std::string util::getLocalSettingsDir() noexcept
 
 void util::createDirsRecursive(const std::string& dirName)
 {
-    int pos = 0;
+   std::string::size_type pos = 0;
     do
     {
         pos = dirName.find("/", pos + 1);

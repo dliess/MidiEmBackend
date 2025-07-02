@@ -5,6 +5,7 @@ set(CMAKE_DEBUG_POSTFIX _g)
 project(NomidiBackend LANGUAGES CXX)
 include(GNUInstallDirs)
 
+
 include(CTest)
 option (USE_MPARK_VARIANT "use mpark variant" ON)
 option (NOMIDI_BACKEND_BUILD_TESTS "build tests enabled" ON)
@@ -162,6 +163,8 @@ get_target_property(MIDI_CONFIGS_BASEDIR MusicDeviceDescriptions::MusicDeviceDes
 message("MIDI_CONFIGS_BASEDIR: " ${MIDI_CONFIGS_BASEDIR})
 target_compile_definitions(${TARGET_NAME} PRIVATE
   MIDI_CONFIGS_BASEDIR="${MIDI_CONFIGS_BASEDIR}")
+
+target_compile_options(${TARGET_NAME} PRIVATE -Werror)
 
 install(TARGETS ${TARGET_NAME}  
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

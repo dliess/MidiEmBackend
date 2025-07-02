@@ -21,9 +21,9 @@ using namespace base::musicDevice::factory;
 
 Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
     m_rHolder(rHolder),
-    m_dataHolder(resourceRootDir),
+    m_musicDevices(resourceRootDir),
     m_loader(resourceRootDir),
-    m_musicDeviceInserter(rHolder, m_dataHolder, resourceRootDir)
+    m_musicDeviceInserter(rHolder, m_musicDevices, resourceRootDir)
 {
    midi::PortNotifiers::instance().inputs.registerNewPortCb(
        [this](rtmidiadapt::PortIndex index,
@@ -64,7 +64,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
 
-          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
+          auto pDescr = m_musicDevices.getDescription(deviceId.deviceName());
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = m_soundPresetFetchers.find(deviceId);
@@ -89,10 +89,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     [this, deviceId](int engineIdx,
                                      const std::string& presetName,
                                      sound::preset::Preset&& preset) {
-                       m_dataHolder.getDevicePresets(deviceId.deviceName())
+                       m_musicDevices.getDevicePresets(deviceId.deviceName())
                            ->savePreset(engineIdx, presetName,
                                         std::move(preset));
-                       m_dataHolder.soundDevicesPresetChanged(sound::preset::Id(
+                       m_musicDevices.soundDevicesPresetChanged(sound::preset::Id(
                            {deviceId.deviceName(), engineIdx, presetName}));
                     });
              }
@@ -138,7 +138,7 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
           m_loader.markAsUsed(Loader::Direction::OUT, devOnUsbPort);
           const MusicDeviceId deviceId(deviceName,
                                        devOnUsbPort.getUsbPortName());
-          auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
+          auto pDescr = m_musicDevices.getDescription(deviceId.deviceName());
           if (pDescr->soundSection && pDescr->soundSection->canDumpPresets())
           {
              auto it = m_soundPresetFetchers.find(deviceId);
@@ -163,10 +163,10 @@ Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
                     [this, deviceId](int engineIdx,
                                      const std::string& presetName,
                                      sound::preset::Preset&& preset) {
-                       m_dataHolder.getDevicePresets(deviceId.deviceName())
+                       m_musicDevices.getDevicePresets(deviceId.deviceName())
                            ->savePreset(engineIdx, presetName,
                                         std::move(preset));
-                       m_dataHolder.soundDevicesPresetChanged(sound::preset::Id(
+                       m_musicDevices.soundDevicesPresetChanged(sound::preset::Id(
                            {deviceId.deviceName(), engineIdx, presetName}));
                     });
              }
@@ -237,7 +237,7 @@ void Factory::createVirtualMidiDevices() noexcept
       const MusicDeviceId deviceId(
           pMidiIn->medium().getDevicePortName(),
           pMidiIn->medium().getHostConnectorPortName());
-      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName);
+      auto pDescr = m_musicDevices.getDescription(deviceId.deviceName);
       fillActionQueueForMidiIn(deviceId, std::move(pMidiIn));
    }
    */
@@ -255,7 +255,7 @@ void Factory::createVirtualMidiDevices() noexcept
       const MusicDeviceId deviceId(
           pMidiOut->medium().getDevicePortName(),
           pMidiOut->medium().getHostConnectorPortName());
-      auto pDescr = m_dataHolder.getDescription(deviceId.deviceName());
+      auto pDescr = m_musicDevices.getDescription(deviceId.deviceName());
       fillActionQueueForMidiOut(deviceId, std::move(pMidiOut));
    }
 }
@@ -277,9 +277,9 @@ void Factory::loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
           m_musicDeviceInserter.handleDeviceInsertChained(
               lastDeviceId, m_rHolder.midiHolder.getMidiIn(chainRoot),
               m_rHolder.midiHolder.getMidiOut(chainRoot),
-              m_dataHolder.getDescription(lastDeviceId.deviceName()),
-              m_dataHolder.getDevicePresets(lastDeviceId.deviceName()),
-              m_dataHolder.getActualDevicePresetNames(lastDeviceId),
+              m_musicDevices.getDescription(lastDeviceId.deviceName()),
+              m_musicDevices.getDevicePresets(lastDeviceId.deviceName()),
+              m_musicDevices.getActualDevicePresetNames(lastDeviceId),
               midiVoiceOffset);
        });
 }
@@ -299,17 +299,17 @@ void Factory::fillActionQueueForMidiIn(
     std::shared_ptr<MusicDevice::MidiInput> pMidiIn)
 {
    m_musicDeviceInserter.handleMidiInInsert(
-       deviceId, pMidiIn, m_dataHolder.getDescription(deviceId.deviceName()),
-       m_dataHolder.getDevicePresets(deviceId.deviceName()),
-       m_dataHolder.getActualDevicePresetNames(deviceId));
+       deviceId, pMidiIn, m_musicDevices.getDescription(deviceId.deviceName()),
+       m_musicDevices.getDevicePresets(deviceId.deviceName()),
+       m_musicDevices.getActualDevicePresetNames(deviceId));
    m_loader.forFirstDeviceInChain(
        deviceId, [this, pMidiIn](const MusicDeviceId& nextDeviceId,
                                  uint8_t midiVoiceOffset) {
           m_musicDeviceInserter.handleMidiInInsertChained(
               nextDeviceId, pMidiIn,
-              m_dataHolder.getDescription(nextDeviceId.deviceName()),
-              m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
-              m_dataHolder.getActualDevicePresetNames(nextDeviceId));
+              m_musicDevices.getDescription(nextDeviceId.deviceName()),
+              m_musicDevices.getDevicePresets(nextDeviceId.deviceName()),
+              m_musicDevices.getActualDevicePresetNames(nextDeviceId));
        });
 }
 
@@ -318,16 +318,16 @@ void Factory::fillActionQueueForMidiOut(
     std::shared_ptr<MusicDevice::MidiOutput> pMidiOut)
 {
    m_musicDeviceInserter.handleMidiOutInsert(
-       deviceId, pMidiOut, m_dataHolder.getDescription(deviceId.deviceName()),
-       m_dataHolder.getDevicePresets(deviceId.deviceName()),
-       m_dataHolder.getActualDevicePresetNames(deviceId));
+       deviceId, pMidiOut, m_musicDevices.getDescription(deviceId.deviceName()),
+       m_musicDevices.getDevicePresets(deviceId.deviceName()),
+       m_musicDevices.getActualDevicePresetNames(deviceId));
    m_loader.forEachDeviceInChain(
        deviceId, [this, pMidiOut](const MusicDeviceId& nextDeviceId,
                                   uint8_t midiVoiceOffset) {
           m_musicDeviceInserter.handleMidiOutInsertChained(
               nextDeviceId, pMidiOut,
-              m_dataHolder.getDescription(nextDeviceId.deviceName()),
-              m_dataHolder.getDevicePresets(nextDeviceId.deviceName()),
-              m_dataHolder.getActualDevicePresetNames(nextDeviceId));
+              m_musicDevices.getDescription(nextDeviceId.deviceName()),
+              m_musicDevices.getDevicePresets(nextDeviceId.deviceName()),
+              m_musicDevices.getActualDevicePresetNames(nextDeviceId));
        });
 }

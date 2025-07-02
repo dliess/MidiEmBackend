@@ -13,10 +13,10 @@ struct KitInstrumentModifier
 
    void renameKitInstrument(std::string name) noexcept;
    Void createNewVoiceInKitInstrument(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void addComponentToKitInstrumentVoice(
-       base::musicDevice::factory::DataHolder& rFactoryDataHolder,
+       base::musicDevice::factory::MusicDevices& rMusicDevices,
        int voiceIdx,
        const util::Identifiable::UUID& soundDeviceUuid, int sdVoiceIdx) noexcept;
    Void removeComponentFromKitInstrumentVoice(
@@ -36,7 +36,7 @@ struct KitInstrumentModifier
    Void addVoice(int padIdx, KitInstrument::Voice voice) noexcept;
    bool isUnreferencedAndDefaultCreatedFor(base::musicDevice::MusicDevice* pMusicDevice) const;
 
-   void fillDescrReferences(base::musicDevice::factory::DataHolder& rFactoryDataHolder) noexcept;
+   void fillDescrReferences(base::musicDevice::factory::MusicDevices& rMusicDevices) noexcept;
 private:
    KitInstrument& m_rKitInstrument;
    void forEachComponent(util::function_ref<void(KitInstrument::Voice::Component&)> f);
