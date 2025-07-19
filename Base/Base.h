@@ -30,7 +30,7 @@ public:
         std::string loaderRpcBindAddr,
         std::string loaderSignalBindAddr);
    ~Base() noexcept;
-   musicDevice::Holder musicDeviceHolder;
+   musicDevice::rt::DataHolder musicDeviceHolder;
    musicDevice::factory::Factory musicDeviceFactory;
    TransportControl transportControl;
    instruments::Instruments instruments;

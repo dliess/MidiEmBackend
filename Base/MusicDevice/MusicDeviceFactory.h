@@ -17,7 +17,8 @@
 
 namespace base::musicDevice
 {
-struct Holder;
+
+namespace rt { struct DataHolder; }
 
 namespace description
 {
@@ -33,7 +34,7 @@ namespace factory
 class Factory
 {
 public:
-   Factory(Holder& rMusicDeviceHolder, const std::string& resourceRootDir);
+   Factory(rt::DataHolder& rMusicDeviceHolder, const std::string& resourceRootDir);
 
    std::string getAllDevicesAsJson() const;
    void loadMusicDeviceToChain(const MusicDeviceId& chainRoot,
@@ -46,7 +47,7 @@ public:
 
     MusicDeviceInserter& musicDeviceInserter() { return m_musicDeviceInserter; }
 private:
-   Holder& m_rHolder;
+   rt::DataHolder& m_rHolder;
    MusicDevices m_musicDevices;
    Loader m_loader;
    std::unordered_map<MusicDeviceId, sound::PresetFetcher>

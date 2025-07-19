@@ -4,10 +4,10 @@
 #include "MusicDeviceContainer.h"
 #include "MidiHolder.h"
 
-namespace base::musicDevice
+namespace base::musicDevice::rt
 {
 
-struct Holder
+struct DataHolder
 {  
    MusicDeviceContainer musicDevices;
    MidiHolder midiHolder;

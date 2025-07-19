@@ -9,9 +9,9 @@
 #include "MusicDeviceId.h"
 #include "itcQueue.h"
 
-namespace base::musicDevice
+namespace base::musicDevice::rt
 {
-struct Holder;
+struct DataHolder;
 }
 namespace base::musicDevice
 {
@@ -23,7 +23,7 @@ namespace base::musicDevice::factory
 class MusicDeviceInserter
 {
 public:
-   MusicDeviceInserter(Holder& rRtDataHolder, MusicDevices& rDataHolder,
+   MusicDeviceInserter(rt::DataHolder& rRtDataHolder, MusicDevices& rDataHolder,
                        const std::string& resourceRootDir) noexcept;
    void handleMidiInInsert(
        MusicDeviceId deviceId, std::shared_ptr<MusicDevice::MidiInput> pMidiIn,
@@ -106,7 +106,7 @@ public:
    void action(EraseFromMidiOutHolder, const MidiHolder::Id& holderId);
 
 private:
-   Holder& m_rRtDataHolder;
+   rt::DataHolder& m_rRtDataHolder;
    MusicDevices& m_rDataHolder;
    std::string m_resourceRootDir;
    util::itc::Queue m_actionQueue;

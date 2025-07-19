@@ -6,7 +6,7 @@
 using namespace uiadapter::capnzero;
 
 TempoRpc::TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals,
-                   base::musicDevice::Holder& rMdHolder) :
+                   base::musicDevice::rt::DataHolder& rMdHolder) :
    m_rMdHolder(rMdHolder)
 {
    base::tempo::BeatTick::instance().onBpmNudgedChanged(

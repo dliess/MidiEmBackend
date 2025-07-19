@@ -5,7 +5,7 @@
 #include "MidiEmRt_Server.h"
 #include "TapTempoHandler.h"
 
-namespace base::musicDevice { struct Holder; }
+namespace base::musicDevice::rt { struct DataHolder; }
 
 namespace uiadapter::capnzero
 {
@@ -13,7 +13,7 @@ class TempoRpc : public ::capnzero::MidiEmRt::TempoRpcIf
 {
 public:
    TempoRpc(::capnzero::MidiEmRt::MidiEmRtServer::Signals& rSignals,
-            base::musicDevice::Holder& rMdHolder);
+            base::musicDevice::rt::DataHolder& rMdHolder);
    void tapTempo() override;
    void setNudge(::capnzero::Float32 bpm) override;
    void increaseBpm(::capnzero::Float32 bpm) override;
@@ -23,7 +23,7 @@ public:
 
 private:
    base::tempo::TapTempoHandler m_tapTempoHandler;
-   base::musicDevice::Holder& m_rMdHolder;
+   base::musicDevice::rt::DataHolder& m_rMdHolder;
 };
 
 }   // namespace uiadapter::capnzero

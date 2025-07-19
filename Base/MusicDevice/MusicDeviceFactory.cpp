@@ -19,7 +19,7 @@
 using namespace base::musicDevice;
 using namespace base::musicDevice::factory;
 
-Factory::Factory(Holder& rHolder, const std::string& resourceRootDir) :
+Factory::Factory(rt::DataHolder& rHolder, const std::string& resourceRootDir) :
     m_rHolder(rHolder),
     m_musicDevices(resourceRootDir),
     m_loader(resourceRootDir),

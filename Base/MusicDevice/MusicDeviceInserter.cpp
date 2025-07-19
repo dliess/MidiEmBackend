@@ -8,7 +8,7 @@ using namespace base::musicDevice;
 using namespace base::musicDevice::factory;
 
 MusicDeviceInserter::MusicDeviceInserter(
-    Holder& rRtDataHolder, MusicDevices& rDataHolder,
+    rt::DataHolder& rRtDataHolder, MusicDevices& rDataHolder,
     const std::string& resourceRootDir) noexcept :
     m_rRtDataHolder(rRtDataHolder),
     m_rDataHolder(rDataHolder),

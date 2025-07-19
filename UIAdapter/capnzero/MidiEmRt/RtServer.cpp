@@ -27,7 +27,7 @@ RtServer::RtServer(
     zmq::context_t &rZmqContext, const std::string &rpcBindAddr,
     const std::string &signalBindAddr,
     base::instruments::Instruments &rInstruments,
-    base::musicDevice::Holder &rMDHolder,
+    base::musicDevice::rt::DataHolder &rMDHolder,
     base::TransportControl &rTransportControl,
     base::AbletonLinkWrapper &rAbletonLinkWrapper,
     base::midifriends::Router &rMidiRouter,

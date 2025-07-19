@@ -5,7 +5,7 @@
 using namespace base;
 
 TransportControl::TransportControl(
-  musicDevice::Holder& rMusicDeviceHolder) noexcept :
+  musicDevice::rt::DataHolder& rMusicDeviceHolder) noexcept :
    m_rMusicDeviceHolder(rMusicDeviceHolder)
 {
    m_rMusicDeviceHolder.musicDevices.onAdded([this](std::shared_ptr<base::musicDevice::MusicDevice> ptr){

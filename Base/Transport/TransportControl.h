@@ -8,9 +8,9 @@
 #include "CallbackSignal.h"
 #include "Identifiable.h"
 
-namespace base::musicDevice
+namespace base::musicDevice::rt
 {
-struct Holder;
+struct DataHolder;
 }
 
 namespace base 
@@ -19,7 +19,7 @@ class TransportControl
 {
 public:
    TransportControl(
-       musicDevice::Holder& rMusicDeviceHolder) noexcept;
+       musicDevice::rt::DataHolder& rMusicDeviceHolder) noexcept;
    void toggleEnabled(const util::Identifiable::UUID& uuid) noexcept;
    void start() noexcept;
    void stop() noexcept;
@@ -35,7 +35,7 @@ public:
    CB_SIGNAL(StartOnBeat, bool);
 
 private:
-   musicDevice::Holder& m_rMusicDeviceHolder;
+   musicDevice::rt::DataHolder& m_rMusicDeviceHolder;
    bool m_startOnBeat{true};
    bool m_startRequested{false};
    bool m_started{false};

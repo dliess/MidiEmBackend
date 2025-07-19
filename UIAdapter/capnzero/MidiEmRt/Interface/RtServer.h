@@ -5,7 +5,7 @@
 
 // clang-format off
 namespace base::instruments { struct Instruments; }
-namespace base::musicDevice { struct Holder; }
+namespace base::musicDevice::rt { struct DataHolder; }
 namespace base { class TransportControl; }
 namespace base { class AbletonLinkWrapper; }
 namespace base::midifriends { class Router; }
@@ -21,7 +21,7 @@ public:
    RtServer(zmq::context_t& rZmqContext, const std::string& rpcBindAddr,
             const std::string& signalBindAddr,
             base::instruments::Instruments& rInstruments,
-            base::musicDevice::Holder& rMusicDeviceHolder,
+            base::musicDevice::rt::DataHolder& rMusicDeviceHolder,
             base::TransportControl& rTransportControl,
             base::AbletonLinkWrapper& rAbletonLinkWrapper,
             base::midifriends::Router& rMidiRouter,
