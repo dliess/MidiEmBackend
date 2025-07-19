@@ -3,13 +3,14 @@
 #include "Instruments.h"
 #include "Refs/InstrumentsRef.h"
 #include "MusicDeviceFactoryDataHolder.h"
+#include "MusicDeviceContainer.h"
 
-using namespace base::musicDevice;
-using namespace base::instruments;
+using namespace base;
 
 TEST(InstrumentsTest, test)
 {
-   factory::MusicDevices factoryDataHolder("~");
-   Instruments instruments(factoryDataHolder);
-   InstrumentsRef instrumentsRef(instruments);
+   musicDevice::factory::MusicDevices factoryMusicDevices("Config dir path");
+   musicDevice::MusicDeviceContainer rtMusicDeviceContainer; 
+   instruments::Instruments instruments(factoryMusicDevices, rtMusicDeviceContainer);
+   instruments::InstrumentsRef instrumentsRef(instruments);
 }
